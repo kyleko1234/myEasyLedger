@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.data.rest.core.annotation.RestResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
@@ -39,11 +40,13 @@ public class LineItem {
 		this.id = id;
 	}
 
+	@JsonProperty(value = "is_credit")
 	@Column(name = "is_credit", nullable = false)
 	public boolean isCredit() {
 		return isCredit;
 	}
-
+	
+	@JsonProperty(value = "is_credit")
 	public void setCredit(boolean isCredit) {
 		this.isCredit = isCredit;
 	}
