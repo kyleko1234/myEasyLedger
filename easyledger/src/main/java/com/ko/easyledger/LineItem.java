@@ -7,13 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.rest.core.annotation.RestResource;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
 @Table(name = "line_item")
-@RestResource(rel="line_item", path="line_item")
 public class LineItem {
 	private long id;
 	private boolean isCredit;
