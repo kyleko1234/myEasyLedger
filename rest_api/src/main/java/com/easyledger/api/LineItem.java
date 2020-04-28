@@ -1,4 +1,4 @@
-package com.ko.easyledger;
+package com.easyledger.api;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

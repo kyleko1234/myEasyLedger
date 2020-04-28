@@ -1,4 +1,4 @@
-package com.ko.easyledger;
+package com.easyledger.api;
 
 import java.util.List;
 import java.util.Optional;
