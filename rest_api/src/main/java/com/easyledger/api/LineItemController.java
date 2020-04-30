@@ -3,6 +3,7 @@ package com.easyledger.api;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +24,12 @@ public class LineItemController {
     }
 
 	
-	@GetMapping("/line_item/{id}")
-	public LineItem lineItemById(@PathVariable("id") Long id) {
-	Optional<LineItem> optLineItem = lineItemRepo.findById(id);
-	if (optLineItem.isPresent()) {
-	return optLineItem.get(); }
-	return null;
-		}
+    @GetMapping("/line_item/{id}")
+    public ResponseEntity<LineItem> getLineItemById(@PathVariable(value = "id") Long lineItemId)
+        throws ResourceNotFoundException {
+        LineItem lineItem = lineItemRepo.findById(lineItemId)
+          .orElseThrow(() -> new ResourceNotFoundException("Line-item not found for this id :: " + lineItemId));
+        return ResponseEntity.ok().body(lineItem);
+    }
 }
 
