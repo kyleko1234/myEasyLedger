@@ -1,7 +1,6 @@
 package com.easyledger.api;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class LineItemController {
 	private LineItemRepository lineItemRepo;
 
+
+
 	public LineItemController(LineItemRepository lineItemRepo) {
+		super();
 		this.lineItemRepo = lineItemRepo;
 	}
-	
+
+
 	@GetMapping("/line_item")
     public List<LineItem> getAllLineItems() {
         return lineItemRepo.findAll();
@@ -25,11 +28,12 @@ public class LineItemController {
 
 	
     @GetMapping("/line_item/{id}")
-    public ResponseEntity<LineItem> getLineItemById(@PathVariable(value = "id") Long lineItemId)
+    public ResponseEntity<LineItemDto> getLineItemById(@PathVariable(value = "id") Long lineItemId)
         throws ResourceNotFoundException {
-        LineItem lineItem = lineItemRepo.findById(lineItemId)
+    	LineItem lineItem = lineItemRepo.findById(lineItemId)
           .orElseThrow(() -> new ResourceNotFoundException("Line-item not found for this id :: " + lineItemId));
-        return ResponseEntity.ok().body(lineItem);
+    	LineItemDto lineItemDto = new LineItemDto(lineItem);
+        return ResponseEntity.ok().body(lineItemDto);
     }
 }
 
