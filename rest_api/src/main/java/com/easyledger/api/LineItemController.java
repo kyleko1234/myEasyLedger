@@ -31,7 +31,7 @@ public class LineItemController {
     public ResponseEntity<LineItemDto> getLineItemById(@PathVariable(value = "id") Long lineItemId)
         throws ResourceNotFoundException {
     	LineItem lineItem = lineItemRepo.findById(lineItemId)
-          .orElseThrow(() -> new ResourceNotFoundException("Line-item not found for this id :: " + lineItemId));
+    		.orElseThrow(() -> new ResourceNotFoundException("Line-item not found for this id :: " + lineItemId)); 
     	LineItemDto lineItemDto = new LineItemDto(lineItem);
         return ResponseEntity.ok().body(lineItemDto);
     }
