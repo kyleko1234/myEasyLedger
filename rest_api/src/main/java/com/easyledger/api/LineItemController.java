@@ -28,12 +28,12 @@ public class LineItemController {
 
 	
     @GetMapping("/line_item/{id}")
-    public ResponseEntity<LineItemDto> getLineItemById(@PathVariable(value = "id") Long lineItemId)
+    public ResponseEntity<LineItemDTO> getLineItemById(@PathVariable(value = "id") Long lineItemId)
         throws ResourceNotFoundException {
     	LineItem lineItem = lineItemRepo.findById(lineItemId)
     		.orElseThrow(() -> new ResourceNotFoundException("Line-item not found for this id :: " + lineItemId)); 
-    	LineItemDto lineItemDto = new LineItemDto(lineItem);
-        return ResponseEntity.ok().body(lineItemDto);
+    	LineItemDTO lineItemDTO = new LineItemDTO(lineItem);
+        return ResponseEntity.ok().body(lineItemDTO);
     }
 }
 

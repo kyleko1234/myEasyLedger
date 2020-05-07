@@ -3,7 +3,7 @@ package com.easyledger.api;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class LineItemDto {
+public class LineItemDTO {
 	private Long lineItemId;
 	private Long entryId;
 	private Long accountId;
@@ -31,7 +31,7 @@ public class LineItemDto {
 	@JsonIgnore
 	private Entry entry;
 	
-	public LineItemDto(LineItem lineItem) {
+	public LineItemDTO(LineItem lineItem) {
 		this.lineItem = lineItem;
     	this.account = this.lineItem.getAccount();
     	this.accountSubtype = account.getAccountSubtype();
@@ -227,7 +227,7 @@ public class LineItemDto {
 
 	@Override
 	public String toString() {
-		return "LineItemDto [lineItemId=" + lineItemId + ", entryId=" + entryId + ", accountId=" + accountId
+		return "LineItemDTO [lineItemId=" + lineItemId + ", entryId=" + entryId + ", accountId=" + accountId
 				+ ", isCredit=" + isCredit + ", amount=" + amount + ", description=" + description + ", categoryId="
 				+ categoryId + ", categoryName=" + categoryName + ", accountName=" + accountName + ", accountTypeId="
 				+ accountTypeId + ", accountTypeName=" + accountTypeName + ", accountSubtypeId=" + accountSubtypeId
