@@ -41,7 +41,7 @@ public class EntryDTO {
 		this.id = id;
 	}
 
-	@JsonProperty(value = "entry_date")
+	@JsonIgnore
 	public Date getEntryDate() {
 		return entryDate;
 	}
@@ -50,7 +50,7 @@ public class EntryDTO {
 		this.entryDate = entryDate;
 	}
 
-	@JsonProperty(value = "line_items")
+	@JsonProperty(value = "line_item")
 	public Set<LineItemDTO> getLineItemDTOs() {
 		return lineItemDTOs;
 	}
