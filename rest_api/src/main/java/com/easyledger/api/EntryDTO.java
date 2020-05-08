@@ -7,21 +7,17 @@ import java.util.HashSet;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+//
 public class EntryDTO {
 
 	private Long id;
 	private Date entryDate;
 	private Set<LineItemDTO> lineItemDTOs;
-
-	@JsonIgnore
-	private Entry entry;
 	
 	public EntryDTO (Entry entry) {
-		this.entry = entry;
 		
-		this.id = this.entry.getId();
-		this.entryDate = this.entry.getEntryDate();
+		this.id = entry.getId();
+		this.entryDate = entry.getEntryDate();
 		this.lineItemDTOs = new HashSet<LineItemDTO>();
 		
 		/* Iterates over entry.getLineItems(), converting LineItems into LineItemDTOs and adding them to this.LineItemDTOs */
@@ -41,7 +37,7 @@ public class EntryDTO {
 		this.id = id;
 	}
 
-	@JsonIgnore
+	@JsonProperty(value = "entry_date")
 	public Date getEntryDate() {
 		return entryDate;
 	}
@@ -59,20 +55,12 @@ public class EntryDTO {
 		this.lineItemDTOs = lineItemDTOs;
 	}
 
-	public Entry getEntry() {
-		return entry;
-	}
-
-	public void setEntry(Entry entry) {
-		this.entry = entry;
-	}
-
 	@Override
 	public String toString() {
-		return "EntryDTO [id=" + id + ", entryDate=" + entryDate + ", lineItemDTOs=" + lineItemDTOs + ", entry=" + entry
-				+ "]";
+		return "EntryDTO [id=" + id + ", entryDate=" + entryDate + ", lineItemDTOs=" + lineItemDTOs + "]";
 	}
-	
+
+
 	
 }
 
