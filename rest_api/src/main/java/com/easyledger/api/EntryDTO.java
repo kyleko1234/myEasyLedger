@@ -28,6 +28,8 @@ public class EntryDTO {
 		}
 	}
 
+	/* Getters, Setters, ToString */
+	
 	@JsonProperty(value = "entry_id")
 	public Long getId() {
 		return id;
