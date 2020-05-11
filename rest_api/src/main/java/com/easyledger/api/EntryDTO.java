@@ -12,13 +12,16 @@ public class EntryDTO {
 
 	private Long id;
 	private Date entryDate;
+	private Long personId;
 	private Set<LineItemDTO> lineItemDTOs;
+
 	
 	public EntryDTO (Entry entry) {
 		
 		this.id = entry.getId();
 		this.entryDate = entry.getEntryDate();
 		this.lineItemDTOs = new HashSet<LineItemDTO>();
+		this.personId = entry.getPerson().getId();
 		
 		/* Iterates over entry.getLineItems(), converting LineItems into LineItemDTOs and adding them to this.LineItemDTOs */
 		Iterator<LineItem> lineItemIterator = entry.getLineItems().iterator();
@@ -47,6 +50,15 @@ public class EntryDTO {
 	public void setEntryDate(Date entryDate) {
 		this.entryDate = entryDate;
 	}
+	
+	@JsonProperty(value = "person_id")
+	public Long getPersonId() {
+		return personId;
+	}
+
+	public void setPersonId(Long personId) {
+		this.personId = personId;
+	}
 
 	@JsonProperty(value = "line_item")
 	public Set<LineItemDTO> getLineItemDTOs() {
@@ -57,9 +69,11 @@ public class EntryDTO {
 		this.lineItemDTOs = lineItemDTOs;
 	}
 
+
 	@Override
 	public String toString() {
-		return "EntryDTO [id=" + id + ", entryDate=" + entryDate + ", lineItemDTOs=" + lineItemDTOs + "]";
+		return "EntryDTO [id=" + id + ", entryDate=" + entryDate + ", lineItemDTOs=" + lineItemDTOs + ", personId="
+				+ personId + "]";
 	}
 
 

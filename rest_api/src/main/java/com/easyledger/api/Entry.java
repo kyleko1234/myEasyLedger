@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,6 +28,10 @@ public class Entry {
 	@OneToMany(mappedBy = "entry")
 	@JsonIgnore
 	private Set<LineItem> lineItems;
+	
+	@ManyToOne
+	@JoinColumn(name = "person_id")
+	private Person person;
 	
 	public Entry() {
 	}
@@ -58,9 +64,17 @@ public class Entry {
 		this.lineItems = lineItems;
 	}
 
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
 	@Override
 	public String toString() {
-		return "Entry [id=" + id + ", entryDate=" + entryDate + ", lineItems=" + lineItems + "]";
+		return "Entry [id=" + id + ", entryDate=" + entryDate + ", lineItems=" + lineItems + ", person=" + person + "]";
 	}
 	
 	

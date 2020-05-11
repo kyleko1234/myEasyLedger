@@ -2,24 +2,13 @@ package com.easyledger.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+
+@JsonPropertyOrder({ "account_id", "account_name", "account_subtype_id", "account_subtype_name", "account_type_id", "account_type_name", "amount", "category_id", "category_name",
+	"description", "entry_id", "is_credit", "line_item_id"})
 public class LineItemDTO {
-	private Long lineItemId;
-	private Long entryId;
-	private Long accountId;
-	private boolean isCredit;
-	private Double amount;
-	private String description;
-	private Long categoryId;
-	private String categoryName;
-	private String accountName;
-	private Long accountTypeId;
-	private String accountTypeName;
-	private Long accountSubtypeId;
-	private String accountSubtypeName;
-	
-	@JsonIgnore
-	private LineItem lineItem;
+
 	@JsonIgnore
 	private Account account;
 	@JsonIgnore
@@ -30,6 +19,25 @@ public class LineItemDTO {
 	private Category category;
 	@JsonIgnore
 	private Entry entry;
+	@JsonIgnore
+	private LineItem lineItem;
+	
+	private Long accountId;
+	private String accountName;
+	private Long accountSubtypeId;
+	private String accountSubtypeName;
+	private Long accountTypeId;
+	private String accountTypeName;
+	private Double amount;
+	private Long categoryId;
+	private String categoryName;
+	private String description;
+	private Long entryId;
+	private boolean isCredit;
+	private Long lineItemId;
+
+	
+
 	
 	public LineItemDTO(LineItem lineItem) {
 		this.lineItem = lineItem;
