@@ -1,6 +1,7 @@
 package com.easyledger.api;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -54,26 +55,30 @@ public class PersonController {
     				
     }
     
-    @PatchMapping(path="/person/{id}", consumes="application/json")
-    public ResponseEntity<Person> patchPerson(@PathVariable(value = "id") Long personId, @RequestBody Person patch)
+    @PatchMapping("/person/{id}")
+    public ResponseEntity<Person> patchPerson(@PathVariable Long id, @RequestBody Map<Object, Object> fields) 
     	throws ResourceNotFoundException {
-    	Person person = personRepo.findById(personId)
-    			.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + personId));
-    	if (patch.getFirstName() != null) {
-    		person.setFirstName(patch.getFirstName());
-    	}
-    	if (patch.getLastName() != null) {
-    		person.setLastName(patch.getLastName());
-    	}
-    	if (patch.getEmail() != null) {
-    		person.setEmail(patch.getEmail());
-    	}
-    	if (patch.getPassword() != null) {
-    		person.setPassword(patch.getPassword());
-    	}
+        Person person = personRepo.findById(id)
+        	.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + id));
+        // Fields is a Json Request Body represented as a Map. Key is the field name, Value is the value name.
+        fields.forEach((k, v) -> {
+           // If k matches the alias of a field of the Person class, change the value of the field into v
+        	if (k == "first_name") {
+        		person.setFirstName((String)v);
+        	}
+        	if (k == "last_name") {
+        		person.setLastName((String)v);
+        	}
+        	if (k == "password") {
+        		person.setPassword((String)v);
+        	}
+        	if (k == "email") {
+        		person.setEmail((String)v);
+        	}
+        });
     	final Person updatedPerson = personRepo.save(person);
     	return ResponseEntity.ok(updatedPerson);
     }
-
+    
 }
 
