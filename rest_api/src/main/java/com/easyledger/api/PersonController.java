@@ -64,28 +64,11 @@ public class PersonController {
         	.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + id));
         // Fields is a Json Request Body represented as a Map. Key is the field name, Value is the value name.
         fields.forEach((k, v) -> {
-           // If k matches the alias of a field of the Person class, change the value of the field into v
+           // Use reflection to find field K in person, and set to value v
         	Field field = ReflectionUtils.findField(Person.class, (String) k);
         	field.setAccessible(true);
         	ReflectionUtils.setField(field, person, v);
         	field.setAccessible(false);
-        	
-        	
-        	
-        	
-        	
-        	/*if (k == "first_name") {
-        		person.setFirstName((String)v);
-        	}
-        	if (k == "last_name") {
-        		person.setLastName((String)v);
-        	}
-        	if (k == "password") {
-        		person.setPassword((String)v);
-        	}
-        	if (k == "email") {
-        		person.setEmail((String)v);
-        	}*/
         });
     	final Person updatedPerson = personRepo.save(person);
     	return ResponseEntity.ok(updatedPerson);
