@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
-@JsonPropertyOrder({ "account_id", "account_name", "account_subtype_id", "account_subtype_name", "account_type_id", "account_type_name", "amount", "category_id", "category_name",
-	"description", "entry_id", "is_credit", "line_item_id"})
+
 public class LineItemDTO {
 
 	@JsonIgnore
@@ -50,7 +49,7 @@ public class LineItemDTO {
     	this.lineItemId = this.lineItem.getId();
     	this.entryId = this.entry.getId();
     	this.accountId = this.account.getId();
-    	this.isCredit = this.lineItem.isCredit();
+    	this.isCredit = this.lineItem.isIsCredit();
     	this.amount = this.lineItem.getAmount();
     	this.description = this.lineItem.getDescription();
     	if (this.category != null) {
@@ -69,7 +68,6 @@ public class LineItemDTO {
 	
 	/** GETTERS AND SETTERS **/
 
-	@JsonProperty(value = "line_item_id")
 	public Long getLineItemId() {
 		return lineItemId;
 	}
@@ -78,7 +76,6 @@ public class LineItemDTO {
 		this.lineItemId = lineItemId;
 	}
 
-	@JsonProperty(value = "entry_id")
 	public Long getEntryId() {
 		return entryId;
 	}
@@ -87,7 +84,6 @@ public class LineItemDTO {
 		this.entryId = entryId;
 	}
 
-	@JsonProperty(value = "account_id")
 	public Long getAccountId() {
 		return accountId;
 	}
@@ -96,12 +92,11 @@ public class LineItemDTO {
 		this.accountId = accountId;
 	}
 
-	@JsonProperty(value = "is_credit")
-	public boolean isCredit() {
+	public boolean isIsCredit() {
 		return isCredit;
 	}
 
-	public void setCredit(boolean isCredit) {
+	public void setIsCredit(boolean isCredit) {
 		this.isCredit = isCredit;
 	}
 
@@ -121,7 +116,6 @@ public class LineItemDTO {
 		this.description = description;
 	}
 
-	@JsonProperty(value = "category_id")
 	public Long getCategoryId() {
 		return categoryId;
 	}
@@ -130,7 +124,6 @@ public class LineItemDTO {
 		this.categoryId = categoryId;
 	}
 
-	@JsonProperty(value = "category_name")
 	public String getCategoryName() {
 		return categoryName;
 	}
@@ -139,7 +132,6 @@ public class LineItemDTO {
 		this.categoryName = categoryName;
 	}
 
-	@JsonProperty(value = "account_name")
 	public String getAccountName() {
 		return accountName;
 	}
@@ -148,7 +140,6 @@ public class LineItemDTO {
 		this.accountName = accountName;
 	}
 
-	@JsonProperty(value = "account_type_id")
 	public Long getAccountTypeId() {
 		return accountTypeId;
 	}
@@ -157,7 +148,6 @@ public class LineItemDTO {
 		this.accountTypeId = accountTypeId;
 	}
 
-	@JsonProperty(value = "account_type_name")
 	public String getAccountTypeName() {
 		return accountTypeName;
 	}
@@ -166,7 +156,6 @@ public class LineItemDTO {
 		this.accountTypeName = accountTypeName;
 	}
 
-	@JsonProperty(value = "account_subtype_id")
 	public Long getAccountSubtypeId() {
 		return accountSubtypeId;
 	}
@@ -175,7 +164,6 @@ public class LineItemDTO {
 		this.accountSubtypeId = accountSubtypeId;
 	}
 
-	@JsonProperty(value = "account_subtype_name")
 	public String getAccountSubtypeName() {
 		return accountSubtypeName;
 	}

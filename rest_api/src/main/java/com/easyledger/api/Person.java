@@ -16,14 +16,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @Entity
 @Table(name = "person")
-@JsonPropertyOrder({"first_name", "last_name", "password", "email"})
 public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name = "first_name", nullable = true)
-	@JsonProperty(value = "first_name")
 	private String firstName;
 	
 	@Column(name = "last_name", nullable = true)
@@ -57,22 +55,18 @@ public class Person {
 		this.id = id;
 	}
 
-	@JsonProperty(value = "first_name")
 	public String getFirstName() {
 		return firstName;
 	}
 
-	@JsonProperty(value = "first_name")
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-	@JsonProperty(value = "last_name")
 	public String getLastName() {
 		return lastName;
 	}
 
-	@JsonProperty(value = "last_name")
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}

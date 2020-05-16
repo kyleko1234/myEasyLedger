@@ -1,10 +1,12 @@
 package com.easyledger.api;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.util.ReflectionUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/v0.1")
 public class PersonController {
 	private PersonRepository personRepo;
 
@@ -63,7 +65,16 @@ public class PersonController {
         // Fields is a Json Request Body represented as a Map. Key is the field name, Value is the value name.
         fields.forEach((k, v) -> {
            // If k matches the alias of a field of the Person class, change the value of the field into v
-        	if (k == "first_name") {
+        	Field field = ReflectionUtils.findField(Person.class, (String) k);
+        	field.setAccessible(true);
+        	ReflectionUtils.setField(field, person, v);
+        	field.setAccessible(false);
+        	
+        	
+        	
+        	
+        	
+        	/*if (k == "first_name") {
         		person.setFirstName((String)v);
         	}
         	if (k == "last_name") {
@@ -74,7 +85,7 @@ public class PersonController {
         	}
         	if (k == "email") {
         		person.setEmail((String)v);
-        	}
+        	}*/
         });
     	final Person updatedPerson = personRepo.save(person);
     	return ResponseEntity.ok(updatedPerson);

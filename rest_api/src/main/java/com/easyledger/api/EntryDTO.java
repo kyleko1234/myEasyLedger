@@ -10,39 +10,37 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 //
 public class EntryDTO {
 
-	private Long id;
+	private Long entryId;
 	private Date entryDate;
 	private Long personId;
-	private Set<LineItemDTO> lineItemDTOs;
+	private Set<LineItemDTO> lineItem;
 
 	
 	public EntryDTO (Entry entry) {
 		
-		this.id = entry.getId();
+		this.entryId = entry.getId();
 		this.entryDate = entry.getEntryDate();
-		this.lineItemDTOs = new HashSet<LineItemDTO>();
+		this.lineItem = new HashSet<LineItemDTO>();
 		this.personId = entry.getPerson().getId();
 		
 		/* Iterates over entry.getLineItems(), converting LineItems into LineItemDTOs and adding them to this.LineItemDTOs */
 		Iterator<LineItem> lineItemIterator = entry.getLineItems().iterator();
 		while (lineItemIterator.hasNext()) {
 			LineItemDTO nextLineItemDTO = new LineItemDTO(lineItemIterator.next());
-			this.lineItemDTOs.add(nextLineItemDTO);
+			this.lineItem.add(nextLineItemDTO);
 		}
 	}
 
 	/* Getters, Setters, ToString */
 	
-	@JsonProperty(value = "entry_id")
-	public Long getId() {
-		return id;
+	public Long getEntryId() {
+		return entryId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setEntryId(Long id) {
+		this.entryId = id;
 	}
 
-	@JsonProperty(value = "entry_date")
 	public Date getEntryDate() {
 		return entryDate;
 	}
@@ -51,7 +49,6 @@ public class EntryDTO {
 		this.entryDate = entryDate;
 	}
 	
-	@JsonProperty(value = "person_id")
 	public Long getPersonId() {
 		return personId;
 	}
@@ -60,19 +57,18 @@ public class EntryDTO {
 		this.personId = personId;
 	}
 
-	@JsonProperty(value = "line_item")
-	public Set<LineItemDTO> getLineItemDTOs() {
-		return lineItemDTOs;
+	public Set<LineItemDTO> getLineItem() {
+		return lineItem;
 	}
 
-	public void setLineItemDTOs(Set<LineItemDTO> lineItemDTOs) {
-		this.lineItemDTOs = lineItemDTOs;
+	public void setLineItem(Set<LineItemDTO> lineItemDTOs) {
+		this.lineItem = lineItemDTOs;
 	}
 
 
 	@Override
 	public String toString() {
-		return "EntryDTO [id=" + id + ", entryDate=" + entryDate + ", lineItemDTOs=" + lineItemDTOs + ", personId="
+		return "EntryDTO [entryId=" + entryId + ", entryDate=" + entryDate + ", lineItem=" + lineItem + ", personId="
 				+ personId + "]";
 	}
 
