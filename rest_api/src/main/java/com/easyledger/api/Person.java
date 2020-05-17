@@ -27,10 +27,10 @@ public class Person {
 	@Column(name = "last_name", nullable = true)
 	private String lastName;
 	
-	@Column(name = "email", nullable = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
-	@Column(name = "password", nullable = true)
+	@Column(name = "password", nullable = false)
 	private String password;
 	
 	@OneToMany(mappedBy = "person")
