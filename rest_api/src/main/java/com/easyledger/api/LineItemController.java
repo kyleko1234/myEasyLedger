@@ -21,13 +21,13 @@ public class LineItemController {
 	}
 
 
-	@GetMapping("/line_item")
+	@GetMapping("/lineItem")
     public List<LineItem> getAllLineItems() {
         return lineItemRepo.findAll();
     }
 
 	
-    @GetMapping("/line_item/{id}")
+    @GetMapping("/lineItem/{id}")
     public ResponseEntity<LineItemDTO> getLineItemById(@PathVariable(value = "id") Long lineItemId)
         throws ResourceNotFoundException {
     	LineItem lineItem = lineItemRepo.findById(lineItemId)
