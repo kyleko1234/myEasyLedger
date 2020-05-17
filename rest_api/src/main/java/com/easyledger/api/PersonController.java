@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.util.ReflectionUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -45,13 +47,14 @@ public class PersonController {
     }
     
     @PostMapping("/person")
+    @ResponseStatus(HttpStatus.CREATED)
     public Person createPerson(@Valid @RequestBody Person person) 
     	throws ConflictException {
     	String email = person.getEmail();
-    	if (personRepo.findByEmail(email).isEmpty() == false) {
+    	if (personRepo.findByEmailIgnoreCase(email).isEmpty() == false) { //Case-insensitive query for existing person with this email
     		throw new ConflictException("Person already registered with this email :: " + email);
     	}
-    	return personRepo.save(person);
+    	return personRepo.save(person); //
     	
     }
     
