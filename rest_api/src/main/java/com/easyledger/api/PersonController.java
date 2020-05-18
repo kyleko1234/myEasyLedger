@@ -51,44 +51,45 @@ public class PersonController {
     public Person createPerson(@Valid @RequestBody Person person) 
     	throws ConflictException {
     	String email = person.getEmail();
-    	if (personRepo.findByEmailIgnoreCase(email).isEmpty() == false) { //Case-insensitive query for existing person with this email
-    		throw new ConflictException("Person already registered with this email :: " + email);
-    	}
+    	checkForUniqueEmail(email);
     	return personRepo.save(person); //
     	
     }
     
-    
-    
-    @PutMapping("/person/{id}")
-    public ResponseEntity<Person> putPerson(@PathVariable(value = "id") Long personId,
-    			@Valid @RequestBody Person personDetails) throws ResourceNotFoundException {
-    	Person person = personRepo.findById(personId)
-    		.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + personId));
-    	person.setFirstName(personDetails.getFirstName());
-    	person.setLastName(personDetails.getLastName());
-    	person.setEmail(personDetails.getEmail());
-    	person.setPassword(personDetails.getPassword());
-    	final Person updatedPerson = personRepo.save(person);
-    	return ResponseEntity.ok(updatedPerson);
-    				
-    }
-    
     @PatchMapping("/person/{id}")
     public ResponseEntity<Person> patchPerson(@PathVariable Long id, @RequestBody Map<Object, Object> fields) 
-    	throws ResourceNotFoundException {
+    	throws ConflictException, ResourceNotFoundException {
         Person person = personRepo.findById(id)
         	.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + id));
-        // Fields is a Json Request Body represented as a Map. Key is the field name, Value is the value name.
-        fields.forEach((k, v) -> {
-           // Use reflection to find field K in person, and set to value v
-        	Field field = ReflectionUtils.findField(Person.class, (String) k);
-        	field.setAccessible(true);
-        	ReflectionUtils.setField(field, person, v);
-        	field.setAccessible(false);
-        });
+        // 'fields' is a Json Request Body represented as a Map. Key is the field name, Value is the value name.
+        // Iterate over 'fields', identifying the correct fields of Person to patch.
+        for (Map.Entry<Object, Object> entry : fields.entrySet()) {
+        	String k = entry.getKey().toString();
+        	if (k.equals("firstName")) {
+        		person.setFirstName((String) entry.getValue());
+        	}
+        	if (k.equals("lastName")) {
+        		person.setLastName((String) entry.getValue());
+        	}
+        	if (k.equals("email")) {
+        		String email = entry.getValue().toString();
+        		checkForUniqueEmail(email); //checks that email is unique and not already registered, otherwise aborts the patch operation and returns HTTP 409
+        		person.setEmail(email);
+        	}
+        	if (k.equals("password")) {
+        		person.setPassword((String) entry.getValue());
+        	}
+        	
+        }
     	final Person updatedPerson = personRepo.save(person);
     	return ResponseEntity.ok(updatedPerson);
+    }
+    
+    private void checkForUniqueEmail(String email) 
+    	throws ConflictException {
+    	if (personRepo.findByEmail(email.toLowerCase()).isEmpty() == false) {
+    		throw new ConflictException("Person already registered with this email :: " + email);
+    	}
     }
     
 }

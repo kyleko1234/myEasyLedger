@@ -43,7 +43,7 @@ public class Person {
 	public Person(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = email;
+		this.email = email.toLowerCase();
 		this.password = password;
 	}
 
@@ -76,7 +76,7 @@ public class Person {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = email.toLowerCase();
 	}
 
 	public String getPassword() {
