@@ -29,7 +29,7 @@ public class Person {
 	
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
-	
+
 	@Column(name = "password", nullable = false)
 	private String password;
 	
@@ -43,7 +43,7 @@ public class Person {
 	public Person(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = email.toLowerCase();
+		this.email = email.toLowerCase().trim();
 		this.password = password;
 	}
 
@@ -76,11 +76,11 @@ public class Person {
 	}
 
 	public void setEmail(String email) {
-		this.email = email.toLowerCase();
+		this.email = email.toLowerCase().trim();
 	}
-
+	
 	public String getPassword() {
-		return password;
+		return "*******";
 	}
 
 	public void setPassword(String password) {

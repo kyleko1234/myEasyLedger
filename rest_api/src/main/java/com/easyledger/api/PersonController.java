@@ -62,24 +62,22 @@ public class PersonController {
         Person person = personRepo.findById(id)
         	.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + id));
         // 'fields' is a Json Request Body represented as a Map. Key is the field name, Value is the value name.
-        // Iterate over 'fields', identifying the correct fields of Person to patch.
+        
+        /* First checks if the field is an Email. If true, email is tested for uniqueness, throwing ConflictException if not unique
+         * and aborting the PATCH. If email is unique, it is saved using Person's setter. For all other fields, Reflection is used
+         * to set the values for the field. If all fields are valid the PATCH is executed and the Person is saved into the db. */
         for (Map.Entry<Object, Object> entry : fields.entrySet()) {
-        	String k = entry.getKey().toString();
-        	if (k.equals("firstName")) {
-        		person.setFirstName((String) entry.getValue());
-        	}
-        	if (k.equals("lastName")) {
-        		person.setLastName((String) entry.getValue());
-        	}
-        	if (k.equals("email")) {
-        		String email = entry.getValue().toString();
-        		checkForUniqueEmail(email); //checks that email is unique and not already registered, otherwise aborts the patch operation and returns HTTP 409
-        		person.setEmail(email);
-        	}
-        	if (k.equals("password")) {
-        		person.setPassword((String) entry.getValue());
-        	}
+        	Object k = entry.getKey();
+        	Object v = entry.getValue();
         	
+        	if (k.toString().equals("email")) {
+        		checkForUniqueEmail(v.toString());
+        		person.setEmail(v.toString());
+        	} else {
+	        	Field field = ReflectionUtils.findField(Person.class, (String) k);
+	        	ReflectionUtils.makeAccessible(field);
+	        	ReflectionUtils.setField(field, person, v);
+        	}      	
         }
     	final Person updatedPerson = personRepo.save(person);
     	return ResponseEntity.ok(updatedPerson);
@@ -87,8 +85,9 @@ public class PersonController {
     
     private void checkForUniqueEmail(String email) 
     	throws ConflictException {
-    	if (personRepo.findByEmail(email.toLowerCase()).isEmpty() == false) {
-    		throw new ConflictException("Person already registered with this email :: " + email);
+    	String formattedEmail = email.toLowerCase().trim();
+    	if (personRepo.findByEmail(formattedEmail).isEmpty() == false) {
+    		throw new ConflictException("Person already registered with this email :: " + email.trim());
     	}
     }
     
