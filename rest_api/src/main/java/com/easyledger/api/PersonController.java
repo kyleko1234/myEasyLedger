@@ -51,7 +51,7 @@ public class PersonController {
     public Person createPerson(@Valid @RequestBody Person person) 
     	throws ConflictException {
     	String email = person.getEmail();
-    	checkForUniqueEmail(email);
+    	assertUniqueEmail(email);
     	return personRepo.save(person); //
     	
     }
@@ -71,7 +71,7 @@ public class PersonController {
         	Object v = entry.getValue();
         	
         	if (k.toString().equals("email")) {
-        		checkForUniqueEmail(v.toString());
+        		assertUniqueEmail(v.toString());
         		person.setEmail(v.toString());
         	} else {
 	        	Field field = ReflectionUtils.findField(Person.class, (String) k);
@@ -83,7 +83,7 @@ public class PersonController {
     	return ResponseEntity.ok(updatedPerson);
     }
     
-    private void checkForUniqueEmail(String email) 
+    private void assertUniqueEmail(String email) 
     	throws ConflictException {
     	String formattedEmail = email.toLowerCase().trim();
     	if (personRepo.findByEmail(formattedEmail).isEmpty() == false) {

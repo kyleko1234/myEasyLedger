@@ -13,21 +13,21 @@ public class EntryDTO {
 	private Long entryId;
 	private Date entryDate;
 	private Long personId;
-	private Set<LineItemDTO> lineItem;
+	private Set<LineItemDTO> lineItems;
 
 	
 	public EntryDTO (Entry entry) {
 		
 		this.entryId = entry.getId();
 		this.entryDate = entry.getEntryDate();
-		this.lineItem = new HashSet<LineItemDTO>();
+		this.lineItems = new HashSet<LineItemDTO>();
 		this.personId = entry.getPerson().getId();
 		
 		/* Iterates over entry.getLineItems(), converting LineItems into LineItemDTOs and adding them to this.LineItemDTOs */
 		Iterator<LineItem> lineItemIterator = entry.getLineItems().iterator();
 		while (lineItemIterator.hasNext()) {
 			LineItemDTO nextLineItemDTO = new LineItemDTO(lineItemIterator.next());
-			this.lineItem.add(nextLineItemDTO);
+			this.lineItems.add(nextLineItemDTO);
 		}
 	}
 
@@ -57,18 +57,18 @@ public class EntryDTO {
 		this.personId = personId;
 	}
 
-	public Set<LineItemDTO> getLineItem() {
-		return lineItem;
+	public Set<LineItemDTO> getLineItems() {
+		return lineItems;
 	}
 
-	public void setLineItem(Set<LineItemDTO> lineItemDTOs) {
-		this.lineItem = lineItemDTOs;
+	public void setLineItems(Set<LineItemDTO> lineItemDTOs) {
+		this.lineItems = lineItemDTOs;
 	}
 
 
 	@Override
 	public String toString() {
-		return "EntryDTO [entryId=" + entryId + ", entryDate=" + entryDate + ", lineItem=" + lineItem + ", personId="
+		return "EntryDTO [entryId=" + entryId + ", entryDate=" + entryDate + ", lineItems=" + lineItems + ", personId="
 				+ personId + "]";
 	}
 
