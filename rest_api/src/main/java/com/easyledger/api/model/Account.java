@@ -1,4 +1,4 @@
-package com.easyledger.api;
+package com.easyledger.api.model;
 
 import java.util.Set;
 

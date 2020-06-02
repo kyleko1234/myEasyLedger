@@ -1,5 +1,11 @@
-package com.easyledger.api;
+package com.easyledger.api.dto;
 
+import com.easyledger.api.model.Account;
+import com.easyledger.api.model.AccountSubtype;
+import com.easyledger.api.model.AccountType;
+import com.easyledger.api.model.Category;
+import com.easyledger.api.model.Entry;
+import com.easyledger.api.model.LineItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -65,6 +71,8 @@ public class LineItemDTO {
     	}
 	}
 
+	public LineItemDTO() {
+	}
 	
 	/** GETTERS AND SETTERS **/
 
@@ -219,8 +227,7 @@ public class LineItemDTO {
 	public void setEntry(Entry entry) {
 		this.entry = entry;
 	}
-
-
+	
 	@Override
 	public String toString() {
 		return "LineItemDTO [lineItemId=" + lineItemId + ", entryId=" + entryId + ", accountId=" + accountId

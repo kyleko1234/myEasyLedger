@@ -1,7 +1,9 @@
-package com.easyledger.api;
+package com.easyledger.api.model;
 
+import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,30 +16,29 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "entry")
+public class Entry {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column
-	private String name;
+	@Column(name = "entry_date")
+	private Date entryDate;
 	
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "entry", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@JsonIgnore
 	private Set<LineItem> lineItems;
 	
 	@ManyToOne
-	@JoinColumn(name = "account_type_id", nullable = false)
-	private AccountType accountType;
+	@JoinColumn(name = "person_id")
+	private Person person;
 	
-	public Category() {
+	public Entry() {
 	}
 
-	public Category(String name) {
-		this.name = name;
+	public Entry(Date entryDate) {
+		this.entryDate = entryDate;
 	}
 
 	public Long getId() {
@@ -48,12 +49,12 @@ public class Category {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public Date getEntryDate() {
+		return entryDate;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setEntryDate(Date entryDate) {
+		this.entryDate = entryDate;
 	}
 
 	public Set<LineItem> getLineItems() {
@@ -64,23 +65,19 @@ public class Category {
 		this.lineItems = lineItems;
 	}
 
-	public AccountType getAccountType() {
-		return accountType;
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setAccountType(AccountType accountType) {
-		this.accountType = accountType;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", lineItems=" + lineItems + ", accountType=" + accountType
-				+ "]";
+		return "Entry [id=" + id + ", entryDate=" + entryDate + ", lineItems=" + lineItems + ", person=" + person + "]";
 	}
-
-
-
-
-
+	
+	
 	
 }

@@ -1,4 +1,4 @@
-package com.easyledger.api;
+package com.easyledger.api.controller;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.easyledger.api.exception.ConflictException;
+import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.model.Person;
+import com.easyledger.api.repository.PersonRepository;
 
 @RestController
 @RequestMapping("/v0.1")

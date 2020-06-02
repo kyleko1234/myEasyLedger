@@ -1,6 +1,5 @@
-package com.easyledger.api;
+package com.easyledger.api.model;
 
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,29 +14,30 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 @Entity
-@Table(name = "entry")
-public class Entry {
+@Table(name = "category")
+public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "entry_date")
-	private Date entryDate;
+	@Column
+	private String name;
 	
-	@OneToMany(mappedBy = "entry")
+	@OneToMany(mappedBy = "category")
 	@JsonIgnore
 	private Set<LineItem> lineItems;
 	
 	@ManyToOne
-	@JoinColumn(name = "person_id")
-	private Person person;
+	@JoinColumn(name = "account_type_id", nullable = false)
+	private AccountType accountType;
 	
-	public Entry() {
+	public Category() {
 	}
 
-	public Entry(Date entryDate) {
-		this.entryDate = entryDate;
+	public Category(String name) {
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -48,12 +48,12 @@ public class Entry {
 		this.id = id;
 	}
 
-	public Date getEntryDate() {
-		return entryDate;
+	public String getName() {
+		return name;
 	}
 
-	public void setEntryDate(Date entryDate) {
-		this.entryDate = entryDate;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Set<LineItem> getLineItems() {
@@ -64,19 +64,23 @@ public class Entry {
 		this.lineItems = lineItems;
 	}
 
-	public Person getPerson() {
-		return person;
+	public AccountType getAccountType() {
+		return accountType;
 	}
 
-	public void setPerson(Person person) {
-		this.person = person;
+	public void setAccountType(AccountType accountType) {
+		this.accountType = accountType;
 	}
 
 	@Override
 	public String toString() {
-		return "Entry [id=" + id + ", entryDate=" + entryDate + ", lineItems=" + lineItems + ", person=" + person + "]";
+		return "Category [id=" + id + ", name=" + name + ", lineItems=" + lineItems + ", accountType=" + accountType
+				+ "]";
 	}
-	
-	
+
+
+
+
+
 	
 }

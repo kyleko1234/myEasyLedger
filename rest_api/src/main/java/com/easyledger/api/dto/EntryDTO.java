@@ -1,10 +1,12 @@
-package com.easyledger.api;
+package com.easyledger.api.dto;
 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.HashSet;
 
+import com.easyledger.api.model.Entry;
+import com.easyledger.api.model.LineItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 //
@@ -29,6 +31,9 @@ public class EntryDTO {
 			LineItemDTO nextLineItemDTO = new LineItemDTO(lineItemIterator.next());
 			this.lineItems.add(nextLineItemDTO);
 		}
+	}
+	
+	public EntryDTO () {
 	}
 
 	/* Getters, Setters, ToString */

@@ -1,4 +1,4 @@
-package com.easyledger.api;
+package com.easyledger.api.controller;
 
 import java.util.List;
 
@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.easyledger.api.dto.LineItemDTO;
+import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.model.LineItem;
+import com.easyledger.api.repository.LineItemRepository;
 
 @RestController
 @RequestMapping("/v0.1")
