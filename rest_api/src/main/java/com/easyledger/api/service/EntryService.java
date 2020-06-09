@@ -1,6 +1,7 @@
 package com.easyledger.api.service;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -37,12 +38,12 @@ public class EntryService {
 	}
 
 	// Creates new Entry entity object from EntryDTO. Does not save the entity to the database.
-	// Will ignore any entryId and lineItemId in the EntryDTO that is passed in. IDs will be automatically generated when objects are saved to database.
+	// Will ignore any lineItemId in the EntryDTO that is passed in. LineItemIds will be automatically generated when objects are saved to database.
 	public Entry createEntryFromDTO (EntryDTO dto) 
 		throws ResourceNotFoundException {
 		Entry product = new Entry();
 		product.setEntryDate(dto.getEntryDate());
-		
+		product.setId(dto.getEntryId());
 		if (dto.getPersonId() != null) {
 			Person person = personRepo.findById(dto.getPersonId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + dto.getPersonId())); 

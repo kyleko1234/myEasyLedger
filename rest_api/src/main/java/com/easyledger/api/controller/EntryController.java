@@ -64,14 +64,14 @@ public class EntryController {
         return ResponseEntity.ok().body(entryDTO);
     }
     
-    /** PUT functions by deleting an old Entry and its LineItems from the database, and replacing them with a new Entry and LineItems
-      * created from the EntryDTO contained in the request body, rather than attempting to use DTO data to edit an existing Entry.
-      * This means an Entry that has been edited using PUT will have a different ID than before, and its LineItems will also have different IDs than before.
-      * PUT will ignore any IDs that are passed in via the DTO, and will automatically generate new IDs instead.
-      * Strictly speaking, this implementation of PUT is not idempotent because the ID of the objects will change every time PUT is called. **/ 		
+    /** PUT overwrites an old Entry with new Entry data, deletes the old LineItems, and repopulates the Entry with new LineItems.
+      * LineItems are deleted and replaced with information from the request body, without regard to whether or not any changes were actually made.
+      * Full Entry information must be sent with each PUT request, including all LineItems. A PUT Entry with a request body that contains no LineItems
+      * will result in an Entry that has no associated LineItems in the DB.
+      * ID of Entry will be preserved, but all lineItemIds will be newly generated, regardless what the lineItemId field in the RequestBody says.**/ 		
     @Transactional(rollbackFor=Exception.class)
     @PutMapping("/entry/{id}")
-    public ResponseEntity<EntryDTO> replaceEntryById(@PathVariable(value = "id") Long id, @RequestBody EntryDTO dto) 
+    public ResponseEntity<EntryDTO> updateEntryById(@PathVariable(value = "id") Long id, @RequestBody EntryDTO dto) 
     	throws ConflictException, ResourceNotFoundException {
     	// Assert URI id is the same as id in the request body.
     	if (!dto.getEntryId().equals(id)) {
@@ -79,25 +79,30 @@ public class EntryController {
     	}
     	
     	//Assert that an entry for this id exists
-    	entryRepo.findById(id)
+    	Entry oldEntry = entryRepo.findById(id)
         	.orElseThrow(() -> new ResourceNotFoundException("Entry not found for this id :: " + id)); 
     	
-    	//Delete entry. Should cascade, so that lineItems within the entry are also deleted.
-    	entryRepo.deleteById(id);
+    	//Delete old LineItems.
+    	Iterator<LineItem> oldLineItemIterator = oldEntry.getLineItems().iterator();
+    	while (oldLineItemIterator.hasNext()) {
+    		lineItemRepo.deleteById(oldLineItemIterator.next().getId());
+    	}
     	
-    	//Replace entry with data from the request body.
-    	Entry entry = entryService.createEntryFromDTO(dto);
+    	//Replace entry with data from the request body. Will create new LineItems to replace old ones.
+    	//Must create a new Entry entity object even if updating an existing entry, otherwise
+    	//Spring will attempt to map the deleted old LineItems to the updated Entry.
+    	Entry updatedEntry = entryService.createEntryFromDTO(dto);
     	
     	//Save Entry and its LineItems. Must save in this order, otherwise will violate not-nullable property.
-    	Iterator<LineItem> lineItems = entry.getLineItems().iterator();
-    	entryRepo.save(entry);
-    	while (lineItems.hasNext()) {
-    		lineItemRepo.save(lineItems.next());
+    	Iterator<LineItem> newLineItemIterator = updatedEntry.getLineItems().iterator();
+    	entryRepo.save(updatedEntry);
+    	while (newLineItemIterator.hasNext()) {
+    		lineItemRepo.save(newLineItemIterator.next());
     	}
     	
     	    
-    	//Return updated entry
-    	EntryDTO newEntryDTO = new EntryDTO(entry);
+    	//Return updated entry.
+    	EntryDTO newEntryDTO = new EntryDTO(updatedEntry);
     	return ResponseEntity.ok().body(newEntryDTO);
 
     }

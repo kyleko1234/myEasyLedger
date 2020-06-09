@@ -1,5 +1,7 @@
 package com.easyledger.api.dto;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
@@ -13,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class EntryDTO {
 
 	private Long entryId;
-	private Date entryDate;
+	private LocalDate entryDate;
 	private Long personId;
 	private Set<LineItemDTO> lineItems;
 
@@ -46,11 +48,11 @@ public class EntryDTO {
 		this.entryId = id;
 	}
 
-	public Date getEntryDate() {
+	public LocalDate getEntryDate() {
 		return entryDate;
 	}
 
-	public void setEntryDate(Date entryDate) {
+	public void setEntryDate(LocalDate entryDate) {
 		this.entryDate = entryDate;
 	}
 	

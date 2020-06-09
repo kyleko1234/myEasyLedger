@@ -1,5 +1,6 @@
 package com.easyledger.api.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public class Entry {
 	private Long id;
 	
 	@Column(name = "entry_date")
-	private Date entryDate;
+	private LocalDate entryDate;
 	
 	@OneToMany(mappedBy = "entry", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@JsonIgnore
@@ -37,7 +38,7 @@ public class Entry {
 	public Entry() {
 	}
 
-	public Entry(Date entryDate) {
+	public Entry(LocalDate entryDate) {
 		this.entryDate = entryDate;
 	}
 
@@ -49,11 +50,11 @@ public class Entry {
 		this.id = id;
 	}
 
-	public Date getEntryDate() {
+	public LocalDate getEntryDate() {
 		return entryDate;
 	}
 
-	public void setEntryDate(Date entryDate) {
+	public void setEntryDate(LocalDate entryDate) {
 		this.entryDate = entryDate;
 	}
 
