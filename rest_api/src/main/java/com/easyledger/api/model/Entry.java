@@ -1,5 +1,6 @@
 package com.easyledger.api.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

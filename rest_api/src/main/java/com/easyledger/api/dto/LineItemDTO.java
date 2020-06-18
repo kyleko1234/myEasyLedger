@@ -1,5 +1,7 @@
 package com.easyledger.api.dto;
 
+import java.math.BigDecimal;
+
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.AccountType;
@@ -33,7 +35,7 @@ public class LineItemDTO {
 	private String accountSubtypeName;
 	private Long accountTypeId;
 	private String accountTypeName;
-	private Double amount;
+	private BigDecimal amount;
 	private Long categoryId;
 	private String categoryName;
 	private String description;
@@ -108,11 +110,11 @@ public class LineItemDTO {
 		this.isCredit = isCredit;
 	}
 
-	public Double getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Double amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 

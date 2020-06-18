@@ -1,6 +1,7 @@
 package com.easyledger.api.service;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -65,4 +66,32 @@ public class EntryService {
 		return product;
 	}
 
+	// Ensures that the total amounts of Credit LineItems in an Entry are equal to the total amounts of Debit LineItems.
+	// Makes a deep copy of the Set of LineItems in an entry, computes total credits and debits, and returns true if equal and false if not.
+	public boolean assertAccountingBalance (Entry entry) {
+		Set<LineItem> lineItems = new HashSet<LineItem>(entry.getLineItems());
+		Iterator<LineItem> lineItemIterator = lineItems.iterator();
+		
+		BigDecimal creditBalance =  new BigDecimal(0);
+		BigDecimal debitBalance = new BigDecimal(0);
+		
+		while (lineItemIterator.hasNext()) {
+			LineItem currentLineItem = lineItemIterator.next();
+			BigDecimal currentAmount = currentLineItem.getAmount();
+			boolean currentIsCredit = currentLineItem.isIsCredit();
+			
+			if (currentIsCredit) {
+				creditBalance = creditBalance.add(currentAmount);
+			} else if (!currentIsCredit) {
+				debitBalance = debitBalance.add(currentAmount);
+			}
+		}
+		
+		if (creditBalance.compareTo(debitBalance) == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

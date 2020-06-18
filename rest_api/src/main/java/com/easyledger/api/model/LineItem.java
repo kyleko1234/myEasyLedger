@@ -1,5 +1,7 @@
 package com.easyledger.api.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +26,7 @@ public class LineItem {
 	private boolean isCredit;
 	
 	@Column(name = "amount", nullable = false)
-	private Double amount;
+	private BigDecimal amount;
 	
 	@Column(name = "description", nullable = true)
 	private String description;
@@ -41,7 +43,7 @@ public class LineItem {
 	@JoinColumn(name = "entry_id", nullable = false)
 	private Entry entry;
 	
-	public LineItem(boolean isCredit, Double amount, String description) {
+	public LineItem(boolean isCredit, BigDecimal amount, String description) {
 		this.isCredit = isCredit;
 		this.amount = amount;
 		this.description = description;
@@ -66,11 +68,11 @@ public class LineItem {
 		this.isCredit = isCredit;
 	}
 
-	public Double getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Double amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
