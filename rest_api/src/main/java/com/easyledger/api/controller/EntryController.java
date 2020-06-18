@@ -93,7 +93,7 @@ public class EntryController {
     	//Spring will attempt to map the deleted old LineItems to the updated Entry.
     	Entry updatedEntry = entryService.createEntryFromDTO(dto);
     	
-    	//Assert updatedEntry fulfills a balanced Universal Accounting Equation
+    	//Assert credits and debits are equal in updatedEntry
     	if (!entryService.assertAccountingBalance(updatedEntry)) {
     		throw new ConflictException("Total debits in this entry are not equal to total credits.");
     	}
