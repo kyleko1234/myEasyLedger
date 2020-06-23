@@ -12,15 +12,18 @@ import java.util.HashMap;
 
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.dto.EntryDTO;
@@ -117,8 +120,6 @@ public class EntryController {
     	if (!entryService.assertAccountingBalance(updatedEntry)) {
     		throw new ConflictException("Total debits in this entry are not equal to total credits.");
     	}
-    
-    	
     	
     	//Save Entry and its LineItems. Must save in this order, otherwise will violate not-nullable property.
     	Iterator<LineItem> newLineItemIterator = updatedEntry.getLineItems().iterator();
@@ -126,11 +127,37 @@ public class EntryController {
     	while (newLineItemIterator.hasNext()) {
     		lineItemRepo.save(newLineItemIterator.next());
     	}
-    	
-    	    
+    		    
     	//Return updated entry.
     	EntryDTO newEntryDTO = new EntryDTO(updatedEntry);
     	return ResponseEntity.ok().body(newEntryDTO);
+
+    }
+
+    @Transactional(rollbackFor=Exception.class)
+    @PostMapping("/entry")
+    @ResponseStatus(HttpStatus.CREATED)
+    public EntryDTO updateEntryById(@RequestBody EntryDTO dto) 
+    	throws ConflictException, ResourceNotFoundException {
+    	
+    	//Create Entry entity object from DTO
+    	Entry updatedEntry = entryService.createEntryFromDTO(dto);
+    	
+    	//Assert credits and debits are equal in updatedEntry
+    	if (!entryService.assertAccountingBalance(updatedEntry)) {
+    		throw new ConflictException("Total debits in this entry are not equal to total credits.");
+    	}
+    	
+    	//Save Entry and its LineItems. Must save in this order, otherwise will violate not-nullable property.
+    	Iterator<LineItem> newLineItemIterator = updatedEntry.getLineItems().iterator();
+    	entryRepo.save(updatedEntry);
+    	while (newLineItemIterator.hasNext()) {
+    		lineItemRepo.save(newLineItemIterator.next());
+    	}
+    		    
+    	//Return updated entry.
+    	EntryDTO newEntryDTO = new EntryDTO(updatedEntry);
+    	return newEntryDTO;
 
     }
 
