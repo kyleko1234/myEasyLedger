@@ -8,12 +8,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -68,6 +70,19 @@ public class EntryController {
     	EntryDTO entryDTO = new EntryDTO(entry);
         return ResponseEntity.ok().body(entryDTO);
     }
+    
+    @DeleteMapping("/entry/{id}")
+    public Map<String, Boolean> deleteEntry(@PathVariable(value = "id") Long entryId)
+         throws ResourceNotFoundException {
+        Entry entry = entryRepo.findById(entryId)
+       .orElseThrow(() -> new ResourceNotFoundException("Entry not found for this id :: " + entryId));
+
+        entryRepo.delete(entry);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
+    }
+    
     
     /** PUT overwrites an old Entry with new Entry data, deletes the old LineItems, and repopulates the Entry with new LineItems.
       * LineItems are deleted and replaced with information from the request body, without regard to whether or not any changes were actually made.
