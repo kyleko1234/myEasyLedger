@@ -78,6 +78,8 @@ public class PersonController {
         	if (k.toString().equals("email")) {
         		assertUniqueEmail(v.toString());
         		person.setEmail(v.toString());
+        	} else if (k.toString().equals("id")) {
+        		throw new ConflictException("Cannot patch id of person object.");
         	} else {
 	        	Field field = ReflectionUtils.findField(Person.class, (String) k);
 	        	ReflectionUtils.makeAccessible(field);

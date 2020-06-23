@@ -50,8 +50,13 @@ public class EntryController {
 
 
 	@GetMapping("/entry")
-    public List<Entry> getAllEntries() {
-        return entryRepo.findAll();
+    public ArrayList<EntryDTO> getAllEntries() {
+        List<Entry> entries = entryRepo.findAll();
+        ArrayList<EntryDTO> entryDtos = new ArrayList<EntryDTO>();
+        for (Entry entry : entries) {
+        	entryDtos.add(new EntryDTO(entry));
+        }
+        return entryDtos;
     }
 
 	
