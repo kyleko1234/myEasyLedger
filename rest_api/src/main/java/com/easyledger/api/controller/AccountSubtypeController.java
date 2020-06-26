@@ -92,6 +92,6 @@ public class AccountSubtypeController {
     private void assertExistingAccountType (AccountSubtype accountSubtype) throws ResourceNotFoundException {
     	Long accountTypeId = accountSubtype.getAccountType().getId();
     	accountTypeRepo.findById(accountTypeId)
-    		.orElseThrow(() -> new ResourceNotFoundException("Account Type not found for this id :: " + accountTypeId));
+    		.orElseThrow(() -> new ResourceNotFoundException("AccountType not found for this id :: " + accountTypeId));
     }
 }

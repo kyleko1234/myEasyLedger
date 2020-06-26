@@ -1,5 +1,6 @@
 package com.easyledger.api.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,50 +20,62 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.CategoryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Category;
 import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.repository.CategoryRepository;
+import com.easyledger.api.service.CategoryService;
 
 @RestController
 @RequestMapping("/v0.1")
 public class CategoryController {
 
 	private CategoryRepository categoryRepo;
+	private CategoryService categoryService;
 	private AccountTypeRepository accountTypeRepo;
 
-    public CategoryController(CategoryRepository categoryRepo, AccountTypeRepository accountTypeRepo) {
+    public CategoryController(CategoryRepository categoryRepo, CategoryService categoryService, AccountTypeRepository accountTypeRepo) {
 		super();
 		this.categoryRepo = categoryRepo;
 		this.accountTypeRepo = accountTypeRepo;
+		this.categoryService = categoryService;
 	}
 
 	@GetMapping("/category")
-    public List<Category> getAllCategories() {
-        return categoryRepo.findAll();
+    public ArrayList<CategoryDTO> getAllCategories() {
+        List<Category> categories = categoryRepo.findAll();
+        ArrayList<CategoryDTO> categoryDtos = new ArrayList<CategoryDTO>();
+        for (Category category : categories) {
+        	categoryDtos.add(new CategoryDTO(category));
+        }
+        return categoryDtos;
     }
 
     @GetMapping("/category/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable(value = "id") Long categoryId)
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable(value = "id") Long categoryId)
         throws ResourceNotFoundException {
         Category category = categoryRepo.findById(categoryId)
           .orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + categoryId));
-        return ResponseEntity.ok().body(category);
+        CategoryDTO dto = new CategoryDTO(category);
+        return ResponseEntity.ok().body(dto);
     }
     
     @PostMapping("/category")
     @ResponseStatus(HttpStatus.CREATED)
-    public Category createCategory(@Valid @RequestBody Category category) 
+    public CategoryDTO createCategory(@Valid @RequestBody CategoryDTO dto) 
     	throws ResourceNotFoundException {
+    	Category category = categoryService.createCategoryFromDTO(dto);
     	assertExistingAccountType(category);
     	final Category updatedCategory = categoryRepo.save(category);
-    	return updatedCategory;
+    	return new CategoryDTO(updatedCategory);
     	}
 
     @PutMapping("/category/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable(value = "id") Long categoryId,
-        @Valid @RequestBody Category categoryDetails) throws ResourceNotFoundException, ConflictException {
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable(value = "id") Long categoryId,
+        @Valid @RequestBody CategoryDTO dto) throws ResourceNotFoundException, ConflictException {
+    	Category categoryDetails = categoryService.createCategoryFromDTO(dto);
         if (!categoryId.equals(categoryDetails.getId())) {
         	throw new ConflictException("Category ID in request body does not match URI.");
         }
@@ -71,7 +84,8 @@ public class CategoryController {
         	.orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + categoryId));
     	assertExistingAccountType(categoryDetails);
     	final Category updatedCategory = categoryRepo.save(categoryDetails);
-        return ResponseEntity.ok(updatedCategory);
+    	CategoryDTO newDto = new CategoryDTO(updatedCategory);
+        return ResponseEntity.ok(newDto);
     }
 
     @DeleteMapping("/category/{id}")

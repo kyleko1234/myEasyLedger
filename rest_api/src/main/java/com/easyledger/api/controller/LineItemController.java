@@ -1,5 +1,6 @@
 package com.easyledger.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,13 @@ public class LineItemController {
 
 
 	@GetMapping("/lineItem")
-    public List<LineItem> getAllLineItems() {
-        return lineItemRepo.findAll();
+    public ArrayList<LineItemDTO> getAllLineItems() {
+		List<LineItem> lineItems = lineItemRepo.findAll();
+		ArrayList<LineItemDTO> lineItemDtos = new ArrayList<LineItemDTO>();
+		for (LineItem lineItem : lineItems) {
+			lineItemDtos.add(new LineItemDTO(lineItem));
+		}
+        return lineItemDtos;
     }
 
 	
