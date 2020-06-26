@@ -81,7 +81,7 @@ public class CategoryController {
         	.orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + categoryId));
 
         if (!category.getLineItems().isEmpty()) {
-        	throw new ConflictException("Please remove LineItems from this category before deleting the category.");
+        	throw new ConflictException("Please remove all LineItems from this category before deleting the category.");
         }
         categoryRepo.delete(category);
         Map<String, Boolean> response = new HashMap<>();
