@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +23,6 @@ import com.easyledger.api.dto.CategoryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Category;
-import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.repository.CategoryRepository;
 import com.easyledger.api.service.CategoryService;
 
@@ -34,12 +32,10 @@ public class CategoryController {
 
 	private CategoryRepository categoryRepo;
 	private CategoryService categoryService;
-	private AccountTypeRepository accountTypeRepo;
 
-    public CategoryController(CategoryRepository categoryRepo, CategoryService categoryService, AccountTypeRepository accountTypeRepo) {
+    public CategoryController(CategoryRepository categoryRepo, CategoryService categoryService) {
 		super();
 		this.categoryRepo = categoryRepo;
-		this.accountTypeRepo = accountTypeRepo;
 		this.categoryService = categoryService;
 	}
 
@@ -67,7 +63,6 @@ public class CategoryController {
     public CategoryDTO createCategory(@Valid @RequestBody CategoryDTO dto) 
     	throws ResourceNotFoundException {
     	Category category = categoryService.createCategoryFromDTO(dto);
-    	assertExistingAccountType(category);
     	final Category updatedCategory = categoryRepo.save(category);
     	return new CategoryDTO(updatedCategory);
     	}
@@ -82,7 +77,6 @@ public class CategoryController {
     	
     	categoryRepo.findById(categoryId)
         	.orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + categoryId));
-    	assertExistingAccountType(categoryDetails);
     	final Category updatedCategory = categoryRepo.save(categoryDetails);
     	CategoryDTO newDto = new CategoryDTO(updatedCategory);
         return ResponseEntity.ok(newDto);
@@ -103,9 +97,4 @@ public class CategoryController {
         return response;
     }
     
-    private void assertExistingAccountType (Category category) throws ResourceNotFoundException {
-    	Long accountTypeId = category.getAccountType().getId();
-    	accountTypeRepo.findById(accountTypeId)
-    		.orElseThrow(() -> new ResourceNotFoundException("Account Type not found for this id :: " + accountTypeId));
-    }
 }

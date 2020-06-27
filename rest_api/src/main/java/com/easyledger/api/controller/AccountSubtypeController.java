@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +23,6 @@ import com.easyledger.api.dto.AccountSubtypeDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.AccountSubtype;
-import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.service.AccountSubtypeService;
 
@@ -34,12 +32,10 @@ public class AccountSubtypeController {
 
 	private AccountSubtypeRepository accountSubtypeRepo;
 	private AccountSubtypeService accountSubtypeService;
-	private AccountTypeRepository accountTypeRepo;
 
-    public AccountSubtypeController(AccountSubtypeRepository accountSubtypeRepo, AccountSubtypeService accountSubtypeService, AccountTypeRepository accountTypeRepo) {
+    public AccountSubtypeController(AccountSubtypeRepository accountSubtypeRepo, AccountSubtypeService accountSubtypeService) {
 		super();
 		this.accountSubtypeRepo = accountSubtypeRepo;
-		this.accountTypeRepo = accountTypeRepo;
 		this.accountSubtypeService = accountSubtypeService;
 	}
 
@@ -67,7 +63,6 @@ public class AccountSubtypeController {
     public AccountSubtypeDTO createAccountSubtype(@Valid @RequestBody AccountSubtypeDTO dto) 
     	throws ResourceNotFoundException {
     	AccountSubtype accountSubtype = accountSubtypeService.createAccountSubtypeFromDTO(dto);
-    	assertExistingAccountType(accountSubtype);
     	final AccountSubtype updatedAccountSubtype = accountSubtypeRepo.save(accountSubtype);
     	return new AccountSubtypeDTO(updatedAccountSubtype);
     	}
@@ -82,7 +77,6 @@ public class AccountSubtypeController {
     	
     	accountSubtypeRepo.findById(accountSubtypeId)
         	.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + accountSubtypeId));
-    	assertExistingAccountType(accountSubtypeDetails);
     	final AccountSubtype updatedAccountSubtype = accountSubtypeRepo.save(accountSubtypeDetails);
     	AccountSubtypeDTO newDto = new AccountSubtypeDTO(updatedAccountSubtype);
         return ResponseEntity.ok(newDto);
@@ -103,9 +97,4 @@ public class AccountSubtypeController {
         return response;
     }
     
-    private void assertExistingAccountType (AccountSubtype accountSubtype) throws ResourceNotFoundException {
-    	Long accountTypeId = accountSubtype.getAccountType().getId();
-    	accountTypeRepo.findById(accountTypeId)
-    		.orElseThrow(() -> new ResourceNotFoundException("Account Type not found for this id :: " + accountTypeId));
-    }
 }

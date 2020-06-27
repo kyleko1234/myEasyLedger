@@ -1,12 +1,12 @@
 package com.easyledger.api.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,66 +19,67 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
-import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.repository.AccountRepository;
-import com.easyledger.api.repository.AccountSubtypeRepository;
-import com.easyledger.api.repository.AccountTypeRepository;
+import com.easyledger.api.service.AccountService;
 
 @RestController
 @RequestMapping("/v0.1")
 public class AccountController {
 
 	private AccountRepository accountRepo;
-	private AccountSubtypeRepository accountSubtypeRepo;
-	private AccountTypeRepository accountTypeRepo;
-
-    public AccountController (AccountRepository accountRepo, AccountSubtypeRepository accountSubtypeRepo,
-    		AccountTypeRepository accountTypeRepo) {
+	private AccountService accountService;
+	
+    public AccountController (AccountRepository accountRepo, AccountService accountService) {
 		super();
 		this.accountRepo = accountRepo;
-		this.accountSubtypeRepo = accountSubtypeRepo;
-		this.accountTypeRepo = accountTypeRepo;
+		this.accountService = accountService;
 	}
 
 	@GetMapping("/account")
-    public List<Account> getAllAccounts() {
-        return accountRepo.findAll();
+    public ArrayList<AccountDTO> getAllAccounts() {
+        List<Account> accounts = accountRepo.findAll();
+        ArrayList<AccountDTO> accountDtos = new ArrayList<AccountDTO>();
+        for (Account account : accounts) {
+        	accountDtos.add(new AccountDTO(account));
+        }
+        return accountDtos;
     }
 
     @GetMapping("/account/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable(value = "id") Long accountId)
+    public ResponseEntity<AccountDTO> getAccountById(@PathVariable(value = "id") Long accountId)
         throws ResourceNotFoundException {
         Account account = accountRepo.findById(accountId)
           .orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-        return ResponseEntity.ok().body(account);
+        AccountDTO dto = new AccountDTO(account);
+        return ResponseEntity.ok().body(dto);
     }
     
     @PostMapping("/account")
     @ResponseStatus(HttpStatus.CREATED)
-    public Account createAccount(@Valid @RequestBody Account account) 
-    	throws ResourceNotFoundException {
-    	assertExistingAccountType(account);
-    	assertExistingAccountSubtype(account);
+    public AccountDTO createAccount(@Valid @RequestBody AccountDTO dto) 
+    	throws ResourceNotFoundException, ConflictException {
+    	Account account = accountService.createAccountFromDTO(dto);
     	final Account updatedAccount = accountRepo.save(account);
-    	return updatedAccount;
+    	return new AccountDTO(updatedAccount);
     	}
 
     @PutMapping("/account/{id}")
-    public ResponseEntity<Account> updateAccount(@PathVariable(value = "id") Long accountId,
-        @Valid @RequestBody Account accountDetails) throws ResourceNotFoundException, ConflictException {
+    public ResponseEntity<AccountDTO> updateAccount(@PathVariable(value = "id") Long accountId,
+        @Valid @RequestBody AccountDTO dto) throws ResourceNotFoundException, ConflictException {
+    	Account accountDetails = accountService.createAccountFromDTO(dto);
         if (!accountId.equals(accountDetails.getId())) {
         	throw new ConflictException("Account ID in request body does not match URI.");
         }
-    	
-    	accountSubtypeRepo.findById(accountId)
+    	accountRepo.findById(accountId)
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-    	assertExistingAccountType(accountDetails);
-    	assertExistingAccountSubtype(accountDetails);
+    	
     	final Account updatedAccount = accountRepo.save(accountDetails);
-        return ResponseEntity.ok(updatedAccount);
+    	AccountDTO updatedDto = new AccountDTO(updatedAccount);
+        return ResponseEntity.ok(updatedDto);
     }
 
     @DeleteMapping("/account/{id}")
@@ -96,17 +97,4 @@ public class AccountController {
         return response;
     }
     
-    private void assertExistingAccountSubtype(Account account) throws ResourceNotFoundException {
-    	Long accountSubtypeId = account.getAccountSubtype().getId();
-    	if (accountSubtypeId != null) {
-    	accountSubtypeRepo.findById(accountSubtypeId)
-    		.orElseThrow(() -> new ResourceNotFoundException("Account Subtype not found for this id :: " + accountSubtypeId));
-    	}
-    }
-    
-    private void assertExistingAccountType (Account account) throws ResourceNotFoundException {
-    	Long accountTypeId = account.getAccountType().getId();
-    	accountTypeRepo.findById(accountTypeId)
-    		.orElseThrow(() -> new ResourceNotFoundException("Account Type not found for this id :: " + accountTypeId));
-    }
 }
