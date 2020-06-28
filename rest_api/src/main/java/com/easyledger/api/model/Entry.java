@@ -37,6 +37,10 @@ public class Entry {
 	@JoinColumn(name = "person_id")
 	private Person person;
 	
+	@ManyToOne
+	@JoinColumn(name = "organization_id")
+	private Organization organization;
+	
 	public Entry() {
 	}
 
@@ -76,9 +80,19 @@ public class Entry {
 		this.person = person;
 	}
 
+	
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
 	@Override
 	public String toString() {
-		return "Entry [id=" + id + ", entryDate=" + entryDate + ", lineItems=" + lineItems + ", person=" + person + "]";
+		return "Entry [id=" + id + ", entryDate=" + entryDate + ", lineItems=" + lineItems + ", person=" + person
+				+ ", organization=" + organization + "]";
 	}
 	
 	

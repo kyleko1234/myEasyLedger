@@ -4,9 +4,11 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,6 +38,9 @@ public class Person {
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
 	private Set<Entry> entries;
+	
+	@ManyToMany(mappedBy = "persons")
+	private Set<Organization> organizations;
 
 	public Person() {
 	}
@@ -47,6 +52,7 @@ public class Person {
 		this.password = password;
 	}
 
+	//Getters, Setters, toString
 	public Long getId() {
 		return id;
 	}
@@ -94,11 +100,19 @@ public class Person {
 	public void setEntries(Set<Entry> entries) {
 		this.entries = entries;
 	}
+	
+	public Set<Organization> getOrganizations() {
+		return organizations;
+	}
+
+	public void setOrganizations(Set<Organization> organizations) {
+		this.organizations = organizations;
+	}
 
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", entries=" + entries + "]";
+				+ ", password=" + password + ", entries=" + entries + ", organizations=" + organizations + "]";
 	}
 	
 	

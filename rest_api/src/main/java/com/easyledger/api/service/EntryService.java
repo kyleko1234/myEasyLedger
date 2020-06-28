@@ -21,7 +21,9 @@ import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Entry;
 import com.easyledger.api.model.LineItem;
+import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
+import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.PersonRepository;
 
 @Service
@@ -30,12 +32,16 @@ public class EntryService {
 	@Autowired
 	private PersonRepository personRepo;
 	
+	@Autowired
+	private OrganizationRepository organizationRepo;
+	
 	private LineItemService lineItemService;
 	
-	public EntryService(PersonRepository personRepo, LineItemService lineItemService) {
+	public EntryService(PersonRepository personRepo, LineItemService lineItemService, OrganizationRepository organizationRepo) {
 		super();
 		this.personRepo = personRepo;
 		this.lineItemService = lineItemService;
+		this.organizationRepo = organizationRepo;
 	}
 
 	// Creates new Entry entity object from EntryDTO. Does not save the entity to the database.
@@ -49,6 +55,11 @@ public class EntryService {
 			Person person = personRepo.findById(dto.getPersonId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + dto.getPersonId())); 
 			product.setPerson(person);
+		}
+		if (dto.getOrganizationId() != null) {
+			Organization organization = organizationRepo.findById(dto.getOrganizationId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getPersonId())); 
+			product.setOrganization(organization);
 		}
 		
     	//Create set of LineItems to insert into this Entry

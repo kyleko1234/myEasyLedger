@@ -17,6 +17,7 @@ public class EntryDTO {
 	private Long entryId;
 	private LocalDate entryDate;
 	private Long personId;
+	private Long organizationId;
 	private Set<LineItemDTO> lineItems;
 
 	
@@ -26,6 +27,7 @@ public class EntryDTO {
 		this.entryDate = entry.getEntryDate();
 		this.lineItems = new HashSet<LineItemDTO>();
 		this.personId = entry.getPerson().getId();
+		this.organizationId= entry.getOrganization().getId();
 		
 		/* Iterates over entry.getLineItems(), converting LineItems into LineItemDTOs and adding them to this.LineItemDTOs */
 		Iterator<LineItem> lineItemIterator = entry.getLineItems().iterator();
@@ -72,6 +74,13 @@ public class EntryDTO {
 		this.lineItems = lineItemDTOs;
 	}
 
+	public Long getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
+	}
 
 	@Override
 	public String toString() {
