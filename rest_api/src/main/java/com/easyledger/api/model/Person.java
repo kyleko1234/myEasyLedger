@@ -86,6 +86,9 @@ public class Person {
 	}
 	
 	public String getPassword() {
+		if (password == null) {
+			return null;
+		}
 		return "*******";
 	}
 
