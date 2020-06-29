@@ -139,6 +139,10 @@ public class EntryController {
     @ResponseStatus(HttpStatus.CREATED)
     public EntryDTO updateEntryById(@RequestBody EntryDTO dto) 
     	throws ConflictException, ResourceNotFoundException {
+    
+    	if (dto.getEntryId() != null) {
+    		throw new ConflictException("Please do not attempt to manually create an EntryId.");
+    	}
     	
     	//Create Entry entity object from DTO
     	Entry updatedEntry = entryService.createEntryFromDTO(dto);

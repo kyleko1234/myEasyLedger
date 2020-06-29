@@ -62,6 +62,9 @@ public class AccountController {
     @ResponseStatus(HttpStatus.CREATED)
     public AccountDTO createAccount(@Valid @RequestBody AccountDTO dto) 
     	throws ResourceNotFoundException, ConflictException {
+    	if (dto.getAccountId() != null) {
+    		throw new ConflictException("Please do not attempt to manually create an account id.");
+    	}
     	Account account = accountService.createAccountFromDTO(dto);
     	final Account updatedAccount = accountRepo.save(account);
     	return new AccountDTO(updatedAccount);

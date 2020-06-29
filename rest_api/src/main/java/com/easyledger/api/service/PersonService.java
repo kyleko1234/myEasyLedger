@@ -69,19 +69,18 @@ public class PersonService {
         			break;
         			
         		case "organizationIds":
-        			HashSet<Organization> organizations = new HashSet<Organization>();
+        			person.removeOrganizations();
         			if (v != null) {
         				//Json's list of int is automatically parsed as ArrayList<Integer> by Spring
 	        			ArrayList<Integer> organizationIds = (ArrayList<Integer>) v;
 	        			for (Integer organizationId : organizationIds) {
 	        				//cast Integer to Long
 	        				Long id = Long.valueOf(organizationId.longValue());
-	        				organizations.add(organizationRepo.findById(id)
+	        				person.addOrganization(organizationRepo.findById(id)
 	            					.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId.toString())));
 	            			}
         			}
-        			person.setOrganizations(organizations);
-        			break;	
+        			break;
         	}
         	
         }

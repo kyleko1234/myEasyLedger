@@ -61,7 +61,10 @@ public class AccountSubtypeController {
     @PostMapping("/accountSubtype")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountSubtypeDTO createAccountSubtype(@Valid @RequestBody AccountSubtypeDTO dto) 
-    	throws ResourceNotFoundException {
+    	throws ResourceNotFoundException, ConflictException {
+    	if (dto.getAccountSubtypeId() != null) {
+    		throw new ConflictException("Please do not attempt to manually create an accountSubtypeId.");
+    	}
     	AccountSubtype accountSubtype = accountSubtypeService.createAccountSubtypeFromDTO(dto);
     	final AccountSubtype updatedAccountSubtype = accountSubtypeRepo.save(accountSubtype);
     	return new AccountSubtypeDTO(updatedAccountSubtype);

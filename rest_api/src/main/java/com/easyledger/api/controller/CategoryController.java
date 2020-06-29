@@ -61,7 +61,10 @@ public class CategoryController {
     @PostMapping("/category")
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryDTO createCategory(@Valid @RequestBody CategoryDTO dto) 
-    	throws ResourceNotFoundException {
+    	throws ResourceNotFoundException, ConflictException {
+    	if (dto.getCategoryId() != null) {
+    		throw new ConflictException("Please do not attempt to manually generate a categoryId.");
+    	}
     	Category category = categoryService.createCategoryFromDTO(dto);
     	final Category updatedCategory = categoryRepo.save(category);
     	return new CategoryDTO(updatedCategory);

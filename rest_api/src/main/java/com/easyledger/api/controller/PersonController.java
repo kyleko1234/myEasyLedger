@@ -1,6 +1,7 @@
 package com.easyledger.api.controller;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,13 +45,18 @@ public class PersonController {
 
 
 	@GetMapping("/person")
-    public List<Person> getAllPersons() {
-        return personRepo.findAll();
+    public ArrayList<PersonDTO> getAllPersons() {
+		ArrayList<PersonDTO> dtos = new ArrayList<PersonDTO>();
+        List<Person> persons = personRepo.findAll();
+        for (Person person : persons) {
+        	dtos.add(new PersonDTO(person));
+        }
+        return dtos;
     }
 
 	
     @GetMapping("/person/{id}")
-    public ResponseEntity<PersonDTO> getPersonId(@PathVariable(value = "id") Long personId)
+    public ResponseEntity<PersonDTO> getPersonById(@PathVariable(value = "id") Long personId)
         throws ResourceNotFoundException {
     	Person person = personRepo.findById(personId)
     		.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + personId)); 
@@ -66,7 +72,9 @@ public class PersonController {
     	Person person = new Person();
         personService.updatePerson(person, fields);
         personService.assertCompletePerson(person);
-        
+        if (person.getId() != null) {
+        	throw new ConflictException("Please do not attempt to manually create a personId.");
+        }
     	final Person updatedPerson = personRepo.save(person);
     	PersonDTO dto = new PersonDTO(updatedPerson);
     	return ResponseEntity.ok(dto);

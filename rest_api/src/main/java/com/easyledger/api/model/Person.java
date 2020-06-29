@@ -1,13 +1,17 @@
 package com.easyledger.api.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -39,10 +43,15 @@ public class Person {
 	@JsonIgnore
 	private Set<Entry> entries;
 	
-	@ManyToMany(mappedBy = "persons")
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(
+			name = "organization_person",
+			joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"))
 	private Set<Organization> organizations;
 
 	public Person() {
+		this.organizations = new HashSet<Organization>();
 	}
 	
 	public Person(String firstName, String lastName, String email, String password) {
@@ -50,6 +59,24 @@ public class Person {
 		this.lastName = lastName;
 		this.email = email.toLowerCase().trim();
 		this.password = password;
+		this.organizations = new HashSet<Organization>();
+	}
+	
+	//Add and Remove organizations
+	public void addOrganization(Organization organization) {
+		this.organizations.add(organization);
+		organization.getPersons().add(this);
+	}
+	
+	public void removeOrganization(Organization organization) {
+		this.organizations.remove(organization);
+		organization.getPersons().remove(this);
+	}
+	
+	public void removeOrganizations() {
+		for (Organization organization : new HashSet<>(organizations)) {
+			removeOrganization(organization);
+		}
 	}
 
 	//Getters, Setters, toString

@@ -1,7 +1,9 @@
 package com.easyledger.api.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,11 +28,7 @@ public class Organization {
 	@Column(name = "name")
 	private String name;
 
-	@ManyToMany
-	@JoinTable(
-			name = "organization_person",
-			joinColumns = @JoinColumn(name = "organization_id"),
-			inverseJoinColumns = @JoinColumn(name = "person_id"))
+	@ManyToMany(mappedBy = "organizations")
 	@JsonIgnore
 	private Set<Person> persons;
 
@@ -44,7 +42,8 @@ public class Organization {
 	
 	public Organization() {
 	}
-
+	
+	
 	//Getters, Setters, toString
 	public Long getId() {
 		return id;
@@ -69,10 +68,19 @@ public class Organization {
 	public void setPersons(Set<Person> persons) {
 		this.persons = persons;
 	}
+	
+
+	public Set<Entry> getEntries() {
+		return entries;
+	}
+
+	public void setEntries(Set<Entry> entries) {
+		this.entries = entries;
+	}
 
 	@Override
 	public String toString() {
-		return "Organization [id=" + id + ", name=" + name + ", persons=" + persons + "]";
+		return "Organization [id=" + id + ", name=" + name + ", persons=" + persons + ", entries=" + entries + "]";
 	}
 	
 
