@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -20,9 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.EntryDTO;
+import com.easyledger.api.dto.PersonDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.AccountSubtype;
+import com.easyledger.api.model.Entry;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.repository.OrganizationRepository;
@@ -50,6 +54,33 @@ public class OrganizationController {
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId)); 
 		return ResponseEntity.ok(organization);
 	}
+	
+	@GetMapping("/organization/{id}/person")
+	public HashSet<PersonDTO> getPersonsInOrganization(@PathVariable(value = "id") Long organizationId) 
+		throws ResourceNotFoundException{
+		Organization organization = organizationRepo.findById(organizationId)
+	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId)); 
+		HashSet<Person> persons = new HashSet<Person>(organization.getPersons());
+		HashSet<PersonDTO> dtos = new HashSet<PersonDTO>();
+		for (Person person : persons) {
+			dtos.add(new PersonDTO(person));
+		}
+		return dtos;
+	}
+	
+	@GetMapping("/organization/{id}/entry")
+	public HashSet<EntryDTO> getEntriesForOrganization(@PathVariable(value = "id") Long organizationId) 
+		throws ResourceNotFoundException{
+		Organization organization = organizationRepo.findById(organizationId)
+	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId)); 
+		HashSet<Entry> entries = new HashSet<Entry>(organization.getEntries());
+		HashSet<EntryDTO> dtos = new HashSet<EntryDTO>();
+		for (Entry entry : entries) {
+			dtos.add(new EntryDTO(entry));
+		}
+		return dtos;
+	}
+	
 	
 	@PostMapping("/organization")
     @ResponseStatus(HttpStatus.CREATED)
