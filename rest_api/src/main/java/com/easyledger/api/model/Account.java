@@ -1,5 +1,6 @@
 package com.easyledger.api.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -37,10 +38,12 @@ public class Account {
 	private AccountType accountType;
 	
 	public Account() {
+		this.lineItems = new HashSet<LineItem>();
 	}
 
 	public Account(String name) {
 		this.name = name;
+		this.lineItems = new HashSet<LineItem>();
 	}
 
 	public Long getId() {
@@ -73,6 +76,7 @@ public class Account {
 
 	public void setAccountSubtype(AccountSubtype accountSubtype) {
 		this.accountSubtype = accountSubtype;
+		accountSubtype.getAccounts().add(this);
 	}
 
 	public AccountType getAccountType() {
@@ -81,6 +85,7 @@ public class Account {
 
 	public void setAccountType(AccountType accountType) {
 		this.accountType = accountType;
+		accountType.getAccounts().add(this);
 	}
 
 	@Override

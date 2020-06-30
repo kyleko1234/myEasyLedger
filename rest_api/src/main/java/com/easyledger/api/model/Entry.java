@@ -3,6 +3,7 @@ package com.easyledger.api.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -42,10 +43,12 @@ public class Entry {
 	private Organization organization;
 	
 	public Entry() {
+		this.lineItems = new HashSet<LineItem>();
 	}
 
 	public Entry(LocalDate entryDate) {
 		this.entryDate = entryDate;
+		this.lineItems = new HashSet<LineItem>();
 	}
 
 	public Long getId() {
@@ -78,6 +81,7 @@ public class Entry {
 
 	public void setPerson(Person person) {
 		this.person = person;
+		person.getEntries().add(this);
 	}
 
 	
@@ -87,6 +91,7 @@ public class Entry {
 
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
+		organization.getEntries().add(this);
 	}
 
 	@Override

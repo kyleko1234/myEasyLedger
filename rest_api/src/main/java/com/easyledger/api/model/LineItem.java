@@ -98,6 +98,7 @@ public class LineItem {
 
 	public void setCategory(Category category) {
 		this.category = category;
+		category.getLineItems().add(this);
 	}
 
 	public Entry getEntry() {
@@ -106,6 +107,7 @@ public class LineItem {
 
 	public void setEntry(Entry entry) {
 		this.entry = entry;
+		entry.getLineItems().add(this);
 	}
 
 	@Override

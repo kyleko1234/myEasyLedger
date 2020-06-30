@@ -58,7 +58,7 @@ public class EntryService {
 		}
 		if (dto.getOrganizationId() != null) {
 			Organization organization = organizationRepo.findById(dto.getOrganizationId())
-		    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getPersonId())); 
+		    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId())); 
 			product.setOrganization(organization);
 		}
 		
