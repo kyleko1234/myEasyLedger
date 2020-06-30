@@ -62,17 +62,12 @@ public class EntryService {
 			product.setOrganization(organization);
 		}
 		
-    	//Create set of LineItems to insert into this Entry
-		HashSet<LineItem> lineItems = new HashSet<LineItem>();
 		//Create Iterator to iterate through the Set<LineItemDTO> contained in dto
 		Iterator<LineItemDTO> lineItemDtoIterator = dto.getLineItems().iterator();
 		//Create LineItem for each LineItemDTO, and insert into set of LineItems
     	while (lineItemDtoIterator.hasNext()) {
-    		LineItem lineItem = lineItemService.createLineItemFromDTO(lineItemDtoIterator.next(), product);
-    		lineItems.add(lineItem);
+    		lineItemService.createLineItemFromDTO(lineItemDtoIterator.next(), product);
     	}
-    	//Insert set of LineItems into Entry
-    	product.setLineItems(lineItems);
     	
 		return product;
 	}
