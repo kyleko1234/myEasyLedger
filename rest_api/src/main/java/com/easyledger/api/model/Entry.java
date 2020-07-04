@@ -4,11 +4,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.easyledger.api.dto.EntryDTO;
+import com.easyledger.api.dto.LineItemDTO;
+import com.easyledger.api.service.LineItemService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -30,8 +35,9 @@ public class Entry {
 	@Column(name = "entry_date")
 	private LocalDate entryDate;
 	
-	@OneToMany(mappedBy = "entry", cascade = CascadeType.REMOVE, orphanRemoval = true)
-	@JsonIgnore
+	@OneToMany(	mappedBy = "entry",
+				cascade = CascadeType.REMOVE,
+				orphanRemoval = true)
 	private Set<LineItem> lineItems;
 	
 	@ManyToOne
@@ -93,7 +99,19 @@ public class Entry {
 		this.organization = organization;
 		organization.getEntries().add(this);
 	}
-
+	public EntryDTO toDTO() {
+		EntryDTO dto = new EntryDTO();
+		dto.setEntryId(id);
+		dto.setEntryDate(entryDate);
+		dto.setOrganizationId(organization.getId());
+		dto.setPersonId(person.getId());
+		Iterator<LineItem> lineItemIterator = lineItems.iterator();
+		while (lineItemIterator.hasNext()) {
+			dto.getLineItems().add(new LineItemDTO(lineItemIterator.next()));
+		}
+		return dto;
+		
+	}
 	@Override
 	public String toString() {
 		return "Entry [id=" + id + ", entryDate=" + entryDate + ", lineItems=" + lineItems + ", person=" + person

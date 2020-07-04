@@ -40,6 +40,7 @@ public class LineItem {
 	private Category category;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "entry_id", nullable = false)
 	private Entry entry;
 	

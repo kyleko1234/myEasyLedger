@@ -34,10 +34,11 @@ public class EntryDTO {
 		while (lineItemIterator.hasNext()) {
 			LineItemDTO nextLineItemDTO = new LineItemDTO(lineItemIterator.next());
 			this.lineItems.add(nextLineItemDTO);
-		}
+		} 
 	}
 	
 	public EntryDTO () {
+		this.lineItems = new HashSet<LineItemDTO>();
 	}
 
 	/* Getters, Setters, ToString */

@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.AccountSubtypeDTO;
 import com.easyledger.api.dto.CategoryDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.AccountType;
 import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.model.Category;
@@ -48,6 +50,19 @@ public class AccountTypeController {
         HashSet<CategoryDTO> dtos = new HashSet<CategoryDTO>();
         for (Category category : categories) {
         	dtos.add(new CategoryDTO(category));
+        }
+        return dtos;
+    }
+    
+    @GetMapping("/accountType/{id}/accountSubtype")
+    public HashSet<AccountSubtypeDTO> getAllSubtypesForAccountType(@PathVariable(value = "id") Long accountTypeId) 
+    	throws ResourceNotFoundException {
+        AccountType accountType = accountTypeRepo.findById(accountTypeId)
+                .orElseThrow(() -> new ResourceNotFoundException("AccountType not found for this id :: " + accountTypeId));
+        HashSet<AccountSubtype> subtypes = new HashSet<AccountSubtype>(accountType.getAccountSubtypes());
+        HashSet<AccountSubtypeDTO> dtos = new HashSet<AccountSubtypeDTO>();
+        for (AccountSubtype subtype : subtypes) {
+        	dtos.add(new AccountSubtypeDTO(subtype));
         }
         return dtos;
     }
