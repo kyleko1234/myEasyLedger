@@ -1,0 +1,49 @@
+@mixin helper-color($color, $value) {
+  .text-#{$color} {
+  	color: $value !important;
+  }
+  .text-#{$color}-lighter {
+  	color: mix($white, $value, 25%) !important;
+  }
+  .text-#{$color}-darker {
+  	color: mix($black, $value, 25%) !important;
+  }
+  .bg-#{$color} {
+  	background-color: $value !important;
+  }
+  .bg-#{$color}-lighter {
+  	background-color: mix($white, $value, 25%) !important;
+  }
+  .bg-#{$color}-darker {
+  	background-color: mix($black, $value, 25%) !important;
+  }
+  .bg-gradient-#{$color} {
+		background: $value !important;
+		background: -moz-linear-gradient(to bottom, lighten($value, 10%) 0%, darken($value, 5%) 100%) !important;
+		background: -webkit-linear-gradient(to bottom, lighten($value, 10%) 0%, darken($value, 5%) 100%) !important;
+		background: linear-gradient(to bottom, lighten($value, 10%) 0%, darken($value, 5%) 100%) !important;
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='lighten($value, 10%)', endColorstr='darken($value, 5%)',GradientType=0 ) !important;
+  }
+	.app-theme-#{$color} {
+		& .app-sidebar .nav > li.active > a {
+			background-color: $value !important;
+		}
+	}
+	.app-theme-gradient-#{$color} {
+		& .app-sidebar .nav > li.active > a {
+			background: $value !important;
+			background: -moz-linear-gradient(to bottom, lighten($value, 10%) 0%, darken($value, 5%) 100%) !important;
+			background: -webkit-linear-gradient(to bottom, lighten($value, 10%) 0%, darken($value, 5%) 100%) !important;
+			background: linear-gradient(to bottom, lighten($value, 10%) 0%, darken($value, 5%) 100%) !important;
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='lighten($value, 10%)', endColorstr='darken($value, 5%)',GradientType=0 ) !important;
+		}
+	}
+  @for $i from 1 through 9 {
+  	.bg-#{$color}-transparent-#{$i} {
+  		background-color: rgba($value, ($i/10)) !important;
+  	}
+  	.text-#{$color}-transparent-#{$i} {
+  		color: rgba($value, ($i/10)) !important;
+  	}
+  }
+}
