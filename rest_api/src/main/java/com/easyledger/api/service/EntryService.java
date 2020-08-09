@@ -50,6 +50,7 @@ public class EntryService {
 		throws ResourceNotFoundException {
 		Entry product = new Entry();
 		product.setEntryDate(dto.getEntryDate());
+		product.setDescription(dto.getDescription());
 		product.setId(dto.getEntryId());
 		if (dto.getPersonId() != null) {
 			Person person = personRepo.findById(dto.getPersonId())

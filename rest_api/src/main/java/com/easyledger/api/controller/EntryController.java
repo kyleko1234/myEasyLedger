@@ -97,7 +97,7 @@ public class EntryController {
     public ResponseEntity<EntryDTO> updateEntryById(@PathVariable(value = "id") Long id, @RequestBody EntryDTO dto) 
     	throws ConflictException, ResourceNotFoundException {
     	// Assert URI id is the same as id in the request body.
-    	if (!dto.getEntryId().equals(id)) {
+    	if (dto.getEntryId() == null || !dto.getEntryId().equals(id)) {
     		throw new ConflictException("Entry ID in request body does not match URI.");
     	}
     	
@@ -137,7 +137,7 @@ public class EntryController {
     @Transactional(rollbackFor=Exception.class)
     @PostMapping("/entry")
     @ResponseStatus(HttpStatus.CREATED)
-    public EntryDTO updateEntryById(@RequestBody EntryDTO dto) 
+    public EntryDTO createEntryById(@RequestBody EntryDTO dto) 
     	throws ConflictException, ResourceNotFoundException {
     
     	if (dto.getEntryId() != null) {

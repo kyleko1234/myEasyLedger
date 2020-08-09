@@ -16,6 +16,7 @@ public class EntryDTO {
 
 	private Long entryId;
 	private LocalDate entryDate;
+	private String description;
 	private Long personId;
 	private Long organizationId;
 	private Set<LineItemDTO> lineItems;
@@ -25,6 +26,7 @@ public class EntryDTO {
 		
 		this.entryId = entry.getId();
 		this.entryDate = entry.getEntryDate();
+		this.description = entry.getDescription();
 		this.lineItems = new HashSet<LineItemDTO>();
 		this.personId = entry.getPerson().getId();
 		this.organizationId= entry.getOrganization().getId();
@@ -59,6 +61,14 @@ public class EntryDTO {
 		this.entryDate = entryDate;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public Long getPersonId() {
 		return personId;
 	}
@@ -85,8 +95,8 @@ public class EntryDTO {
 
 	@Override
 	public String toString() {
-		return "EntryDTO [entryId=" + entryId + ", entryDate=" + entryDate + ", lineItems=" + lineItems + ", personId="
-				+ personId + "]";
+		return "EntryDTO [entryId=" + entryId + ", entryDate=" + entryDate + ", description=" + description
+				+ ", personId=" + personId + ", organizationId=" + organizationId + ", lineItems=" + lineItems + "]";
 	}
 
 

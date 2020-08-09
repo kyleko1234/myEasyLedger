@@ -35,6 +35,9 @@ public class Entry {
 	@Column(name = "entry_date")
 	private LocalDate entryDate;
 	
+	@Column(name= "description")
+	private String description;
+	
 	@OneToMany(	mappedBy = "entry",
 				cascade = CascadeType.REMOVE,
 				orphanRemoval = true)
@@ -69,8 +72,18 @@ public class Entry {
 		return entryDate;
 	}
 
+
 	public void setEntryDate(LocalDate entryDate) {
 		this.entryDate = entryDate;
+	}
+	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Set<LineItem> getLineItems() {
@@ -99,23 +112,11 @@ public class Entry {
 		this.organization = organization;
 		organization.getEntries().add(this);
 	}
-	public EntryDTO toDTO() {
-		EntryDTO dto = new EntryDTO();
-		dto.setEntryId(id);
-		dto.setEntryDate(entryDate);
-		dto.setOrganizationId(organization.getId());
-		dto.setPersonId(person.getId());
-		Iterator<LineItem> lineItemIterator = lineItems.iterator();
-		while (lineItemIterator.hasNext()) {
-			dto.getLineItems().add(new LineItemDTO(lineItemIterator.next()));
-		}
-		return dto;
-		
-	}
+
 	@Override
 	public String toString() {
-		return "Entry [id=" + id + ", entryDate=" + entryDate + ", lineItems=" + lineItems + ", person=" + person
-				+ ", organization=" + organization + "]";
+		return "Entry [id=" + id + ", entryDate=" + entryDate + ", description=" + description + ", lineItems="
+				+ lineItems + ", person=" + person + ", organization=" + organization + "]";
 	}
 	
 	
