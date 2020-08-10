@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,14 +18,47 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.easyledger.api.dto.EntryDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.service.LineItemService;
+import com.easyledger.api.viewmodel.EntryViewModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+@SqlResultSetMapping( //maps native SQL query to EntryViewModel class
+		name = "entryViewModelMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = EntryViewModel.class,
+						columns = {
+								@ColumnResult(name = "entryId"),
+								@ColumnResult(name = "entryDate"),
+								@ColumnResult(name = "description"),
+								@ColumnResult(name = "debitAmount"),
+								@ColumnResult(name = "creditAmount")
+						}
+				)
+		}
+)	
+@NamedNativeQuery( //retrieves all entries and maps them into EntryViewModels
+	name = "Entry.getAllEntryViewModels",
+	query = "SELECT entry_id AS entryId, "
+				+ "entry_date AS entryDate, "
+				+ "entry.description AS description, "
+				+ "sum(CASE line_item.is_credit WHEN false THEN line_item.amount END) AS debitAmount, "
+				+ "sum(CASE line_item.is_credit WHEN true THEN line_item.amount END) AS creditAmount "
+			+ "FROM entry,line_item WHERE line_item.entry_id = entry.id "
+			+ "GROUP BY entry_id, entry_date, entry.description "
+			+ "ORDER BY entry_date DESC "
+			+ "OFFSET :offset LIMIT :limit",
+	resultSetMapping = "entryViewModelMapping"
+)	
 
 @Entity
 @Table(name = "entry")

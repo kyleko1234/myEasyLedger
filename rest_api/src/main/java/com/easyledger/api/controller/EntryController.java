@@ -36,6 +36,7 @@ import com.easyledger.api.repository.EntryRepository;
 import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.service.EntryService;
 import com.easyledger.api.service.LineItemService;
+import com.easyledger.api.viewmodel.EntryViewModel;
 
 @RestController
 @CrossOrigin("*")
@@ -65,6 +66,45 @@ public class EntryController {
         }
         return entryDtos;
     }
+	
+	@GetMapping("/entryViewModel")
+	public List<EntryViewModel> getAllEntryViewModels(@RequestBody Map<String, Integer> params) 
+		throws ConflictException {
+		Integer pageNumber = null;
+		Integer entriesPerPage = null;
+		Integer offset = null;
+		Integer limit = null;
+		
+		//this syntax is incredibly confusing to read; within this loop 'entry' refers to each key-value pair in the json request body
+        for (Map.Entry<String, Integer> entry : params.entrySet()) {
+        	String k = entry.getKey();
+        	Integer v = entry.getValue();
+        	switch (k) {
+        		case "pageNumber":
+        			pageNumber = v;
+        			break;
+        			
+        		case "entriesPerPage":
+        			entriesPerPage = v;
+        			break;
+        	}
+        }
+        
+        if (pageNumber == null || entriesPerPage == null) {
+        	throw new ConflictException("Missing parameters. pageNumber and entriesPerPage both required.");
+        }
+        if (pageNumber <= 0) {
+        	throw new ConflictException("Page number must be a positive number");
+        }
+        if (entriesPerPage <= 0) {
+        	throw new ConflictException("Must request at least one entry per page");
+        }
+        
+        offset = (pageNumber - 1) * entriesPerPage;
+        limit = entriesPerPage;
+        
+		return entryRepo.getAllEntryViewModels(offset, limit);
+	}
 
 	
     @GetMapping("/entry/{id}")
