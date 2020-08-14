@@ -12,6 +12,11 @@ import java.util.HashMap;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,43 +72,10 @@ public class EntryController {
         return entryDtos;
     }
 	
-	@GetMapping("/entryViewModel")
-	public List<EntryViewModel> getAllEntryViewModels(@RequestBody Map<String, Integer> params) 
-		throws ConflictException {
-		Integer pageNumber = null;
-		Integer entriesPerPage = null;
-		Integer offset = null;
-		Integer limit = null;
-		
-		//this syntax is incredibly confusing to read; within this loop 'entry' refers to each key-value pair in the json request body
-        for (Map.Entry<String, Integer> entry : params.entrySet()) {
-        	String k = entry.getKey();
-        	Integer v = entry.getValue();
-        	switch (k) {
-        		case "pageNumber":
-        			pageNumber = v;
-        			break;
-        			
-        		case "entriesPerPage":
-        			entriesPerPage = v;
-        			break;
-        	}
-        }
-        
-        if (pageNumber == null || entriesPerPage == null) {
-        	throw new ConflictException("Missing parameters. pageNumber and entriesPerPage both required.");
-        }
-        if (pageNumber <= 0) {
-        	throw new ConflictException("Page number must be a positive number");
-        }
-        if (entriesPerPage <= 0) {
-        	throw new ConflictException("Must request at least one entry per page");
-        }
-        
-        offset = (pageNumber - 1) * entriesPerPage;
-        limit = entriesPerPage;
-        
-		return entryRepo.getAllEntryViewModels(offset, limit);
+	@GetMapping(path = "/entryViewModel")
+	public Page<EntryViewModel> getAllEntryViewModels(Pageable pageable)  {
+		Page<EntryViewModel> entryViewModels = entryRepo.getAllEntryViewModels(pageable);
+		return entryRepo.getAllEntryViewModels(pageable);
 	}
 
 	

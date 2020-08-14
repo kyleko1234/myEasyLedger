@@ -47,18 +47,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		}
 )	
 @NamedNativeQuery( //retrieves all entries and maps them into EntryViewModels
-	name = "Entry.getAllEntryViewModels",
-	query = "SELECT entry_id AS entryId, "
-				+ "entry_date AS entryDate, "
-				+ "entry.description AS description, "
-				+ "sum(CASE line_item.is_credit WHEN false THEN line_item.amount END) AS debitAmount, "
-				+ "sum(CASE line_item.is_credit WHEN true THEN line_item.amount END) AS creditAmount "
-			+ "FROM entry,line_item WHERE line_item.entry_id = entry.id "
-			+ "GROUP BY entry_id, entry_date, entry.description "
-			+ "ORDER BY entry_date DESC "
-			+ "OFFSET :offset LIMIT :limit",
-	resultSetMapping = "entryViewModelMapping"
-)	
+		name = "Entry.getAllEntryViewModels",
+		query = "SELECT entry_id AS entryId, "
+					+ "entry_date AS entryDate, "
+					+ "entry.description AS description, "
+					+ "sum(CASE line_item.is_credit WHEN false THEN line_item.amount END) AS debitAmount, "
+					+ "sum(CASE line_item.is_credit WHEN true THEN line_item.amount END) AS creditAmount "
+				+ "FROM entry,line_item WHERE line_item.entry_id = entry.id "
+				+ "GROUP BY entry_id, entry_date, entry.description "
+				+ "ORDER BY entry_date DESC ",
+		resultSetMapping = "entryViewModelMapping"
+)
+@SqlResultSetMapping(//sqlresultsetmapping for counting query
+		name = "SqlResultSetMapping.count",
+		columns = @ColumnResult(name = "count"))
+
+@NamedNativeQuery( //query to count number of entries in order to use Pageable on Entry.getAllEntryViewModels
+		name = "Entry.getAllEntryViewModels.count",
+		query = "SELECT count(*) AS count from entry",
+		resultSetMapping = "SqlResultSetMapping.count"
+)
+
 
 @Entity
 @Table(name = "entry")

@@ -61,7 +61,7 @@ import LoginV3 from './../pages/user/login-v3.js';
 import RegisterV3 from './../pages/user/register-v3.js';
 import HelperCSS from './../pages/helper/helper-css.js';
 
-import Ledger from './../pages/ledger/ledger.js';
+import Journals from './../pages/journals/journals.js';
 
 const routes = [
   {
@@ -366,9 +366,9 @@ const routes = [
     component: () => <HelperCSS />,
   },
   {
-    path: '/ledger',
-    title: 'Ledger',
-    component: () => <Ledger />,
+    path: '/journals',
+    title: 'Journals',
+    component: () => <Journals />,
   }
 ];
 

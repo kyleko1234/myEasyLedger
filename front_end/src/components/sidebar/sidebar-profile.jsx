@@ -32,8 +32,8 @@ class SidebarProfile extends React.Component {
 								</div>
 								<div className="info">
 									<b className="caret pull-right"></b>
-									Sean Ngu
-									<small>Front end developer</small>
+									Easy Ledger
+									<small>Easy Accounting</small>
 								</div>
 							</Link>
 						</li>

@@ -43,7 +43,7 @@ const Menu = [
       { path: '/table/data', title: 'Data Tables' }
     ]
   },
-  { path: '/ledger', icon: 'fa fa-list-ol', title: 'Ledger' },
+  { path: '/journals', icon: 'fa fa-list-ol', title: 'Journals' },
 /*  { path: '/frontend', icon: 'fa fa-star', title: 'FrontEnd',
     children: [
       { path: '/frontend/one-page-parallax', title: 'One Page Parallax' },
