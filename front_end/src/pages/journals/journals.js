@@ -1,10 +1,8 @@
 import React from 'react';
 import namor from "namor";
-import ReactTable from 'react-table';
 import { Link } from 'react-router-dom';
 import { Panel, PanelHeader } from '../../components/panel/panel.jsx';
-import LineItemTable from '../../components/table/line-item-table'
-import 'react-table/react-table.css';
+import JournalTable from '../../components/table/journal-table'
 import axios from 'axios';
 
 
@@ -15,19 +13,22 @@ class Journals extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-            lineItems: []
+			data: []
         };
 		
 	}
     
     componentDidMount() {
-        const url = `${API_URL}/lineItem/`;
+        const url = `${API_URL}/entryViewModel/`;
         axios.get(url).then(response => {
-            this.setState({ 'lineItems': response.data })
+			this.setState({ 'data': response.data.content })
+			console.log(this.state.data)
         })
-        .catch(console.log)
+		.catch(console.log);
     }
 	render() {
+
+		
 		return (
 			<div>
 				<ol className="breadcrumb float-xl-right">
@@ -39,8 +40,7 @@ class Journals extends React.Component {
 					<PanelHeader noButton={true}>
 						Accounting Entries
 					</PanelHeader>
-					
-                    <LineItemTable lineItems={ this.state.lineItems }/>
+					<JournalTable data={this.state.data}/>
 				</Panel>
 			</div>
 		)

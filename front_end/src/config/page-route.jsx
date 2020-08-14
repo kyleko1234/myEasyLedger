@@ -24,7 +24,6 @@ import Bootstrap4 from './../pages/bootstrap/bootstrap-4.js';
 import FormElements from './../pages/form/form-elements.js';
 import FormPlugins from './../pages/form/form-plugins.js';
 import TableBasic from './../pages/table/table-basic.js';
-import TableData from './../pages/table/table-data.js';
 import ChartJS from './../pages/chart/chart-js.js';
 import ChartD3 from './../pages/chart/chart-d3.js';
 import ChartApex from './../pages/chart/chart-apex.js';
@@ -184,11 +183,6 @@ const routes = [
     path: '/table/basic',
     title: 'Basic Tables',
     component: () => <TableBasic />,
-  },
-  {
-    path: '/table/data',
-    title: 'Data Tables',
-    component: () => <TableData />,
   },
   {
     path: '/chart/js',

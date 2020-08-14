@@ -39,8 +39,7 @@ const Menu = [
   },
   { path: '/table', icon: 'fa fa-table', title: 'Tables',
     children: [
-      { path: '/table/basic', title: 'Basic Tables' },
-      { path: '/table/data', title: 'Data Tables' }
+      { path: '/table/basic', title: 'Basic Tables' }
     ]
   },
   { path: '/journals', icon: 'fa fa-list-ol', title: 'Journals' },
