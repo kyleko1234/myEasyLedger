@@ -13,7 +13,7 @@ class Journals extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: []
+			content: []
         };
 		
 	}
@@ -21,8 +21,8 @@ class Journals extends React.Component {
     componentDidMount() {
         const url = `${API_URL}/entryViewModel/`;
         axios.get(url).then(response => {
-			this.setState({ 'data': response.data.content })
-			console.log(this.state.data)
+			this.setState({ 'content': response.data.content }) //using a single "data" field in this.state, setting this.state.data to response.data, and thne calling this.state.data.content fails. why? 
+			console.log(this.state.content)
         })
 		.catch(console.log);
     }
@@ -40,7 +40,7 @@ class Journals extends React.Component {
 					<PanelHeader noButton={true}>
 						Accounting Entries
 					</PanelHeader>
-					<JournalTable data={this.state.data}/>
+					<JournalTable data={this.state.content}/>
 				</Panel>
 			</div>
 		)
