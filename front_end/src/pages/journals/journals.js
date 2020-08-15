@@ -28,7 +28,7 @@ class Journals extends React.Component {
     }
 	render() {
 
-		
+
 		return (
 			<div>
 				<ol className="breadcrumb float-xl-right">
