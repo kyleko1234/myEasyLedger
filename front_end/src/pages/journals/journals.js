@@ -1,9 +1,8 @@
 import React from 'react';
-import namor from "namor";
 import { Link } from 'react-router-dom';
 import { Panel, PanelHeader } from '../../components/panel/panel.jsx';
 import JournalTable from '../../components/table/journal-table'
-import axios from 'axios';
+
 
 
 const API_URL = 'http://localhost:8080/v0.1';

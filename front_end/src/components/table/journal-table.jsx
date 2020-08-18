@@ -18,7 +18,6 @@ function JournalTable() {
   
   // We'll start our table without any data
   const [data, setData] = React.useState([])
-  const [loading, setLoading] = React.useState(false)
   const [pageCount, setPageCount] = React.useState(0)
   const [elementCount, setElementCount] = React.useState(0)
   const fetchIdRef = React.useRef(0)
@@ -28,12 +27,8 @@ function JournalTable() {
     // You could fetch your data from literally anywhere,
     // even a server. But for this example, we'll just fake it.
 
-    // Give this fetch an ID
-    const fetchId = ++fetchIdRef.current
-
-    // Set the loading state
-    setLoading(true);
-
+        
+    //pageSize = 2;
     //fetch data from API
     const url = `${API_URL}/entryViewModel/?page=${pageIndex}&size=${pageSize}`;
     axios.get(url).then(response => {
@@ -43,7 +38,6 @@ function JournalTable() {
       })
       .catch(console.log);
     
-    setLoading(false);
   }, [])
 
   return (
@@ -51,7 +45,6 @@ function JournalTable() {
         columns={columns}
         data={data}
         fetchData={fetchData}
-        loading={loading}
         pageCount={pageCount}
         elementCount={elementCount}
       />
