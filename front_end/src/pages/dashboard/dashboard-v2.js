@@ -361,7 +361,7 @@ class DashboardV2 extends React.Component {
 									<Link to="/dashboard/v2"><img src="/assets/img/user/user-4.jpg" alt="" /></Link>
 									<h4 className="username text-ellipsis">
 										Packed Puffs
-										<small>Malaysian></small>
+										<small>Malaysian</small>
 									</h4>
 								</li>
 								<li>

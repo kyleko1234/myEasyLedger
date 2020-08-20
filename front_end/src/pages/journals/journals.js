@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Panel, PanelHeader } from '../../components/panel/panel.jsx';
-import JournalTable from '../../components/table/journal-table'
+import JournalTable from './components/journal-table'
 
 
 

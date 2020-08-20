@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from './table';
+import TableOfEntries from '../../../components/table/table-of-entries';
 import axios from 'axios';
 
 
@@ -24,24 +24,24 @@ function JournalTable() {
 
   const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
     // This will get called when the table needs new data
-    // You could fetch your data from literally anywhere,
-    // even a server. But for this example, we'll just fake it.
-
         
-    //pageSize = 2;
-    //fetch data from API
+    //fetch data from Easy Ledger API
     const url = `${API_URL}/entryViewModel/?page=${pageIndex}&size=${pageSize}`;
     axios.get(url).then(response => {
-        setData(response.data.content);
+        var dataContent = response.data.content;
+        dataContent.forEach( entry => {
+          entry.debitAmount = entry.debitAmount.toFixed(2);
+          entry.creditAmount = entry.creditAmount.toFixed(2);
+        })
+        setData(dataContent);
         setPageCount(response.data.totalPages);
         setElementCount(response.data.totalElements);
       })
       .catch(console.log);
-    
   }, [])
-
+  
   return (
-      <Table
+      <TableOfEntries
         columns={columns}
         data={data}
         fetchData={fetchData}

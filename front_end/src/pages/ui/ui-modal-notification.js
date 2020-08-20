@@ -168,7 +168,7 @@ class UIModalNotification extends React.Component {
 										<td><button onClick={() => this.toggleModal('modalDialog')} className="btn btn-sm btn-success">Demo</button></td>
 									</tr>
 									<tr>
-										<td>Modal Dialog Box with fade out animation.</td>
+										<td>Modal Dialog Box without fade out animation.</td>
 										<td><button onClick={() => this.toggleModal('modalWithoutAnimation')} className="btn btn-sm btn-default">Demo</button></td>
 									</tr>
 									<tr>
@@ -183,8 +183,8 @@ class UIModalNotification extends React.Component {
 							</table>
 							<Modal isOpen={this.state.modalDialog} toggle={() => this.toggleModal('modalDialog')}>
 								<ModalHeader toggle={() => this.toggleModal('modalDialog')}>Modal Dialog</ModalHeader>
-          			<ModalBody>
-          				<p>
+          						<ModalBody>
+          							<p>
 										Modal body content here...
 									</p>
 								</ModalBody>
@@ -196,8 +196,8 @@ class UIModalNotification extends React.Component {
 							
 							<Modal isOpen={this.state.modalWithoutAnimation} fade={false} toggle={() => this.toggleModal('modalWithoutAnimation')}>
 								<ModalHeader toggle={() => this.toggleModal('modalWithoutAnimation')}>Modal Without Animation</ModalHeader>
-          			<ModalBody>
-          				<p>
+          						<ModalBody>
+          							<p>
 										Modal body content here...
 									</p>
 								</ModalBody>
@@ -208,7 +208,7 @@ class UIModalNotification extends React.Component {
 							
 							<Modal isOpen={this.state.modalMessage} toggle={() => this.toggleModal('modalMessage')} modalClassName="modal-message">
 								<ModalHeader toggle={() => this.toggleModal('modalMessage')}>Modal Message Header</ModalHeader>
-          			<ModalBody>
+          						<ModalBody>
 									<p>Text in a modal</p>
 									<p>Do you want to turn on location services so GPS can use your location ?</p>
 								</ModalBody>
@@ -220,7 +220,7 @@ class UIModalNotification extends React.Component {
 							
 							<Modal isOpen={this.state.modalAlert} toggle={() => this.toggleModal('modalAlert')}>
 								<ModalHeader toggle={() => this.toggleModal('modalAlert')}>Alert Header</ModalHeader>
-          			<ModalBody>
+          						<ModalBody>
 									<div className="alert alert-danger m-b-0">
 										<h5><i className="fa fa-info-circle"></i> Alert Header</h5>
 										<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>

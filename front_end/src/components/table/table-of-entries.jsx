@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTable, usePagination } from 'react-table'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 //Generates a table with react-table 7 using pagination
@@ -7,7 +8,7 @@ import { Link } from 'react-router-dom';
 // Let's add a fetchData method to our Table component that will be used to fetch
 // new data when pagination state changes
 // We can also add a loading state to let our table know it's loading new data
-function Table({
+function TableOfEntries({
   columns,
   data,
   fetchData,
@@ -44,6 +45,9 @@ function Table({
     usePagination
   )
 
+  const [entryExpanded, setEntryExpanded] = React.useState(false); //Whether or not the modal  is shown
+  const toggleEntryExpanded = () => setEntryExpanded(!entryExpanded); //Toggles modal on or off
+
 
   // Listen for changes in pagination and use the state to fetch our new data
   React.useEffect(() => {
@@ -78,43 +82,30 @@ function Table({
           {page.map((row, i) => {
             prepareRow(row)
             return (
-              <tr {...row.getRowProps()}>
+              <tr style={{cursor: "pointer"}} onClick={() => toggleEntryExpanded()} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
               </tr>
             )
           })}
-
         </tbody>
-    {/*}    <tfoot>
-            <tr style={{textAlign: 'center'}}>
-                {loading ? (
-                // Use our custom loading state to show a loading indicator
-                <td colSpan="10000">	
-                    <i className="fa-3x fas fa-circle-notch fa-spin"></i>
-                </td>
-                ) : (
-                <>
-                <ul className="pager m-t-0 m-b-0">
-                    <li className={canPreviousPage? "previous" : "previous disabled"}>
-                        <Link onClick={canPreviousPage? () => previousPage() : null}>&larr; Newer</Link>
-                    </li>
-                </ul>
-                <td colSpan="10000">
-                    Showing {((pageIndex * page.length) + 1) + "-" + ((pageIndex + 1) * page.length)} of {elementCount}{' '}
-                    results
-                </td>
-                <ul className="pager m-t-0 m-b-0">
-                    <li className={canNextPage? "next" : "next disabled"}>
-                        <Link onClick={canNextPage? () => nextPage() : null}>Older &rarr;</Link>
-                    </li>
-                </ul>
-                </>
-                )}
-            </tr>
-        </tfoot> */}
       </table>
+
+      {/* Modal that opens when a row in the table is clicked */}
+      <Modal isOpen={entryExpanded} toggle={() => toggleEntryExpanded()} size="lg" style={{maxWidth: '1600px', width: '80%'}}>
+          <ModalHeader toggle={() => toggleEntryExpanded()}>Modal Header</ModalHeader>
+          <ModalBody>
+            <p>
+              Modal Body Content Here
+            </p>
+          </ModalBody>
+          <ModalFooter>
+            <button className="btn btn-primary">Action</button>
+            <button className="btn btn-white" onClick={() => toggleEntryExpanded()}>Close</button>
+          </ModalFooter>
+      </Modal>
+
       </div>
       {/* 
         Pagination can be built however you'd like. 
@@ -177,23 +168,9 @@ function Table({
 
     </div>
 
-    {/* <div className="row">
-            <select className="form-control-sm"
-                value={pageSize}
-                onChange={e => {
-                    setPageSize(Number(e.target.value))
-                }}
-            >
-                {[2, 10, 20, 30, 40, 50].map(pageSize => (
-                    <option key={pageSize} value={pageSize}>
-                        Show {pageSize}
-                    </option>
-                ))}
-            </select>
-    </div>  */}
     </>
   )
 }
 
-export default Table
+export default TableOfEntries
 
