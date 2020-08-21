@@ -2,6 +2,8 @@ import React from 'react'
 import { useTable, usePagination } from 'react-table'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
+import LineItemTable from './line-item-table'
 
 //Generates a table with react-table 7 using pagination
 
@@ -48,6 +50,36 @@ function TableOfEntries({
   const [entryExpanded, setEntryExpanded] = React.useState(false); //Whether or not the modal  is shown
   const toggleEntryExpanded = () => setEntryExpanded(!entryExpanded); //Toggles modal on or off
 
+  const [currentEntry, setCurrentEntry] = React.useState([]);
+  const API_URL = 'http://localhost:8080/v0.1';
+  const fetchEntry = i => {
+    const url = `${API_URL}/entry/${i}`;
+    axios.get(url).then(response => {
+        var entry = response.data;
+        entry.lineItems.forEach( lineItem => {
+          lineItem.amount = lineItem.amount.toFixed(2);
+        })
+        setCurrentEntry(entry);
+        setLineItemData(entry.lineItems);
+      })
+      .catch(console.log);
+  }
+  const lineItemColumns = React.useMemo(
+    () => [ // accessor is the "key" in the data},
+      { Header: 'id', accessor: 'lineItemId'},
+      { Header: 'Account', accessor: 'accountName'},
+      { Header: 'Description', accessor: 'description'},
+      { Header: 'Amount', accessor: 'amount'},
+      { Header: 'isCredit', accessor: 'isCredit'},
+      { Header: 'Category', accessor: 'categoryName'},
+    ],
+    []
+  )
+  const [lineItemData, setLineItemData] = React.useState([]);
+  const expandEntry = i => {
+    fetchEntry(i);
+    toggleEntryExpanded();
+  }
 
   // Listen for changes in pagination and use the state to fetch our new data
   React.useEffect(() => {
@@ -82,7 +114,7 @@ function TableOfEntries({
           {page.map((row, i) => {
             prepareRow(row)
             return (
-              <tr style={{cursor: "pointer"}} onClick={() => toggleEntryExpanded()} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
+              <tr style={{cursor: "pointer"}} onClick={() => expandEntry(data[i].entryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
@@ -96,9 +128,7 @@ function TableOfEntries({
       <Modal isOpen={entryExpanded} toggle={() => toggleEntryExpanded()} size="lg" style={{maxWidth: '1600px', width: '80%'}}>
           <ModalHeader toggle={() => toggleEntryExpanded()}>Modal Header</ModalHeader>
           <ModalBody>
-            <p>
-              Modal Body Content Here
-            </p>
+            <LineItemTable columns={lineItemColumns} data={lineItemData}></LineItemTable>
           </ModalBody>
           <ModalFooter>
             <button className="btn btn-primary">Action</button>

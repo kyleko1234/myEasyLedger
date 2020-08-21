@@ -7,10 +7,10 @@ function setTitle(path, routeArray) {
 	var pageTitle;
 	for (var i=0; i < routeArray.length; i++) {
 		if (routeArray[i].path === path) {
-			pageTitle = 'Color Admin | ' + routeArray[i].title;
+			pageTitle = 'Easy Ledger | ' + routeArray[i].title;
 		}
 	}
-	document.title = (pageTitle) ? pageTitle : 'Color Admin | React App';
+	document.title = (pageTitle) ? pageTitle : 'Easy Ledger | React App';
 }
 
 class Content extends React.Component {
