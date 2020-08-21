@@ -50,27 +50,15 @@ function TableOfEntries({
   const [entryExpanded, setEntryExpanded] = React.useState(false); //Whether or not the modal  is shown
   const toggleEntryExpanded = () => setEntryExpanded(!entryExpanded); //Toggles modal on or off
 
-  const [currentEntry, setCurrentEntry] = React.useState([]);
   const API_URL = 'http://localhost:8080/v0.1';
-  const fetchEntry = i => {
-    const url = `${API_URL}/entry/${i}`;
-    axios.get(url).then(response => {
-        var entry = response.data;
-        entry.lineItems.forEach( lineItem => {
-          lineItem.amount = lineItem.amount.toFixed(2);
-        })
-        setCurrentEntry(entry);
-        setLineItemData(entry.lineItems);
-      })
-      .catch(console.log);
-  }
+
   const lineItemColumns = React.useMemo(
     () => [ // accessor is the "key" in the data},
       { Header: 'id', accessor: 'lineItemId'},
       { Header: 'Account', accessor: 'accountName'},
       { Header: 'Description', accessor: 'description'},
-      { Header: 'Amount', accessor: 'amount'},
-      { Header: 'isCredit', accessor: 'isCredit'},
+      { Header: 'Debit', accessor: 'debitAmount'},
+      { Header: 'Credit', accessor: 'creditAmount'},
       { Header: 'Category', accessor: 'categoryName'},
     ],
     []
@@ -79,6 +67,27 @@ function TableOfEntries({
   const expandEntry = i => {
     fetchEntry(i);
     toggleEntryExpanded();
+  }
+
+  const fetchEntry = i => {
+    const url = `${API_URL}/entry/${i}`;
+    axios.get(url).then(response => {
+        var entry = response.data;
+        var formattedLineItems = [];
+        entry.lineItems.forEach( lineItem => {
+          var formattedLineItem = {
+            lineItemId: lineItem.lineItemId,
+            accountName: lineItem.accountName,
+            description: lineItem.description,
+            debitAmount: (lineItem.isCredit ? null : lineItem.amount.toFixed(2)),
+            creditAmount: (lineItem.isCredit ? lineItem.amount.toFixed(2) : null),
+            categoryName: lineItem.categoryName
+          };
+          formattedLineItems.push(formattedLineItem);
+        })
+        setLineItemData(formattedLineItems);
+      })
+      .catch(console.log);
   }
 
   // Listen for changes in pagination and use the state to fetch our new data
