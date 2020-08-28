@@ -49,17 +49,15 @@ function TableOfEntries({
 
   const [entryExpanded, setEntryExpanded] = React.useState(false); //Whether or not the modal  is shown
   const toggleEntryExpanded = () => setEntryExpanded(!entryExpanded); //Toggles modal on or off
-
-  const API_URL = 'http://localhost:8080/v0.1';
-
-
-  const [lineItemData, setLineItemData] = React.useState([]);
+  const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
   const expandEntry = i => {
     fetchEntry(i);
     toggleEntryExpanded();
   }
   const [entryDescription, setEntryDescription] = React.useState();
   const [entryDate, setEntryDate] = React.useState('no');
+
+  const API_URL = 'http://localhost:8080/v0.1';
 
   const fetchEntry = i => {
     const url = `${API_URL}/entry/${i}`;
