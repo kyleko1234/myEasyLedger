@@ -2,8 +2,8 @@ import React from 'react'
 import { useTable, usePagination } from 'react-table'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import axios from 'axios'
-import LineItemTable from './line-item-table'
+import axios from 'axios';
+import LineItemTable from './line-item-table';
 
 //Generates a table with react-table 7 using pagination
 
@@ -52,22 +52,14 @@ function TableOfEntries({
 
   const API_URL = 'http://localhost:8080/v0.1';
 
-  const lineItemColumns = React.useMemo(
-    () => [ // accessor is the "key" in the data},
-      { Header: 'id', accessor: 'lineItemId'},
-      { Header: 'Account', accessor: 'accountName'},
-      { Header: 'Description', accessor: 'description'},
-      { Header: 'Debit', accessor: 'debitAmount'},
-      { Header: 'Credit', accessor: 'creditAmount'},
-      { Header: 'Category', accessor: 'categoryName'},
-    ],
-    []
-  )
+
   const [lineItemData, setLineItemData] = React.useState([]);
   const expandEntry = i => {
     fetchEntry(i);
     toggleEntryExpanded();
   }
+  const [entryDescription, setEntryDescription] = React.useState();
+  const [entryDate, setEntryDate] = React.useState('no');
 
   const fetchEntry = i => {
     const url = `${API_URL}/entry/${i}`;
@@ -86,6 +78,8 @@ function TableOfEntries({
           formattedLineItems.push(formattedLineItem);
         })
         setLineItemData(formattedLineItems);
+        setEntryDescription(entry.description);
+        setEntryDate(entry.entryDate);
       })
       .catch(console.log);
   }
@@ -134,10 +128,10 @@ function TableOfEntries({
       </table>
 
       {/* Modal that opens when a row in the table is clicked */}
-      <Modal isOpen={entryExpanded} toggle={() => toggleEntryExpanded()} size="lg" style={{maxWidth: '1600px', width: '80%'}}>
-          <ModalHeader toggle={() => toggleEntryExpanded()}>Modal Header</ModalHeader>
+      <Modal isOpen={entryExpanded} toggle={() => toggleEntryExpanded()}size="lg" style={{maxWidth: '1600px', width: '80%', margin: 'auto'}}>
+          <ModalHeader toggle={() => toggleEntryExpanded()} className="bg-dark text-white">Journal Entry</ModalHeader>
           <ModalBody>
-            <LineItemTable columns={lineItemColumns} data={lineItemData}></LineItemTable>
+            <LineItemTable data={lineItemData} entryDate={entryDate} entryDescription={entryDescription}></LineItemTable>
           </ModalBody>
           <ModalFooter>
             <button className="btn btn-primary">Action</button>

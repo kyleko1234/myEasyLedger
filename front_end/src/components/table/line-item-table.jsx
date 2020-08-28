@@ -1,7 +1,19 @@
 import React from 'react'
 import { useTable, useSortBy } from 'react-table'
 
-function LineItemTable({ columns, data }) {
+function LineItemTable({ data, entryDescription, entryDate }) {
+
+  const columns = React.useMemo(
+    () => [ // accessor is the "key" in the data},
+      { Header: 'id', accessor: 'lineItemId'},
+      { Header: 'Description', accessor: 'description'},
+      { Header: 'Account', accessor: 'accountName'},
+      { Header: 'Category', accessor: 'categoryName'},
+      { Header: 'Debit', accessor: 'debitAmount'},
+      { Header: 'Credit', accessor: 'creditAmount'},
+    ],
+    []
+  )
 
   const initialSort = React.useMemo(
     () => [
@@ -27,9 +39,16 @@ function LineItemTable({ columns, data }) {
   )
 
 
-
   return (
     <>
+      <div className="row m-b-10">
+        <div className="col-md-1"><strong>Date</strong></div> <div className="col-md-11">{entryDate}</div>
+      </div>
+      <div className="row m-b-10">
+        <div className="col-md-1"><strong>Description</strong></div> <div className="col-md-11">{entryDescription}</div>
+      </div>
+      <br></br>
+      
       <div className="table-responsive">
       <table className="table"{...getTableProps()}>
         <thead>
