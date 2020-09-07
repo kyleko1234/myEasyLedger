@@ -24,21 +24,21 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.easyledger.api.dto.EntryDTO;
+import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.service.LineItemService;
-import com.easyledger.api.viewmodel.EntryViewModel;
+import com.easyledger.api.viewmodel.JournalEntryViewModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @SqlResultSetMapping( //maps native SQL query to EntryViewModel class
-		name = "entryViewModelMapping",
+		name = "journalEntryViewModelMapping",
 		classes = {
 				@ConstructorResult(
-						targetClass = EntryViewModel.class,
+						targetClass = JournalEntryViewModel.class,
 						columns = {
-								@ColumnResult(name = "entryId"),
-								@ColumnResult(name = "entryDate"),
+								@ColumnResult(name = "journalEntryId"),
+								@ColumnResult(name = "journalEntryDate"),
 								@ColumnResult(name = "description"),
 								@ColumnResult(name = "debitAmount"),
 								@ColumnResult(name = "creditAmount")
@@ -47,42 +47,42 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		}
 )	
 @NamedNativeQuery( //retrieves all entries and maps them into EntryViewModels
-		name = "Entry.getAllEntryViewModels",
-		query = "SELECT entry_id AS entryId, "
-					+ "entry_date AS entryDate, "
-					+ "entry.description AS description, "
+		name = "JournalEntry.getAllJournalEntryViewModels",
+		query = "SELECT journal_entry_id AS journalEntryId, "
+					+ "journal_entry_date AS journalEntryDate, "
+					+ "journal_entry.description AS description, "
 					+ "sum(CASE line_item.is_credit WHEN false THEN line_item.amount END) AS debitAmount, "
 					+ "sum(CASE line_item.is_credit WHEN true THEN line_item.amount END) AS creditAmount "
-				+ "FROM entry,line_item WHERE line_item.entry_id = entry.id "
-				+ "GROUP BY entry_id, entry_date, entry.description "
-				+ "ORDER BY entry_date DESC ",
-		resultSetMapping = "entryViewModelMapping"
+				+ "FROM journal_entry,line_item WHERE line_item.journal_entry_id = journal_entry.id "
+				+ "GROUP BY journal_entry_id, journal_entry_date, journal_entry.description "
+				+ "ORDER BY journal_entry_date DESC ",
+		resultSetMapping = "journalEntryViewModelMapping"
 )
 @SqlResultSetMapping(//sqlresultsetmapping for counting query
 		name = "SqlResultSetMapping.count",
 		columns = @ColumnResult(name = "count"))
 
 @NamedNativeQuery( //query to count number of entries in order to use Pageable on Entry.getAllEntryViewModels
-		name = "Entry.getAllEntryViewModels.count",
-		query = "SELECT count(*) AS count from entry",
+		name = "JournalEntry.getAllJournalEntryViewModels.count",
+		query = "SELECT count(*) AS count from journal_entry",
 		resultSetMapping = "SqlResultSetMapping.count"
 )
 
 
 @Entity
-@Table(name = "entry")
-public class Entry {
+@Table(name = "journal_entry")
+public class JournalEntry {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "entry_date")
-	private LocalDate entryDate;
+	@Column(name = "journal_entry_date")
+	private LocalDate journalEntryDate;
 	
 	@Column(name= "description")
 	private String description;
 	
-	@OneToMany(	mappedBy = "entry",
+	@OneToMany(	mappedBy = "journalEntry",
 				cascade = CascadeType.REMOVE,
 				orphanRemoval = true)
 	private Set<LineItem> lineItems;
@@ -95,12 +95,12 @@ public class Entry {
 	@JoinColumn(name = "organization_id")
 	private Organization organization;
 	
-	public Entry() {
+	public JournalEntry() {
 		this.lineItems = new HashSet<LineItem>();
 	}
 
-	public Entry(LocalDate entryDate) {
-		this.entryDate = entryDate;
+	public JournalEntry(LocalDate journalEntryDate) {
+		this.journalEntryDate = journalEntryDate;
 		this.lineItems = new HashSet<LineItem>();
 	}
 
@@ -112,13 +112,13 @@ public class Entry {
 		this.id = id;
 	}
 
-	public LocalDate getEntryDate() {
-		return entryDate;
+	public LocalDate getJournalEntryDate() {
+		return journalEntryDate;
 	}
 
 
-	public void setEntryDate(LocalDate entryDate) {
-		this.entryDate = entryDate;
+	public void setJournalEntryDate(LocalDate journalEntryDate) {
+		this.journalEntryDate = journalEntryDate;
 	}
 	
 
@@ -144,7 +144,7 @@ public class Entry {
 
 	public void setPerson(Person person) {
 		this.person = person;
-		person.getEntries().add(this);
+		person.getJournalEntries().add(this);
 	}
 
 	
@@ -154,13 +154,13 @@ public class Entry {
 
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
-		organization.getEntries().add(this);
+		organization.getJournalEntries().add(this);
 	}
 
 	@Override
 	public String toString() {
-		return "Entry [id=" + id + ", entryDate=" + entryDate + ", description=" + description + ", lineItems="
-				+ lineItems + ", person=" + person + ", organization=" + organization + "]";
+		return "JournalEntry [id=" + id + ", journalEntryDate=" + journalEntryDate + ", description=" + description
+				+ ", lineItems=" + lineItems + ", person=" + person + ", organization=" + organization + "]";
 	}
 	
 	

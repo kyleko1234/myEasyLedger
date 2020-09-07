@@ -7,58 +7,58 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.easyledger.api.model.Entry;
+import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 //
-public class EntryDTO {
+public class JournalEntryDTO {
 
-	private Long entryId;
-	private LocalDate entryDate;
+	private Long journalEntryId;
+	private LocalDate journalEntryDate;
 	private String description;
 	private Long personId;
 	private Long organizationId;
 	private Set<LineItemDTO> lineItems;
 
 	
-	public EntryDTO (Entry entry) {
+	public JournalEntryDTO (JournalEntry journalEntry) {
 		
-		this.entryId = entry.getId();
-		this.entryDate = entry.getEntryDate();
-		this.description = entry.getDescription();
+		this.journalEntryId = journalEntry.getId();
+		this.journalEntryDate = journalEntry.getJournalEntryDate();
+		this.description = journalEntry.getDescription();
 		this.lineItems = new HashSet<LineItemDTO>();
-		this.personId = entry.getPerson().getId();
-		this.organizationId= entry.getOrganization().getId();
+		this.personId = journalEntry.getPerson().getId();
+		this.organizationId= journalEntry.getOrganization().getId();
 		
 		/* Iterates over entry.getLineItems(), converting LineItems into LineItemDTOs and adding them to this.LineItemDTOs */
-		Iterator<LineItem> lineItemIterator = entry.getLineItems().iterator();
+		Iterator<LineItem> lineItemIterator = journalEntry.getLineItems().iterator();
 		while (lineItemIterator.hasNext()) {
 			LineItemDTO nextLineItemDTO = new LineItemDTO(lineItemIterator.next());
 			this.lineItems.add(nextLineItemDTO);
 		} 
 	}
 	
-	public EntryDTO () {
+	public JournalEntryDTO () {
 		this.lineItems = new HashSet<LineItemDTO>();
 	}
 
 	/* Getters, Setters, ToString */
 	
-	public Long getEntryId() {
-		return entryId;
+	public Long getJournalEntryId() {
+		return journalEntryId;
 	}
 
-	public void setEntryId(Long id) {
-		this.entryId = id;
+	public void setJournalEntryId(Long id) {
+		this.journalEntryId = id;
 	}
 
-	public LocalDate getEntryDate() {
-		return entryDate;
+	public LocalDate getJournalEntryDate() {
+		return journalEntryDate;
 	}
 
 	public void setEntryDate(LocalDate entryDate) {
-		this.entryDate = entryDate;
+		this.journalEntryDate = entryDate;
 	}
 	
 	public String getDescription() {
@@ -95,8 +95,9 @@ public class EntryDTO {
 
 	@Override
 	public String toString() {
-		return "EntryDTO [entryId=" + entryId + ", entryDate=" + entryDate + ", description=" + description
-				+ ", personId=" + personId + ", organizationId=" + organizationId + ", lineItems=" + lineItems + "]";
+		return "JournalEntryDTO [journalEntryId=" + journalEntryId + ", journalEntryDate=" + journalEntryDate
+				+ ", description=" + description + ", personId=" + personId + ", organizationId=" + organizationId
+				+ ", lineItems=" + lineItems + "]";
 	}
 
 

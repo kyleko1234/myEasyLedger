@@ -9,8 +9,10 @@ import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.AccountType;
+import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.repository.AccountTypeRepository;
+import com.easyledger.api.repository.OrganizationRepository;
 
 @Service
 public class AccountService {
@@ -20,11 +22,16 @@ public class AccountService {
 	
 	@Autowired
 	private AccountTypeRepository accountTypeRepo;
+	
+	@Autowired
+	private OrganizationRepository organizationRepo;
 
-	public AccountService(AccountSubtypeRepository accountSubtypeRepo, AccountTypeRepository accountTypeRepo) {
+	public AccountService(AccountSubtypeRepository accountSubtypeRepo, AccountTypeRepository accountTypeRepo,
+			OrganizationRepository organizationRepo) {
 		super();
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.accountTypeRepo = accountTypeRepo;
+		this.organizationRepo = organizationRepo;
 	}
 	
 	public Account createAccountFromDTO(AccountDTO dto) 
@@ -47,6 +54,10 @@ public class AccountService {
 				throw new ConflictException("Account Subtype " + accountSubtypeTypeId + " is not of Account Type " + product.getAccountType().getId() + ".");
 			}
 		}
+		
+		Organization organization = organizationRepo.findById(dto.getOrganizationId())
+				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId()));
+		product.setOrganization(organization);
 		
 		return product;
 		

@@ -8,12 +8,16 @@ public class CategoryDTO {
 	private String categoryName;
 	private Long accountTypeId;
 	private String accountTypeName;
+	private Long organizationId;
+	private String organizationName;
 	
 	public CategoryDTO(Category category) {
 		this.categoryId = category.getId();
 		this.categoryName = category.getName();
 		this.accountTypeId = category.getAccountType().getId();
 		this.accountTypeName = category.getAccountType().getName();
+		this.organizationId = category.getOrganization().getId();
+		this.organizationName = category.getOrganization().getName();
 	}
 	
 	public CategoryDTO() {
@@ -52,10 +56,27 @@ public class CategoryDTO {
 		this.accountTypeName = accountTypeName;
 	}
 
+	public Long getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
+	}
+
+	public String getOrganizationName() {
+		return organizationName;
+	}
+
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
+	}
+
 	@Override
 	public String toString() {
 		return "CategoryDTO [categoryId=" + categoryId + ", categoryName=" + categoryName + ", accountTypeId="
-				+ accountTypeId + ", accountTypeName=" + accountTypeName + "]";
+				+ accountTypeId + ", accountTypeName=" + accountTypeName + ", organizationId=" + organizationId
+				+ ", organizationName=" + organizationName + "]";
 	}
 	
 	

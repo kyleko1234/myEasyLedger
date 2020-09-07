@@ -6,7 +6,7 @@ import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.AccountType;
 import com.easyledger.api.model.Category;
-import com.easyledger.api.model.Entry;
+import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,7 +25,7 @@ public class LineItemDTO {
 	@JsonIgnore
 	private Category category;
 	@JsonIgnore
-	private Entry entry;
+	private JournalEntry journalEntry;
 	@JsonIgnore
 	private LineItem lineItem;
 	
@@ -39,7 +39,7 @@ public class LineItemDTO {
 	private Long categoryId;
 	private String categoryName;
 	private String description;
-	private Long entryId;
+	private Long journalEntryId;
 	private boolean isCredit;
 	private Long lineItemId;
 
@@ -52,10 +52,10 @@ public class LineItemDTO {
     	this.accountSubtype = account.getAccountSubtype();
     	this.accountType = account.getAccountType();
     	this.category = lineItem.getCategory();
-    	this.entry = lineItem.getEntry();
+    	this.journalEntry = lineItem.getJournalEntry();
     	
     	this.lineItemId = this.lineItem.getId();
-    	this.entryId = this.entry.getId();
+    	this.journalEntryId = this.journalEntry.getId();
     	this.accountId = this.account.getId();
     	this.isCredit = this.lineItem.isIsCredit();
     	this.amount = this.lineItem.getAmount();
@@ -86,12 +86,12 @@ public class LineItemDTO {
 		this.lineItemId = lineItemId;
 	}
 
-	public Long getEntryId() {
-		return entryId;
+	public Long getJournalEntryId() {
+		return journalEntryId;
 	}
 
-	public void setEntryId(Long entryId) {
-		this.entryId = entryId;
+	public void setJournalEntryId(Long journalEntryId) {
+		this.journalEntryId = journalEntryId;
 	}
 
 	public Long getAccountId() {
@@ -222,23 +222,23 @@ public class LineItemDTO {
 		this.category = category;
 	}
 
-	public Entry getEntry() {
-		return entry;
+	public JournalEntry getJournalEntry() {
+		return journalEntry;
 	}
 
-	public void setEntry(Entry entry) {
-		this.entry = entry;
+	public void setEntry(JournalEntry journalEntry) {
+		this.journalEntry = journalEntry;
 	}
 	
 	@Override
 	public String toString() {
-		return "LineItemDTO [lineItemId=" + lineItemId + ", entryId=" + entryId + ", accountId=" + accountId
-				+ ", isCredit=" + isCredit + ", amount=" + amount + ", description=" + description + ", categoryId="
-				+ categoryId + ", categoryName=" + categoryName + ", accountName=" + accountName + ", accountTypeId="
-				+ accountTypeId + ", accountTypeName=" + accountTypeName + ", accountSubtypeId=" + accountSubtypeId
-				+ ", accountSubtypeName=" + accountSubtypeName + ", lineItem=" + lineItem + ", account=" + account
-				+ ", accountSubtype=" + accountSubtype + ", accountType=" + accountType + ", category=" + category
-				+ ", entry=" + entry + "]";
+		return "LineItemDTO [account=" + account + ", accountSubtype=" + accountSubtype + ", accountType=" + accountType
+				+ ", category=" + category + ", journalEntry=" + journalEntry + ", lineItem=" + lineItem
+				+ ", accountId=" + accountId + ", accountName=" + accountName + ", accountSubtypeId=" + accountSubtypeId
+				+ ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
+				+ ", accountTypeName=" + accountTypeName + ", amount=" + amount + ", categoryId=" + categoryId
+				+ ", categoryName=" + categoryName + ", description=" + description + ", journalEntryId="
+				+ journalEntryId + ", isCredit=" + isCredit + ", lineItemId=" + lineItemId + "]";
 	}
 	
 	

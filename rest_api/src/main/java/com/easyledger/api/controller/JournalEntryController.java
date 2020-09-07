@@ -32,69 +32,68 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easyledger.api.dto.EntryDTO;
+import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
-import com.easyledger.api.model.Entry;
+import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
-import com.easyledger.api.repository.EntryRepository;
+import com.easyledger.api.repository.JournalEntryRepository;
 import com.easyledger.api.repository.LineItemRepository;
-import com.easyledger.api.service.EntryService;
+import com.easyledger.api.service.JournalEntryService;
 import com.easyledger.api.service.LineItemService;
-import com.easyledger.api.viewmodel.EntryViewModel;
+import com.easyledger.api.viewmodel.JournalEntryViewModel;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/v0.1")
-public class EntryController {
-	private EntryRepository entryRepo;
-	private EntryService entryService;
+public class JournalEntryController {
+	private JournalEntryRepository journalEntryRepo;
+	private JournalEntryService journalEntryService;
 	private LineItemService lineItemService;
 	private LineItemRepository lineItemRepo;
 
-	public EntryController(EntryRepository entryRepo, EntryService entryService, 
+	public JournalEntryController(JournalEntryRepository journalEntryRepo, JournalEntryService journalEntryService, 
 			LineItemService lineItemService, LineItemRepository lineItemRepo) {
 		super();
-		this.entryRepo = entryRepo;
-		this.entryService = entryService;
+		this.journalEntryRepo = journalEntryRepo;
+		this.journalEntryService = journalEntryService;
 		this.lineItemService = lineItemService;
 		this.lineItemRepo = lineItemRepo;
 	}
 
 
-	@GetMapping("/entry")
-    public ArrayList<EntryDTO> getAllEntries() {
-        List<Entry> entries = entryRepo.findAll();
-        ArrayList<EntryDTO> entryDtos = new ArrayList<EntryDTO>();
-        for (Entry entry : entries) {
-        	entryDtos.add(new EntryDTO(entry));
+	@GetMapping("/journalEntry")
+    public ArrayList<JournalEntryDTO> getAllJournalEntries() {
+        List<JournalEntry> journalEntries = journalEntryRepo.findAll();
+        ArrayList<JournalEntryDTO> journalEntryDtos = new ArrayList<JournalEntryDTO>();
+        for (JournalEntry journalEntry : journalEntries) {
+        	journalEntryDtos.add(new JournalEntryDTO(journalEntry));
         }
-        return entryDtos;
+        return journalEntryDtos;
     }
 	
-	@GetMapping(path = "/entryViewModel")
-	public Page<EntryViewModel> getAllEntryViewModels(Pageable pageable)  {
-		Page<EntryViewModel> entryViewModels = entryRepo.getAllEntryViewModels(pageable);
-		return entryRepo.getAllEntryViewModels(pageable);
+	@GetMapping(path = "/journalEntryViewModel")
+	public Page<JournalEntryViewModel> getAllJournalEntryViewModels(Pageable pageable)  {
+		return journalEntryRepo.getAllJournalEntryViewModels(pageable);
 	}
 
 	
-    @GetMapping("/entry/{id}")
-    public ResponseEntity<EntryDTO> getEntryById(@PathVariable(value = "id") Long entryId)
+    @GetMapping("/journalEntry/{id}")
+    public ResponseEntity<JournalEntryDTO> getJournalEntryById(@PathVariable(value = "id") Long journalEntryId)
         throws ResourceNotFoundException {
-    	Entry entry = entryRepo.findById(entryId)
-    		.orElseThrow(() -> new ResourceNotFoundException("Entry not found for this id :: " + entryId)); 
-    	EntryDTO entryDTO = new EntryDTO(entry);
-        return ResponseEntity.ok().body(entryDTO);
+    	JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
+    		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId)); 
+    	JournalEntryDTO journalEntryDTO = new JournalEntryDTO(journalEntry);
+        return ResponseEntity.ok().body(journalEntryDTO);
     }
     
-    @DeleteMapping("/entry/{id}")
-    public Map<String, Boolean> deleteEntry(@PathVariable(value = "id") Long entryId)
+    @DeleteMapping("/journalEntry/{id}")
+    public Map<String, Boolean> deleteJournalEntry(@PathVariable(value = "id") Long journalEntryId)
          throws ResourceNotFoundException {
-        Entry entry = entryRepo.findById(entryId)
-       .orElseThrow(() -> new ResourceNotFoundException("Entry not found for this id :: " + entryId));
+        JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
+       .orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
 
-        entryRepo.delete(entry);
+        journalEntryRepo.delete(journalEntry);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
@@ -107,20 +106,20 @@ public class EntryController {
       * will result in an Entry that has no associated LineItems in the DB.
       * ID of Entry will be preserved, but all lineItemIds will be newly generated, regardless what the lineItemId field in the RequestBody says.**/ 		
     @Transactional(rollbackFor=Exception.class)
-    @PutMapping("/entry/{id}")
-    public ResponseEntity<EntryDTO> updateEntryById(@PathVariable(value = "id") Long id, @RequestBody EntryDTO dto) 
+    @PutMapping("/journalEntry/{id}")
+    public ResponseEntity<JournalEntryDTO> updateJournalEntryById(@PathVariable(value = "id") Long id, @RequestBody JournalEntryDTO dto) 
     	throws ConflictException, ResourceNotFoundException {
     	// Assert URI id is the same as id in the request body.
-    	if (dto.getEntryId() == null || !dto.getEntryId().equals(id)) {
+    	if (dto.getJournalEntryId() == null || !dto.getJournalEntryId().equals(id)) {
     		throw new ConflictException("Entry ID in request body does not match URI.");
     	}
     	
     	//Assert that an entry for this id exists
-    	Entry oldEntry = entryRepo.findById(id)
-        	.orElseThrow(() -> new ResourceNotFoundException("Entry not found for this id :: " + id)); 
+    	JournalEntry oldJournalEntry = journalEntryRepo.findById(id)
+        	.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + id)); 
     	
     	//Delete old LineItems.
-    	Iterator<LineItem> oldLineItemIterator = oldEntry.getLineItems().iterator();
+    	Iterator<LineItem> oldLineItemIterator = oldJournalEntry.getLineItems().iterator();
     	while (oldLineItemIterator.hasNext()) {
     		lineItemRepo.deleteById(oldLineItemIterator.next().getId());
     	}
@@ -128,53 +127,53 @@ public class EntryController {
     	//Replace entry with data from the request body. Will create new LineItems to replace old ones.
     	//Must create a new Entry entity object even if updating an existing entry, otherwise
     	//Spring will attempt to map the deleted old LineItems to the updated Entry.
-    	Entry updatedEntry = entryService.createEntryFromDTO(dto);
+    	JournalEntry updatedJournalEntry = journalEntryService.createJournalEntryFromDTO(dto);
     	
     	//Assert credits and debits are equal in updatedEntry
-    	if (!entryService.assertAccountingBalance(updatedEntry)) {
+    	if (!journalEntryService.assertAccountingBalance(updatedJournalEntry)) {
     		throw new ConflictException("Total debits in this entry are not equal to total credits.");
     	}
     	
     	//Save Entry and its LineItems. Must save in this order, otherwise will violate not-nullable property.
-    	Iterator<LineItem> newLineItemIterator = updatedEntry.getLineItems().iterator();
-    	entryRepo.save(updatedEntry);
+    	Iterator<LineItem> newLineItemIterator = updatedJournalEntry.getLineItems().iterator();
+    	journalEntryRepo.save(updatedJournalEntry);
     	while (newLineItemIterator.hasNext()) {
     		lineItemRepo.save(newLineItemIterator.next());
     	}
     		    
     	//Return updated entry.
-    	EntryDTO newEntryDTO = new EntryDTO(updatedEntry);
+    	JournalEntryDTO newEntryDTO = new JournalEntryDTO(updatedJournalEntry);
     	return ResponseEntity.ok().body(newEntryDTO);
 
     }
 
     @Transactional(rollbackFor=Exception.class)
-    @PostMapping("/entry")
+    @PostMapping("/journalEntry")
     @ResponseStatus(HttpStatus.CREATED)
-    public EntryDTO createEntryById(@RequestBody EntryDTO dto) 
+    public JournalEntryDTO createJournalEntryById(@RequestBody JournalEntryDTO dto) 
     	throws ConflictException, ResourceNotFoundException {
     
-    	if (dto.getEntryId() != null) {
+    	if (dto.getJournalEntryId() != null) {
     		throw new ConflictException("Please do not attempt to manually create an EntryId.");
     	}
     	
     	//Create Entry entity object from DTO
-    	Entry updatedEntry = entryService.createEntryFromDTO(dto);
+    	JournalEntry updatedJournalEntry = journalEntryService.createJournalEntryFromDTO(dto);
     	
     	//Assert credits and debits are equal in updatedEntry
-    	if (!entryService.assertAccountingBalance(updatedEntry)) {
+    	if (!journalEntryService.assertAccountingBalance(updatedJournalEntry)) {
     		throw new ConflictException("Total debits in this entry are not equal to total credits.");
     	}
     	
     	//Save Entry and its LineItems. Must save in this order, otherwise will violate not-nullable property.
-    	Iterator<LineItem> newLineItemIterator = updatedEntry.getLineItems().iterator();
-    	entryRepo.save(updatedEntry);
+    	Iterator<LineItem> newLineItemIterator = updatedJournalEntry.getLineItems().iterator();
+    	journalEntryRepo.save(updatedJournalEntry);
     	while (newLineItemIterator.hasNext()) {
     		lineItemRepo.save(newLineItemIterator.next());
     	}
     		    
     	//Return updated entry.
-    	EntryDTO newEntryDTO = new EntryDTO(updatedEntry);
+    	JournalEntryDTO newEntryDTO = new JournalEntryDTO(updatedJournalEntry);
     	return newEntryDTO;
 
     }

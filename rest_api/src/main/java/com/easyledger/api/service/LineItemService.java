@@ -8,17 +8,17 @@ import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.Category;
-import com.easyledger.api.model.Entry;
+import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.CategoryRepository;
-import com.easyledger.api.repository.EntryRepository;
+import com.easyledger.api.repository.JournalEntryRepository;
 
 @Service
 public class LineItemService {
 	
 	@Autowired
-	private EntryRepository entryRepo;
+	private JournalEntryRepository journalEntryRepo;
 	
 	@Autowired
 	private AccountRepository accountRepo;
@@ -29,8 +29,8 @@ public class LineItemService {
 	
 	
 	
-	public LineItemService(EntryRepository entryRepo, AccountRepository accountRepo, CategoryRepository categoryRepo) {
-		this.entryRepo = entryRepo;
+	public LineItemService(JournalEntryRepository journalEntryRepo, AccountRepository accountRepo, CategoryRepository categoryRepo) {
+		this.journalEntryRepo = journalEntryRepo;
 		this.accountRepo = accountRepo;
 		this.categoryRepo = categoryRepo;
 	}
@@ -39,7 +39,7 @@ public class LineItemService {
 	// A LineItem entity object cannot be created without a parent Entry entity object. The parent Entry should be passed as input along with the LineItemDTO.
 	// Ignores the lineItemId field in the input LineItemDTO, and automatically generates a new ID when saved to the database.
 	// Requires that accountId and categoryId point to valid entities within the database.
-	public LineItem createLineItemFromDTO (LineItemDTO dto, Entry entry) 
+	public LineItem createLineItemFromDTO (LineItemDTO dto, JournalEntry journalEntry) 
 			throws ResourceNotFoundException {
 		System.out.println(dto);
 		LineItem product = new LineItem();
@@ -58,7 +58,7 @@ public class LineItemService {
 			product.setCategory(category);
 		}
 		
-		product.setEntry(entry);
+		product.setJournalEntry(journalEntry);
 		
 		return product;
 	}

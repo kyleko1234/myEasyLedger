@@ -34,6 +34,10 @@ public class Category {
 	@JoinColumn(name = "account_type_id", nullable = false)
 	private AccountType accountType;
 	
+	@ManyToOne
+	@JoinColumn(name = "organization_id", nullable = false)
+	private Organization organization;
+	
 	public Category() {
 		this.lineItems = new HashSet<LineItem>();
 	}
@@ -75,11 +79,20 @@ public class Category {
 		this.accountType = accountType;
 		accountType.getCategories().add(this);
 	}
+	
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+		organization.getCategories().add(this);
+	}
 
 	@Override
 	public String toString() {
 		return "Category [id=" + id + ", name=" + name + ", lineItems=" + lineItems + ", accountType=" + accountType
-				+ "]";
+				+ ", organization=" + organization + "]";
 	}
 
 

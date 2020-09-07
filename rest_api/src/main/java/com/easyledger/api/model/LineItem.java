@@ -41,8 +41,8 @@ public class LineItem {
 	
 	@ManyToOne
 	@JsonIgnore
-	@JoinColumn(name = "entry_id", nullable = false)
-	private Entry entry;
+	@JoinColumn(name = "journal_entry_id", nullable = false)
+	private JournalEntry journalEntry;
 	
 	public LineItem(boolean isCredit, BigDecimal amount, String description) {
 		this.isCredit = isCredit;
@@ -102,19 +102,19 @@ public class LineItem {
 		category.getLineItems().add(this);
 	}
 
-	public Entry getEntry() {
-		return entry;
+	public JournalEntry getJournalEntry() {
+		return journalEntry;
 	}
 
-	public void setEntry(Entry entry) {
-		this.entry = entry;
-		entry.getLineItems().add(this);
+	public void setJournalEntry(JournalEntry journalEntry) {
+		this.journalEntry = journalEntry;
+		journalEntry.getLineItems().add(this);
 	}
 
 	@Override
 	public String toString() {
 		return "LineItem [id=" + id + ", isCredit=" + isCredit + ", amount=" + amount + ", description=" + description
-				+ ", account=" + account + ", category=" + category + ", entry=" + entry + "]";
+				+ ", account=" + account + ", category=" + category + ", journalEntry=" + journalEntry + "]";
 	}
 
 

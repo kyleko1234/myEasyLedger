@@ -33,6 +33,12 @@ public class AccountSubtype {
 	@JoinColumn(name = "account_type_id", nullable = false)
 	private AccountType accountType;
 	
+	@ManyToOne
+	@JoinColumn(name = "organization_id", nullable = false)
+	private Organization organization;
+	
+
+
 	public AccountSubtype() {
 		this.accounts = new HashSet<Account>();
 	}
@@ -75,11 +81,20 @@ public class AccountSubtype {
 		this.accountType = accountType;
 		accountType.getAccountSubtypes().add(this);
 	}
+	
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+		organization.getAccountSubtypes().add(this);
+	}
 
 	@Override
 	public String toString() {
 		return "AccountSubtype [id=" + id + ", name=" + name + ", accounts=" + accounts + ", accountType=" + accountType
-				+ "]";
+				+ ", organization=" + organization + "]";
 	}
 
 

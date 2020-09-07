@@ -4,13 +4,29 @@
     "type": "split",
     "children": [
       {
-        "id": "82dd79bf1364fb57",
+        "id": "e9ecb484239110b1",
         "type": "leaf",
         "active": true,
         "state": {
-          "type": "graph",
-          "state": {}
-        }
+          "type": "markdown",
+          "state": {
+            "file": "Easy Ledger.md",
+            "mode": "source"
+          }
+        },
+        "group": "bd85d377df6c24a6"
+      },
+      {
+        "id": "f6364cec6a3f3c3c",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Easy Ledger.md",
+            "mode": "preview"
+          }
+        },
+        "group": "bd85d377df6c24a6"
       }
     ],
     "direction": "vertical"
@@ -58,7 +74,9 @@
             "type": "leaf",
             "state": {
               "type": "backlink",
-              "state": {}
+              "state": {
+                "file": "Easy Ledger.md"
+              }
             }
           }
         ]
@@ -68,5 +86,11 @@
     "width": 300,
     "collapsed": true
   },
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "Easy Ledger.md",
+    "AccountType/Contents/List All AccountTypes.md",
+    "AccountType/AccountType.md",
+    "AccountType/Contents/The AccountType Object.md",
+    "List All AccountTypes.md"
+  ]
 }

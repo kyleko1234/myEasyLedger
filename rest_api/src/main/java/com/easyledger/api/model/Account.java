@@ -37,6 +37,10 @@ public class Account {
 	@JoinColumn(name = "account_type_id", nullable = false)
 	private AccountType accountType;
 	
+	@ManyToOne
+	@JoinColumn(name = "organization_id", nullable = false)
+	private Organization organization;
+	
 	public Account() {
 		this.lineItems = new HashSet<LineItem>();
 	}
@@ -88,10 +92,19 @@ public class Account {
 		accountType.getAccounts().add(this);
 	}
 
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+		organization.getAccounts().add(this);
+	}
+
 	@Override
 	public String toString() {
 		return "Account [id=" + id + ", name=" + name + ", lineItems=" + lineItems + ", accountSubtype="
-				+ accountSubtype + ", accountType=" + accountType + "]";
+				+ accountSubtype + ", accountType=" + accountType + ", organization=" + organization + "]";
 	}
 
 

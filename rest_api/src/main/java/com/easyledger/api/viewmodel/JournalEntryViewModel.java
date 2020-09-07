@@ -4,41 +4,42 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class EntryViewModel {
+public class JournalEntryViewModel {
 	
-	private Integer entryId;
-	private Date entryDate;
+	private Integer journalEntryId;
+	private Date journalEntryDate;
 	private String description;
 	private BigDecimal debitAmount;
 	private BigDecimal creditAmount;
 	
-	public EntryViewModel(Integer entryId, Date entryDate, String description, BigDecimal debitAmount,
+	public JournalEntryViewModel(Integer journalEntryId, Date journalEntryDate, String description, BigDecimal debitAmount,
 			BigDecimal creditAmount) {
-		this.entryId = entryId;
-		this.entryDate = entryDate;
+		this.journalEntryId = journalEntryId;
+		this.journalEntryDate = journalEntryDate;
 		this.description = description;
 		this.debitAmount = debitAmount;
 		this.creditAmount = creditAmount;
 	}
 	
-	public EntryViewModel() {
+	public JournalEntryViewModel() {
 		
 	}
 
-	public Integer getEntryId() {
-		return entryId;
+
+	public Integer getJournalEntryId() {
+		return journalEntryId;
 	}
 
-	public void setEntryId(Integer entryId) {
-		this.entryId = entryId;
+	public void setJournalEntryId(Integer journalEntryId) {
+		this.journalEntryId = journalEntryId;
 	}
 
-	public Date getEntryDate() {
-		return entryDate;
+	public Date getJournalEntryDate() {
+		return journalEntryDate;
 	}
 
-	public void setEntryDate(Date entryDate) {
-		this.entryDate = entryDate;
+	public void setJournalEntryDate(Date journalEntryDate) {
+		this.journalEntryDate = journalEntryDate;
 	}
 
 	public String getDescription() {
@@ -67,8 +68,9 @@ public class EntryViewModel {
 
 	@Override
 	public String toString() {
-		return "EntryViewModel [entryId=" + entryId + ", entryDate=" + entryDate + ", description=" + description
-				+ ", debitAmount=" + debitAmount + ", creditAmount=" + creditAmount + "]";
+		return "JournalEntryViewModel [journalEntryId=" + journalEntryId + ", journalEntryDate=" + journalEntryDate
+				+ ", description=" + description + ", debitAmount=" + debitAmount + ", creditAmount=" + creditAmount
+				+ "]";
 	}
 	
 	

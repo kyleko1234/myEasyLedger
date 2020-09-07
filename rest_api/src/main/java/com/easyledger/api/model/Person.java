@@ -41,7 +41,7 @@ public class Person {
 	
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
-	private Set<Entry> entries;
+	private Set<JournalEntry> journalEntries;
 	
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(
@@ -123,12 +123,12 @@ public class Person {
 		this.password = password;
 	}
 
-	public Set<Entry> getEntries() {
-		return entries;
+	public Set<JournalEntry> getJournalEntries() {
+		return journalEntries;
 	}
 
-	public void setEntries(Set<Entry> entries) {
-		this.entries = entries;
+	public void setJournalEntries(Set<JournalEntry> journalEntries) {
+		this.journalEntries = journalEntries;
 	}
 	
 	public Set<Organization> getOrganizations() {
@@ -142,7 +142,8 @@ public class Person {
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", entries=" + entries + ", organizations=" + organizations + "]";
+				+ ", password=" + password + ", journalEntries=" + journalEntries + ", organizations=" + organizations
+				+ "]";
 	}
 	
 	

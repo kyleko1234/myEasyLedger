@@ -34,7 +34,19 @@ public class Organization {
 
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
-	private Set<Entry> entries;
+	private Set<JournalEntry> journalEntries;
+	
+	@OneToMany(mappedBy = "organization")
+	@JsonIgnore
+	private Set<AccountSubtype> accountSubtypes;
+	
+	@OneToMany(mappedBy = "organization")
+	@JsonIgnore
+	private Set<Category> categories;
+	
+	@OneToMany(mappedBy = "organization")
+	@JsonIgnore
+	private Set<Account> accounts;
 	
 	public Organization(String name) {
 		this.name = name;
@@ -70,17 +82,43 @@ public class Organization {
 	}
 	
 
-	public Set<Entry> getEntries() {
-		return entries;
+	public Set<JournalEntry> getJournalEntries() {
+		return journalEntries;
 	}
 
-	public void setEntries(Set<Entry> entries) {
-		this.entries = entries;
+	public void setJournalEntries(Set<JournalEntry> journalEntries) {
+		this.journalEntries = journalEntries;
+	}
+
+	public Set<AccountSubtype> getAccountSubtypes() {
+		return accountSubtypes;
+	}
+
+	public void setAccountSubtypes(Set<AccountSubtype> accountSubtypes) {
+		this.accountSubtypes = accountSubtypes;
+	}
+
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
+	}
+
+	public Set<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts = accounts;
 	}
 
 	@Override
 	public String toString() {
-		return "Organization [id=" + id + ", name=" + name + ", persons=" + persons + ", entries=" + entries + "]";
+		return "Organization [id=" + id + ", name=" + name + ", persons=" + persons + ", journalEntries="
+				+ journalEntries + ", accountSubtypes=" + accountSubtypes + ", categories=" + categories + ", accounts="
+				+ accounts + "]";
 	}
 	
 

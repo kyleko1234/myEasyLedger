@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.easyledger.api.dto.EntryDTO;
+import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
-import com.easyledger.api.model.Entry;
+import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
@@ -27,7 +27,7 @@ import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.PersonRepository;
 
 @Service
-public class EntryService {
+public class JournalEntryService {
 	
 	@Autowired
 	private PersonRepository personRepo;
@@ -37,7 +37,7 @@ public class EntryService {
 	
 	private LineItemService lineItemService;
 	
-	public EntryService(PersonRepository personRepo, LineItemService lineItemService, OrganizationRepository organizationRepo) {
+	public JournalEntryService(PersonRepository personRepo, LineItemService lineItemService, OrganizationRepository organizationRepo) {
 		super();
 		this.personRepo = personRepo;
 		this.lineItemService = lineItemService;
@@ -46,12 +46,12 @@ public class EntryService {
 
 	// Creates new Entry entity object from EntryDTO. Does not save the entity to the database.
 	// Will ignore any lineItemId in the EntryDTO that is passed in. LineItemIds will be automatically generated when objects are saved to database.
-	public Entry createEntryFromDTO (EntryDTO dto) 
+	public JournalEntry createJournalEntryFromDTO (JournalEntryDTO dto) 
 		throws ResourceNotFoundException {
-		Entry product = new Entry();
-		product.setEntryDate(dto.getEntryDate());
+		JournalEntry product = new JournalEntry();
+		product.setJournalEntryDate(dto.getJournalEntryDate());
 		product.setDescription(dto.getDescription());
-		product.setId(dto.getEntryId());
+		product.setId(dto.getJournalEntryId());
 		if (dto.getPersonId() != null) {
 			Person person = personRepo.findById(dto.getPersonId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + dto.getPersonId())); 
@@ -75,8 +75,8 @@ public class EntryService {
 
 	// Ensures that the total amounts of Credit LineItems in an Entry are equal to the total amounts of Debit LineItems.
 	// Makes a deep copy of the Set of LineItems in an entry, computes total credits and debits, and returns true if equal and false if not.
-	public boolean assertAccountingBalance (Entry entry) {
-		Set<LineItem> lineItems = new HashSet<LineItem>(entry.getLineItems());
+	public boolean assertAccountingBalance (JournalEntry journalEntry) {
+		Set<LineItem> lineItems = new HashSet<LineItem>(journalEntry.getLineItems());
 		Iterator<LineItem> lineItemIterator = lineItems.iterator();
 		
 		BigDecimal creditBalance =  new BigDecimal(0);

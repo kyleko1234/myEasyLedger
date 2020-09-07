@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easyledger.api.dto.EntryDTO;
+import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.dto.PersonDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.AccountSubtype;
-import com.easyledger.api.model.Entry;
+import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.repository.OrganizationRepository;
@@ -68,15 +68,15 @@ public class OrganizationController {
 		return dtos;
 	}
 	
-	@GetMapping("/organization/{id}/entry")
-	public HashSet<EntryDTO> getEntriesForOrganization(@PathVariable(value = "id") Long organizationId) 
+	@GetMapping("/organization/{id}/journalEntry")
+	public HashSet<JournalEntryDTO> getJournalEntriesForOrganization(@PathVariable(value = "id") Long organizationId) 
 		throws ResourceNotFoundException{
 		Organization organization = organizationRepo.findById(organizationId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId)); 
-		HashSet<Entry> entries = new HashSet<Entry>(organization.getEntries());
-		HashSet<EntryDTO> dtos = new HashSet<EntryDTO>();
-		for (Entry entry : entries) {
-			dtos.add(new EntryDTO(entry));
+		HashSet<JournalEntry> entries = new HashSet<JournalEntry>(organization.getJournalEntries());
+		HashSet<JournalEntryDTO> dtos = new HashSet<JournalEntryDTO>();
+		for (JournalEntry entry : entries) {
+			dtos.add(new JournalEntryDTO(entry));
 		}
 		return dtos;
 	}
@@ -110,7 +110,7 @@ public class OrganizationController {
         Organization organization = organizationRepo.findById(organizationId)
         	.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
 
-        if (!organization.getEntries().isEmpty()) {
+        if (!organization.getJournalEntries().isEmpty()) {
         	throw new ConflictException("Please remove all Entries from this Organization before deleting the Organization.");
         }
         

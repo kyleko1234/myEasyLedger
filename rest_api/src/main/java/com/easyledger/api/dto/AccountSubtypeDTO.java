@@ -8,12 +8,16 @@ public class AccountSubtypeDTO {
 	private String accountSubtypeName;
 	private Long accountTypeId;
 	private String accountTypeName;
+	private Long organizationId;
+	private String organizationName;
 	
 	public AccountSubtypeDTO(AccountSubtype accountSubtype) {
 		this.accountSubtypeId = accountSubtype.getId();
 		this.accountSubtypeName = accountSubtype.getName();
 		this.accountTypeId = accountSubtype.getAccountType().getId();
 		this.accountTypeName = accountSubtype.getAccountType().getName();
+		this.organizationId = accountSubtype.getOrganization().getId();
+		this.organizationName = accountSubtype.getOrganization().getName();
 	}
 	
 	public AccountSubtypeDTO() {
@@ -52,10 +56,27 @@ public class AccountSubtypeDTO {
 		this.accountTypeName = accountTypeName;
 	}
 
+	public Long getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
+	}
+
+	public String getOrganizationName() {
+		return organizationName;
+	}
+
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
+	}
+
 	@Override
 	public String toString() {
-		return "AccountSubtypeDTO [accountSubtypeId=" + accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId="
-				+ accountTypeId + ", accountTypeName=" + accountTypeName + "]";
+		return "AccountSubtypeDTO [accountSubtypeId=" + accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName
+				+ ", accountTypeId=" + accountTypeId + ", accountTypeName=" + accountTypeName + ", organizationId="
+				+ organizationId + ", organizationName=" + organizationName + "]";
 	}
 	
 	
