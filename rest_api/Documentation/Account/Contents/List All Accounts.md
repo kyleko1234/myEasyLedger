@@ -20,13 +20,15 @@ ___
 ```json
 [
     {
-        "accountId": 1,
-        "accountName": "Cash",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "accountSubtypeId": 1,
-        "accountSubtypeName": "Cash"
-    },
+   		"accountId": 1,
+    	"accountName": "Personal Cash",
+    	"accountTypeId": 1,
+    	"accountTypeName": "Assets",
+    	"accountSubtypeId": 1,
+    	"accountSubtypeName": "Cash",
+    	"organizationId": 1,
+    	"organizationName": "Sample organization"
+	},
     ...
 ]
 ```

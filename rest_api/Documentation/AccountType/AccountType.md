@@ -12,7 +12,8 @@ AccountTypes represent the main categories of accounts. The API allows you to re
 |5|Expenses|
 ___
 ### Contents
-- [The AccountType Object](./Contents/The%20AccountType%20Object.md)
-- [Retrieve an AccountType](./Contents/Retrieve%20an%20AccountType.md)
-- [List All AccountTypes](./Contents/List%20All%20AccountTypes.md)
-
+- [[The AccountType Object]]
+- [[Retrieve an AccountType]]
+- [[List All AccountTypes]]
+- [[List All Categories for an AccountType]]
+- [[List All AccountSubtypes for an AccountType]]

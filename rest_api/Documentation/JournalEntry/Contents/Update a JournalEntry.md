@@ -1,13 +1,13 @@
-### Update an Entry
-Endpoint: `PUT /entry/{id}`
+### Update an JournalEntry
+Endpoint: `PUT /journalEntry/{id}`
 
-Updates an entry with the specified id by setting the value of the parameters passed. All parameters must be passed; any unpassed parameters will set the attribute to null. All existing LineItems will be destroyed and replaced with LineItems passed in the request body. An Entry will keep the same id after an update, but its LineItems will be assigned new ids after an update regardless of whether the updated list of LineItems is different from that of the existing Entry. 
+Updates an journal entry with the specified id by setting the value of the parameters passed. All parameters must be passed; any unpassed parameters will set the attribute to null. All existing LineItems will be destroyed and replaced with LineItems passed in the request body. A journal entry will keep the same id after an update, but its LineItems will be assigned new ids after an update regardless of whether the updated list of LineItems is different from that of the existing Entry. 
 ___
 #### Request Body Parameters
-- **entryId (`Long`)**<br/>
+- **journalEntryId (`Long`)**<br/>
 Id of the entry to be updated. Must match id in URI of the request.
 
-- **entryDate (`LocalDate`)**<br/>
+- **journalEntryDate (`LocalDate`)**<br/>
 User-supplied date of this entry.
 
 - **description (`String` 255)**<br/>
@@ -36,12 +36,12 @@ ___
 Returns the updated entry object upon successful update. Returns HTTP 404 upon submission of an invalid personId, accountId, organizationId, or categoryId, or if an entry does not exist for the supplied entryId. Returns HTTP 409 if URI and entryID do not match, or if total debits and credits of LineItems are not equal.
 ___
 #### Sample Request
-`PUT /entry/1`
+`PUT /journalEntry/1`
 Body:
 ```json 
 {
-    "entryId": 1,
-    "entryDate": "2020-04-21",
+    "journalEntryId": 1,
+    "journalEntryDate": "2020-04-21",
     "description": "grocery shopping",
     "personId": 1,
     "organizationId": 1,
@@ -69,8 +69,8 @@ Body:
 #### Sample Response
 ```json
 {
-    "entryId": 1,
-    "entryDate": "2020-04-21",
+    "journalEntryId": 1,
+    "journalEntryDate": "2020-04-21",
     "description": "grocery shopping",
     "personId": 1,
     "organizationId": 1,
@@ -86,7 +86,7 @@ Body:
             "categoryId": null,
             "categoryName": null,
             "description": "Cash payment for groceries",
-            "entryId": 1,
+            "journalEntryId": 1,
             "isCredit": true,
             "lineItemId": 15
         },
@@ -101,7 +101,7 @@ Body:
             "categoryId": 1,
             "categoryName": "Grocery",
             "description": "Grocery expenses",
-            "entryId": 1,
+            "journalEntryId": 1,
             "isCredit": false,
             "lineItemId": 16
         }

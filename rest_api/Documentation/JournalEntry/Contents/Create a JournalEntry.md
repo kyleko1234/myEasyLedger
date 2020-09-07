@@ -1,10 +1,10 @@
-### Create an Entry
-Endpoint: `POST /entry`
+### Create a JournalEntry
+Endpoint: `POST /journalEntry`
 
-Creates an entry and line items using the values of the parameters passed.
+Creates a journal entry and line items using the values of the parameters passed.
 ___
 #### Request Body Parameters
-- **entryDate (`LocalDate`)**<br/>
+- **journalEntryDate (`LocalDate`)**<br/>
 User-supplied date of this entry.
 
 - **personId (`Long`)**<br/>
@@ -34,11 +34,11 @@ ___
 Returns HTTP 201 and the updated entry object upon successful update. Returns HTTP 404 upon submission of an invalid personId, accountId, organizationId, or categoryId, Returns HTTP 409 if total debits and credits of LineItems are not equal, or if there is an attempt to manually assign an entryId.
 ___
 #### Sample Request
-`POST /entry`
+`POST /journalEntry`
 Body:
 ```json 
 {
-    "entryDate": "2020-06-20",
+    "journalEntryDate": "2020-06-20",
     "personId": 1,
     "description": "paid credit card balance",
     "organizationId": 1,
@@ -66,8 +66,8 @@ Body:
 #### Sample Response
 ```json
 {
-    "entryId": 7,
-    "entryDate": "2020-06-20",
+    "journalEntryId": 7,
+    "journalEntryDate": "2020-06-20",
     "description": "paid credit card balance",
     "personId": 1,
     "organizationId": 1,
@@ -83,7 +83,7 @@ Body:
             "categoryId": null,
             "categoryName": null,
             "description": "paid credit balance from checking acc",
-            "entryId": 7,
+            "journalEntryId": 7,
             "isCredit": true,
             "lineItemId": 17
         },
@@ -98,7 +98,7 @@ Body:
             "categoryId": null,
             "categoryName": null,
             "description": "paid credit balance",
-            "entryId": 7,
+            "journalEntryId": 7,
             "isCredit": false,
             "lineItemId": 18
         }

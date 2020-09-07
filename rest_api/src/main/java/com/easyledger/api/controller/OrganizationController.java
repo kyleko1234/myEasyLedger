@@ -73,10 +73,10 @@ public class OrganizationController {
 		throws ResourceNotFoundException{
 		Organization organization = organizationRepo.findById(organizationId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId)); 
-		HashSet<JournalEntry> entries = new HashSet<JournalEntry>(organization.getJournalEntries());
+		HashSet<JournalEntry> journalEntries = new HashSet<JournalEntry>(organization.getJournalEntries());
 		HashSet<JournalEntryDTO> dtos = new HashSet<JournalEntryDTO>();
-		for (JournalEntry entry : entries) {
-			dtos.add(new JournalEntryDTO(entry));
+		for (JournalEntry journalEntry : journalEntries) {
+			dtos.add(new JournalEntryDTO(journalEntry));
 		}
 		return dtos;
 	}

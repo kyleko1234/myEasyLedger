@@ -3,9 +3,9 @@
 
 ---
 ### Contents
-- [The Person Object](./Contents/The%20Person%20Object.md)
-- [Create a Person](./Contents/Create%20a%20Person.md)
-- [Retrieve a Person](./Contents/Retrieve%20a%20Person.md)
-- [Update a Person](./Contents/Update%20a%20Person.md)
-- [Delete a Person](./Contents/Delete%20a%20Person.md)
-- [List All Persons](./Contents/List%20All%20Persons.md)
+- [[The Person Object]]
+- [[Create a Person]]
+- [[Retrieve a Person]]
+- [[Update a Person]]
+- [[Delete a Person]]
+- [[List All Persons]]

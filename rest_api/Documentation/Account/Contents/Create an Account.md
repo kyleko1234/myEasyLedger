@@ -12,6 +12,9 @@ The id of the type for this account.
 
 - **accountSubtypeId (optional `Long`)**<br/>
 The id of the subtype for this account.
+
+- **organizationId (`Long`)** <br/>
+The id of the organization that this account belongs to.
 ___
 
 #### Returns
@@ -23,9 +26,10 @@ ___
 Body:
 ```json
 {
-    "accountName": "Cash",
+    "accountName": "Personal Cash",
     "accountTypeId": 1,
     "accountSubtypeId": 1,
+	"organizationId": 1
 }
 ```
 <br/>
@@ -35,10 +39,12 @@ Body:
 ```json
 {
     "accountId": 1,
-    "accountName": "Cash",
+    "accountName": "Personal Cash",
     "accountTypeId": 1,
     "accountTypeName": "Assets",
     "accountSubtypeId": 1,
-    "accountSubtypeName": "Cash"
+    "accountSubtypeName": "Cash",
+    "organizationId": 1,
+    "organizationName": "Sample organization"
 }
 ```

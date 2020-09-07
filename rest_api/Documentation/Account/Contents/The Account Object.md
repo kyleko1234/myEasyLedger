@@ -18,15 +18,24 @@ The id of the subtype for this account.
 
 - **accountSubtypeName (optional `String` 40)**<br/>
 The name of the subtype for this account.
-__
+
+- **organizationId (`Long`)** <br/>
+The id of the organization that this account belongs to.
+
+- **organizationName (`String`)** <br/>
+The name of the organization that this account belongs to.
+
+___
 #### Sample Object
 ```json
 {
     "accountId": 1,
-    "accountName": "Cash",
+    "accountName": "Personal Cash",
     "accountTypeId": 1,
     "accountTypeName": "Assets",
     "accountSubtypeId": 1,
-    "accountSubtypeName": "Cash"
+    "accountSubtypeName": "Cash",
+    "organizationId": 1,
+    "organizationName": "Sample organization"
 }
 ```

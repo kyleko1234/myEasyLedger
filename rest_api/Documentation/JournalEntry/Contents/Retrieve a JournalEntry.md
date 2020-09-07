@@ -1,30 +1,24 @@
-### The Entry Object
+### Retrieve a JournalEntry
+Endpoint: `GET /journalEntry/{id}`
+
+Retrieves an existing entry using the supplied id.
 ___
-#### Attributes
-- **entryId (`Long`)**<br/>
-Unique identifier for the object.
-
-- **entryDate (`LocalDate`)**<br/>
-Date for the entry, supplied by the user, in “YYYY-MM-DD” format.
-
-- **description (`String` 255)**<br/>
-A description for this entry, up to 255 characters.
-
-- **personId (`Long`)**<br/>
-Id of the user that last modified this entry.
-
-- **organizationId (`Long`)**<br/>
-Id of the organization that this entry belongs to. 
-
-- **lineItems (`ArrayList<LineItem>`)**<br/>
-A list of LineItem objects that this entry contains. Each entry’s LineItems must be balanced; that is, total credit amounts must equal total debit amounts.
+#### Request Body Parameters
+None.
+___ 
+#### Returns
+Returns HTTP 200 and an entry object if a valid id was supplied, otherwise returns an HTTP 404 error.
 ___
-#### Sample Object
+#### Sample Request
+`GET /journalEntry/1`
+<br />
+
+#### Sample Response
 ```json
 {
-    "entryId": 1,
-    "entryDate": "2020-04-20",
-    "description": "cheese shopping at whole foods",
+    "journalEntryId": 1,
+    "journalEntryDate": "2020-04-11",
+    "description": "Grocery for the week",
     "personId": 1,
     "organizationId": 1,
     "lineItems": [
@@ -39,13 +33,13 @@ ___
             "categoryId": 1,
             "categoryName": "Grocery",
             "description": "Grocery expenses",
-            "entryId": 1,
+            "journalEntryId": 1,
             "isCredit": false,
             "lineItemId": 1
         },
         {
             "accountId": 1,
-            "accountName": "Cash",
+            "accountName": "Personal Cash",
             "accountSubtypeId": 1,
             "accountSubtypeName": "Cash",
             "accountTypeId": 1,
@@ -54,10 +48,10 @@ ___
             "categoryId": null,
             "categoryName": null,
             "description": "Cash payment for groceries",
-            "entryId": 1,
+            "journalEntryId": 1,
             "isCredit": true,
             "lineItemId": 2
         }
     ]
 }
- ```
+```

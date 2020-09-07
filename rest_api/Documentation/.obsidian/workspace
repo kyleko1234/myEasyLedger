@@ -6,11 +6,10 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Category/Contents/Update a Category.md",
             "mode": "source"
           }
         },
@@ -19,10 +18,11 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Category/Contents/Update a Category.md",
             "mode": "preview"
           }
         },
@@ -75,7 +75,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md"
+                "file": "Category/Contents/Update a Category.md"
               }
             }
           }
@@ -87,10 +87,10 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Category/Contents/Update a Category.md",
     "Easy Ledger.md",
-    "AccountType/Contents/List All AccountTypes.md",
-    "AccountType/AccountType.md",
-    "AccountType/Contents/The AccountType Object.md",
-    "List All AccountTypes.md"
+    "Category/Category.md",
+    "Untitled.md",
+    "Category/Contents/Retrieve a Category.md"
   ]
 }

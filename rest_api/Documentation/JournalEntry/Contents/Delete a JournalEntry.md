@@ -1,7 +1,7 @@
-### Delete an entry
-Endpoint: `DELETE /entry/{id}`
+### Delete a  JournalEntry
+Endpoint: `DELETE /journalEntry/{id}`
 
-Deletes an entry and all the line items contained in that entry using the specified entry id.
+Deletes a journal entry and all the line items contained in that entry using the specified entry id.
 ___
 #### Parameters
 None
@@ -12,7 +12,7 @@ HTTP 200 and JSON containing “deleted : true” if valid id, otherwise returns
 ___
 
 #### Sample Request
-`DELETE /entry/3`
+`DELETE /journalEntry/3`
 <br />
 
 #### Sample Response
