@@ -10,7 +10,6 @@ ___
 - [[Update an Organization]]
 - [[Delete an Organization]]
 - [[List All Organizations]]
-- [[List All JournalEntries for an Organization]]
 - [[List All Persons in an Organization]]
 
 

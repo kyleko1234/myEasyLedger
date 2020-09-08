@@ -47,15 +47,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		}
 )	
 @NamedNativeQuery( //retrieves all entries and maps them into EntryViewModels
-		name = "JournalEntry.getAllJournalEntryViewModels",
+		name = "JournalEntry.getAllJournalEntryViewModelsForOrganization",
 		query = "SELECT journal_entry_id AS journalEntryId, "
 					+ "journal_entry_date AS journalEntryDate, "
 					+ "journal_entry.description AS description, "
 					+ "sum(CASE line_item.is_credit WHEN false THEN line_item.amount END) AS debitAmount, "
 					+ "sum(CASE line_item.is_credit WHEN true THEN line_item.amount END) AS creditAmount "
-				+ "FROM journal_entry,line_item WHERE line_item.journal_entry_id = journal_entry.id "
+				+ "FROM journal_entry,line_item "
+				+ "WHERE line_item.journal_entry_id = journal_entry.id AND journal_entry.organization_id = ? "
 				+ "GROUP BY journal_entry_id, journal_entry_date, journal_entry.description "
-				+ "ORDER BY journal_entry_date DESC ",
+				+ "ORDER BY journal_entry_date DESC, journal_entry_id DESC ",
 		resultSetMapping = "journalEntryViewModelMapping"
 )
 @SqlResultSetMapping(//sqlresultsetmapping for counting query
@@ -63,8 +64,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		columns = @ColumnResult(name = "count"))
 
 @NamedNativeQuery( //query to count number of entries in order to use Pageable on Entry.getAllEntryViewModels
-		name = "JournalEntry.getAllJournalEntryViewModels.count",
-		query = "SELECT count(*) AS count from journal_entry",
+		name = "JournalEntry.getAllJournalEntryViewModelsForOrganization.count",
+		query = "SELECT count(*) AS count from journal_entry WHERE journal_entry.id = ? ",
 		resultSetMapping = "SqlResultSetMapping.count"
 )
 

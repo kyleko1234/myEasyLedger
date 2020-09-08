@@ -10,7 +10,7 @@ import LineItemTable from './line-item-table';
 // Let's add a fetchData method to our Table component that will be used to fetch
 // new data when pagination state changes
 // We can also add a loading state to let our table know it's loading new data
-function TableOfEntries({
+function TableOfJournalEntries({
   columns,
   data,
   fetchData,
@@ -47,24 +47,24 @@ function TableOfEntries({
     usePagination
   )
 
-  const [entryExpanded, setEntryExpanded] = React.useState(false); //Whether or not the modal  is shown
-  const toggleEntryExpanded = () => setEntryExpanded(!entryExpanded); //Toggles modal on or off
+  const [journalEntryExpanded, setJournalEntryExpanded] = React.useState(false); //Whether or not the modal  is shown
+  const toggleJournalEntryExpanded = () => setJournalEntryExpanded(!journalEntryExpanded); //Toggles modal on or off
   const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
-  const expandEntry = i => {
-    fetchEntry(i);
-    toggleEntryExpanded();
+  const expandJournalEntry = i => {
+    fetchJournalEntry(i);
+    toggleJournalEntryExpanded();
   }
-  const [entryDescription, setEntryDescription] = React.useState();
-  const [entryDate, setEntryDate] = React.useState('no');
+  const [journalEntryDescription, setJournalEntryDescription] = React.useState();
+  const [journalEntryDate, setJournalEntryDate] = React.useState('no');
 
   const API_URL = 'http://localhost:8080/v0.1';
-
-  const fetchEntry = i => {
-    const url = `${API_URL}/entry/${i}`;
+  
+  const fetchJournalEntry = i => {
+    const url = `${API_URL}/journalEntry/${i}`;
     axios.get(url).then(response => {
-        var entry = response.data;
+        var journalEntry = response.data;
         var formattedLineItems = [];
-        entry.lineItems.forEach( lineItem => {
+        journalEntry.lineItems.forEach( lineItem => {
           var formattedLineItem = {
             lineItemId: lineItem.lineItemId,
             accountName: lineItem.accountName,
@@ -76,8 +76,8 @@ function TableOfEntries({
           formattedLineItems.push(formattedLineItem);
         })
         setLineItemData(formattedLineItems);
-        setEntryDescription(entry.description);
-        setEntryDate(entry.entryDate);
+        setJournalEntryDescription(journalEntry.description);
+        setJournalEntryDate(journalEntry.journalEntryDate);
       })
       .catch(console.log);
   }
@@ -115,7 +115,7 @@ function TableOfEntries({
           {page.map((row, i) => {
             prepareRow(row)
             return (
-              <tr style={{cursor: "pointer"}} onClick={() => expandEntry(data[i].entryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
+              <tr style={{cursor: "pointer"}} onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
@@ -126,14 +126,14 @@ function TableOfEntries({
       </table>
 
       {/* Modal that opens when a row in the table is clicked */}
-      <Modal isOpen={entryExpanded} toggle={() => toggleEntryExpanded()}size="lg" style={{maxWidth: '1600px', width: '80%', margin: 'auto'}}>
-          <ModalHeader toggle={() => toggleEntryExpanded()} className="bg-dark text-white">Journal Entry</ModalHeader>
+      <Modal isOpen={journalEntryExpanded} toggle={() => toggleJournalEntryExpanded()}size="lg" style={{maxWidth: '1600px', width: '80%', margin: 'auto'}}>
+          <ModalHeader toggle={() => toggleJournalEntryExpanded()} className="bg-dark text-white">Journal Entry</ModalHeader>
           <ModalBody>
-            <LineItemTable data={lineItemData} entryDate={entryDate} entryDescription={entryDescription}></LineItemTable>
+            <LineItemTable data={lineItemData} journalEntryDate={journalEntryDate} journalEntryDescription={journalEntryDescription}></LineItemTable>
           </ModalBody>
           <ModalFooter>
             <button className="btn btn-primary">Action</button>
-            <button className="btn btn-white" onClick={() => toggleEntryExpanded()}>Close</button>
+            <button className="btn btn-white" onClick={() => toggleJournalEntryExpanded()}>Close</button>
           </ModalFooter>
       </Modal>
 
@@ -203,5 +203,5 @@ function TableOfEntries({
   )
 }
 
-export default TableOfEntries
+export default TableOfJournalEntries
 

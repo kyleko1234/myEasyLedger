@@ -37,8 +37,10 @@ import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
+import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.JournalEntryRepository;
 import com.easyledger.api.repository.LineItemRepository;
+import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.service.JournalEntryService;
 import com.easyledger.api.service.LineItemService;
 import com.easyledger.api.viewmodel.JournalEntryViewModel;
@@ -51,14 +53,16 @@ public class JournalEntryController {
 	private JournalEntryService journalEntryService;
 	private LineItemService lineItemService;
 	private LineItemRepository lineItemRepo;
+	private OrganizationRepository organizationRepo;
 
 	public JournalEntryController(JournalEntryRepository journalEntryRepo, JournalEntryService journalEntryService, 
-			LineItemService lineItemService, LineItemRepository lineItemRepo) {
+			LineItemService lineItemService, LineItemRepository lineItemRepo, OrganizationRepository organizationRepo) {
 		super();
 		this.journalEntryRepo = journalEntryRepo;
 		this.journalEntryService = journalEntryService;
 		this.lineItemService = lineItemService;
 		this.lineItemRepo = lineItemRepo;
+		this.organizationRepo = organizationRepo;
 	}
 
 
@@ -72,9 +76,12 @@ public class JournalEntryController {
         return journalEntryDtos;
     }
 	
-	@GetMapping(path = "/journalEntryViewModel")
-	public Page<JournalEntryViewModel> getAllJournalEntryViewModels(Pageable pageable)  {
-		return journalEntryRepo.getAllJournalEntryViewModels(pageable);
+	@GetMapping(path = "organization/{id}/journalEntryViewModel")
+	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganization(
+			@PathVariable(value = "id") Long organizationId, Pageable pageable) throws ResourceNotFoundException {
+		organizationRepo.findById(organizationId)
+			.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+		return journalEntryRepo.getAllJournalEntryViewModelsForOrganization(organizationId, pageable);
 	}
 
 	

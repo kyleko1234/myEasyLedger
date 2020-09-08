@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTable, useSortBy } from 'react-table'
 
-function LineItemTable({ data, entryDescription, entryDate }) {
+function LineItemTable({ data, journalEntryDescription, journalEntryDate }) {
 
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
@@ -42,10 +42,10 @@ function LineItemTable({ data, entryDescription, entryDate }) {
   return (
     <>
       <div className="row m-b-10">
-        <div className="col-md-1"><strong>Date</strong></div> <div className="col-md-11">{entryDate}</div>
+        <div className="col-md-1"><strong>Date</strong></div> <div className="col-md-11">{journalEntryDate}</div>
       </div>
       <div className="row m-b-10">
-        <div className="col-md-1"><strong>Description</strong></div> <div className="col-md-11">{entryDescription}</div>
+        <div className="col-md-1"><strong>Description</strong></div> <div className="col-md-11">{journalEntryDescription}</div>
       </div>
       <br></br>
       

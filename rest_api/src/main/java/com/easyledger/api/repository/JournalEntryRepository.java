@@ -21,7 +21,7 @@ public interface JournalEntryRepository extends JpaRepository<JournalEntry, Long
 	 * total sum of credit LineItems, and total sum of debit LineItems. Uses a named native query defined 
 	 * in Entry.java.*/
 	@Query(nativeQuery = true)
-	public Page<JournalEntryViewModel> getAllJournalEntryViewModels(Pageable pageable);
+	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganization(Long organizationId, Pageable pageable);
 	
 
 }

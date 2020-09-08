@@ -68,20 +68,6 @@ public class OrganizationController {
 		return dtos;
 	}
 	
-	@GetMapping("/organization/{id}/journalEntry")
-	public HashSet<JournalEntryDTO> getJournalEntriesForOrganization(@PathVariable(value = "id") Long organizationId) 
-		throws ResourceNotFoundException{
-		Organization organization = organizationRepo.findById(organizationId)
-	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId)); 
-		HashSet<JournalEntry> journalEntries = new HashSet<JournalEntry>(organization.getJournalEntries());
-		HashSet<JournalEntryDTO> dtos = new HashSet<JournalEntryDTO>();
-		for (JournalEntry journalEntry : journalEntries) {
-			dtos.add(new JournalEntryDTO(journalEntry));
-		}
-		return dtos;
-	}
-	
-	
 	@PostMapping("/organization")
     @ResponseStatus(HttpStatus.CREATED)
 	public Organization createOrganization(@Valid @RequestBody Organization organization)

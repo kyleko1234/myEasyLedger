@@ -8,4 +8,4 @@ ___
 - [[Update a JournalEntry]]
 - [[Delete a  JournalEntry]]
 - [[List All JournalEntries]]
-- [[List All JournalEntries as JournalEntryViewModels]]
+- [[List All JournalEntries Belonging to an Organization as JournalEntryViewModels]]

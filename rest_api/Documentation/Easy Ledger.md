@@ -19,7 +19,7 @@ ___
 - [[Delete a Person|DELETE /person/{id}]]
 <br/> <br/>
 - [[List All JournalEntries|GET /journalEntry]]
-- [[List All JournalEntries as JournalEntryViewModels|GET /journalEntryViewModel]]
+- [[List All JournalEntries Belonging to an Organization as JournalEntryViewModels|GET /organization/{id}/journalEntryViewModel]]
 - [[Update a JournalEntry|PUT /journalEntry/{id}]]
 - [[Create a JournalEntry|POST /journalEntry]]
 - [[Delete a JournalEntry| DELETE /entry/{id}]]
@@ -29,7 +29,6 @@ ___
 <br/><br/>
 - [[List All Organizations|GET /organization]]
 - [[Retrieve an Organization|GET /organization/{id}]]
-- [[List All JournalEntries for an Organization|GET    /organization/{id}/entry]]
 - [[List All Persons in an Organization|GET /organization/{id}/person]]
 - [[Create an Organization|POST /organization]]
 - [[Update an Organization| PUT /organization/{id}]]

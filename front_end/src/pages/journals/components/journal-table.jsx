@@ -1,5 +1,5 @@
 import React from 'react';
-import TableOfEntries from '../../../components/table/table-of-entries';
+import TableOfJournalEntries from '../../../components/table/table-of-journal-entries';
 import axios from 'axios';
 
 
@@ -7,7 +7,7 @@ function JournalTable() {
 
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
-      { Header: 'Date', accessor: 'entryDate'},
+      { Header: 'Date', accessor: 'journalEntryDate'},
       { Header: 'Description', accessor: 'description'},
       { Header: 'Debit', accessor: 'debitAmount'},
       { Header: 'Credit', accessor: 'creditAmount'},
@@ -15,7 +15,8 @@ function JournalTable() {
     []
   )
   const API_URL = 'http://localhost:8080/v0.1';
-  
+  const ORGANIZATION_ID = '1';
+
   // We'll start our table without any data
   const [data, setData] = React.useState([])
   const [pageCount, setPageCount] = React.useState(0)
@@ -26,7 +27,7 @@ function JournalTable() {
     // This will get called when the table needs new data
         
     //fetch data from Easy Ledger API
-    const url = `${API_URL}/entryViewModel/?page=${pageIndex}&size=${pageSize}`;
+    const url = `${API_URL}/organization/${ORGANIZATION_ID}/journalEntryViewModel/?page=${pageIndex}&size=${pageSize}`;
     axios.get(url).then(response => {
         var dataContent = response.data.content;
         dataContent.forEach( entry => {
@@ -41,7 +42,7 @@ function JournalTable() {
   }, [])
   
   return (
-      <TableOfEntries
+      <TableOfJournalEntries
         columns={columns}
         data={data}
         fetchData={fetchData}
