@@ -20,6 +20,16 @@ public class CategoryDTO {
 		this.organizationName = category.getOrganization().getName();
 	}
 	
+	public CategoryDTO(Integer categoryId, String categoryName, Integer accountTypeId, String accountTypeName,
+			Integer organizationId, String organizationName) {
+		this.categoryId = Long.valueOf(categoryId);
+		this.categoryName = categoryName;
+		this.accountTypeId = Long.valueOf(accountTypeId);
+		this.accountTypeName = accountTypeName;
+		this.organizationId = Long.valueOf(organizationId);
+		this.organizationName = organizationName;
+	}
+	
 	public CategoryDTO() {
 	}
 

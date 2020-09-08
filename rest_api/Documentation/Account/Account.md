@@ -8,3 +8,4 @@ ___
 - [[Update an Account]]
 - [[Delete an Account]]
 - [[List All Accounts]]
+- [[List All Accounts Belonging to an Organization]]

@@ -24,6 +24,7 @@ import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.repository.AccountRepository;
+import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.service.AccountService;
 
 @RestController
@@ -32,11 +33,13 @@ public class AccountController {
 
 	private AccountRepository accountRepo;
 	private AccountService accountService;
+	private OrganizationRepository organizationRepo;
 	
-    public AccountController (AccountRepository accountRepo, AccountService accountService) {
+    public AccountController (AccountRepository accountRepo, AccountService accountService, OrganizationRepository organizationRepo) {
 		super();
 		this.accountRepo = accountRepo;
 		this.accountService = accountService;
+		this.organizationRepo = organizationRepo;
 	}
 
 	@GetMapping("/account")
@@ -56,6 +59,14 @@ public class AccountController {
           .orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
         AccountDTO dto = new AccountDTO(account);
         return ResponseEntity.ok().body(dto);
+    }
+    
+    @GetMapping("/organization/{id}/account")
+    public List<AccountDTO> getAllAccountsForOrganization(@PathVariable(value = "id") Long organizationId)
+    	throws ResourceNotFoundException {
+    	organizationRepo.findById(organizationId)
+    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+    	return accountRepo.getAllAccountsForOrganization(organizationId);
     }
     
     @PostMapping("/account")

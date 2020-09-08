@@ -36,6 +36,7 @@ ___
 <br/><br/>
 - [[List All Accounts|GET /account]]
 - [[Retrieve an Account| GET /account/{id}]]
+- [[List All Accounts Belonging to an Organization|GET /organization/{id}/account]]
 - [[Update an Account|PUT /account/{id}]]
 - [[Create an Account|POST /account]]
 - [[Delete an Account|DELETE /account/{id}]]
@@ -53,6 +54,7 @@ ___
 <br/><br/>
 - [[List All Categories|GET /category]]
 - [[Retrieve a Category|GET /category/{id}]]
+- [[List All Categories Belonging to an Organization|GET /organization/{id}/category]]
 - [[Create a Category|POST /category]]
 - [[Update a Category|PUT /category/{id}]]
 - [[Delete a Category|DELETE /category/{id}]]

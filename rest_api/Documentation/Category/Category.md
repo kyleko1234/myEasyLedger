@@ -10,6 +10,8 @@ ___
 - [[Update a Category]]
 - [[Delete a Category]]
 - [[List All Categories]]
+- [[List All Categories Belonging to an Organization]]
+
 
 
 

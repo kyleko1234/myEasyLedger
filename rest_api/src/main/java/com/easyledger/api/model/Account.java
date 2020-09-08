@@ -4,16 +4,59 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
+import com.easyledger.api.dto.AccountDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@SqlResultSetMapping( //maps native SQL query to CategoryDTO class
+		name = "accountDTOMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = AccountDTO.class,
+						columns = {
+								@ColumnResult(name = "accountId"),
+								@ColumnResult(name = "accountName"),
+								@ColumnResult(name = "accountSubtypeId"),
+								@ColumnResult(name = "accountSubtypeName"),
+								@ColumnResult(name = "accountTypeId"),
+								@ColumnResult(name = "accountTypeName"),
+								@ColumnResult(name = "organizationId"),
+								@ColumnResult(name = "organizationName")
+						}
+				)
+		}
+)	
+@NamedNativeQuery( //retrieves all entries and maps them into EntryViewModels
+		name = "Account.getAllAccountsForOrganization",
+		query = "SELECT account.id AS accountId, "
+					+ "account.name AS accountName, "
+					+ "account_subtype.id AS accountSubtypeId, "
+					+ "account_subtype.name AS accountSubtypeName, "
+					+ "account_type.id AS accountTypeId, "
+					+ "account_type.name AS accountTypeName, "
+					+ "organization.id AS organizationId, "
+					+ "organization.name AS organizationName "
+				+ "FROM account "
+				+ "LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id "
+					+ "LEFT JOIN account_type ON account.account_type_id = account_type.id "
+					+ "LEFT JOIN organization ON account.organization_id = organization.id "
+				+ "WHERE organization.id = ? "
+				+ "ORDER BY accountTypeId ASC, accountId DESC",
+		resultSetMapping = "accountDTOMapping"
+)
+
 
 @Entity
 @Table(name = "account")

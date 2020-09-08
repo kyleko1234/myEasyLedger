@@ -24,6 +24,7 @@ import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Category;
 import com.easyledger.api.repository.CategoryRepository;
+import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.service.CategoryService;
 
 @RestController
@@ -32,11 +33,13 @@ public class CategoryController {
 
 	private CategoryRepository categoryRepo;
 	private CategoryService categoryService;
+	private OrganizationRepository organizationRepo;
 
-    public CategoryController(CategoryRepository categoryRepo, CategoryService categoryService) {
+    public CategoryController(CategoryRepository categoryRepo, CategoryService categoryService, OrganizationRepository organizationRepo) {
 		super();
 		this.categoryRepo = categoryRepo;
 		this.categoryService = categoryService;
+		this.organizationRepo = organizationRepo;
 	}
 
 	@GetMapping("/category")
@@ -57,6 +60,16 @@ public class CategoryController {
         CategoryDTO dto = new CategoryDTO(category);
         return ResponseEntity.ok().body(dto);
     }
+    
+    @GetMapping("/organization/{id}/category")
+    public List<CategoryDTO> getAllCategoriesForOrganization(@PathVariable(value = "id") Long organizationId) 
+    	throws ResourceNotFoundException {
+    	organizationRepo.findById(organizationId)
+        .orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+    	return categoryRepo.getAllCategoriesForOrganization(organizationId);
+    }
+    
+    
     
     @PostMapping("/category")
     @ResponseStatus(HttpStatus.CREATED)

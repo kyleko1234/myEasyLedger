@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Organization/Organization.md",
+            "file": "Easy Ledger.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Organization/Organization.md",
+            "file": "Easy Ledger.md",
             "mode": "preview"
           }
         },
@@ -75,7 +75,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Organization/Organization.md"
+                "file": "Easy Ledger.md"
               }
             }
           }
@@ -87,10 +87,10 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "Organization/Organization.md",
     "Easy Ledger.md",
-    "JournalEntry/JournalEntry.md",
-    "JournalEntry/Contents/List All JournalEntries as JournalEntryViewModels.md",
+    "Account/Account.md",
+    "Untitled.md",
+    "Category/Category.md",
     "Category/Contents/Update a Category.md"
   ]
 }

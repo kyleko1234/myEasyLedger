@@ -25,6 +25,20 @@ public class AccountDTO {
 		this.organizationName = account.getOrganization().getName();
 	}
 	
+	public AccountDTO(Integer accountId, String accountName, Integer accountSubtypeId, String accountSubtypeName,
+			Integer accountTypeId, String accountTypeName, Integer organizationId, String organizationName) {
+		this.accountId = Long.valueOf(accountId);
+		this.accountName = accountName;
+		this.accountTypeId = Long.valueOf(accountTypeId);
+		this.accountTypeName = accountTypeName;
+		if (accountSubtypeId != null) {
+			this.accountSubtypeId = Long.valueOf(accountSubtypeId);
+			this.accountSubtypeName = accountSubtypeName;
+		}
+		this.organizationId = Long.valueOf(organizationId);
+		this.organizationName = organizationName;
+	}
+
 	public AccountDTO() {
 	}
 
