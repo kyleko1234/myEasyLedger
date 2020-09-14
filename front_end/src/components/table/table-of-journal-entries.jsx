@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import LineItemTable from './line-item-table';
+import LineItemForm from './line-item-form';
 
 //Generates a table with react-table 7 using pagination
 
@@ -15,7 +16,10 @@ function TableOfJournalEntries({
   data,
   fetchData,
   pageCount: controlledPageCount,
-  elementCount
+  elementCount,
+  organizationId,
+  API_URL,
+  localization
 }) {
   const {
     getTableProps,
@@ -49,15 +53,20 @@ function TableOfJournalEntries({
 
   const [journalEntryExpanded, setJournalEntryExpanded] = React.useState(false); //Whether or not the modal  is shown
   const toggleJournalEntryExpanded = () => setJournalEntryExpanded(!journalEntryExpanded); //Toggles modal on or off
-  const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
-  const expandJournalEntry = i => {
+  const expandJournalEntry = i => { //fetches a journalEntry from the API and toggles the modal on
     fetchJournalEntry(i);
     toggleJournalEntryExpanded();
   }
-  const [journalEntryDescription, setJournalEntryDescription] = React.useState();
-  const [journalEntryDate, setJournalEntryDate] = React.useState('no');
+  const [editMode, setEditMode] = React.useState(false); //Toggle editmode for an expanded entry
+  const toggleEditMode = () => setEditMode(!editMode);
+  
 
-  const API_URL = 'http://localhost:8080/v0.1';
+  const [journalEntryId, setJournalEntryId] = React.useState(null);
+  const [journalEntryDescription, setJournalEntryDescription] = React.useState('');
+  const [journalEntryDate, setJournalEntryDate] = React.useState('');
+  const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
+  const [categories, setCategories] = React.useState([]);
+  const [accounts, setAccounts] = React.useState([]);
   
   const fetchJournalEntry = i => {
     const url = `${API_URL}/journalEntry/${i}`;
@@ -68,18 +77,35 @@ function TableOfJournalEntries({
           var formattedLineItem = {
             lineItemId: lineItem.lineItemId,
             accountName: lineItem.accountName,
+            accountId: lineItem.accountId,
+            accountTypeId: lineItem.accountTypeId,
             description: lineItem.description,
-            debitAmount: (lineItem.isCredit ? null : lineItem.amount.toFixed(2)),
-            creditAmount: (lineItem.isCredit ? lineItem.amount.toFixed(2) : null),
-            categoryName: lineItem.categoryName
+            debitAmount: (lineItem.isCredit ? null : lineItem.amount),
+            creditAmount: (lineItem.isCredit ? lineItem.amount : null),
+            categoryName: lineItem.categoryName,
+            categoryId: lineItem.categoryId
           };
           formattedLineItems.push(formattedLineItem);
         })
+        formattedLineItems.sort((a, b) => (a.lineItemId > b.lineItemId) ? 1 : -1) //sort by LineItemId to preserve insertion order
         setLineItemData(formattedLineItems);
+        setJournalEntryId(journalEntry.journalEntryId);
         setJournalEntryDescription(journalEntry.description);
         setJournalEntryDate(journalEntry.journalEntryDate);
       })
       .catch(console.log);
+  }
+
+  const fetchCategoriesAndAccounts = i => {
+      axios.get(`${API_URL}/organization/${i}/category`).then(response => {
+      const categories = response.data;
+      setCategories(categories);
+    })
+    .catch(console.log);
+    axios.get(`${API_URL}/organization/${i}/account`).then(response => {
+      const accounts = response.data;
+      setAccounts(accounts);
+    })
   }
 
   // Listen for changes in pagination and use the state to fetch our new data
@@ -87,9 +113,25 @@ function TableOfJournalEntries({
     fetchData({ pageIndex, pageSize })
   }, [fetchData, pageIndex, pageSize])
 
-  // Render the UI for your table
+  React.useEffect(() => {
+    fetchCategoriesAndAccounts(organizationId);
+  }, [organizationId])
+
+  //format table cell value based on column name and locale
+  const formatCellValue = cell => {
+    let columnId = cell.column.id;
+    switch (columnId) {
+      case "creditAmount":
+      case "debitAmount":
+        return (new Intl.NumberFormat(localization.locale, { style: 'currency', currency:localization.currency }).format(cell.value));
+      default: 
+        return (cell.value);
+    }
+  }
 
   
+
+  // Render the UI for your table
   return (
     <><div className="table-responsive">
       <table  className="table table-hover m-b-0 text-inverse" {...getTableProps()}>
@@ -117,7 +159,7 @@ function TableOfJournalEntries({
             return (
               <tr style={{cursor: "pointer"}} onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  return <td {...cell.getCellProps()}>{formatCellValue(cell)}</td>
                 })}
               </tr>
             )
@@ -126,14 +168,65 @@ function TableOfJournalEntries({
       </table>
 
       {/* Modal that opens when a row in the table is clicked */}
-      <Modal isOpen={journalEntryExpanded} toggle={() => toggleJournalEntryExpanded()}size="lg" style={{maxWidth: '1600px', width: '80%', margin: 'auto'}}>
-          <ModalHeader toggle={() => toggleJournalEntryExpanded()} className="bg-dark text-white">Journal Entry</ModalHeader>
-          <ModalBody>
-            <LineItemTable data={lineItemData} journalEntryDate={journalEntryDate} journalEntryDescription={journalEntryDescription}></LineItemTable>
+      <Modal 
+        isOpen={journalEntryExpanded} 
+        toggle={() => toggleJournalEntryExpanded()}
+        size="lg" style={{maxWidth: '1600px', width: '80%', margin: 'auto'}}
+        backdrop={editMode ? "static" : true}
+      >
+          <ModalHeader className="bg-dark text-white">Journal Entry</ModalHeader>
+          <ModalBody className="bg-light">
+            {editMode ?
+              <LineItemForm 
+                data={lineItemData} setLineItemData={setLineItemData}
+                journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
+                journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
+                categories={categories} 
+                accounts={accounts}
+                localization={localization}>
+              </LineItemForm> :
+              <LineItemTable
+                data={lineItemData}
+                journalEntryDate={journalEntryDate}
+                journalEntryDescription={journalEntryDescription}
+                localization={localization}>
+              </LineItemTable>
+            }
           </ModalBody>
-          <ModalFooter>
-            <button className="btn btn-primary">Action</button>
-            <button className="btn btn-white" onClick={() => toggleJournalEntryExpanded()}>Close</button>
+          <ModalFooter className="justify-content-between"  style={{backgroundColor: "#e4e4e4"}}>
+            {editMode ? 
+              <>
+                <div>
+                  <button className="btn btn-red" style={{width: "10ch"}}>Delete</button>
+                </div>
+                <div>
+                  <button className="btn btn-primary" 
+                    style={{width: "10ch"}} 
+                    onClick={() => {
+                      console.log(journalEntryId);
+                      console.log(journalEntryDate);
+                      console.log(journalEntryDescription);
+                      console.log(lineItemData);
+                  }}>
+                    Print?</button>
+                  <button 
+                    className="btn btn-white m-l-10" 
+                    style={{width: "10ch"}}
+                    onClick={() => {
+                      toggleEditMode();
+                      fetchJournalEntry(journalEntryId);
+                    }}>
+                    Cancel</button>
+                </div>
+              </> :
+                <>
+                  <div></div>
+                  <div>
+                    <button className="btn btn-primary" onClick={() => toggleEditMode()} style={{width: "10ch"}}>Edit</button>
+                    <button className="btn btn-white m-l-10" onClick={() => toggleJournalEntryExpanded()} style={{width: "10ch"}}>Close</button>
+                  </div>
+              </>
+            }
           </ModalFooter>
       </Modal>
 
@@ -143,21 +236,7 @@ function TableOfJournalEntries({
         This is just a very basic UI implementation:
       */}
     <div className="row px-3 py-2">
-        {/*<span >
-            <button className="btn btn-white " onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                {'First'}
-            </button>{' '}
-            <button className="btn btn-white" onClick={() => previousPage()} disabled={!canPreviousPage}>
-                {'Previous'}
-            </button>{' '}
-            <button className="btn btn-white" onClick={() => nextPage()} disabled={!canNextPage}>
-                {'Next'}
-            </button>{' '}
-            <button className="btn btn-white" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                {'Last'}
-            </button>{' '}
-        </span> */}
-        
+
                 <ul className="pager m-t-0 m-b-0">
                     <li className={canPreviousPage? "previous" : "previous disabled"}>
                         {canPreviousPage? <Link onClick={() => previousPage()}>&larr; Newer</Link> : null} 
@@ -173,14 +252,6 @@ function TableOfJournalEntries({
                     </li>
                 </ul>
                 
-        
-
-        {/* <span className="p-10" style={{textAlign: "center"}}>
-            Page{' '}
-            <strong>
-                {pageIndex + 1} of {pageOptions.length}
-            </strong>{' '}
-         </span> */}
 
         {/*go to page, page size*/}
         {/*<span className="p-10">
@@ -194,7 +265,6 @@ function TableOfJournalEntries({
                 }}
             /> {' '}
         </span>*/}
-
 
 
     </div>

@@ -24,21 +24,6 @@ ___
         "organizationId": 1,
         "lineItems": [
             {
-                "accountId": 5,
-                "accountName": "Personal Expenses",
-                "accountSubtypeId": null,
-                "accountSubtypeName": null,
-                "accountTypeId": 5,
-                "accountTypeName": "Expenses",
-                "amount": 40.00,
-                "categoryId": 1,
-                "categoryName": "Grocery",
-                "description": "Grocery expenses",
-                "journalEntryId": 1,
-                "isCredit": false,
-                "lineItemId": 1
-            },
-            {
                 "accountId": 1,
                 "accountName": "Personal Cash",
                 "accountSubtypeId": 1,
@@ -52,6 +37,21 @@ ___
                 "journalEntryId": 1,
                 "isCredit": true,
                 "lineItemId": 2
+            },
+            {
+                "accountId": 5,
+                "accountName": "Personal Expenses",
+                "accountSubtypeId": null,
+                "accountSubtypeName": null,
+                "accountTypeId": 5,
+                "accountTypeName": "Expenses",
+                "amount": 40.00,
+                "categoryId": 1,
+                "categoryName": "Grocery",
+                "description": "Grocery expenses",
+                "journalEntryId": 1,
+                "isCredit": false,
+                "lineItemId": 1
             }
         ]
     },
@@ -62,21 +62,6 @@ ___
         "personId": 1,
         "organizationId": 1,
         "lineItems": [
-            {
-                "accountId": 4,
-                "accountName": "Personal BOA Credit Card",
-                "accountSubtypeId": 7,
-                "accountSubtypeName": "Line of Credit",
-                "accountTypeId": 2,
-                "accountTypeName": "Liabilities",
-                "amount": 30.00,
-                "categoryId": null,
-                "categoryName": null,
-                "description": "Card payment for lunch",
-                "journalEntryId": 2,
-                "isCredit": true,
-                "lineItemId": 5
-            },
             {
                 "accountId": 3,
                 "accountName": "Personal Venmo",
@@ -106,6 +91,21 @@ ___
                 "journalEntryId": 2,
                 "isCredit": false,
                 "lineItemId": 3
+            },
+            {
+                "accountId": 4,
+                "accountName": "Personal BOA Credit Card",
+                "accountSubtypeId": 7,
+                "accountSubtypeName": "Line of Credit",
+                "accountTypeId": 2,
+                "accountTypeName": "Liabilities",
+                "amount": 30.00,
+                "categoryId": null,
+                "categoryName": null,
+                "description": "Card payment for lunch",
+                "journalEntryId": 2,
+                "isCredit": true,
+                "lineItemId": 5
             }
         ]
     },
@@ -234,19 +234,19 @@ ___
         "organizationId": 1,
         "lineItems": [
             {
-                "accountId": 1,
-                "accountName": "Personal Cash",
-                "accountSubtypeId": 1,
-                "accountSubtypeName": "Cash",
-                "accountTypeId": 1,
-                "accountTypeName": "Assets",
-                "amount": 40.00,
-                "categoryId": null,
-                "categoryName": null,
-                "description": "whole foods drained my whole wallet",
+                "accountId": 5,
+                "accountName": "Personal Expenses",
+                "accountSubtypeId": null,
+                "accountSubtypeName": null,
+                "accountTypeId": 5,
+                "accountTypeName": "Expenses",
+                "amount": 20.00,
+                "categoryId": 2,
+                "categoryName": "Dining",
+                "description": "bought lunch at whole foods",
                 "journalEntryId": 6,
-                "isCredit": true,
-                "lineItemId": 14
+                "isCredit": false,
+                "lineItemId": 12
             },
             {
                 "accountId": 5,
@@ -264,19 +264,19 @@ ___
                 "lineItemId": 13
             },
             {
-                "accountId": 5,
-                "accountName": "Personal Expenses",
-                "accountSubtypeId": null,
-                "accountSubtypeName": null,
-                "accountTypeId": 5,
-                "accountTypeName": "Expenses",
-                "amount": 20.00,
-                "categoryId": 2,
-                "categoryName": "Dining",
-                "description": "bought lunch at whole foods",
+                "accountId": 1,
+                "accountName": "Personal Cash",
+                "accountSubtypeId": 1,
+                "accountSubtypeName": "Cash",
+                "accountTypeId": 1,
+                "accountTypeName": "Assets",
+                "amount": 40.00,
+                "categoryId": null,
+                "categoryName": null,
+                "description": "whole foods drained my whole wallet",
                 "journalEntryId": 6,
-                "isCredit": false,
-                "lineItemId": 12
+                "isCredit": true,
+                "lineItemId": 14
             }
         ]
     }

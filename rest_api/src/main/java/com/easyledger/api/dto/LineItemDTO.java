@@ -110,10 +110,10 @@ public class LineItemDTO {
 		this.isCredit = isCredit;
 	}
 
-	public BigDecimal getAmount() {
+	public BigDecimal getAmount() { 
 		return amount;
 	}
-
+	
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}

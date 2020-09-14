@@ -16,6 +16,9 @@ The name of the subtype of this LineItem’s account, if it has a subtype.
 - **accountTypeId (`Long`)**<br/>
 The id of the type of the Account that this LineItem affects. Easy Ledger assumes that there are exactly five account types: Assets (1), Liabilities (2), Owner’s Equity (3), Income (4), and Expenses (5).
 
+- **amount (`BigDecimal`)**<br/>
+The amount that this lineItem is recording.
+
 - **accountTypeName (`String` 20)**<br/>
 The name of the type of the Account that this LineItem affects.
 

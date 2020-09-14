@@ -6,7 +6,10 @@ import JournalTable from './components/journal-table'
 
 
 const API_URL = 'http://localhost:8080/v0.1';
-
+const localization = {
+	locale: 'en-US',
+	currency: 'USD'
+}
 
 class Journals extends React.Component {
 	constructor(props) {
@@ -31,7 +34,7 @@ class Journals extends React.Component {
 					<PanelHeader noButton={true}>
 						Accounting Entries
 					</PanelHeader>
-					<JournalTable/>
+					<JournalTable API_URL={API_URL} localization={localization}/>
 				</Panel>
 			</div>
 		)

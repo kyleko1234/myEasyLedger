@@ -1,11 +1,10 @@
 import React from 'react'
-import { useTable, useSortBy } from 'react-table'
+import { useTable } from 'react-table'
 
-function LineItemTable({ data, journalEntryDescription, journalEntryDate }) {
+function LineItemTable({ data, journalEntryDescription, journalEntryDate, localization}) {
 
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
-      { Header: 'id', accessor: 'lineItemId'},
       { Header: 'Description', accessor: 'description'},
       { Header: 'Account', accessor: 'accountName'},
       { Header: 'Category', accessor: 'categoryName'},
@@ -15,11 +14,6 @@ function LineItemTable({ data, journalEntryDescription, journalEntryDate }) {
     []
   )
 
-  const initialSort = React.useMemo(
-    () => [
-      { id: 'lineItemId', desc: false},
-    ],
-    [])
   const {
     getTableProps,
     getTableBodyProps,
@@ -29,15 +23,36 @@ function LineItemTable({ data, journalEntryDescription, journalEntryDate }) {
   } = useTable(
     {
       columns,
-      data,
-      initialState: {
-        sortBy: initialSort,
-        hiddenColumns: ["lineItemId"]
-      }
-    },
-    useSortBy
+      data
+    }
   )
 
+  const sumAmountsInColumn = columnName => {
+    let sum = 0;
+    data.forEach(row => {
+        sum += row[columnName];
+    });
+    if (isNaN(sum)) {
+        return 0
+    } else {
+        return sum;
+    }
+  }
+
+  const formatCell = cell => {
+    let columnId = cell.column.id;
+    switch (columnId) {
+      case "debitAmount":
+      case "creditAmount":
+        if (cell.value) {
+          return (new Intl.NumberFormat(localization.locale, { style: 'currency', currency:localization.currency }).format(cell.value));
+        } else {
+          return null;
+        }
+      default:
+        return cell.value;
+    }
+  }
 
   return (
     <>
@@ -72,13 +87,22 @@ function LineItemTable({ data, journalEntryDescription, journalEntryDate }) {
                 <tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      <td {...cell.getCellProps()}>{formatCell(cell)}</td>
                     )
                   })}
                 </tr>
               )}
           )}
         </tbody>
+        <tfoot>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td></td>
+            <td></td>
+            <td><strong>{new Intl.NumberFormat(localization.locale, { style: 'currency', currency:localization.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
+            <td><strong>{new Intl.NumberFormat(localization.locale, { style: 'currency', currency:localization.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
+          </tr>
+        </tfoot>
       </table>
       </div>
     </>

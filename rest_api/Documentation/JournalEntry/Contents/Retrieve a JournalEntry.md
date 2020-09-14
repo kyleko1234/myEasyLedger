@@ -23,21 +23,6 @@ ___
     "organizationId": 1,
     "lineItems": [
         {
-            "accountId": 5,
-            "accountName": "Personal Expenses",
-            "accountSubtypeId": null,
-            "accountSubtypeName": null,
-            "accountTypeId": 5,
-            "accountTypeName": "Expenses",
-            "amount": 40.00,
-            "categoryId": 1,
-            "categoryName": "Grocery",
-            "description": "Grocery expenses",
-            "journalEntryId": 1,
-            "isCredit": false,
-            "lineItemId": 1
-        },
-        {
             "accountId": 1,
             "accountName": "Personal Cash",
             "accountSubtypeId": 1,
@@ -51,6 +36,21 @@ ___
             "journalEntryId": 1,
             "isCredit": true,
             "lineItemId": 2
+        },
+        {
+            "accountId": 5,
+            "accountName": "Personal Expenses",
+            "accountSubtypeId": null,
+            "accountSubtypeName": null,
+            "accountTypeId": 5,
+            "accountTypeName": "Expenses",
+            "amount": 40.00,
+            "categoryId": 1,
+            "categoryName": "Grocery",
+            "description": "Grocery expenses",
+            "journalEntryId": 1,
+            "isCredit": false,
+            "lineItemId": 1
         }
     ]
 }

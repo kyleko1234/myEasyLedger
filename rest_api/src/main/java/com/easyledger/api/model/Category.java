@@ -44,7 +44,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				+ "FROM category, account_type, organization "
 				+ "WHERE category.organization_id = ? "
 				+ "AND organization.id = category.organization_id "
-					+ "AND account_type.id = category.account_type_id",
+					+ "AND account_type.id = category.account_type_id "
+				+ "ORDER BY category.name",
 		resultSetMapping = "categoryDTOMapping"
 )
 

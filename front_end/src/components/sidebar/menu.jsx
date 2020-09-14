@@ -42,7 +42,7 @@ const Menu = [
       { path: '/table/basic', title: 'Basic Tables' }
     ]
   },
-  { path: '/journals', icon: 'fa fa-list-ol', title: 'Journals' },
+  { path: '/journals', icon: 'fa fa-list-alt', title: 'Journals' },
 /*  { path: '/frontend', icon: 'fa fa-star', title: 'FrontEnd',
     children: [
       { path: '/frontend/one-page-parallax', title: 'One Page Parallax' },

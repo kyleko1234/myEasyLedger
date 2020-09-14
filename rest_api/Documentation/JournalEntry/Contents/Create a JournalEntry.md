@@ -18,15 +18,19 @@ Id of the organization that this entry belongs to.
 
 - **lineItems (`ArrayList<LineItem>`)**<br/>
 List of LineItems to be contained in this entry. Each entry’s LineItems must be balanced; that is, total credit amounts must equal total debit amounts. LineItems require the following attributes:
-    - **accountId (`Long`)**<br/>
+   - **accountId (`Long`)**<br/>
         Account that this LineItem affects.
-    - **amount (`BigDecimal`)**<br/>
+		
+   - **amount (`BigDecimal`)**<br/>
         Amount of money that this LineItem represents.
-    - **categoryId (optional `Long`)**<br/>
-If this is an expense or income LineItem, the type of expense or income it represents.
-    - **description (optional `String` 255)**<br/>
+		
+   - **categoryId (optional `Long`)**<br/>
+        If this is an expense or income LineItem, the type of expense or income it represents.
+
+   - **description (optional `String` 255)**<br/>
         A description for this LineItem.
-    - **isCredit (`boolean`)**<br/>
+		
+   - **isCredit (`boolean`)**<br/>
         True for a credit LineItem, false for a debit.
 ___
 

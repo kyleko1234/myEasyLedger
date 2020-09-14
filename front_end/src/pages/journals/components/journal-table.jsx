@@ -3,7 +3,7 @@ import TableOfJournalEntries from '../../../components/table/table-of-journal-en
 import axios from 'axios';
 
 
-function JournalTable() {
+function JournalTable({API_URL, localization}) {
 
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
@@ -14,7 +14,6 @@ function JournalTable() {
     ],
     []
   )
-  const API_URL = 'http://localhost:8080/v0.1';
   const ORGANIZATION_ID = '1';
 
   // We'll start our table without any data
@@ -31,8 +30,8 @@ function JournalTable() {
     axios.get(url).then(response => {
         var dataContent = response.data.content;
         dataContent.forEach( entry => {
-          entry.debitAmount = entry.debitAmount.toFixed(2);
-          entry.creditAmount = entry.creditAmount.toFixed(2);
+          entry.debitAmount = entry.debitAmount;
+          entry.creditAmount = entry.creditAmount;
         })
         setData(dataContent);
         setPageCount(response.data.totalPages);
@@ -48,6 +47,9 @@ function JournalTable() {
         fetchData={fetchData}
         pageCount={pageCount}
         elementCount={elementCount}
+        organizationId={ORGANIZATION_ID}
+        API_URL={API_URL}
+        localization={localization}
       />
   )
 }
