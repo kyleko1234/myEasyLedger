@@ -175,27 +175,20 @@ function TableOfJournalEntries({
     let missingAccount = false;
     let missingCategory = false;
     let accountTypesWithCategories = [3, 4, 5];
-    lineItemData.forEach(lineItem => { // check for missing fields, and sum debits and credits.
-      //check to see if we have either amount missing or description missing, but not both.
-      //if both amount and description missing we consider this lineItem to be intentionally empty and delete it when sending to server
+    lineItemData.forEach(lineItem => { // check for missing fields within lineItems, and sum debits and credits.
       if (!lineItem.description) {
-        if (lineItem.creditAmount || lineItem.debitAmount) {
-          missingDescription = true;
-        }
+        missingDescription = true;
       }
       if (!lineItem.creditAmount && !lineItem.debitAmount) { 
-        if (lineItem.description) {
-          missingAmount = true;
-        }
+        missingAmount = true;
       }
-      if (lineItem.description || lineItem.creditAmount || lineItem.debitAmount) {
-        if (!lineItem.accountId) {
-          missingAccount = true;
-        }
-        if (accountTypesWithCategories.includes(lineItem.accountTypeId) && !lineItem.categoryId) {
-          missingCategory = true;
-        }
+      if (!lineItem.accountId) {
+        missingAccount = true;
       }
+      if (accountTypesWithCategories.includes(lineItem.accountTypeId) && !lineItem.categoryId) {
+        missingCategory = true;
+      }
+      
       // sum debits and credits
       if (lineItem.debitAmount) {
         debitSum += lineItem.debitAmount;
@@ -221,15 +214,13 @@ function TableOfJournalEntries({
       errorMessages.push("Debits and Credits must balance.")
     }
     setAlertMessages(errorMessages);
-    console.log(errorMessages);
     return errorMessages;
   }
 
   //Returns a POSTable/PUTable journalEntry created from this function's state POSTable entries have null journalEntryId, otherwise they should be PUT instead. 
+  //Before calling this function please check for validity of the entry by making sure checkEntryForValidationErrors().length == 0
   const formatJournalEntryToSendToServer = () => {
-    //remove any lineItems with no amount or description. make sure checkEntryForValidationErrors() returns an empty array before formatting entry to send to server!
-    let lineItemDataWithEmptyItemsRemoved = lineItemData.slice().filter(lineItem => (lineItem.description || lineItem.creditAmount || lineItem.debitAmount));
-    setLineItemData(lineItemDataWithEmptyItemsRemoved);
+    console.log(lineItemData);
     let lineItems = lineItemData.map(lineItem => {
       return {
         accountId: lineItem.accountId,
@@ -250,11 +241,12 @@ function TableOfJournalEntries({
   }
 
   const postJournalEntry = (data) => {
+    console.log(data);
     axios.post(`${API_URL}/journalEntry`, data)
       .then(response => {
-        console.log(response);
         fetchData({pageIndex, pageSize});
         fetchJournalEntry(response.data.journalEntryId);
+        setCreateMode(false);
         toggleEditMode();
       });
   }
