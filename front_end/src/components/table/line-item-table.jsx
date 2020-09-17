@@ -5,11 +5,11 @@ function LineItemTable({ data, journalEntryDescription, journalEntryDate, locali
 
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
-      { Header: 'Description', accessor: 'description'},
-      { Header: 'Account', accessor: 'accountName'},
-      { Header: 'Category', accessor: 'categoryName'},
-      { Header: 'Debit', accessor: 'debitAmount'},
-      { Header: 'Credit', accessor: 'creditAmount'},
+      { Header: 'Description', accessor: 'description', width:'40%'},
+      { Header: 'Account', accessor: 'accountName', width:'20%'},
+      { Header: 'Category', accessor: 'categoryName', width:'20%'},
+      { Header: 'Debit', accessor: 'debitAmount', width:'10%'},
+      { Header: 'Credit', accessor: 'creditAmount', width:'10%'},
     ],
     []
   )
@@ -72,7 +72,7 @@ function LineItemTable({ data, journalEntryDescription, journalEntryDate, locali
               {headerGroup.headers.map(column => (
                 // Add the sorting props to control sorting. For this example
                 // we can add them into the header props
-                <th {...column.getHeaderProps()}>
+                <th {...column.getHeaderProps()} style={{width: column.width}}>
                   {column.render('Header')}
                 </th>
               ))}

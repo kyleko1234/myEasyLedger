@@ -3,8 +3,10 @@ package com.easyledger.api.service;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -76,7 +78,7 @@ public class JournalEntryService {
 	// Ensures that the total amounts of Credit LineItems in an Entry are equal to the total amounts of Debit LineItems.
 	// Makes a deep copy of the Set of LineItems in an entry, computes total credits and debits, and returns true if equal and false if not.
 	public boolean assertAccountingBalance (JournalEntry journalEntry) {
-		Set<LineItem> lineItems = new HashSet<LineItem>(journalEntry.getLineItems());
+		List<LineItem> lineItems = new ArrayList<LineItem>(journalEntry.getLineItems());
 		Iterator<LineItem> lineItemIterator = lineItems.iterator();
 		
 		BigDecimal creditBalance =  new BigDecimal(0);

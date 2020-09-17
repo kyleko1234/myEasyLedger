@@ -368,7 +368,7 @@ class App extends React.Component {
 		return (
 			<PageSettings.Provider value={this.state}>
 				<div className={
-					'fade page-sidebar-fixed show page-container ' + 
+					'fade page-sidebar-fixed show page-container' + 
 					(this.state.pageHeader ? 'page-header-fixed ' : '') + 
 					(this.state.pageSidebar ? '' : 'page-without-sidebar ') + 
 					(this.state.pageRightSidebar ? 'page-with-right-sidebar ' : '') +

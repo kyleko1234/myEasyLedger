@@ -2,9 +2,11 @@ package com.easyledger.api.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -65,7 +67,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @NamedNativeQuery( //query to count number of entries in order to use Pageable on Entry.getAllEntryViewModels
 		name = "JournalEntry.getAllJournalEntryViewModelsForOrganization.count",
-		query = "SELECT count(*) AS count from journal_entry WHERE journal_entry.id = ? ",
+		query = "SELECT count(*) AS count from journal_entry WHERE journal_entry.organization_id = ? ",
 		resultSetMapping = "SqlResultSetMapping.count"
 )
 
@@ -86,7 +88,7 @@ public class JournalEntry {
 	@OneToMany(	mappedBy = "journalEntry",
 				cascade = CascadeType.REMOVE,
 				orphanRemoval = true)
-	private Set<LineItem> lineItems;
+	private List<LineItem> lineItems;
 	
 	@ManyToOne
 	@JoinColumn(name = "person_id")
@@ -97,12 +99,12 @@ public class JournalEntry {
 	private Organization organization;
 	
 	public JournalEntry() {
-		this.lineItems = new HashSet<LineItem>();
+		this.lineItems = new ArrayList<LineItem>();
 	}
 
 	public JournalEntry(LocalDate journalEntryDate) {
 		this.journalEntryDate = journalEntryDate;
-		this.lineItems = new HashSet<LineItem>();
+		this.lineItems = new ArrayList<LineItem>();
 	}
 
 	public Long getId() {
@@ -131,11 +133,11 @@ public class JournalEntry {
 		this.description = description;
 	}
 
-	public Set<LineItem> getLineItems() {
+	public List<LineItem> getLineItems() {
 		return lineItems;
 	}
 
-	public void setLineItems(Set<LineItem> lineItems) {
+	public void setLineItems(List<LineItem> lineItems) {
 		this.lineItems = lineItems;
 	}
 

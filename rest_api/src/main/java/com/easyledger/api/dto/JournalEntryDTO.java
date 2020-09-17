@@ -2,8 +2,10 @@ package com.easyledger.api.dto;
 
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -19,7 +21,7 @@ public class JournalEntryDTO {
 	private String description;
 	private Long personId;
 	private Long organizationId;
-	private Set<LineItemDTO> lineItems;
+	private List<LineItemDTO> lineItems;
 
 	
 	public JournalEntryDTO (JournalEntry journalEntry) {
@@ -27,7 +29,7 @@ public class JournalEntryDTO {
 		this.journalEntryId = journalEntry.getId();
 		this.journalEntryDate = journalEntry.getJournalEntryDate();
 		this.description = journalEntry.getDescription();
-		this.lineItems = new HashSet<LineItemDTO>();
+		this.lineItems = new ArrayList<LineItemDTO>();
 		this.personId = journalEntry.getPerson().getId();
 		this.organizationId= journalEntry.getOrganization().getId();
 		
@@ -40,7 +42,7 @@ public class JournalEntryDTO {
 	}
 	
 	public JournalEntryDTO () {
-		this.lineItems = new HashSet<LineItemDTO>();
+		this.lineItems = new ArrayList<LineItemDTO>();
 	}
 
 	/* Getters, Setters, ToString */
@@ -77,11 +79,11 @@ public class JournalEntryDTO {
 		this.personId = personId;
 	}
 
-	public Set<LineItemDTO> getLineItems() {
+	public List<LineItemDTO> getLineItems() {
 		return lineItems;
 	}
 
-	public void setLineItems(Set<LineItemDTO> lineItemDTOs) {
+	public void setLineItems(List<LineItemDTO> lineItemDTOs) {
 		this.lineItems = lineItemDTOs;
 	}
 

@@ -1,26 +1,18 @@
 package com.easyledger.api.controller;
 
-import java.lang.reflect.Field;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +29,6 @@ import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
-import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.JournalEntryRepository;
 import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;

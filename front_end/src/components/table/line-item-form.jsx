@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTable } from 'react-table'
+import { Alert } from 'reactstrap'
 
 function LineItemForm({
     data, setLineItemData,
@@ -7,18 +8,17 @@ function LineItemForm({
     journalEntryDescription, setJournalEntryDescription,
     categories,
     accounts,
-    localization
+    localization,
+    alertMessages
 }) {
-    
-
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
-            { Header: 'Description', accessor: 'description' },
-            { Header: 'Account', accessor: 'accountName' },
-            { Header: 'Category', accessor: 'categoryName' },
-            { Header: 'Debit', accessor: 'debitAmount' },
-            { Header: 'Credit', accessor: 'creditAmount' },
+            { Header: 'Description', accessor: 'description', width:'40%', minWidth:"9em" },
+            { Header: 'Account', accessor: 'accountName', width:'18%', minWidth:"6em" },
+            { Header: 'Category', accessor: 'categoryName', width:'18%', minWidth:"6em" },
+            { Header: 'Debit', accessor: 'debitAmount', width:'10%', minWidth:"6em" },
+            { Header: 'Credit', accessor: 'creditAmount', width:'10%', minWidth:"6em" },
         ],
         []
     )
@@ -88,7 +88,7 @@ function LineItemForm({
                 return(
                     <>
                         <select
-                            value={data[cell.row.index].accountId}
+                            value={(data[cell.row.index].accountId)}
                             className="form-control"
                             onChange={event => {
                                 let updatedLineItemData = data.slice();
@@ -103,6 +103,7 @@ function LineItemForm({
                                 setLineItemData(updatedLineItemData);
                             }}
                         >
+                            <option value='' disabled className="font-italic">Select an account...</option>
                             {accounts.map(
                                 (account) => {
                                     return(
@@ -129,6 +130,8 @@ function LineItemForm({
                                     setLineItemData(updatedLineItemData);
                                 }}
                             >
+                                <option value='' disabled className="font-italic">Select a category...</option>
+
                                 {categoriesForThisAccountType.map(
                                     (category) => {
                                         return(
@@ -154,6 +157,7 @@ function LineItemForm({
                 return (cell.value);
         }
     }
+
     const addEmptyLineItem = () => {
         let updatedLineItemData = data.slice();
         updatedLineItemData.push({
@@ -162,8 +166,8 @@ function LineItemForm({
             accountId: "",
             accountTypeId: "",
             description: "",
-            debitAmount: "",
-            creditAmount: "",
+            debitAmount: 0,
+            creditAmount: 0,
             categoryName: "",
             categoryId: "",
         })
@@ -190,9 +194,23 @@ function LineItemForm({
 
     return (
         <>
+            { alertMessages.length ? 
+                <div>
+                    <Alert color="danger" className="m-b-15" style={{borderStyle: "solid", borderColor:"FireBrick", borderWidth: "1px"}}>
+                        <div className="d-flex justify-content-center">
+                            <ul className="my-0">
+                                {alertMessages.map((alertMessage, i) => (
+                                    <li key={i}>{alertMessage}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </Alert>
+                </div> : null
+            }
+
             <div className="row m-b-10">
                 <div className="col-md-1"><strong>Date</strong></div> 
-                <div className="col-md-11">
+                <div className="col-md-2">
                     <input 
                         type="date" 
                         className="form-control"
@@ -220,11 +238,11 @@ function LineItemForm({
                                 {headerGroup.headers.map(column => (
                                     // Add the sorting props to control sorting. For this example
                                     // we can add them into the header props
-                                    <th {...column.getHeaderProps()}>
+                                    <th {...column.getHeaderProps()} style={{width: column.width, minWidth: column.minWidth}}>
                                         {column.render('Header')}
                                     </th>
                                 ))}
-                                <th></th>
+                                <th style={{width: "4%"}}></th>
                             </tr>
                         ))}
                     </thead>
@@ -243,7 +261,7 @@ function LineItemForm({
                                         })}
                                         <td>
                                             <button className="btn btn-lg btn-icon btn-light" onClick={() => removeRow(i)}>
-                                                <i className="ion ion-ios-close fa-fw fa-lg"></i>
+                                                <i className="ion ion-md-close fa-fw fa-lg"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -262,7 +280,9 @@ function LineItemForm({
                         </tr>
                     </tfoot>
                 </table>
-                <button className="btn btn-green btn-block row" style={{margin:"auto", padding:"1em"}} onClick={() => addEmptyLineItem()}>Add a Line Item</button>
+                <button className="btn btn-light btn-block row" style={{margin:"auto", padding:"1em", borderStyle:"solid", borderColor:"LightGray", borderWidth:"1px"}} onClick={() => addEmptyLineItem()}>
+                    <i className="ion ion-md-add fa-fw fa-lg"></i>Add a Line Item
+                </button>
             </div>
         </>
     )
