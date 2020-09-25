@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import LineItemTable from './line-item-table';
 import LineItemForm from './line-item-form';
+import { createTrue } from 'typescript';
 
 //Generates a table with react-table 7 using pagination
 
@@ -220,7 +221,6 @@ function TableOfJournalEntries({
   //Returns a POSTable/PUTable journalEntry created from this function's state POSTable entries have null journalEntryId, otherwise they should be PUT instead. 
   //Before calling this function please check for validity of the entry by making sure checkEntryForValidationErrors().length == 0
   const formatJournalEntryToSendToServer = () => {
-    console.log(lineItemData);
     let lineItems = lineItemData.map(lineItem => {
       return {
         accountId: lineItem.accountId,
@@ -357,7 +357,7 @@ function TableOfJournalEntries({
         toggle={() => toggleJournalEntryExpanded()}
         size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
         backdrop={editMode ? "static" : true}
-        centered={false}
+        centered={true}
       >
         <ModalHeader style={{backgroundColor: "#e4e4e4"}}>Journal Entry</ModalHeader>
         <ModalBody className="bg-light">

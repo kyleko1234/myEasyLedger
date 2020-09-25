@@ -76,6 +76,29 @@ public class LineItemDTO {
 	public LineItemDTO() {
 	}
 	
+	
+	public LineItemDTO(Integer accountId, String accountName, Integer accountSubtypeId, String accountSubtypeName,
+			Integer accountTypeId, String accountTypeName, BigDecimal amount, Integer categoryId, String categoryName,
+			String description, Integer journalEntryId, boolean isCredit, Integer lineItemId) {
+		this.accountId = Long.valueOf(accountId);
+		this.accountName = accountName;
+		if (accountSubtypeId != null) {
+			this.accountSubtypeId = Long.valueOf(accountSubtypeId);
+			this.accountSubtypeName = accountSubtypeName;
+		}
+		this.accountTypeId = Long.valueOf(accountTypeId);
+		this.accountTypeName = accountTypeName;
+		this.amount = amount;
+		if (categoryId != null) { 
+			this.categoryId = Long.valueOf(categoryId);
+			this.categoryName = categoryName;
+		}
+		this.description = description;
+		this.journalEntryId = Long.valueOf(journalEntryId);
+		this.isCredit = isCredit;
+		this.lineItemId = Long.valueOf(lineItemId);
+	}
+
 	/** GETTERS AND SETTERS **/
 
 	public Long getLineItemId() {

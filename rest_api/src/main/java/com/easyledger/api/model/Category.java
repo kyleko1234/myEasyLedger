@@ -36,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				)
 		}
 )	
-@NamedNativeQuery( //retrieves all entries and maps them into EntryViewModels
+@NamedNativeQuery( //retrieves all categories for an organization when given an organization id
 		name = "Category.getAllCategoriesForOrganization",
 		query = "SELECT category.id AS categoryId, category.name AS categoryName, "
 					+ "account_type.id AS accountTypeId, account_type.name AS accountTypeName, "

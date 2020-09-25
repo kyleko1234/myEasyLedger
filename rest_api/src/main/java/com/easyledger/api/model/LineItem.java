@@ -3,16 +3,80 @@ package com.easyledger.api.model;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
+import com.easyledger.api.dto.LineItemDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+@SqlResultSetMapping( //maps native SQL query to LineItemDTO class
+		name = "lineItemDTOMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = LineItemDTO.class,
+						columns = {
+								@ColumnResult(name = "accountId"),
+								@ColumnResult(name = "accountName"),
+								@ColumnResult(name = "accountSubtypeId"),
+								@ColumnResult(name = "accountSubtypeName"),
+								@ColumnResult(name = "accountTypeId"),
+								@ColumnResult(name = "accountTypeName"),
+								@ColumnResult(name = "amount"),
+								@ColumnResult(name = "categoryId"),
+								@ColumnResult(name = "categoryName"),
+								@ColumnResult(name = "description"),
+								@ColumnResult(name = "journalEntryId"),
+								@ColumnResult(name = "isCredit"),
+								@ColumnResult(name = "lineItemId")
+						}
+				)
+		}
+)	
+@NamedNativeQuery( //retrieves all LineItems for an account when given an accountId
+		name = "LineItem.getAllLineItemsForAccount",
+		query = "SELECT " + 
+				"    line_item.id AS lineItemId, " + 
+				"    line_item.journal_entry_id AS journalEntryId, " + 
+				"    line_item.account_id AS accountId, " + 
+				"    line_item.is_credit AS isCredit, " + 
+				"    line_item.amount AS amount, " + 
+				"    line_item.description AS description, " + 
+				"    line_item.category_id AS categoryId, " + 
+				"    category.name AS categoryName, " + 
+				"    account.name AS accountName, " + 
+				"    account.account_type_id AS accountTypeId, " + 
+				"    account_type.name AS accountTypeName, " + 
+				"    account_subtype.id AS accountSubtypeId, " + 
+				"    account_subtype.name AS accountSubtypeName " + 
+				"FROM " + 
+				"    line_item LEFT OUTER JOIN category on line_item.category_id = category.id, " + 
+				"    account LEFT OUTER JOIN account_subtype on account.account_subtype_id = account_subtype.id " + 
+				"    LEFT OUTER JOIN account_type on account.account_type_id = account_type.id " + 
+				"WHERE line_item.account_id = account.id AND account.id = ? " + 
+				"ORDER BY lineItemId DESC",
+		resultSetMapping = "lineItemDTOMapping"
+)
+@SqlResultSetMapping(//sqlresultsetmapping for counting query
+		name = "lineItemDTOMapping.count",
+		columns = @ColumnResult(name = "count"))
+
+@NamedNativeQuery( //query to count number of LineItems in order to use Pageable on LineItem.getAllLineItemsForAccount
+		name = "LineItem.getAllLineItemsForAccount.count",
+		query = "SELECT count(*) AS count from line_item WHERE line_item.account_id = ? ",
+		resultSetMapping = "lineItemDTOMapping.count"
+)
+
+
 
 
 @Entity

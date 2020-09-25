@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import com.easyledger.api.dto.AccountDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@SqlResultSetMapping( //maps native SQL query to CategoryDTO class
+@SqlResultSetMapping( //maps native SQL query to AccountDTO class
 		name = "accountDTOMapping",
 		classes = {
 				@ConstructorResult(
@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				)
 		}
 )	
-@NamedNativeQuery( //retrieves all entries and maps them into EntryViewModels
+@NamedNativeQuery( //takes an organization ID as a parameter and returns all accounts for that organization
 		name = "Account.getAllAccountsForOrganization",
 		query = "SELECT account.id AS accountId, "
 					+ "account.name AS accountName, "

@@ -62,13 +62,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		resultSetMapping = "journalEntryViewModelMapping"
 )
 @SqlResultSetMapping(//sqlresultsetmapping for counting query
-		name = "SqlResultSetMapping.count",
+		name = "journalEntryViewModelMapping.count",
 		columns = @ColumnResult(name = "count"))
 
 @NamedNativeQuery( //query to count number of entries in order to use Pageable on Entry.getAllEntryViewModels
 		name = "JournalEntry.getAllJournalEntryViewModelsForOrganization.count",
 		query = "SELECT count(*) AS count from journal_entry WHERE journal_entry.organization_id = ? ",
-		resultSetMapping = "SqlResultSetMapping.count"
+		resultSetMapping = "journalEntryViewModelMapping.count"
 )
 
 
