@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTable } from 'react-table'
 
-function LineItemTable({ data, journalEntryDescription, journalEntryDate, localization}) {
+function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate, localization}) {
 
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
@@ -109,4 +109,4 @@ function LineItemTable({ data, journalEntryDescription, journalEntryDate, locali
   )
 }
 
-export default LineItemTable
+export default JournalEntryViewMode

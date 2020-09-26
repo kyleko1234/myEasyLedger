@@ -3,7 +3,7 @@ import TableOfJournalEntries from '../../../components/table/table-of-journal-en
 import axios from 'axios';
 
 
-function JournalTable({API_URL, localization, organizationId, personId}) {
+function GeneralJournal({API_URL, localization, organizationId, personId}) {
 
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
@@ -59,4 +59,4 @@ function JournalTable({API_URL, localization, organizationId, personId}) {
 
 
 
-export default JournalTable
+export default GeneralJournal

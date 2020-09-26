@@ -2,7 +2,7 @@ import React from 'react'
 import { useTable } from 'react-table'
 import { Alert } from 'reactstrap'
 
-function LineItemForm({
+function JournalEntryEditMode({
     data, setLineItemData,
     journalEntryDate, setJournalEntryDate,
     journalEntryDescription, setJournalEntryDescription,
@@ -288,4 +288,4 @@ function LineItemForm({
     )
 }
 
-export default LineItemForm
+export default JournalEntryEditMode

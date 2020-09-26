@@ -6,11 +6,10 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "AccountType/Contents/Retrieve an AccountType.md",
             "mode": "source"
           }
         },
@@ -19,10 +18,11 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "AccountType/Contents/Retrieve an AccountType.md",
             "mode": "preview"
           }
         },
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md"
+                "file": "AccountType/Contents/Retrieve an AccountType.md"
               }
             }
           }
@@ -89,10 +89,10 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "AccountType/Contents/Retrieve an AccountType.md",
     "Easy Ledger.md",
     "LineItem/LineItem.md",
     "LineItem/Contents/The LIneItem Object.md",
-    "LineItem/Contents/Retrieve All LineItems for a Category.md",
-    "LineItem/Contents/Retrieve All LineItems for an Account.md"
+    "LineItem/Contents/Retrieve All LineItems for a Category.md"
   ]
 }

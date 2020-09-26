@@ -3,9 +3,8 @@ import { useTable, usePagination } from 'react-table'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import LineItemTable from './line-item-table';
-import LineItemForm from './line-item-form';
-import { createTrue } from 'typescript';
+import JournalEntryViewMode from './journal-entry-view-mode';
+import JournalEntryEditMode from './journal-entry-edit-mode';
 
 //Generates a table with react-table 7 using pagination
 
@@ -362,7 +361,7 @@ function TableOfJournalEntries({
         <ModalHeader style={{backgroundColor: "#e4e4e4"}}>Journal Entry</ModalHeader>
         <ModalBody className="bg-light">
           {editMode ?
-            <LineItemForm
+            <JournalEntryEditMode
               data={lineItemData} setLineItemData={setLineItemData}
               journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
               journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
@@ -370,13 +369,13 @@ function TableOfJournalEntries({
               accounts={accounts}
               localization={localization}
               alertMessages={alertMessages}>
-            </LineItemForm> :
-            <LineItemTable
+            </JournalEntryEditMode> :
+            <JournalEntryViewMode
               data={lineItemData}
               journalEntryDate={journalEntryDate}
               journalEntryDescription={journalEntryDescription}
               localization={localization}>
-            </LineItemTable>
+            </JournalEntryViewMode>
           }
         </ModalBody>
         <ModalFooter className="justify-content-between" style={{ backgroundColor: "#e4e4e4" }}>

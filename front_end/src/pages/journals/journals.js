@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Panel, PanelHeader } from '../../components/panel/panel.jsx';
-import JournalTable from './components/journal-table'
+import GeneralJournal from './components/general-journal'
 
 
 
@@ -33,7 +33,7 @@ class Journals extends React.Component {
 				</ol>
 				<h1 className="page-header">Journals </h1>
 					<div>
-						<JournalTable API_URL={API_URL} localization={localization} organizationId={ORGANIZATION_ID} personId={PERSON_ID}/>
+						<GeneralJournal API_URL={API_URL} localization={localization} organizationId={ORGANIZATION_ID} personId={PERSON_ID}/>
 					</div>
 			</div>
 		)
