@@ -62,5 +62,13 @@ public class LineItemController {
 	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
 	    return lineItemRepo.getAllLineItemsForAccount(accountId, pageable);
     }
+    
+    @GetMapping("/category/{id}/lineItem")
+    public Page<LineItemDTO> getAllLineItemsForCategory(@PathVariable(value="id") Long categoryId, Pageable pageable)
+    	throws ResourceNotFoundException {
+	    Account account = accountRepo.findById(categoryId)
+	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + categoryId));
+	    return lineItemRepo.getAllLineItemsForCategory(categoryId, pageable);
+    }
 }
 

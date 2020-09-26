@@ -7,7 +7,7 @@ ___
 None
 ___
 #### Returns
-Returns a page of LineItems based on the query parameters provided.
+Returns a page of LineItems based on the query parameters provided, sorted by descending lineItemId.
 ___
 
 #### Sample Request

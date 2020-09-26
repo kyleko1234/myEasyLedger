@@ -17,4 +17,7 @@ public interface LineItemRepository extends JpaRepository<LineItem, Long> {
 	@Query(nativeQuery = true)
 	public Page<LineItemDTO> getAllLineItemsForAccount(Long accountId, Pageable pageable);
 	
+	@Query(nativeQuery = true)
+	public Page<LineItemDTO> getAllLineItemsForCategory(Long categoryId, Pageable pageable);
+	
 }
