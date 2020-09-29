@@ -62,6 +62,7 @@ import HelperCSS from './../pages/helper/helper-css.js';
 
 import Journals from './../pages/journals/journals.js';
 import Accounts from './../pages/accounts/accounts.js';
+import Categories from './../pages/categories/categories.js';
 
 const routes = [
   {
@@ -369,6 +370,11 @@ const routes = [
     path: '/accounts',
     title: 'Accounts',
     component: () => <Accounts />,
+  },
+  {
+    path: '/categories',
+    title: 'Categories',
+    component: () => <Categories />,
   }
 ];
 

@@ -44,6 +44,8 @@ const Menu = [
   },
   { path: '/journals', icon: 'fa fa-list-alt', title: 'Journals' },
   { path: '/accounts', icon: 'fa fa-list-alt', title: 'Accounts' },
+  { path: '/categories', icon: 'fa fa-list-alt', title: 'Categories' },
+
 /*  { path: '/frontend', icon: 'fa fa-star', title: 'FrontEnd',
     children: [
       { path: '/frontend/one-page-parallax', title: 'One Page Parallax' },

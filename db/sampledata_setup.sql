@@ -81,16 +81,16 @@ INSERT INTO account(name, account_subtype_id, account_type_id, organization_id)
      10 | "Accounts Receivable"      |   9                   |   1               | 1 
      11 | "Business Equity"          |   NULL                |   3               | 1**/    
 
-INSERT INTO category(name, account_type_id, organization_id)
+INSERT INTO category(name, account_id)
     VALUES
-        ('Grocery', 5, 1),
-        ('Dining', 5, 1),
-        ('Rent', 5, 1),
-        ('Supplies and Equipment', 5, 1),
-        ('Revenue from operations', 4, 1),
-        ('Utilities', 5, 1),
-        ('Dividends', 4, 1),
-        ('Employee Salary', 5, 1);
+        ('Grocery', 5),
+        ('Dining', 5),
+        ('Rent', 7),
+        ('Supplies and Equipment', 7),
+        ('Revenue from operations', 8),
+        ('Utilities', 8),
+        ('Dividends', 8),
+        ('Employee Salary', 7);
 /** id  | name                      | account_type_id   | organization_id
      1  | "Grocery"                 |  5                | 1
      2  | "Dining"                  |  5                | 1 
