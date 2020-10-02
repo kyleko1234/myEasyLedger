@@ -28,23 +28,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 						columns = {
 								@ColumnResult(name = "categoryId"),
 								@ColumnResult(name = "categoryName"),
-								@ColumnResult(name = "accountTypeId"),
-								@ColumnResult(name = "accountTypeName"),
-								@ColumnResult(name = "organizationId"),
-								@ColumnResult(name = "organizationName")
+								@ColumnResult(name = "accountId"),
+								@ColumnResult(name = "accountName"),
+								@ColumnResult(name = "deleted")	
 						}
 				)
 		}
 )	
-@NamedNativeQuery( //retrieves all categories for an organization when given an organization id
+@NamedNativeQuery( //retrieves all undeleted categories for an organization when given an organization id
 		name = "Category.getAllCategoriesForOrganization",
 		query = "SELECT category.id AS categoryId, category.name AS categoryName, "
-					+ "account_type.id AS accountTypeId, account_type.name AS accountTypeName, "
-					+ "organization.id AS organizationId, organization.name AS organizationName "
-				+ "FROM category, account_type, organization "
-				+ "WHERE category.organization_id = ? "
-				+ "AND organization.id = category.organization_id "
-					+ "AND account_type.id = category.account_type_id "
+					+ "account.id AS accountId, account.name AS accountName, "
+					+ "category.deleted AS deleted "
+				+ "FROM category, account "
+				+ "WHERE account.organization_id = ? AND category.account_id = account.id AND category.deleted = false"
 				+ "ORDER BY category.name",
 		resultSetMapping = "categoryDTOMapping"
 )
@@ -57,20 +54,20 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column
+	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "deleted")
+	private boolean deleted;
 	
 	@OneToMany(mappedBy = "category")
 	@JsonIgnore
 	private Set<LineItem> lineItems;
 	
 	@ManyToOne
-	@JoinColumn(name = "account_type_id", nullable = false)
-	private AccountType accountType;
+	@JoinColumn(name = "account_id", nullable = false)
+	private Account account;
 	
-	@ManyToOne
-	@JoinColumn(name = "organization_id", nullable = false)
-	private Organization organization;
 	
 	public Category() {
 		this.lineItems = new HashSet<LineItem>();
@@ -97,6 +94,14 @@ public class Category {
 		this.name = name;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public Set<LineItem> getLineItems() {
 		return lineItems;
 	}
@@ -105,28 +110,19 @@ public class Category {
 		this.lineItems = lineItems;
 	}
 
-	public AccountType getAccountType() {
-		return accountType;
+	public Account getAccount() {
+		return account;
 	}
 
-	public void setAccountType(AccountType accountType) {
-		this.accountType = accountType;
-		accountType.getCategories().add(this);
-	}
-	
-	public Organization getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
-		organization.getCategories().add(this);
+	public void setAccount(Account account) {
+		this.account = account;
+		account.getCategories().add(this);
 	}
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", lineItems=" + lineItems + ", accountType=" + accountType
-				+ ", organization=" + organization + "]";
+		return "Category [id=" + id + ", name=" + name + ", deleted=" + deleted + ", lineItems=" + lineItems
+				+ ", account=" + account + "]";
 	}
 
 

@@ -64,6 +64,7 @@ public class JournalEntryService {
 		    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId())); 
 			product.setOrganization(organization);
 		}
+		product.setDeleted(dto.isDeleted());
 		
 		//Create Iterator to iterate through the Set<LineItemDTO> contained in dto
 		Iterator<LineItemDTO> lineItemDtoIterator = dto.getLineItems().iterator();

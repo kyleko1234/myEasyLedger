@@ -1,6 +1,7 @@
 package com.easyledger.api.dto;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountSubtype;
@@ -77,26 +78,26 @@ public class LineItemDTO {
 	}
 	
 	
-	public LineItemDTO(Integer accountId, String accountName, Integer accountSubtypeId, String accountSubtypeName,
-			Integer accountTypeId, String accountTypeName, BigDecimal amount, Integer categoryId, String categoryName,
-			String description, Integer journalEntryId, boolean isCredit, Integer lineItemId) {
-		this.accountId = Long.valueOf(accountId);
+	public LineItemDTO(BigInteger accountId, String accountName, BigInteger accountSubtypeId, String accountSubtypeName,
+			BigInteger accountTypeId, String accountTypeName, BigDecimal amount, BigInteger categoryId, String categoryName,
+			String description, BigInteger journalEntryId, boolean isCredit, BigInteger lineItemId) {
+		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
 		if (accountSubtypeId != null) {
-			this.accountSubtypeId = Long.valueOf(accountSubtypeId);
+			this.accountSubtypeId = accountSubtypeId.longValueExact();
 			this.accountSubtypeName = accountSubtypeName;
 		}
-		this.accountTypeId = Long.valueOf(accountTypeId);
+		this.accountTypeId = accountTypeId.longValueExact();
 		this.accountTypeName = accountTypeName;
 		this.amount = amount;
 		if (categoryId != null) { 
-			this.categoryId = Long.valueOf(categoryId);
+			this.categoryId = categoryId.longValueExact();
 			this.categoryName = categoryName;
 		}
 		this.description = description;
-		this.journalEntryId = Long.valueOf(journalEntryId);
+		this.journalEntryId = journalEntryId.longValueExact();
 		this.isCredit = isCredit;
-		this.lineItemId = Long.valueOf(lineItemId);
+		this.lineItemId = lineItemId.longValueExact();
 	}
 
 	/** GETTERS AND SETTERS **/

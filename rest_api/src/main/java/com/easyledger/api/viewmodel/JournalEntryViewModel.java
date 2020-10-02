@@ -1,20 +1,21 @@
 package com.easyledger.api.viewmodel;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Date;
 
 public class JournalEntryViewModel {
 	
-	private Integer journalEntryId;
+	private Long journalEntryId;
 	private Date journalEntryDate;
 	private String description;
 	private BigDecimal debitAmount;
 	private BigDecimal creditAmount;
 	
-	public JournalEntryViewModel(Integer journalEntryId, Date journalEntryDate, String description, BigDecimal debitAmount,
+	public JournalEntryViewModel(BigInteger journalEntryId, Date journalEntryDate, String description, BigDecimal debitAmount,
 			BigDecimal creditAmount) {
-		this.journalEntryId = journalEntryId;
+		this.journalEntryId = journalEntryId.longValueExact();
 		this.journalEntryDate = journalEntryDate;
 		this.description = description;
 		this.debitAmount = debitAmount;
@@ -22,15 +23,14 @@ public class JournalEntryViewModel {
 	}
 	
 	public JournalEntryViewModel() {
-		
 	}
 
 
-	public Integer getJournalEntryId() {
+	public Long getJournalEntryId() {
 		return journalEntryId;
 	}
 
-	public void setJournalEntryId(Integer journalEntryId) {
+	public void setJournalEntryId(Long journalEntryId) {
 		this.journalEntryId = journalEntryId;
 	}
 

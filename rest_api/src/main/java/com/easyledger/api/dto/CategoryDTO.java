@@ -1,33 +1,31 @@
 package com.easyledger.api.dto;
 
+import java.math.BigInteger;
+
 import com.easyledger.api.model.Category;
 
 public class CategoryDTO {
 	
 	private Long categoryId;
 	private String categoryName;
-	private Long accountTypeId;
-	private String accountTypeName;
-	private Long organizationId;
-	private String organizationName;
+	private Long accountId;
+	private String accountName;
+	private boolean deleted;
 	
 	public CategoryDTO(Category category) {
 		this.categoryId = category.getId();
 		this.categoryName = category.getName();
-		this.accountTypeId = category.getAccountType().getId();
-		this.accountTypeName = category.getAccountType().getName();
-		this.organizationId = category.getOrganization().getId();
-		this.organizationName = category.getOrganization().getName();
+		this.accountId = category.getAccount().getId();
+		this.accountName = category.getAccount().getName();
+		this.deleted = category.isDeleted();
 	}
 	
-	public CategoryDTO(Integer categoryId, String categoryName, Integer accountTypeId, String accountTypeName,
-			Integer organizationId, String organizationName) {
-		this.categoryId = Long.valueOf(categoryId);
+	public CategoryDTO(BigInteger categoryId, String categoryName, BigInteger accountId, String accountName, boolean deleted) {
+		this.categoryId = categoryId.longValueExact();
 		this.categoryName = categoryName;
-		this.accountTypeId = Long.valueOf(accountTypeId);
-		this.accountTypeName = accountTypeName;
-		this.organizationId = Long.valueOf(organizationId);
-		this.organizationName = organizationName;
+		this.accountId = accountId.longValueExact();
+		this.accountName = accountName;
+		this.deleted = deleted;
 	}
 	
 	public CategoryDTO() {
@@ -50,43 +48,34 @@ public class CategoryDTO {
 		this.categoryName = categoryName;
 	}
 
-	public Long getAccountTypeId() {
-		return accountTypeId;
+	public Long getAccountId() {
+		return accountId;
 	}
 
-	public void setAccountTypeId(Long accountTypeId) {
-		this.accountTypeId = accountTypeId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
-	public String getAccountTypeName() {
-		return accountTypeName;
+	public String getAccountName() {
+		return accountName;
 	}
 
-	public void setAccountTypeName(String accountTypeName) {
-		this.accountTypeName = accountTypeName;
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
 	}
 
-	public Long getOrganizationId() {
-		return organizationId;
+	public boolean isDeleted() {
+		return deleted;
 	}
 
-	public void setOrganizationId(Long organizationId) {
-		this.organizationId = organizationId;
-	}
-
-	public String getOrganizationName() {
-		return organizationName;
-	}
-
-	public void setOrganizationName(String organizationName) {
-		this.organizationName = organizationName;
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	@Override
 	public String toString() {
-		return "CategoryDTO [categoryId=" + categoryId + ", categoryName=" + categoryName + ", accountTypeId="
-				+ accountTypeId + ", accountTypeName=" + accountTypeName + ", organizationId=" + organizationId
-				+ ", organizationName=" + organizationName + "]";
+		return "CategoryDTO [categoryId=" + categoryId + ", categoryName=" + categoryName + ", accountId=" + accountId
+				+ ", accountName=" + accountName + ", deleted=" + deleted + "]";
 	}
 	
 	

@@ -42,19 +42,6 @@ public class AccountTypeController {
           .orElseThrow(() -> new ResourceNotFoundException("AccountType not found for this id :: " + accountTypeId));
         return ResponseEntity.ok().body(accountType);
     }
-
-    @GetMapping("/accountType/{id}/category")
-    public HashSet<CategoryDTO> getAllCategoriesForAccountType(@PathVariable(value = "id") Long accountTypeId) 
-    	throws ResourceNotFoundException {
-        AccountType accountType = accountTypeRepo.findById(accountTypeId)
-                .orElseThrow(() -> new ResourceNotFoundException("AccountType not found for this id :: " + accountTypeId));
-        HashSet<Category> categories = new HashSet<Category>(accountType.getCategories());
-        HashSet<CategoryDTO> dtos = new HashSet<CategoryDTO>();
-        for (Category category : categories) {
-        	dtos.add(new CategoryDTO(category));
-        }
-        return dtos;
-    }
    
     @GetMapping("/accountType/{id}/accountSubtype")
     public HashSet<AccountSubtypeDTO> getAllSubtypesForAccountType(@PathVariable(value = "id") Long accountTypeId) 

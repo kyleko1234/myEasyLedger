@@ -48,7 +48,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				)
 		}
 )	
-@NamedNativeQuery( //retrieves all entries and maps them into EntryViewModels
+@NamedNativeQuery( //retrieves all undeleted entries for the given organization and maps them into EntryViewModels
 		name = "JournalEntry.getAllJournalEntryViewModelsForOrganization",
 		query = "SELECT journal_entry_id AS journalEntryId, "
 					+ "journal_entry_date AS journalEntryDate, "
@@ -56,7 +56,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 					+ "sum(CASE line_item.is_credit WHEN false THEN line_item.amount END) AS debitAmount, "
 					+ "sum(CASE line_item.is_credit WHEN true THEN line_item.amount END) AS creditAmount "
 				+ "FROM journal_entry,line_item "
-				+ "WHERE line_item.journal_entry_id = journal_entry.id AND journal_entry.organization_id = ? "
+				+ "WHERE line_item.journal_entry_id = journal_entry.id AND journal_entry.organization_id = ? AND journal_entry.deleted = false "
 				+ "GROUP BY journal_entry_id, journal_entry_date, journal_entry.description "
 				+ "ORDER BY journal_entry_date DESC, journal_entry_id DESC ",
 		resultSetMapping = "journalEntryViewModelMapping"
@@ -82,8 +82,11 @@ public class JournalEntry {
 	@Column(name = "journal_entry_date")
 	private LocalDate journalEntryDate;
 	
-	@Column(name= "description")
+	@Column(name = "description")
 	private String description;
+	
+	@Column(name = "deleted")
+	private boolean deleted;
 	
 	@OneToMany(	mappedBy = "journalEntry",
 				cascade = CascadeType.REMOVE,
@@ -133,6 +136,14 @@ public class JournalEntry {
 		this.description = description;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public List<LineItem> getLineItems() {
 		return lineItems;
 	}
@@ -163,7 +174,8 @@ public class JournalEntry {
 	@Override
 	public String toString() {
 		return "JournalEntry [id=" + id + ", journalEntryDate=" + journalEntryDate + ", description=" + description
-				+ ", lineItems=" + lineItems + ", person=" + person + ", organization=" + organization + "]";
+				+ ", deleted=" + deleted + ", lineItems=" + lineItems + ", person=" + person + ", organization="
+				+ organization + "]";
 	}
 	
 	

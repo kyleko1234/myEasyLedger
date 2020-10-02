@@ -10,6 +10,7 @@ public class AccountSubtypeDTO {
 	private String accountTypeName;
 	private Long organizationId;
 	private String organizationName;
+	private boolean deleted;
 	
 	public AccountSubtypeDTO(AccountSubtype accountSubtype) {
 		this.accountSubtypeId = accountSubtype.getId();
@@ -18,6 +19,7 @@ public class AccountSubtypeDTO {
 		this.accountTypeName = accountSubtype.getAccountType().getName();
 		this.organizationId = accountSubtype.getOrganization().getId();
 		this.organizationName = accountSubtype.getOrganization().getName();
+		this.deleted = accountSubtype.isDeleted();
 	}
 	
 	public AccountSubtypeDTO() {
@@ -72,11 +74,19 @@ public class AccountSubtypeDTO {
 		this.organizationName = organizationName;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@Override
 	public String toString() {
 		return "AccountSubtypeDTO [accountSubtypeId=" + accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName
 				+ ", accountTypeId=" + accountTypeId + ", accountTypeName=" + accountTypeName + ", organizationId="
-				+ organizationId + ", organizationName=" + organizationName + "]";
+				+ organizationId + ", organizationName=" + organizationName + ", deleted=" + deleted + "]";
 	}
 	
 	

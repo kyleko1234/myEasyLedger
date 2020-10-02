@@ -81,6 +81,10 @@ public class PersonService {
 	            			}
         			}
         			break;
+        		
+        		case "deleted":
+        			person.setDeleted((boolean) v);
+        			break;
         	}
         	
         }

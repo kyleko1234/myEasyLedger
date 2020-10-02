@@ -25,6 +25,9 @@ public class AccountSubtype {
 	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "deleted")
+	private boolean deleted;
+	
 	@OneToMany (mappedBy = "accountSubtype")
 	@JsonIgnore
 	private Set<Account> accounts;
@@ -63,7 +66,14 @@ public class AccountSubtype {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	public Set<Account> getAccounts() {
 		return accounts;
@@ -93,8 +103,8 @@ public class AccountSubtype {
 
 	@Override
 	public String toString() {
-		return "AccountSubtype [id=" + id + ", name=" + name + ", accounts=" + accounts + ", accountType=" + accountType
-				+ ", organization=" + organization + "]";
+		return "AccountSubtype [id=" + id + ", name=" + name + ", deleted=" + deleted + ", accounts=" + accounts
+				+ ", accountType=" + accountType + ", organization=" + organization + "]";
 	}
 
 

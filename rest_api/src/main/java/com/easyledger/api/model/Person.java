@@ -39,6 +39,9 @@ public class Person {
 	@Column(name = "password", nullable = false)
 	private String password;
 	
+	@Column(name = "deleted")
+	private boolean deleted;
+	
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries;
@@ -123,6 +126,14 @@ public class Person {
 		this.password = password;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public Set<JournalEntry> getJournalEntries() {
 		return journalEntries;
 	}
@@ -142,8 +153,8 @@ public class Person {
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", journalEntries=" + journalEntries + ", organizations=" + organizations
-				+ "]";
+				+ ", password=" + password + ", deleted=" + deleted + ", journalEntries=" + journalEntries
+				+ ", organizations=" + organizations + "]";
 	}
 	
 	

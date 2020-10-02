@@ -17,6 +17,7 @@ public class PersonDTO {
 	private String email;
 	private String password;
 	private Set<Long> organizationIds;
+	private boolean deleted;
 	
 	public PersonDTO (Person person) {
 		this.personId = person.getId();
@@ -24,6 +25,7 @@ public class PersonDTO {
 		this.lastName = person.getLastName();
 		this.email = person.getEmail();
 		this.password = person.getPassword();
+		this.deleted = person.isDeleted();
 		
 		HashSet<Long> setOfIds = new HashSet<Long>();
 		Iterator<Organization> organizationIterator = person.getOrganizations().iterator();
@@ -85,10 +87,19 @@ public class PersonDTO {
 		this.organizationIds = organizationIds;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@Override
 	public String toString() {
 		return "PersonDTO [personId=" + personId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
-				+ email + ", password=" + password + ", organizationIds=" + organizationIds + "]";
+				+ email + ", password=" + password + ", organizationIds=" + organizationIds + ", deleted=" + deleted
+				+ "]";
 	}
 	
 	

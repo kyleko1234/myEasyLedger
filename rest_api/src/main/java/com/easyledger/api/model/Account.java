@@ -1,6 +1,8 @@
 package com.easyledger.api.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -33,12 +35,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 								@ColumnResult(name = "accountTypeId"),
 								@ColumnResult(name = "accountTypeName"),
 								@ColumnResult(name = "organizationId"),
-								@ColumnResult(name = "organizationName")
+								@ColumnResult(name = "organizationName"),
+								@ColumnResult(name = "deleted")
 						}
 				)
 		}
 )	
-@NamedNativeQuery( //takes an organization ID as a parameter and returns all accounts for that organization
+@NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts for that organization
 		name = "Account.getAllAccountsForOrganization",
 		query = "SELECT account.id AS accountId, "
 					+ "account.name AS accountName, "
@@ -48,11 +51,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 					+ "account_type.name AS accountTypeName, "
 					+ "organization.id AS organizationId, "
 					+ "organization.name AS organizationName "
+					+ "account.deleted AS deleted "
 				+ "FROM account "
 				+ "LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id "
 					+ "LEFT JOIN account_type ON account.account_type_id = account_type.id "
 					+ "LEFT JOIN organization ON account.organization_id = organization.id "
-				+ "WHERE organization.id = ? "
+				+ "WHERE organization.id = ? AND account.deleted = false "
 				+ "ORDER BY accountTypeId ASC, accountId DESC",
 		resultSetMapping = "accountDTOMapping"
 )
@@ -67,10 +71,17 @@ public class Account {
 	
 	@Column(name = "name")
     private String name;
-
+	
+	@Column(name = "deleted")
+	private boolean deleted;
+	
 	@OneToMany(mappedBy = "account")
 	@JsonIgnore
 	private Set<LineItem> lineItems;
+
+	@OneToMany(mappedBy = "account")
+	@JsonIgnore
+	private List<Category> categories;
 	
 	@ManyToOne
 	@JoinColumn(name = "account_subtype_id", nullable = true)
@@ -86,12 +97,14 @@ public class Account {
 	
 	public Account() {
 		this.lineItems = new HashSet<LineItem>();
+		this.categories = new ArrayList<Category>();
 	}
 
 	public Account(String name) {
 		this.name = name;
 		this.lineItems = new HashSet<LineItem>();
-	}
+		this.categories = new ArrayList<Category>();
+		}
 
 	public Long getId() {
 		return id;
@@ -108,6 +121,14 @@ public class Account {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	public Set<LineItem> getLineItems() {
 		return lineItems;
@@ -115,6 +136,14 @@ public class Account {
 
 	public void setLineItems(Set<LineItem> lineItems) {
 		this.lineItems = lineItems;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	public AccountSubtype getAccountSubtype() {
@@ -146,8 +175,9 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", name=" + name + ", lineItems=" + lineItems + ", accountSubtype="
-				+ accountSubtype + ", accountType=" + accountType + ", organization=" + organization + "]";
+		return "Account [id=" + id + ", name=" + name + ", deleted=" + deleted + ", lineItems=" + lineItems
+				+ ", categories=" + categories + ", accountSubtype=" + accountSubtype + ", accountType=" + accountType
+				+ ", organization=" + organization + "]";
 	}
 
 

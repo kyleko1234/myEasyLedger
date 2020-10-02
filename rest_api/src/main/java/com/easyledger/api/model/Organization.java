@@ -27,6 +27,9 @@ public class Organization {
 	
 	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "deleted")
+	private boolean deleted;
 
 	@ManyToMany(mappedBy = "organizations")
 	@JsonIgnore
@@ -39,10 +42,6 @@ public class Organization {
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
 	private Set<AccountSubtype> accountSubtypes;
-	
-	@OneToMany(mappedBy = "organization")
-	@JsonIgnore
-	private Set<Category> categories;
 	
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
@@ -73,6 +72,14 @@ public class Organization {
 		this.name = name;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public Set<Person> getPersons() {
 		return persons;
 	}
@@ -98,14 +105,6 @@ public class Organization {
 		this.accountSubtypes = accountSubtypes;
 	}
 
-	public Set<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Set<Category> categories) {
-		this.categories = categories;
-	}
-
 	public Set<Account> getAccounts() {
 		return accounts;
 	}
@@ -116,8 +115,8 @@ public class Organization {
 
 	@Override
 	public String toString() {
-		return "Organization [id=" + id + ", name=" + name + ", persons=" + persons + ", journalEntries="
-				+ journalEntries + ", accountSubtypes=" + accountSubtypes + ", categories=" + categories + ", accounts="
+		return "Organization [id=" + id + ", name=" + name + ", deleted=" + deleted + ", persons=" + persons
+				+ ", journalEntries=" + journalEntries + ", accountSubtypes=" + accountSubtypes + ", accounts="
 				+ accounts + "]";
 	}
 	

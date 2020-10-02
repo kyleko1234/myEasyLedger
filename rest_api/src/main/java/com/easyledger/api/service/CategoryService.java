@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 
 import com.easyledger.api.dto.CategoryDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountType;
 import com.easyledger.api.model.Category;
 import com.easyledger.api.model.Organization;
+import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 
@@ -15,15 +17,14 @@ import com.easyledger.api.repository.OrganizationRepository;
 public class CategoryService {
 
 	@Autowired
-	private AccountTypeRepository accountTypeRepo;
+	private AccountRepository accountRepo;
 	
 	@Autowired
 	private OrganizationRepository organizationRepo;
 	
-	public CategoryService(AccountTypeRepository accountTypeRepo, OrganizationRepository organizationRepo) {
+	public CategoryService(AccountRepository accountRepo) {
 		super();
-		this.accountTypeRepo = accountTypeRepo;
-		this.organizationRepo = organizationRepo;
+		this.accountRepo = accountRepo;
 	}
 	
 	public Category createCategoryFromDTO(CategoryDTO dto) 
@@ -31,12 +32,9 @@ public class CategoryService {
 		Category product = new Category();
 		product.setId(dto.getCategoryId());
 		product.setName(dto.getCategoryName());
-		AccountType accountType = accountTypeRepo.findById(dto.getAccountTypeId())
-	    		.orElseThrow(() -> new ResourceNotFoundException("AccountType not found for this id :: " + dto.getAccountTypeId())); 
-		product.setAccountType(accountType);
-		Organization organization = organizationRepo.findById(dto.getOrganizationId())
-	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId())); 
-		product.setOrganization(organization);
+		Account account = accountRepo.findById(dto.getAccountId())
+	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + dto.getAccountId())); 
+		product.setAccount(account);
 		return product;
 		
 	}

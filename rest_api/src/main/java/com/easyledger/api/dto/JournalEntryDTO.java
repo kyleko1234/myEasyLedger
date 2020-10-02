@@ -22,6 +22,8 @@ public class JournalEntryDTO {
 	private Long personId;
 	private Long organizationId;
 	private List<LineItemDTO> lineItems;
+	private boolean deleted;
+	
 
 	
 	public JournalEntryDTO (JournalEntry journalEntry) {
@@ -32,6 +34,7 @@ public class JournalEntryDTO {
 		this.lineItems = new ArrayList<LineItemDTO>();
 		this.personId = journalEntry.getPerson().getId();
 		this.organizationId= journalEntry.getOrganization().getId();
+		this.deleted = journalEntry.isDeleted();
 		
 		/* Iterates over entry.getLineItems(), converting LineItems into LineItemDTOs and adding them to this.LineItemDTOs */
 		Iterator<LineItem> lineItemIterator = journalEntry.getLineItems().iterator();
@@ -59,7 +62,7 @@ public class JournalEntryDTO {
 		return journalEntryDate;
 	}
 
-	public void setEntryDate(LocalDate entryDate) {
+	public void setJournalEntryDate(LocalDate entryDate) {
 		this.journalEntryDate = entryDate;
 	}
 	
@@ -95,11 +98,19 @@ public class JournalEntryDTO {
 		this.organizationId = organizationId;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@Override
 	public String toString() {
 		return "JournalEntryDTO [journalEntryId=" + journalEntryId + ", journalEntryDate=" + journalEntryDate
 				+ ", description=" + description + ", personId=" + personId + ", organizationId=" + organizationId
-				+ ", lineItems=" + lineItems + "]";
+				+ ", lineItems=" + lineItems + ", deleted=" + deleted + "]";
 	}
 
 

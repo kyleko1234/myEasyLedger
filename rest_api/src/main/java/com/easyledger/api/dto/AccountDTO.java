@@ -1,6 +1,12 @@
 package com.easyledger.api.dto;
 
+import java.math.BigInteger;
+import java.util.Iterator;
+import java.util.List;
+
 import com.easyledger.api.model.Account;
+import com.easyledger.api.model.Category;
+
 
 public class AccountDTO {
 	private Long accountId;
@@ -11,6 +17,7 @@ public class AccountDTO {
 	private String accountSubtypeName;
 	private Long organizationId;
 	private String organizationName;
+	private boolean deleted;
 	
 	public AccountDTO(Account account) {
 		this.accountId = account.getId();
@@ -23,20 +30,23 @@ public class AccountDTO {
 		}
 		this.organizationId = account.getOrganization().getId();
 		this.organizationName = account.getOrganization().getName();
+		
+		this.deleted = account.isDeleted();
 	}
 	
-	public AccountDTO(Integer accountId, String accountName, Integer accountSubtypeId, String accountSubtypeName,
-			Integer accountTypeId, String accountTypeName, Integer organizationId, String organizationName) {
-		this.accountId = Long.valueOf(accountId);
+	public AccountDTO(BigInteger accountId, String accountName, BigInteger accountSubtypeId, String accountSubtypeName,
+			BigInteger accountTypeId, String accountTypeName, BigInteger organizationId, String organizationName, boolean deleted) {
+		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
-		this.accountTypeId = Long.valueOf(accountTypeId);
+		this.accountTypeId = accountTypeId.longValueExact();
 		this.accountTypeName = accountTypeName;
 		if (accountSubtypeId != null) {
-			this.accountSubtypeId = Long.valueOf(accountSubtypeId);
+			this.accountSubtypeId = accountSubtypeId.longValueExact();
 			this.accountSubtypeName = accountSubtypeName;
 		}
-		this.organizationId = Long.valueOf(organizationId);
+		this.organizationId = organizationId.longValueExact();
 		this.organizationName = organizationName;
+		this.deleted = deleted;
 	}
 
 	public AccountDTO() {
@@ -106,12 +116,20 @@ public class AccountDTO {
 		this.organizationName = organizationName;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@Override
 	public String toString() {
 		return "AccountDTO [accountId=" + accountId + ", accountName=" + accountName + ", accountTypeId="
 				+ accountTypeId + ", accountTypeName=" + accountTypeName + ", accountSubtypeId=" + accountSubtypeId
 				+ ", accountSubtypeName=" + accountSubtypeName + ", organizationId=" + organizationId
-				+ ", organizationName=" + organizationName + "]";
+				+ ", organizationName=" + organizationName + ", deleted=" + deleted + "]";
 	}
 	
 	
