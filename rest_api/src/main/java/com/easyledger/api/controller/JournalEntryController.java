@@ -91,7 +91,8 @@ public class JournalEntryController {
         JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
        .orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
 
-        journalEntryRepo.delete(journalEntry);
+        journalEntry.setDeleted(true);
+        journalEntryRepo.save(journalEntry);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;

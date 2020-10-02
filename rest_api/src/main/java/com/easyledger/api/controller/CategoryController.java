@@ -25,6 +25,7 @@ import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Category;
 import com.easyledger.api.repository.CategoryRepository;
+import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.service.CategoryService;
 
@@ -36,12 +37,15 @@ public class CategoryController {
 	private CategoryRepository categoryRepo;
 	private CategoryService categoryService;
 	private OrganizationRepository organizationRepo;
+	private LineItemRepository lineItemRepo;
 
-    public CategoryController(CategoryRepository categoryRepo, CategoryService categoryService, OrganizationRepository organizationRepo) {
+    public CategoryController(CategoryRepository categoryRepo, CategoryService categoryService, 
+    		OrganizationRepository organizationRepo, LineItemRepository lineItemRepo) {
 		super();
 		this.categoryRepo = categoryRepo;
 		this.categoryService = categoryService;
 		this.organizationRepo = organizationRepo;
+		this.lineItemRepo = lineItemRepo;
 	}
 
 	@GetMapping("/category")
@@ -106,10 +110,13 @@ public class CategoryController {
         Category category = categoryRepo.findById(categoryId)
         	.orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + categoryId));
 
-        if (!category.getLineItems().isEmpty()) {
-        	throw new ConflictException("Please remove all LineItems from this category before deleting the category.");
+        Long numberOfUndeletedLineItemsForCategory = lineItemRepo.countUndeletedLineItemsForCategory(categoryId);
+        if (numberOfUndeletedLineItemsForCategory != 0) {
+        	throw new ConflictException("Please remove all " + numberOfUndeletedLineItemsForCategory + " LineItems from this category before deleting the category.");
         }
-        categoryRepo.delete(category);
+        category.setDeleted(true);
+        categoryRepo.save(category);
+        
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;

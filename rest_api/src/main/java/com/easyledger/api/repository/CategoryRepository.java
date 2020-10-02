@@ -14,4 +14,10 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 	
 	@Query(nativeQuery = true)
 	public List<CategoryDTO> getAllCategoriesForOrganization(Long organizationId);
+	
+	@Query(
+		value = "SELECT count(*) FROM category "
+				+ "WHERE category.account_id = ? AND category.deleted = false", 
+		nativeQuery = true)
+	public Long countUndeletedCategoriesForAccount(Long accountId);
 }

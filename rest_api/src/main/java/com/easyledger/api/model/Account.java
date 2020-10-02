@@ -50,7 +50,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 					+ "account_type.id AS accountTypeId, "
 					+ "account_type.name AS accountTypeName, "
 					+ "organization.id AS organizationId, "
-					+ "organization.name AS organizationName "
+					+ "organization.name AS organizationName, "
 					+ "account.deleted AS deleted "
 				+ "FROM account "
 				+ "LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id "

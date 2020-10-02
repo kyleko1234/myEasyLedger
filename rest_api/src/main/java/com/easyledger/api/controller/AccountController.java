@@ -25,6 +25,8 @@ import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.repository.AccountRepository;
+import com.easyledger.api.repository.CategoryRepository;
+import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.service.AccountService;
 
@@ -34,14 +36,19 @@ import com.easyledger.api.service.AccountService;
 public class AccountController {
 
 	private AccountRepository accountRepo;
+	private LineItemRepository lineItemRepo;
 	private AccountService accountService;
 	private OrganizationRepository organizationRepo;
+	private CategoryRepository categoryRepo;
 	
-    public AccountController (AccountRepository accountRepo, AccountService accountService, OrganizationRepository organizationRepo) {
+    public AccountController (AccountRepository accountRepo, AccountService accountService, 
+    		OrganizationRepository organizationRepo, LineItemRepository lineItemRepo, CategoryRepository categoryRepo) {
 		super();
 		this.accountRepo = accountRepo;
 		this.accountService = accountService;
 		this.organizationRepo = organizationRepo;
+		this.lineItemRepo = lineItemRepo;
+		this.categoryRepo = categoryRepo;
 	}
 
 	@GetMapping("/account")
@@ -103,11 +110,16 @@ public class AccountController {
         throws ResourceNotFoundException, ConflictException {
         Account account = accountRepo.findById(accountId)
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-
-        if (!account.getLineItems().isEmpty()) {
-        	throw new ConflictException("Please remove all line items from this account before deleting the account.");
+        Long numberOfUndeletedCategoriesForAccount = categoryRepo.countUndeletedCategoriesForAccount(accountId);
+        if (numberOfUndeletedCategoriesForAccount != 0) {
+        	throw new ConflictException("Please remove all " + numberOfUndeletedCategoriesForAccount + " categories from this account before deleting the account.");
         }
-        accountRepo.delete(account);
+        Long numberOfUndeletedLineItemsForAccount = lineItemRepo.countUndeletedLineItemsForAccount(accountId);
+        if (numberOfUndeletedLineItemsForAccount != 0) {
+        	throw new ConflictException("Please remove all " + numberOfUndeletedLineItemsForAccount + " line items from this account before deleting the account.");
+        }
+        account.setDeleted(true);
+        accountRepo.save(account);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;

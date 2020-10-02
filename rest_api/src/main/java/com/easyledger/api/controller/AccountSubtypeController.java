@@ -23,6 +23,7 @@ import com.easyledger.api.dto.AccountSubtypeDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.AccountSubtype;
+import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.service.AccountSubtypeService;
 
@@ -32,11 +33,14 @@ public class AccountSubtypeController {
 
 	private AccountSubtypeRepository accountSubtypeRepo;
 	private AccountSubtypeService accountSubtypeService;
+	private AccountRepository accountRepo;
 
-    public AccountSubtypeController(AccountSubtypeRepository accountSubtypeRepo, AccountSubtypeService accountSubtypeService) {
+    public AccountSubtypeController(AccountSubtypeRepository accountSubtypeRepo, AccountSubtypeService accountSubtypeService, 
+    		AccountRepository accountRepo) {
 		super();
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.accountSubtypeService = accountSubtypeService;
+		this.accountRepo = accountRepo;
 	}
 
 	@GetMapping("/accountSubtype")
@@ -91,10 +95,12 @@ public class AccountSubtypeController {
         AccountSubtype accountSubtype = accountSubtypeRepo.findById(accountSubtypeId)
         	.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + accountSubtypeId));
 
-        if (!accountSubtype.getAccounts().isEmpty()) {
-        	throw new ConflictException("Please remove all Accounts from this AccountSubtype before deleting the AccountSubtype.");
+        Long undeletedNumberOfAccountsForSubtype = accountRepo.countUndeletedAccountsForSubtype(accountSubtypeId);
+        if (undeletedNumberOfAccountsForSubtype != 0) {
+        	throw new ConflictException("Please remove all " + undeletedNumberOfAccountsForSubtype + " Accounts from this AccountSubtype before deleting the AccountSubtype.");
         }
-        accountSubtypeRepo.delete(accountSubtype);
+        accountSubtype.setDeleted(true);
+        accountSubtypeRepo.save(accountSubtype);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;

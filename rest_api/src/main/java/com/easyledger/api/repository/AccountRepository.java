@@ -15,4 +15,10 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 	@Query(nativeQuery = true)
 	public List<AccountDTO> getAllAccountsForOrganization(Long organizationId);
 	
+	@Query(
+		value = "SELECT count(*) from account "
+				+ "WHERE account.account_subtype_id = ? AND account.deleted = false",
+		nativeQuery = true)
+	public Long countUndeletedAccountsForSubtype(Long accountSubtypeId);
+	
 }
