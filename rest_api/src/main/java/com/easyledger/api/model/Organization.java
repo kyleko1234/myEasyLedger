@@ -27,9 +27,6 @@ public class Organization {
 	
 	@Column(name = "name")
 	private String name;
-	
-	@Column(name = "deleted")
-	private boolean deleted;
 
 	@ManyToMany(mappedBy = "organizations")
 	@JsonIgnore
@@ -72,14 +69,6 @@ public class Organization {
 		this.name = name;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
 	public Set<Person> getPersons() {
 		return persons;
 	}
@@ -115,9 +104,8 @@ public class Organization {
 
 	@Override
 	public String toString() {
-		return "Organization [id=" + id + ", name=" + name + ", deleted=" + deleted + ", persons=" + persons
-				+ ", journalEntries=" + journalEntries + ", accountSubtypes=" + accountSubtypes + ", accounts="
-				+ accounts + "]";
+		return "Organization [id=" + id + ", name=" + name + ", persons=" + persons + ", journalEntries="
+				+ journalEntries + ", accountSubtypes=" + accountSubtypes + ", accounts=" + accounts + "]";
 	}
 	
 

@@ -89,7 +89,7 @@ public class OrganizationController {
 		return organizationRepo.save(organization);
 	}
 	
-    @DeleteMapping("/organization/{id}")
+/*    @DeleteMapping("/organization/{id}")
     @Transactional(rollbackFor=Exception.class)
     public Map<String, Boolean> deleteAccountSubtype(@PathVariable(value = "id") Long organizationId)
         throws ResourceNotFoundException, ConflictException {
@@ -110,6 +110,6 @@ public class OrganizationController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
-
+*/
 	
 }

@@ -93,7 +93,7 @@ public class PersonController {
     	return ResponseEntity.ok(dto);
     }
     
-    @DeleteMapping("/person/{id}")
+ /*   @DeleteMapping("/person/{id}")
     public Map<String, Boolean> deleteCategory(@PathVariable(value = "id") Long personId)
         throws ResourceNotFoundException, ConflictException {
         Person person = personRepo.findById(personId)
@@ -104,6 +104,6 @@ public class PersonController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
-
+*/
 }
 
