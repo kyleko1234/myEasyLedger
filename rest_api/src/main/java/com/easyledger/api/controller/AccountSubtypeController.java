@@ -95,9 +95,9 @@ public class AccountSubtypeController {
         AccountSubtype accountSubtype = accountSubtypeRepo.findById(accountSubtypeId)
         	.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + accountSubtypeId));
 
-        Long undeletedNumberOfAccountsForSubtype = accountRepo.countUndeletedAccountsForSubtype(accountSubtypeId);
-        if (undeletedNumberOfAccountsForSubtype != 0) {
-        	throw new ConflictException("Please remove all " + undeletedNumberOfAccountsForSubtype + " Accounts from this AccountSubtype before deleting the AccountSubtype.");
+        boolean accountSubtypeContainsAccounts = accountRepo.accountSubtypeContainsAccounts(accountSubtypeId);
+        if (accountSubtypeContainsAccounts) {
+        	throw new ConflictException("Please remove all accounts from this AccountSubtype before deleting the AccountSubtype.");
         }
         accountSubtype.setDeleted(true);
         accountSubtypeRepo.save(accountSubtype);

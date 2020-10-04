@@ -16,9 +16,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 	public List<AccountDTO> getAllAccountsForOrganization(Long organizationId);
 	
 	@Query(
-		value = "SELECT count(*) from account "
-				+ "WHERE account.account_subtype_id = ? AND account.deleted = false",
+		value = "SELECT CASE EXISTS (SELECT 1 from account WHERE account.account_subtype_id = ? AND account.deleted = false) "
+				+ "WHEN true THEN true ELSE false END",
 		nativeQuery = true)
-	public Long countUndeletedAccountsForSubtype(Long accountSubtypeId);
+	public boolean accountSubtypeContainsAccounts(Long accountSubtypeId);
 	
 }

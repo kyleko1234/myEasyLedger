@@ -110,9 +110,9 @@ public class CategoryController {
         Category category = categoryRepo.findById(categoryId)
         	.orElseThrow(() -> new ResourceNotFoundException("Category not found for this id :: " + categoryId));
 
-        Long numberOfUndeletedLineItemsForCategory = lineItemRepo.countUndeletedLineItemsForCategory(categoryId);
-        if (numberOfUndeletedLineItemsForCategory != 0) {
-        	throw new ConflictException("Please remove all " + numberOfUndeletedLineItemsForCategory + " LineItems from this category before deleting the category.");
+        boolean categoryContainsLineItems = lineItemRepo.categoryContainsLineItems(categoryId);
+        if (categoryContainsLineItems) {
+        	throw new ConflictException("Please remove all LineItems from this category before deleting the category.");
         }
         category.setDeleted(true);
         categoryRepo.save(category);

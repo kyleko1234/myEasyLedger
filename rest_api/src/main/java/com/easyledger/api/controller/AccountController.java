@@ -110,13 +110,13 @@ public class AccountController {
         throws ResourceNotFoundException, ConflictException {
         Account account = accountRepo.findById(accountId)
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-        Long numberOfUndeletedCategoriesForAccount = categoryRepo.countUndeletedCategoriesForAccount(accountId);
-        if (numberOfUndeletedCategoriesForAccount != 0) {
-        	throw new ConflictException("Please remove all " + numberOfUndeletedCategoriesForAccount + " categories from this account before deleting the account.");
+        boolean accountContainsCategories = categoryRepo.accountContainsCategories(accountId);
+        if (accountContainsCategories) {
+        	throw new ConflictException("Please remove all categories from this account before deleting the account.");
         }
-        Long numberOfUndeletedLineItemsForAccount = lineItemRepo.countUndeletedLineItemsForAccount(accountId);
-        if (numberOfUndeletedLineItemsForAccount != 0) {
-        	throw new ConflictException("Please remove all " + numberOfUndeletedLineItemsForAccount + " line items from this account before deleting the account.");
+        boolean accountContainsLineItems = lineItemRepo.accountContainsLineItems(accountId);
+        if (accountContainsLineItems) {
+        	throw new ConflictException("Please remove all line items from this account before deleting the account.");
         }
         account.setDeleted(true);
         accountRepo.save(account);

@@ -16,8 +16,9 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 	public List<CategoryDTO> getAllCategoriesForOrganization(Long organizationId);
 	
 	@Query(
-		value = "SELECT count(*) FROM category "
-				+ "WHERE category.account_id = ? AND category.deleted = false", 
+		value = "SELECT CASE EXISTS (SELECT 1 FROM category "
+				+ "WHERE category.account_id = ? AND category.deleted = false) "
+				+ "WHEN true THEN true ELSE false END", 
 		nativeQuery = true)
-	public Long countUndeletedCategoriesForAccount(Long accountId);
+	public boolean accountContainsCategories(Long accountId);
 }

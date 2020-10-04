@@ -19,16 +19,18 @@ public interface LineItemRepository extends JpaRepository<LineItem, Long> {
 	public Page<LineItemDTO> getAllLineItemsForCategory(Long categoryId, Pageable pageable);
 
 	@Query(
-		value = "SELECT count(*) from line_item, journal_entry "
+		value = "SELECT CASE EXISTS (SELECT 1 from line_item, journal_entry "
 				+ "WHERE line_item.journal_entry_id = journal_entry.id "
-				+ "AND line_item.account_id = ? AND journal_entry.deleted = false",
+				+ "AND line_item.account_id = ? AND journal_entry.deleted = false) "
+				+ "WHEN true THEN true ELSE false END",
 		nativeQuery = true)
-	public Long countUndeletedLineItemsForAccount(Long accountId);
+	public boolean accountContainsLineItems(Long accountId);
 	
 	@Query(
-		value = "SELECT count(*) from line_item, journal_entry "
+		value = "SELECT CASE EXISTS (SELECT 1 from line_item, journal_entry "
 				+ "WHERE line_item.journal_entry_id = journal_entry.id "
-				+ "AND line_item.category_id = ? AND journal_entry.deleted = false", 
+				+ "AND line_item.category_id = ? AND journal_entry.deleted = false) "
+				+ "WHEN true THEN true ELSE false END", 
 		nativeQuery = true)
-	public Long countUndeletedLineItemsForCategory(Long categoryId);
+	public boolean categoryContainsLineItems(Long categoryId);
 }
