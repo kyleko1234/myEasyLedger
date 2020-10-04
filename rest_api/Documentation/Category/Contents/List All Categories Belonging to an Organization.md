@@ -1,7 +1,7 @@
 ### List All Categories Belonging to an Organization
 Endpoint: GET /organization/{id}/category
 
-Returns a list of all categories that belong to the organization with the given id, ordered by category name.
+Returns a list of all undeleted categories that belong to the organization with the given id, ordered by category name.
 ___
 #### Request Body Parameters
 None
@@ -19,66 +19,58 @@ ___
     {
         "categoryId": 2,
         "categoryName": "Dining",
-        "accountTypeId": 5,
-        "accountTypeName": "Expenses",
-        "organizationId": 1,
-        "organizationName": "Sample organization"
+        "accountId": 5,
+        "accountName": "Personal Expenses",
+        "deleted": false
     },
     {
         "categoryId": 7,
         "categoryName": "Dividends",
-        "accountTypeId": 4,
-        "accountTypeName": "Income",
-        "organizationId": 1,
-        "organizationName": "Sample organization"
+        "accountId": 8,
+        "accountName": "Business Income",
+        "deleted": false
     },
     {
         "categoryId": 8,
         "categoryName": "Employee Salary",
-        "accountTypeId": 5,
-        "accountTypeName": "Expenses",
-        "organizationId": 1,
-        "organizationName": "Sample organization"
+        "accountId": 7,
+        "accountName": "Business Expenses",
+        "deleted": false
     },
     {
         "categoryId": 1,
         "categoryName": "Grocery",
-        "accountTypeId": 5,
-        "accountTypeName": "Expenses",
-        "organizationId": 1,
-        "organizationName": "Sample organization"
+        "accountId": 5,
+        "accountName": "Personal Expenses",
+        "deleted": false
     },
     {
         "categoryId": 3,
         "categoryName": "Rent",
-        "accountTypeId": 5,
-        "accountTypeName": "Expenses",
-        "organizationId": 1,
-        "organizationName": "Sample organization"
+        "accountId": 7,
+        "accountName": "Business Expenses",
+        "deleted": false
     },
     {
         "categoryId": 5,
         "categoryName": "Revenue from operations",
-        "accountTypeId": 4,
-        "accountTypeName": "Income",
-        "organizationId": 1,
-        "organizationName": "Sample organization"
+        "accountId": 8,
+        "accountName": "Business Income",
+        "deleted": false
     },
     {
         "categoryId": 4,
         "categoryName": "Supplies and Equipment",
-        "accountTypeId": 5,
-        "accountTypeName": "Expenses",
-        "organizationId": 1,
-        "organizationName": "Sample organization"
+        "accountId": 7,
+        "accountName": "Business Expenses",
+        "deleted": false
     },
     {
         "categoryId": 6,
         "categoryName": "Utilities",
-        "accountTypeId": 5,
-        "accountTypeName": "Expenses",
-        "organizationId": 1,
-        "organizationName": "Sample organization"
+        "accountId": 8,
+        "accountName": "Business Income",
+        "deleted": false
     }
 ]
 ```

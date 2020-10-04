@@ -23,7 +23,8 @@ ___
     "accountSubtypeId": 1,
     "accountSubtypeName": "Cash",
     "organizationId": 1,
-    "organizationName": "Sample organization"
+    "organizationName": "Sample organization",
+    "deleted": false
 }
 ```
 

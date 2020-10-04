@@ -37,7 +37,6 @@ public class AccountSubtypeService {
 		Organization organization = organizationRepo.findById(dto.getOrganizationId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId())); 
 		product.setOrganization(organization);
-		product.setDeleted(dto.isDeleted());
 		return product;
 		
 	}

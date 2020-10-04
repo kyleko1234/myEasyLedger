@@ -1,7 +1,7 @@
 ### Update a category
 Endpoint: `PUT /category/{id}`
 
-Updates a category with the values of the parameters passed. All parameters must be passed in order to update the object. Any parameters not passed are set to null.
+Updates a category with the values of the parameters passed. All parameters must be passed in order to update the object. Cannot be used to delete an object, use the DELETE endpoint instead.
 ___
 
 #### Request Body Parameters
@@ -11,11 +11,8 @@ The id of the category that is to be updated.
 - **categoryName (`String` 40)**<br/>
 The name of this category.
 
-- **accountTypeId (`Long`)**<br/>
+- **accountId (`Long`)**<br/>
 The id of the type that this account subtype belongs to.
-
-- **organizationId(`Long`)**<br/>
-The id of the organization that this account subtype belongs to.
 
 ___
 #### Returns
@@ -31,8 +28,7 @@ Body:
 {
     "categoryId": 1,
     "categoryName": "Food components",
-    "accountTypeId": 5,
-	"organizationId": 1
+    "accountId": 5,
 }
 ```
 <br/><br/>
@@ -42,9 +38,8 @@ Body:
 {
     "categoryId": 1,
     "categoryName": "Grocery",
-    "accountTypeId": 5,
-    "accountTypeName": "Expenses",
-    "organizationId": 1,
-    "organizationName": "Sample organization"
+    "accountId": 5,
+    "accountName": "Personal Expenses",
+    "deleted": false
 }
 ```

@@ -1,7 +1,7 @@
 ### List All Accounts Belonging to an Organization
 Endpoint: `GET /organization/{id}/account`
 
-Returns a list of all accounts belonging to an organization with the specified id, sorted by accountTypeId and then by accountId.
+Returns a list of all undeleted accounts belonging to an organization with the specified id, sorted by accountTypeId and then by accountId.
 ___
 #### Request Body Parameters
 None
@@ -24,7 +24,8 @@ ___
         "accountSubtypeId": 9,
         "accountSubtypeName": "Accounts Receivable",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountId": 6,
@@ -34,7 +35,8 @@ ___
         "accountSubtypeId": 1,
         "accountSubtypeName": "Cash",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountId": 3,
@@ -44,7 +46,8 @@ ___
         "accountSubtypeId": 4,
         "accountSubtypeName": "Mobile Payment Account",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountId": 2,
@@ -54,7 +57,8 @@ ___
         "accountSubtypeId": 2,
         "accountSubtypeName": "Checking Account",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountId": 1,
@@ -64,7 +68,8 @@ ___
         "accountSubtypeId": 1,
         "accountSubtypeName": "Cash",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountId": 9,
@@ -74,7 +79,8 @@ ___
         "accountSubtypeId": 8,
         "accountSubtypeName": "Accounts Payable",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountId": 4,
@@ -84,7 +90,8 @@ ___
         "accountSubtypeId": 7,
         "accountSubtypeName": "Line of Credit",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountId": 11,
@@ -94,7 +101,8 @@ ___
         "accountSubtypeId": null,
         "accountSubtypeName": null,
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountId": 8,
@@ -104,7 +112,8 @@ ___
         "accountSubtypeId": null,
         "accountSubtypeName": null,
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountId": 7,
@@ -114,7 +123,8 @@ ___
         "accountSubtypeId": null,
         "accountSubtypeName": null,
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountId": 5,
@@ -124,7 +134,8 @@ ___
         "accountSubtypeId": null,
         "accountSubtypeName": null,
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     }
 ]
 ```

@@ -1,7 +1,7 @@
 ### Update an account subtype
 Endpoint: `PUT /accountSubtype/{id}`
 
-Updates an account subtype with the values of the parameters passed. All parameters must be passed in order to update the object. Any parameters not passed are set to null.
+Updates an account subtype with the values of the parameters passed. All parameters must be passed in order to update the object. Any parameters not passed are set to null. Cannot be used to update the "deleted" field, use `DELETE /accountSubtype/{id}` instead.
 ___
 
 #### Request Body Parameters
@@ -43,6 +43,7 @@ Body:
     "accountTypeId": 1,
     "accountTypeName": "Assets",
     "organizationId": 1,
-    "organizationName": "Sample organization"
+    "organizationName": "Sample organization",
+    "deleted": false
 }
 ```

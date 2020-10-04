@@ -7,5 +7,4 @@
 - [[Create a Person]]
 - [[Retrieve a Person]]
 - [[Update a Person]]
-- [[Delete a Person]]
 - [[List All Persons]]

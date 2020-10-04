@@ -1,7 +1,7 @@
 ### Delete a category
 Endpoint: `DELETE /category/{id}`
 
-Deletes the category with the specified id. Categories can only be deleted if there are no Accounts associated with them. Any Accounts will need to be removed or updated to modify a different category before deletion of the category can occur.
+Soft-deletes the category with the specified id. Categories can only be deleted if there are no LineItems associated with them. Any LineItems will need to be removed or updated to modify a different category before deletion of the category can occur.
 ___
 
 #### Request Body Parameters

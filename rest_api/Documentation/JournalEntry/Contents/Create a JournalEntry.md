@@ -70,43 +70,44 @@ Body:
 #### Sample Response
 ```json
 {
-    "journalEntryId": 7,
-    "journalEntryDate": "2020-06-20",
-    "description": "paid credit card balance",
+    "journalEntryId": 1,
+    "journalEntryDate": "2020-04-11",
+    "description": "Grocery for the week",
     "personId": 1,
     "organizationId": 1,
     "lineItems": [
         {
-            "accountId": 2,
-            "accountName": "Checking",
-            "accountSubtypeId": 2,
-            "accountSubtypeName": "Checking Account",
+            "accountId": 1,
+            "accountName": "Personal Cash",
+            "accountSubtypeId": 1,
+            "accountSubtypeName": "Cash",
             "accountTypeId": 1,
             "accountTypeName": "Assets",
-            "amount": 30.00,
+            "amount": 40.00,
             "categoryId": null,
             "categoryName": null,
-            "description": "paid credit balance from checking acc",
-            "journalEntryId": 7,
+            "description": "Cash payment for groceries",
+            "journalEntryId": 1,
             "isCredit": true,
-            "lineItemId": 17
+            "lineItemId": 2
         },
         {
-            "accountId": 4,
-            "accountName": "BOA Credit Card",
-            "accountSubtypeId": 7,
-            "accountSubtypeName": "Line of Credit",
-            "accountTypeId": 2,
-            "accountTypeName": "Liabilities",
-            "amount": 30.00,
-            "categoryId": null,
-            "categoryName": null,
-            "description": "paid credit balance",
-            "journalEntryId": 7,
+            "accountId": 5,
+            "accountName": "Personal Expenses",
+            "accountSubtypeId": null,
+            "accountSubtypeName": null,
+            "accountTypeId": 5,
+            "accountTypeName": "Expenses",
+            "amount": 40.00,
+            "categoryId": 1,
+            "categoryName": "Grocery",
+            "description": "Grocery expenses",
+            "journalEntryId": 1,
             "isCredit": false,
-            "lineItemId": 18
+            "lineItemId": 1
         }
-    ]
+    ],
+    "deleted": false
 }
 ```
 

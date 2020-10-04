@@ -25,7 +25,8 @@ ___
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountSubtypeId": 2,
@@ -33,7 +34,8 @@ ___
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountSubtypeId": 3,
@@ -41,7 +43,8 @@ ___
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountSubtypeId": 4,
@@ -49,7 +52,8 @@ ___
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountSubtypeId": 5,
@@ -57,7 +61,8 @@ ___
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountSubtypeId": 6,
@@ -65,7 +70,8 @@ ___
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountSubtypeId": 7,
@@ -73,7 +79,8 @@ ___
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountSubtypeId": 8,
@@ -81,7 +88,8 @@ ___
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
     {
         "accountSubtypeId": 9,
@@ -89,7 +97,8 @@ ___
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
-        "organizationName": "Sample organization"
+        "organizationName": "Sample organization",
+        "deleted": false
     },
 	...
 ]

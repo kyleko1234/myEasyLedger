@@ -41,6 +41,7 @@ Body:
     "accountTypeId": 1,
     "accountTypeName": "Assets",
     "organizationId": 1,
-    "organizationName": "Sample organization"
+    "organizationName": "Sample organization",
+    "deleted": false
 }
 ```

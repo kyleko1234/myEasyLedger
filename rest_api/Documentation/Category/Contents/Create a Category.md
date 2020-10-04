@@ -8,11 +8,8 @@ ___
 - **categoryName (`String` 40)** <br/>
 The name of this category.
 
-- **accountTypeId (`Long`)** <br/>
-The id of the account type that this category belongs to.
-
-- **organizationId(`Long`)**<br/>
-The id of the organization that this category belongs to.
+- **accountId (`Long`)** <br/>
+The id of the account that this category belongs to.
 
 ___
 #### Returns
@@ -28,8 +25,7 @@ Body:
 ```json
 {
     "categoryName": "Grocery",
-    "accountTypeId": 5,
-	"organizationId": 1
+    "accountId": 5,
 }
 ```
 
@@ -39,9 +35,8 @@ Sample Response
 {
     "categoryId": 1,
     "categoryName": "Grocery",
-    "accountTypeId": 5,
-    "accountTypeName": "Expenses",
-    "organizationId": 1,
-    "organizationName": "Sample organization"
+    "accountId": 5,
+    "accountName": "Personal Expenses",
+    "deleted": false
 }
 ```

@@ -43,7 +43,6 @@ public class AccountService {
 		Account product = new Account();
 		product.setId(dto.getAccountId());
 		product.setName(dto.getAccountName());
-		product.setDeleted(dto.isDeleted());
 		
 		AccountType accountType = accountTypeRepo.findById(dto.getAccountTypeId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("AccountType not found for this id :: " + dto.getAccountTypeId()));

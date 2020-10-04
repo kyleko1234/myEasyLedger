@@ -1,7 +1,7 @@
 ### List all JournalEntries
 Endpoint: `GET /journalEntry`
 
-Returns a list of all JournalEntries.
+Returns a list of all JournalEntries. Database requests for this endpoint scale linearly with the number of entries to be returned, so it is not recommended to use this endpoint. If possible, fetch only the journalEntries you need, or use `GET /organization/{id}/journalEntry` instead.
 ___
 #### Request Body Parameters
 None
@@ -53,7 +53,8 @@ ___
                 "isCredit": false,
                 "lineItemId": 1
             }
-        ]
+        ],
+        "deleted": false
     },
     {
         "journalEntryId": 2,
@@ -78,21 +79,6 @@ ___
                 "lineItemId": 4
             },
             {
-                "accountId": 5,
-                "accountName": "Personal Expenses",
-                "accountSubtypeId": null,
-                "accountSubtypeName": null,
-                "accountTypeId": 5,
-                "accountTypeName": "Expenses",
-                "amount": 20.00,
-                "categoryId": 2,
-                "categoryName": "Dining",
-                "description": "Dining expenses",
-                "journalEntryId": 2,
-                "isCredit": false,
-                "lineItemId": 3
-            },
-            {
                 "accountId": 4,
                 "accountName": "Personal BOA Credit Card",
                 "accountSubtypeId": 7,
@@ -106,8 +92,24 @@ ___
                 "journalEntryId": 2,
                 "isCredit": true,
                 "lineItemId": 5
+            },
+            {
+                "accountId": 5,
+                "accountName": "Personal Expenses",
+                "accountSubtypeId": null,
+                "accountSubtypeName": null,
+                "accountTypeId": 5,
+                "accountTypeName": "Expenses",
+                "amount": 20.00,
+                "categoryId": 2,
+                "categoryName": "Dining",
+                "description": "Dining expenses",
+                "journalEntryId": 2,
+                "isCredit": false,
+                "lineItemId": 3
             }
-        ]
+        ],
+        "deleted": false
     },
     {
         "journalEntryId": 3,
@@ -146,7 +148,8 @@ ___
                 "isCredit": true,
                 "lineItemId": 7
             }
-        ]
+        ],
+        "deleted": false
     },
     {
         "journalEntryId": 4,
@@ -185,7 +188,8 @@ ___
                 "isCredit": true,
                 "lineItemId": 9
             }
-        ]
+        ],
+        "deleted": false
     },
     {
         "journalEntryId": 5,
@@ -224,7 +228,8 @@ ___
                 "isCredit": false,
                 "lineItemId": 10
             }
-        ]
+        ],
+        "deleted": false
     },
     {
         "journalEntryId": 6,
@@ -233,6 +238,21 @@ ___
         "personId": 1,
         "organizationId": 1,
         "lineItems": [
+            {
+                "accountId": 1,
+                "accountName": "Personal Cash",
+                "accountSubtypeId": 1,
+                "accountSubtypeName": "Cash",
+                "accountTypeId": 1,
+                "accountTypeName": "Assets",
+                "amount": 40.00,
+                "categoryId": null,
+                "categoryName": null,
+                "description": "whole foods drained my whole wallet",
+                "journalEntryId": 6,
+                "isCredit": true,
+                "lineItemId": 14
+            },
             {
                 "accountId": 5,
                 "accountName": "Personal Expenses",
@@ -262,23 +282,9 @@ ___
                 "journalEntryId": 6,
                 "isCredit": false,
                 "lineItemId": 13
-            },
-            {
-                "accountId": 1,
-                "accountName": "Personal Cash",
-                "accountSubtypeId": 1,
-                "accountSubtypeName": "Cash",
-                "accountTypeId": 1,
-                "accountTypeName": "Assets",
-                "amount": 40.00,
-                "categoryId": null,
-                "categoryName": null,
-                "description": "whole foods drained my whole wallet",
-                "journalEntryId": 6,
-                "isCredit": true,
-                "lineItemId": 14
             }
-        ]
+        ],
+        "deleted": false
     }
 ]
 ```

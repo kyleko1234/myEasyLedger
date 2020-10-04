@@ -105,6 +105,7 @@ Body:
             "isCredit": false,
             "lineItemId": 16
         }
-    ]
+    ],
+	"deleted": "false"
 }
 ```

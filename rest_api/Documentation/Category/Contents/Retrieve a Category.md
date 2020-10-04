@@ -21,9 +21,8 @@ ___
 {
     "categoryId": 1,
     "categoryName": "Grocery",
-    "accountTypeId": 5,
-    "accountTypeName": "Expenses",
-    "organizationId": 1,
-    "organizationName": "Sample organization"
+    "accountId": 5,
+    "accountName": "Personal Expenses",
+    "deleted": false
 }
 ```

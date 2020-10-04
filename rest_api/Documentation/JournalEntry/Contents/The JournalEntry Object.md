@@ -18,6 +18,9 @@ Id of the organization that this entry belongs to.
 
 - **lineItems (`ArrayList<LineItem>`)**<br/>
 A list of LineItem objects that this entry contains. Each entry’s LineItems must be balanced; that is, total credit amounts must equal total debit amounts.
+
+- **deleted(`boolean`)** <br/>
+Whether or not this journal entry has been deleted.
 ___
 #### Sample Object
 ```json
@@ -58,6 +61,7 @@ ___
             "isCredit": true,
             "lineItemId": 2
         }
-    ]
+    ],
+	"deleted": "false"
 }
 ```

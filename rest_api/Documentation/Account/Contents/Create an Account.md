@@ -15,6 +15,7 @@ The id of the subtype for this account.
 
 - **organizationId (`Long`)** <br/>
 The id of the organization that this account belongs to.
+
 ___
 
 #### Returns
@@ -45,6 +46,7 @@ Body:
     "accountSubtypeId": 1,
     "accountSubtypeName": "Cash",
     "organizationId": 1,
-    "organizationName": "Sample organization"
+    "organizationName": "Sample organization",
+    "deleted": false
 }
 ```

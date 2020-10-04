@@ -1,7 +1,7 @@
 ### List All JournalEntries Belonging to an Organization as JournalEntryViewModels
 Endpoint: `GET /organization/{id}/journalEntryViewModel?page={i}&size={j}`
 
-Returns a page from a paginated list of all journal entries belonging to organization with id {id} with zero-indexed page number  `i` and page size `j` as ViewModels, sorted by most recent journalEntryDate, secondary sorted by journalEntryId descending. JournalEntryViewModels are a compressed view of entries, allowing the entry to be displayed in one row with a summary of LineItem data for that entry. This is useful for generating a compact paginated view of a General Journal. ViewModels include information on journalEntryId, journalEntryDate, description for the journal entry, total debit amounts for the entry, and total credit amounts for the entry. Pagination is done server-side.
+Returns a page from a paginated list of all undeleted journal entries belonging to organization with id {id} with zero-indexed page number  `i` and page size `j` as ViewModels, sorted by most recent journalEntryDate, secondary sorted by journalEntryId descending. JournalEntryViewModels are a compressed view of entries, allowing the entry to be displayed in one row with a summary of LineItem data for that entry. This is useful for generating a compact paginated view of a General Journal. ViewModels include information on journalEntryId, journalEntryDate, description for the journal entry, total debit amounts for the entry, and total credit amounts for the entry. Pagination is done server-side.
 ___
 
 #### Request Body Parameters
@@ -50,12 +50,12 @@ ___
         "offset": 0,
         "pageNumber": 0,
         "pageSize": 3,
-        "unpaged": false,
-        "paged": true
+        "paged": true,
+        "unpaged": false
     },
+    "last": false,
     "totalPages": 2,
     "totalElements": 6,
-    "last": false,
     "size": 3,
     "sort": {
         "sorted": false,
@@ -63,8 +63,8 @@ ___
         "empty": true
     },
     "number": 0,
-    "first": true,
     "numberOfElements": 3,
+    "first": true,
     "empty": false
 }
 ```

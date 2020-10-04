@@ -1,7 +1,7 @@
 ### Delete an account
 Endpoint: `DELETE /account/{id}`
 
-Deletes the account with the specified id. Accounts can only be deleted if there are no LineItems associated with them. Any LineItems will need to be removed or updated to modify a different account before deletion of the account.
+Soft-deletes the account with the specified id. Accounts can only be deleted if there are no LineItems associated with them. Any LineItems will need to be removed or updated to modify a different account before deletion of the account.
 ___
 
 #### Request Body Parameters

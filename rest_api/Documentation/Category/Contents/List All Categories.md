@@ -20,20 +20,59 @@ ___
     {
         "categoryId": 1,
         "categoryName": "Grocery",
-        "accountTypeId": 5,
-        "accountTypeName": "Expenses",
-        "organizationId": 1,
-        "organizationName": "Sample organization"
+        "accountId": 5,
+        "accountName": "Personal Expenses",
+        "deleted": false
     },
     {
         "categoryId": 2,
         "categoryName": "Dining",
-        "accountTypeId": 5,
-        "accountTypeName": "Expenses",
-        "organizationId": 1,
-        "organizationName": "Sample organization"
+        "accountId": 5,
+        "accountName": "Personal Expenses",
+        "deleted": false
     },
-	...
+    {
+        "categoryId": 3,
+        "categoryName": "Rent",
+        "accountId": 7,
+        "accountName": "Business Expenses",
+        "deleted": false
+    },
+    {
+        "categoryId": 4,
+        "categoryName": "Supplies and Equipment",
+        "accountId": 7,
+        "accountName": "Business Expenses",
+        "deleted": false
+    },
+    {
+        "categoryId": 5,
+        "categoryName": "Revenue from operations",
+        "accountId": 8,
+        "accountName": "Business Income",
+        "deleted": false
+    },
+    {
+        "categoryId": 6,
+        "categoryName": "Utilities",
+        "accountId": 8,
+        "accountName": "Business Income",
+        "deleted": false
+    },
+    {
+        "categoryId": 7,
+        "categoryName": "Dividends",
+        "accountId": 8,
+        "accountName": "Business Income",
+        "deleted": false
+    },
+    {
+        "categoryId": 8,
+        "categoryName": "Employee Salary",
+        "accountId": 7,
+        "accountName": "Business Expenses",
+        "deleted": false
+    }
 ]
 ```
  

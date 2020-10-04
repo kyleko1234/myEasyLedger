@@ -25,6 +25,8 @@ The id of the organization that this account belongs to.
 - **organizationName (`String`)** <br/>
 The name of the organization that this account belongs to.
 
+- **deleted (`boolean`)** <br/>
+Whether or not this account has been deleted.
 ___
 #### Sample Object
 ```json
@@ -36,6 +38,7 @@ ___
     "accountSubtypeId": 1,
     "accountSubtypeName": "Cash",
     "organizationId": 1,
-    "organizationName": "Sample organization"
+    "organizationName": "Sample organization",
+    "deleted": false
 }
 ```

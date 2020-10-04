@@ -16,7 +16,6 @@ ___
 - [[Retrieve a Person|GET /person/{id}]]
 - [[Create a Person|POST /person]]
 - [[Update a Person|PATCH /person/{id}]]
-- [[Delete a Person|DELETE /person/{id}]]
 <br/> <br/>
 - [[List All JournalEntries|GET /journalEntry]]
 - [[List All JournalEntries Belonging to an Organization as JournalEntryViewModels|GET /organization/{id}/journalEntryViewModel]]
@@ -34,7 +33,6 @@ ___
 - [[List All Persons in an Organization|GET /organization/{id}/person]]
 - [[Create an Organization|POST /organization]]
 - [[Update an Organization| PUT /organization/{id}]]
-- [[Delete an Organization|DELETE /organization/{id}]]
 <br/><br/>
 - [[List All Accounts|GET /account]]
 - [[Retrieve an Account| GET /account/{id}]]
@@ -45,7 +43,6 @@ ___
 <br/><br/>
 - [[List All AccountTypes|GET /accountType]]
 - [[Retrieve an AccountType|GET /accountType/{id}]]
-- [[List All Categories for an AccountType| GET /accountType/{id}/category]]
 - [[List All AccountSubtypes for an AccountType| GET /accountType/{id}/accountSubtype]]
 <br/><br/>
 - [[List All AccountSubtypes|GET /accountSubtype]]

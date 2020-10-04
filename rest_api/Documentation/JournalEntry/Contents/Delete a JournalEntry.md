@@ -1,7 +1,7 @@
 ### Delete a  JournalEntry
 Endpoint: `DELETE /journalEntry/{id}`
 
-Deletes a journal entry and all the line items contained in that entry using the specified entry id.
+Soft-deletes a journal entry and all the line items contained in that entry using the specified entry id.
 ___
 #### Parameters
 None

@@ -41,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 					+ "account.id AS accountId, account.name AS accountName, "
 					+ "category.deleted AS deleted "
 				+ "FROM category, account "
-				+ "WHERE account.organization_id = ? AND category.account_id = account.id AND category.deleted = false"
+				+ "WHERE account.organization_id = ? AND category.account_id = account.id AND category.deleted = false "
 				+ "ORDER BY category.name",
 		resultSetMapping = "categoryDTOMapping"
 )

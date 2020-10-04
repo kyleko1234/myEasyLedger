@@ -52,6 +52,7 @@ ___
             "isCredit": false,
             "lineItemId": 1
         }
-    ]
+    ],
+    "deleted": false
 }
 ```

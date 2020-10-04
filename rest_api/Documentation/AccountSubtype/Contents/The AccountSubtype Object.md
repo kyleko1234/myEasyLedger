@@ -19,6 +19,9 @@ The id of the organization that this subtype belongs to.
 
 - **organizationName (`String` 50)**<br/>
 The name of the organization that this subtype belongs to.
+
+- **deleted (`boolean`) ** <br/>
+Whether or not this account subtype has been deleted.
 ___
 
 #### Sample Object
@@ -29,7 +32,8 @@ ___
     "accountTypeId": 1,
     "accountTypeName": "Assets",
     "organizationId": 1,
-    "organizationName": "Sample organization"
+    "organizationName": "Sample organization",
+    "deleted": false
 }
 ```
 
