@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
+import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -59,6 +60,37 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				+ "WHERE organization.id = ? AND account.deleted = false "
 				+ "ORDER BY accountTypeId ASC, accountId DESC",
 		resultSetMapping = "accountDTOMapping"
+)
+
+@SqlResultSetMapping( //maps native SQL query to AccountDTO class
+		name = "accountBalanceDTOMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = AccountBalanceDTO.class,
+						columns = {
+								@ColumnResult(name = "accountId"),
+								@ColumnResult(name = "accountName"),
+								@ColumnResult(name = "accountTypeId"),
+								@ColumnResult(name = "accountSubtypeId"),
+								@ColumnResult(name = "debitTotal"),
+								@ColumnResult(name = "creditTotal")
+						}
+				)
+		}
+)	
+@NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts for that organization
+		name = "Account.getAllAccountBalancesForOrganization",
+		query = "SELECT account.id AS accountId, account.name AS accountName, account.account_type_id AS accountTypeId, account.account_subtype_id AS accountSubtypeId, " + 
+				"  SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
+				"  SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
+				"FROM account " + 
+				"  LEFT JOIN line_item ON line_item.account_id = account.id " + 
+				"  LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
+				"WHERE account.organization_id = ?" + 
+				"  AND account.deleted = false " + 
+				"GROUP BY account.id " + 
+				"ORDER BY account.account_type_id, account.name",
+		resultSetMapping = "accountBalanceDTOMapping"
 )
 
 

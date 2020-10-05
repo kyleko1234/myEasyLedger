@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -78,6 +79,14 @@ public class AccountController {
     	return accountRepo.getAllAccountsForOrganization(organizationId);
     }
     
+    @GetMapping("/organization/{id}/accountBalance")
+    public List<AccountBalanceDTO> getAllAccountBalancesForOrganization(@PathVariable(value = "id") Long organizationId)
+    	throws ResourceNotFoundException {
+    	organizationRepo.findById(organizationId)
+    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+    	return accountRepo.getAllAccountBalancesForOrganization(organizationId);
+    }
+
     @PostMapping("/account")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountDTO createAccount(@Valid @RequestBody AccountDTO dto) 

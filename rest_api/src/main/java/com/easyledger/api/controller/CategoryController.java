@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.CategoryBalanceDTO;
 import com.easyledger.api.dto.CategoryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -73,6 +74,14 @@ public class CategoryController {
     	organizationRepo.findById(organizationId)
         .orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
     	return categoryRepo.getAllCategoriesForOrganization(organizationId);
+    }
+    
+    @GetMapping("/organization/{id}/categoryBalance")
+    public List<CategoryBalanceDTO> getAllCategoryBalancesForOrganization(@PathVariable(value = "id") Long organizationId) 
+    	throws ResourceNotFoundException {
+    	organizationRepo.findById(organizationId)
+        .orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+    	return categoryRepo.getAllCategoryBalancesForOrganization(organizationId);
     }
     
     

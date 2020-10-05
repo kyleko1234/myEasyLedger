@@ -20,7 +20,9 @@ function TableOfJournalEntries({
   organizationId,
   personId,
   API_URL,
-  localization
+  localization,
+  tableTitle,
+  hasAddEntryButton
 }) {
   const {
     getTableProps,
@@ -284,18 +286,19 @@ function TableOfJournalEntries({
   // Render the UI for your table
   return (
     <>
-      <div style={{borderRadius: "5px", borderStyle: "solid", borderWidth:"0.5px", borderColor: "DarkGray"}}>
-      <div className="d-flex bg-light justify-content-between px-2 py-2" style={{ borderRadius: "inherit" }}>
-        <span className="h5 align-self-center">
-          Accounting Entries
-      </span>
+      <div style={{borderRadius: "5px", borderStyle: "solid", borderWidth:"0.5px", borderColor: "DarkGray"}} className="bg-light">
+      <div className="d-flex justify-content-between px-2 py-2" style={{borderBottom: "solid 1px silver"}}>
+        <span className="h5 align-self-center py-1">
+          {tableTitle}
+        </span>
         <span>
-          <button className="btn btn-green align-self-center" onClick={() => openEditorForNewEntry()}>
-            <i className="ion ion-md-add fa-fw fa-lg"></i>Add an entry
-        </button>
+          {hasAddEntryButton ? 
+            <button className="btn btn-green align-self-center" onClick={() => openEditorForNewEntry()}>
+              <i className="ion ion-md-add fa-fw fa-lg"></i>Add an entry
+            </button> : null}
         </span>
       </div>
-      <div className="table-responsive bg-white" style={{ borderTop: "solid 1px Silver" }}>
+      <div className="table-responsive bg-white">
         <table className="table table-hover m-b-0 text-inverse" {...getTableProps()}>
           <thead>
             {headerGroups.map(headerGroup => (
@@ -315,7 +318,7 @@ function TableOfJournalEntries({
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()} style={{borderBottom: "solid 1px Silver"}}>
+          <tbody {...getTableBodyProps()}>
             {page.map((row, i) => {
               prepareRow(row)
               return (
@@ -329,7 +332,7 @@ function TableOfJournalEntries({
           </tbody>
         </table>
       </div>
-      <div className="d-flex bg-light justify-content-between px-1 py-2" style={{borderRadius:"inherit"}}>
+      <div className="d-flex justify-content-between px-1 py-2" style={{borderTop: "solid 1px silver"}}>
         <span style={{ width: "25ch" }}>
           <ul className="pager align-self-center m-t-0 m-b-0">
             <li className={canPreviousPage ? "previous" : "previous disabled"}>

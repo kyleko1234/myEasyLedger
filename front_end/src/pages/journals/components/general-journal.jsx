@@ -1,5 +1,5 @@
 import React from 'react';
-import TableOfJournalEntries from '../../../components/table/table-of-journal-entries';
+import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
 import axios from 'axios';
 
 
@@ -41,7 +41,7 @@ function GeneralJournal({API_URL, localization, organizationId, personId}) {
   
   return (
     <div >
-      <TableOfJournalEntries
+      <ClickableTableWithPaginationAndJournalEntryModal
         columns={columns}
         data={data}
         fetchData={fetchData}
@@ -51,6 +51,8 @@ function GeneralJournal({API_URL, localization, organizationId, personId}) {
         personId={personId}
         API_URL={API_URL}
         localization={localization}
+        tableTitle="Accounting Entries"
+        hasAddEntryButton={true}
       />
     </div>
   )

@@ -1,19 +1,22 @@
 ### List All Categories Belonging to an Organization
-Endpoint: GET /organization/{id}/category
+Endpoint: `GET /organization/{id}/category/`
 
-Returns a list of all undeleted categories that belong to the organization with the given id, ordered by category name.
+Retrieves all undeleted categories for the specified organization id.
 ___
+
 #### Request Body Parameters
 None
 ___
 #### Returns
-Returns 200 and a list of all categories belonging to the specified organization, or 404 and an error if the given organization does not exist. 
+Returns a list of all undeleted category objects for an organization with ID if a valid ID was supplied, otherwise returns HTTP 404 and an error.
+
 ___
+
 #### Sample Request
-`GET /organization/{id}/category`
+`GET /organization/1/category`
 <br/>
 
-#### Sample Response
+
 ```json
 [
     {

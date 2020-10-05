@@ -53,7 +53,7 @@ ___
 <br/><br/>
 - [[List All Categories|GET /category]]
 - [[Retrieve a Category|GET /category/{id}]]
-- [[List All Categories Belonging to an Organization|GET /organization/{id}/category]]
+- [[List All Categories Belonging to an Organization|DELETE /organization/{id}/category]]
 - [[Create a Category|POST /category]]
 - [[Update a Category|PUT /category/{id}]]
 - [[Delete a Category|DELETE /category/{id}]]

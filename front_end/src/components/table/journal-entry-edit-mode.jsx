@@ -39,7 +39,7 @@ function JournalEntryEditMode({
     
     const returnFormByColumnType = cell => {
         const columnId = cell.column.id;
-        const accountTypesWithCategories = [3, 4, 5];
+        const accountTypesWithCategories = [4, 5];
         switch (columnId) {
             case "description":
                 return( 
@@ -116,7 +116,7 @@ function JournalEntryEditMode({
                 )
             case "categoryName":
                 if (accountTypesWithCategories.includes(data[cell.row.index].accountTypeId)) {
-                    const categoriesForThisAccountType = categories.filter(category => category.accountTypeId == data[cell.row.index].accountTypeId);
+                    const categoriesForThisAccount = categories.filter(category => category.accountId == data[cell.row.index].accountId);
                     return(
                         <>
                             <select
@@ -132,7 +132,7 @@ function JournalEntryEditMode({
                             >
                                 <option value='' disabled className="font-italic">Select a category...</option>
 
-                                {categoriesForThisAccountType.map(
+                                {categoriesForThisAccount.map(
                                     (category) => {
                                         return(
                                             <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>

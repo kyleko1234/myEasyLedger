@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Person.md",
+            "file": "Easy Ledger.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Person.md",
+            "file": "Easy Ledger.md",
             "mode": "preview"
           }
         },
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Person/Person.md"
+                "file": "Easy Ledger.md"
               }
             }
           }
@@ -89,10 +89,10 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "Person/Person.md",
-    "Organization/Organization.md",
     "Easy Ledger.md",
-    "AccountType/AccountType.md",
-    "AccountType/Contents/The AccountType Object.md"
+    "Category/Contents/List All Categories Belonging to an Organization.md",
+    "Category/Contents/Retrieve a Category.md",
+    "Category/Category.md",
+    "List All Categories Belonging to an Organization.md"
   ]
 }

@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
+import com.easyledger.api.dto.CategoryBalanceDTO;
 import com.easyledger.api.dto.CategoryDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -44,6 +45,38 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				+ "WHERE account.organization_id = ? AND category.account_id = account.id AND category.deleted = false "
 				+ "ORDER BY category.name",
 		resultSetMapping = "categoryDTOMapping"
+)
+
+@SqlResultSetMapping( //maps native SQL query to CategoryDTO class
+		name = "categoryBalanceDTOMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = CategoryBalanceDTO.class,
+						columns = {
+								@ColumnResult(name = "categoryId"),
+								@ColumnResult(name = "categoryName"),
+								@ColumnResult(name = "accountId"),
+								@ColumnResult(name = "debitTotal"),
+								@ColumnResult(name = "creditTotal")	
+						}
+				)
+		}
+)	
+@NamedNativeQuery( //retrieves all undeleted categories for an organization when given an organization id
+		name = "Category.getAllCategoryBalancesForOrganization",
+		query = "SELECT category.id AS categoryId, category.name AS categoryName, category.account_id AS accountId,  " + 
+				"  SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
+				"  SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
+				"FROM category  " + 
+				"  LEFT JOIN line_item ON line_item.category_id = category.id  " + 
+				"  LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id, " + 
+				"  account " + 
+				"WHERE account.organization_id = 1  " + 
+				"  AND category.account_id = account.id " + 
+				"  AND category.deleted = false " + 
+				"GROUP BY category.id " + 
+				"ORDER BY category.name",
+		resultSetMapping = "categoryBalanceDTOMapping"
 )
 
 
