@@ -2,6 +2,9 @@ package com.easyledger.api.dto;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountSubtype;
@@ -41,6 +44,7 @@ public class LineItemDTO {
 	private String categoryName;
 	private String description;
 	private Long journalEntryId;
+	private LocalDate journalEntryDate;
 	private boolean isCredit;
 	private Long lineItemId;
 
@@ -57,6 +61,7 @@ public class LineItemDTO {
     	
     	this.lineItemId = this.lineItem.getId();
     	this.journalEntryId = this.journalEntry.getId();
+    	this.journalEntryDate = this.journalEntry.getJournalEntryDate();
     	this.accountId = this.account.getId();
     	this.isCredit = this.lineItem.isIsCredit();
     	this.amount = this.lineItem.getAmount();
@@ -80,7 +85,7 @@ public class LineItemDTO {
 	
 	public LineItemDTO(BigInteger accountId, String accountName, BigInteger accountSubtypeId, String accountSubtypeName,
 			BigInteger accountTypeId, String accountTypeName, BigDecimal amount, BigInteger categoryId, String categoryName,
-			String description, BigInteger journalEntryId, boolean isCredit, BigInteger lineItemId) {
+			String description, BigInteger journalEntryId, Date journalEntryDate, boolean isCredit, BigInteger lineItemId) {
 		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
 		if (accountSubtypeId != null) {
@@ -96,6 +101,7 @@ public class LineItemDTO {
 		}
 		this.description = description;
 		this.journalEntryId = journalEntryId.longValueExact();
+		this.journalEntryDate = LocalDate.parse(journalEntryDate.toString());
 		this.isCredit = isCredit;
 		this.lineItemId = lineItemId.longValueExact();
 	}
@@ -116,6 +122,15 @@ public class LineItemDTO {
 
 	public void setJournalEntryId(Long journalEntryId) {
 		this.journalEntryId = journalEntryId;
+	}
+	
+
+	public LocalDate getJournalEntryDate() {
+		return journalEntryDate;
+	}
+
+	public void setJournalEntryDate(LocalDate journalEntryDate) {
+		this.journalEntryDate = journalEntryDate;
 	}
 
 	public Long getAccountId() {
@@ -250,7 +265,7 @@ public class LineItemDTO {
 		return journalEntry;
 	}
 
-	public void setEntry(JournalEntry journalEntry) {
+	public void setJournalEntry(JournalEntry journalEntry) {
 		this.journalEntry = journalEntry;
 	}
 	
