@@ -30,7 +30,8 @@ ___
         "categoryId": 1,
         "categoryName": "Grocery",
         "description": "Grocery expenses",
-        "entryId": 1,
+        "journalEntryId": 1,
+		"journalEntryDate": "2020-04-11",
         "isCredit": false,
         "lineItemId": 1
     },
@@ -45,7 +46,8 @@ ___
         "categoryId": null,
         "categoryName": null,
         "description": "Cash payment for groceries",
-        "entryId": 1,
+        "journalEntryId": 1,
+		"journalEntryDate": "2020-04-11",
         "isCredit": true,
         "lineItemId": 2
     }, 

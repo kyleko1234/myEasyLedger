@@ -32,21 +32,6 @@ ___
     "organizationId": 1,
     "lineItems": [
         {
-            "accountId": 5,
-            "accountName": "Personal Expenses",
-            "accountSubtypeId": null,
-            "accountSubtypeName": null,
-            "accountTypeId": 5,
-            "accountTypeName": "Expenses",
-            "amount": 40.00,
-            "categoryId": 1,
-            "categoryName": "Grocery",
-            "description": "Grocery expenses",
-            "journalEntryId": 1,
-            "isCredit": false,
-            "lineItemId": 1
-        },
-        {
             "accountId": 1,
             "accountName": "Personal Cash",
             "accountSubtypeId": 1,
@@ -58,10 +43,27 @@ ___
             "categoryName": null,
             "description": "Cash payment for groceries",
             "journalEntryId": 1,
+            "journalEntryDate": "2020-04-11",
             "isCredit": true,
             "lineItemId": 2
+        },
+        {
+            "accountId": 5,
+            "accountName": "Personal Expenses",
+            "accountSubtypeId": null,
+            "accountSubtypeName": null,
+            "accountTypeId": 5,
+            "accountTypeName": "Expenses",
+            "amount": 40.00,
+            "categoryId": 1,
+            "categoryName": "Grocery",
+            "description": "Grocery expenses",
+            "journalEntryId": 1,
+            "journalEntryDate": "2020-04-11",
+            "isCredit": false,
+            "lineItemId": 1
         }
     ],
-	"deleted": "false"
+    "deleted": false
 }
 ```

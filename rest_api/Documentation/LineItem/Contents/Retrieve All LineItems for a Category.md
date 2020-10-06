@@ -25,11 +25,28 @@ ___
             "accountSubtypeName": null,
             "accountTypeId": 5,
             "accountTypeName": "Expenses",
+            "amount": 20.00,
+            "categoryId": 1,
+            "categoryName": "Grocery",
+            "description": "bought an stick of celery at whole foods",
+            "journalEntryId": 6,
+            "journalEntryDate": "2020-04-21",
+            "isCredit": false,
+            "lineItemId": 13
+        },
+        {
+            "accountId": 5,
+            "accountName": "Personal Expenses",
+            "accountSubtypeId": null,
+            "accountSubtypeName": null,
+            "accountTypeId": 5,
+            "accountTypeName": "Expenses",
             "amount": 40.00,
             "categoryId": 1,
             "categoryName": "Grocery",
             "description": "Grocery expenses",
             "journalEntryId": 1,
+            "journalEntryDate": "2020-04-11",
             "isCredit": false,
             "lineItemId": 1
         }
@@ -47,7 +64,7 @@ ___
         "unpaged": false
     },
     "totalPages": 1,
-    "totalElements": 1,
+    "totalElements": 2,
     "last": true,
     "size": 2,
     "sort": {
@@ -56,7 +73,7 @@ ___
         "empty": true
     },
     "number": 0,
-    "numberOfElements": 1,
+    "numberOfElements": 2,
     "first": true,
     "empty": false
 }

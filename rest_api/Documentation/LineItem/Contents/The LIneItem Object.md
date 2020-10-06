@@ -31,8 +31,11 @@ If this LineItem affects an Income or Expense account, this describes the catego
 - **description (optional `String` 255)**<br/>
 A brief description of this LineItem.
 
-- **EntryId (`Long`)**<br/>
-The id of the Entry that this LineItem belongs to.
+- **journalEntryId (`Long`)**<br/>
+The id of the journal entry that this LineItem belongs to.
+
+- **journalEntryDate (`LocalDate`)**<br/>
+The date of the journal entry that this LineItem belongs to.
 
 - **isCredit (`boolean`)**<br/>
 A boolean that marks whether this is a debit (false) item or a credit (true) item.
@@ -53,7 +56,8 @@ ___
     "categoryId": 2,
     "categoryName": "Dining",
     "description": "Dining expenses",
-    "entryId": 2,
+    "journalEntryId": 2,
+    "journalEntryDate": "2020-04-18",
     "isCredit": false,
     "lineItemId": 3
 }

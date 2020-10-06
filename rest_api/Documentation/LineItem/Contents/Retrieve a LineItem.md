@@ -28,7 +28,8 @@ ____
     "categoryId": 2,
     "categoryName": "Dining",
     "description": "Dining expenses",
-    "entryId": 2,
+    "journalEntryId": 2,
+    "journalEntryDate": "2020-04-18",
     "isCredit": false,
     "lineItemId": 3
 }

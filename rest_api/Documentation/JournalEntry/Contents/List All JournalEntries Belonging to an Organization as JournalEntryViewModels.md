@@ -53,9 +53,9 @@ ___
         "paged": true,
         "unpaged": false
     },
-    "last": false,
     "totalPages": 2,
     "totalElements": 6,
+    "last": false,
     "size": 3,
     "sort": {
         "sorted": false,

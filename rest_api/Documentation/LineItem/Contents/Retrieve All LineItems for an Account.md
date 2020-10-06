@@ -30,6 +30,7 @@ ___
             "categoryName": null,
             "description": "paid credit balance from checking acc",
             "journalEntryId": 5,
+            "journalEntryDate": "2020-04-20",
             "isCredit": true,
             "lineItemId": 11
         },
@@ -45,6 +46,7 @@ ___
             "categoryName": null,
             "description": "venmo transfer to bank",
             "journalEntryId": 4,
+            "journalEntryDate": "2020-04-19",
             "isCredit": false,
             "lineItemId": 8
         }

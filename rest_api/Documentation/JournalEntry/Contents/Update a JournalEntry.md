@@ -70,14 +70,14 @@ Body:
 ```json
 {
     "journalEntryId": 1,
-    "journalEntryDate": "2020-04-21",
-    "description": "grocery shopping",
+    "journalEntryDate": "2020-04-11",
+    "description": "Grocery for the week",
     "personId": 1,
     "organizationId": 1,
     "lineItems": [
         {
             "accountId": 1,
-            "accountName": "Cash",
+            "accountName": "Personal Cash",
             "accountSubtypeId": 1,
             "accountSubtypeName": "Cash",
             "accountTypeId": 1,
@@ -87,8 +87,9 @@ Body:
             "categoryName": null,
             "description": "Cash payment for groceries",
             "journalEntryId": 1,
+            "journalEntryDate": "2020-04-11",
             "isCredit": true,
-            "lineItemId": 15
+            "lineItemId": 2
         },
         {
             "accountId": 5,
@@ -102,10 +103,11 @@ Body:
             "categoryName": "Grocery",
             "description": "Grocery expenses",
             "journalEntryId": 1,
+            "journalEntryDate": "2020-04-11",
             "isCredit": false,
-            "lineItemId": 16
+            "lineItemId": 1
         }
     ],
-	"deleted": "false"
+    "deleted": false
 }
 ```

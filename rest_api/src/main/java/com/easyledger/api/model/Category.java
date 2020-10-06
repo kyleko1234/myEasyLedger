@@ -71,7 +71,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"  LEFT JOIN line_item ON line_item.category_id = category.id  " + 
 				"  LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id, " + 
 				"  account " + 
-				"WHERE account.organization_id = 1  " + 
+				"WHERE account.organization_id = ? " + 
 				"  AND category.account_id = account.id " + 
 				"  AND category.deleted = false " + 
 				"GROUP BY category.id " + 

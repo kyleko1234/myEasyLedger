@@ -11,6 +11,7 @@ ___
 - [[Delete a Category]]
 - [[List All Categories]]
 - [[List All Categories Belonging to an Organization]]
+- [[List All Categories Belonging to an Organization As CategoryBalance Objects]]
 
 
 

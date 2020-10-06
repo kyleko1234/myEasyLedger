@@ -66,7 +66,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"    LEFT OUTER JOIN account_type on account.account_type_id = account_type.id, " + 
 				"	 journal_entry " + 
 				"WHERE line_item.account_id = account.id AND account.id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false " + 
-				"ORDER BY journal_entry.journal_entry_date, line_item.id DESC",
+				"ORDER BY journal_entry.journal_entry_date DESC, line_item.id DESC",
 		resultSetMapping = "lineItemDTOMapping"
 )
 @NamedNativeQuery( //retrieves all LineItems in undeleted entries for a category when given a categoryId
@@ -92,7 +92,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"    LEFT OUTER JOIN account_type on account.account_type_id = account_type.id, " + 
 				"    journal_entry " + 
 				"WHERE line_item.account_id = account.id AND line_item.category_id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false " + 
-				"ORDER BY journal_entry.journal_entry_date, line_item.id DESC",
+				"ORDER BY journal_entry.journal_entry_date DESC, line_item.id DESC",
 		resultSetMapping = "lineItemDTOMapping"
 )
 @SqlResultSetMapping(//sqlresultsetmapping for counting query

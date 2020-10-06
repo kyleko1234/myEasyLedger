@@ -17,3 +17,4 @@ ___
 - [[Delete an Account]]
 - [[List All Accounts]]
 - [[List All Accounts Belonging to an Organization]]
+- [[List All Accounts Belonging to an Organization as AccountBalance Objects]]
