@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.dto.AccountSubtypeDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
+import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.service.AccountSubtypeService;
 
 @RestController
@@ -34,13 +36,15 @@ public class AccountSubtypeController {
 	private AccountSubtypeRepository accountSubtypeRepo;
 	private AccountSubtypeService accountSubtypeService;
 	private AccountRepository accountRepo;
+	private OrganizationRepository organizationRepo;
 
     public AccountSubtypeController(AccountSubtypeRepository accountSubtypeRepo, AccountSubtypeService accountSubtypeService, 
-    		AccountRepository accountRepo) {
+    		AccountRepository accountRepo, OrganizationRepository organizationRepo) {
 		super();
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.accountSubtypeService = accountSubtypeService;
 		this.accountRepo = accountRepo;
+		this.organizationRepo = organizationRepo;
 	}
 
 	@GetMapping("/accountSubtype")
@@ -60,6 +64,14 @@ public class AccountSubtypeController {
           .orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + accountSubtypeId));
         AccountSubtypeDTO dto = new AccountSubtypeDTO(accountSubtype);
         return ResponseEntity.ok().body(dto);
+    }
+    
+    @GetMapping("/organization/{id}/accountSubtype")
+    public List<AccountSubtypeDTO> getAllAccountSubtypesForOrganization(@PathVariable(value = "id") Long organizationId)
+    	throws ResourceNotFoundException {
+    	organizationRepo.findById(organizationId)
+    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+    	return accountSubtypeRepo.getAllAccountSubtypesForOrganization(organizationId);
     }
     
     @PostMapping("/accountSubtype")

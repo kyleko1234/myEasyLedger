@@ -4,16 +4,57 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
+import com.easyledger.api.dto.AccountSubtypeDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@SqlResultSetMapping( //maps native SQL query to AccountDTO class
+		name = "accountSubtypeDTOMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = AccountSubtypeDTO.class,
+						columns = {
+								@ColumnResult(name = "accountSubtypeId"),
+								@ColumnResult(name = "accountSubtypeName"),
+								@ColumnResult(name = "accountTypeId"),
+								@ColumnResult(name = "accountTypeName"),
+								@ColumnResult(name = "organizationId"),
+								@ColumnResult(name = "organizationName"),
+								@ColumnResult(name = "deleted")
+						}
+				)
+		}
+)	
+@NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts for that organization
+		name = "AccountSubtype.getAllAccountSubtypesForOrganization",
+		query = "SELECT " + 
+				"  account_subtype.id AS accountSubtypeId, " + 
+				"  account_subtype.name AS accountSubtypeName, " + 
+				"  account_subtype.account_type_id AS accountTypeId, " + 
+				"  account_type.name AS accountTypeName, " + 
+				"  account_subtype.organization_id AS organizationId, " + 
+				"  organization.name AS organizationName, " + 
+				"  account_subtype.deleted AS deleted " + 
+				"FROM account_subtype, account_type, organization " + 
+				"WHERE account_subtype.account_type_id = account_type.id " + 
+				"  AND account_subtype.organization_id = organization.id " + 
+				"  AND account_subtype.deleted = false " + 
+				"  AND organization.id = ? " + 
+				"ORDER BY account_subtype.account_type_id ASC, account_subtype.name ASC",
+		resultSetMapping = "accountSubtypeDTOMapping"
+)
 
 @Entity
 @Table(name = "account_subtype")

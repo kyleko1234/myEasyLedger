@@ -48,6 +48,7 @@ ___
 <br/><br/>
 - [[List All AccountSubtypes|GET /accountSubtype]]
 - [[Retrieve an AccountSubtype|GET /accountSubtype/{id}]]
+- [[List All AccountSubtypes Belonging to an Organization|GET /organization/{id}/accountSubtype]]
 - [[Create an AccountSubtype| POST /accountSubtype]]
 - [[Update an AccountSubtype|PUT /accountSubtype/{id}]]
 - [[Delete an AccountSubtype| DELETE /accountSubtype/{id}]]

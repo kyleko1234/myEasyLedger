@@ -10,7 +10,7 @@ ___
 Returns 200 and a list of all accounts belonging to an organization when supplied a valid id. Returns 404 and an error if the organization with the supplied id does not exist in the database.
 ___
 #### Sample Request
-`GET /organization/{id}/account`
+`GET /organization/1/account`
 <br/>
 
 #### Sample Response

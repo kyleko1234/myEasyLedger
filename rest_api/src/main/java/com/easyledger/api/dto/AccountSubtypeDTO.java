@@ -1,5 +1,7 @@
 package com.easyledger.api.dto;
 
+import java.math.BigInteger;
+
 import com.easyledger.api.model.AccountSubtype;
 
 public class AccountSubtypeDTO {
@@ -22,6 +24,18 @@ public class AccountSubtypeDTO {
 		this.deleted = accountSubtype.isDeleted();
 	}
 	
+	public AccountSubtypeDTO(BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId,
+			String accountTypeName, BigInteger organizationId, String organizationName, boolean deleted) {
+		super();
+		this.accountSubtypeId = accountSubtypeId.longValueExact();
+		this.accountSubtypeName = accountSubtypeName;
+		this.accountTypeId = accountTypeId.longValueExact();
+		this.accountTypeName = accountTypeName;
+		this.organizationId = organizationId.longValueExact();
+		this.organizationName = organizationName;
+		this.deleted = deleted;
+	}
+
 	public AccountSubtypeDTO() {
 	}
 

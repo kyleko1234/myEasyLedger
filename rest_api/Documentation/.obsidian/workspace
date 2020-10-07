@@ -90,9 +90,9 @@
   },
   "lastOpenFiles": [
     "Easy Ledger.md",
-    "Account/Account.md",
-    "Account/Contents/List All Accounts Belonging to an Organization 1.md",
-    "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md",
-    "Account/Contents/List All Accounts Belonging to an Organization.md"
+    "AccountSubtype/AccountSubtype.md",
+    "List All AccountSubtypes Belonging to an Organization.md",
+    "Account/Contents/List All Accounts Belonging to an Organization.md",
+    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md"
   ]
 }
