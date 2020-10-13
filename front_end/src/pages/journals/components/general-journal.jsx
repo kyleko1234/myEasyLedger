@@ -3,7 +3,7 @@ import ClickableTableWithPaginationAndJournalEntryModal from '../../../component
 import axios from 'axios';
 
 
-function GeneralJournal({API_URL, localization, organizationId, personId}) {
+function GeneralJournal({context}) {
 
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
@@ -25,13 +25,9 @@ function GeneralJournal({API_URL, localization, organizationId, personId}) {
     // This will get called when the table needs new data
         
     //fetch data from Easy Ledger API
-    const url = `${API_URL}/organization/${organizationId}/journalEntryViewModel/?page=${pageIndex}&size=${pageSize}`;
+    const url = `${context.apiUrl}/organization/${context.organizationId}/journalEntryViewModel/?page=${pageIndex}&size=${pageSize}`;
     axios.get(url).then(response => {
         var dataContent = response.data.content;
-        dataContent.forEach( entry => {
-          entry.debitAmount = entry.debitAmount;
-          entry.creditAmount = entry.creditAmount;
-        })
         setData(dataContent);
         setPageCount(response.data.totalPages);
         setElementCount(response.data.totalElements);
@@ -42,15 +38,12 @@ function GeneralJournal({API_URL, localization, organizationId, personId}) {
   return (
     <div >
       <ClickableTableWithPaginationAndJournalEntryModal
+        context={context}
         columns={columns}
         data={data}
         fetchData={fetchData}
         pageCount={pageCount}
         elementCount={elementCount}
-        organizationId={organizationId}
-        personId={personId}
-        API_URL={API_URL}
-        localization={localization}
         tableTitle="Accounting Entries"
         hasAddEntryButton={true}
       />

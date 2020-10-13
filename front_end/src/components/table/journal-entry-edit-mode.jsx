@@ -3,12 +3,12 @@ import { useTable } from 'react-table'
 import { Alert } from 'reactstrap'
 
 function JournalEntryEditMode({
+    context,
     data, setLineItemData,
     journalEntryDate, setJournalEntryDate,
     journalEntryDescription, setJournalEntryDescription,
     categories,
     accounts,
-    localization,
     alertMessages
 }) {
 
@@ -274,8 +274,8 @@ function JournalEntryEditMode({
                             <td><strong>Total</strong></td>
                             <td></td>
                             <td></td>
-                            <td><strong>{new Intl.NumberFormat(localization.locale, { style: 'currency', currency:localization.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
-                            <td><strong>{new Intl.NumberFormat(localization.locale, { style: 'currency', currency:localization.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
+                            <td><strong>{new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
+                            <td><strong>{new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
                             <td></td>
                         </tr>
                     </tfoot>

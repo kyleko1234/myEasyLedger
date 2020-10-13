@@ -12,15 +12,12 @@ import JournalEntryEditMode from './journal-entry-edit-mode';
 // new data when pagination state changes
 // We can also add a loading state to let our table know it's loading new data
 function TableOfJournalEntries({
+  context,
   columns,
   data,
   fetchData,
   pageCount: controlledPageCount,
   elementCount,
-  organizationId,
-  personId,
-  API_URL,
-  localization,
   tableTitle,
   hasAddEntryButton
 }) {
@@ -75,7 +72,7 @@ function TableOfJournalEntries({
   const [alertMessages, setAlertMessages] = React.useState([]);
 
   const fetchJournalEntry = i => {
-    const url = `${API_URL}/journalEntry/${i}`;
+    const url = `${context.apiUrl}/journalEntry/${i}`;
     axios.get(url).then(response => {
       var journalEntry = response.data;
       var formattedLineItems = [];
@@ -129,12 +126,12 @@ function TableOfJournalEntries({
   }
 
   const fetchCategoriesAndAccounts = i => {
-    axios.get(`${API_URL}/organization/${i}/category`).then(response => {
+    axios.get(`${context.apiUrl}/organization/${i}/category`).then(response => {
       const categories = response.data;
       setCategories(categories);
     })
       .catch(console.log);
-    axios.get(`${API_URL}/organization/${i}/account`).then(response => {
+    axios.get(`${context.apiUrl}/organization/${i}/account`).then(response => {
       const accounts = response.data;
       setAccounts(accounts);
     })
@@ -146,8 +143,8 @@ function TableOfJournalEntries({
   }, [fetchData, pageIndex, pageSize])
   
   React.useEffect(() => {
-    fetchCategoriesAndAccounts(organizationId);
-  }, [organizationId])
+    fetchCategoriesAndAccounts(context.organizationId);
+  }, [context.organizationId])
 
   //format table cell value based on column name and locale
   const formatCellValue = cell => {
@@ -155,7 +152,7 @@ function TableOfJournalEntries({
     switch (columnId) {
       case "creditAmount":
       case "debitAmount":
-        return (new Intl.NumberFormat(localization.locale, { style: 'currency', currency: localization.currency }).format(cell.value));
+        return (new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(cell.value));
       default:
         return (cell.value);
     }
@@ -235,15 +232,15 @@ function TableOfJournalEntries({
       journalEntryId : journalEntryId,
       journalEntryDate: journalEntryDate,
       description: journalEntryDescription,
-      personId: personId,
-      organizationId: organizationId,
+      personId: context.personId,
+      organizationId: context.organizationId,
       lineItems: lineItems
     }
   }
 
   const postJournalEntry = (data) => {
     console.log(data);
-    axios.post(`${API_URL}/journalEntry`, data)
+    axios.post(`${context.apiUrl}/journalEntry`, data)
       .then(response => {
         fetchData({pageIndex, pageSize});
         fetchJournalEntry(response.data.journalEntryId);
@@ -253,7 +250,7 @@ function TableOfJournalEntries({
   }
 
   const putJournalEntry = (id, data) => {
-    axios.put(`${API_URL}/journalEntry/${id}`, data)
+    axios.put(`${context.apiUrl}/journalEntry/${id}`, data)
       .then(response => {
         console.log(response);
         fetchData({pageIndex, pageSize});
@@ -273,7 +270,7 @@ function TableOfJournalEntries({
     }
   }
   const handleDeleteJournalEntryButton = (id) => {
-    axios.delete(`${API_URL}/journalEntry/${id}`)
+    axios.delete(`${context.apiUrl}/journalEntry/${id}`)
       .then(response => {
         console.log(response)
         fetchData({pageIndex, pageSize});
@@ -365,19 +362,20 @@ function TableOfJournalEntries({
         <ModalBody className="bg-light">
           {editMode ?
             <JournalEntryEditMode
+              context={context}
               data={lineItemData} setLineItemData={setLineItemData}
               journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
               journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
               categories={categories}
               accounts={accounts}
-              localization={localization}
               alertMessages={alertMessages}>
             </JournalEntryEditMode> :
             <JournalEntryViewMode
+              context={context}
               data={lineItemData}
               journalEntryDate={journalEntryDate}
               journalEntryDescription={journalEntryDescription}
-              localization={localization}>
+            >
             </JournalEntryViewMode>
           }
         </ModalBody>

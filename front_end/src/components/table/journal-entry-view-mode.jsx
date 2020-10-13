@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTable } from 'react-table'
 
-function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate, localization}) {
+function JournalEntryViewMode({ context, data, journalEntryDescription, journalEntryDate}) {
 
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
@@ -45,7 +45,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
       case "debitAmount":
       case "creditAmount":
         if (cell.value) {
-          return (new Intl.NumberFormat(localization.locale, { style: 'currency', currency:localization.currency }).format(cell.value));
+          return (new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(cell.value));
         } else {
           return null;
         }
@@ -99,8 +99,8 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
             <td><strong>Total</strong></td>
             <td></td>
             <td></td>
-            <td><strong>{new Intl.NumberFormat(localization.locale, { style: 'currency', currency:localization.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
-            <td><strong>{new Intl.NumberFormat(localization.locale, { style: 'currency', currency:localization.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
+            <td><strong>{new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
+            <td><strong>{new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
           </tr>
         </tfoot>
       </table>

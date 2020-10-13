@@ -74,7 +74,7 @@ const routes = [
     path: '/dashboard/v1',
     exact: true,
     title: 'Dashboard V1',
-    component: () => <DashboardV1 />
+    component: DashboardV1
   },
   {
     path: '/dashboard/v2',
@@ -364,18 +364,19 @@ const routes = [
   {
     path: '/journals',
     title: 'Journals',
-    component: () => <Journals />,
+    component: Journals,
   },
   {
     path: '/accounts',
     title: 'Accounts',
-    component: () => <Accounts />,
+    component: Accounts,
   },
   {
     path: '/categories',
     title: 'Categories',
-    component: () => <Categories />,
+    component: Categories,
   }
+
 ];
 
 
