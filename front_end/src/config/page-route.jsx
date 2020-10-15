@@ -61,7 +61,7 @@ import RegisterV3 from './../pages/user/register-v3.js';
 import HelperCSS from './../pages/helper/helper-css.js';
 
 import Journals from './../pages/journals/journals.js';
-import Accounts from './../pages/accounts/accounts.js';
+import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
 import Categories from './../pages/categories/categories.js';
 
 const routes = [
@@ -367,9 +367,9 @@ const routes = [
     component: Journals,
   },
   {
-    path: '/accounts',
-    title: 'Accounts',
-    component: Accounts,
+    path: '/chartofaccounts',
+    title: 'Chart Of Accounts',
+    component: ChartOfAccounts,
   },
   {
     path: '/categories',

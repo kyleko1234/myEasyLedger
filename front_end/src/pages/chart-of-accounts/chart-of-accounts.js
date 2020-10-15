@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link, Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
-import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
-import classnames from 'classnames';
-import AccountView from './components/account-details';
-import AccountOverview from './components/account-overview.js';
+import ChartOfAccountsOverview from './components/chart-of-accounts-overview.js';
 import AccountDetails from './components/account-details';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-class Accounts extends React.Component {
+class ChartOfAccounts extends React.Component {
     //This component essentially acts as a controller for accounts. It declares Routes for the "Accounts" tab, and maintains the state of all operations in the accounts tab.
     //One is redirected to the AccountOverview component by default. Through the AccountOverview component, one can select a specific account to view details.
     //Utilities for account and category selection are passed as props into the AccountOverview component, and allow the AccountOverview component to communicate selection information
@@ -29,8 +27,11 @@ class Accounts extends React.Component {
             },
             selectedAccountId: 0,
             selectedCategoryId: 0,
+            addAnAccountModal: false,
             utils: {
-                setSelectedAccountId: this.setSelectedAccountId.bind(this)
+                setSelectedAccountId: this.setSelectedAccountId.bind(this),
+                toggleAddAnAccountModal: this.toggleAddAnAccountModal.bind(this),
+                fetchData: this.fetchData.bind(this)
             }
         };
     }
@@ -60,32 +61,41 @@ class Accounts extends React.Component {
         this.setState({selectedCategoryId: i});
     }
 
+    toggleAddAnAccountModal() {
+        this.setState({addAnAccountModal: !this.state.addAnAccountModal});
+    }
+
     render() {
         return (
             <div>
                 <Switch>
-                    <Route path={`${this.props.match.url}/accountDetails`}>
+                    <Route path={`${this.props.match.path}/accountDetails`}>
                         <AccountDetails
                             accounts={this.state.accounts}
                             selectedAccountId={this.state.selectedAccountId}
                             context={this.state.context}
                         />
                     </Route>
-                    <Route path={`${this.props.match.url}`} exact={true}>
-                        <AccountOverview
+                    <Route path={`${this.props.match.path}`} exact={true}>
+                        <ChartOfAccountsOverview
                             accounts={this.state.accounts}
                             accountSubtypes={this.state.accountSubtypes}
                             categories={this.state.categories}
                             context={this.state.context}
-                            parentUrl={this.props.match.url}
+                            parentPath={this.props.match.path}
                             utils={this.state.utils}
                         />
                     </Route> 
                 </Switch>
+                <Modal isOpen={this.state.addAnAccountModal} toggle={() => this.toggleAddAnAccountModal()} centered={true}>
+                    <ModalHeader> Header </ModalHeader>
+                    <ModalBody>Body</ModalBody>
+                    <ModalFooter>Footer</ModalFooter>
+                </Modal>
             </div>
 
         )
     }
 }
 
-export default Accounts;
+export default ChartOfAccounts;

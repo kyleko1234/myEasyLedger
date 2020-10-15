@@ -27,7 +27,7 @@ function AccountDetails(props) {
         // This will get called when the table needs new data
 
         //fetch data from Easy Ledger API
-        const url = `${props.context.apiUrl}/account/${props.context.organizationId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
+        const url = `${props.context.apiUrl}/account/${props.selectedAccountId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
         axios.get(url).then(response => {
             var dataContent = response.data.content;
             dataContent.forEach(lineItem => {
@@ -47,17 +47,22 @@ function AccountDetails(props) {
     }, [])
 
     return (
-        <div >
-            <ClickableTableWithPaginationAndJournalEntryModal
-                context={props.context}
-                columns={columns}
-                data={data}
-                fetchData={fetchData}
-                pageCount={pageCount}
-                elementCount={elementCount}
-                tableTitle={selectedAccount.accountName}
-                hasAddEntryButton={false}
-            />
+        <div className="row">
+            <span className="col-md-9">
+                <ClickableTableWithPaginationAndJournalEntryModal
+                    context={props.context}
+                    columns={columns}
+                    data={data}
+                    fetchData={fetchData}
+                    pageCount={pageCount}
+                    elementCount={elementCount}
+                    tableTitle={selectedAccount.accountName}
+                    hasAddEntryButton={false}
+                />
+            </span>
+            <span className="col-md-3 border-left">
+                sidebar
+            </span>
         </div>
     )
 }
