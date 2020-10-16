@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import ChartOfAccountsOverview from './components/chart-of-accounts-overview.js';
 import AccountDetails from './components/account-details';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class ChartOfAccounts extends React.Component {
     //This component essentially acts as a controller for accounts. It declares Routes for the "Accounts" tab, and maintains the state of all operations in the accounts tab.
@@ -16,6 +16,7 @@ class ChartOfAccounts extends React.Component {
             accounts: [],
             accountSubtypes: [],
             categories: [],
+
             context: {
                 apiUrl: 'http://localhost:8080/v0.1',
                 organizationId: 1,
@@ -25,12 +26,21 @@ class ChartOfAccounts extends React.Component {
                     currency: 'USD'
                 }
             },
+
             selectedAccountId: 0,
+            selectedAccountSubtypeId: 0,
             selectedCategoryId: 0,
-            addAnAccountModal: false,
+            
+            accountNameInput: '',
+            accountNameAlert: false,
+
+            addAnAccountFromSubtypeModal: false,
+
             utils: {
                 setSelectedAccountId: this.setSelectedAccountId.bind(this),
-                toggleAddAnAccountModal: this.toggleAddAnAccountModal.bind(this),
+                setSelectedAccountSubtypeId: this.setSelectedAccountSubtypeId.bind(this),
+                setAccountNameInput: this.setAccountNameInput.bind(this),
+                toggleAddAnAccountFromSubtypeModal: this.toggleAddAnAccountFromSubtypeModal.bind(this),
                 fetchData: this.fetchData.bind(this)
             }
         };
@@ -56,13 +66,46 @@ class ChartOfAccounts extends React.Component {
     setSelectedAccountId(i) {
         this.setState({selectedAccountId: i});
     }
+
+    setSelectedAccountSubtypeId(i) {
+        this.setState({selectedAccountSubtypeId: i});
+    }
     
     setSelectedCategoryId(i) {
         this.setState({selectedCategoryId: i});
     }
 
-    toggleAddAnAccountModal() {
-        this.setState({addAnAccountModal: !this.state.addAnAccountModal});
+    setAccountNameInput( formInputText ) {
+        this.setState({accountNameInput: formInputText});
+    }
+
+    toggleAddAnAccountFromSubtypeModal() {
+        this.setState({addAnAccountFromSubtypeModal: !this.state.addAnAccountFromSubtypeModal});
+    }
+    
+    postAccountWithSubtype() {
+        const url = `${this.state.context.apiUrl}/account`;
+        let data = {
+            accountName: this.state.accountNameInput,
+            accountSubtypeId: this.state.selectedAccountSubtypeId,
+            accountTypeId: this.state.accountSubtypes.slice()
+                .find(accountSubtype => accountSubtype.accountSubtypeId === this.state.selectedAccountSubtypeId).accountTypeId,
+            organizationId: this.state.context.organizationId
+        };
+        axios.post(url, data).then( response => {
+            console.log(response);
+            this.fetchData();
+        })
+    }
+
+    handleSaveNewAccountWithSubtype() {
+        if (!this.state.accountNameInput) {
+            this.setState({accountNameAlert: true})
+        } else {
+            this.postAccountWithSubtype();
+            this.toggleAddAnAccountFromSubtypeModal();
+            this.setState({accountNameInput: ''});
+        }
     }
 
     render() {
@@ -87,10 +130,52 @@ class ChartOfAccounts extends React.Component {
                         />
                     </Route> 
                 </Switch>
-                <Modal isOpen={this.state.addAnAccountModal} toggle={() => this.toggleAddAnAccountModal()} centered={true}>
-                    <ModalHeader> Header </ModalHeader>
-                    <ModalBody>Body</ModalBody>
-                    <ModalFooter>Footer</ModalFooter>
+                <Modal isOpen={this.state.addAnAccountFromSubtypeModal} toggle={() => this.toggleAddAnAccountFromSubtypeModal()} centered={true}>
+                    <ModalHeader> Add an Account </ModalHeader>
+                    <ModalBody>
+                        {
+                            this.state.accountNameAlert ? 
+                                <Alert color="danger">
+                                    Please provide a name for your account.
+                                </Alert>
+                            : null
+                        }
+                        <form>
+                            <div className="form-group row">
+                                <label className="col-form-label col-md-3">
+                                    Account Name
+                                </label>
+                                <div className="col-md-9">
+                                    <input 
+                                        className="form-control" 
+                                        value={this.state.accountNameInput ? this.state.accountNameInput : ''}
+                                        onChange={event => {
+                                            this.setAccountNameInput(event.target.value);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </form>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button 
+                            className="btn btn-primary" 
+                            onClick={() => this.handleSaveNewAccountWithSubtype()} 
+                            style={{width: "10ch"}}
+                        >
+                            Save
+                        </button>
+                        <button 
+                            className="btn btn-white" 
+                            onClick={() => {
+                                this.toggleAddAnAccountFromSubtypeModal();
+                                this.setState({accountNameInput: '', accountNameAlert: false});
+                            }} 
+                            style={{width: "10ch"}}
+                        >
+                            Cancel
+                        </button>
+                    </ModalFooter>
                 </Modal>
             </div>
 

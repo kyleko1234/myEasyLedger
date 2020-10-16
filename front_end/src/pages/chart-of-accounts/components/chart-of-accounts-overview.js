@@ -6,7 +6,8 @@ import classnames from 'classnames';
 
 class ChartOfAccountsOverview extends React.Component {
     //required props: accounts, accountSubtypes, categories, context, parentPath, utils
-    //required utils: setSelectedAccountId, toggleAddAnAccountModal, fetchData
+
+    //required utils: setSelectedAccountId, setSelectedAccountSubtypeId, toggleAddAnAccountFromSubtypeModal, fetchData
     
 
     constructor(props) {
@@ -110,9 +111,15 @@ class ChartOfAccountsOverview extends React.Component {
                                                                 </Link>
                                                         )
                                                     })}
+
+                                                    {/* Add an Account [from subtype] button. Will open a modal to add a new account of this subtype.
+                                                        Renders at the bottom of the list of accounts for every subtype. */}
                                                     <button 
                                                         className="btn btn-block btn-xs btn-default border-0 font-weight-normal my-1"
-                                                        onClick={() => this.props.utils.toggleAddAnAccountModal()}
+                                                        onClick={() => {
+                                                            this.props.utils.setSelectedAccountSubtypeId(accountSubtype.accountSubtypeId);
+                                                            this.props.utils.toggleAddAnAccountFromSubtypeModal();
+                                                            }}
                                                         >
                                                         <i className="ion ion-md-add fa-fw fa-lg"></i>Add a new account
                                                     </button>
