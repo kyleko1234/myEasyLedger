@@ -78,7 +78,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				)
 		}
 )	
-@NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts for that organization
+@NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization
 		name = "Account.getAllAccountBalancesForOrganization",
 		query = "SELECT account.id AS accountId, account.name AS accountName, account.account_type_id AS accountTypeId, account.account_subtype_id AS accountSubtypeId, " + 
 				"  SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
@@ -92,7 +92,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"ORDER BY account.account_type_id, account.name",
 		resultSetMapping = "accountBalanceDTOMapping"
 )
-
+@NamedNativeQuery( //takes an account ID as a parameter and returns an account with balances with that id 
+		name = "Account.getAccountBalanceById",
+		query = "SELECT account.id AS accountId, account.name AS accountName, account.account_type_id AS accountTypeId, account.account_subtype_id AS accountSubtypeId, " + 
+				"  SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
+				"  SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
+				"FROM account " + 
+				"  LEFT JOIN line_item ON line_item.account_id = account.id " + 
+				"  LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
+				"WHERE account.id = ?" + 
+				"GROUP BY account.id ",
+		resultSetMapping = "accountBalanceDTOMapping"
+)
 
 @Entity
 @Table(name = "account")

@@ -71,6 +71,16 @@ public class AccountController {
         return ResponseEntity.ok().body(dto);
     }
     
+    @GetMapping("/account/{id}/accountBalance")
+    public AccountBalanceDTO getAccountBalanceById(@PathVariable(value = "id") Long accountId)
+        throws ResourceNotFoundException {
+        AccountBalanceDTO result = accountRepo.getAccountBalanceById(accountId);
+        if (result == null) {
+        	throw new ResourceNotFoundException("Account not found for this id :: " + accountId);
+        }
+        return result;
+    }
+    
     @GetMapping("/organization/{id}/account")
     public List<AccountDTO> getAllAccountsForOrganization(@PathVariable(value = "id") Long organizationId)
     	throws ResourceNotFoundException {
@@ -87,6 +97,7 @@ public class AccountController {
     	return accountRepo.getAllAccountBalancesForOrganization(organizationId);
     }
 
+    
     @PostMapping("/account")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountDTO createAccount(@Valid @RequestBody AccountDTO dto) 

@@ -1,11 +1,12 @@
 import React from 'react';
 import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
 import axios from 'axios';
+import {Link} from 'react-router-dom'
 
 
 function AccountDetails(props) {
-    // required props: accounts, selectedAccountId, context
-    const selectedAccount = props.accounts.slice().find(account => account.accountId === props.selectedAccountId);
+    // required props: accounts, selectedAccountId, context, parentPath, parentName
+{/*   const selectedAccount = props.accounts.slice().find(account => account.accountId === props.selectedAccountId);
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
@@ -45,9 +46,14 @@ function AccountDetails(props) {
         })
             .catch(console.log);
     }, [])
-
+*/}
     return (
-        <div className="row">
+        <ol className="breadcrumb float-xl-right">
+            <li className="breadcrumb-item"><Link to="/">Home</Link></li>
+            <li className="breadcrumb-item"><Link to={props.parentPath}>{props.parentName}</Link></li>
+            <li className="breadcrumb-item active">Account Details</li>
+        </ol>
+        /* <div className="row">
             <span className="col-md-9">
                 <ClickableTableWithPaginationAndJournalEntryModal
                     context={props.context}
@@ -63,7 +69,7 @@ function AccountDetails(props) {
             <span className="col-md-3 border-left">
                 sidebar
             </span>
-        </div>
+        </div> */
     )
 }
 

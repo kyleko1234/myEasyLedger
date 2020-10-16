@@ -104,7 +104,7 @@ class ChartOfAccounts extends React.Component {
         } else {
             this.postAccountWithSubtype();
             this.toggleAddAnAccountFromSubtypeModal();
-            this.setState({accountNameInput: ''});
+            this.setState({accountNameInput: '', accountNameAlert: false});
         }
     }
 
@@ -117,6 +117,8 @@ class ChartOfAccounts extends React.Component {
                             accounts={this.state.accounts}
                             selectedAccountId={this.state.selectedAccountId}
                             context={this.state.context}
+                            parentPath={this.props.match.path}
+                            parentName="Chart of Accounts"
                         />
                     </Route>
                     <Route path={`${this.props.match.path}`} exact={true}>

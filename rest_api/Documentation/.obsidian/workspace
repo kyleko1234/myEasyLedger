@@ -6,10 +6,11 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Create an Account.md",
+            "file": "Retrieve an AccountBalance.md",
             "mode": "source"
           }
         },
@@ -18,11 +19,10 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Create an Account.md",
+            "file": "Retrieve an AccountBalance.md",
             "mode": "preview"
           }
         },
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/Create an Account.md"
+                "file": "Retrieve an AccountBalance.md"
               }
             }
           }
@@ -89,6 +89,9 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Retrieve an AccountBalance.md",
+    "Account/Contents/Retrieve an Account.md",
+    "Untitled.md",
     "Account/Contents/Create an Account.md",
     "Easy Ledger.md",
     "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md",
