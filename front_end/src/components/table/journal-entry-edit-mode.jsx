@@ -92,10 +92,11 @@ function JournalEntryEditMode({
                             className="form-control"
                             onChange={event => {
                                 let updatedLineItemData = data.slice();
-                                let selectedAccount = accounts.find(account => account.accountId == event.target.value);
+                                let selectedAccount = accounts.find(account => account.accountId.toString() === event.target.value);
                                 updatedLineItemData[cell.row.index].accountId = selectedAccount.accountId;
                                 updatedLineItemData[cell.row.index].accountName = selectedAccount.accountName;
                                 updatedLineItemData[cell.row.index].accountTypeId = selectedAccount.accountTypeId;
+                                updatedLineItemData[cell.row.index].categoryId = '';
                                 if (!accountTypesWithCategories.includes(selectedAccount.accountTypeId)) {
                                     updatedLineItemData[cell.row.index].categoryId = null;
                                     updatedLineItemData[cell.row.index].categoryName = null;
@@ -116,7 +117,7 @@ function JournalEntryEditMode({
                 )
             case "categoryName":
                 if (accountTypesWithCategories.includes(data[cell.row.index].accountTypeId)) {
-                    const categoriesForThisAccount = categories.filter(category => category.accountId == data[cell.row.index].accountId);
+                    const categoriesForThisAccount = categories.filter(category => category.accountId.toString() === data[cell.row.index].accountId.toString());
                     return(
                         <>
                             <select
@@ -124,7 +125,7 @@ function JournalEntryEditMode({
                                 className="form-control"
                                 onChange={event => {
                                     let updatedLineItemData = data.slice();
-                                    let selectedCategory = categories.find(category => category.categoryId == event.target.value);
+                                    let selectedCategory = categories.find(category => category.categoryId.toString() === event.target.value);
                                     updatedLineItemData[cell.row.index].categoryId = selectedCategory.categoryId;
                                     updatedLineItemData[cell.row.index].categoryName = selectedCategory.categoryName;
                                     setLineItemData(updatedLineItemData);

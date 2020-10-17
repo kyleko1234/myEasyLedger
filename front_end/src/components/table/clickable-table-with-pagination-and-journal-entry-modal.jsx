@@ -125,26 +125,22 @@ function TableOfJournalEntries({
     toggleJournalEntryExpanded();
   }
 
-  const fetchCategoriesAndAccounts = i => {
-    axios.get(`${context.apiUrl}/organization/${i}/category`).then(response => {
-      const categories = response.data;
-      setCategories(categories);
-    })
-      .catch(console.log);
-    axios.get(`${context.apiUrl}/organization/${i}/account`).then(response => {
-      const accounts = response.data;
-      setAccounts(accounts);
-    })
-  }
-
   // Listen for changes in pagination and use the state to fetch our new data
   React.useEffect(() => {
     fetchData({ pageIndex, pageSize })
   }, [fetchData, pageIndex, pageSize])
   
   React.useEffect(() => {
-    fetchCategoriesAndAccounts(context.organizationId);
-  }, [context.organizationId])
+    axios.get(`${context.apiUrl}/organization/${context.organizationId}/category`).then(response => {
+      const categories = response.data;
+      setCategories(categories);
+    })
+      .catch(console.log);
+    axios.get(`${context.apiUrl}/organization/${context.organizationId}/account`).then(response => {
+      const accounts = response.data;
+      setAccounts(accounts);
+    })
+  }, [context.apiUrl, context.organizationId])
 
   //format table cell value based on column name and locale
   const formatCellValue = cell => {
@@ -209,7 +205,7 @@ function TableOfJournalEntries({
     if (missingCategory) {
       errorMessages.push("Owner's equity, income, and expense accounts require their line-items to be categorized.");
     }
-    if (debitSum.toFixed(2) != creditSum.toFixed(2)) {
+    if (debitSum.toFixed(2) !== creditSum.toFixed(2)) {
       errorMessages.push("Debits and Credits must balance.")
     }
     setAlertMessages(errorMessages);
@@ -260,7 +256,7 @@ function TableOfJournalEntries({
   }
 
   const handleSaveJournalEntryButton = () => {
-    if (checkEntryForValidationErrors().length == 0) {
+    if (checkEntryForValidationErrors().length === 0) {
       let formattedEntry = formatJournalEntryToSendToServer();
       if (journalEntryId) {
         putJournalEntry(journalEntryId, formattedEntry);

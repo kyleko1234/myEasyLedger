@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 
 
 function AccountDetails(props) {
-    // required props: accounts, selectedAccountId, context, parentPath, parentName
+    // required props: context, parentPath, parentName
 {/*   const selectedAccount = props.accounts.slice().find(account => account.accountId === props.selectedAccountId);
 
     const columns = React.useMemo(

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Panel, PanelHeader } from '../../components/panel/panel.jsx';
 import GeneralJournal from './components/general-journal'
 
 
@@ -16,10 +15,6 @@ const CONTEXT = {
 }
 
 class Journals extends React.Component {
-	constructor(props) {
-		super(props);
-		
-	}
     
     componentDidMount() {
 

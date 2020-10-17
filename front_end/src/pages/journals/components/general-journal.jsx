@@ -19,7 +19,6 @@ function GeneralJournal({context}) {
   const [data, setData] = React.useState([])
   const [pageCount, setPageCount] = React.useState(0)
   const [elementCount, setElementCount] = React.useState(0)
-  const fetchIdRef = React.useRef(0)
 
   const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
     // This will get called when the table needs new data
@@ -33,7 +32,7 @@ function GeneralJournal({context}) {
         setElementCount(response.data.totalElements);
       })
       .catch(console.log);
-  }, [])
+  }, [context.apiUrl, context.organizationId])
   
   return (
     <div >

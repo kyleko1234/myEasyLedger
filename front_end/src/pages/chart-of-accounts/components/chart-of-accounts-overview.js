@@ -1,13 +1,12 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 
 class ChartOfAccountsOverview extends React.Component {
     //required props: accounts, accountSubtypes, categories, context, parentPath, utils
 
-    //required utils: setSelectedAccountId, setSelectedAccountSubtypeId, toggleAddAnAccountFromSubtypeModal, fetchData
+    //required utils: setSelectedAccountSubtypeId, toggleAddAnAccountFromSubtypeModal, fetchData
     
 
     constructor(props) {
@@ -30,7 +29,7 @@ class ChartOfAccountsOverview extends React.Component {
             <div>
                 <ol className="breadcrumb float-xl-right">
                     <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                    <li className="breadcrumb-item active">Accounts</li>
+                    <li className="breadcrumb-item active">Chart of Accounts</li>
                 </ol>
 
                 <h1 className="page-header">Chart of Accounts </h1>
@@ -94,10 +93,7 @@ class ChartOfAccountsOverview extends React.Component {
                                                     .map(account => {
                                                         return (
                                                                 <Link 
-                                                                    onClick={() => {
-                                                                        this.props.utils.setSelectedAccountId(account.accountId);
-                                                                        }}
-                                                                    to={`${this.props.parentPath}/accountDetails`}
+                                                                    to={`${this.props.parentPath}/accountDetails/${account.accountId}`}
                                                                     className={"row d-flex justify-content-between border-bottom py-1 px-1"}
                                                                     key={account.accountId}
                                                                 >
