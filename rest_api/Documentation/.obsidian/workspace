@@ -6,11 +6,10 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Retrieve an AccountBalance.md",
+            "file": "Account/Contents/Retrieve an AccountBalance.md",
             "mode": "source"
           }
         },
@@ -19,10 +18,11 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Retrieve an AccountBalance.md",
+            "file": "Account/Contents/Retrieve an AccountBalance.md",
             "mode": "preview"
           }
         },
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Retrieve an AccountBalance.md"
+                "file": "Account/Contents/Retrieve an AccountBalance.md"
               }
             }
           }
@@ -89,15 +89,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Account/Contents/Retrieve an AccountBalance.md",
+    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+    "Easy Ledger.md",
+    "Account/Account.md",
+    "Account/Contents/Update an Account.md",
     "Retrieve an AccountBalance.md",
     "Account/Contents/Retrieve an Account.md",
     "Untitled.md",
     "Account/Contents/Create an Account.md",
-    "Easy Ledger.md",
-    "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md",
-    "AccountSubtype/Contents/Update an AccountSubtype.md",
-    "AccountSubtype/Contents/The AccountSubtype Object.md",
-    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
-    "Account/Contents/List All Accounts Belonging to an Organization.md"
+    "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md"
   ]
 }

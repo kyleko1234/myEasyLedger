@@ -36,6 +36,7 @@ ___
 <br/><br/>
 - [[List All Accounts|GET /account]]
 - [[Retrieve an Account| GET /account/{id}]]
+- [[Retrieve an AccountBalance|GET /account/{id}/accountBalance]]
 - [[List All Accounts Belonging to an Organization|GET /organization/{id}/account]]
 - [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance]]
 - [[Update an Account|PUT /account/{id}]]
