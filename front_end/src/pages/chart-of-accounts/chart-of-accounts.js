@@ -38,7 +38,7 @@ class ChartOfAccounts extends React.Component {
                 setSelectedAccountSubtypeId: this.setSelectedAccountSubtypeId.bind(this),
                 setAccountNameInput: this.setAccountNameInput.bind(this),
                 toggleAddAnAccountFromSubtypeModal: this.toggleAddAnAccountFromSubtypeModal.bind(this),
-                fetchData: this.fetchData.bind(this)
+                deleteAccount: this.deleteAccount.bind(this)
             }
         };
     }
@@ -86,6 +86,14 @@ class ChartOfAccounts extends React.Component {
             console.log(response);
             this.fetchData();
         })
+    }
+
+    deleteAccount(accountId) {
+        const url = `${CONTEXT.apiUrl}/account/${accountId}`
+        axios.delete(url).then(response => {
+            console.log(response)
+            this.fetchData();
+        }).catch(console.log)
     }
 
     handleSaveNewAccountWithSubtype() {

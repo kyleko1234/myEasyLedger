@@ -9,7 +9,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 
 function AccountDetails(props) {
     // required props: context, parentPath, parentName, utils
-    // required utils: fetchData
+    // required utils: deleteAccount
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
@@ -87,7 +87,7 @@ function AccountDetails(props) {
         if (elementCount != 0) {
             toggleCannotDeleteAccountAlert();
         } else {
-            deleteAccount();
+            props.utils.deleteAccount(selectedAccount.accountId);
             setRedirect(true);
         }
     }
@@ -98,12 +98,6 @@ function AccountDetails(props) {
                 <Redirect post to={props.parentPath}/>
             )
         }
-    }
-
-    const deleteAccount = () => {
-        axios.delete(`${props.context.apiUrl}/account/${selectedAccount.accountId}`).then(response => {
-            console.log(response);
-        }).catch(console.log);
     }
 
     return (
