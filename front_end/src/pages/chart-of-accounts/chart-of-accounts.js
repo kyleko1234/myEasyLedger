@@ -104,10 +104,10 @@ class ChartOfAccounts extends React.Component {
                 <Switch>
                     <Route path={`${this.props.match.path}/accountDetails/:id`}>
                         <AccountDetails
-                            accounts={this.state.accounts}
                             context={CONTEXT}
                             parentPath={this.props.match.path}
                             parentName="Chart of Accounts"
+                            utils={this.state.utils}
                         />
                     </Route>
                     <Route path={`${this.props.match.path}`} exact={true}>

@@ -1,14 +1,16 @@
 import React from 'react';
 import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
 import axios from 'axios';
-import {Link, useParams} from 'react-router-dom';
+import {Link, Redirect, useParams} from 'react-router-dom';
 import AccountDetailsSidebarView from "./account-details-sidebar-view";
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 
 function AccountDetails(props) {
-    // required props: context, parentPath, parentName, match
+    // required props: context, parentPath, parentName, utils
+    // required utils: fetchData
+
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
             { Header: 'Date', accessor: 'journalEntryDate', width: "20%" },
@@ -40,6 +42,8 @@ function AccountDetails(props) {
     const toggleCannotDeleteAccountAlert = () => {
         setCannotDeleteAccountAlert(!cannotDeleteAccountAlert);
     }
+
+    const [redirect, setRedirect] = React.useState(false);
 
     //initially fetch account data, list of subtypes, list of types from API
     React.useEffect(() => {
@@ -83,11 +87,28 @@ function AccountDetails(props) {
         if (elementCount != 0) {
             toggleCannotDeleteAccountAlert();
         } else {
-            //TODO handle deletion of account
+            deleteAccount();
+            setRedirect(true);
         }
     }
+
+    const renderRedirect = () => {
+        if (redirect) {
+            return (
+                <Redirect post to={props.parentPath}/>
+            )
+        }
+    }
+
+    const deleteAccount = () => {
+        axios.delete(`${props.context.apiUrl}/account/${selectedAccount.accountId}`).then(response => {
+            console.log(response);
+        }).catch(console.log);
+    }
+
     return (
         <>
+            {renderRedirect()}
             <ol className="breadcrumb float-xl-right">
                 <li className="breadcrumb-item"><Link to="/">Home</Link></li>
                 <li className="breadcrumb-item"><Link to={props.parentPath}>{props.parentName}</Link></li>
@@ -141,7 +162,7 @@ function AccountDetails(props) {
                 <SweetAlert primary showCancel
                     confirmBtnText="Yes, delete it!"
                     confirmBtnBsStyle="primary"
-                    cancelBtnBsStyle="white"
+                    cancelBtnBsStyle="default"
                     title="Are you sure?"
                     onConfirm={() => handleConfirmDeleteAccountButton()}
                     onCancel={() => toggleDeleteAccountAlert()}
@@ -151,8 +172,9 @@ function AccountDetails(props) {
             : null}
             {cannotDeleteAccountAlert ? 
                 <SweetAlert danger showConfirm={false} showCancel={true}
-                    cancelBtnBsStyle="white"
+                    cancelBtnBsStyle="default"
                     title="Cannot delete this account."
+                    onConfirm={() => toggleCannotDeleteAccountAlert()}
                     onCancel={() => toggleCannotDeleteAccountAlert()}
                 >
                     Please remove all line items from this account and try again.
