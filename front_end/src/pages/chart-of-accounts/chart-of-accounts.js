@@ -38,8 +38,10 @@ class ChartOfAccounts extends React.Component {
                 setSelectedAccountSubtypeId: this.setSelectedAccountSubtypeId.bind(this),
                 setAccountNameInput: this.setAccountNameInput.bind(this),
                 toggleAddAnAccountFromSubtypeModal: this.toggleAddAnAccountFromSubtypeModal.bind(this),
-                deleteAccount: this.deleteAccount.bind(this)
+                deleteAccount: this.deleteAccount.bind(this),
+                fetchData: this.fetchData.bind(this)
             }
+            
         };
     }
 

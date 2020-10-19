@@ -130,6 +130,7 @@ function TableOfJournalEntries({
     fetchData({ pageIndex, pageSize })
   }, [fetchData, pageIndex, pageSize])
   
+  //initially retrieve categories and accounts from API
   React.useEffect(() => {
     axios.get(`${context.apiUrl}/organization/${context.organizationId}/category`).then(response => {
       const categories = response.data;
@@ -140,7 +141,22 @@ function TableOfJournalEntries({
       const accounts = response.data;
       setAccounts(accounts);
     })
+      .catch(console.log);
   }, [context.apiUrl, context.organizationId])
+
+  //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
+  const refreshAccountsAndCategories = () => {
+      axios.get(`${context.apiUrl}/organization/${context.organizationId}/category`).then(response => {
+        const categories = response.data;
+        setCategories(categories);
+      })
+        .catch(console.log);
+      axios.get(`${context.apiUrl}/organization/${context.organizationId}/account`).then(response => {
+        const accounts = response.data;
+        setAccounts(accounts);
+      })
+        .catch(console.log);
+  }
 
   //format table cell value based on column name and locale
   const formatCellValue = cell => {
@@ -403,7 +419,7 @@ function TableOfJournalEntries({
             <>
               <div>{/*empty div to push the other two buttons to the right*/}</div>
               <div>
-                <button className="btn btn-primary" onClick={() => toggleEditMode()} style={{ width: "10ch" }}>Edit</button>
+                <button className="btn btn-primary" onClick={() => {toggleEditMode(); refreshAccountsAndCategories()}} style={{ width: "10ch" }}>Edit</button>
                 <button className="btn btn-white m-l-10" onClick={() => toggleJournalEntryExpanded()} style={{ width: "10ch" }}>Close</button>
               </div>
             </>

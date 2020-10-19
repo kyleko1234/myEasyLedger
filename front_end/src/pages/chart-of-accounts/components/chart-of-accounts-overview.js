@@ -6,7 +6,7 @@ import classnames from 'classnames';
 class ChartOfAccountsOverview extends React.Component {
     //required props: accounts, accountSubtypes, categories, context, parentPath, utils
 
-    //required utils: setSelectedAccountSubtypeId, toggleAddAnAccountFromSubtypeModal, fetchData
+    //required utils: setSelectedAccountSubtypeId, toggleAddAnAccountFromSubtypeModal
     
 
     constructor(props) {

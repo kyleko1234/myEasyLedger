@@ -2,14 +2,15 @@ import React from 'react';
 import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
 import axios from 'axios';
 import {Link, Redirect, useParams} from 'react-router-dom';
-import AccountDetailsSidebarView from "./account-details-sidebar-view";
+import AccountDetailsSidebar from "./account-details-sidebar";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 
 function AccountDetails(props) {
     // required props: context, parentPath, parentName, utils
-    // required utils: deleteAccount
+    // required utils: deleteAccount, fetchData
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
@@ -43,6 +44,16 @@ function AccountDetails(props) {
         setCannotDeleteAccountAlert(!cannotDeleteAccountAlert);
     }
 
+    const [editAccountMode, setEditAccountMode] = React.useState(false);
+    const toggleEditAccountMode = () => {
+        setEditAccountMode(!editAccountMode);
+        setAccountNameInput(selectedAccount.accountName)
+        setAccountSubtypeInput(selectedAccount.accountSubtypeId);
+    }
+
+    const [accountNameInput, setAccountNameInput] = React.useState('');
+    const [accountSubtypeInput, setAccountSubtypeInput] = React.useState(null);
+
     const [redirect, setRedirect] = React.useState(false);
 
     //initially fetch account data, list of subtypes, list of types from API
@@ -58,6 +69,19 @@ function AccountDetails(props) {
             setAccountSubtypes(response.data); 
         })
     }, [])
+
+    const refreshData = () => {
+        axios.get(`${props.context.apiUrl}/account/${selectedAccountId}/accountBalance`).then(response => {
+            let responseData = response.data
+            setSelectedAccount(responseData);
+        })
+        axios.get(`${props.context.apiUrl}/accountType`).then(response => {
+            setAccountTypes(response.data);
+        })
+        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
+            setAccountSubtypes(response.data); 
+        })
+    }
 
     const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
         // This will get called when the table needs new data
@@ -90,6 +114,22 @@ function AccountDetails(props) {
             props.utils.deleteAccount(selectedAccount.accountId);
             setRedirect(true);
         }
+    }
+
+    const handleSaveEditAccountButton = () => {
+        let updatedAccount = {
+            accountId: selectedAccount.accountId,
+            accountName: accountNameInput,
+            accountTypeId: selectedAccount.accountTypeId,
+            accountSubtypeId: accountSubtypeInput,
+            organizationId: props.context.organizationId
+        }
+        axios.put(`${props.context.apiUrl}/account/${selectedAccount.accountId}`, updatedAccount).then(response => {
+            console.log(response);
+            refreshData();
+            props.utils.fetchData(); //refresh data on parent component too!
+        })
+        toggleEditAccountMode();
     }
 
     const renderRedirect = () => {
@@ -130,6 +170,7 @@ function AccountDetails(props) {
                         <div>
                             <button 
                                 className="btn btn-default btn-icon btn-lg"
+                                onClick={() => toggleEditAccountMode()}
                             >
                                 <i className="fas fa-edit"></i>
                             </button>
@@ -142,7 +183,7 @@ function AccountDetails(props) {
                         </div>
                     </div>
                     <div>
-                        {selectedAccount ? <AccountDetailsSidebarView
+                        {selectedAccount ? <AccountDetailsSidebar
                             {...selectedAccount}
                             accountSubtypes={accountSubtypes}
                             accountTypes={accountTypes}
@@ -174,6 +215,63 @@ function AccountDetails(props) {
                     Please remove all line items from this account and try again.
                 </SweetAlert> 
             : null}
+
+            <Modal
+                isOpen={editAccountMode}
+                toggle={() => toggleEditAccountMode()}
+                backdrop="static"
+                centered={true}
+            >
+                <ModalHeader>Edit Account</ModalHeader>
+                <ModalBody>
+                        <div className="row m-b-10">
+                            <span className="col-md-3 py-2 align-center"><strong>Account Name</strong></span>
+                            <span className="col-md-9 align-center">
+                                <input 
+                                    className="form-control" 
+                                    type="text"
+                                    value={accountNameInput}
+                                    onChange={event => setAccountNameInput(event.target.value)}
+                                />
+                            </span>
+                        </div>
+                        <div className="row m-b-10">
+                            <span className="col-md-3 py-2 align-center"><strong>Account Subtype</strong></span>
+                            <span className="col-md-9 align-center">
+                                { accountSubtypes ? 
+                                    <select 
+                                        className="form-control" 
+                                        type="text"
+                                        value={accountSubtypeInput}
+                                        onChange={event => setAccountSubtypeInput(event.target.value)}
+                                    >
+                                        {accountSubtypes.map(accountSubtype => {
+                                            return (
+                                                <option key={accountSubtype.accountSubtypeId} value={accountSubtype.accountSubtypeId}> {accountSubtype.accountSubtypeName}</option>
+                                            )
+                                        })}
+                                    </select>
+                                : "Loading..."}
+                            </span>
+                        </div>
+                </ModalBody>
+                <ModalFooter> 
+                    <button
+                        className="btn btn-primary"
+                        style={{ width: "10ch" }}
+                        onClick={() => handleSaveEditAccountButton()}
+                    >
+                        Save
+                    </button>
+                    <button
+                        className="btn btn-white"
+                        style={{ width: "10ch" }}
+                        onClick={() => toggleEditAccountMode()}
+                    >
+                        Cancel
+                    </button>
+                </ModalFooter>
+            </Modal>
         </>
     )
 }

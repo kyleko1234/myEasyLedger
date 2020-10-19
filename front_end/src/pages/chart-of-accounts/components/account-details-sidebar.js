@@ -1,9 +1,9 @@
 import React from 'react';
 
-function AccountDetailsSidebarView( props ) {
+function AccountDetailsSidebar( props ) {
     /*  required props: accountName, accountSubtypeId,
-            accountSubtypes, accountTypes, context
-        If spreading an account object from the api into props, you'll need {...account}, accountSubtypes, accountTypes */
+            accountSubtypes, accountTypes, context, refreshData
+        If spreading an account object from the api into props, you'll need {...account}, accountSubtypes, accountTypes, context */
 
     
 
@@ -54,4 +54,4 @@ function AccountDetailsSidebarView( props ) {
     )
 }
 
-export default AccountDetailsSidebarView
+export default AccountDetailsSidebar
