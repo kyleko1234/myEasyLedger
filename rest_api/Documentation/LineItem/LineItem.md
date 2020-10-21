@@ -8,3 +8,4 @@ ___
 - [[List All LineItems]]
 - [[Retrieve All LineItems for an Account]]
 - [[Retrieve All LineItems for a Category]]
+- [[Retrieve All LineItems for an Account Subtype]]

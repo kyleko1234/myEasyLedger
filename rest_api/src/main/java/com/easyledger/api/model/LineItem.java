@@ -95,6 +95,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"ORDER BY journal_entry.journal_entry_date DESC, line_item.id DESC",
 		resultSetMapping = "lineItemDTOMapping"
 )
+@NamedNativeQuery( //retrieves all undeleted LineItems in undeleted entries for an account subtype when given an accountSubtypeId
+		name = "LineItem.getAllLineItemsForAccountSubtype",
+		query = "SELECT " + 
+				"    line_item.id AS lineItemId, " + 
+				"    line_item.journal_entry_id AS journalEntryId, " + 
+				"    journal_entry.journal_entry_date AS journalEntryDate, " + 
+				"    line_item.account_id AS accountId, " + 
+				"    line_item.is_credit AS isCredit, " + 
+				"    line_item.amount AS amount, " + 
+				"    line_item.description AS description, " + 
+				"    line_item.category_id AS categoryId, " + 
+				"    category.name AS categoryName, " + 
+				"    account.name AS accountName, " + 
+				"    account.account_type_id AS accountTypeId, " + 
+				"    account_type.name AS accountTypeName, " + 
+				"    account_subtype.id AS accountSubtypeId, " + 
+				"    account_subtype.name AS accountSubtypeName " + 
+				"FROM " + 
+				"    line_item LEFT OUTER JOIN category on line_item.category_id = category.id, " + 
+				"    account LEFT OUTER JOIN account_subtype on account.account_subtype_id = account_subtype.id " + 
+				"    LEFT OUTER JOIN account_type on account.account_type_id = account_type.id, " + 
+				"	 journal_entry " + 
+				"WHERE line_item.account_id = account.id AND account.account_subtype_id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false " + 
+				"ORDER BY journal_entry.journal_entry_date DESC, line_item.id DESC",
+		resultSetMapping = "lineItemDTOMapping"
+)
 @SqlResultSetMapping(//sqlresultsetmapping for counting query
 		name = "lineItemDTOMapping.count",
 		columns = @ColumnResult(name = "count"))
@@ -107,6 +133,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @NamedNativeQuery( //query to count number of LineItems in order to use Pageable on LineItem.getAllLineItemsForCategory
 		name = "LineItem.getAllLineItemsForCategory.count",
 		query = "SELECT count(*) AS count from line_item, journal_entry WHERE line_item.category_id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false ",
+		resultSetMapping = "lineItemDTOMapping.count"
+)
+@NamedNativeQuery( //query to count number of LineItems in order to use Pageable on LineItem.getAllLineItemsForAccountSubtype
+		name = "LineItem.getAllLineItemsForAccountSubtype.count",
+		query = "SELECT count(*) AS count from line_item, account, journal_entry WHERE line_item.account_id = account.id AND account.account_subtype_id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false",
 		resultSetMapping = "lineItemDTOMapping.count"
 )
 

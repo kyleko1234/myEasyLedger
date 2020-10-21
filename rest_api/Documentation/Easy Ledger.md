@@ -27,6 +27,7 @@ ___
 - [[Retrieve a LineItem|GET /lineItem/{id}]]
 - [[Retrieve All LineItems for an Account|GET /account/{id}/lineItem]]
 - [[Retrieve All LineItems for a Category|GET /category/{id}/lineItem]]
+- [[Retrieve All LineItems for an Account Subtype|GET /accountSubtype/{id}/lineItem]]
 <br/><br/>
 - [[List All Organizations|GET /organization]]
 - [[Retrieve an Organization|GET /organization/{id}]]

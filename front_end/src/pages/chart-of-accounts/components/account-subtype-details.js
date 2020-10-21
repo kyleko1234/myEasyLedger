@@ -8,14 +8,16 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 
-function AccountDetails(props) {
+function AccountSubtypeDetails(props) {
     // required props: context, parentPath, parentName, utils
-    // required utils: deleteAccount, fetchData
+    // required utils: deleteAccountSubtype, fetchData
+    // renders account details based on the id in url parameter
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
             { Header: 'Date', accessor: 'journalEntryDate', width: "20%" },
-            { Header: 'Description', accessor: 'description', width: "60%" },
+            { Header: 'Description', accessor: 'description', width: "50%" },
+            { Header: 'Account', accessor: 'description', width: "10%" },
             { Header: 'Debit', accessor: 'debitAmount', width: "10%" },
             { Header: 'Credit', accessor: 'creditAmount', width: "10%" },
         ],
@@ -23,7 +25,7 @@ function AccountDetails(props) {
     )
 
     //get the selected account ID from URL parameters
-    const selectedAccountId = useParams().id;
+    const selectedAccountSubtypeId = useParams().id;
 
     // We'll start our table without any data
     const [data, setData] = React.useState([])
@@ -31,61 +33,62 @@ function AccountDetails(props) {
     const [elementCount, setElementCount] = React.useState(0)
 
     //
-    const [selectedAccount, setSelectedAccount] = React.useState(null);
-    const [accountSubtypes, setAccountSubtypes] = React.useState(null);
+    const [selectedAccountSubtype, setSelectedAccountSubtype] = React.useState(null);
+    const [accounts, setAccounts] = React.useState(null);
     const [accountTypes, setAccountTypes] = React.useState(null);
 
-    const [noAccountNameAlert, setNoAccountNameAlert] = React.useState(false);
+    const [noAccountSubtypeNameAlert, setNoAccountSubtypeNameAlert] = React.useState(false);
 
-    const [deleteAccountAlert, setDeleteAccountAlert] = React.useState(false);
-    const toggleDeleteAccountAlert = () => {
-        setDeleteAccountAlert(!deleteAccountAlert);
+    const [deleteAccountSubtypeAlert, setDeleteAccountSubtypeAlert] = React.useState(false);
+    const toggleDeleteAccountSubtypeAlert = () => {
+        setDeleteAccountSubtypeAlert(!deleteAccountSubtypeAlert);
     }
-    const [cannotDeleteAccountAlert, setCannotDeleteAccountAlert] = React.useState(false);
-    const toggleCannotDeleteAccountAlert = () => {
-        setCannotDeleteAccountAlert(!cannotDeleteAccountAlert);
-    }
-
-    const [editAccountMode, setEditAccountMode] = React.useState(false);
-    const toggleEditAccountMode = () => {
-        setEditAccountMode(!editAccountMode);
-        setAccountNameInput(selectedAccount.accountName)
-        setAccountSubtypeInput(selectedAccount.accountSubtypeId);
-        setNoAccountNameAlert(false);
+    const [cannotDeleteAccountSubtypeAlert, setCannotDeleteAccountSubtypeAlert] = React.useState(false);
+    const toggleCannotDeleteAccountSubtypeAlert = () => {
+        setCannotDeleteAccountSubtypeAlert(!cannotDeleteAccountSubtypeAlert);
     }
 
-    const [accountNameInput, setAccountNameInput] = React.useState('');
-    const [accountSubtypeInput, setAccountSubtypeInput] = React.useState(null);
+    const [editAccountSubtypeMode, setEditAccountSubtypeMode] = React.useState(false);
+    const toggleEditAccountSubtypeMode = () => {
+        setEditAccountSubtypeMode(!editAccountSubtypeMode);
+        setAccountNameSubtypeInput(selectedAccountSubtype.accountSubtypeName)
+        setNoAccountSubtypeNameAlert(false);
+    }
+
+    const [accountSubtypeNameInput, setAccountSubtypeNameInput] = React.useState('');
 
     const [redirect, setRedirect] = React.useState(false);
 
     //initially fetch account data, list of subtypes, list of types from API
     React.useEffect(() => {
-        axios.get(`${props.context.apiUrl}/account/${selectedAccountId}/accountBalance`).then(response => {
+        axios.get(`${props.context.apiUrl}/accountSubtype/${selectedAccountSubtypeId}`).then(response => {
             let responseData = response.data
-            setSelectedAccount(responseData);
+            setSelectedAccountSubtype(responseData);
         })
         axios.get(`${props.context.apiUrl}/accountType`).then(response => {
             setAccountTypes(response.data);
         })
-        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
-            setAccountSubtypes(response.data); 
+        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountBalance`).then(response => {
+            let accountsBelongingToSubtype = response.data.filter(account => account.accountSubtypeId === selectedAccountSubtypeId)
+            setAccounts(accountsBelongingToSubtype);
         })
     }, [])
 
     const refreshData = () => {
-        axios.get(`${props.context.apiUrl}/account/${selectedAccountId}/accountBalance`).then(response => {
+        axios.get(`${props.context.apiUrl}/accountSubtype/${selectedAccountSubtypeId}`).then(response => {
             let responseData = response.data
-            setSelectedAccount(responseData);
+            setSelectedAccountSubtype(responseData);
         })
         axios.get(`${props.context.apiUrl}/accountType`).then(response => {
             setAccountTypes(response.data);
         })
-        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
-            setAccountSubtypes(response.data); 
+        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountBalance`).then(response => {
+            let accountsBelongingToSubtype = response.data.filter(account => account.accountSubtypeId === selectedAccountSubtypeId)
+            setAccounts(accountsBelongingToSubtype);
         })
     }
 
+    //TODO FROM HERE!!! requires GET /accountSubtype/{id}/lineItem endpoint
     const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
         // This will get called when the table needs new data
 

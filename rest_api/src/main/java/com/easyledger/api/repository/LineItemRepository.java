@@ -17,6 +17,10 @@ public interface LineItemRepository extends JpaRepository<LineItem, Long> {
 	
 	@Query(nativeQuery = true)
 	public Page<LineItemDTO> getAllLineItemsForCategory(Long categoryId, Pageable pageable);
+	
+	@Query(nativeQuery = true)
+	public Page<LineItemDTO> getAllLineItemsForAccountSubtype(Long accountSubtypeId, Pageable pageable);
+
 
 	@Query(
 		value = "SELECT CASE EXISTS (SELECT 1 from line_item, journal_entry "

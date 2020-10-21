@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
+import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.LineItem;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountRepository;
+import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 
@@ -27,11 +29,14 @@ import com.easyledger.api.repository.OrganizationRepository;
 public class LineItemController {
 	private LineItemRepository lineItemRepo;
 	private AccountRepository accountRepo;
+	private AccountSubtypeRepository accountSubtypeRepo;
 
-	public LineItemController(LineItemRepository lineItemRepo, AccountRepository accountRepo) {
+	public LineItemController(LineItemRepository lineItemRepo, AccountRepository accountRepo,
+			AccountSubtypeRepository accountSubtypeRepo) {
 		super();
 		this.lineItemRepo = lineItemRepo;
 		this.accountRepo = accountRepo;
+		this.accountSubtypeRepo = accountSubtypeRepo;
 	}
 
 
@@ -61,6 +66,14 @@ public class LineItemController {
 	    Account account = accountRepo.findById(accountId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
 	    return lineItemRepo.getAllLineItemsForAccount(accountId, pageable);
+    }
+    
+    @GetMapping("/accountSubtype/{id}/lineItem")
+    public Page<LineItemDTO> getAllLineItemsForAccountSubtype(@PathVariable(value="id") Long accountSubtypeId, Pageable pageable)
+    	throws ResourceNotFoundException {
+	    AccountSubtype accountSubtype = accountSubtypeRepo.findById(accountSubtypeId)
+	    		.orElseThrow(() -> new ResourceNotFoundException("Account subtype not found for this id :: " + accountSubtypeId));
+	    return lineItemRepo.getAllLineItemsForAccountSubtype(accountSubtypeId, pageable);
     }
     
     @GetMapping("/category/{id}/lineItem")
