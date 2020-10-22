@@ -6,11 +6,10 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "AccountSubtype/Contents/Update an AccountSubtype.md",
             "mode": "source"
           }
         },
@@ -19,10 +18,11 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "AccountSubtype/Contents/Update an AccountSubtype.md",
             "mode": "preview"
           }
         },
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md"
+                "file": "AccountSubtype/Contents/Update an AccountSubtype.md"
               }
             }
           }
@@ -89,6 +89,7 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "AccountSubtype/Contents/Update an AccountSubtype.md",
     "Easy Ledger.md",
     "LineItem/LineItem.md",
     "Untitled.md",
@@ -97,7 +98,6 @@
     "AccountSubtype/AccountSubtype.md",
     "Account/Contents/Update an Account.md",
     "Account/Contents/Retrieve an AccountBalance.md",
-    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
-    "Account/Account.md"
+    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md"
   ]
 }

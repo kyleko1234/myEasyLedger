@@ -4,6 +4,7 @@ import axios from 'axios';
 import ChartOfAccountsOverview from './components/chart-of-accounts-overview.js';
 import AccountDetails from './components/account-details';
 import { Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import AccountSubtypeDetails from './components/account-subtype-details.js';
 
 
 const CONTEXT = {
@@ -46,6 +47,7 @@ class ChartOfAccounts extends React.Component {
                 toggleAddAnAccountFromSubtypeModal: this.toggleAddAnAccountFromSubtypeModal.bind(this),
                 toggleAddAnAccountSubtypeModal: this.toggleAddAnAccountSubtypeModal.bind(this),
                 deleteAccount: this.deleteAccount.bind(this),
+                deleteAccountSubtype: this.deleteAccountSubtype.bind(this),
                 fetchData: this.fetchData.bind(this)
             }
             
@@ -130,6 +132,14 @@ class ChartOfAccounts extends React.Component {
         }).catch(console.log)
     }
 
+    deleteAccountSubtype(accountSubtypeId) {
+        const url = `${CONTEXT.apiUrl}/accountSubtype/${accountSubtypeId}`
+        axios.delete(url).then(response => {
+            console.log(response)
+            this.fetchData();
+        }).catch(console.log)
+    }
+
     handleSaveNewAccountWithSubtype() {
         if (!this.state.accountNameInput) {
             this.setState({accountNameAlert: true})
@@ -154,6 +164,15 @@ class ChartOfAccounts extends React.Component {
                 <Switch>
                     <Route path={`${this.props.match.path}/accountDetails/:id`}>
                         <AccountDetails
+                            context={CONTEXT}
+                            parentPath={this.props.match.path}
+                            parentName="Chart of Accounts"
+                            utils={this.state.utils} //passing utils from this.state should break deletion and fetchdata from the child component upon browser refresh.
+                                                     //however, it works totally fine. Hooray? 
+                        />
+                    </Route>
+                    <Route path={`${this.props.match.path}/accountSubtypeDetails/:id`}>
+                        <AccountSubtypeDetails 
                             context={CONTEXT}
                             parentPath={this.props.match.path}
                             parentName="Chart of Accounts"

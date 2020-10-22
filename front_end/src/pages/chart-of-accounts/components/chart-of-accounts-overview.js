@@ -104,9 +104,12 @@ class ChartOfAccountsOverview extends React.Component {
                                 .map((accountSubtype) => {
                                     return (
                                         <div key={accountSubtype.accountSubtypeId}>
-                                            <div className="row bg-light my-1 py-1 px-2  border">
-                                                <h5 className="my-0">{accountSubtype.accountSubtypeName}</h5>
-                                            </div>
+                                                <Link
+                                                    to={`${this.props.parentPath}/accountSubtypeDetails/${accountSubtype.accountSubtypeId}`} 
+                                                    className="row bg-light my-1 py-1 px-2  border"
+                                                >
+                                                    <h5 className="my-0">{accountSubtype.accountSubtypeName}</h5>
+                                                </Link>
                                             <div className="px-1">
                                                 {this.props.accounts.slice()
                                                     .filter(account => account.accountSubtypeId === accountSubtype.accountSubtypeId)
@@ -114,7 +117,7 @@ class ChartOfAccountsOverview extends React.Component {
                                                         return (
                                                                 <Link 
                                                                     to={`${this.props.parentPath}/accountDetails/${account.accountId}`}
-                                                                    className={"row d-flex justify-content-between py-1 px-1 border-bottom"}
+                                                                    className={"row bg-white d-flex justify-content-between py-1 px-1 border-bottom"}
                                                                     key={account.accountId}
                                                                 >
                                                                     <span>{account.accountName}</span>
