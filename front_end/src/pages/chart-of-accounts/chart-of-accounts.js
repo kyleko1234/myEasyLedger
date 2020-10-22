@@ -39,6 +39,7 @@ class ChartOfAccounts extends React.Component {
 
             addAnAccountFromSubtypeModal: false,
             addAnAccountSubtypeModal: false,
+            addAnAccountWithoutSubtypeModal: false,
 
             utils: {
                 setSelectedAccountTypeId: this.setSelectedAccountTypeId.bind(this),
@@ -46,6 +47,7 @@ class ChartOfAccounts extends React.Component {
                 setAccountNameInput: this.setAccountNameInput.bind(this),
                 toggleAddAnAccountFromSubtypeModal: this.toggleAddAnAccountFromSubtypeModal.bind(this),
                 toggleAddAnAccountSubtypeModal: this.toggleAddAnAccountSubtypeModal.bind(this),
+                toggleAddAnAccountWithoutSubtypeModal: this.toggleAddAnAccountWithoutSubtypeModal.bind(this),
                 deleteAccount: this.deleteAccount.bind(this),
                 deleteAccountSubtype: this.deleteAccountSubtype.bind(this),
                 fetchData: this.fetchData.bind(this)
@@ -96,6 +98,11 @@ class ChartOfAccounts extends React.Component {
         this.setState({addAnAccountSubtypeModal: !this.state.addAnAccountSubtypeModal});
         this.setState({accountSubtypeNameInput: '', accountSubtypeNameAlert: false});
     }
+
+    toggleAddAnAccountWithoutSubtypeModal() {
+        this.setState({addAnAccountWithoutSubtypeModal: !this.state.addAnAccountWithoutSubtypeModal});
+        this.setState({accountNameInput: '', accountNameAlert: false});
+    }
     
     postAccountSubtype() {
         const url = `${CONTEXT.apiUrl}/accountSubtype`;
@@ -116,6 +123,19 @@ class ChartOfAccounts extends React.Component {
             accountSubtypeId: this.state.selectedAccountSubtypeId,
             accountTypeId: this.state.accountSubtypes.slice()
                 .find(accountSubtype => accountSubtype.accountSubtypeId === this.state.selectedAccountSubtypeId).accountTypeId,
+            organizationId: CONTEXT.organizationId
+        };
+        axios.post(url, data).then( response => {
+            console.log(response);
+            this.fetchData();
+        })
+    }
+
+    postAccountWithoutSubtype() {
+        const url = `${CONTEXT.apiUrl}/account`;
+        let data = {
+            accountName: this.state.accountNameInput,
+            accountTypeId: this.state.selectedAccountTypeId,
             organizationId: CONTEXT.organizationId
         };
         axios.post(url, data).then( response => {
@@ -146,6 +166,15 @@ class ChartOfAccounts extends React.Component {
         } else {
             this.postAccountWithSubtype();
             this.toggleAddAnAccountFromSubtypeModal();
+        }
+    }
+
+    handleSaveNewAccountWithoutSubtype() {
+        if (!this.state.accountNameInput) {
+            this.setState({accountNameAlert: true})
+        } else {
+            this.postAccountWithoutSubtype();
+            this.toggleAddAnAccountWithoutSubtypeModal();
         }
     }
 
@@ -200,7 +229,7 @@ class ChartOfAccounts extends React.Component {
                                 </Alert>
                             : null
                         }
-                        <form>
+                        <form onSubmit={event => {event.preventDefault(); this.handleSaveNewAccountWithSubtype()}}>
                             <div className="form-group row">
                                 <label className="col-form-label col-md-3">
                                     Account Name
@@ -246,7 +275,7 @@ class ChartOfAccounts extends React.Component {
                                 </Alert>
                             : null
                         }
-                        <form>
+                        <form onSubmit={event => {event.preventDefault(); this.handleSaveNewAccountSubtype()}}>
                             <div className="form-group row">
                                 <label className="col-form-label col-md-4 semi-bold">
                                     Account Subtype Name
@@ -275,6 +304,52 @@ class ChartOfAccounts extends React.Component {
                             className="btn btn-white" 
                             onClick={() => {
                                 this.toggleAddAnAccountSubtypeModal();
+                            }} 
+                            style={{width: "10ch"}}
+                        >
+                            Cancel
+                        </button>
+                    </ModalFooter>
+                </Modal>
+                <Modal isOpen={this.state.addAnAccountWithoutSubtypeModal} toggle={() => this.toggleAddAnAccountWithoutSubtypeModal()} centered={true}>
+                    <ModalHeader> Add an Account </ModalHeader>
+                    <ModalBody>
+                        {
+                            this.state.accountNameAlert ? 
+                                <Alert color="danger">
+                                    Please provide a name for your account.
+                                </Alert>
+                            : null
+                        }
+                        <form onSubmit={event => {event.preventDefault(); this.handleSaveNewAccountWithoutSubtype()}}>
+                            <div className="form-group row">
+                                <label className="col-form-label col-md-4 semi-bold">
+                                    Account Name
+                                </label>
+                                <div className="col-md-8">
+                                    <input 
+                                        className="form-control" 
+                                        value={this.state.accountNameInput ? this.state.accountNameInput : ''}
+                                        onChange={event => {
+                                            this.setAccountNameInput(event.target.value);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </form>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button 
+                            className="btn btn-primary" 
+                            onClick={() => this.handleSaveNewAccountWithoutSubtype()} 
+                            style={{width: "10ch"}}
+                        >
+                            Save
+                        </button>
+                        <button 
+                            className="btn btn-white" 
+                            onClick={() => {
+                                this.toggleAddAnAccountWithoutSubtypeModal();
                             }} 
                             style={{width: "10ch"}}
                         >

@@ -22,6 +22,18 @@ function AccountDetails(props) {
         []
     )
 
+    const columnsWithCategories = React.useMemo(
+        () => [ // accessor is the "key" in the data},
+            { Header: 'Date', accessor: 'journalEntryDate', width: "10%" },
+            { Header: 'Description', accessor: 'description', width: "50%" },
+            { Header: 'Category', accessor: 'categoryName', width: "20%" },
+            { Header: 'Debit', accessor: 'debitAmount', width: "10%" },
+            { Header: 'Credit', accessor: 'creditAmount', width: "10%" },
+        ],
+        []
+    )
+
+
     //get the selected account ID from URL parameters
     const selectedAccountId = useParams().id;
 
@@ -34,6 +46,9 @@ function AccountDetails(props) {
     const [selectedAccount, setSelectedAccount] = React.useState(null);
     const [accountSubtypes, setAccountSubtypes] = React.useState(null);
     const [accountTypes, setAccountTypes] = React.useState(null);
+
+    const [hasCategories, setHasCategories] = React.useState(false);
+    const [categories, setCategories] = React.useState(null);
 
     const [noAccountNameAlert, setNoAccountNameAlert] = React.useState(false);
 
@@ -62,27 +77,42 @@ function AccountDetails(props) {
     //initially fetch account data, list of subtypes, list of types from API
     React.useEffect(() => {
         axios.get(`${props.context.apiUrl}/account/${selectedAccountId}/accountBalance`).then(response => {
-            let responseData = response.data
-            setSelectedAccount(responseData);
+            let selectedAccount = response.data
+            let accountTypesWithCategories = [4, 5]
+            if (accountTypesWithCategories.includes(selectedAccount.accountTypeId)) {
+                setHasCategories(true);
+            } 
+            setSelectedAccount(selectedAccount);
         })
         axios.get(`${props.context.apiUrl}/accountType`).then(response => {
             setAccountTypes(response.data);
         })
         axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
             setAccountSubtypes(response.data); 
+        })
+        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/category`).then(response => {
+            let categoriesForThisAccount = response.data.filter(category => category.accountId.toString() === selectedAccountId.toString());
+            setCategories(categoriesForThisAccount);
         })
     }, [])
 
-    const refreshData = () => {
+    const refreshData = () => { //call this function to grab updated data from API when needed
         axios.get(`${props.context.apiUrl}/account/${selectedAccountId}/accountBalance`).then(response => {
-            let responseData = response.data
-            setSelectedAccount(responseData);
+            let accountTypesWithCategories = [4, 5]
+            if (accountTypesWithCategories.includes(selectedAccount.accountTypeId)) {
+                setHasCategories(true);
+            } 
+            setSelectedAccount(selectedAccount);
         })
         axios.get(`${props.context.apiUrl}/accountType`).then(response => {
             setAccountTypes(response.data);
         })
         axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
             setAccountSubtypes(response.data); 
+        })
+        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/category`).then(response => {
+            let categoriesForThisAccount = response.data.filter(category => category.accountId.toString() === selectedAccountId.toString());
+            setCategories(categoriesForThisAccount);
         })
     }
 
@@ -113,6 +143,8 @@ function AccountDetails(props) {
         toggleDeleteAccountAlert();
         if (elementCount != 0) {
             toggleCannotDeleteAccountAlert();
+        } else if (hasCategories && categories.length != 0) {
+            toggleCannotDeleteAccountAlert();
         } else {
             props.utils.deleteAccount(selectedAccount.accountId);
             setRedirect(true);
@@ -127,7 +159,7 @@ function AccountDetails(props) {
                 accountId: selectedAccount.accountId,
                 accountName: accountNameInput,
                 accountTypeId: selectedAccount.accountTypeId,
-                accountSubtypeId: accountSubtypeInput,
+                accountSubtypeId: (hasCategories? null : accountSubtypeInput),
                 organizationId: props.context.organizationId
             }
             axios.put(`${props.context.apiUrl}/account/${selectedAccount.accountId}`, updatedAccount).then(response => {
@@ -162,7 +194,7 @@ function AccountDetails(props) {
                 <span className="col-md-9">
                     {selectedAccount ? <ClickableTableWithPaginationAndJournalEntryModal
                         context={props.context}
-                        columns={columns}
+                        columns={hasCategories ? columnsWithCategories : columns}
                         data={data}
                         fetchData={fetchData}
                         pageCount={pageCount}
@@ -194,6 +226,8 @@ function AccountDetails(props) {
                             {...selectedAccount}
                             accountSubtypes={accountSubtypes}
                             accountTypes={accountTypes}
+                            hasCategories={hasCategories}
+                            categories={categories}
                             context={props.context}
                         /> : "Loading..."}
                     </div>
@@ -219,7 +253,8 @@ function AccountDetails(props) {
                     onConfirm={() => toggleCannotDeleteAccountAlert()}
                     onCancel={() => toggleCannotDeleteAccountAlert()}
                 >
-                    Please remove all line items from this account and try again.
+                    {hasCategories ? "Please remove all categories from this account and try again."
+                     : "Please remove all line items from this account and try again."}
                 </SweetAlert> 
             : null}
 
@@ -234,36 +269,40 @@ function AccountDetails(props) {
                         {noAccountNameAlert ? 
                             <Alert color="danger"> Please provide a name for your account. </Alert> 
                         : null}
-                        <div className="row m-b-10">
-                            <span className="col-md-3 py-2 align-center"><strong>Account Name</strong></span>
-                            <span className="col-md-9 align-center">
-                                <input 
-                                    className="form-control" 
-                                    type="text"
-                                    value={accountNameInput}
-                                    onChange={event => setAccountNameInput(event.target.value)}
-                                />
-                            </span>
-                        </div>
-                        <div className="row m-b-10">
-                            <span className="col-md-3 py-2 align-center"><strong>Account Subtype</strong></span>
-                            <span className="col-md-9 align-center">
-                                { accountSubtypes ? 
-                                    <select 
+                        <form onSubmit={event => {event.preventDefault(); handleSaveEditAccountButton()}}>
+                            <div className="row m-b-10">
+                                <span className="col-md-3 py-2 align-center"><strong>Account Name</strong></span>
+                                <span className="col-md-9 align-center">
+                                    <input 
                                         className="form-control" 
                                         type="text"
-                                        value={accountSubtypeInput}
-                                        onChange={event => setAccountSubtypeInput(event.target.value)}
-                                    >
-                                        {accountSubtypes.map(accountSubtype => {
-                                            return (
-                                                <option key={accountSubtype.accountSubtypeId} value={accountSubtype.accountSubtypeId}> {accountSubtype.accountSubtypeName}</option>
-                                            )
-                                        })}
-                                    </select>
-                                : "Loading..."}
-                            </span>
-                        </div>
+                                        value={accountNameInput}
+                                        onChange={event => setAccountNameInput(event.target.value)}
+                                    />
+                                </span>
+                            </div>
+                            {hasCategories? null :
+                                <div className="row m-b-10">
+                                    <span className="col-md-3 py-2 align-center"><strong>Account Subtype</strong></span>
+                                    <span className="col-md-9 align-center">
+                                        { accountSubtypes ? 
+                                            <select 
+                                                className="form-control" 
+                                                type="text"
+                                                value={accountSubtypeInput}
+                                                onChange={event => setAccountSubtypeInput(event.target.value)}
+                                            >
+                                                {accountSubtypes.map(accountSubtype => {
+                                                    return (
+                                                        <option key={accountSubtype.accountSubtypeId} value={accountSubtype.accountSubtypeId}> {accountSubtype.accountSubtypeName}</option>
+                                                    )
+                                                })}
+                                            </select>
+                                        : "Loading..."}
+                                    </span>
+                                </div>
+                            }
+                        </form>
                 </ModalBody>
                 <ModalFooter> 
                     <button

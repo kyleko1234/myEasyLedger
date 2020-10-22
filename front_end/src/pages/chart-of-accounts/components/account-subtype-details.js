@@ -15,9 +15,9 @@ function AccountSubtypeDetails(props) {
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
-            { Header: 'Date', accessor: 'journalEntryDate', width: "20%" },
+            { Header: 'Date', accessor: 'journalEntryDate', width: "10%" },
             { Header: 'Description', accessor: 'description', width: "50%" },
-            { Header: 'Account', accessor: 'accountName', width: "10%" },
+            { Header: 'Account', accessor: 'accountName', width: "20%" },
             { Header: 'Debit', accessor: 'debitAmount', width: "10%" },
             { Header: 'Credit', accessor: 'creditAmount', width: "10%" },
         ],
@@ -107,7 +107,7 @@ function AccountSubtypeDetails(props) {
 
     const handleConfirmDeleteAccountSubtypeButton = () => {
         toggleDeleteAccountSubtypeAlert();
-        if (elementCount != 0) {
+        if (accounts.length != 0) {
             toggleCannotDeleteAccountSubtypeAlert();
         } else {
             props.utils.deleteAccountSubtype(selectedAccountSubtype.accountSubtypeId);
@@ -228,17 +228,19 @@ function AccountSubtypeDetails(props) {
                         {noAccountSubtypeNameAlert ? 
                             <Alert color="danger"> Please provide a name for your account subtype. </Alert> 
                         : null}
-                        <div className="row m-b-10">
-                            <span className="col-md-3 py-2 align-center"><strong>Account Subtype Name</strong></span>
-                            <span className="col-md-9 align-center">
-                                <input 
-                                    className="form-control" 
-                                    type="text"
-                                    value={accountSubtypeNameInput}
-                                    onChange={event => setAccountSubtypeNameInput(event.target.value)}
-                                />
-                            </span>
-                        </div>
+                        <form onSubmit={event => {event.preventDefault(); handleSaveEditAccountSubtypeButton()}}>
+                            <div className="row m-b-10">
+                                <span className="col-md-3 py-2 align-center"><strong>Account Subtype Name</strong></span>
+                                <span className="col-md-9 align-center">
+                                    <input 
+                                        className="form-control" 
+                                        type="text"
+                                        value={accountSubtypeNameInput}
+                                        onChange={event => setAccountSubtypeNameInput(event.target.value)}
+                                    />
+                                </span>
+                            </div>
+                        </form>
                 </ModalBody>
                 <ModalFooter> 
                     <button
