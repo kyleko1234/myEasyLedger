@@ -7,6 +7,7 @@ ___
 - [[The Category Object]]
 - [[Create a Category]]
 - [[Retrieve a Category]]
+- [[Retrieve a CategoryBalance]]
 - [[Update a Category]]
 - [[Delete a Category]]
 - [[List All Categories]]

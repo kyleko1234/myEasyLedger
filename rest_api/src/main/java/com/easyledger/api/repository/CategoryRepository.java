@@ -18,7 +18,9 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 	
 	@Query(nativeQuery = true)
 	public List<CategoryBalanceDTO> getAllCategoryBalancesForOrganization(Long organizationId);
-
+	
+	@Query(nativeQuery = true)
+	public CategoryBalanceDTO getCategoryBalanceById(Long categoryId);
 	
 	@Query(
 		value = "SELECT CASE EXISTS (SELECT 1 FROM category "

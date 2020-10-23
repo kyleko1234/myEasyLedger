@@ -78,6 +78,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"ORDER BY category.name",
 		resultSetMapping = "categoryBalanceDTOMapping"
 )
+@NamedNativeQuery( //retrieves all a category with balance info when given a category id. Uses left join in order to allow for retrieval of categories with no undeleted line items.
+		name = "Category.getCategoryBalanceById",
+		query = "SELECT category.id AS categoryId, category.name AS categoryName, category.account_id AS accountId,  " + 
+				"  SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
+				"  SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
+				"FROM category  " + 
+				"  LEFT JOIN line_item ON line_item.category_id = category.id  " + 
+				"  LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
+				"WHERE category.id = ? " + 
+				"GROUP BY category.id " + 
+				"ORDER BY category.name",
+		resultSetMapping = "categoryBalanceDTOMapping"
+)
+
 
 
 @Entity

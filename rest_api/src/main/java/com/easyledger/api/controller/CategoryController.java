@@ -84,7 +84,15 @@ public class CategoryController {
     	return categoryRepo.getAllCategoryBalancesForOrganization(organizationId);
     }
     
-    
+    @GetMapping("/category/{id}/categoryBalance")
+    public CategoryBalanceDTO getCategoryBalanceById(@PathVariable(value = "id") Long categoryId)
+        throws ResourceNotFoundException {
+        CategoryBalanceDTO result = categoryRepo.getCategoryBalanceById(categoryId);
+        if (result == null) {
+        	throw new ResourceNotFoundException("Category not found for this id :: " + categoryId);
+        }
+        return result;
+    }
     
     @PostMapping("/category")
     @ResponseStatus(HttpStatus.CREATED)

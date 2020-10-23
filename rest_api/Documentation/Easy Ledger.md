@@ -57,6 +57,7 @@ ___
 <br/><br/>
 - [[List All Categories|GET /category]]
 - [[Retrieve a Category|GET /category/{id}]]
+- [[Retrieve a CategoryBalance| GET /category/{id}/categoryBalance]]
 - [[List All Categories Belonging to an Organization|GET /organization/{id}/category]]
 - [[List All Categories Belonging to an Organization As CategoryBalance Objects| GET /organization/{id}/categoryBalance]]
 - [[Create a Category|POST /category]]

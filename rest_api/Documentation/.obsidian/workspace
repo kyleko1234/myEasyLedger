@@ -6,6 +6,7 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
@@ -18,7 +19,6 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
@@ -90,14 +90,14 @@
   },
   "lastOpenFiles": [
     "Easy Ledger.md",
+    "Category/Category.md",
+    "Untitled.md",
+    "Category/Contents/Retrieve a Category.md",
     "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md",
     "AccountSubtype/Contents/Update an AccountSubtype.md",
     "LineItem/LineItem.md",
-    "Untitled.md",
     "LineItem/Contents/Retrieve All LineItems for an Account.md",
     "AccountSubtype/Contents/Create an AccountSubtype.md",
-    "AccountSubtype/AccountSubtype.md",
-    "Account/Contents/Update an Account.md",
-    "Account/Contents/Retrieve an AccountBalance.md"
+    "AccountSubtype/AccountSubtype.md"
   ]
 }
