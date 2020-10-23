@@ -74,7 +74,7 @@ function AccountDetails(props) {
 
     const [redirect, setRedirect] = React.useState(false);
 
-    //initially fetch account data, list of subtypes, list of types from API
+    //initially fetch account data, list of subtypes, list of categories, list of types from API
     React.useEffect(() => {
         axios.get(`${props.context.apiUrl}/account/${selectedAccountId}/accountBalance`).then(response => {
             let selectedAccount = response.data

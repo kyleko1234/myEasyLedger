@@ -8,15 +8,17 @@ public class CategoryBalanceDTO {
 	private Long categoryId;
 	private String categoryName;
 	private Long accountId;
+	private Long accountTypeId;
 	private BigDecimal debitTotal;
 	private BigDecimal creditTotal;
 
 
-	public CategoryBalanceDTO(BigInteger categoryId, String categoryName, BigInteger accountId, BigDecimal debitTotal,
+	public CategoryBalanceDTO(BigInteger categoryId, String categoryName, BigInteger accountId, BigInteger accountTypeId, BigDecimal debitTotal,
 			BigDecimal creditTotal) {
 		this.categoryId = categoryId.longValueExact();
 		this.categoryName = categoryName;
 		this.accountId = accountId.longValueExact();
+		this.accountTypeId = accountTypeId.longValueExact();
 		if (debitTotal != null) {
 			this.debitTotal = debitTotal;
 		} else {
@@ -56,6 +58,14 @@ public class CategoryBalanceDTO {
 		this.accountId = accountId;
 	}
 
+	public Long getAccountTypeId() {
+		return accountTypeId;
+	}
+
+	public void setAccountTypeId(Long accountTypeId) {
+		this.accountTypeId = accountTypeId;
+	}
+
 	public BigDecimal getDebitTotal() {
 		return debitTotal;
 	}
@@ -75,7 +85,8 @@ public class CategoryBalanceDTO {
 	@Override
 	public String toString() {
 		return "CategoryBalanceDTO [categoryId=" + categoryId + ", categoryName=" + categoryName + ", accountId="
-				+ accountId + ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal + "]";
+				+ accountId + ", accountTypeId=" + accountTypeId + ", debitTotal=" + debitTotal + ", creditTotal="
+				+ creditTotal + "]";
 	}
 	
 

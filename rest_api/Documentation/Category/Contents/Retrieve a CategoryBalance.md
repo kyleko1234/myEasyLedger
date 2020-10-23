@@ -22,6 +22,7 @@ ___
     "categoryId": 1,
     "categoryName": "Grocery",
     "accountId": 5,
+    "accountTypeId": 5,
     "debitTotal": 60.00,
     "creditTotal": 1000.111
 }

@@ -23,13 +23,15 @@ ___
         "categoryId": 2,
         "categoryName": "Dining",
         "accountId": 5,
-        "debitTotal": 40.00,
+        "accountTypeId": 5,
+        "debitTotal": 1040.111,
         "creditTotal": 10.00
     },
     {
         "categoryId": 7,
         "categoryName": "Dividends",
         "accountId": 8,
+        "accountTypeId": 4,
         "debitTotal": 0,
         "creditTotal": 0
     },
@@ -37,6 +39,7 @@ ___
         "categoryId": 8,
         "categoryName": "Employee Salary",
         "accountId": 7,
+        "accountTypeId": 5,
         "debitTotal": 0,
         "creditTotal": 0
     },
@@ -44,13 +47,15 @@ ___
         "categoryId": 1,
         "categoryName": "Grocery",
         "accountId": 5,
+        "accountTypeId": 5,
         "debitTotal": 60.00,
-        "creditTotal": 0
+        "creditTotal": 1000.111
     },
     {
         "categoryId": 3,
         "categoryName": "Rent",
         "accountId": 7,
+        "accountTypeId": 5,
         "debitTotal": 0,
         "creditTotal": 0
     },
@@ -58,6 +63,7 @@ ___
         "categoryId": 5,
         "categoryName": "Revenue from operations",
         "accountId": 8,
+        "accountTypeId": 4,
         "debitTotal": 0,
         "creditTotal": 0
     },
@@ -65,6 +71,7 @@ ___
         "categoryId": 4,
         "categoryName": "Supplies and Equipment",
         "accountId": 7,
+        "accountTypeId": 5,
         "debitTotal": 0,
         "creditTotal": 0
     },
@@ -72,6 +79,7 @@ ___
         "categoryId": 6,
         "categoryName": "Utilities",
         "accountId": 8,
+        "accountTypeId": 4,
         "debitTotal": 0,
         "creditTotal": 0
     }

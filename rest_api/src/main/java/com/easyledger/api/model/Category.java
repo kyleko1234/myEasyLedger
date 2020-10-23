@@ -56,6 +56,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 								@ColumnResult(name = "categoryId"),
 								@ColumnResult(name = "categoryName"),
 								@ColumnResult(name = "accountId"),
+								@ColumnResult(name = "accountTypeId"),
 								@ColumnResult(name = "debitTotal"),
 								@ColumnResult(name = "creditTotal")	
 						}
@@ -64,7 +65,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )	
 @NamedNativeQuery( //retrieves all undeleted categories for an organization when given an organization id
 		name = "Category.getAllCategoryBalancesForOrganization",
-		query = "SELECT category.id AS categoryId, category.name AS categoryName, category.account_id AS accountId,  " + 
+		query = "SELECT category.id AS categoryId, category.name AS categoryName, category.account_id AS accountId, account.account_type_id AS accountTypeId, " + 
 				"  SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
 				"  SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
 				"FROM category  " + 
@@ -74,20 +75,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"WHERE account.organization_id = ? " + 
 				"  AND category.account_id = account.id " + 
 				"  AND category.deleted = false " + 
-				"GROUP BY category.id " + 
+				"GROUP BY category.id, account.account_type_id " + 
 				"ORDER BY category.name",
 		resultSetMapping = "categoryBalanceDTOMapping"
 )
 @NamedNativeQuery( //retrieves all a category with balance info when given a category id. Uses left join in order to allow for retrieval of categories with no undeleted line items.
 		name = "Category.getCategoryBalanceById",
-		query = "SELECT category.id AS categoryId, category.name AS categoryName, category.account_id AS accountId,  " + 
+		query = "SELECT category.id AS categoryId, category.name AS categoryName, category.account_id AS accountId, account.account_type_id AS accountTypeId, " + 
 				"  SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
 				"  SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
 				"FROM category  " + 
 				"  LEFT JOIN line_item ON line_item.category_id = category.id  " + 
-				"  LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
-				"WHERE category.id = ? " + 
-				"GROUP BY category.id " + 
+				"  LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id, " + 
+				"  account " + 
+				"WHERE category.id = ? AND category.account_id = account.id " + 
+				"GROUP BY category.id, account.account_type_id " + 
 				"ORDER BY category.name",
 		resultSetMapping = "categoryBalanceDTOMapping"
 )
