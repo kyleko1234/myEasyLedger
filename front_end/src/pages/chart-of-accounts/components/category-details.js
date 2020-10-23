@@ -33,6 +33,7 @@ function CategoryDetails(props) {
     //
     const [selectedCategory, setSelectedCategory] = React.useState(null);
     const [accounts, setAccounts] = React.useState(null);
+    const [accountTypes, setAccountTypes] = React.useState(null);
 
     const [noCategoryNameAlert, setNoCategoryNameAlert] = React.useState(false);
 
@@ -64,9 +65,11 @@ function CategoryDetails(props) {
             let returnedCategory = response.data
             setSelectedCategory(returnedCategory);
         })
-        //TO DO: only display accounts for the same accountType
         axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/account`).then(response => {
             setAccounts(response.data); 
+        })
+        axios.get(`${props.context.apiUrl}/accountType`).then(response => {
+            setAccountTypes(response.data); 
         })
     }, [])
 
@@ -185,6 +188,7 @@ function CategoryDetails(props) {
                         {selectedCategory ? <CategoryDetailsSidebar
                             {...selectedCategory}
                             accounts={accounts}
+                            accountTypes={accountTypes}
                             context={props.context}
                         /> : "Loading..."}
                     </div>
@@ -240,14 +244,15 @@ function CategoryDetails(props) {
                             <div className="row m-b-10">
                                 <span className="col-md-3 py-2 align-center"><strong>Account</strong></span>
                                 <span className="col-md-9 align-center">
-                                    {accounts ?
+                                    {accounts && selectedCategory ?
                                         <select
                                             className="form-control"
                                             type="text"
                                             value={accountInput}
                                             onChange={event => setAccountInput(event.target.value)}
                                         >
-                                            {accounts.map(account => {
+                                            {accounts.slice().filter(account => account.accountTypeId === selectedCategory.accountTypeId).map(account => {
+                                                //only renders accounts of the same account type of this category
                                                 return (
                                                     <option key={account.accountId} value={account.accountId}> {account.accountName}</option>
                                                 )

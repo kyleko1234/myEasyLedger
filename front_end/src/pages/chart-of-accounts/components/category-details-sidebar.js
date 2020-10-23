@@ -1,26 +1,24 @@
 import React from 'react';
 
 function CategoryDetailsSidebar ( props ) {
-    /*  required props: accountName, accountSubtypeId, accountTypeId
-            hasCategories, categories, accountSubtypes, accountTypes, context
-        If spreading an account object from the api into props, you'll need {...account}, accountSubtypes, accountTypes, context */
+    /*  required props: categoryName, accountId, accountTypeId, debitTotal, creditTotal
+            accounts, context
+        If spreading an account object from the api into props, you'll need {...category}, accounts, accountTypes, context */
     return (
         <div>
             <div className="row my-3">
-                <span className="col-md-6 font-weight-bold">{"Account Name: "}</span>
-                <span className="col-md-6"> {props.accountName} </span> 
+                <span className="col-md-6 font-weight-bold">{"Category Name: "}</span>
+                <span className="col-md-6"> {props.categoryName} </span> 
             </div> 
-            {props.hasCategories? null : 
-                <div className="row my-3">
-                    <span className="col-md-6 font-weight-bold">{"Account Subtype: "}</span>
-                    <span className="col-md-6">
-                        {props.accountSubtypes ? 
-                            props.accountSubtypes.slice()
-                                .find(accountSubtype => accountSubtype.accountSubtypeId.toString() === props.accountSubtypeId.toString()).accountSubtypeName
-                        : "Loading..."} 
-                    </span>
-                </div>
-            }
+            <div className="row my-3">
+                <span className="col-md-6 font-weight-bold">{"Account: "}</span>
+                <span className="col-md-6">
+                    {props.accounts ?
+                        props.accounts.slice()
+                            .find(account => account.accountId.toString() === props.accountId.toString()).accountName
+                        : "Loading..."}
+                </span>
+            </div>
             <div className="row my-3">
                 <span className="col-md-6 font-weight-bold">{"Account Type: "}</span>
                 <span className="col-md-6">
@@ -37,7 +35,7 @@ function CategoryDetailsSidebar ( props ) {
                 </span>
             </div> 
             <div className="row my-3">
-                <span className="col-md-6 font-weight-bold">{"Total Debits: "}</span>
+                <span className="col-md-6 font-weight-bold">{"Total Credits: "}</span>
                 <span className="col-md-6">
                      {new Intl.NumberFormat(props.context.localization.locale, { style: 'currency', currency: props.context.localization.currency }).format(props.creditTotal)}
                 </span>
@@ -48,22 +46,6 @@ function CategoryDetailsSidebar ( props ) {
                      {new Intl.NumberFormat(props.context.localization.locale, { style: 'currency', currency: props.context.localization.currency }).format(props.debitTotal - props.creditTotal)}
                 </span>
             </div> 
-            {props.hasCategories ? 
-                (props.categories ?                 
-                    <div className="row my-3">
-                        <span className="col-md-6 font-weight-bold">{"Categories: "}</span>
-                        <span className="col-md-6">
-                            <ul>
-                                {props.categories.map(category => {
-                                    return (
-                                        <li key={category.categoryId}>{category.categoryName}</li>
-                                    )
-                                })}
-                            </ul>
-                        </span>
-                    </div> 
-                : null)
-            : null}
 
         </div>
     )

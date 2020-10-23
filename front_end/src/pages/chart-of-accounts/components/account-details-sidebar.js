@@ -37,7 +37,7 @@ function AccountDetailsSidebar( props ) {
                 </span>
             </div> 
             <div className="row my-3">
-                <span className="col-md-6 font-weight-bold">{"Total Debits: "}</span>
+                <span className="col-md-6 font-weight-bold">{"Total Credits: "}</span>
                 <span className="col-md-6">
                      {new Intl.NumberFormat(props.context.localization.locale, { style: 'currency', currency: props.context.localization.currency }).format(props.creditTotal)}
                 </span>

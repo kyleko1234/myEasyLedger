@@ -203,7 +203,7 @@ function AccountSubtypeDetails(props) {
                     onConfirm={() => handleConfirmDeleteAccountSubtypeButton()}
                     onCancel={() => toggleDeleteAccountSubtypeAlert()}
                 >
-                    Are you sure you want to delete this account?
+                    Are you sure you want to delete this subtype?
                 </SweetAlert> 
             : null}
             {cannotDeleteAccountSubtypeAlert ? 

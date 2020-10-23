@@ -1,8 +1,9 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import ChartOfAccountsOverview from './components/chart-of-accounts-overview.js';
 import AccountDetails from './components/account-details';
+import CategoryDetails from './components/category-details';
 import { Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import AccountSubtypeDetails from './components/account-subtype-details.js';
 
@@ -28,6 +29,7 @@ class ChartOfAccounts extends React.Component {
             accountSubtypes: [],
             categories: [],
 
+            selectedAccountId: 0,
             selectedAccountSubtypeId: 0,
             selectedAccountTypeId: 0,
             
@@ -37,19 +39,26 @@ class ChartOfAccounts extends React.Component {
             accountSubtypeNameInput: '',
             accountSubtypeNameAlert: false,
 
+            categoryNameInput: '',
+            categoryNameAlert: false,
+
             addAnAccountFromSubtypeModal: false,
             addAnAccountSubtypeModal: false,
             addAnAccountWithoutSubtypeModal: false,
+            addACategoryModal: false,
 
             utils: {
+                setSelectedAccountId: this.setSelectedAccountId.bind(this),
                 setSelectedAccountTypeId: this.setSelectedAccountTypeId.bind(this),
                 setSelectedAccountSubtypeId: this.setSelectedAccountSubtypeId.bind(this),
                 setAccountNameInput: this.setAccountNameInput.bind(this),
                 toggleAddAnAccountFromSubtypeModal: this.toggleAddAnAccountFromSubtypeModal.bind(this),
                 toggleAddAnAccountSubtypeModal: this.toggleAddAnAccountSubtypeModal.bind(this),
                 toggleAddAnAccountWithoutSubtypeModal: this.toggleAddAnAccountWithoutSubtypeModal.bind(this),
+                toggleAddACategoryModal: this.toggleAddACategoryModal.bind(this),
                 deleteAccount: this.deleteAccount.bind(this),
                 deleteAccountSubtype: this.deleteAccountSubtype.bind(this),
+                deleteCategory: this.deleteCategory.bind(this),
                 fetchData: this.fetchData.bind(this)
             }
             
@@ -58,6 +67,13 @@ class ChartOfAccounts extends React.Component {
 
     componentDidMount() {
         this.fetchData();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.location.pathname !== prevProps.location.pathname) {
+            this.fetchData();
+        } //pull fresh data from server when url location changes. 
+        //This is to make sure that the balances shown in the Chart of Accounts are correct even if the user edited journal entries from within the account or category details pages.
     }
 
     fetchData() {
@@ -73,6 +89,10 @@ class ChartOfAccounts extends React.Component {
         })
     }
     
+    setSelectedAccountId(i) {
+        this.setState({selectedAccountId: i});
+    }
+
     setSelectedAccountTypeId(i) {
         this.setState({selectedAccountTypeId: i});
     }
@@ -88,6 +108,10 @@ class ChartOfAccounts extends React.Component {
     setAccountSubtypeNameInput( formInputText ) {
         this.setState({accountSubtypeNameInput: formInputText});
     }
+    
+    setCategoryNameInput( formInputText ) {
+        this.setState({categoryNameInput: formInputText});
+    }
 
     toggleAddAnAccountFromSubtypeModal() {
         this.setState({addAnAccountFromSubtypeModal: !this.state.addAnAccountFromSubtypeModal});
@@ -102,6 +126,11 @@ class ChartOfAccounts extends React.Component {
     toggleAddAnAccountWithoutSubtypeModal() {
         this.setState({addAnAccountWithoutSubtypeModal: !this.state.addAnAccountWithoutSubtypeModal});
         this.setState({accountNameInput: '', accountNameAlert: false});
+    }
+
+    toggleAddACategoryModal() {
+        this.setState({addACategoryModal: !this.state.addACategoryModal});
+        this.setState({categoryNameInput: '', categoryNameAlert: false});
     }
     
     postAccountSubtype() {
@@ -144,6 +173,19 @@ class ChartOfAccounts extends React.Component {
         })
     }
 
+    postCategory() {
+        const url = `${CONTEXT.apiUrl}/category`;
+        let data = {
+            categoryName: this.state.categoryNameInput,
+            accountId: this.state.selectedAccountId,
+            organizationId: CONTEXT.organizationId
+        };
+        axios.post(url, data).then( response => {
+            console.log(response);
+            this.fetchData();
+        })
+    }
+
     deleteAccount(accountId) {
         const url = `${CONTEXT.apiUrl}/account/${accountId}`
         axios.delete(url).then(response => {
@@ -154,6 +196,14 @@ class ChartOfAccounts extends React.Component {
 
     deleteAccountSubtype(accountSubtypeId) {
         const url = `${CONTEXT.apiUrl}/accountSubtype/${accountSubtypeId}`
+        axios.delete(url).then(response => {
+            console.log(response)
+            this.fetchData();
+        }).catch(console.log)
+    }
+
+    deleteCategory(categoryId) {
+        const url = `${CONTEXT.apiUrl}/category/${categoryId}`
         axios.delete(url).then(response => {
             console.log(response)
             this.fetchData();
@@ -187,6 +237,15 @@ class ChartOfAccounts extends React.Component {
         }
     }
 
+    handleSaveNewCategory() {
+        if (!this.state.categoryNameInput) {
+            this.setState({categoryNameAlert: true});
+        } else {
+            this.postCategory();
+            this.toggleAddACategoryModal();
+        }    
+    }
+
     render() {
         return (
             <div>
@@ -202,6 +261,14 @@ class ChartOfAccounts extends React.Component {
                     </Route>
                     <Route path={`${this.props.match.path}/accountSubtypeDetails/:id`}>
                         <AccountSubtypeDetails 
+                            context={CONTEXT}
+                            parentPath={this.props.match.path}
+                            parentName="Chart of Accounts"
+                            utils={this.state.utils}
+                        />
+                    </Route>
+                    <Route path={`${this.props.match.path}/categoryDetails/:id`}>
+                        <CategoryDetails 
                             context={CONTEXT}
                             parentPath={this.props.match.path}
                             parentName="Chart of Accounts"
@@ -357,10 +424,57 @@ class ChartOfAccounts extends React.Component {
                         </button>
                     </ModalFooter>
                 </Modal>
+                <Modal isOpen={this.state.addACategoryModal} toggle={() => this.toggleAddACategoryModal()} centered={true}>
+                    <ModalHeader> Add a Category </ModalHeader>
+                    <ModalBody>
+                        {
+                            this.state.categoryNameAlert ? 
+                                <Alert color="danger">
+                                    Please provide a name for your category.
+                                </Alert>
+                            : null
+                        }
+                        <form onSubmit={event => {event.preventDefault(); this.handleSaveNewCategory()}}>
+                            <div className="form-group row">
+                                <label className="col-form-label col-md-4 semi-bold">
+                                    Category Name
+                                </label>
+                                <div className="col-md-8">
+                                    <input 
+                                        className="form-control" 
+                                        value={this.state.categoryNameInput ? this.state.categoryNameInput : ''}
+                                        onChange={event => {
+                                            this.setCategoryNameInput(event.target.value);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </form>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button 
+                            className="btn btn-primary" 
+                            onClick={() => this.handleSaveNewCategory()} 
+                            style={{width: "10ch"}}
+                        >
+                            Save
+                        </button>
+                        <button 
+                            className="btn btn-white" 
+                            onClick={() => {
+                                this.toggleAddACategoryModal();
+                            }} 
+                            style={{width: "10ch"}}
+                        >
+                            Cancel
+                        </button>
+                    </ModalFooter>
+                </Modal>
+
             </div>
 
         )
     }
 }
 
-export default ChartOfAccounts;
+export default  withRouter(props => <ChartOfAccounts {...props}/>);
