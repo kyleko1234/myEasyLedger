@@ -98,7 +98,7 @@ public class PersonService {
     public void assertUniqueEmail(String email) 
         	throws ConflictException {
         String formattedEmail = email.toLowerCase().trim();
-        if (personRepo.findByEmail(formattedEmail).isEmpty() == false) {
+        if (personRepo.findByEmail(formattedEmail) != null) {
         	throw new ConflictException("Person already registered with this email :: " + email.trim());
         }
     }

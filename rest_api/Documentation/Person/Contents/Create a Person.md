@@ -13,8 +13,8 @@ Last name of the user.
 - **email (`string` 255)**<br/>
 Email address of the user. Cannot be an email already belonging to an existing user.
 
-- **password (`string` 30)**<br/>
-Password of the user. Returned JSON output will always be “*******” regardless of input.
+- **password (`string` 64)**<br/>
+Password of the user, stored as BCrypt hash.
 
 - **organizationIds (`Array<Integer>`)**<br/>
 List of organizations that this person belongs to, separated by commas. Internally, the JSON is parsed from an `ArrayList<Integer>` into a `Set<Long>`.

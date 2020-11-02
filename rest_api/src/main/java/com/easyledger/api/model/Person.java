@@ -113,10 +113,7 @@ public class Person {
 	}
 	
 	public String getPassword() {
-		if (password == null) {
-			return null;
-		}
-		return "*******";
+		return this.password;
 	}
 
 	public void setPassword(String password) {
