@@ -8,11 +8,8 @@
         "type": "leaf",
         "active": true,
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Person/Contents/Create a Person.md",
-            "mode": "source"
-          }
+          "type": "graph",
+          "state": {}
         },
         "group": "bd85d377df6c24a6"
       },
@@ -76,9 +73,7 @@
             "type": "leaf",
             "state": {
               "type": "backlink",
-              "state": {
-                "file": "Person/Contents/Create a Person.md"
-              }
+              "state": {}
             }
           }
         ]
