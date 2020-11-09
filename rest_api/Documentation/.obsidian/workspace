@@ -8,8 +8,11 @@
         "type": "leaf",
         "active": true,
         "state": {
-          "type": "graph",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "Authentication/Contents/Sign Up.md",
+            "mode": "source"
+          }
         },
         "group": "bd85d377df6c24a6"
       },
@@ -19,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Create a Person.md",
+            "file": "Authentication/Contents/Sign Up.md",
             "mode": "preview"
           }
         },
@@ -73,7 +76,9 @@
             "type": "leaf",
             "state": {
               "type": "backlink",
-              "state": {}
+              "state": {
+                "file": "Authentication/Contents/Sign Up.md"
+              }
             }
           }
         ]
@@ -84,15 +89,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "Person/Contents/Create a Person.md",
-    "Person/Contents/Retrieve a Person.md",
-    "Person/Contents/Update a Person.md",
+    "Authentication/Contents/Sign Up.md",
+    "Authentication/Contents/Sign In.md",
     "Person/Contents/The Person Object.md",
-    "Person/Contents/List All Persons.md",
-    "Person/Person.md",
-    "Category/Contents/Retrieve a CategoryBalance.md",
-    "Category/Contents/List All Categories Belonging to an Organization.md",
-    "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md",
-    "Category/Contents/Update a Category.md"
+    "Account/Contents/Update an Account.md",
+    "Authentication/Authentication.md",
+    "Authentication/Contents/Untitled.md",
+    "Account/Contents/The Account Object.md",
+    "Account/Contents/Create an Account.md",
+    "AccountType/Contents/Retrieve an AccountType.md",
+    "AccountType/Contents/List All AccountTypes.md"
   ]
 }

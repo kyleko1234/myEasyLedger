@@ -1,6 +1,6 @@
 ### The AccountType Object
 ___
-## Attributes
+#### Attributes
 - **id (`Long`)**<br/>
 The unique identifier for this object.
 
@@ -8,7 +8,7 @@ The unique identifier for this object.
 The name of this account type.
 
 ___
-### Sample Object
+#### Sample Object
 ```json 
 {
     "id": 1,

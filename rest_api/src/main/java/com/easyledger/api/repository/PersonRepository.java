@@ -12,4 +12,6 @@ import com.easyledger.api.model.Person;
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
 	Optional<Person> findByEmail(String email);
+
+	Boolean existsByEmail(String email);
 }

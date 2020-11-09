@@ -12,6 +12,8 @@ ___
 - [[Category]]
 ___
 ### List of Endpoints
+
+Prefix all endpoints with `http://{host}/v0.1/`
 - [[List All Persons|GET /person]]
 - [[Retrieve a Person|GET /person/{id}]]
 - [[Create a Person|POST /person]]
