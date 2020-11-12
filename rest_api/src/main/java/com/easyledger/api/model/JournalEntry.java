@@ -71,7 +71,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		resultSetMapping = "journalEntryViewModelMapping.count"
 )
 
-
+//TODO: "auditing"? use spring security to listen for the user that updates entry?
 @Entity
 @Table(name = "journal_entry")
 public class JournalEntry {

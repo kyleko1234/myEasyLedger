@@ -1,8 +1,25 @@
+INSERT INTO role(name)
+    VALUES
+        ('ROLE_USER'),
+        ('ROLE_ADMIN');
+/**
+    id | name
+     1 | ROLE_USER
+     2 | ROLE_ADMIN
+*/
+
 INSERT INTO person(first_name, last_name, email, password)
     VALUES
-        ('Kyle', 'Ko', 'kyleko1234@gmail.com', 'secret');
-/** id | first_name | last_name | email                 | password
-     1 | 'Kyle'   | 'Ko'    | kyleko1234@gmail.com  | secret  **/
+        ('Kyle', 'Ko', 'kyleko1234@gmail.com', '$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG'); 
+/** id | first_name | last_name | email             | password
+     1 | 'Kyle'   | 'Ko'    | kyleko1234@gmail.com  | $2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG (bcrypted 'admin') **/
+
+
+INSERT INTO person_role(person_id, role_id)
+    VALUES
+        (1, 2);
+/** person_id | role_id
+            1 | 2      */
 
 INSERT INTO organization(name)
     VALUES

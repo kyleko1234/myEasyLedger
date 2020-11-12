@@ -13,8 +13,8 @@ Last name of the user.
 - **email (optional `string` 255)**<br/>
 Email address of the user. Cannot be an email already belonging to an existing user.
 
-- **password (optional `string` 30)**<br/>
-Password of the user. Returned JSON output will always be “*******” regardless of input.
+- **password (optional `string` 64)**<br/>
+Password of the user. Should be stored as BCrypt hash.
 
 - **organizationIds (optional `Array<Integer>`)**<br/>
 The full list of IDs for the organizations that this person belongs to. All organizations that the person belongs to must be included in this list; the person will be removed from any organizations not passed into this list. To remove a person from all organizations, pass an empty list. Internally organizationIds is parsed from the `ArrayList<Integer>` in the JSON request body into a `Set<Long>`.

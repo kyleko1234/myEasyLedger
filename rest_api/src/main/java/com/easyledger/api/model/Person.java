@@ -49,9 +49,18 @@ public class Person {
 			joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"))
 	private Set<Organization> organizations;
+    
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(
+			name = "person_role",
+			joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Set<Role> roles;
+
 
 	public Person() {
 		this.organizations = new HashSet<Organization>();
+		this.roles = new HashSet<Role>();
 	}
 	
 	public Person(String firstName, String lastName, String email, String password) {
@@ -76,6 +85,23 @@ public class Person {
 	public void removeOrganizations() {
 		for (Organization organization : new HashSet<>(organizations)) {
 			removeOrganization(organization);
+		}
+	}
+	
+	//Add and Remove roles
+	public void addRole(Role role) {
+		this.roles.add(role);
+		role.getPersons().add(this);
+	}
+	
+	public void removeRole(Role role) {
+		this.roles.remove(role);
+		role.getPersons().remove(this);
+	}
+	
+	public void removeRoles() {
+		for (Role role : new HashSet<>(roles)) {
+			removeRole(role);
 		}
 	}
 
@@ -113,10 +139,7 @@ public class Person {
 	}
 	
 	public String getPassword() {
-		if (password == null) {
-			return null;
-		}
-		return "*******";
+		return this.password;
 	}
 
 	public void setPassword(String password) {
@@ -137,6 +160,14 @@ public class Person {
 
 	public void setOrganizations(Set<Organization> organizations) {
 		this.organizations = organizations;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 	@Override

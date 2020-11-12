@@ -13,8 +13,8 @@ Last name of the user.
 - **email (`string` 255)**<br/>
 Email address of the user. Each user should have a unique email address.
 
-- **password (`string` 30)**<br/>
-Password of the user. A string password is stored but JSON output will always be “*******”.
+- **password (`string` 64)**<br/>
+Password of the user, stored as a BCrypt hash.
 
 - **organizationIds (`Array<Integer>`)**<br/>
 List of IDs of organizations that this Person belongs to. When an organization that a person belongs to is deleted, it is automatically deleted from this list. 
