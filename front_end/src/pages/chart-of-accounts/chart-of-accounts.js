@@ -6,6 +6,7 @@ import AccountDetails from './components/account-details';
 import CategoryDetails from './components/category-details';
 import { Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import AccountSubtypeDetails from './components/account-subtype-details.js';
+import {API_BASE_URL} from '../../components/utils/constants.js';
 
 
 const CONTEXT = {
@@ -77,14 +78,14 @@ class ChartOfAccounts extends React.Component {
     }
 
     fetchData() {
-        const url = `${CONTEXT.apiUrl}/organization/${CONTEXT.organizationId}/accountBalance`;
+        const url = `${API_BASE_URL}/organization/${CONTEXT.organizationId}/accountBalance`;
         axios.get(url).then(response => {
             this.setState({ accounts: response.data });
         });
-        axios.get(`${CONTEXT.apiUrl}/organization/${CONTEXT.organizationId}/categoryBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${CONTEXT.organizationId}/categoryBalance`).then(response => {
             this.setState({ categories: response.data });
         })
-        axios.get(`${CONTEXT.apiUrl}/organization/${CONTEXT.organizationId}/accountSubtype`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${CONTEXT.organizationId}/accountSubtype`).then(response => {
             this.setState({ accountSubtypes: response.data });
         })
     }
@@ -134,7 +135,7 @@ class ChartOfAccounts extends React.Component {
     }
     
     postAccountSubtype() {
-        const url = `${CONTEXT.apiUrl}/accountSubtype`;
+        const url = `${API_BASE_URL}/accountSubtype`;
         let data = {
             accountSubtypeName: this.state.accountSubtypeNameInput,
             accountTypeId: this.state.selectedAccountTypeId,
@@ -146,7 +147,7 @@ class ChartOfAccounts extends React.Component {
         })
     }
     postAccountWithSubtype() {
-        const url = `${CONTEXT.apiUrl}/account`;
+        const url = `${API_BASE_URL}/account`;
         let data = {
             accountName: this.state.accountNameInput,
             accountSubtypeId: this.state.selectedAccountSubtypeId,
@@ -161,7 +162,7 @@ class ChartOfAccounts extends React.Component {
     }
 
     postAccountWithoutSubtype() {
-        const url = `${CONTEXT.apiUrl}/account`;
+        const url = `${API_BASE_URL}/account`;
         let data = {
             accountName: this.state.accountNameInput,
             accountTypeId: this.state.selectedAccountTypeId,
@@ -174,7 +175,7 @@ class ChartOfAccounts extends React.Component {
     }
 
     postCategory() {
-        const url = `${CONTEXT.apiUrl}/category`;
+        const url = `${API_BASE_URL}/category`;
         let data = {
             categoryName: this.state.categoryNameInput,
             accountId: this.state.selectedAccountId,
@@ -187,7 +188,7 @@ class ChartOfAccounts extends React.Component {
     }
 
     deleteAccount(accountId) {
-        const url = `${CONTEXT.apiUrl}/account/${accountId}`
+        const url = `${API_BASE_URL}/account/${accountId}`
         axios.delete(url).then(response => {
             console.log(response)
             this.fetchData();
@@ -195,7 +196,7 @@ class ChartOfAccounts extends React.Component {
     }
 
     deleteAccountSubtype(accountSubtypeId) {
-        const url = `${CONTEXT.apiUrl}/accountSubtype/${accountSubtypeId}`
+        const url = `${API_BASE_URL}/accountSubtype/${accountSubtypeId}`
         axios.delete(url).then(response => {
             console.log(response)
             this.fetchData();
@@ -203,7 +204,7 @@ class ChartOfAccounts extends React.Component {
     }
 
     deleteCategory(categoryId) {
-        const url = `${CONTEXT.apiUrl}/category/${categoryId}`
+        const url = `${API_BASE_URL}/category/${categoryId}`
         axios.delete(url).then(response => {
             console.log(response)
             this.fetchData();

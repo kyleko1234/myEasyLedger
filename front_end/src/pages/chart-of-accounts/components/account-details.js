@@ -1,5 +1,6 @@
 import React from 'react';
 import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
+import {API_BASE_URL} from '../../../components/utils/constants';
 import axios from 'axios';
 import {Link, Redirect, useParams} from 'react-router-dom';
 import AccountDetailsSidebar from "./account-details-sidebar";
@@ -76,7 +77,7 @@ function AccountDetails(props) {
 
     //initially fetch account data, list of subtypes, list of categories, list of types from API
     React.useEffect(() => {
-        axios.get(`${props.context.apiUrl}/account/${selectedAccountId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/account/${selectedAccountId}/accountBalance`).then(response => {
             let selectedAccount = response.data
             let accountTypesWithCategories = [4, 5]
             if (accountTypesWithCategories.includes(selectedAccount.accountTypeId)) {
@@ -84,33 +85,33 @@ function AccountDetails(props) {
             } 
             setSelectedAccount(selectedAccount);
         })
-        axios.get(`${props.context.apiUrl}/accountType`).then(response => {
+        axios.get(`${API_BASE_URL}/accountType`).then(response => {
             setAccountTypes(response.data);
         })
-        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
             setAccountSubtypes(response.data); 
         })
-        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/category`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/category`).then(response => {
             let categoriesForThisAccount = response.data.filter(category => category.accountId.toString() === selectedAccountId.toString());
             setCategories(categoriesForThisAccount);
         })
     }, [])
 
     const refreshData = () => { //call this function to grab updated data from API when needed
-        axios.get(`${props.context.apiUrl}/account/${selectedAccountId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/account/${selectedAccountId}/accountBalance`).then(response => {
             let accountTypesWithCategories = [4, 5]
             if (accountTypesWithCategories.includes(selectedAccount.accountTypeId)) {
                 setHasCategories(true);
             } 
             setSelectedAccount(selectedAccount);
         })
-        axios.get(`${props.context.apiUrl}/accountType`).then(response => {
+        axios.get(`${API_BASE_URL}/accountType`).then(response => {
             setAccountTypes(response.data);
         })
-        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
             setAccountSubtypes(response.data); 
         })
-        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/category`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/category`).then(response => {
             let categoriesForThisAccount = response.data.filter(category => category.accountId.toString() === selectedAccountId.toString());
             setCategories(categoriesForThisAccount);
         })
@@ -120,7 +121,7 @@ function AccountDetails(props) {
         // This will get called when the table needs new data
 
         //fetch data from Easy Ledger API
-        const url = `${props.context.apiUrl}/account/${selectedAccountId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
+        const url = `${API_BASE_URL}/account/${selectedAccountId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
         axios.get(url).then(response => {
             var dataContent = response.data.content;
             dataContent.forEach(lineItem => {
@@ -162,7 +163,7 @@ function AccountDetails(props) {
                 accountSubtypeId: (hasCategories? null : accountSubtypeInput),
                 organizationId: props.context.organizationId
             }
-            axios.put(`${props.context.apiUrl}/account/${selectedAccount.accountId}`, updatedAccount).then(response => {
+            axios.put(`${API_BASE_URL}/account/${selectedAccount.accountId}`, updatedAccount).then(response => {
                 console.log(response);
                 refreshData();
                 props.utils.fetchData(); //refresh data on parent component too!

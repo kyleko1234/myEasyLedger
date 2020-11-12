@@ -3,6 +3,7 @@ import { useTable, usePagination } from 'react-table'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {API_BASE_URL} from '../utils/constants.js';
 import JournalEntryViewMode from './journal-entry-view-mode';
 import JournalEntryEditMode from './journal-entry-edit-mode';
 
@@ -72,7 +73,7 @@ function TableOfJournalEntries({
   const [alertMessages, setAlertMessages] = React.useState([]);
 
   const fetchJournalEntry = i => {
-    const url = `${context.apiUrl}/journalEntry/${i}`;
+    const url = `${API_BASE_URL}/journalEntry/${i}`;
     axios.get(url).then(response => {
       var journalEntry = response.data;
       var formattedLineItems = [];
@@ -132,26 +133,26 @@ function TableOfJournalEntries({
   
   //initially retrieve categories and accounts from API
   React.useEffect(() => {
-    axios.get(`${context.apiUrl}/organization/${context.organizationId}/category`).then(response => {
+    axios.get(`${API_BASE_URL}/organization/${context.organizationId}/category`).then(response => {
       const categories = response.data;
       setCategories(categories);
     })
       .catch(console.log);
-    axios.get(`${context.apiUrl}/organization/${context.organizationId}/account`).then(response => {
+    axios.get(`${API_BASE_URL}/organization/${context.organizationId}/account`).then(response => {
       const accounts = response.data;
       setAccounts(accounts);
     })
       .catch(console.log);
-  }, [context.apiUrl, context.organizationId])
+  }, [API_BASE_URL, context.organizationId])
 
   //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
   const refreshAccountsAndCategories = () => {
-      axios.get(`${context.apiUrl}/organization/${context.organizationId}/category`).then(response => {
+      axios.get(`${API_BASE_URL}/organization/${context.organizationId}/category`).then(response => {
         const categories = response.data;
         setCategories(categories);
       })
         .catch(console.log);
-      axios.get(`${context.apiUrl}/organization/${context.organizationId}/account`).then(response => {
+      axios.get(`${API_BASE_URL}/organization/${context.organizationId}/account`).then(response => {
         const accounts = response.data;
         setAccounts(accounts);
       })
@@ -252,7 +253,7 @@ function TableOfJournalEntries({
 
   const postJournalEntry = (data) => {
     console.log(data);
-    axios.post(`${context.apiUrl}/journalEntry`, data)
+    axios.post(`${API_BASE_URL}/journalEntry`, data)
       .then(response => {
         fetchData({pageIndex, pageSize});
         fetchJournalEntry(response.data.journalEntryId);
@@ -262,7 +263,7 @@ function TableOfJournalEntries({
   }
 
   const putJournalEntry = (id, data) => {
-    axios.put(`${context.apiUrl}/journalEntry/${id}`, data)
+    axios.put(`${API_BASE_URL}/journalEntry/${id}`, data)
       .then(response => {
         console.log(response);
         fetchData({pageIndex, pageSize});
@@ -282,7 +283,7 @@ function TableOfJournalEntries({
     }
   }
   const handleDeleteJournalEntryButton = (id) => {
-    axios.delete(`${context.apiUrl}/journalEntry/${id}`)
+    axios.delete(`${API_BASE_URL}/journalEntry/${id}`)
       .then(response => {
         console.log(response)
         fetchData({pageIndex, pageSize});

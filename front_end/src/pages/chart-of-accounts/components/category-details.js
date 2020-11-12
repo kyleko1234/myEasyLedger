@@ -1,6 +1,7 @@
 import React from 'react';
 import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
 import axios from 'axios';
+import {API_BASE_URL} from '../../../components/utils/constants.js';
 import {Link, Redirect, useParams} from 'react-router-dom';
 import CategoryDetailsSidebar from "./category-details-sidebar";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from "reactstrap";
@@ -61,24 +62,24 @@ function CategoryDetails(props) {
 
     //initially fetch category data, list of accounts
     React.useEffect(() => {
-        axios.get(`${props.context.apiUrl}/category/${selectedCategoryId}/categoryBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/category/${selectedCategoryId}/categoryBalance`).then(response => {
             let returnedCategory = response.data
             setSelectedCategory(returnedCategory);
         })
-        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/account`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/account`).then(response => {
             setAccounts(response.data); 
         })
-        axios.get(`${props.context.apiUrl}/accountType`).then(response => {
+        axios.get(`${API_BASE_URL}/accountType`).then(response => {
             setAccountTypes(response.data); 
         })
     }, [])
 
     const refreshData = () => { //exactly the same as above. call this function to grab updated data from API when needed.
-        axios.get(`${props.context.apiUrl}/category/${selectedCategoryId}/categoryBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/category/${selectedCategoryId}/categoryBalance`).then(response => {
             let returnedCategory = response.data
             setSelectedCategory(returnedCategory);
         })
-        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/account`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/account`).then(response => {
             setAccounts(response.data); 
         })
     }
@@ -87,7 +88,7 @@ function CategoryDetails(props) {
         // This will get called when the table needs new data
         // Retrieves data for the table of lineItems
         //fetch data from Easy Ledger API
-        const url = `${props.context.apiUrl}/category/${selectedCategoryId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
+        const url = `${API_BASE_URL}/category/${selectedCategoryId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
         axios.get(url).then(response => {
             var dataContent = response.data.content;
             dataContent.forEach(lineItem => {
@@ -125,7 +126,7 @@ function CategoryDetails(props) {
                 categoryName: categoryNameInput,
                 accountId: accountInput
             }
-            axios.put(`${props.context.apiUrl}/category/${selectedCategory.categoryId}`, updatedCategory).then(response => {
+            axios.put(`${API_BASE_URL}/category/${selectedCategory.categoryId}`, updatedCategory).then(response => {
                 console.log(response);
                 refreshData();
                 props.utils.fetchData(); //refresh data on parent component too!

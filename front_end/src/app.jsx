@@ -8,6 +8,7 @@ import TopMenu from './components/top-menu/top-menu.jsx';
 import Content from './components/content/content.jsx';
 import Footer from './components/footer/footer.jsx';
 import FloatSubMenu from './components/float-sub-menu/float-sub-menu.jsx';
+import LoginV3 from './pages/user/login-v3.js';
 
 
 class App extends React.Component {
@@ -266,7 +267,7 @@ class App extends React.Component {
 		}
 		
 		this.state = {
-			pageHeader: true,
+			pageHeader: false,
 			pageheaderMegaMenu: false,
 			pageHeaderLanguageBar: false,
 			hasScroll: false,
@@ -336,7 +337,12 @@ class App extends React.Component {
 			handleSetPageRightSidebar: this.handleSetPageRightSidebar,
 			
 			handleSetBodyWhiteBg: this.handleSetBodyWhiteBg,
-			handleSetPageBoxedLayout: this.handleSetPageBoxedLayout
+			handleSetPageBoxedLayout: this.handleSetPageBoxedLayout,
+
+			isAuthenticated: false,
+			isLoading: false,
+			currentUser: null
+
 		};
 	}
 	
@@ -365,6 +371,12 @@ class App extends React.Component {
   }
 	
 	render() {
+		if (this.state.isLoading) {
+			return <h1>Loading...</h1>
+		} else if (this.state.isAuthenticated) {
+			return <LoginV3/>;
+		}
+
 		return (
 			<PageSettings.Provider value={this.state}>
 				<div className={

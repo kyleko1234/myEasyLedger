@@ -1,6 +1,7 @@
 import React from 'react';
 import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
 import axios from 'axios';
+import {API_BASE_URL} from '../../../components/utils/constants.js';
 import {Link, Redirect, useParams} from 'react-router-dom';
 import AccountSubtypeDetailsSidebar from "./account-subtype-details-sidebar";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from "reactstrap";
@@ -61,22 +62,22 @@ function AccountSubtypeDetails(props) {
 
     //initially fetch account data, list of subtypes, list of types from API
     React.useEffect(() => {
-        axios.get(`${props.context.apiUrl}/accountSubtype/${selectedAccountSubtypeId}`).then(response => {
+        axios.get(`${API_BASE_URL}/accountSubtype/${selectedAccountSubtypeId}`).then(response => {
             let responseData = response.data
             setSelectedAccountSubtype(responseData);
         })
-        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/accountBalance`).then(response => {
             let accountsBelongingToSubtype = response.data.filter(account => account.accountSubtypeId && (account.accountSubtypeId.toString() === selectedAccountSubtypeId.toString()))
             setAccounts(accountsBelongingToSubtype);
         })
     }, [])
 
     const refreshData = () => {
-        axios.get(`${props.context.apiUrl}/accountSubtype/${selectedAccountSubtypeId}`).then(response => {
+        axios.get(`${API_BASE_URL}/accountSubtype/${selectedAccountSubtypeId}`).then(response => {
             let responseData = response.data
             setSelectedAccountSubtype(responseData);
         })
-        axios.get(`${props.context.apiUrl}/organization/${props.context.organizationId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/accountBalance`).then(response => {
             let accountsBelongingToSubtype = response.data.filter(account => account.accountSubtypeId && (account.accountSubtypeId.toString() === selectedAccountSubtypeId.toString()))
             setAccounts(accountsBelongingToSubtype);
         })
@@ -86,7 +87,7 @@ function AccountSubtypeDetails(props) {
         // This will get called when the table needs new data
 
         //fetch data from Easy Ledger API
-        const url = `${props.context.apiUrl}/accountSubtype/${selectedAccountSubtypeId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
+        const url = `${API_BASE_URL}/accountSubtype/${selectedAccountSubtypeId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
         axios.get(url).then(response => {
             var dataContent = response.data.content;
             dataContent.forEach(lineItem => {
@@ -125,7 +126,7 @@ function AccountSubtypeDetails(props) {
                 accountTypeId: selectedAccountSubtype.accountTypeId,
                 organizationId: props.context.organizationId
             }
-            axios.put(`${props.context.apiUrl}/accountSubtype/${selectedAccountSubtype.accountSubtypeId}`, updatedAccountSubtype).then(response => {
+            axios.put(`${API_BASE_URL}/accountSubtype/${selectedAccountSubtype.accountSubtypeId}`, updatedAccountSubtype).then(response => {
                 console.log(response);
                 refreshData();
                 props.utils.fetchData(); //refresh data on parent component too!
