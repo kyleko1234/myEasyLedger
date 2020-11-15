@@ -1,7 +1,7 @@
 import React from 'react';
 import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
 import axios from 'axios';
-import {API_BASE_URL} from '../../../components/utils/constants.js';
+import {API_BASE_URL} from '../../../utils/constants.js';
 import {Link, Redirect, useParams} from 'react-router-dom';
 import CategoryDetailsSidebar from "./category-details-sidebar";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from "reactstrap";

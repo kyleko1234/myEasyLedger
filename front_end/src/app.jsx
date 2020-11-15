@@ -8,7 +8,8 @@ import TopMenu from './components/top-menu/top-menu.jsx';
 import Content from './components/content/content.jsx';
 import Footer from './components/footer/footer.jsx';
 import FloatSubMenu from './components/float-sub-menu/float-sub-menu.jsx';
-import LoginV3 from './pages/user/login-v3.js';
+import { ACCESS_TOKEN } from './utils/constants.js';
+import interceptors from "./utils/interceptors"; //interceptors for API requests, used for auth purposes.
 
 
 class App extends React.Component {
@@ -265,6 +266,28 @@ class App extends React.Component {
 				document.body.classList.remove('bg-white');
 			}
 		}
+
+		this.checkForAuthentication = () => {
+			let jwtToken = localStorage.getItem(ACCESS_TOKEN);
+			if (jwtToken) {
+				this.setState({isAuthenticated: true});
+				console.log("authenticated with bearer " + jwtToken);
+			} else {
+				this.setState({isAuthenticated: false});
+				console.log("not authenticated");
+			}
+		}
+
+		this.handleSetRememberMe = (value) => {
+			this.setState(state => ({
+				rememberMe: value
+			}));
+		}
+
+		this.logout = () => {
+			localStorage.removeItem(ACCESS_TOKEN);
+			this.checkForAuthentication();
+		}
 		
 		this.state = {
 			pageHeader: false,
@@ -340,18 +363,25 @@ class App extends React.Component {
 			handleSetPageBoxedLayout: this.handleSetPageBoxedLayout,
 
 			isAuthenticated: false,
-			isLoading: false,
-			currentUser: null
+			rememberMe: false, //TODO: rememberMe seems to be always on.
+			isLoading: true,
+			currentUser: null,
+
+			checkForAuthentication: this.checkForAuthentication,
+			handleSetRememberMe: this.handleSetRememberMe,
+			logout: this.logout
 
 		};
 	}
 	
-	componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll)
+  componentDidMount() {
+	window.addEventListener('scroll', this.handleScroll)
+	this.checkForAuthentication();
+	this.setState({isLoading: false})
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
+	window.removeEventListener('scroll', this.handleScroll)
   }
   
   handleScroll = () => {
@@ -371,12 +401,6 @@ class App extends React.Component {
   }
 	
 	render() {
-		if (this.state.isLoading) {
-			return <h1>Loading...</h1>
-		} else if (this.state.isAuthenticated) {
-			return <LoginV3/>;
-		}
-
 		return (
 			<PageSettings.Provider value={this.state}>
 				<div className={

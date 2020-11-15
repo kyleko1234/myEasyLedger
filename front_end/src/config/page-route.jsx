@@ -63,6 +63,7 @@ import HelperCSS from './../pages/helper/helper-css.js';
 import Journals from './../pages/journals/journals.js';
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
 import Categories from './../pages/categories/categories.js';
+import RegistrationSuccessful from './../pages/user/registration-successful.js';
 
 const routes = [
   {
@@ -354,7 +355,7 @@ const routes = [
   {
     path: '/user/register-v3',
     title: 'Register v3',
-    component: () => <RegisterV3 />,
+    component: RegisterV3,
   },
   {
     path: '/helper/css',
@@ -375,6 +376,11 @@ const routes = [
     path: '/categories',
     title: 'Categories',
     component: Categories,
+  },
+  {
+    path: '/user/registration-successful',
+    title: 'Registration Successful!',
+    component: RegistrationSuccessful
   }
 
 ];

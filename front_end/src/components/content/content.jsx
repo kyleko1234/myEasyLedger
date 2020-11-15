@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Redirect, Route, withRouter } from 'react-router-dom';
 import routes from './../../config/page-route.jsx';
 import { PageSettings } from './../../config/page-settings.js';
 
@@ -13,6 +13,14 @@ function setTitle(path, routeArray) {
 	document.title = (pageTitle) ? pageTitle : 'Easy Ledger | React App';
 }
 
+function handleRedirectToLogin(isAuthenticated, isLoading) {
+	if (!isAuthenticated && !isLoading) {
+		return <Redirect to="/user/login-v3"/>;
+	} else {
+		return null;
+	}
+}
+
 class Content extends React.Component {
 	componentDidMount() {
 		setTitle(this.props.history.location.pathname, routes);
@@ -22,11 +30,13 @@ class Content extends React.Component {
 			setTitle(this.props.history.location.pathname, routes);
     });
   }
+
+
   
 	render() {
 		return (
 			<PageSettings.Consumer>
-				{({pageContentFullWidth, pageContentClass, pageContentInverseMode}) => (
+				{({pageContentFullWidth, pageContentClass, pageContentInverseMode, isAuthenticated, isLoading}) => (
 					<div className={'content ' + (pageContentFullWidth ? 'content-full-width ' : '') + (pageContentInverseMode ? 'content-inverse-mode ' : '') + pageContentClass}>
 						{routes.map((route, index) => (
 							<Route
@@ -36,6 +46,7 @@ class Content extends React.Component {
 								component={route.component}
 							/>
 						))}
+						{handleRedirectToLogin(isAuthenticated, isLoading)}
 					</div>
 				)
 			}

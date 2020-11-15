@@ -6,7 +6,7 @@ import AccountDetails from './components/account-details';
 import CategoryDetails from './components/category-details';
 import { Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import AccountSubtypeDetails from './components/account-subtype-details.js';
-import {API_BASE_URL} from '../../components/utils/constants.js';
+import {API_BASE_URL} from '../../utils/constants.js';
 
 
 const CONTEXT = {

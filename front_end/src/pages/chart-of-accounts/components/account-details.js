@@ -1,6 +1,6 @@
 import React from 'react';
 import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
-import {API_BASE_URL} from '../../../components/utils/constants';
+import {API_BASE_URL} from '../../../utils/constants';
 import axios from 'axios';
 import {Link, Redirect, useParams} from 'react-router-dom';
 import AccountDetailsSidebar from "./account-details-sidebar";

@@ -22,7 +22,7 @@ class SidebarProfile extends React.Component {
 	render() {
 		return (
 			<PageSettings.Consumer>
-				{({pageSidebarMinify}) => (
+				{({pageSidebarMinify, logout}) => (
 					<ul className="nav">
 						<li className={"nav-profile " + (this.state.profileActive ? "expand " : "")}>
 							<Link to="/" onClick={this.handleProfileExpand}>
@@ -42,6 +42,7 @@ class SidebarProfile extends React.Component {
 								<li><Link to="/"><i className="fa fa-cog"></i> Settings</Link></li>
 								<li><Link to="/"><i className="fa fa-pencil-alt"></i> Send Feedback</Link></li>
 								<li><Link to="/"><i className="fa fa-question-circle"></i> Helps</Link></li>
+								<li><Link to="#" onClick={logout}><i className="fa fa-sign-out-alt"></i> Sign Out</Link></li>
 							</ul>
 						</li>
 					</ul>
