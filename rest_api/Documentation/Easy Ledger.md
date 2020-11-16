@@ -14,6 +14,9 @@ ___
 ### List of Endpoints
 
 Prefix all endpoints with `http://{host}/v0.1/`
+- [[Sign In | POST /auth/signin]]
+- [[Sign Up| POST /auth/signup]]
+<br/><br/>
 - [[List All Persons|GET /person]]
 - [[Retrieve a Person|GET /person/{id}]]
 - [[Create a Person|POST /person]]

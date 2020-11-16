@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easyledger.api.dto.PersonDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Category;
@@ -45,28 +44,25 @@ public class PersonController {
 
 
 	@GetMapping("/person")
-    public ArrayList<PersonDTO> getAllPersons() {
-		ArrayList<PersonDTO> dtos = new ArrayList<PersonDTO>();
+    public List<Person> getAllPersons() {
         List<Person> persons = personRepo.findAll();
-        for (Person person : persons) {
-        	dtos.add(new PersonDTO(person));
-        }
-        return dtos;
+        return persons;
     }
 
 	
     @GetMapping("/person/{id}")
-    public ResponseEntity<PersonDTO> getPersonById(@PathVariable(value = "id") Long personId)
+    public ResponseEntity<Person> getPersonById(@PathVariable(value = "id") Long personId)
         throws ResourceNotFoundException {
     	Person person = personRepo.findById(personId)
     		.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + personId)); 
-        PersonDTO dto = new PersonDTO(person);
-    	return ResponseEntity.ok().body(dto);
+        //PersonDTO dto = new PersonDTO(person);
+    	return ResponseEntity.ok().body(person);
     }
     
+    @Deprecated
     @PostMapping("/person")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<PersonDTO> createPerson(@RequestBody Map<Object, Object> fields) 
+    public ResponseEntity<Person> createPerson(@RequestBody Map<Object, Object> fields) 
     	throws ConflictException, ResourceNotFoundException {
     	
     	Person person = new Person();
@@ -76,12 +72,11 @@ public class PersonController {
         	throw new ConflictException("Please do not attempt to manually create a personId.");
         }
     	final Person updatedPerson = personRepo.save(person);
-    	PersonDTO dto = new PersonDTO(updatedPerson);
-    	return ResponseEntity.ok(dto);
+    	return ResponseEntity.ok(updatedPerson);
     }
     
     @PatchMapping("/person/{id}")
-    public ResponseEntity<PersonDTO> patchPerson(@PathVariable Long id, @RequestBody Map<Object, Object> fields) 
+    public ResponseEntity<Person> patchPerson(@PathVariable Long id, @RequestBody Map<Object, Object> fields) 
     	throws ConflictException, ResourceNotFoundException {
         Person person = personRepo.findById(id)
         	.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + id));
@@ -89,8 +84,7 @@ public class PersonController {
         personService.updatePerson(person, fields);
         
     	final Person updatedPerson = personRepo.save(person);
-    	PersonDTO dto = new PersonDTO(updatedPerson);
-    	return ResponseEntity.ok(dto);
+    	return ResponseEntity.ok(person);
     }
     
  /*   @DeleteMapping("/person/{id}")

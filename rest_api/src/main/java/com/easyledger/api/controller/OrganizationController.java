@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.dto.JournalEntryDTO;
-import com.easyledger.api.dto.PersonDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.AccountSubtype;
@@ -56,16 +55,12 @@ public class OrganizationController {
 	}
 	
 	@GetMapping("/organization/{id}/person")
-	public HashSet<PersonDTO> getPersonsInOrganization(@PathVariable(value = "id") Long organizationId) 
+	public HashSet<Person> getPersonsInOrganization(@PathVariable(value = "id") Long organizationId) 
 		throws ResourceNotFoundException{
 		Organization organization = organizationRepo.findById(organizationId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId)); 
 		HashSet<Person> persons = new HashSet<Person>(organization.getPersons());
-		HashSet<PersonDTO> dtos = new HashSet<PersonDTO>();
-		for (Person person : persons) {
-			dtos.add(new PersonDTO(person));
-		}
-		return dtos;
+		return persons;
 	}
 	
 	@PostMapping("/organization")

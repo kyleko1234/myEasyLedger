@@ -34,8 +34,8 @@ public class PersonService {
 	}
 	
 	public void updatePerson(Person person, Map<Object, Object> fields) 
-		throws ConflictException, ResourceNotFoundException {
-		
+		throws ConflictException, ResourceNotFoundException { 
+		//TODO: add ability to update ROLES
         for (Map.Entry<Object, Object> entry : fields.entrySet()) {
         	Object k = entry.getKey();
         	Object v = entry.getValue();

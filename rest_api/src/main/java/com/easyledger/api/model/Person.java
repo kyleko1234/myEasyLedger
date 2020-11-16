@@ -37,6 +37,7 @@ public class Person {
 	private String email;
 
 	@Column(name = "password", nullable = false)
+	@JsonIgnore
 	private String password;
 	
 	@OneToMany(mappedBy = "person")
