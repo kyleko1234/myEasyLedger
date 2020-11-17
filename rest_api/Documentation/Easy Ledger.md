@@ -16,6 +16,7 @@ ___
 Prefix all endpoints with `http://{host}/v0.1/`
 - [[Sign In | POST /auth/signin]]
 - [[Sign Up| POST /auth/signup]]
+- [[Refresh JWT|GET /auth/refresh]]
 <br/><br/>
 - [[List All Persons|GET /person]]
 - [[Retrieve a Person|GET /person/{id}]]

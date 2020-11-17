@@ -1,31 +1,19 @@
-### Sign In
+### Refresh JWT
 
-Endpoint: `POST /auth/signin`
+Endpoint: `GET /auth/refresh`
 
-Authenticates a user using the user-provided credentials. Returns two JWTs: an access and a refresh token. 
+Returns two fresh JWTs. Generally, the client should first attempt an API call using the access token. If the API call fails due to expired JWT, call this endpoint using the refresh token in order to obtain a refreshed access token and refresh token. If this endpoint returns 401 due to expired JWT, the client should sign in again.
 ___
 
 #### Request Body Parameters
 
-- **email** <br/>
-The email that identifies the user being authenticated.
-
-- **password** <br/>
-The password of the user being authenticated.
+none
 ___
 #### Returns
-Returns a JWT token upon successful authentication, or 401 and an error upon failed authentication.
+Returns fresh access and refresh tokens upon successful authentication, or 401 and an error upon failed authentication.
 ___
 #### Sample Request
 `POST /auth/signin`
-
-Body:
-```json 
-{
-    "email": "signuptester@gmail.com",
-    "password": "password"
-}
-```
 
 #### Sample Response
 ```json

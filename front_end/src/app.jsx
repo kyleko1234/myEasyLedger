@@ -8,8 +8,9 @@ import TopMenu from './components/top-menu/top-menu.jsx';
 import Content from './components/content/content.jsx';
 import Footer from './components/footer/footer.jsx';
 import FloatSubMenu from './components/float-sub-menu/float-sub-menu.jsx';
-import { ACCESS_TOKEN } from './utils/constants.js';
+import { ACCESS_TOKEN, API_BASE_URL } from './utils/constants.js';
 import interceptors from "./utils/interceptors"; //interceptors for API requests, used for auth purposes.
+import axios from 'axios';
 
 
 class App extends React.Component {
@@ -268,15 +269,19 @@ class App extends React.Component {
 		}
 
 		this.checkForAuthentication = () => {
+			this.setState({isLoading: true})
 			let jwtToken = localStorage.getItem(ACCESS_TOKEN);
 			if (jwtToken) {
 				this.setState({isAuthenticated: true});
 				console.log("authenticated with bearer " + jwtToken);
+				this.setState({isLoading: false})
 			} else {
 				this.setState({isAuthenticated: false});
 				console.log("not authenticated");
+				this.setState({isLoading: false})
 			}
 		}
+
 
 		this.handleSetRememberMe = (value) => {
 			this.setState(state => ({
@@ -377,7 +382,6 @@ class App extends React.Component {
   componentDidMount() {
 	window.addEventListener('scroll', this.handleScroll)
 	this.checkForAuthentication();
-	this.setState({isLoading: false})
   }
 
   componentWillUnmount() {
