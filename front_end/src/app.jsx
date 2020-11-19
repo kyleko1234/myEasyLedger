@@ -8,7 +8,7 @@ import TopMenu from './components/top-menu/top-menu.jsx';
 import Content from './components/content/content.jsx';
 import Footer from './components/footer/footer.jsx';
 import FloatSubMenu from './components/float-sub-menu/float-sub-menu.jsx';
-import { ACCESS_TOKEN, API_BASE_URL } from './utils/constants.js';
+import { ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN } from './utils/constants.js';
 import interceptors from "./utils/interceptors"; //interceptors for API requests, used for auth purposes.
 import axios from 'axios';
 
@@ -282,15 +282,9 @@ class App extends React.Component {
 			}
 		}
 
-
-		this.handleSetRememberMe = (value) => {
-			this.setState(state => ({
-				rememberMe: value
-			}));
-		}
-
 		this.logout = () => {
-			localStorage.removeItem(ACCESS_TOKEN);
+			localStorage.clear();
+			console.log("logging out");
 			this.checkForAuthentication();
 		}
 		
@@ -368,12 +362,10 @@ class App extends React.Component {
 			handleSetPageBoxedLayout: this.handleSetPageBoxedLayout,
 
 			isAuthenticated: false,
-			rememberMe: false, //TODO: rememberMe seems to be always on.
 			isLoading: true,
 			currentUser: null,
 
 			checkForAuthentication: this.checkForAuthentication,
-			handleSetRememberMe: this.handleSetRememberMe,
 			logout: this.logout
 
 		};

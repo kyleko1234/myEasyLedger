@@ -64,6 +64,7 @@ import Journals from './../pages/journals/journals.js';
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
 import Categories from './../pages/categories/categories.js';
 import RegistrationSuccessful from './../pages/user/registration-successful.js';
+import Logout from './../pages/user/logout.js'
 
 const routes = [
   {
@@ -381,6 +382,11 @@ const routes = [
     path: '/user/registration-successful',
     title: 'Registration Successful!',
     component: RegistrationSuccessful
+  },
+  {
+    path: '/user/logout',
+    title: 'Log out',
+    component: Logout
   }
 
 ];

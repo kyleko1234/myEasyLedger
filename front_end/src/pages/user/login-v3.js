@@ -5,12 +5,6 @@ import LoginV3Render from './login-v3-render.js';
 
 class LoginV3 extends React.Component {
 	static contextType = PageSettings;
-
-	constructor(props) {
-    super(props);
-    
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
   
 	componentDidMount() {
 		this.context.handleSetPageSidebar(false);
@@ -23,11 +17,6 @@ class LoginV3 extends React.Component {
 		//this.context.handleSetPageHeader(true);
 		this.context.handleSetBodyWhiteBg(false);
 	}
-	
-	handleSubmit(event) {
-		event.preventDefault();
-    this.props.history.push('/dashboard/v3');
-  }
   
 	render() {
 		return (

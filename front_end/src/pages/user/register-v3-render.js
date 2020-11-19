@@ -58,7 +58,6 @@ function RegisterV3Render(props) {
         }).catch(response => {
             if (response && response.response.data.message == "Email is already taken!") {
                 setEmailTakenAlert(true);
-                return;
             }
         })
         
