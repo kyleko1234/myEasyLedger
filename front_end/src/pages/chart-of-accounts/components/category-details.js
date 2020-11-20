@@ -6,11 +6,12 @@ import {Link, Redirect, useParams} from 'react-router-dom';
 import CategoryDetailsSidebar from "./category-details-sidebar";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from "reactstrap";
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { PageSettings } from '../../../config/page-settings';
 
 
 
 function CategoryDetails(props) {
-    // required props: context, parentPath, parentName, utils
+    // required props: parentPath, parentName, utils
     // required utils: deleteCategory, fetchData
 
     const columns = React.useMemo(
@@ -22,6 +23,8 @@ function CategoryDetails(props) {
         ],
         []
     )
+
+    const appContext = React.useContext(PageSettings);
 
     //get the selected account ID from URL parameters
     const selectedCategoryId = useParams().id;
@@ -66,7 +69,7 @@ function CategoryDetails(props) {
             let returnedCategory = response.data
             setSelectedCategory(returnedCategory);
         })
-        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/account`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
             setAccounts(response.data); 
         })
         axios.get(`${API_BASE_URL}/accountType`).then(response => {
@@ -79,7 +82,7 @@ function CategoryDetails(props) {
             let returnedCategory = response.data
             setSelectedCategory(returnedCategory);
         })
-        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/account`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
             setAccounts(response.data); 
         })
     }
@@ -157,7 +160,6 @@ function CategoryDetails(props) {
             <div className="row">
                 <span className="col-md-9">
                     {selectedCategory ? <ClickableTableWithPaginationAndJournalEntryModal
-                        context={props.context}
                         columns={columns}
                         data={data}
                         fetchData={fetchData}
@@ -190,7 +192,6 @@ function CategoryDetails(props) {
                             {...selectedCategory}
                             accounts={accounts}
                             accountTypes={accountTypes}
-                            context={props.context}
                         /> : "Loading..."}
                     </div>
                 </span>

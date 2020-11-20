@@ -30,7 +30,7 @@ public class Organization {
 
 	@ManyToMany(mappedBy = "organizations")
 	@JsonIgnore
-	private Set<Person> persons;
+	private Set<Person> persons = new HashSet<Person>();
 
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore

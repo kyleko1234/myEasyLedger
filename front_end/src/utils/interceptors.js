@@ -45,7 +45,7 @@ axios.interceptors.response.use((response) => {
         return axios(originalRequest); //send original request again using a refreshed jwt. this request is flagged as a 'retry' attempt, in order to avoid an infinite loop.
       }
       console.log(window.location.origin)
-      window.location.href = window.location.origin + "/user/logout"
+      window.location.href = window.location.origin + "/user/logout" //log the user out and redirect user to login page if a 401 error is returned after jwt refresh attempt. 
     }
   }
 

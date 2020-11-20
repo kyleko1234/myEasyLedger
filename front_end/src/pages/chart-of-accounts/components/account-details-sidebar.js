@@ -1,9 +1,13 @@
 import React from 'react';
+import { PageSettings } from '../../../config/page-settings';
 
 function AccountDetailsSidebar( props ) {
     /*  required props: accountName, accountSubtypeId, accountTypeId
-            hasCategories, categories, accountSubtypes, accountTypes, context
+            hasCategories, categories, accountSubtypes, accountTypes
         If spreading an account object from the api into props, you'll need {...account}, accountSubtypes, accountTypes, context */
+    
+    const appContext = React.useContext(PageSettings);
+
     return (
         <div>
             <div className="row my-3">
@@ -33,19 +37,19 @@ function AccountDetailsSidebar( props ) {
             <div className="row my-3">
                 <span className="col-md-6 font-weight-bold">{"Total Debits: "}</span>
                 <span className="col-md-6">
-                     {new Intl.NumberFormat(props.context.localization.locale, { style: 'currency', currency: props.context.localization.currency }).format(props.debitTotal)}
+                     {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(props.debitTotal)}
                 </span>
             </div> 
             <div className="row my-3">
                 <span className="col-md-6 font-weight-bold">{"Total Credits: "}</span>
                 <span className="col-md-6">
-                     {new Intl.NumberFormat(props.context.localization.locale, { style: 'currency', currency: props.context.localization.currency }).format(props.creditTotal)}
+                     {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(props.creditTotal)}
                 </span>
             </div>             
             <div className="row my-3">
                 <span className="col-md-6 font-weight-bold">{"Total Balance: "}</span>
                 <span className="col-md-6">
-                     {new Intl.NumberFormat(props.context.localization.locale, { style: 'currency', currency: props.context.localization.currency }).format(props.debitTotal - props.creditTotal)}
+                     {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(props.debitTotal - props.creditTotal)}
                 </span>
             </div> 
             {props.hasCategories ? 

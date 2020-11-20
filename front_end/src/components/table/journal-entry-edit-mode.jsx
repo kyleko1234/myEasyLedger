@@ -1,9 +1,9 @@
 import React from 'react'
 import { useTable } from 'react-table'
 import { Alert } from 'reactstrap'
+import { PageSettings } from '../../config/page-settings'
 
 function JournalEntryEditMode({
-    context,
     data, setLineItemData,
     journalEntryDate, setJournalEntryDate,
     journalEntryDescription, setJournalEntryDescription,
@@ -11,6 +11,7 @@ function JournalEntryEditMode({
     accounts,
     alertMessages
 }) {
+    const appContext = React.useContext(PageSettings);
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
@@ -275,8 +276,8 @@ function JournalEntryEditMode({
                             <td><strong>Total</strong></td>
                             <td></td>
                             <td></td>
-                            <td><strong>{new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
-                            <td><strong>{new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
+                            <td><strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
+                            <td><strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
                             <td></td>
                         </tr>
                     </tfoot>

@@ -8,15 +8,17 @@ import TopMenu from './components/top-menu/top-menu.jsx';
 import Content from './components/content/content.jsx';
 import Footer from './components/footer/footer.jsx';
 import FloatSubMenu from './components/float-sub-menu/float-sub-menu.jsx';
-import { ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN } from './utils/constants.js';
+import { ACCESS_TOKEN } from './utils/constants.js';
+import jwt_decode from 'jwt-decode';
 import interceptors from "./utils/interceptors"; //interceptors for API requests, used for auth purposes.
 import axios from 'axios';
 
 
 class App extends React.Component {
+
 	constructor(props) {
 		super(props);
-		
+
 		this.toggleSidebarMinify = (e) => {
 			e.preventDefault();
 			if (this.state.pageSidebarMinify) {
@@ -268,12 +270,28 @@ class App extends React.Component {
 			}
 		}
 
+		this.handleSetCurrentUser = (value) => {
+			this.setState({currentUser: value});
+			console.log('setting state with current user ' + value);
+			console.log(this.state.currentUser);
+		}
+
+		this.handleSetCurrentOrganization = (value) => {
+			this.setState({currentOrganization: value});
+		}
+
+
 		this.checkForAuthentication = () => {
 			this.setState({isLoading: true})
 			let jwtToken = localStorage.getItem(ACCESS_TOKEN);
 			if (jwtToken) {
+				let decodedJwtToken = jwt_decode(jwtToken);
+				this.setState({currentUser: decodedJwtToken.sub});
+				this.setState({currentOrganization: decodedJwtToken.organizations[0].id})
 				this.setState({isAuthenticated: true});
 				console.log("authenticated with bearer " + jwtToken);
+				console.log("current user " + this.state.currentUser);
+				console.log("current organization " + this.state.currentOrganization);
 				this.setState({isLoading: false})
 			} else {
 				this.setState({isAuthenticated: false});
@@ -364,6 +382,15 @@ class App extends React.Component {
 			isAuthenticated: false,
 			isLoading: true,
 			currentUser: null,
+			currentOrganization: null,
+			
+
+			locale: 'en-US',
+			currency: 'USD',
+			
+
+			handleSetCurrentUser: this.handleSetCurrentUser,
+			handleSetCurrentOrganization: this.handleSetCurrentOrganization,
 
 			checkForAuthentication: this.checkForAuthentication,
 			logout: this.logout
@@ -416,11 +443,11 @@ class App extends React.Component {
 					(this.state.hasScroll ? 'has-scroll ' : '')
 				}>
 					{this.state.pageHeader && (<Header />)}
-					{this.state.pageSidebar && (<Sidebar />)}
-					{this.state.pageTwoSidebar && (<SidebarRight />)}
-					{this.state.pageTopMenu && (<TopMenu />)}
+					{this.state.pageSidebar && !this.state.isLoading && (<Sidebar />)}
+					{this.state.pageTwoSidebar && !this.state.isLoading && (<SidebarRight />)}
+					{this.state.pageTopMenu && !this.state.isLoading && (<TopMenu />)}
 					{this.state.pageContent && (<Content />)}
-					{this.state.pageFooter && (<Footer />)}
+					{this.state.pageFooter && !this.state.isLoading && (<Footer />)}
 					<FloatSubMenu />
 				</div>
 			</PageSettings.Provider>

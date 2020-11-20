@@ -16,6 +16,9 @@ The email of the user being signed up. Must be unique; this is used as the usern
 - **password (`String 64`)** <br/>
 The password of the user being signed up.
 
+- **organizationName (`String 50`)** <br/>
+The name of the first organization for this person. A user must have at least one organization, so it is required to provide an organization name on sign-up.
+
 ___
 #### Returns
 Returns a message indicating success or failure of user registration. Signing a user up will not log the user in; this must be done manually.
@@ -30,7 +33,8 @@ Body:
     "firstName": "cheese",
     "lastName" : "grater",
     "email": "cheesegrater@gmail.com",
-    "password": "macpro"
+    "password": "macpro",
+	"organization": "Apple Computer Incorporated"
 }
 ```
 

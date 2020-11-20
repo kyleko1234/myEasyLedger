@@ -21,12 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.easyledger.api.exception.AppException;
+import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.model.Role;
 import com.easyledger.api.payload.ApiResponse;
 import com.easyledger.api.payload.JwtAuthenticationResponse;
 import com.easyledger.api.payload.LoginRequest;
 import com.easyledger.api.payload.SignUpRequest;
+import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.repository.RoleRepository;
 import com.easyledger.api.security.JwtTokenProvider;
@@ -39,6 +42,9 @@ public class AuthController {
 
     @Autowired
     PersonRepository personRepository;
+    
+    @Autowired
+    OrganizationRepository organizationRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -70,12 +76,19 @@ public class AuthController {
     		return new ResponseEntity(new ApiResponse(false, "Email is already taken!"), HttpStatus.BAD_REQUEST);
     	}
     	
+    	Organization organization = new Organization(signUpRequest.getOrganizationName());
+    	organizationRepository.save(organization);
+    	
     	Person person = new Person(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPassword());
     	person.setPassword(passwordEncoder.encode(person.getPassword()));
+    	person.addOrganization(organization);
+    	
     	Role userRole = roleRepository.findByName("ROLE_USER")
     			.orElseThrow(() -> new AppException("ROLE_USER does not exist."));
     	person.setRoles(Collections.singleton(userRole));
     	Person result = personRepository.save(person);
+    	
+    	
     	
     	URI location = ServletUriComponentsBuilder
     			.fromCurrentContextPath().path("/v0.1/person/{id}")

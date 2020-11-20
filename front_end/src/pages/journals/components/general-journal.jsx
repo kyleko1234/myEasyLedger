@@ -2,10 +2,13 @@ import React from 'react';
 import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
 import { API_BASE_URL } from '../../../utils/constants.js';
 import axios from 'axios';
+import { PageSettings } from '../../../config/page-settings';
 
 
-function GeneralJournal({context}) {
+function GeneralJournal() {
 
+  const appContext = React.useContext(PageSettings);
+  
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
       { Header: 'Date', accessor: 'journalEntryDate', width:"20%"},
@@ -25,7 +28,7 @@ function GeneralJournal({context}) {
     // This will get called when the table needs new data
         
     //fetch data from Easy Ledger API
-    const url = `${API_BASE_URL}/organization/${context.organizationId}/journalEntryViewModel/?page=${pageIndex}&size=${pageSize}`;
+    const url = `${API_BASE_URL}/organization/${appContext.currentOrganization}/journalEntryViewModel/?page=${pageIndex}&size=${pageSize}`;
     axios.get(url).then(response => {
         var dataContent = response.data.content;
         setData(dataContent);
@@ -33,12 +36,11 @@ function GeneralJournal({context}) {
         setElementCount(response.data.totalElements);
       })
       .catch(console.log);
-  }, [API_BASE_URL, context.organizationId])
+  }, [API_BASE_URL, appContext.currentOrganization])
   
   return (
     <div >
       <ClickableTableWithPaginationAndJournalEntryModal
-        context={context}
         columns={columns}
         data={data}
         fetchData={fetchData}

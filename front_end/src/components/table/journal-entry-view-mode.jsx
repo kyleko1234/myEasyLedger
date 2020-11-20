@@ -1,8 +1,9 @@
 import React from 'react'
 import { useTable } from 'react-table'
+import { PageSettings } from '../../config/page-settings'
 
-function JournalEntryViewMode({ context, data, journalEntryDescription, journalEntryDate}) {
-
+function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}) {
+  const appContext = React.useContext(PageSettings);
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
       { Header: 'Description', accessor: 'description', width:'40%'},
@@ -45,7 +46,7 @@ function JournalEntryViewMode({ context, data, journalEntryDescription, journalE
       case "debitAmount":
       case "creditAmount":
         if (cell.value) {
-          return (new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(cell.value));
+          return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cell.value));
         } else {
           return null;
         }
@@ -99,8 +100,8 @@ function JournalEntryViewMode({ context, data, journalEntryDescription, journalE
             <td><strong>Total</strong></td>
             <td></td>
             <td></td>
-            <td><strong>{new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
-            <td><strong>{new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
+            <td><strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
+            <td><strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
           </tr>
         </tfoot>
       </table>

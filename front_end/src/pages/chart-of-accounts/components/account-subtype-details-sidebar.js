@@ -2,7 +2,7 @@ import React from 'react';
 
 function AccountSubtypeDetailsSidebar( props ) {
     /*  required props: accountSubtypeName, accountSubtypeId, accountTypeName
-            accounts, context
+            accounts
         If spreading an account subtype object from the api into props, you'll need {...accountSubtype}, accounts, context */
 
     

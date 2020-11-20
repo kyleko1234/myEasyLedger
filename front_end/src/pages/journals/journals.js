@@ -4,15 +4,6 @@ import GeneralJournal from './components/general-journal'
 
 
 
-const CONTEXT = {
-	apiUrl: 'http://localhost:8080/v0.1',
-	organizationId: 1,
-	personId: 1,
-	localization: {
-		locale: 'en-US',
-		currency: 'USD'
-	}
-}
 
 class Journals extends React.Component {
     
@@ -30,7 +21,7 @@ class Journals extends React.Component {
 				</ol>
 				<h1 className="page-header">Journals </h1>
 					<div>
-						<GeneralJournal context={CONTEXT}/>
+						<GeneralJournal/>
 					</div>
 			</div>
 		)

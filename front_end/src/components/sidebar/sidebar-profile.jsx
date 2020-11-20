@@ -1,15 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
+import {API_BASE_URL} from '../../utils/constants.js';
+import axios from 'axios';
 
 class SidebarProfile extends React.Component {
+	static contextType = PageSettings;
 
 	constructor(props) {
 		super(props);
+
+		this.getUserInfo = () => {
+			this.setState({loading: true});
+			axios.get(`${API_BASE_URL}/person/${this.context.currentUser}`).then(response => {
+				this.setState({userInfo: response.data});
+				this.context.handleSetCurrentOrganization(response.data.organizations[0].id);
+				this.setState({loading: false});
+			}).catch(console.log);	
+			
+		}
+
 		this.state = {
-			profileActive: 0
+			profileActive: 0,
+			loading: true,
+			userInfo: null
 		};
 		this.handleProfileExpand = this.handleProfileExpand.bind(this);
+	}
+
+	componentDidMount() {
+		this.getUserInfo();
 	}
 
 	handleProfileExpand(e) {
@@ -23,29 +43,37 @@ class SidebarProfile extends React.Component {
 		return (
 			<PageSettings.Consumer>
 				{({pageSidebarMinify, logout}) => (
-					<ul className="nav">
-						<li className={"nav-profile " + (this.state.profileActive ? "expand " : "")}>
-							<Link to="/" onClick={this.handleProfileExpand}>
-								<div className="cover with-shadow"></div>
-								<div className="image">
-									<img src="/assets/img/user/user-13.jpg" alt="" />
-								</div>
-								<div className="info">
-									<b className="caret pull-right"></b>
-									Easy Ledger
-									<small>Easy Accounting</small>
-								</div>
-							</Link>
-						</li>
-						<li>
-							<ul className={"nav nav-profile " + (this.state.profileActive && !pageSidebarMinify ? "d-block " : "")}>
-								<li><Link to="/"><i className="fa fa-cog"></i> Settings</Link></li>
-								<li><Link to="/"><i className="fa fa-pencil-alt"></i> Send Feedback</Link></li>
-								<li><Link to="/"><i className="fa fa-question-circle"></i> Helps</Link></li>
-								<li><Link to="#" onClick={logout}><i className="fa fa-sign-out-alt"></i> Sign Out</Link></li>
-							</ul>
-						</li>
-					</ul>
+					this.state.loading ? 
+						<ul className="nav">
+							<li className="nav-profile">
+								<i className="fas fa-circle-notch fa-spin fa-3x"></i> 
+							</li>
+						</ul>
+						:
+						<ul className="nav">
+							<li className={"nav-profile " + (this.state.profileActive ? "expand " : "")}>
+								<Link to="/" onClick={this.handleProfileExpand}>
+									<div className="cover with-shadow"></div>
+									<div className="image">
+										<img src="/assets/img/user/user-13.jpg" alt="" />
+									</div>
+									<div className="info">
+										<b className="caret pull-right"></b>
+										{this.state.userInfo.firstName + " " + this.state.userInfo.lastName} 
+										<small>{this.state.userInfo.organizations[0].name}</small>
+									</div>
+								</Link>
+							</li>
+							<li>
+								<ul className={"nav nav-profile " + (this.state.profileActive && !pageSidebarMinify ? "d-block " : "")}>
+									<li><Link to="/"><i className="fa fa-cog"></i> Settings</Link></li>
+									<li><Link to="/"><i className="fa fa-pencil-alt"></i> Send Feedback</Link></li>
+									<li><Link to="/"><i className="fa fa-question-circle"></i> Helps</Link></li>
+									<li><Link to="#" onClick={logout}><i className="fa fa-sign-out-alt"></i> Sign Out</Link></li>
+								</ul>
+							</li>
+						</ul>
+					
 				)}
 			</PageSettings.Consumer>
 		)

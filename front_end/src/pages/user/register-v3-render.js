@@ -13,6 +13,7 @@ function RegisterV3Render(props) {
     const [lastNameInput, setLastNameInput] = React.useState('');
     const [emailInput, setEmailInput] = React.useState('');
     const [reEnterEmailInput, setReEnterEmailInput] = React.useState('');
+    const [organizationNameInput, setOrganizationNameInput] = React.useState('');
     const [passwordInput, setPasswordInput] = React.useState('');
     const [reEnterPasswordInput, setReEnterPasswordInput] = React.useState('');
     const [agreeInput, setAgreeInput] = React.useState(false);
@@ -50,7 +51,8 @@ function RegisterV3Render(props) {
             firstName: firstNameInput,
             lastName: lastNameInput,
             email: emailInput,
-            password: passwordInput
+            password: passwordInput,
+            organizationName: organizationNameInput
         }
 
         axios.post(`${API_BASE_URL}/auth/signup`, requestBody).then(response => {
@@ -104,6 +106,12 @@ function RegisterV3Render(props) {
                             </div>
                         </div>
                         {emailMatchAlert ? <Alert color="danger">Email does not match.</Alert> : null}
+                        <label className="control-label">Organization Name <span className="text-danger">*</span></label>
+                        <div className="row m-b-15">
+                            <div className="col-md-12">
+                                <input type="text" className="form-control" placeholder="Organization Name" required value={organizationNameInput} onChange={event => setOrganizationNameInput(event.target.value)}/>
+                            </div>
+                        </div>
                         <label className="control-label">Password <span className="text-danger">*</span></label>
                         <div className="row m-b-15">
                             <div className="col-md-12">

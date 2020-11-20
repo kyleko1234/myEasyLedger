@@ -7,22 +7,16 @@ import CategoryDetails from './components/category-details';
 import { Alert, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import AccountSubtypeDetails from './components/account-subtype-details.js';
 import {API_BASE_URL} from '../../utils/constants.js';
+import { PageSettings } from '../../config/page-settings.js';
 
 
-const CONTEXT = {
-    apiUrl: 'http://localhost:8080/v0.1',
-    organizationId: 1,
-    personId: 1,
-    localization: {
-        locale: 'en-US',
-        currency: 'USD'
-    }
-}
 class ChartOfAccounts extends React.Component {
     //This component essentially acts as a controller for accounts. It declares Routes for the "Accounts" tab, and maintains the state of all operations in the accounts tab.
     //One is redirected to the AccountOverview component by default. Through the AccountOverview component, one can select a specific account to view details.
     //Utilities for account and category selection are passed as props into the AccountOverview component, and allow the AccountOverview component to communicate selection information
     //to the detailed-view components.
+    static contextType = PageSettings;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -78,14 +72,14 @@ class ChartOfAccounts extends React.Component {
     }
 
     fetchData() {
-        const url = `${API_BASE_URL}/organization/${CONTEXT.organizationId}/accountBalance`;
+        const url = `${API_BASE_URL}/organization/${this.context.currentOrganization}/accountBalance`;
         axios.get(url).then(response => {
             this.setState({ accounts: response.data });
         }).catch(console.log);
-        axios.get(`${API_BASE_URL}/organization/${CONTEXT.organizationId}/categoryBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganization}/categoryBalance`).then(response => {
             this.setState({ categories: response.data });
         }).catch(console.log);
-        axios.get(`${API_BASE_URL}/organization/${CONTEXT.organizationId}/accountSubtype`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganization}/accountSubtype`).then(response => {
             this.setState({ accountSubtypes: response.data });
         }).catch(console.log);
     }
@@ -139,7 +133,7 @@ class ChartOfAccounts extends React.Component {
         let data = {
             accountSubtypeName: this.state.accountSubtypeNameInput,
             accountTypeId: this.state.selectedAccountTypeId,
-            organizationId: CONTEXT.organizationId
+            organizationId: this.context.currentOrganization
         }
         axios.post(url, data).then(response => {
             console.log(response);
@@ -153,7 +147,7 @@ class ChartOfAccounts extends React.Component {
             accountSubtypeId: this.state.selectedAccountSubtypeId,
             accountTypeId: this.state.accountSubtypes.slice()
                 .find(accountSubtype => accountSubtype.accountSubtypeId === this.state.selectedAccountSubtypeId).accountTypeId,
-            organizationId: CONTEXT.organizationId
+            organizationId: this.context.currentOrganization
         };
         axios.post(url, data).then( response => {
             console.log(response);
@@ -166,7 +160,7 @@ class ChartOfAccounts extends React.Component {
         let data = {
             accountName: this.state.accountNameInput,
             accountTypeId: this.state.selectedAccountTypeId,
-            organizationId: CONTEXT.organizationId
+            organizationId: this.context.currentOrganization
         };
         axios.post(url, data).then( response => {
             console.log(response);
@@ -179,7 +173,7 @@ class ChartOfAccounts extends React.Component {
         let data = {
             categoryName: this.state.categoryNameInput,
             accountId: this.state.selectedAccountId,
-            organizationId: CONTEXT.organizationId
+            organizationId: this.context.currentOrganization
         };
         axios.post(url, data).then( response => {
             console.log(response);
@@ -253,7 +247,6 @@ class ChartOfAccounts extends React.Component {
                 <Switch>
                     <Route path={`${this.props.match.path}/accountDetails/:id`}>
                         <AccountDetails
-                            context={CONTEXT}
                             parentPath={this.props.match.path}
                             parentName="Chart of Accounts"
                             utils={this.state.utils} //passing utils from this.state should break deletion and fetchdata from the child component upon browser refresh.
@@ -262,7 +255,6 @@ class ChartOfAccounts extends React.Component {
                     </Route>
                     <Route path={`${this.props.match.path}/accountSubtypeDetails/:id`}>
                         <AccountSubtypeDetails 
-                            context={CONTEXT}
                             parentPath={this.props.match.path}
                             parentName="Chart of Accounts"
                             utils={this.state.utils}
@@ -270,7 +262,6 @@ class ChartOfAccounts extends React.Component {
                     </Route>
                     <Route path={`${this.props.match.path}/categoryDetails/:id`}>
                         <CategoryDetails 
-                            context={CONTEXT}
                             parentPath={this.props.match.path}
                             parentName="Chart of Accounts"
                             utils={this.state.utils}
@@ -281,7 +272,6 @@ class ChartOfAccounts extends React.Component {
                             accounts={this.state.accounts}
                             accountSubtypes={this.state.accountSubtypes}
                             categories={this.state.categories}
-                            context={CONTEXT}
                             parentPath={this.props.match.path}
                             utils={this.state.utils}
                         />

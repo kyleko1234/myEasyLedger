@@ -6,12 +6,15 @@ import {Link, Redirect, useParams} from 'react-router-dom';
 import AccountDetailsSidebar from "./account-details-sidebar";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from "reactstrap";
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { PageSettings } from '../../../config/page-settings';
 
 
 
 function AccountDetails(props) {
-    // required props: context, parentPath, parentName, utils
+    // required props: parentPath, parentName, utils
     // required utils: deleteAccount, fetchData
+
+    const appContext = React.useContext(PageSettings);
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
@@ -88,10 +91,10 @@ function AccountDetails(props) {
         axios.get(`${API_BASE_URL}/accountType`).then(response => {
             setAccountTypes(response.data);
         })
-        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountSubtype`).then(response => {
             setAccountSubtypes(response.data); 
         })
-        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/category`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/category`).then(response => {
             let categoriesForThisAccount = response.data.filter(category => category.accountId.toString() === selectedAccountId.toString());
             setCategories(categoriesForThisAccount);
         })
@@ -108,10 +111,10 @@ function AccountDetails(props) {
         axios.get(`${API_BASE_URL}/accountType`).then(response => {
             setAccountTypes(response.data);
         })
-        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/accountSubtype`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountSubtype`).then(response => {
             setAccountSubtypes(response.data); 
         })
-        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/category`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/category`).then(response => {
             let categoriesForThisAccount = response.data.filter(category => category.accountId.toString() === selectedAccountId.toString());
             setCategories(categoriesForThisAccount);
         })
@@ -161,7 +164,7 @@ function AccountDetails(props) {
                 accountName: accountNameInput,
                 accountTypeId: selectedAccount.accountTypeId,
                 accountSubtypeId: (hasCategories? null : accountSubtypeInput),
-                organizationId: props.context.organizationId
+                organizationId: appContext.currentOrganization
             }
             axios.put(`${API_BASE_URL}/account/${selectedAccount.accountId}`, updatedAccount).then(response => {
                 console.log(response);
@@ -194,7 +197,6 @@ function AccountDetails(props) {
             <div className="row">
                 <span className="col-md-9">
                     {selectedAccount ? <ClickableTableWithPaginationAndJournalEntryModal
-                        context={props.context}
                         columns={hasCategories ? columnsWithCategories : columns}
                         data={data}
                         fetchData={fetchData}
@@ -229,7 +231,6 @@ function AccountDetails(props) {
                             accountTypes={accountTypes}
                             hasCategories={hasCategories}
                             categories={categories}
-                            context={props.context}
                         /> : "Loading..."}
                     </div>
                 </span>

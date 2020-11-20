@@ -6,6 +6,7 @@ import axios from 'axios';
 import {API_BASE_URL} from '../../utils/constants.js';
 import JournalEntryViewMode from './journal-entry-view-mode';
 import JournalEntryEditMode from './journal-entry-edit-mode';
+import { PageSettings } from '../../config/page-settings.js';
 
 //Generates a table with react-table 7 using pagination
 
@@ -13,7 +14,6 @@ import JournalEntryEditMode from './journal-entry-edit-mode';
 // new data when pagination state changes
 // We can also add a loading state to let our table know it's loading new data
 function TableOfJournalEntries({
-  context,
   columns,
   data,
   fetchData,
@@ -52,6 +52,8 @@ function TableOfJournalEntries({
     usePagination
   )
   
+  const appContext = React.useContext(PageSettings);
+
   const [journalEntryExpanded, setJournalEntryExpanded] = React.useState(false); //Whether or not the modal  is shown
   const toggleJournalEntryExpanded = () => setJournalEntryExpanded(!journalEntryExpanded); //Toggles modal on or off
   const expandJournalEntry = i => { //fetches a journalEntry from the API and toggles the modal on
@@ -133,26 +135,26 @@ function TableOfJournalEntries({
   
   //initially retrieve categories and accounts from API
   React.useEffect(() => {
-    axios.get(`${API_BASE_URL}/organization/${context.organizationId}/category`).then(response => {
+    axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/category`).then(response => {
       const categories = response.data;
       setCategories(categories);
     })
       .catch(console.log);
-    axios.get(`${API_BASE_URL}/organization/${context.organizationId}/account`).then(response => {
+    axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
       const accounts = response.data;
       setAccounts(accounts);
     })
       .catch(console.log);
-  }, [API_BASE_URL, context.organizationId])
+  }, [API_BASE_URL, appContext.currentOrganization])
 
   //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
   const refreshAccountsAndCategories = () => {
-      axios.get(`${API_BASE_URL}/organization/${context.organizationId}/category`).then(response => {
+      axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/category`).then(response => {
         const categories = response.data;
         setCategories(categories);
       })
         .catch(console.log);
-      axios.get(`${API_BASE_URL}/organization/${context.organizationId}/account`).then(response => {
+      axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
         const accounts = response.data;
         setAccounts(accounts);
       })
@@ -165,7 +167,7 @@ function TableOfJournalEntries({
     switch (columnId) {
       case "creditAmount":
       case "debitAmount":
-        return (new Intl.NumberFormat(context.localization.locale, { style: 'currency', currency: context.localization.currency }).format(cell.value));
+        return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cell.value));
       default:
         return (cell.value);
     }
@@ -245,8 +247,8 @@ function TableOfJournalEntries({
       journalEntryId : journalEntryId,
       journalEntryDate: journalEntryDate,
       description: journalEntryDescription,
-      personId: context.personId,
-      organizationId: context.organizationId,
+      personId: appContext.currentUser,
+      organizationId: appContext.currentOrganization,
       lineItems: lineItems
     }
   }
@@ -375,7 +377,6 @@ function TableOfJournalEntries({
         <ModalBody className="bg-light">
           {editMode ?
             <JournalEntryEditMode
-              context={context}
               data={lineItemData} setLineItemData={setLineItemData}
               journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
               journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
@@ -384,7 +385,6 @@ function TableOfJournalEntries({
               alertMessages={alertMessages}>
             </JournalEntryEditMode> :
             <JournalEntryViewMode
-              context={context}
               data={lineItemData}
               journalEntryDate={journalEntryDate}
               journalEntryDescription={journalEntryDescription}

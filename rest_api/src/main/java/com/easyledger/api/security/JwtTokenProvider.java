@@ -1,12 +1,19 @@
 package com.easyledger.api.security;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+
+import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.model.Organization;
+import com.easyledger.api.model.Person;
+import com.easyledger.api.repository.PersonRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -20,6 +27,9 @@ import io.jsonwebtoken.UnsupportedJwtException;
 public class JwtTokenProvider {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
+	
+	@Autowired
+	private PersonRepository personRepo;
 	
 	@Value("${app.jwtSecret}")
 	private String jwtSecret;
@@ -38,6 +48,7 @@ public class JwtTokenProvider {
 		
 		return Jwts.builder()
 				.setSubject(Long.toString(userPrincipal.getId()))
+				.claim("organizations", userPrincipal.getOrganizations())
 				.setIssuedAt(new Date())
 				.setExpiration(expiryDate)
 				.signWith(SignatureAlgorithm.HS512, jwtSecret)
@@ -52,6 +63,7 @@ public class JwtTokenProvider {
 		
 		return Jwts.builder()
 				.setSubject(Long.toString(userPrincipal.getId()))
+				.claim("organizations", userPrincipal.getOrganizations())
 				.setIssuedAt(new Date())
 				.setExpiration(expiryDate)
 				.signWith(SignatureAlgorithm.HS512, jwtSecret)

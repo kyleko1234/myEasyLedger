@@ -6,13 +6,15 @@ import {Link, Redirect, useParams} from 'react-router-dom';
 import AccountSubtypeDetailsSidebar from "./account-subtype-details-sidebar";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from "reactstrap";
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { PageSettings } from '../../../config/page-settings';
 
 
 
 function AccountSubtypeDetails(props) {
-    // required props: context, parentPath, parentName, utils
+    // required props: parentPath, parentName, utils
     // required utils: deleteAccountSubtype, fetchData
     // renders account details based on the id in url parameter
+    const appContext = React.useContext(PageSettings);
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
@@ -66,7 +68,7 @@ function AccountSubtypeDetails(props) {
             let responseData = response.data
             setSelectedAccountSubtype(responseData);
         })
-        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountBalance`).then(response => {
             let accountsBelongingToSubtype = response.data.filter(account => account.accountSubtypeId && (account.accountSubtypeId.toString() === selectedAccountSubtypeId.toString()))
             setAccounts(accountsBelongingToSubtype);
         })
@@ -77,7 +79,7 @@ function AccountSubtypeDetails(props) {
             let responseData = response.data
             setSelectedAccountSubtype(responseData);
         })
-        axios.get(`${API_BASE_URL}/organization/${props.context.organizationId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountBalance`).then(response => {
             let accountsBelongingToSubtype = response.data.filter(account => account.accountSubtypeId && (account.accountSubtypeId.toString() === selectedAccountSubtypeId.toString()))
             setAccounts(accountsBelongingToSubtype);
         })
@@ -124,7 +126,7 @@ function AccountSubtypeDetails(props) {
                 accountSubtypeId: selectedAccountSubtype.accountSubtypeId,
                 accountSubtypeName: accountSubtypeNameInput,
                 accountTypeId: selectedAccountSubtype.accountTypeId,
-                organizationId: props.context.organizationId
+                organizationId: appContext.currentOrganization
             }
             axios.put(`${API_BASE_URL}/accountSubtype/${selectedAccountSubtype.accountSubtypeId}`, updatedAccountSubtype).then(response => {
                 console.log(response);
@@ -157,7 +159,6 @@ function AccountSubtypeDetails(props) {
             <div className="row">
                 <span className="col-md-9">
                     {selectedAccountSubtype ? <ClickableTableWithPaginationAndJournalEntryModal
-                        context={props.context}
                         columns={columns}
                         data={data}
                         fetchData={fetchData}
@@ -189,7 +190,6 @@ function AccountSubtypeDetails(props) {
                         {selectedAccountSubtype ? <AccountSubtypeDetailsSidebar
                             {...selectedAccountSubtype}
                             accounts={accounts}
-                            context={props.context}
                         /> : "Loading..."}
                     </div>
                 </span>
