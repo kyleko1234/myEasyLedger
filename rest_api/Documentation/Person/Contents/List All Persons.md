@@ -1,6 +1,8 @@
 ### List all persons
 Endpoint: `GET /person`
 
+Authorization: `ROLE_ADMIN`
+
 Returns a list of all persons.
 ___
 #### Request Body Parameters

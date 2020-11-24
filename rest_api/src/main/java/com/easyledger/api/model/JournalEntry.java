@@ -90,14 +90,15 @@ public class JournalEntry {
 	
 	@OneToMany(	mappedBy = "journalEntry",
 				cascade = CascadeType.REMOVE,
-				orphanRemoval = true)
+				orphanRemoval = true,
+				fetch = FetchType.EAGER)
 	private List<LineItem> lineItems;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "person_id")
 	private Person person;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "organization_id")
 	private Organization organization;
 	

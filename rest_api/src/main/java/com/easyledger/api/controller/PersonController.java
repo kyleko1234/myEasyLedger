@@ -11,6 +11,8 @@ import javax.validation.Valid;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -42,7 +44,7 @@ public class PersonController {
 		this.personService = personService;
 	}
 
-
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/person")
     public List<Person> getAllPersons() {
         List<Person> persons = personRepo.findAll();
@@ -50,6 +52,7 @@ public class PersonController {
     }
 
 	
+	@PreAuthorize("#personId == principal.getId()")
     @GetMapping("/person/{id}")
     public ResponseEntity<Person> getPersonById(@PathVariable(value = "id") Long personId)
         throws ResourceNotFoundException {
@@ -60,6 +63,7 @@ public class PersonController {
     }
     
     @Deprecated
+    @Secured("ROLE_ADMIN")
     @PostMapping("/person")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Person> createPerson(@RequestBody Map<Object, Object> fields) 
@@ -75,6 +79,8 @@ public class PersonController {
     	return ResponseEntity.ok(updatedPerson);
     }
     
+    //TODO allow client to update roles?
+    @PreAuthorize("#id == principal.getId()")
     @PatchMapping("/person/{id}")
     public ResponseEntity<Person> patchPerson(@PathVariable Long id, @RequestBody Map<Object, Object> fields) 
     	throws ConflictException, ResourceNotFoundException {

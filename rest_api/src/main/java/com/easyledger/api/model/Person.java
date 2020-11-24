@@ -44,14 +44,16 @@ public class Person {
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries;
 	
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST },
+    			fetch = FetchType.EAGER)
     @JoinTable(
 			name = "organization_person",
 			joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"))
 	private Set<Organization> organizations;
     
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST },
+    			fetch = FetchType.EAGER)
     @JoinTable(
 			name = "person_role",
 			joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),

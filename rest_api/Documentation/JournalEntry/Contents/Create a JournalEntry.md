@@ -1,6 +1,8 @@
 ### Create a JournalEntry
 Endpoint: `POST /journalEntry`
 
+Authorization: Entry can only be created with an organizationId of an organization that the user belongs to.
+
 Creates a journal entry and line items using the values of the parameters passed.
 ___
 #### Request Body Parameters

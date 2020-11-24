@@ -20,7 +20,7 @@ Password of the user, stored as a BCrypt hash. Not returned as a result of GET r
 List of IDs of organizations that this Person belongs to. When an organization that a person belongs to is deleted, it is automatically deleted from this list. This is used for convenience of PATCHing a person. 
 
 - **organizations (`Array<Organization>`**<br/>
-List of organizations with name and ID that this person belongs to. This field is used for GET requests only; PATCH requests need only send an array of IDs.
+List of organization objects with name and ID that this person belongs to. This field is used for GET requests only; PATCH requests need only send an array of IDs.
 
 - **roles (`Array<Role>`)** <br/>
 List of roles that this person holds, with ID and name of role. Currently there are two roles: ROLE_USER and ROLE_ADMIN. There are not yet any functional differences between the two roles.
@@ -29,13 +29,21 @@ ___
 #### Sample Object
 ```json
 {
-    "personId": 1,
-    "firstName": "Sample",
-    "lastName": "User",
-    "email": "sampleuser@gmail.com",
-    "password": "*******",
-    "organizationIds": [
-        1
+    "id": 1,
+    "firstName": "Kyle",
+    "lastName": "Ko",
+    "email": "kyleko1234@gmail.com",
+    "organizations": [
+        {
+            "id": 1,
+            "name": "Sample organization"
+        }
+    ],
+    "roles": [
+        {
+            "id": 2,
+            "name": "ROLE_ADMIN"
+        }
     ]
 }
 ```

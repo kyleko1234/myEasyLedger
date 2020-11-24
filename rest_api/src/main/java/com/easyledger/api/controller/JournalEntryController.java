@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,11 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
 import com.easyledger.api.repository.JournalEntryRepository;
 import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;
+import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.service.JournalEntryService;
 import com.easyledger.api.service.LineItemService;
 import com.easyledger.api.viewmodel.JournalEntryViewModel;
@@ -45,18 +49,21 @@ public class JournalEntryController {
 	private LineItemService lineItemService;
 	private LineItemRepository lineItemRepo;
 	private OrganizationRepository organizationRepo;
+	private AuthorizationService authorizationService;
 
 	public JournalEntryController(JournalEntryRepository journalEntryRepo, JournalEntryService journalEntryService, 
-			LineItemService lineItemService, LineItemRepository lineItemRepo, OrganizationRepository organizationRepo) {
+			LineItemService lineItemService, LineItemRepository lineItemRepo, OrganizationRepository organizationRepo, 
+			AuthorizationService authorizationService) {
 		super();
 		this.journalEntryRepo = journalEntryRepo;
 		this.journalEntryService = journalEntryService;
 		this.lineItemService = lineItemService;
 		this.lineItemRepo = lineItemRepo;
 		this.organizationRepo = organizationRepo;
+		this.authorizationService = authorizationService;
 	}
 
-
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/journalEntry")
     public ArrayList<JournalEntryDTO> getAllJournalEntries() {
         List<JournalEntry> journalEntries = journalEntryRepo.findAll();
@@ -68,29 +75,33 @@ public class JournalEntryController {
     }
 	
 	@GetMapping(path = "organization/{id}/journalEntryViewModel")
-	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganization(
-			@PathVariable(value = "id") Long organizationId, Pageable pageable) throws ResourceNotFoundException {
-		organizationRepo.findById(organizationId)
-			.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganization (
+			@PathVariable(value = "id") Long organizationId, Authentication authentication, Pageable pageable) throws ResourceNotFoundException, UnauthorizedException {		
+		
+		authorizationService.authorizeByOrganizationId(authentication, organizationId);
+		
 		return journalEntryRepo.getAllJournalEntryViewModelsForOrganization(organizationId, pageable);
 	}
 
 	
     @GetMapping("/journalEntry/{id}")
-    public ResponseEntity<JournalEntryDTO> getJournalEntryById(@PathVariable(value = "id") Long journalEntryId)
-        throws ResourceNotFoundException {
+    public ResponseEntity<JournalEntryDTO> getJournalEntryById(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
+        throws ResourceNotFoundException, UnauthorizedException {
     	JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
     		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId)); 
     	JournalEntryDTO journalEntryDTO = new JournalEntryDTO(journalEntry);
+    	authorizationService.authorizeByOrganizationId(authentication, journalEntryDTO.getOrganizationId());
         return ResponseEntity.ok().body(journalEntryDTO);
     }
     
     @DeleteMapping("/journalEntry/{id}")
-    public Map<String, Boolean> deleteJournalEntry(@PathVariable(value = "id") Long journalEntryId)
-         throws ResourceNotFoundException {
+    public Map<String, Boolean> deleteJournalEntry(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
+         throws ResourceNotFoundException, UnauthorizedException {
         JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
        .orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
 
+        authorizationService.authorizeByOrganizationId(authentication, journalEntry.getOrganization().getId());
+        
         journalEntry.setDeleted(true);
         journalEntryRepo.save(journalEntry);
         Map<String, Boolean> response = new HashMap<>();
@@ -103,11 +114,12 @@ public class JournalEntryController {
       * LineItems are deleted and replaced with information from the request body, without regard to whether or not any changes were actually made.
       * Full Entry information must be sent with each PUT request, including all LineItems. A PUT Entry with a request body that contains no LineItems
       * will result in an Entry that has no associated LineItems in the DB.
-      * ID of Entry will be preserved, but all lineItemIds will be newly generated, regardless what the lineItemId field in the RequestBody says.**/ 		
+      * ID of Entry will be preserved, but all lineItemIds will be newly generated, regardless what the lineItemId field in the RequestBody says.
+     * @throws UnauthorizedException **/ 		
     @Transactional(rollbackFor=Exception.class)
     @PutMapping("/journalEntry/{id}")
-    public ResponseEntity<JournalEntryDTO> updateJournalEntryById(@PathVariable(value = "id") Long id, @RequestBody JournalEntryDTO dto) 
-    	throws ConflictException, ResourceNotFoundException {
+    public ResponseEntity<JournalEntryDTO> updateJournalEntryById(@PathVariable(value = "id") Long id, @RequestBody JournalEntryDTO dto, Authentication authentication) 
+    	throws ConflictException, ResourceNotFoundException, UnauthorizedException {
     	// Assert URI id is the same as id in the request body.
     	if (dto.getJournalEntryId() == null || !dto.getJournalEntryId().equals(id)) {
     		throw new ConflictException("Entry ID in request body does not match URI.");
@@ -116,6 +128,8 @@ public class JournalEntryController {
     	//Assert that an entry for this id exists
     	JournalEntry oldJournalEntry = journalEntryRepo.findById(id)
         	.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + id)); 
+    	
+    	authorizationService.authorizeByOrganizationId(authentication, oldJournalEntry.getOrganization().getId());
     	
     	//Delete old LineItems.
     	Iterator<LineItem> oldLineItemIterator = oldJournalEntry.getLineItems().iterator();
@@ -149,12 +163,14 @@ public class JournalEntryController {
     @Transactional(rollbackFor=Exception.class)
     @PostMapping("/journalEntry")
     @ResponseStatus(HttpStatus.CREATED)
-    public JournalEntryDTO createJournalEntryById(@RequestBody JournalEntryDTO dto) 
-    	throws ConflictException, ResourceNotFoundException {
+    public JournalEntryDTO createJournalEntryById(@RequestBody JournalEntryDTO dto, Authentication authentication) 
+    	throws ConflictException, ResourceNotFoundException, UnauthorizedException {
     
     	if (dto.getJournalEntryId() != null) {
     		throw new ConflictException("Please do not attempt to manually create an EntryId.");
     	}
+    	
+    	authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
     	
     	//Create Entry entity object from DTO
     	JournalEntry updatedJournalEntry = journalEntryService.createJournalEntryFromDTO(dto);

@@ -1,6 +1,8 @@
 ### DEPRECATED: Create a Person
 Endpoint: `POST /person`
 
+Authorization: `ROLE_ADMIN`
+
 Posts a Person object to the database using the specified parameters. This is a deprecated endpoint that probably does not work as intended. Please use `POST /auth/signup` instead.
 ___
 #### Request Body Parameters

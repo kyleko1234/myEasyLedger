@@ -1,6 +1,8 @@
 ### Retrieve a person
 Endpoint: `GET /person/{id}`
 
+Authorization: Current user can only request the Person object representing themselves.
+
 Retrieves an existing person using the specified id.
 ___
 

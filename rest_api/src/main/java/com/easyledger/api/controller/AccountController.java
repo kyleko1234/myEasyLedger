@@ -60,6 +60,7 @@ public class AccountController {
         	accountDtos.add(new AccountDTO(account));
         }
         return accountDtos;
+        
     }
 
     @GetMapping("/account/{id}")

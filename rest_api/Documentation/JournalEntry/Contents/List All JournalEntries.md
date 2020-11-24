@@ -1,6 +1,8 @@
 ### List all JournalEntries
 Endpoint: `GET /journalEntry`
 
+Authorization: `ROLE_ADMIN`
+
 Returns a list of all JournalEntries. Database requests for this endpoint scale linearly with the number of entries to be returned, so it is not recommended to use this endpoint. If possible, fetch only the journalEntries you need, or use `GET /organization/{id}/journalEntry` instead.
 ___
 #### Request Body Parameters

@@ -1,7 +1,10 @@
 ### Retrieve a JournalEntry
 Endpoint: `GET /journalEntry/{id}`
 
+Authorization: User making the request must belong to the organization that owns the specified entry..
+
 Retrieves an existing entry using the supplied id.
+
 ___
 #### Request Body Parameters
 None.
