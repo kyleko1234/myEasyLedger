@@ -1,6 +1,8 @@
 ### Create an account
 Endpoint: `POST /account`
 
+Authorization: User may only create an account for an organization that they belong to.
+
 Creates an account with the values of the parameters passed.
 ___
 #### Request Body Parameters

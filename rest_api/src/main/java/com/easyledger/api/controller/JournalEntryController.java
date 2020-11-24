@@ -130,6 +130,7 @@ public class JournalEntryController {
         	.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + id)); 
     	
     	authorizationService.authorizeByOrganizationId(authentication, oldJournalEntry.getOrganization().getId());
+    	authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
     	
     	//Delete old LineItems.
     	Iterator<LineItem> oldLineItemIterator = oldJournalEntry.getLineItems().iterator();

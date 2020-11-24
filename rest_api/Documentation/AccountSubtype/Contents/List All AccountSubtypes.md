@@ -1,6 +1,8 @@
 ### List all account subtypes
 Endpoint: `GET /accountSubtype`
 
+Authorization: `ROLE_ADMIN`
+
 Returns a list of all account subtypes in the database.
 ___
 

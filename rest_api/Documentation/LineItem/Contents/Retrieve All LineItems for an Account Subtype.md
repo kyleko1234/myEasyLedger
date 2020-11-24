@@ -1,6 +1,8 @@
 ### Retrieve All LineItems for an Account Subtype
 Endpoint: `GET /accountSubtype/{id}/lineItem?page={i}&size={j}`
 
+Authorization: Specified account subtype must belong to an organization which includes the requesting user.
+
 Retrieves all LineItems belonging to account subtype with id {id}. Paginated server-side.
 ___
 #### Request Body Parameters

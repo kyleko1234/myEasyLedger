@@ -1,6 +1,8 @@
 ### Create an account subtype
 Endpoint: `POST /accountSubtype`
 
+Authorization: User can only create an account subtype for an organization that they belong to.
+
 Creates an account subtype with the values of the parameters passed.
 
 ___

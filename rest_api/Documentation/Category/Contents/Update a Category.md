@@ -1,6 +1,8 @@
 ### Update a category
 Endpoint: `PUT /category/{id}`
 
+Authorization: User must belong to the organization that owns the account that this category belongs to. 
+
 Updates a category with the values of the parameters passed. All parameters must be passed in order to update the object. Cannot be used to delete an object, use the DELETE endpoint instead.
 ___
 

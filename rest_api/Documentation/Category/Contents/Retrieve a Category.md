@@ -1,6 +1,8 @@
 ### Retrieve a category
 Endpoint: `GET /category/{id}`
 
+Authorization: User must belong to the organization that owns this category.
+
 Retrieves a category using the specified id.
 ___
 

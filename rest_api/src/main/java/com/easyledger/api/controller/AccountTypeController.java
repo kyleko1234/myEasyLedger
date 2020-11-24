@@ -43,7 +43,7 @@ public class AccountTypeController {
         return ResponseEntity.ok().body(accountType);
     }
    
-    @GetMapping("/accountType/{id}/accountSubtype")
+/*    @GetMapping("/accountType/{id}/accountSubtype")
     public HashSet<AccountSubtypeDTO> getAllSubtypesForAccountType(@PathVariable(value = "id") Long accountTypeId) 
     	throws ResourceNotFoundException {
         AccountType accountType = accountTypeRepo.findById(accountTypeId)
@@ -54,5 +54,5 @@ public class AccountTypeController {
         	dtos.add(new AccountSubtypeDTO(subtype));
         }
         return dtos;
-    }
+    }*/
 }

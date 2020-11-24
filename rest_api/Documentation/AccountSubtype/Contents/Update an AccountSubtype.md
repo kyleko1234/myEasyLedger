@@ -1,6 +1,8 @@
 ### Update an account subtype
 Endpoint: `PUT /accountSubtype/{id}`
 
+Authorization: User must belong to the organization that owns the specified account subtype and the organization that this account subtype is being updated to belong to.
+
 Updates an account subtype with the values of the parameters passed. All parameters must be passed in order to update the object. Any parameters not passed are set to null. Cannot be used to update the "deleted" field, use `DELETE /accountSubtype/{id}` instead.
 ___
 

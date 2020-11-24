@@ -1,6 +1,8 @@
 ### Delete a category
 Endpoint: `DELETE /category/{id}`
 
+Authorization: User must belong to the organization that owns the specified category.
+
 Soft-deletes the category with the specified id. Categories can only be deleted if there are no LineItems associated with them. Any LineItems will need to be removed or updated to modify a different category before deletion of the category can occur.
 ___
 

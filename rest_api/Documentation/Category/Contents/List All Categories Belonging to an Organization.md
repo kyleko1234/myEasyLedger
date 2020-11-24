@@ -1,6 +1,8 @@
 ### List All Categories Belonging to an Organization
 Endpoint: `GET /organization/{id}/category/`
 
+Authorization: User must belong to the specified organization.
+
 Retrieves all undeleted categories for the specified organization id.
 ___
 

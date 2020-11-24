@@ -1,6 +1,8 @@
 ### Retrieve an account
 Endpoint: `GET /account/{id}`
 
+Authorization: Requesting user must belong to the organization that owns this account. 
+
 Retrieves an account using the specified id.
 ___
 #### Request Body Parameters

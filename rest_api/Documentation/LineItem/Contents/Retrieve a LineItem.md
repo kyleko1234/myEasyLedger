@@ -1,6 +1,8 @@
 ### Retrieve a LineItem
 Endpoint: `GET /lineItem/{id}`
 
+Authorization: The requested line item must belong to an organization that includes the requesting user.
+
 Retrieves an existing line item using the supplied id.
 ___
 

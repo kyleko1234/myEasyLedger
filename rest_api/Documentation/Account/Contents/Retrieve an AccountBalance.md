@@ -1,6 +1,8 @@
 ### Retrieve an AccountBalance
 Endpoint: `GET /account/{id}/accountBalance`
 
+Authorization: Requesting user must belong to the organization that owns this account. 
+
 Retrieves an account using the specified account id. Includes information on total debits and credits in this account.
 ___
 #### Request Body Parameters

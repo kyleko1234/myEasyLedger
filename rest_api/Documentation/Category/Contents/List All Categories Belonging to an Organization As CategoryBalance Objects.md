@@ -1,6 +1,8 @@
 ### List All Categories Belonging to an Organization As CategoryBalance Objects
 Endpoint: `GET /organization/{id}/categoryBalance/`
 
+Authorization: User must belong to the specified organization.
+
 Retrieves all undeleted categories for the specified organization id as CategoryBalance objects. CategoryBalance objects are Category objects, but additionally contain totals of all credit and debit line-items within the category. The returned list of CategoryBalance objects is ordered alphabetically.
 ___
 

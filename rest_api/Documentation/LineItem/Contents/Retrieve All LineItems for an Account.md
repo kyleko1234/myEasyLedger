@@ -1,6 +1,8 @@
 ### Retrieve All LineItems for an Account
 Endpoint: `GET /account/{id}/lineItem?page={i}&size={j}`
 
+Authorization: Specified account must belong to an organization which includes the requesting user.
+
 Retrieves all LineItems belonging to account with id {id}. Paginated server-side.
 ___
 #### Request Body Parameters

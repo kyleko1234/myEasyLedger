@@ -1,6 +1,8 @@
 ### List all Organizations
 Endpoint: `GET /organization`
 
+Authorization: `ROLE_ADMIN`
+
 Returns a list of all organizations in the database.
 ___
 

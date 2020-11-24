@@ -1,6 +1,8 @@
 ### Create a category
 `Endpoint: POST /category`
 
+Authorization: User must belong to the organization that owns the account that this category belongs to. 
+
 Creates a category with the values of the parameters passed.
 ___
 

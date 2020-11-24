@@ -1,6 +1,8 @@
 ### Retrieve an account subtype
 Endpoint: `GET /accountSubtype/{id}`
 
+Authorization: Requesting user must belong to the organization that owns this account subtype.
+
 Retrieves an account subtype using the specified id.
 ___
 

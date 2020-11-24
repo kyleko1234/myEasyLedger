@@ -1,6 +1,8 @@
 ### List All Accounts Belonging to an Organization
 Endpoint: `GET /organization/{id}/account`
 
+Authorization: Requesting user must belong to the organization with the specified id.
+
 Returns a list of all undeleted accounts belonging to an organization with the specified id, sorted by accountTypeId and then by accountId.
 ___
 #### Request Body Parameters

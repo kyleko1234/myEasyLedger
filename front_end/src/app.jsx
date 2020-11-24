@@ -383,7 +383,7 @@ class App extends React.Component {
 			isLoading: true,
 			currentUser: null,
 			currentOrganization: null,
-			
+
 
 			locale: 'en-US',
 			currency: 'USD',
@@ -443,11 +443,11 @@ class App extends React.Component {
 					(this.state.hasScroll ? 'has-scroll ' : '')
 				}>
 					{this.state.pageHeader && (<Header />)}
-					{this.state.pageSidebar && !this.state.isLoading && (<Sidebar />)}
-					{this.state.pageTwoSidebar && !this.state.isLoading && (<SidebarRight />)}
-					{this.state.pageTopMenu && !this.state.isLoading && (<TopMenu />)}
+					{this.state.pageSidebar && !this.state.isLoading && this.state.isAuthenticated && (<Sidebar />)}
+					{this.state.pageTwoSidebar && !this.state.isLoading && this.state.isAuthenticated &&(<SidebarRight />)}
+					{this.state.pageTopMenu && !this.state.isLoading && this.state.isAuthenticated &&(<TopMenu />)}
 					{this.state.pageContent && (<Content />)}
-					{this.state.pageFooter && !this.state.isLoading && (<Footer />)}
+					{this.state.pageFooter && !this.state.isLoading && this.state.isAuthenticated &&(<Footer />)}
 					<FloatSubMenu />
 				</div>
 			</PageSettings.Provider>

@@ -1,6 +1,8 @@
 ### Retrieve All LineItems for a Category
 Endpoint: `GET /category/{id}/lineItem?page={i}&size={j}`
 
+Authorization: Specified category must belong to an organization which includes the requesting user.
+
 Retrieves all LineItems belonging to category with id {id}. Paginated server-side.
 ___
 #### Request Body Parameters

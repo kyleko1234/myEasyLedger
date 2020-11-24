@@ -1,6 +1,8 @@
 ### List all persons associated with an organization
 Endpoint: `GET /organization/{id}/person`
 
+Authorization: Requesting user must belong to the requested organization.
+
 Returns a list of all persons associated with the organization with the specified id.
 ___
 #### Request Body Parameters

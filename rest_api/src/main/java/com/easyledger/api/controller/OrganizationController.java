@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,21 +26,25 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.repository.OrganizationRepository;
+import com.easyledger.api.security.AuthorizationService;
 
 @RestController
 @RequestMapping("/v0.1")
 public class OrganizationController {
 	
 	private OrganizationRepository organizationRepo;
+	private AuthorizationService authorizationService;
 
-	public OrganizationController(OrganizationRepository organizationRepo) {
+	public OrganizationController(OrganizationRepository organizationRepo, AuthorizationService authorizationService) {
 		super();
 		this.organizationRepo = organizationRepo;
+		this.authorizationService = authorizationService;
 	}
 	
 	@Secured("ROLE_ADMIN")
@@ -49,22 +54,25 @@ public class OrganizationController {
 	}
 
 	@GetMapping("/organization/{id}")
-	public ResponseEntity<Organization> getOrganizationById(@PathVariable(value = "id") Long organizationId) 
-		throws ResourceNotFoundException {
+	public ResponseEntity<Organization> getOrganizationById(@PathVariable(value = "id") Long organizationId, Authentication authentication) 
+		throws ResourceNotFoundException, UnauthorizedException {
 		Organization organization = organizationRepo.findById(organizationId)
-	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId)); 
+	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+		authorizationService.authorizeByOrganizationId(authentication, organizationId);
 		return ResponseEntity.ok(organization);
 	}
 	
 	@GetMapping("/organization/{id}/person")
-	public HashSet<Person> getPersonsInOrganization(@PathVariable(value = "id") Long organizationId) 
-		throws ResourceNotFoundException{
+	public HashSet<Person> getPersonsInOrganization(@PathVariable(value = "id") Long organizationId, Authentication authentication) 
+		throws ResourceNotFoundException, UnauthorizedException{
 		Organization organization = organizationRepo.findById(organizationId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId)); 
+		authorizationService.authorizeByOrganizationId(authentication, organizationId);
 		HashSet<Person> persons = new HashSet<Person>(organization.getPersons());
 		return persons;
 	}
 	
+	//TODO change this to POST /organization/person/{personId}, with personId being the creator of this organization and automatically adding the creator to the organization.
 	@PostMapping("/organization")
     @ResponseStatus(HttpStatus.CREATED)
 	public Organization createOrganization(@Valid @RequestBody Organization organization)
@@ -77,12 +85,12 @@ public class OrganizationController {
 	
 	@PutMapping("/organization/{id}")
 	public Organization updateOrganization(@PathVariable(value = "id") Long organizationId, 
-			@Valid @RequestBody Organization organization) throws ConflictException, ResourceNotFoundException {
+					@Valid @RequestBody Organization organization, Authentication authentication)
+					throws ConflictException, ResourceNotFoundException, UnauthorizedException {
 		if (!organization.getId().equals(organizationId)) {
 			throw new ConflictException("Organization ID in request body does not match URI.");
 		}
-		organizationRepo.findById(organizationId)
-	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId)); 
+		authorizationService.authorizeByOrganizationId(authentication, organizationId);
 		return organizationRepo.save(organization);
 	}
 	

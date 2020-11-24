@@ -1,6 +1,8 @@
 ### Retrieve an organization
 Endpoint: `GET /organization/{id}`
 
+Authorization: Requesting user must belong to the requested organization.
+
 Retrieves an organization using the specified id.
 ___
 

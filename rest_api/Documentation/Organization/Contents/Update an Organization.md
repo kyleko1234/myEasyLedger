@@ -1,6 +1,8 @@
 ### Update an organization
 Endpoint: `PUT /organization/{id}`
 
+Authorization: Requesting user must belong to the requested organization.
+
 Updates an organization with the values of the parameters passed.
 ___
 

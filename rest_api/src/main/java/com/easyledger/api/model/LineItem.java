@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -168,7 +169,7 @@ public class LineItem {
 	@JoinColumn(name = "category_id", nullable = true)
 	private Category category;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JsonIgnore
 	@JoinColumn(name = "journal_entry_id", nullable = false)
 	private JournalEntry journalEntry;

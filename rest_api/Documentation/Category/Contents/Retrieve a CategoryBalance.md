@@ -1,6 +1,8 @@
 ### Retrieve a CategoryBalance
 Endpoint: `GET /category/{id}/categoryBalance`
 
+Authorization: User must belong to the organization that owns the specified category.
+
 Retrieves a category with balance information using the specified id.
 ___
 

@@ -1,6 +1,8 @@
 ### List all LineItems
 Endpoint: `GET /lineItem`
 
+Authorization: `ROLE_ADMIN`
+
 Returns a list of all line items.
 ___
 

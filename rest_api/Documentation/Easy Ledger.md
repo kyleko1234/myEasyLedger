@@ -53,7 +53,6 @@ Prefix all endpoints with `http://{host}/v0.1/`
 <br/><br/>
 - [[List All AccountTypes|GET /accountType]]
 - [[Retrieve an AccountType|GET /accountType/{id}]]
-- [[List All AccountSubtypes for an AccountType| GET /accountType/{id}/accountSubtype]]
 <br/><br/>
 - [[List All AccountSubtypes|GET /accountSubtype]]
 - [[Retrieve an AccountSubtype|GET /accountSubtype/{id}]]**

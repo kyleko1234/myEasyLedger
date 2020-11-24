@@ -1,6 +1,8 @@
 ### List All Accounts Belonging to an Organization as AccountBalance Objects
 Endpoint: `GET /organization/{id}/accountBalance`
 
+Authorization: Requesting user must belong to the organization with the specified id.
+
 Returns a list of all undeleted accounts belonging to an organization with the specified id. These accounts are presented as AccountBalance objects, which are Account objects that include the total debit and credit amounts of all undeleted line items affecting the account. The results are ordered by AccountTypeId, then by AccountName alphabetically.
 ___
 #### Request Body Parameters

@@ -1,6 +1,8 @@
 ### List all accounts
 Endpoint: `GET /account`
 
+Authorization: `ROLE_ADMIN`
+
 Returns a list of all accounts in the database.
 ___
 

@@ -1,6 +1,8 @@
 ### List all categories
 Endpoint: `GET /category`
 
+Authorization: `ROLE_ADMIN`
+
 Returns a list of all categories in the database.
 ___
 

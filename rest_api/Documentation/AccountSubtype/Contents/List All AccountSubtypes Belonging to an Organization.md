@@ -2,6 +2,8 @@
 
 Endpoint: `GET /organization/{id}/accountSubtype`
 
+Authorization: User must belong to the specified organization.
+
 Returns a list of all undeleted AccountSubtypes belonging to an organization with the specified id, sorted by accountTypeId and then by accountSubtypeName.
 ___
 #### Request Body Parameters

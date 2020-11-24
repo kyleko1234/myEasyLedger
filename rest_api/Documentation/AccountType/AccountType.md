@@ -15,4 +15,3 @@ ___
 - [[The AccountType Object]]
 - [[Retrieve an AccountType]]
 - [[List All AccountTypes]]
-- [[List All AccountSubtypes for an AccountType]]
