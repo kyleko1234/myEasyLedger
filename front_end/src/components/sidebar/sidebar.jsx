@@ -4,7 +4,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { PageSettings } from './../../config/page-settings.js';
 import SidebarProfile from './sidebar-profile.jsx';
 import SidebarNav from './sidebar-nav.jsx';
-
 class Sidebar extends React.Component {
 	static contextType = PageSettings;
 	
@@ -13,17 +12,18 @@ class Sidebar extends React.Component {
 			<PageSettings.Consumer>
 				{({toggleSidebarMinify, toggleMobileSidebar, pageSidebarTransparent}) => (
 					<React.Fragment>
-						<div id="sidebar" style={{backgroundColor: "#f0f0f0"}} className={'sidebar pt-0' + (pageSidebarTransparent ? 'sidebar-transparent' : '')}>
-							<PerfectScrollbar className="height-full" options={{suppressScrollX: true}}>
-								{!this.context.pageSidebarSearch && (
-								<SidebarProfile />
-								)}
-								<SidebarNav />
-								<Link to="/" className="sidebar-minify-btn" onClick={toggleSidebarMinify}>
-									<i className="fa fa-angle-double-left"></i>
-								</Link>
-							</PerfectScrollbar>
-						</div>
+							<div id="sidebar" className={'sidebar pt-0' + (pageSidebarTransparent ? 'sidebar-transparent' : '')}>
+								<PerfectScrollbar className="height-full" options={{suppressScrollX: true}}>
+									{!this.context.pageSidebarSearch && (
+									<SidebarProfile />
+									)}
+									<SidebarNav />
+									<Link to="/" className="sidebar-minify-btn" onClick={toggleSidebarMinify}>
+										<i className="fa fa-angle-double-left"></i>
+									</Link>
+								</PerfectScrollbar>
+							</div>
+
 						<div className="sidebar-bg"></div>
 						<div className="sidebar-mobile-dismiss" onClick={toggleMobileSidebar}></div>
 					</React.Fragment>

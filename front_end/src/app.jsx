@@ -290,8 +290,6 @@ class App extends React.Component {
 				this.setState({currentOrganization: decodedJwtToken.organizations[0].id})
 				this.setState({isAuthenticated: true});
 				console.log("authenticated with bearer " + jwtToken);
-				console.log("current user " + this.state.currentUser);
-				console.log("current organization " + this.state.currentOrganization);
 				this.setState({isLoading: false})
 			} else {
 				this.setState({isAuthenticated: false});
@@ -427,7 +425,7 @@ class App extends React.Component {
 		return (
 			<PageSettings.Provider value={this.state}>
 				<div className={
-					'fade page-sidebar-fixed show page-container' + 
+					'fade page-sidebar-fixed show page-container ' + 
 					(this.state.pageHeader ? 'page-header-fixed ' : '') + 
 					(this.state.pageSidebar ? '' : 'page-without-sidebar ') + 
 					(this.state.pageRightSidebar ? 'page-with-right-sidebar ' : '') +
@@ -448,7 +446,7 @@ class App extends React.Component {
 					{this.state.pageTopMenu && !this.state.isLoading && this.state.isAuthenticated &&(<TopMenu />)}
 					{this.state.pageContent && (<Content />)}
 					{this.state.pageFooter && !this.state.isLoading && this.state.isAuthenticated &&(<Footer />)}
-					<FloatSubMenu />
+					{/** <FloatSubMenu /> */}
 				</div>
 			</PageSettings.Provider>
 		)

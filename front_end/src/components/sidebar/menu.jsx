@@ -12,7 +12,7 @@ const Menu = [
       { path: '/email/compose', title: 'Compose' },
       { path: '/email/detail', title: 'Detail' }
     ]
-  }, */
+  }, 
   { path: '/widgets', icon: 'fab fa-simplybuilt', title: 'Widgets', label: 'NEW' },
   { path: '/ui', icon: 'fa fa-gem', title: 'UI Elements', label: 'NEW',
     children: [
@@ -41,7 +41,7 @@ const Menu = [
     children: [
       { path: '/table/basic', title: 'Basic Tables' }
     ]
-  },
+  },*/
   { path: '/journals', icon: 'fa fa-list-alt', title: 'Journals' },
   { path: '/chartofaccounts/', icon: 'fa fa-list-alt', title: 'Chart Of Accounts' },
   { path: '/categories', icon: 'fa fa-list-alt', title: 'Categories' },
@@ -59,7 +59,7 @@ const Menu = [
       { path: '/email-template/system', title: 'System Template' },
       { path: '/email-template/newsletter', title: 'Newsletter Template' }
     ]
-  }, */
+  }, 
   { path: '/chart', icon: 'fa fa-chart-pie', title: 'Chart', label: 'NEW',
     children: [
       { path: '/chart/js', title: 'Chart JS' },
@@ -67,7 +67,7 @@ const Menu = [
       { path: '/chart/apex', title: 'Apex Chart', highlight: true }
     ]
   },
-  /*{ path: '/calendar', icon: 'fa fa-calendar', title: 'Calendar' },
+  { path: '/calendar', icon: 'fa fa-calendar', title: 'Calendar' },
   { path: '/map', icon: 'fa fa-map', title: 'Map' },
   { path: '/gallery', icon: 'fa fa-image', title: 'Gallery' },
   { path: '/page-option', icon: 'fa fa-cogs', title: 'Page Options', label: 'NEW',
@@ -101,7 +101,7 @@ const Menu = [
       { path: '/extra/scrum-board', title: 'Scrum Board', highlight: true },
       { path: '/extra/cookie-acceptance-banner', title: 'Cookie Acceptance Banner', highlight: true },
     ]
-  }, */
+  }, 
   { path: '/user', icon: 'fa fa-key', title: 'Login & Register',
     children: [
       { path: '/user/login-v1', title: 'Login' },
@@ -110,7 +110,7 @@ const Menu = [
       { path: '/user/register-v3', title: 'Register v3' }
     ]
   },
-  /*{ path: '/version', icon: 'fa fa-cubes', title: 'Version', label: 'NEW',
+  { path: '/version', icon: 'fa fa-cubes', title: 'Version', label: 'NEW',
     children: [
       { path: '/version/html', title: 'HTML' },
       { path: '/version/ajax', title: 'AJAX' },
@@ -123,7 +123,7 @@ const Menu = [
       { path: '/version/facebook', title: 'FACEBOOK DESIGN', highlight: true },
       { path: '/version/google', title: 'GOOGLE DESIGN', highlight: true }
     ]
-  }, */
+  }, 
   { path: '/helper', icon: 'fa fa-medkit', title: 'Helper',
     children: [
       { path: '/helper/css', title: 'Predefined CSS Classes' }
@@ -146,7 +146,7 @@ const Menu = [
       { path: '/menu/menu-1-2', title: 'Menu 1.2' },
       { path: '/menu/menu-1-3', title: 'Menu 1.3' },
     ]
-  },
+  },*/
 ]
 
 export default Menu;
