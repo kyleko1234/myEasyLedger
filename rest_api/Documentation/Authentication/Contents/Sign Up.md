@@ -1,7 +1,7 @@
 ### Sign Up
 Endpoint: `POST /auth/signup`
 
-Creates a new user with role ROLE_USER.
+Creates a new user with role ROLE_USER. Request body parameters should match the front-end registration form exactly.
 ___
 #### Request Body Parameters
 - **firstName (`String 25`)** <br/>
@@ -13,8 +13,17 @@ The last name of the user being signed up.
 - **email (`String 255`)** <br/>
 The email of the user being signed up. Must be unique; this is used as the username for this account.
 
+- **confirmEmail (`String 255`)** <br/>
+The email of the user, once again. `confirmEmail` and `email`  must match in order to successfully register.
+
 - **password (`String 64`)** <br/>
 The password of the user being signed up.
+
+- **confirmPassword (`String 64`)** <br/>
+The password of the user being signed up, once again. `confirmPassword` and `password` must match in order to successfully register.
+
+- **agree (`boolean`)** <br/>
+A boolean signifying that the user agrees to the terms and conditions of using this software.
 
 - **organizationName (`String 50`)** <br/>
 The name of the first organization for this person. A user must have at least one organization, so it is required to provide an organization name on sign-up.
@@ -33,7 +42,10 @@ Body:
     "firstName": "cheese",
     "lastName" : "grater",
     "email": "cheesegrater@gmail.com",
+    "confirmEmail": "cheesegrater@gmail.com",
     "password": "macpro",
+	"confirmPassword": "macpro",
+	"agree": true,
 	"organization": "Apple Computer Incorporated"
 }
 ```

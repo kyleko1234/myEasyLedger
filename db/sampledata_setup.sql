@@ -8,9 +8,9 @@ INSERT INTO role(name)
      2 | ROLE_ADMIN
 */
 
-INSERT INTO person(first_name, last_name, email, password)
+INSERT INTO person(first_name, last_name, email, password, enabled)
     VALUES
-        ('Kyle', 'Ko', 'kyleko1234@gmail.com', '$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG'); 
+        ('Kyle', 'Ko', 'kyleko1234@gmail.com', '$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG', TRUE); 
 /** id | first_name | last_name | email             | password
      1 | 'Kyle'   | 'Ko'    | kyleko1234@gmail.com  | $2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG (bcrypted 'admin') **/
 

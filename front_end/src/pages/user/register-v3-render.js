@@ -51,7 +51,10 @@ function RegisterV3Render(props) {
             firstName: firstNameInput,
             lastName: lastNameInput,
             email: emailInput,
+            reEnterEmail: reEnterEmailInput,
             password: passwordInput,
+            reEnterPassword: reEnterPasswordInput,
+            agree: agreeInput,
             organizationName: organizationNameInput
         }
 

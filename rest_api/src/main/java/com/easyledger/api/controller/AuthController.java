@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.easyledger.api.exception.AppException;
+import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
@@ -71,7 +72,9 @@ public class AuthController {
     }
     
     @PostMapping("/auth/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws ConflictException {
+    	signUpRequest.validateRequest();
+    	
     	if(personRepository.existsByEmail(signUpRequest.getEmail())) {
     		return new ResponseEntity(new ApiResponse(false, "Email is already taken!"), HttpStatus.BAD_REQUEST);
     	}
