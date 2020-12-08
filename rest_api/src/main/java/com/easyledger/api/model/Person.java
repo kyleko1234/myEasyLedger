@@ -40,6 +40,10 @@ public class Person {
 	@JsonIgnore
 	private String password;
 	
+	@Column(name = "enabled")
+	@JsonIgnore
+	private boolean enabled;
+	
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries;
@@ -66,12 +70,13 @@ public class Person {
 		this.roles = new HashSet<Role>();
 	}
 	
-	public Person(String firstName, String lastName, String email, String password) {
+	public Person(String firstName, String lastName, String email, String password, boolean enabled) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email.toLowerCase().trim();
 		this.password = password;
 		this.organizations = new HashSet<Organization>();
+		this.enabled = enabled;
 	}
 	
 	//Add and Remove organizations
@@ -147,6 +152,15 @@ public class Person {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Set<JournalEntry> getJournalEntries() {

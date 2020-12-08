@@ -10,30 +10,46 @@ function LoginV3Render(props) {
     const [emailInput, setEmailInput] = React.useState('');
     const [passwordInput, setPasswordInput] = React.useState('');
     const [loginAlert, setLoginAlert] = React.useState(false);
+    const [accountDisabledAlert, setAccountDisabledAlert] = React.useState(false);
+    const [lastAttemptedEmail, setLastAttemptedEmail] = React.useState('');
+    const [verificationSentAlert, setVerificationSentAlert] = React.useState(false);
 
     const appContext = React.useContext(PageSettings);
-
+    const axiosLoginInstance = axios.create();
 
 
     const handleSubmit = event => {
         event.preventDefault();
         setLoginAlert(false);
+        setAccountDisabledAlert(false);
+        setVerificationSentAlert(false);
+        setLastAttemptedEmail(emailInput.slice());
 
         let requestBody = {
             email: emailInput,
             password: passwordInput
         }
 
-        axios.post(`${API_BASE_URL}/auth/signin`, requestBody).then( response => {
+        axiosLoginInstance.post(`${API_BASE_URL}/auth/signin`, requestBody).then( response => {
             localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
             localStorage.setItem(REFRESH_TOKEN, response.data.refreshToken);
             appContext.checkForAuthentication();
             props.history.push('/');
-        }).catch( response => {
-            console.log(response);
-            setLoginAlert(true);
+        }).catch( error => {
+            if (error.response.data.message == "User is disabled") {
+                setAccountDisabledAlert(true);
+            } else {
+                setLoginAlert(true);
+            }
         });
 
+    }
+
+    const handleResendEmail = () => {
+        axiosLoginInstance.get(`${API_BASE_URL}/verification/resend/${lastAttemptedEmail}`).then( response => {
+            setAccountDisabledAlert(false);
+            setVerificationSentAlert(true);
+        }).catch(console.log);
     }
 
 
@@ -61,6 +77,13 @@ function LoginV3Render(props) {
                 </div>
                 <div className="login-content">
                     {loginAlert? <Alert color="danger">Invalid email or password.</Alert> : null}
+                    {accountDisabledAlert? 
+                        <Alert color="danger">
+                            The email address for this account has not been verified. Please follow the instructions in your verification email to verify this account.
+                            &nbsp;<Link to="#" onClick={() => handleResendEmail()} className="alert-link">Click here to send a new verification email.</Link>
+                        </Alert> 
+                    : null}
+                    {verificationSentAlert? <Alert color="success">Verification email sent!</Alert> : null}
                     <form className="margin-bottom-0" onSubmit={event => handleSubmit(event)}>
                         <div className="form-group m-b-15">
                             <input type="email" className="form-control form-control-lg" placeholder="Email Address" required value={emailInput} onChange={event => setEmailInput(event.target.value)}/>

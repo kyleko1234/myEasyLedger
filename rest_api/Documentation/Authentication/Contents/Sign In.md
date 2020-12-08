@@ -14,7 +14,7 @@ The email that identifies the user being authenticated.
 The password of the user being authenticated.
 ___
 #### Returns
-Returns a JWT token upon successful authentication, or 401 and an error upon failed authentication.
+Returns a JWT token upon successful authentication. Returns 401 and message "Bad credentials" upon failure to authenticate. Returns 401 and "User is disabled" if the email in the request body exists in the database but the user has not been verified or is otherwise disabled.
 ___
 #### Sample Request
 `POST /auth/signin`

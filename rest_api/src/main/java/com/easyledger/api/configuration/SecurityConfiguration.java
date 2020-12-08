@@ -85,7 +85,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	                    "/**/*.css",
 	                    "/**/*.js")
 	                    .permitAll()
-	                .antMatchers("/v0.1/auth/signin", "/v0.1/auth/signup")
+	                .antMatchers("/v0.1/auth/signin", "/v0.1/auth/signup", "/v0.1/auth/testEmail", "/v0.1/verification/**")
 	                	.permitAll()
 	                .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
 	                	.permitAll()

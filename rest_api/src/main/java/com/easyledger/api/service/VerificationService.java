@@ -1,0 +1,95 @@
+package com.easyledger.api.service;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.mail.MessagingException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import com.easyledger.api.mail.EmailServiceImpl;
+import com.easyledger.api.model.Person;
+import com.easyledger.api.model.VerificationToken;
+import com.easyledger.api.repository.PersonRepository;
+import com.easyledger.api.repository.VerificationTokenRepository;
+
+@Service
+public class VerificationService {
+	
+	@Autowired
+	private VerificationTokenRepository verificationTokenRepo;
+	
+	@Autowired
+	private PersonRepository personRepo;
+	
+    @Autowired 
+    EmailServiceImpl emailService;
+	
+	@Value("${app.apiUrl}")
+	private String apiUrl;
+
+	
+	public VerificationService(VerificationTokenRepository verificationTokenRepo, PersonRepository personRepo, EmailServiceImpl emailService) {
+		this.verificationTokenRepo = verificationTokenRepo;
+		this.personRepo = personRepo;
+		this.emailService = emailService;
+	}
+	
+	public VerificationToken createVerificationTokenForPerson(Person person) {
+		String token = UUID.randomUUID().toString();
+		VerificationToken verificationToken = new VerificationToken(token);
+		verificationToken.setPerson(person);
+		return verificationTokenRepo.save(verificationToken);
+	}
+	
+	public String[] verifyUserByToken(String token) throws MessagingException {
+		String[] result = {"firstName", "filetype.html"}; //result is an array of two strings. result[1] is the firstName of the user being verified. result[2] is the filename+extension of the html document to be served
+		VerificationToken verificationToken = verificationTokenRepo.findByToken(token);
+		if (verificationToken == null) { //if invalid verification token
+			result[1] = "verificationFailure.html";
+			return result;
+		}
+		Person person = verificationToken.getPerson();
+		result[0] = person.getFirstName();
+		Calendar cal = Calendar.getInstance();
+		if (verificationToken.getExpiryDate().getTime() - cal.getTime().getTime() <= 0) { // if expired token
+			renewVerificationToken(person);
+			result[1] = "verificationExpired.html";
+			return result;
+		}
+		
+		person.setEnabled(true); //if valid token, enable this Person
+		personRepo.save(person);
+		result[1] = "verificationSuccess.html";
+		return result;
+		
+	}
+	
+	
+	public void renewVerificationToken(Person person) throws MessagingException {
+		VerificationToken oldToken = verificationTokenRepo.findByPersonId(person.getId());
+		if (oldToken != null) {
+			verificationTokenRepo.delete(oldToken);
+		}
+		VerificationToken newToken = createVerificationTokenForPerson(person);
+		sendVerificationMail(person.getEmail(), person.getFirstName(), newToken.getToken());
+	}
+	
+	public String sendVerificationMail(String to, String firstName, String token) throws MessagingException {
+    	//Set variables for Thymeleaf Template
+    	Map<String, Object> templateModel = new HashMap<String, Object>();
+    	templateModel.put("recipientFirstName", firstName);
+    	templateModel.put("verificationUrl", apiUrl + "/verification/" + token);
+    	//Set email recipient and subject fields
+    	String subject = "Easy Ledger Account Verification";
+    	//send verification email to recipient
+    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel);
+    	return "User registered successfully!";
+    	
+
+	}
+}

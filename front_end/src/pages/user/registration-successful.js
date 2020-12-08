@@ -39,7 +39,8 @@ class RegistrationSuccessful extends React.Component {
                     </h1>
                     <div className="register-content">
                             <div className="m-t-20 m-b-40 p-b-40 text-inverse">
-                                <Link to="/user/login-v3">Click here to login.</Link>
+                                <p>A verification email is on its way to your inbox.</p>
+                                <Link to="/user/login-v3">Return to login page.</Link>
                             </div>
                             <hr />
                             <p className="text-center">

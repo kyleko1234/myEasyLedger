@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Authentication/Contents/Sign Up.md",
+            "file": "Authentication/Authentication.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Authentication/Contents/Sign Up.md",
+            "file": "Authentication/Authentication.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Authentication/Contents/Sign Up.md",
+                "file": "Authentication/Authentication.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +99,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "Authentication/Contents/Sign Up.md",
     "Authentication/Authentication.md",
+    "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
+    "Authentication/Contents/Sign In.md",
+    "Authentication/Contents/Sign Up.md",
+    "Untitled.md",
     "Category/Contents/Delete a Category.md",
     "Category/Contents/Update a Category.md",
     "Category/Contents/Create a Category.md",
     "Category/Contents/Retrieve a CategoryBalance.md",
-    "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md",
-    "Category/Contents/List All Categories Belonging to an Organization.md",
-    "Category/Contents/Retrieve a Category.md",
-    "Category/Contents/List All Categories.md"
+    "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md"
   ]
 }
