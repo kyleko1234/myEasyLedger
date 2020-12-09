@@ -6,11 +6,10 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Authentication/Authentication.md",
+            "file": "AccountType/Contents/List All AccountTypes.md",
             "mode": "source"
           }
         },
@@ -19,10 +18,11 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Authentication/Authentication.md",
+            "file": "AccountType/Contents/List All AccountTypes.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Authentication/Authentication.md",
+                "file": "AccountType/Contents/List All AccountTypes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,6 +99,8 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "AccountType/Contents/List All AccountTypes.md",
+    "AccountType/AccountType.md",
     "Authentication/Authentication.md",
     "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
     "Authentication/Contents/Sign In.md",
@@ -106,8 +108,6 @@
     "Untitled.md",
     "Category/Contents/Delete a Category.md",
     "Category/Contents/Update a Category.md",
-    "Category/Contents/Create a Category.md",
-    "Category/Contents/Retrieve a CategoryBalance.md",
-    "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md"
+    "Category/Contents/Create a Category.md"
   ]
 }

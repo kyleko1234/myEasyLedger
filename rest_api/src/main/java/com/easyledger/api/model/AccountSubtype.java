@@ -92,6 +92,12 @@ public class AccountSubtype {
 		this.name = name;
 		this.accounts = new HashSet<Account>();
 	}
+	public AccountSubtype(String name, AccountType accountType) {
+		this.name = name;
+		this.accountType = accountType;
+		accountType.getAccountSubtypes().add(this);
+		this.accounts = new HashSet<Account>();
+	}
 	
 	public Long getId() {
 		return id;

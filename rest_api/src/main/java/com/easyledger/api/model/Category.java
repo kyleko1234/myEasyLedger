@@ -128,6 +128,13 @@ public class Category {
 		this.lineItems = new HashSet<LineItem>();
 	}
 
+	public Category(String name, Account account) {
+		this.name = name;
+		this.account = account;
+		account.getCategories().add(this);
+		this.lineItems = new HashSet<LineItem>();
+	}
+	
 	public Long getId() {
 		return id;
 	}

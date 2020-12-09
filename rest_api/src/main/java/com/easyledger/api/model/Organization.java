@@ -34,15 +34,15 @@ public class Organization {
 
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
-	private Set<JournalEntry> journalEntries;
+	private Set<JournalEntry> journalEntries = new HashSet<JournalEntry>();
 	
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
-	private Set<AccountSubtype> accountSubtypes;
+	private Set<AccountSubtype> accountSubtypes = new HashSet<AccountSubtype>();
 	
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
-	private Set<Account> accounts;
+	private Set<Account> accounts = new HashSet<Account>();
 	
 	public Organization(String name) {
 		this.name = name;

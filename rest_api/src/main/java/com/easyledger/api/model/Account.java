@@ -149,6 +149,25 @@ public class Account {
 		this.lineItems = new HashSet<LineItem>();
 		this.categories = new ArrayList<Category>();
 		}
+	
+	public Account(String name, AccountType accountType) {
+		this.name = name;
+		this.accountType = accountType;
+		accountType.getAccounts().add(this);
+		this.lineItems = new HashSet<LineItem>();
+		this.categories = new ArrayList<Category>();
+		}
+
+	public Account(String name, AccountType accountType, AccountSubtype accountSubtype) {
+		this.name = name;
+		this.accountType = accountType;
+		this.accountSubtype = accountSubtype;
+		accountType.getAccounts().add(this);
+		accountSubtype.getAccounts().add(this);
+		this.lineItems = new HashSet<LineItem>();
+		this.categories = new ArrayList<Category>();
+		}
+
 
 	public Long getId() {
 		return id;
