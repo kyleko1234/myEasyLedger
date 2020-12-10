@@ -138,6 +138,7 @@ public class PersonService {
         }
 	}
 	
+	@Transactional
 	//before calling this method it is recommended to validate the signup request by calling signUpRequest.validateRequest()
 	//creates a and persists an person, an organization for the person, and a verification token, based on the data from the signuprequest form.
 	//The created Person will be unverified (i.e. person.enabled = false). The VerificationToken for the person is returned by this method, and should be used by the AuthController to create a verification link and send a verification email to the user.
@@ -168,7 +169,6 @@ public class PersonService {
     	
 	}
 	
-	@Transactional
 	/* Automatically populate a person with default accounts, subtypes, categories. Assumes that the account_type table is already populated with
 	 * default values (id1:Assets id2:Liabilities id3:Owner's Equity id4:Income id5:Expenses).
 	 * Default fields:
@@ -182,14 +182,6 @@ public class PersonService {
 		List<AccountType> accountTypes = accountTypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
 		
 		//create and persist subtypes
-		
-		/*
-		AccountSubtype cash = new AccountSubtype("Cash");
-		cash.setAccountType(accountTypes.get(0));
-		AccountSubtype bankAccounts = new AccountSubtype("Bank Accounts");
-		bankAccounts.setAccountType(accountTypes.get(0));
-		AccountSubtype creditCards = new AccountSubtype("Credit Cards");
-		creditCards.setAccountType(accountTypes.get(1)); */
 		AccountSubtype cash = new AccountSubtype("Cash", accountTypes.get(0));
 		AccountSubtype bankAccounts = new AccountSubtype("Bank Accounts", accountTypes.get(0));
 		AccountSubtype creditCards = new AccountSubtype("Credit Cards", accountTypes.get(1));
@@ -202,26 +194,6 @@ public class PersonService {
 		accountSubtypeRepo.saveAll(Arrays.asList(accountSubtypes));
 		
 		//create and persist accounts
-		
-		/*Account myPersonalWallet = new Account("My Personal Wallet");
-		myPersonalWallet.setAccountSubtype(cash);
-		myPersonalWallet.setAccountType(cash.getAccountType());
-		Account savingsAccount = new Account("Savings Account #1");
-		savingsAccount.setAccountSubtype(bankAccounts);
-		savingsAccount.setAccountType(bankAccounts.getAccountType());
-		Account checkingAccount = new Account("Checking Account #1");
-		checkingAccount.setAccountSubtype(bankAccounts);
-		checkingAccount.setAccountType(bankAccounts.getAccountType());
-		Account investmentAccount = new Account("Investment Account #1");
-		investmentAccount.setAccountSubtype(bankAccounts);
-		investmentAccount.setAccountType(bankAccounts.getAccountType());
-		Account creditCardOne = new Account("Credit Card #1");
-		creditCardOne.setAccountSubtype(creditCards);
-		creditCardOne.setAccountType(creditCards.getAccountType());
-		Account personalIncome = new Account("Personal Income");
-		personalIncome.setAccountType(accountTypes.get(3));
-		Account personalExpenses = new Account("Personal Expenses");
-		personalExpenses.setAccountType(accountTypes.get(4)); */
 		Account myPersonalWallet = new Account("My Personal Wallet", cash.getAccountType(), cash);
 		Account savingsAccount = new Account("Savings Account #1", bankAccounts.getAccountType(), bankAccounts);
 		Account checkingAccount = new Account("Checking Account #1", bankAccounts.getAccountType(), bankAccounts);
@@ -237,29 +209,6 @@ public class PersonService {
 		accountRepo.saveAll(Arrays.asList(accounts));
 
 		//create and persist categories
-		/*
-		Category job = new Category("Job #1");
-		job.setAccount(personalIncome);
-		Category project = new Category("Project #1");
-		project.setAccount(personalIncome);
-		Category otherIncome = new Category("Other");
-		otherIncome.setAccount(personalIncome);
-		Category grocery = new Category("Grocery");
-		grocery.setAccount(personalExpenses);
-		Category dining = new Category("Dining");
-		dining.setAccount(personalExpenses);
-		Category apparel = new Category("Apparel");
-		apparel.setAccount(personalExpenses);
-		Category living = new Category("Living");
-		living.setAccount(personalExpenses);
-		Category transportation = new Category("Transportation");
-		transportation.setAccount(personalExpenses);
-		Category education = new Category("Education");
-		education.setAccount(personalExpenses);
-		Category entertainment = new Category("Entertainment");
-		entertainment.setAccount(personalExpenses);
-		Category otherExpenses = new Category("Other");
-		otherExpenses.setAccount(personalExpenses); */
 		Category job = new Category("Job #1", personalIncome);
 		Category project = new Category("Project #1", personalIncome);
 		Category otherIncome = new Category("Other", personalIncome);
