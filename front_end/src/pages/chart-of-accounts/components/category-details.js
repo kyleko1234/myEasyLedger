@@ -37,7 +37,6 @@ function CategoryDetails(props) {
     //
     const [selectedCategory, setSelectedCategory] = React.useState(null);
     const [accounts, setAccounts] = React.useState(null);
-    const [accountTypes, setAccountTypes] = React.useState(null);
 
     const [noCategoryNameAlert, setNoCategoryNameAlert] = React.useState(false);
 
@@ -71,9 +70,6 @@ function CategoryDetails(props) {
         })
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
             setAccounts(response.data); 
-        })
-        axios.get(`${API_BASE_URL}/accountType`).then(response => {
-            setAccountTypes(response.data); 
         })
     }, [])
 
@@ -188,11 +184,7 @@ function CategoryDetails(props) {
                         </div>
                     </div>
                     <div>
-                        {selectedCategory ? <CategoryDetailsSidebar
-                            {...selectedCategory}
-                            accounts={accounts}
-                            accountTypes={accountTypes}
-                        /> : "Loading..."}
+                        {selectedCategory ? <CategoryDetailsSidebar {...selectedCategory}/> : "Loading..."}
                     </div>
                 </span>
             </div>

@@ -104,6 +104,14 @@ public class AccountBalanceDTO {
 		this.creditTotal = creditTotal;
 	}
 
+	@Override
+	public String toString() {
+		return "AccountBalanceDTO [accountId=" + accountId + ", accountName=" + accountName + ", accountTypeId="
+				+ accountTypeId + ", accountTypeName=" + accountTypeName + ", accountSubtypeId=" + accountSubtypeId
+				+ ", accountSubtypeName=" + accountSubtypeName + ", debitTotal=" + debitTotal + ", creditTotal="
+				+ creditTotal + "]";
+	}
+
 
 	
 }

@@ -22,10 +22,12 @@ ___
 ```json
 {
     "categoryId": 1,
-    "categoryName": "Grocery",
-    "accountId": 5,
-    "accountTypeId": 5,
-    "debitTotal": 60.00,
-    "creditTotal": 1000.111
+    "categoryName": "Job #1",
+    "accountId": 6,
+    "accountName": "Personal Income",
+    "accountTypeId": 4,
+    "accountTypeName": "Income",
+    "debitTotal": 0,
+    "creditTotal": 0
 }
 ```

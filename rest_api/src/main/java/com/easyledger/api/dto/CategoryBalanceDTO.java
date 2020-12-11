@@ -8,17 +8,21 @@ public class CategoryBalanceDTO {
 	private Long categoryId;
 	private String categoryName;
 	private Long accountId;
+	private String accountName;
 	private Long accountTypeId;
+	private String accountTypeName;
 	private BigDecimal debitTotal;
 	private BigDecimal creditTotal;
 
 
-	public CategoryBalanceDTO(BigInteger categoryId, String categoryName, BigInteger accountId, BigInteger accountTypeId, BigDecimal debitTotal,
-			BigDecimal creditTotal) {
+	public CategoryBalanceDTO(BigInteger categoryId, String categoryName, BigInteger accountId, String accountName, 
+			BigInteger accountTypeId, String accountTypeName, BigDecimal debitTotal, BigDecimal creditTotal) {
 		this.categoryId = categoryId.longValueExact();
 		this.categoryName = categoryName;
 		this.accountId = accountId.longValueExact();
+		this.accountName = accountName;
 		this.accountTypeId = accountTypeId.longValueExact();
+		this.accountTypeName = accountTypeName;
 		if (debitTotal != null) {
 			this.debitTotal = debitTotal;
 		} else {
@@ -58,12 +62,28 @@ public class CategoryBalanceDTO {
 		this.accountId = accountId;
 	}
 
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+
 	public Long getAccountTypeId() {
 		return accountTypeId;
 	}
 
 	public void setAccountTypeId(Long accountTypeId) {
 		this.accountTypeId = accountTypeId;
+	}
+
+	public String getAccountTypeName() {
+		return accountTypeName;
+	}
+
+	public void setAccountTypeName(String accountTypeName) {
+		this.accountTypeName = accountTypeName;
 	}
 
 	public BigDecimal getDebitTotal() {
@@ -85,9 +105,8 @@ public class CategoryBalanceDTO {
 	@Override
 	public String toString() {
 		return "CategoryBalanceDTO [categoryId=" + categoryId + ", categoryName=" + categoryName + ", accountId="
-				+ accountId + ", accountTypeId=" + accountTypeId + ", debitTotal=" + debitTotal + ", creditTotal="
-				+ creditTotal + "]";
+				+ accountId + ", accountName=" + accountName + ", accountTypeId=" + accountTypeId + ", accountTypeName="
+				+ accountTypeName + ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal + "]";
 	}
-	
-
 }
+

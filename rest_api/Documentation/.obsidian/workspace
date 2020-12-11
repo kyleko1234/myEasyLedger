@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+            "file": "Category/Contents/Retrieve a CategoryBalance.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+            "file": "Category/Contents/Retrieve a CategoryBalance.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+                "file": "Category/Contents/Retrieve a CategoryBalance.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,6 +99,8 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Category/Contents/Retrieve a CategoryBalance.md",
+    "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md",
     "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
     "Account/Contents/Retrieve an AccountBalance.md",
     "Account/Contents/Delete an Account.md",
@@ -106,8 +108,6 @@
     "AccountType/AccountType.md",
     "Authentication/Authentication.md",
     "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
-    "Authentication/Contents/Sign In.md",
-    "Authentication/Contents/Sign Up.md",
-    "Untitled.md"
+    "Authentication/Contents/Sign In.md"
   ]
 }
