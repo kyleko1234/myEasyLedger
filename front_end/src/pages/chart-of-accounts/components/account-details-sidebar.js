@@ -2,9 +2,9 @@ import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 
 function AccountDetailsSidebar( props ) {
-    /*  required props: accountName, accountSubtypeId, accountTypeId
-            hasCategories, categories, accountSubtypes, accountTypes
-        If spreading an account object from the api into props, you'll need {...account}, accountSubtypes, accountTypes, context */
+    /*  required props: accountName, accountSubtypeName, accountTypeName
+            hasCategories, categories
+        If spreading an account object from the api into props, you'll need {...account}, hasCategories, categories */
     
     const appContext = React.useContext(PageSettings);
 
@@ -17,22 +17,12 @@ function AccountDetailsSidebar( props ) {
             {props.hasCategories? null : 
                 <div className="row my-3">
                     <span className="col-md-6 font-weight-bold">{"Account Subtype: "}</span>
-                    <span className="col-md-6">
-                        {props.accountSubtypes ? 
-                            props.accountSubtypes.slice()
-                                .find(accountSubtype => accountSubtype.accountSubtypeId.toString() === props.accountSubtypeId.toString()).accountSubtypeName
-                        : "Loading..."} 
-                    </span>
+                    <span className="col-md-6">{props.accountSubtypeName}</span>
                 </div>
             }
             <div className="row my-3">
                 <span className="col-md-6 font-weight-bold">{"Account Type: "}</span>
-                <span className="col-md-6">
-                    {props.accountTypes ? 
-                        props.accountTypes.slice()
-                            .find(accountType => accountType.id.toString() === props.accountTypeId.toString()).name
-                    : "Loading..."} 
-                </span>
+                <span className="col-md-6">{props.accountTypeName}</span>
             </div>
             <div className="row my-3">
                 <span className="col-md-6 font-weight-bold">{"Total Debits: "}</span>

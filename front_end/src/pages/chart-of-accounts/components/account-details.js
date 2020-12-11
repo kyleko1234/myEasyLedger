@@ -49,7 +49,6 @@ function AccountDetails(props) {
     //
     const [selectedAccount, setSelectedAccount] = React.useState(null);
     const [accountSubtypes, setAccountSubtypes] = React.useState(null);
-    const [accountTypes, setAccountTypes] = React.useState(null);
 
     const [hasCategories, setHasCategories] = React.useState(false);
     const [categories, setCategories] = React.useState(null);
@@ -88,9 +87,6 @@ function AccountDetails(props) {
             } 
             setSelectedAccount(selectedAccount);
         })
-        axios.get(`${API_BASE_URL}/accountType`).then(response => {
-            setAccountTypes(response.data);
-        })
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountSubtype`).then(response => {
             setAccountSubtypes(response.data); 
         })
@@ -107,9 +103,6 @@ function AccountDetails(props) {
                 setHasCategories(true);
             } 
             setSelectedAccount(selectedAccount);
-        })
-        axios.get(`${API_BASE_URL}/accountType`).then(response => {
-            setAccountTypes(response.data);
         })
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountSubtype`).then(response => {
             setAccountSubtypes(response.data); 
@@ -227,8 +220,6 @@ function AccountDetails(props) {
                     <div>
                         {selectedAccount ? <AccountDetailsSidebar
                             {...selectedAccount}
-                            accountSubtypes={accountSubtypes}
-                            accountTypes={accountTypes}
                             hasCategories={hasCategories}
                             categories={categories}
                         /> : "Loading..."}

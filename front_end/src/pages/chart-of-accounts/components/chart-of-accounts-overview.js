@@ -313,7 +313,7 @@ class ChartOfAccountsOverview extends React.Component {
                                                                 >
                                                                     <span>{category.categoryName}</span>
                                                                     <span className={category.debitTotal > category.creditTotal ? "text-red" : ""}> {/** Income categories use black for excess credits and red for excess debits */}
-                                                                        {new Intl.NumberFormat(this.context.locale, { style: 'currency', currency: this.context.currency }).format(account.creditTotal - account.debitTotal)}
+                                                                        {new Intl.NumberFormat(this.context.locale, { style: 'currency', currency: this.context.currency }).format(category.creditTotal - category.debitTotal)}
                                                                     </span>
                                                                     {/* For each account in this subtype, render a row. Each row is clickable, and includes the account name and the account balance.
                                                                         Clicking the row will send the user to the account-details component, where they can view and edit details for the selected account. */}
@@ -362,7 +362,7 @@ class ChartOfAccountsOverview extends React.Component {
                                                                 >
                                                                     <span>{category.categoryName}</span>
                                                                     <span className={category.debitTotal > category.creditTotal ? "text-red" : ""}> {/** Expense categories use black for excess credits and red for excess debits */}
-                                                                        {new Intl.NumberFormat(this.context.locale, { style: 'currency', currency: this.context.currency }).format(account.debitTotal - account.creditTotal)}
+                                                                        {new Intl.NumberFormat(this.context.locale, { style: 'currency', currency: this.context.currency }).format(category.debitTotal - category.creditTotal)}
                                                                     </span>
                                                                     {/* For each account in this subtype, render a row. Each row is clickable, and includes the account name and the account balance.
                                                                         Clicking the row will send the user to the account-details component, where they can view and edit details for the selected account. */}

@@ -8,17 +8,22 @@ public class AccountBalanceDTO {
 	private Long accountId;
 	private String accountName;
 	private Long accountTypeId;
+	private String accountTypeName;
 	private Long accountSubtypeId;
+	private String accountSubtypeName;
 	private BigDecimal debitTotal;
 	private BigDecimal creditTotal;
 
-	public AccountBalanceDTO(BigInteger accountId, String accountName, BigInteger accountTypeId, BigInteger accountSubtypeId,
+	public AccountBalanceDTO(BigInteger accountId, String accountName, BigInteger accountTypeId,
+			String accountTypeName, BigInteger accountSubtypeId, String accountSubtypeName,
 			BigDecimal debitTotal, BigDecimal creditTotal) {
 		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
 		this.accountTypeId = accountTypeId.longValueExact();
+		this.accountTypeName = accountTypeName;
 		if (accountSubtypeId != null) {
 			this.accountSubtypeId = accountSubtypeId.longValueExact();
+			this.accountSubtypeName = accountSubtypeName;
 		}
 		if (debitTotal != null) {
 			this.debitTotal = debitTotal;
@@ -59,12 +64,28 @@ public class AccountBalanceDTO {
 		this.accountTypeId = accountTypeId;
 	}
 
+	public String getAccountTypeName() {
+		return accountTypeName;
+	}
+
+	public void setAccountTypeName(String accountTypeName) {
+		this.accountTypeName = accountTypeName;
+	}
+
 	public Long getAccountSubtypeId() {
 		return accountSubtypeId;
 	}
 
 	public void setAccountSubtypeId(Long accountSubtypeId) {
 		this.accountSubtypeId = accountSubtypeId;
+	}
+
+	public String getAccountSubtypeName() {
+		return accountSubtypeName;
+	}
+
+	public void setAccountSubtypeName(String accountSubtypeName) {
+		this.accountSubtypeName = accountSubtypeName;
 	}
 
 	public BigDecimal getDebitTotal() {
@@ -81,13 +102,6 @@ public class AccountBalanceDTO {
 
 	public void setCreditTotal(BigDecimal creditTotal) {
 		this.creditTotal = creditTotal;
-	}
-
-	@Override
-	public String toString() {
-		return "AccountBalanceDTO [accountId=" + accountId + ", accountName=" + accountName + ", accountTypeId="
-				+ accountTypeId + ", accountSubtypeId=" + accountSubtypeId + ", debitTotal=" + debitTotal
-				+ ", creditTotal=" + creditTotal + "]";
 	}
 
 

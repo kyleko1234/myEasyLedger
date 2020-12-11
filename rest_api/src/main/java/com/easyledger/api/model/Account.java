@@ -72,7 +72,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 								@ColumnResult(name = "accountId"),
 								@ColumnResult(name = "accountName"),
 								@ColumnResult(name = "accountTypeId"),
+								@ColumnResult(name = "accountTypeName"),
 								@ColumnResult(name = "accountSubtypeId"),
+								@ColumnResult(name = "accountSubtypeName"),
 								@ColumnResult(name = "debitTotal"),
 								@ColumnResult(name = "creditTotal")
 						}
@@ -81,28 +83,33 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )	
 @NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization
 		name = "Account.getAllAccountBalancesForOrganization",
-		query = "SELECT account.id AS accountId, account.name AS accountName, account.account_type_id AS accountTypeId, account.account_subtype_id AS accountSubtypeId, " + 
-				"  SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
-				"  SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
-				"FROM account " + 
-				"  LEFT JOIN line_item ON line_item.account_id = account.id " + 
-				"  LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
-				"WHERE account.organization_id = ?" + 
-				"  AND account.deleted = false " + 
-				"GROUP BY account.id " + 
-				"ORDER BY account.account_type_id, account.name",
+		query = " SELECT account.id AS accountId, account.name AS accountName, account.account_type_id AS accountTypeId, account_type.name AS accountTypeName, account.account_subtype_id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, " + 
+				"                   SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
+				"                   SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
+				"                 FROM account_type, account " + 
+				"                   LEFT JOIN line_item ON line_item.account_id = account.id " + 
+				"                   LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
+				"                   LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id " + 
+				"                 WHERE account.organization_id = ? " + 
+				"                    AND account.account_type_id = account_type.id     " + 
+				"                   AND account.deleted = false " + 
+				"                 GROUP BY account.id, account_type.name, account_subtype.name " + 
+				"                 ORDER BY account.account_type_id, account.name",
 		resultSetMapping = "accountBalanceDTOMapping"
 )
 @NamedNativeQuery( //takes an account ID as a parameter and returns an account with balances with that id 
 		name = "Account.getAccountBalanceById",
-		query = "SELECT account.id AS accountId, account.name AS accountName, account.account_type_id AS accountTypeId, account.account_subtype_id AS accountSubtypeId, " + 
-				"  SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
-				"  SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
-				"FROM account " + 
-				"  LEFT JOIN line_item ON line_item.account_id = account.id " + 
-				"  LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
-				"WHERE account.id = ?" + 
-				"GROUP BY account.id ",
+		query = " SELECT account.id AS accountId, account.name AS accountName, account.account_type_id AS accountTypeId, account_type.name AS accountTypeName, account.account_subtype_id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, " + 
+				"                   SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal, " + 
+				"                   SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
+				"                 FROM account_type, account " + 
+				"                   LEFT JOIN line_item ON line_item.account_id = account.id " + 
+				"                   LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
+				"                   LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id " + 
+				"                 WHERE account.id = ? " + 
+				"                    AND account.account_type_id = account_type.id     " + 
+				"                 GROUP BY account.id, account_type.name, account_subtype.name " + 
+				"                 ORDER BY account.account_type_id, account.name",
 		resultSetMapping = "accountBalanceDTOMapping"
 )
 

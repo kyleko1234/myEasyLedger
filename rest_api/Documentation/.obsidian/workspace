@@ -6,10 +6,11 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "AccountType/Contents/List All AccountTypes.md",
+            "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
             "mode": "source"
           }
         },
@@ -18,11 +19,10 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "AccountType/Contents/List All AccountTypes.md",
+            "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AccountType/Contents/List All AccountTypes.md",
+                "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +99,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+    "Account/Contents/Retrieve an AccountBalance.md",
+    "Account/Contents/Delete an Account.md",
     "AccountType/Contents/List All AccountTypes.md",
     "AccountType/AccountType.md",
     "Authentication/Authentication.md",
     "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
     "Authentication/Contents/Sign In.md",
     "Authentication/Contents/Sign Up.md",
-    "Untitled.md",
-    "Category/Contents/Delete a Category.md",
-    "Category/Contents/Update a Category.md",
-    "Category/Contents/Create a Category.md"
+    "Untitled.md"
   ]
 }

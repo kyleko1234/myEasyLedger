@@ -19,92 +19,84 @@ ___
 ```json
 [
     {
-        "accountId": 10,
-        "accountName": "Accounts Receivable",
+        "accountId": 3,
+        "accountName": "Checking Account #1",
         "accountTypeId": 1,
-        "accountSubtypeId": 9,
-        "debitTotal": 0,
-        "creditTotal": 0
+        "accountTypeName": "Assets",
+        "accountSubtypeId": 2,
+        "accountSubtypeName": "Bank Accounts",
+        "debitTotal": 20,
+        "creditTotal": 30
     },
     {
-        "accountId": 6,
-        "accountName": "Business Cash",
+        "accountId": 4,
+        "accountName": "Investment Account #1",
         "accountTypeId": 1,
-        "accountSubtypeId": 1,
+        "accountTypeName": "Assets",
+        "accountSubtypeId": 2,
+        "accountSubtypeName": "Bank Accounts",
         "debitTotal": 0,
         "creditTotal": 0
     },
     {
         "accountId": 1,
-        "accountName": "Personal Cash",
+        "accountName": "My Personal Wallet",
         "accountTypeId": 1,
+        "accountTypeName": "Assets",
         "accountSubtypeId": 1,
+        "accountSubtypeName": "Cash",
         "debitTotal": 0,
-        "creditTotal": 80.00
+        "creditTotal": 80
     },
     {
         "accountId": 2,
-        "accountName": "Personal Checking",
+        "accountName": "Savings Account #1",
         "accountTypeId": 1,
+        "accountTypeName": "Assets",
         "accountSubtypeId": 2,
-        "debitTotal": 30.00,
-        "creditTotal": 30.00
-    },
-    {
-        "accountId": 3,
-        "accountName": "Personal Venmo",
-        "accountTypeId": 1,
-        "accountSubtypeId": 4,
-        "debitTotal": 20.00,
-        "creditTotal": 30.00
-    },
-    {
-        "accountId": 9,
-        "accountName": "Accounts Payable",
-        "accountTypeId": 2,
-        "accountSubtypeId": 8,
-        "debitTotal": 0,
-        "creditTotal": 0
-    },
-    {
-        "accountId": 4,
-        "accountName": "Personal BOA Credit Card",
-        "accountTypeId": 2,
-        "accountSubtypeId": 7,
-        "debitTotal": 30.00,
-        "creditTotal": 30.00
-    },
-    {
-        "accountId": 11,
-        "accountName": "Business Equity",
-        "accountTypeId": 3,
-        "accountSubtypeId": null,
+        "accountSubtypeName": "Bank Accounts",
         "debitTotal": 0,
         "creditTotal": 0
     },
     {
         "accountId": 8,
-        "accountName": "Business Income",
+        "accountName": "Venmo Balance",
+        "accountTypeId": 1,
+        "accountTypeName": "Assets",
+        "accountSubtypeId": 4,
+        "accountSubtypeName": "Digital Payment Accounts",
+        "debitTotal": 20,
+        "creditTotal": 20
+    },
+    {
+        "accountId": 5,
+        "accountName": "Credit Card #1",
+        "accountTypeId": 2,
+        "accountTypeName": "Liabilities",
+        "accountSubtypeId": 3,
+        "accountSubtypeName": "Credit Cards",
+        "debitTotal": 30,
+        "creditTotal": 30
+    },
+    {
+        "accountId": 6,
+        "accountName": "Personal Income",
         "accountTypeId": 4,
+        "accountTypeName": "Income",
         "accountSubtypeId": null,
+        "accountSubtypeName": null,
         "debitTotal": 0,
         "creditTotal": 0
     },
     {
         "accountId": 7,
-        "accountName": "Business Expenses",
-        "accountTypeId": 5,
-        "accountSubtypeId": null,
-        "debitTotal": 0,
-        "creditTotal": 0
-    },
-    {
-        "accountId": 5,
         "accountName": "Personal Expenses",
         "accountTypeId": 5,
+        "accountTypeName": "Expenses",
         "accountSubtypeId": null,
-        "debitTotal": 100.00,
-        "creditTotal": 10.00
+        "accountSubtypeName": null,
+        "debitTotal": 100,
+        "creditTotal": 10
     }
 ]
 ```
