@@ -8,6 +8,20 @@ INSERT INTO role(name)
      2 | ROLE_ADMIN
 */
 
+INSERT INTO account_type(name)
+    VALUES 
+        ('Assets'),
+        ('Liabilities'),
+        ('Owner''s Equity'),
+        ('Income'),
+        ('Expenses');
+/** id | name
+     1 | 'Assets'
+     2 | 'Liabilities'
+     3 | 'Owner's Equity'
+     4 | 'Income'
+     5 | 'Expenses' **/
+
 INSERT INTO person(first_name, last_name, email, password, enabled)
     VALUES
         ('Kyle', 'Ko', 'kyleko1234@gmail.com', '$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG', TRUE); 
@@ -33,19 +47,7 @@ INSERT INTO organization_person(person_id, organization_id)
 /** person_id | organization_id
             1 | 1           **/
 
-INSERT INTO account_type(name)
-    VALUES 
-        ('Assets'),
-        ('Liabilities'),
-        ('Owner''s Equity'),
-        ('Income'),
-        ('Expenses');
-/** id | name
-     1 | 'Assets'
-     2 | 'Liabilities'
-     3 | 'Owner's Equity'
-     4 | 'Income'
-     5 | 'Expenses' **/
+
 
 INSERT INTO account_subtype(name, account_type_id, organization_id)
     VALUES

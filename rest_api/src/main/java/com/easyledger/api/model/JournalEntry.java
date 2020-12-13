@@ -82,6 +82,10 @@ public class JournalEntry {
 	@Column(name = "journal_entry_date")
 	private LocalDate journalEntryDate;
 	
+	@JsonIgnore
+	@Column(name = "year_month")
+	private Integer yearMonth; //yyyymm format of journalEntryDate. for faster sql queries when grouping monthly
+	
 	@Column(name = "description")
 	private String description;
 	
@@ -108,6 +112,7 @@ public class JournalEntry {
 
 	public JournalEntry(LocalDate journalEntryDate) {
 		this.journalEntryDate = journalEntryDate;
+		this.yearMonth = (journalEntryDate.getYear() * 100) + journalEntryDate.getMonthValue();
 		this.lineItems = new ArrayList<LineItem>();
 	}
 
@@ -126,8 +131,8 @@ public class JournalEntry {
 
 	public void setJournalEntryDate(LocalDate journalEntryDate) {
 		this.journalEntryDate = journalEntryDate;
+		this.yearMonth = (journalEntryDate.getYear() * 100) + journalEntryDate.getMonthValue();
 	}
-	
 
 	public String getDescription() {
 		return description;

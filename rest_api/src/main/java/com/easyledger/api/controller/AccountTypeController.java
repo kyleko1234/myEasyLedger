@@ -1,5 +1,6 @@
 package com.easyledger.api.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +17,7 @@ import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.AccountType;
 import com.easyledger.api.repository.AccountTypeRepository;
+import com.easyledger.api.viewmodel.AccountTypeSummaryViewModel;
 import com.easyledger.api.model.Category;
 
 @RestController
@@ -41,6 +43,31 @@ public class AccountTypeController {
         AccountType accountType = accountTypeRepo.findById(accountTypeId)
           .orElseThrow(() -> new ResourceNotFoundException("AccountType not found for this id :: " + accountTypeId));
         return ResponseEntity.ok().body(accountType);
+    }
+    
+    //get monthly account type summaries for organization with organziationId for the past (int months) months
+    @GetMapping("/organization/{id}/accountTypeSummary/monthly/{numberOfMonths}")
+    public List<AccountTypeSummaryViewModel> getMonthlyAccountTypeSummaries(@PathVariable(value = "id") Long organizationId, @PathVariable(value = "numberOfMonths") int months) {
+    	//get current year and month as ints
+    	LocalDate now = LocalDate.now();
+    	int year = now.getYear();
+    	int month = now.getMonthValue(); 
+    	
+    	//calculate how the yyyymm for the oldest returned data
+    	while (months > 0) {
+    		if (months >= month) {
+    			months -= month;
+    			month = 12;
+    			year--;
+    		}
+    		if (months < month) {
+    			month -= months;
+    			months = 0;
+    		}
+    	}
+    	
+    	int yearMonth = (year * 100) + month;
+    	return accountTypeRepo.getMonthlyAccountTypeSummaries(organizationId, yearMonth);
     }
    
 /*    @GetMapping("/accountType/{id}/accountSubtype")

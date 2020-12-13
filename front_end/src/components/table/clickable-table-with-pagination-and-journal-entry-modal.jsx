@@ -42,7 +42,7 @@ function TableOfJournalEntries({
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 2 }, // Pass our hoisted table state
+      initialState: { pageIndex: 0, pageSize: 10 }, // Pass our hoisted table state
       manualPagination: true, // Tell the usePagination
       // hook that we'll handle our own data fetching
       // This means we'll also have to provide our own
@@ -188,7 +188,7 @@ function TableOfJournalEntries({
     let missingAmount = false;
     let missingAccount = false;
     let missingCategory = false;
-    let accountTypesWithCategories = [3, 4, 5];
+    let accountTypesWithCategories = [4, 5];
     lineItemData.forEach(lineItem => { // check for missing fields within lineItems, and sum debits and credits.
       if (!lineItem.description) {
         missingDescription = true;
