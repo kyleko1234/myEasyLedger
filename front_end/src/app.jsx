@@ -446,7 +446,7 @@ class App extends React.Component {
 					{this.state.pageTopMenu && !this.state.isLoading && this.state.isAuthenticated &&(<TopMenu />)}
 					{this.state.pageContent && (<Content />)}
 					{this.state.pageFooter && !this.state.isLoading && this.state.isAuthenticated &&(<Footer />)}
-					{/** <FloatSubMenu /> */}
+					{this.state.pageSidebarMinify && <FloatSubMenu />}
 				</div>
 			</PageSettings.Provider>
 		)

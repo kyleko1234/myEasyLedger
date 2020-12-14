@@ -65,6 +65,7 @@ import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
 import Categories from './../pages/categories/categories.js';
 import RegistrationSuccessful from './../pages/user/registration-successful.js';
 import Logout from './../pages/user/logout.js'
+import Dashboard from './../pages/dashboard/dashboard.js'
 
 const routes = [
   {
@@ -374,11 +375,6 @@ const routes = [
     component: ChartOfAccounts,
   },
   {
-    path: '/categories',
-    title: 'Categories',
-    component: Categories,
-  },
-  {
     path: '/user/registration-successful',
     title: 'Registration Successful!',
     component: RegistrationSuccessful
@@ -387,6 +383,12 @@ const routes = [
     path: '/user/logout',
     title: 'Log out',
     component: Logout
+  },
+  {
+    path: '/dashboard',
+    exact: true,
+    title: 'Dashboard',
+    component: Dashboard
   }
 
 ];

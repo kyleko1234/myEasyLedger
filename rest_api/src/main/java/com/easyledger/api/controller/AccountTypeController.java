@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easyledger.api.dto.AccountSubtypeDTO;
 import com.easyledger.api.dto.CategoryDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.AccountType;
 import com.easyledger.api.repository.AccountTypeRepository;
+import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.viewmodel.AccountTypeSummaryViewModel;
 import com.easyledger.api.model.Category;
 
@@ -26,10 +29,13 @@ import com.easyledger.api.model.Category;
 public class AccountTypeController {
 
 	private AccountTypeRepository accountTypeRepo;
+	
+	private AuthorizationService authorizationService;
 
-    public AccountTypeController(AccountTypeRepository accountTypeRepo) {
+    public AccountTypeController(AccountTypeRepository accountTypeRepo, AuthorizationService authorizationService) {
 		super();
 		this.accountTypeRepo = accountTypeRepo;
+		this.authorizationService = authorizationService;
 	}
 
 	@GetMapping("/accountType")
@@ -47,7 +53,12 @@ public class AccountTypeController {
     
     //get monthly account type summaries for organization with organziationId for the past (int months) months
     @GetMapping("/organization/{id}/accountTypeSummary/monthly/{numberOfMonths}")
-    public List<AccountTypeSummaryViewModel> getMonthlyAccountTypeSummaries(@PathVariable(value = "id") Long organizationId, @PathVariable(value = "numberOfMonths") int months) {
+    public List<AccountTypeSummaryViewModel> getMonthlyAccountTypeSummaries(@PathVariable(value = "id") Long organizationId, @PathVariable(value = "numberOfMonths") int months,
+    		Authentication authentication) throws UnauthorizedException {
+    	
+    	//check authorization
+    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	
     	//get current year and month as ints
     	LocalDate now = LocalDate.now();
     	int year = now.getYear();

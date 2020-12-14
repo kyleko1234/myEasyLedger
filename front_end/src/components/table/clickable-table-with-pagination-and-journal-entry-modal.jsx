@@ -305,7 +305,7 @@ function TableOfJournalEntries({
         </span>
         <span>
           {hasAddEntryButton ? 
-            <button className="btn btn-green align-self-center" onClick={() => openEditorForNewEntry()}>
+            <button className="btn btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
               <i className="ion ion-md-add fa-fw fa-lg"></i>Add an entry
             </button> : null}
         </span>
