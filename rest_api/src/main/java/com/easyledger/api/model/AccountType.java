@@ -48,7 +48,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"        AND journal_entry.year_month >= :yearMonth " + 
 				"WHERE account.account_type_id = account_type.id AND account.deleted = false AND journal_entry.deleted = false AND account.organization_id = :organizationId " + 
 				"GROUP BY account_type.id, journal_entry.year_month  " + 
-				"ORDER BY account_type.id DESC, journal_entry.year_month DESC",
+				"ORDER BY journal_entry.year_month ASC, account_type.id DESC",
 		resultSetMapping = "accountTypeSummaryViewModelMapping"
 )
 

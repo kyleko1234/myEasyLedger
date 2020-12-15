@@ -1,9 +1,9 @@
 ### Retrieve Account Type Summaries for An Organization for the Past N Months
-Endpoint: GET `/organization/{id}/accountTypeSummary/monthly/{numberOfMonths}`
+Endpoint: GET `/organization/{id}/accountTypeSummary/monthly/{monthsAgo}`
 
 Authorization: Requesting user must belong to the specified organization.
 
-Returns a list of monthly account type balance summaries for organization {id} for the past {numberOfMonths} months (i.e. if the current date is 2020-12-12 and we query for 20 months, monthly summaries will be returned for all account types since 2020-12 minus 20 months = 2019-04). yearMonth in the returned objects are the year and month for the account type which the summary object represents, in yyyymm format.
+Returns a list of monthly account type balance summaries for organization {id} for the past {monthsAgo+} months (i.e. if the current date is 2020-12-12 and we query for 20 monthsAgo, monthly summaries will be returned for all account types since 2020-12 minus 20 months = 2019-04. **This gives us 21 months of data.**). yearMonth in the returned objects are the year and month for the account type which the summary object represents, in yyyymm format. Results are ordered by yearMonth ascending, then AccountTypeId descending.
 
 ___
 
