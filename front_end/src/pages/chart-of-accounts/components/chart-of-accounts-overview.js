@@ -93,7 +93,7 @@ class ChartOfAccountsOverview extends React.Component {
 
                 <h1 className="page-header">Chart of Accounts </h1>
 
-                <div className="rounded bg-light" style={{ backgroundColor: "#e4e4e4", border: "0.5px solid silver" }}>
+                <div className="rounded bg-light" style={{ border: "0.5px solid silver" }}>
                     <Nav tabs className="d-flex justify-content-between px-3"> {/* Strangely, using a forEach loop to save space here causes React to refuse to render tabs */}
                         <div className="row">
                             <NavItem>
@@ -150,7 +150,7 @@ class ChartOfAccountsOverview extends React.Component {
                                         <div key={accountSubtype.accountSubtypeId}>
                                                 <Link
                                                     to={`${this.props.parentPath}/accountSubtypeDetails/${accountSubtype.accountSubtypeId}`} 
-                                                    className="row bg-light py-1 px-2 border text-decoration-none"
+                                                    className="row rounded bg-light py-1 px-2 border text-decoration-none"
                                                 >
                                                     <h5 className="my-0">{accountSubtype.accountSubtypeName}</h5>
                                                 </Link>
@@ -170,7 +170,6 @@ class ChartOfAccountsOverview extends React.Component {
                                                                     </span>
                                                                     {/* For each account in this subtype, render a row. Each row is clickable, and includes the account name and the account balance (red if negative asset balance, black if positive)
                                                                         Clicking the row will send the user to the account-details component, where they can view and edit details for the selected account. */}
-                                
                                                                 </Link>
                                                         )
                                                     })}
@@ -199,7 +198,7 @@ class ChartOfAccountsOverview extends React.Component {
                                         <div key={accountSubtype.accountSubtypeId}>
                                                 <Link
                                                     to={`${this.props.parentPath}/accountSubtypeDetails/${accountSubtype.accountSubtypeId}`} 
-                                                    className="row bg-light py-1 px-2 border text-decoration-none"
+                                                    className="row rounded bg-light py-1 px-2 border text-decoration-none"
                                                 >
                                                     <h5 className="my-0">{accountSubtype.accountSubtypeName}</h5>
                                                 </Link>
@@ -248,7 +247,7 @@ class ChartOfAccountsOverview extends React.Component {
                                         <div key={accountSubtype.accountSubtypeId}>
                                                 <Link
                                                     to={`${this.props.parentPath}/accountSubtypeDetails/${accountSubtype.accountSubtypeId}`} 
-                                                    className="row bg-light py-1 px-2 border text-decoration-none"
+                                                    className="row rounded bg-light py-1 px-2 border text-decoration-none"
                                                 >
                                                     <h5 className="my-0">{accountSubtype.accountSubtypeName}</h5>
                                                 </Link>
@@ -297,7 +296,7 @@ class ChartOfAccountsOverview extends React.Component {
                                         <div key={account.accountId}>
                                                 <Link
                                                     to={`${this.props.parentPath}/accountDetails/${account.accountId}`} 
-                                                    className="row bg-light py-1 px-2 border text-decoration-none"
+                                                    className="row rounded bg-light py-1 px-2 border text-decoration-none"
                                                 >
                                                     <h5 className="my-0">{account.accountName}</h5>
                                                 </Link>
@@ -346,7 +345,7 @@ class ChartOfAccountsOverview extends React.Component {
                                         <div key={account.accountId}>
                                                 <Link
                                                     to={`${this.props.parentPath}/accountDetails/${account.accountId}`} 
-                                                    className="row bg-light py-1 px-2 border text-decoration-none"
+                                                    className="row rounded bg-light py-1 px-2 border text-decoration-none"
                                                 >
                                                     <h5 className="my-0">{account.accountName}</h5>
                                                 </Link>

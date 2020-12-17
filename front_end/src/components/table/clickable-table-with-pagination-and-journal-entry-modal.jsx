@@ -334,7 +334,7 @@ function TableOfJournalEntries({
               {page.map((row, i) => {
                 prepareRow(row)
                 return (
-                  <tr style={{ cursor: "pointer" }} onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
+                  <tr className="cursor-pointer" onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
                     {row.cells.map(cell => {
                       return <td {...cell.getCellProps()}>{formatCellValue(cell)}</td>
                     })}

@@ -47,7 +47,7 @@ function BalanceSummary() {
                                 <tbody>
                                     {assetAndLiabilityAccounts.map(account => {
                                         return(
-                                            <tr key={account.accountId} onClick={() => history.push(`/chartofaccounts/accountDetails/${account.accountId}`)}>
+                                            <tr key={account.accountId} className="cursor-pointer" onClick={() => history.push(`/chartofaccounts/accountDetails/${account.accountId}`)}>
                                                 <td>
                                                     {account.accountName}
                                                 </td>

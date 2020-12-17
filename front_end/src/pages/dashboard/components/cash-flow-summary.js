@@ -128,8 +128,8 @@ function CashFlowSummary() {
             }, {
                 label: 'Expenses',
                 borderWidth: 2,
-                borderColor: '#2d353c',
-                backgroundColor: 'rgba(45, 53, 60, 0.3)',
+                borderColor: '#8f103c',
+                backgroundColor: 'rgba(143, 16, 60, 0.3)',
                 data: expenseData
             }]
         },
