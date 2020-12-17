@@ -74,16 +74,16 @@ function CashFlowSummary() {
         let monthString = ''
         switch (month) {
             case 1:
-                monthString = " January";
+                monthString = " Jan";
                 break;
             case 2:
-                monthString = " February";
+                monthString = " Feb";
                 break;
             case 3:
-                monthString = " March";
+                monthString = " Mar";
                 break;
             case 4:
-                monthString = " April";
+                monthString = " Apr";
                 break;
             case 5:
                 monthString = " May";
@@ -95,19 +95,19 @@ function CashFlowSummary() {
                 monthString = " July";
                 break;
             case 8:
-                monthString = " August";
+                monthString = " Aug";
                 break;
             case 9:
-                monthString = " September";
+                monthString = " Sept";
                 break;
             case 10:
-                monthString = " October";
+                monthString = " Oct";
                 break;
             case 11:
-                monthString = " November";
+                monthString = " Nov";
                 break;
             case 12:
-                monthString = " December";
+                monthString = " Dec";
                 break; 
             default:
                 break;                                                                                                                                                                                                                           

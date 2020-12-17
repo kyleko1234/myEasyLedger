@@ -20,7 +20,8 @@ function Dashboard() {
                     <CashFlowSummary />}
                 </div>
                 <div className="col-xl-4 col-lg-6">
-                    <BalanceSummary />
+                    {appContext.isLoading? <div>Loading...</div> : 
+                    <BalanceSummary />}
                 </div>
             </div>
 		</div>
