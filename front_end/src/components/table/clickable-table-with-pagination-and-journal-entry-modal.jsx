@@ -298,72 +298,72 @@ function TableOfJournalEntries({
   // Render the UI for your table
   return (
     <>
-      <div style={{borderRadius: "5px", borderStyle: "solid", borderWidth:"0.5px", borderColor: "DarkGray"}} className="bg-light">
-      <div className="d-flex justify-content-between px-2 py-2" style={{borderBottom: "solid 1px silver"}}>
-        <span className="h5 align-self-center py-1">
-          {tableTitle}
-        </span>
-        <span>
-          {hasAddEntryButton ? 
-            <button className="btn btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
-              <i className="ion ion-md-add fa-fw fa-lg"></i>Add an entry
-            </button> : null}
-        </span>
-      </div>
-      <div className="table-responsive bg-white">
-        <table className="table table-hover m-b-0 text-inverse" {...getTableProps()}>
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th style={{width: column.width}}{...column.getHeaderProps()}>
-                    {column.render('Header')}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
-                        : ''}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row)
-              return (
-                <tr style={{ cursor: "pointer" }} onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
-                  {row.cells.map(cell => {
-                    return <td {...cell.getCellProps()}>{formatCellValue(cell)}</td>
-                  })}
+      <div className="widget widget-rounded m-b-30">
+        <div className="widget-header d-flex justify-content-between bg-light">
+          <span className="h5 my-2 mx-2 align-self-center">
+            {tableTitle}
+          </span>
+          <span>
+            {hasAddEntryButton ? 
+              <button className="btn btn-sm mx-2 my-2 btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
+                <i className="ion ion-md-add fa-fw fa-lg"></i>Add an entry
+              </button> : null}
+          </span>
+        </div>
+        <div className="table-responsive bg-white border-top">
+          <table className="table table-hover m-b-0 text-inverse" {...getTableProps()}>
+            <thead>
+              {headerGroups.map(headerGroup => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map(column => (
+                    <th style={{width: column.width}}{...column.getHeaderProps()}>
+                      {column.render('Header')}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? ' 🔽'
+                            : ' 🔼'
+                          : ''}
+                      </span>
+                    </th>
+                  ))}
                 </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-      <div className="d-flex justify-content-between px-1 py-2" style={{borderTop: "solid 1px silver"}}>
-        <span style={{ width: "25ch" }}>
-          <ul className="pager align-self-center m-t-0 m-b-0">
-            <li className={canPreviousPage ? "previous" : "previous disabled"}>
-              {canPreviousPage ? <Link onClick={() => previousPage()} to="/journals">&larr; Newer</Link> : null}
-            </li>
-          </ul>
-        </span>
-        <span className="align-self-center">
-          Showing {((pageIndex * page.length) + 1) + "-" + ((pageIndex + 1) * page.length)} of {elementCount}{' '}
-                    results
-        </span>
-        <span>
-          <ul className="pager align-self-center m-t-0 m-b-0" style={{ width: "25ch" }}>
-            <li className={canNextPage ? "next" : "next disabled"}>
-              {canNextPage ? <Link onClick={() => nextPage()} to="/journals">Older &rarr;</Link> : null}
-            </li>
-          </ul>
-        </span>
-      </div>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row, i) => {
+                prepareRow(row)
+                return (
+                  <tr style={{ cursor: "pointer" }} onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
+                    {row.cells.map(cell => {
+                      return <td {...cell.getCellProps()}>{formatCellValue(cell)}</td>
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div className="d-flex justify-content-between px-1 py-2 border-top bg-light" >
+          <span style={{ width: "25ch" }}>
+            <ul className="pager align-self-center m-t-0 m-b-0">
+              <li className={canPreviousPage ? "previous" : "previous disabled"}>
+                {canPreviousPage ? <Link onClick={() => previousPage()} to="/journals">&larr; Newer</Link> : null}
+              </li>
+            </ul>
+          </span>
+          <span className="align-self-center">
+            Showing {((pageIndex * page.length) + 1) + "-" + ((pageIndex + 1) * page.length)} of {elementCount}{' '}
+                      results
+          </span>
+          <span>
+            <ul className="pager align-self-center m-t-0 m-b-0" style={{ width: "25ch" }}>
+              <li className={canNextPage ? "next" : "next disabled"}>
+                {canNextPage ? <Link onClick={() => nextPage()} to="/journals">Older &rarr;</Link> : null}
+              </li>
+            </ul>
+          </span>
+        </div>
       </div>
       {/* Modal that opens when a row in the table is clicked */}
       <Modal
