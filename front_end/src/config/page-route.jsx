@@ -71,7 +71,7 @@ const routes = [
   {
     path: '/',
     exact: true,
-    component: () => <Redirect to='/dashboard/v2'/>
+    component: () => <Redirect to='/dashboard'/>
   },
   {
     path: '/dashboard/v1',

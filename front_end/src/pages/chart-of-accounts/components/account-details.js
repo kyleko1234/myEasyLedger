@@ -98,11 +98,12 @@ function AccountDetails(props) {
 
     const refreshData = () => { //call this function to grab updated data from API when needed
         axios.get(`${API_BASE_URL}/account/${selectedAccountId}/accountBalance`).then(response => {
-            let accountTypesWithCategories = [4, 5]
-            if (accountTypesWithCategories.includes(selectedAccount.accountTypeId)) {
+            let account = response.data;
+            let accountTypesWithCategories = [4, 5];
+            if (accountTypesWithCategories.includes(account.accountTypeId)) {
                 setHasCategories(true);
             } 
-            setSelectedAccount(selectedAccount);
+            setSelectedAccount(account);
         })
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountSubtype`).then(response => {
             setAccountSubtypes(response.data); 
