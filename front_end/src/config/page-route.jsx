@@ -64,8 +64,9 @@ import Journals from './../pages/journals/journals.js';
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
 import Categories from './../pages/categories/categories.js';
 import RegistrationSuccessful from './../pages/user/registration-successful.js';
-import Logout from './../pages/user/logout.js'
-import Dashboard from './../pages/dashboard/dashboard.js'
+import Logout from './../pages/user/logout.js';
+import Dashboard from './../pages/dashboard/dashboard.js';
+import Reports from './../pages/reports/reports.js';
 
 const routes = [
   {
@@ -389,6 +390,12 @@ const routes = [
     exact: true,
     title: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/reports',
+    exact: true,
+    title: 'Reports',
+    component: Reports
   }
 
 ];

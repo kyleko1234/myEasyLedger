@@ -73,7 +73,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
               {headerGroup.headers.map(column => (
                 // Add the sorting props to control sorting. For this example
                 // we can add them into the header props
-                <th {...column.getHeaderProps()} style={{width: column.width}}>
+                <th {...column.getHeaderProps()} style={{width: column.width}} className={column.Header == "Debit" || column.Header == "Credit" ? "text-right" : ""}>
                   {column.render('Header')}
                 </th>
               ))}
@@ -88,7 +88,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
                 <tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
                     return (
-                      <td {...cell.getCellProps()}>{formatCell(cell)}</td>
+                      <td className={cell.column.Header == "Debit" || cell.column.Header == "Credit" ? "text-right" : ""} {...cell.getCellProps()}>{formatCell(cell)}</td>
                     )
                   })}
                 </tr>
@@ -100,8 +100,12 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
             <td><strong>Total</strong></td>
             <td></td>
             <td></td>
-            <td><strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
-            <td><strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
+            <td className="text-right">
+              <strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</strong>
+            </td>
+            <td className="text-right">
+              <strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</strong>
+            </td>
           </tr>
         </tfoot>
       </table>

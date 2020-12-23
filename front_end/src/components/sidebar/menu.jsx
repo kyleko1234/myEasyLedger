@@ -1,12 +1,5 @@
 const Menu = [
-  { path: '/dashboard', icon: 'fa fa-th', title: 'Dashboard',
-    children: [
-      { path: '/dashboard/v1', title: 'Dashboard v1' },
-      { path: '/dashboard/v2', title: 'Dashboard v2' },
-      { path: '/dashboard/v3', title: 'Dashboard v3' },
-      { path: '/dashboard', title: 'Dashboard' }
-    ]
-  },
+  { path: '/dashboard', icon: 'fa fa-th', title: 'Dashboard'},
   /*{ path: '/email', icon: 'fa fa-hdd', title: 'Email', badge: '10',
     children: [
       { path: '/email/inbox', title: 'Inbox' },
@@ -44,7 +37,8 @@ const Menu = [
     ]
   },*/
   { path: '/journals', icon: 'fa fa-list-alt', title: 'Journals' },
-  { path: '/chartofaccounts/', icon: 'fa fa-list-alt', title: 'Chart Of Accounts' },
+  { path: '/chartofaccounts', icon: 'fa fa-columns', title: 'Chart Of Accounts' },
+  { path: '/reports', icon: 'fa fa-file-alt', title: 'Reports' },
 /*  { path: '/frontend', icon: 'fa fa-star', title: 'FrontEnd',
     children: [
       { path: '/frontend/one-page-parallax', title: 'One Page Parallax' },
@@ -58,7 +52,7 @@ const Menu = [
       { path: '/email-template/system', title: 'System Template' },
       { path: '/email-template/newsletter', title: 'Newsletter Template' }
     ]
-  }, */
+  }, 
   { path: '/chart', icon: 'fa fa-chart-pie', title: 'Chart', label: 'NEW',
     children: [
       { path: '/chart/js', title: 'Chart JS' },
@@ -66,7 +60,6 @@ const Menu = [
       { path: '/chart/apex', title: 'Apex Chart', highlight: true }
     ]
   },
-  /*
   { path: '/calendar', icon: 'fa fa-calendar', title: 'Calendar' },
   { path: '/map', icon: 'fa fa-map', title: 'Map' },
   { path: '/gallery', icon: 'fa fa-image', title: 'Gallery' },

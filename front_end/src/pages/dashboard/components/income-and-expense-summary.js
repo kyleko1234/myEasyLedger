@@ -4,13 +4,13 @@ import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
 
-function CashFlowSummary() {
+function IncomeAndExpenseSummary() {
     const appContext = React.useContext(PageSettings);
     const [loading, setLoading] = React.useState(true);
     const [labels, setLabels] = React.useState([]);
     const [incomeData, setIncomeData] = React.useState([]);
     const [expenseData, setExpenseData] = React.useState([]);
-    const [numberOfMonths, setNumberOfMonths] = React.useState(9);
+    const [numberOfMonths, setNumberOfMonths] = React.useState(12);
 
     //fetch data on component mount
     React.useEffect(() => {
@@ -148,7 +148,7 @@ function CashFlowSummary() {
         <div className="card border-0 mb-3">
             <div className="card-body">
                 <div className="mb-3">
-                    <b>CASH FLOW SUMMARY</b>
+                    <b>INCOME AND EXPENSES</b>
                 </div>
                 {loading? <div>Loading...</div> : 
                     <div style={{ height: '500px'}}>
@@ -160,4 +160,4 @@ function CashFlowSummary() {
     )
 }
 
-export default CashFlowSummary;
+export default IncomeAndExpenseSummary;

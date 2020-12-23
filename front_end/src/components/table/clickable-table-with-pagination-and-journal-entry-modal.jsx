@@ -116,6 +116,17 @@ function TableOfJournalEntries({
       creditAmount: 0,
       categoryName: "",
       categoryId: ""
+    }, 
+    {
+      lineItemId: "",
+      accountName: "",
+      accountId: "",
+      accountTypeId: "",
+      description: "",
+      debitAmount: 0,
+      creditAmount: 0,
+      categoryName: "",
+      categoryId: ""
     }])
     toggleEditMode();
     setCreateMode(true);
@@ -316,7 +327,7 @@ function TableOfJournalEntries({
               {headerGroups.map(headerGroup => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
-                    <th style={{width: column.width}}{...column.getHeaderProps()}>
+                    <th style={{width: column.width}} className={column.Header == "Debit" || column.Header == "Credit" ? "text-right" : ""} {...column.getHeaderProps()}>
                       {column.render('Header')}
                       <span>
                         {column.isSorted
@@ -336,7 +347,7 @@ function TableOfJournalEntries({
                 return (
                   <tr className="cursor-pointer" onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
                     {row.cells.map(cell => {
-                      return <td {...cell.getCellProps()}>{formatCellValue(cell)}</td>
+                      return <td className={cell.column.Header == "Debit" || cell.column.Header == "Credit" ? "text-right" : ""} {...cell.getCellProps()}> {formatCellValue(cell)} </td>
                     })}
                   </tr>
                 )

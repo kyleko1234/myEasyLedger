@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import BalanceSummary from './components/balance-summary';
-import CashFlowSummary from './components/cash-flow-summary';
+import IncomeAndExpenseSummary from './components/income-and-expense-summary';
 import { PageSettings } from '../../config/page-settings';
 
 function Dashboard() {
@@ -17,7 +17,7 @@ function Dashboard() {
             <div className="row">
                 <div className="col-xl-8 col-lg-6">
                     {appContext.isLoading? <div>Loading...</div> :
-                    <CashFlowSummary />}
+                    <IncomeAndExpenseSummary />}
                 </div>
                 <div className="col-xl-4 col-lg-6">
                     {appContext.isLoading? <div>Loading...</div> : 
