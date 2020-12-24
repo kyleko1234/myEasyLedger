@@ -1,5 +1,6 @@
 package com.easyledger.api.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -105,6 +107,23 @@ public class AccountController {
     	throws UnauthorizedException {
     	authorizationService.authorizeByOrganizationId(authentication, organizationId);
     	return accountRepo.getAllAccountBalancesForOrganization(organizationId);
+    }
+    
+    @GetMapping("/organization/{id}/accountBalance/{startDate}/{endDate}")
+    public List<AccountBalanceDTO> getAllAccountBalancesForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId, 
+    		@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
+    		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication)
+    	throws UnauthorizedException {
+    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	return accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
+    }
+    
+    @GetMapping("/organization/{id}/accountBalance/{endDate}")
+    public List<AccountBalanceDTO> getAllAccountBalancesForOrganizationUpToDate(@PathVariable(value = "id") Long organizationId, 
+    		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication)
+    	throws UnauthorizedException {
+    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	return accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, endDate);
     }
 
     

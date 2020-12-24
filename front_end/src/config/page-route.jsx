@@ -67,6 +67,8 @@ import RegistrationSuccessful from './../pages/user/registration-successful.js';
 import Logout from './../pages/user/logout.js';
 import Dashboard from './../pages/dashboard/dashboard.js';
 import Reports from './../pages/reports/reports.js';
+import IncomeStatementReport from '../pages/reports/income-statement-report.js';
+import BalanceSheetReport from '../pages/reports/balance-sheet-report.js';
 
 const routes = [
   {
@@ -396,6 +398,18 @@ const routes = [
     exact: true,
     title: 'Reports',
     component: Reports
+  },
+  {
+    path: '/reports/balance-sheet',
+    exact: true,
+    title: 'Balance Sheet Report',
+    component: BalanceSheetReport
+  },
+  {
+    path: '/reports/income-statement',
+    exact: true,
+    title: 'Income Statement Report',
+    component: IncomeStatementReport
   }
 
 ];

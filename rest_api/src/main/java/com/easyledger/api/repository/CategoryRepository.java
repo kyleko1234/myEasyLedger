@@ -1,5 +1,6 @@
 package com.easyledger.api.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +19,10 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 	
 	@Query(nativeQuery = true)
 	public List<CategoryBalanceDTO> getAllCategoryBalancesForOrganization(Long organizationId);
+	
+	@Query(nativeQuery = true)
+	public List<CategoryBalanceDTO> getAllCategoryBalancesForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate);
+	
 	
 	@Query(nativeQuery = true)
 	public CategoryBalanceDTO getCategoryBalanceById(Long categoryId);

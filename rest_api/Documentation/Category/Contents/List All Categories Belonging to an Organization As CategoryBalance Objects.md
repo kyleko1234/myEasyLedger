@@ -1,9 +1,15 @@
 ### List All Categories Belonging to an Organization As CategoryBalance Objects
-Endpoint: `GET /organization/{id}/categoryBalance/`
+Endpoints:
+- `GET /organization/{id}/categoryBalance/`
+- `GET /organization/{id}/categoryBalance/{startDate}/{endDate}`
 
 Authorization: User must belong to the specified organization.
 
 Retrieves all undeleted categories for the specified organization id as CategoryBalance objects. CategoryBalance objects are Category objects, but additionally contain totals of all credit and debit line-items within the category. The returned list of CategoryBalance objects is ordered alphabetically.
+
+Requires either zero or two date parameters. When zero parameters are given, the debitTotal and creditTotal fields of the returned CategoryBalance objects will encompass all undeleted LineItems. When two date parameters are given, the returned objects will encompass all LineItems within the given date range, inclusive.
+
+If the two date parameters are the same, the returned objects will only encompass that date. If the startDate is later than the endDate, all CategoryBalance objects will have credit and debit totals of 0.
 ___
 
 #### Request Body Parameters

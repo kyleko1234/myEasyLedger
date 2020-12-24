@@ -83,6 +83,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"                                 ORDER BY category.name",
 		resultSetMapping = "categoryBalanceDTOMapping"
 )
+@NamedNativeQuery( //retrieves all undeleted categories for an organization when given an organization id within a certain date range
+		name = "Category.getAllCategoryBalancesForOrganizationBetweenDates",
+		query = "  SELECT category.id AS categoryId, category.name AS categoryName, category.account_id AS accountId, account.name AS accountName, account.account_type_id AS accountTypeId, account_type.name AS accountTypeName,         " + 
+				"                                                                    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS debitTotal,           " + 
+				"                                                                    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS creditTotal           " + 
+				"                                                                  FROM category            " + 
+				"                                                                    LEFT JOIN line_item ON line_item.category_id = category.id            " + 
+				"                                                                    LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id,           " + 
+				"                                                                    account, account_type      " + 
+				"                                                                  WHERE account.organization_id = :organizationId     " + 
+				"                                                                    AND category.account_id = account.id      " + 
+				"                                                                    AND account_type.id = account.account_type_id       " + 
+				"                                                                    AND category.deleted = false           " + 
+				"                                                                  GROUP BY category.id, account.account_type_id, account.name, account_type.name          " + 
+				"                                                                  ORDER BY category.name",
+		resultSetMapping = "categoryBalanceDTOMapping"
+)
 @NamedNativeQuery( //retrieves all a category with balance info when given a category id. Uses left join in order to allow for retrieval of categories with no undeleted line items.
 		name = "Category.getCategoryBalanceById",
 		query = " SELECT category.id AS categoryId, category.name AS categoryName, category.account_id AS accountId, account.name AS accountName, account.account_type_id AS accountTypeId, account_type.name AS accountTypeName,   " + 

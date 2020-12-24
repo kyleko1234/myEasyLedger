@@ -1,5 +1,6 @@
 package com.easyledger.api.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -90,6 +92,16 @@ public class CategoryController {
     	throws UnauthorizedException {
     	authorizationService.authorizeByOrganizationId(authentication, organizationId);
     	return categoryRepo.getAllCategoryBalancesForOrganization(organizationId);
+    }
+    
+    @GetMapping("/organization/{id}/categoryBalance/{startDate}/{endDate}")
+    public List<CategoryBalanceDTO> getAllCategoryBalancesForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId, 
+    		@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
+    		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+    		Authentication authentication) 
+    	throws UnauthorizedException {
+    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	return categoryRepo.getAllCategoryBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
     }
     
     @GetMapping("/category/{id}/categoryBalance")

@@ -44,9 +44,11 @@ Prefix all endpoints with `http://{host}/v0.1/`
 <br/><br/>
 - [[List All Accounts|GET /account]]
 - [[Retrieve an Account| GET /account/{id}]]
-- [[Retrieve an AccountBalance|GET /account/{id}/accountBalance]]**
-- [[List All Accounts Belonging to an Organization|GET /organization/{id}/account]]*
-- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance]]*
+- [[Retrieve an AccountBalance|GET /account/{id}/accountBalance]]
+- [[List All Accounts Belonging to an Organization|GET /organization/{id}/account]]
+- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance]]
+- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance/{startDate}]]
+- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance/{startDate}/{endDate}]]
 - [[Update an Account|PUT /account/{id}]]**
 - [[Create an Account|POST /account]]**
 - [[Delete an Account|DELETE /account/{id}]]**
@@ -66,6 +68,7 @@ Prefix all endpoints with `http://{host}/v0.1/`
 - [[Retrieve a CategoryBalance| GET /category/{id}/categoryBalance]]**
 - [[List All Categories Belonging to an Organization|GET /organization/{id}/category]]*
 - [[List All Categories Belonging to an Organization As CategoryBalance Objects| GET /organization/{id}/categoryBalance]]*
+- [[List All Categories Belonging to an Organization As CategoryBalance Objects| GET /organization/{id}/categoryBalance/{startDate}/{endDate}]]
 - [[Create a Category|POST /category]]**
 - [[Update a Category|PUT /category/{id}]]**
 - [[Delete a Category|DELETE /category/{id}]]**
