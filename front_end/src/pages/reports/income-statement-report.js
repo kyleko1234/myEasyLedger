@@ -15,7 +15,7 @@ function IncomeStatementReport() {
             </ol>
             <h1 className="page-header">Income Statement Report </h1>
             <div>
-                {appContext.isLoading? "Loading..." : <ReportRender title="Income Statement" />}
+                {appContext.isLoading? "Loading..." : <ReportRender title="Income Statement" dateRange={true}/>}
             </div>
 		</div>
     )

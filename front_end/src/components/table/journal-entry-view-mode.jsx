@@ -97,14 +97,14 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
         </tbody>
         <tfoot>
           <tr>
-            <td><strong>Total</strong></td>
+            <td>Total</td>
             <td></td>
             <td></td>
             <td className="text-right">
-              <strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</strong>
+              {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}
             </td>
             <td className="text-right">
-              <strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</strong>
+              {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}
             </td>
           </tr>
         </tfoot>

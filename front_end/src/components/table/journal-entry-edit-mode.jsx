@@ -273,11 +273,11 @@ function JournalEntryEditMode({
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td><strong>Total</strong></td>
+                            <td>Total</td>
                             <td></td>
                             <td></td>
-                            <td><strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</strong></td>
-                            <td><strong>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</strong></td>
+                            <td>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</td>
+                            <td>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</td>
                             <td></td>
                         </tr>
                     </tfoot>

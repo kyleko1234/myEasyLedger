@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import {API_BASE_URL} from '../../../utils/constants.js';
-import {PageSettings} from '../../../config/page-settings';
+import { API_BASE_URL } from '../../../utils/constants.js';
+import { PageSettings } from '../../../config/page-settings';
 import { useHistory } from "react-router-dom";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -19,7 +19,7 @@ function BalanceSummary() {
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountBalance`).then(response => {
             if (response.data) {
                 let filteredAccounts = response.data.filter(accountBalance => accountBalance.accountTypeId == 1 || accountBalance.accountTypeId == 2);
-                filteredAccounts.forEach(account => (account.amount = (account.accountTypeId == 1? 
+                filteredAccounts.forEach(account => (account.amount = (account.accountTypeId == 1 ?
                     account.debitTotal - account.creditTotal : account.creditTotal - account.debitTotal)));
                 setAssetAndLiabilityAccounts(filteredAccounts);
             }
@@ -30,37 +30,35 @@ function BalanceSummary() {
 
 
     return (
-        <div className="card border-0 mb-3">
-            <div className="card-body">
-                <div className="mb-3">
-                    <b>BALANCE SUMMARY</b>
-                </div>
-                <div style={{ height: '500px'}} className="overflow-auto">
-                    {loading? <div>Loading...</div> :
-                            <table className = 'table table-hover'>
-                                <thead>
-                                    <tr>
-                                        <th>Account</th>
-                                        <th className="text-right">Balance</th>
+        <div className="widget widget-rounded mb-3">
+            <div className="widget-header bg-light border-bottom">
+                <h4 className="widget-header-title">Balance Summary</h4>
+            </div>
+            <div className="overflow-auto px-2" style={{ height: '500px' }}>
+                {loading ? <div>Loading...</div> :
+                    <table className='table table-hover'>
+                        <thead>
+                            <tr>
+                                <th>Account</th>
+                                <th className="text-right">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {assetAndLiabilityAccounts.map(account => {
+                                return (
+                                    <tr key={account.accountId} className="cursor-pointer" onClick={() => history.push(`/chartofaccounts/accountDetails/${account.accountId}`)}>
+                                        <td>
+                                            {account.accountName}
+                                        </td>
+                                        <td className={"text-right " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
+                                            {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(account.amount)}
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {assetAndLiabilityAccounts.map(account => {
-                                        return(
-                                            <tr key={account.accountId} className="cursor-pointer" onClick={() => history.push(`/chartofaccounts/accountDetails/${account.accountId}`)}>
-                                                <td>
-                                                    {account.accountName}
-                                                </td>
-                                                <td className={"text-right " + (account.creditTotal > account.debitTotal? "text-red": "" )}>
-                                                    {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(account.amount)}
-                                                </td>
-                                            </tr>
-                                        )                  
-                                    })}
-                                </tbody>
-                            </table>
-                    }
-				</div>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                }
             </div>
         </div>
     )

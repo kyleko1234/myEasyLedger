@@ -47,7 +47,7 @@ Prefix all endpoints with `http://{host}/v0.1/`
 - [[Retrieve an AccountBalance|GET /account/{id}/accountBalance]]
 - [[List All Accounts Belonging to an Organization|GET /organization/{id}/account]]
 - [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance]]
-- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance/{startDate}]]
+- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance/{endDate}]]
 - [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance/{startDate}/{endDate}]]
 - [[Update an Account|PUT /account/{id}]]**
 - [[Create an Account|POST /account]]**

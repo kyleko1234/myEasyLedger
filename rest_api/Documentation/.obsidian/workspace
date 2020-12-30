@@ -6,11 +6,10 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
             "mode": "source"
           }
         },
@@ -19,10 +18,11 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md",
+                "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +99,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+    "Account/Contents/Update an Account.md",
+    "AccountSubtype/Contents/List All AccountSubtypes.md",
     "Easy Ledger.md",
     "Category/Contents/List All Categories Belonging to an Organization As CategoryBalance Objects.md",
     "Category/Contents/List All Categories Belonging to an Organization.md",
     "Category/Category.md",
-    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
     "Account/Contents/List All Accounts Belonging to an Organization.md",
     "Account/Contents/Untitled.md",
-    "Account/Contents/Retrieve an AccountBalance.md",
-    "Account/Account.md",
-    "AccountType/Contents/Retrieve Monthly Account Type Summaries for An Organization for the Past N Months.md"
+    "Account/Contents/Retrieve an AccountBalance.md"
   ]
 }

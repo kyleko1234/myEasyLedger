@@ -68,7 +68,7 @@ function IncomeAndExpenseSummary() {
 
 
     //takes integer representing a year and month in format yyyymm and returns a string "yyyy MonthName"
-    const parseYearMonth = yyyymm => { 
+    const parseYearMonth = yyyymm => {
         let month = yyyymm % 100;
         let year = (yyyymm - month) / 100;
         let monthString = ''
@@ -108,13 +108,13 @@ function IncomeAndExpenseSummary() {
                 break;
             case 12:
                 monthString = " Dec";
-                break; 
+                break;
             default:
-                break;                                                                                                                                                                                                                           
+                break;
         }
         return (year.toString() + monthString);
     }
-    
+
 
     const barChart = {
         data: {
@@ -134,7 +134,7 @@ function IncomeAndExpenseSummary() {
             }]
         },
         options: {
-            responsive: true, 
+            responsive: true,
             maintainAspectRatio: false
         }
     };
@@ -145,17 +145,15 @@ function IncomeAndExpenseSummary() {
 
 
     return (
-        <div className="card border-0 mb-3">
-            <div className="card-body">
-                <div className="mb-3">
-                    <b>INCOME AND EXPENSES</b>
-                </div>
-                {loading? <div>Loading...</div> : 
-                    <div style={{ height: '500px'}}>
-                        <Bar className="text-white" data={barChart.data} options={barChart.options} />
-                    </div> 
-                }
+        <div className="card border-0 widget widget-rounded mb-3">
+            <div className="widget-header bg-light border-bottom">
+                <h4 className="widget-header-title">Income and Expenses</h4>
             </div>
+            {loading ? <div>Loading...</div> :
+                <div className="card-body" style={{ height: '500px' }}>
+                    <Bar className="text-white" data={barChart.data} options={barChart.options} />
+                </div>
+            }
         </div>
     )
 }

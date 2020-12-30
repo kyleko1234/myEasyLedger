@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
-import ReportRender from './components/report-render.js';
+import BalanceSheetRender from './components/balance-sheet-render';
 
 function BalanceSheetReport() {
     const appContext = React.useContext(PageSettings);
@@ -15,7 +15,7 @@ function BalanceSheetReport() {
             </ol>
             <h1 className="page-header">Balance Sheet Report </h1>
             <div>
-                {appContext.isLoading? "Loading..." : <ReportRender title="Balance Sheet" />}
+                {appContext.isLoading? "Loading..." : <BalanceSheetRender/>}
             </div>
 		</div>
     )
