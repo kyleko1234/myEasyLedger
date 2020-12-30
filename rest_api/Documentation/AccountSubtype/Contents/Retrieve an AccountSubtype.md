@@ -26,7 +26,8 @@ ___
     "accountTypeId": 1,
     "accountTypeName": "Assets",
     "organizationId": 1,
-    "organizationName": "Sample organization",
+    "organizationName": "Easy Ledger Test",
+    "affectsRetainedEarnings": false,
     "deleted": false
 }
 ```

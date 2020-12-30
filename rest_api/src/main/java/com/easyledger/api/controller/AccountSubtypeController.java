@@ -58,9 +58,9 @@ public class AccountSubtypeController {
     @Secured("ROLE_ADMIN")
 	@GetMapping("/accountSubtype")
     public ArrayList<AccountSubtypeDTO> getAllCategories() {
-        List<AccountSubtype> categories = accountSubtypeRepo.findAll();
+        List<AccountSubtype> accountSubtypes = accountSubtypeRepo.findAll();
         ArrayList<AccountSubtypeDTO> accountSubtypeDtos = new ArrayList<AccountSubtypeDTO>();
-        for (AccountSubtype accountSubtype : categories) {
+        for (AccountSubtype accountSubtype : accountSubtypes) {
         	accountSubtypeDtos.add(new AccountSubtypeDTO(accountSubtype));
         }
         return accountSubtypeDtos;

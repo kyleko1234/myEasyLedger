@@ -33,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 								@ColumnResult(name = "accountTypeName"),
 								@ColumnResult(name = "organizationId"),
 								@ColumnResult(name = "organizationName"),
+								@ColumnResult(name = "affectsRetainedEarnings"),
 								@ColumnResult(name = "deleted")
 						}
 				)
@@ -47,6 +48,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"  account_type.name AS accountTypeName, " + 
 				"  account_subtype.organization_id AS organizationId, " + 
 				"  organization.name AS organizationName, " + 
+				"  account_subtype.affects_retained_earnings AS affectsRetainedEarnings, " + 
 				"  account_subtype.deleted AS deleted " + 
 				"FROM account_subtype, account_type, organization " + 
 				"WHERE account_subtype.account_type_id = account_type.id " + 
@@ -69,6 +71,9 @@ public class AccountSubtype {
 	
 	@Column(name = "deleted")
 	private boolean deleted;
+	
+	@Column(name = "affects_retained_earnings")
+	private boolean affectsRetainedEarnings;
 	
 	@OneToMany (mappedBy = "accountSubtype")
 	@JsonIgnore
@@ -123,6 +128,14 @@ public class AccountSubtype {
 		this.deleted = deleted;
 	}
 
+	public boolean isAffectsRetainedEarnings() {
+		return affectsRetainedEarnings;
+	}
+
+	public void setAffectsRetainedEarnings(boolean affectsRetainedEarnings) {
+		this.affectsRetainedEarnings = affectsRetainedEarnings;
+	}
+
 	public Set<Account> getAccounts() {
 		return accounts;
 	}
@@ -151,8 +164,9 @@ public class AccountSubtype {
 
 	@Override
 	public String toString() {
-		return "AccountSubtype [id=" + id + ", name=" + name + ", deleted=" + deleted + ", accounts=" + accounts
-				+ ", accountType=" + accountType + ", organization=" + organization + "]";
+		return "AccountSubtype [id=" + id + ", name=" + name + ", deleted=" + deleted + ", affectsRetainedEarnings="
+				+ affectsRetainedEarnings + ", accounts=" + accounts + ", accountType=" + accountType
+				+ ", organization=" + organization + "]";
 	}
 
 

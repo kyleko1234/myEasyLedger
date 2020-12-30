@@ -20,12 +20,13 @@ ___
 ```json
 [
     {
-        "accountSubtypeId": 9,
-        "accountSubtypeName": "Accounts Receivable",
+        "accountSubtypeId": 2,
+        "accountSubtypeName": "Bank Accounts",
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
-        "organizationName": "Sample organization",
+        "organizationName": "Easy Ledger Test",
+        "affectsRetainedEarnings": false,
         "deleted": false
     },
     {
@@ -34,70 +35,28 @@ ___
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
-    },
-    {
-        "accountSubtypeId": 2,
-        "accountSubtypeName": "Checking Account",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
-    },
-    {
-        "accountSubtypeId": 5,
-        "accountSubtypeName": "Investment Account",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
+        "organizationName": "Easy Ledger Test",
+        "affectsRetainedEarnings": false,
         "deleted": false
     },
     {
         "accountSubtypeId": 4,
-        "accountSubtypeName": "Mobile Payment Account",
+        "accountSubtypeName": "Virtual Payment Accounts",
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
-        "organizationName": "Sample organization",
+        "organizationName": "Easy Ledger Test",
+        "affectsRetainedEarnings": false,
         "deleted": false
     },
     {
         "accountSubtypeId": 3,
-        "accountSubtypeName": "Savings Account",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
-    },
-    {
-        "accountSubtypeId": 8,
-        "accountSubtypeName": "Accounts Payable",
+        "accountSubtypeName": "Credit Cards",
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
         "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
-    },
-    {
-        "accountSubtypeId": 7,
-        "accountSubtypeName": "Line of Credit",
-        "accountTypeId": 2,
-        "accountTypeName": "Liabilities",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
-    },
-    {
-        "accountSubtypeId": 6,
-        "accountSubtypeName": "Mortgage",
-        "accountTypeId": 2,
-        "accountTypeName": "Liabilities",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
+        "organizationName": "Easy Ledger Test",
+        "affectsRetainedEarnings": false,
         "deleted": false
     }
 ]

@@ -18,6 +18,9 @@ The id of the type that this account subtype belongs to.
 
 - **organizationId(`Long`)**<br/>
 The id of the organization that this account subtype belongs to.
+
+- **affectsRetainedEarnings(`boolean`)** <br/>
+Whether or not this accountSubtype should be included in the Retained Earnings calculation for the balance sheet. Should always be FALSE for account subtypes that are not of the Equity type. Should only be true for subtypes such as "Dividends".
 ___
 #### Returns
 Returns the updated account subtype object upon successful update. Returns HTTP 409 and an error if the id in the URI does not match the id in the request body. Returns HTTP 404 and an error if an AccountType does not exist in the database for the specified accountTypeId, or an AccountSubtype does not exist for the provided accountSubtypeId.
@@ -45,7 +48,8 @@ Body:
     "accountTypeId": 1,
     "accountTypeName": "Assets",
     "organizationId": 1,
-    "organizationName": "Sample organization",
+    "organizationName": "Easy Ledger Test",
+    "affectsRetainedEarnings": false,
     "deleted": false
 }
 ```
