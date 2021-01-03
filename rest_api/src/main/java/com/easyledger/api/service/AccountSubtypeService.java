@@ -7,7 +7,7 @@ import com.easyledger.api.dto.AccountSubtypeDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.AccountType;
 import com.easyledger.api.model.Organization;
-import com.easyledger.api.model.AccountSubtype;
+import com.easyledger.api.model.AccountSubtypeMetadata;
 import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 
@@ -26,9 +26,9 @@ public class AccountSubtypeService {
 		this.organizationRepo = organizationRepo;
 	}
 	
-	public AccountSubtype createAccountSubtypeFromDTO(AccountSubtypeDTO dto) 
+	public AccountSubtypeMetadata createAccountSubtypeFromDTO(AccountSubtypeDTO dto) 
 			throws ResourceNotFoundException {
-		AccountSubtype product = new AccountSubtype();
+		AccountSubtypeMetadata product = new AccountSubtypeMetadata();
 		product.setId(dto.getAccountSubtypeId());
 		product.setName(dto.getAccountSubtypeName());
 		AccountType accountType = accountTypeRepo.findById(dto.getAccountTypeId())

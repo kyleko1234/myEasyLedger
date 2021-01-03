@@ -1,16 +1,16 @@
-package com.easyledger.api.viewmodel;
+package com.easyledger.api.dto;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public class AccountTypeSummaryViewModel {
+public class AccountTypeSummaryDTO {
 	private Long accountTypeId;
 	private String accountTypeName;
 	private BigDecimal debitAmount;
 	private BigDecimal creditAmount;
 	private Integer yearMonth;
 	
-	public AccountTypeSummaryViewModel(BigInteger accountTypeId, String accountTypeName, BigDecimal debitAmount,
+	public AccountTypeSummaryDTO(BigInteger accountTypeId, String accountTypeName, BigDecimal debitAmount,
 			BigDecimal creditAmount, Integer yearMonth) {
 		this.accountTypeId = accountTypeId.longValueExact();
 		this.accountTypeName = accountTypeName;
@@ -58,12 +58,14 @@ public class AccountTypeSummaryViewModel {
 	public void setYearMonth(Integer yearMonth) {
 		this.yearMonth = yearMonth;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "AccountTypeSummaryViewModel [accountTypeId=" + accountTypeId + ", accountTypeName=" + accountTypeName
+		return "AccountTypeSummaryDTO [accountTypeId=" + accountTypeId + ", accountTypeName=" + accountTypeName
 				+ ", debitAmount=" + debitAmount + ", creditAmount=" + creditAmount + ", yearMonth=" + yearMonth + "]";
 	}
+	
+
 	
 	
 }

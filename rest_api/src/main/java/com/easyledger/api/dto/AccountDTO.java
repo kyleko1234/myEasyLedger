@@ -11,10 +11,12 @@ import com.easyledger.api.model.Category;
 public class AccountDTO {
 	private Long accountId;
 	private String accountName;
-	private Long accountTypeId;
-	private String accountTypeName;
+	private Long accountGroupId;
+	private String accountGroupName;
 	private Long accountSubtypeId;
 	private String accountSubtypeName;
+	private Long accountTypeId;
+	private String accountTypeName;
 	private Long organizationId;
 	private String organizationName;
 	private boolean deleted;
@@ -22,28 +24,28 @@ public class AccountDTO {
 	public AccountDTO(Account account) {
 		this.accountId = account.getId();
 		this.accountName = account.getName();
-		this.accountTypeId = account.getAccountType().getId();
-		this.accountTypeName = account.getAccountType().getName();
-		if (account.getAccountSubtype() != null) {
-			this.accountSubtypeId = account.getAccountSubtype().getId();
-			this.accountSubtypeName = account.getAccountSubtype().getName();
-		}
-		this.organizationId = account.getOrganization().getId();
-		this.organizationName = account.getOrganization().getName();
-		
+		this.accountGroupId = account.getAccountGroup().getId();
+		this.accountGroupName = account.getAccountGroup().getName();
+		this.accountSubtypeId = account.getAccountGroup().getAccountSubtype().getId();
+		this.accountSubtypeName = account.getAccountGroup().getAccountSubtype().getName();
+		this.accountTypeId = account.getAccountGroup().getAccountSubtype().getAccountType().getId();
+		this.accountTypeName = account.getAccountGroup().getAccountSubtype().getAccountType().getName();
+		this.organizationId = account.getAccountGroup().getOrganization().getId();
+		this.organizationName = account.getAccountGroup().getOrganization().getName();
 		this.deleted = account.isDeleted();
 	}
 	
-	public AccountDTO(BigInteger accountId, String accountName, BigInteger accountSubtypeId, String accountSubtypeName,
-			BigInteger accountTypeId, String accountTypeName, BigInteger organizationId, String organizationName, boolean deleted) {
+	public AccountDTO(BigInteger accountId, String accountName, BigInteger accountGroupId, String accountGroupName,
+			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
+			BigInteger organizationId, String organizationName, boolean deleted) {
 		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
+		this.accountGroupId = accountGroupId.longValueExact();
+		this.accountGroupName = accountGroupName;
+		this.accountSubtypeId = accountSubtypeId.longValueExact();
+		this.accountSubtypeName = accountSubtypeName;
 		this.accountTypeId = accountTypeId.longValueExact();
 		this.accountTypeName = accountTypeName;
-		if (accountSubtypeId != null) {
-			this.accountSubtypeId = accountSubtypeId.longValueExact();
-			this.accountSubtypeName = accountSubtypeName;
-		}
 		this.organizationId = organizationId.longValueExact();
 		this.organizationName = organizationName;
 		this.deleted = deleted;
@@ -68,20 +70,20 @@ public class AccountDTO {
 		this.accountName = accountName;
 	}
 
-	public Long getAccountTypeId() {
-		return accountTypeId;
+	public Long getAccountGroupId() {
+		return accountGroupId;
 	}
 
-	public void setAccountTypeId(Long accountTypeId) {
-		this.accountTypeId = accountTypeId;
+	public void setAccountGroupId(Long accountGroupId) {
+		this.accountGroupId = accountGroupId;
 	}
 
-	public String getAccountTypeName() {
-		return accountTypeName;
+	public String getAccountGroupName() {
+		return accountGroupName;
 	}
 
-	public void setAccountTypeName(String accountTypeName) {
-		this.accountTypeName = accountTypeName;
+	public void setAccountGroupName(String accountGroupName) {
+		this.accountGroupName = accountGroupName;
 	}
 
 	public Long getAccountSubtypeId() {
@@ -98,6 +100,22 @@ public class AccountDTO {
 
 	public void setAccountSubtypeName(String accountSubtypeName) {
 		this.accountSubtypeName = accountSubtypeName;
+	}
+
+	public Long getAccountTypeId() {
+		return accountTypeId;
+	}
+
+	public void setAccountTypeId(Long accountTypeId) {
+		this.accountTypeId = accountTypeId;
+	}
+
+	public String getAccountTypeName() {
+		return accountTypeName;
+	}
+
+	public void setAccountTypeName(String accountTypeName) {
+		this.accountTypeName = accountTypeName;
 	}
 
 	public Long getOrganizationId() {
@@ -126,11 +144,14 @@ public class AccountDTO {
 
 	@Override
 	public String toString() {
-		return "AccountDTO [accountId=" + accountId + ", accountName=" + accountName + ", accountTypeId="
-				+ accountTypeId + ", accountTypeName=" + accountTypeName + ", accountSubtypeId=" + accountSubtypeId
-				+ ", accountSubtypeName=" + accountSubtypeName + ", organizationId=" + organizationId
-				+ ", organizationName=" + organizationName + ", deleted=" + deleted + "]";
+		return "AccountDTO [accountId=" + accountId + ", accountName=" + accountName + ", accountGroupId="
+				+ accountGroupId + ", accountGroupName=" + accountGroupName + ", accountSubtypeId=" + accountSubtypeId
+				+ ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
+				+ ", accountTypeName=" + accountTypeName + ", organizationId=" + organizationId + ", organizationName="
+				+ organizationName + ", deleted=" + deleted + "]";
 	}
-	
+
+
+
 	
 }

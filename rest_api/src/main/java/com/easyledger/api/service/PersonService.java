@@ -23,7 +23,7 @@ import com.easyledger.api.exception.AppException;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
-import com.easyledger.api.model.AccountSubtype;
+import com.easyledger.api.model.AccountSubtypeMetadata;
 import com.easyledger.api.model.AccountType;
 import com.easyledger.api.model.Category;
 import com.easyledger.api.model.Organization;
@@ -182,13 +182,13 @@ public class PersonService {
 		List<AccountType> accountTypes = accountTypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
 		
 		//create and persist subtypes
-		AccountSubtype cash = new AccountSubtype("Cash", accountTypes.get(0));
-		AccountSubtype bankAccounts = new AccountSubtype("Bank Accounts", accountTypes.get(0));
-		AccountSubtype creditCards = new AccountSubtype("Credit Cards", accountTypes.get(1));
+		AccountSubtypeMetadata cash = new AccountSubtypeMetadata("Cash", accountTypes.get(0));
+		AccountSubtypeMetadata bankAccounts = new AccountSubtypeMetadata("Bank Accounts", accountTypes.get(0));
+		AccountSubtypeMetadata creditCards = new AccountSubtypeMetadata("Credit Cards", accountTypes.get(1));
 
 
-		AccountSubtype[] accountSubtypes = {cash, bankAccounts, creditCards}; 
-		for (AccountSubtype accountSubtype : accountSubtypes) {
+		AccountSubtypeMetadata[] accountSubtypes = {cash, bankAccounts, creditCards}; 
+		for (AccountSubtypeMetadata accountSubtype : accountSubtypes) {
 			accountSubtype.setOrganization(organization);
 		}
 		accountSubtypeRepo.saveAll(Arrays.asList(accountSubtypes));

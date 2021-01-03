@@ -38,11 +38,8 @@ public class Organization {
 	
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
-	private Set<AccountSubtype> accountSubtypes = new HashSet<AccountSubtype>();
+	private Set<AccountGroup> accountGroups = new HashSet<AccountGroup>();
 	
-	@OneToMany(mappedBy = "organization")
-	@JsonIgnore
-	private Set<Account> accounts = new HashSet<Account>();
 	
 	public Organization(String name) {
 		this.name = name;
@@ -86,26 +83,18 @@ public class Organization {
 		this.journalEntries = journalEntries;
 	}
 
-	public Set<AccountSubtype> getAccountSubtypes() {
-		return accountSubtypes;
+	public Set<AccountGroup> getAccountGroups() {
+		return accountGroups;
 	}
 
-	public void setAccountSubtypes(Set<AccountSubtype> accountSubtypes) {
-		this.accountSubtypes = accountSubtypes;
-	}
-
-	public Set<Account> getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(Set<Account> accounts) {
-		this.accounts = accounts;
+	public void setAccountGroups(Set<AccountGroup> accountGroups) {
+		this.accountGroups = accountGroups;
 	}
 
 	@Override
 	public String toString() {
 		return "Organization [id=" + id + ", name=" + name + ", persons=" + persons + ", journalEntries="
-				+ journalEntries + ", accountSubtypes=" + accountSubtypes + ", accounts=" + accounts + "]";
+				+ journalEntries + ", accountGroups=" + accountGroups + "]";
 	}
 	
 

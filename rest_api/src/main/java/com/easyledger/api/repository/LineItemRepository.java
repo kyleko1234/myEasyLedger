@@ -14,10 +14,7 @@ public interface LineItemRepository extends JpaRepository<LineItem, Long> {
 
 	@Query(nativeQuery = true)
 	public Page<LineItemDTO> getAllLineItemsForAccount(Long accountId, Pageable pageable);
-	
-	@Query(nativeQuery = true)
-	public Page<LineItemDTO> getAllLineItemsForCategory(Long categoryId, Pageable pageable);
-	
+		
 	@Query(nativeQuery = true)
 	public Page<LineItemDTO> getAllLineItemsForAccountSubtype(Long accountSubtypeId, Pageable pageable);
 
@@ -30,11 +27,4 @@ public interface LineItemRepository extends JpaRepository<LineItem, Long> {
 		nativeQuery = true)
 	public boolean accountContainsLineItems(Long accountId);
 	
-	@Query(
-		value = "SELECT CASE EXISTS (SELECT 1 from line_item, journal_entry "
-				+ "WHERE line_item.journal_entry_id = journal_entry.id "
-				+ "AND line_item.category_id = ? AND journal_entry.deleted = false) "
-				+ "WHEN true THEN true ELSE false END", 
-		nativeQuery = true)
-	public boolean categoryContainsLineItems(Long categoryId);
 }

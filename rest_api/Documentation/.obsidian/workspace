@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "AccountSubtype/Contents/Create an AccountSubtype.md",
+            "file": "Easy Ledger.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "AccountSubtype/Contents/Create an AccountSubtype.md",
+            "file": "Easy Ledger.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AccountSubtype/Contents/Create an AccountSubtype.md",
+                "file": "Easy Ledger.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,6 +99,7 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Easy Ledger.md",
     "AccountSubtype/Contents/Create an AccountSubtype.md",
     "AccountSubtype/Contents/Update an AccountSubtype.md",
     "AccountSubtype/Contents/The AccountSubtype Object.md",
@@ -107,7 +108,6 @@
     "AccountSubtype/Contents/List All AccountSubtypes Belonging to an Organization.md",
     "AccountSubtype/Contents/Retrieve an AccountSubtype.md",
     "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
-    "Account/Contents/Update an Account.md",
-    "Easy Ledger.md"
+    "Account/Contents/Update an Account.md"
   ]
 }

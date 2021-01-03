@@ -16,7 +16,7 @@ import com.easyledger.api.dto.AccountSubtypeDTO;
 import com.easyledger.api.dto.CategoryDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
-import com.easyledger.api.model.AccountSubtype;
+import com.easyledger.api.model.AccountSubtypeMetadata;
 import com.easyledger.api.model.AccountType;
 import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.security.AuthorizationService;

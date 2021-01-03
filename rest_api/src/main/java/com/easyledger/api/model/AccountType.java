@@ -66,19 +66,14 @@ public class AccountType {
 	@JsonIgnore
 	private Set<AccountSubtype> accountSubtypes;
 	
-	@OneToMany(mappedBy = "accountType")
-	@JsonIgnore
-	private Set<Account> accounts;
 	
 	public AccountType() {
 		this.accountSubtypes = new HashSet<AccountSubtype>();
-		this.accounts = new HashSet<Account>();
 	}
 	
 	public AccountType(String name) {
 		this.name = name;
 		this.accountSubtypes = new HashSet<AccountSubtype>();
-		this.accounts = new HashSet<Account>();
 	}
 	
 	public Long getId() {
@@ -105,21 +100,13 @@ public class AccountType {
 		this.accountSubtypes = accountSubtypes;
 	}
 
-	public Set<Account> getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(Set<Account> accounts) {
-		this.accounts = accounts;
-	}
-
-
-
 	@Override
 	public String toString() {
-		return "AccountType [id=" + id + ", name=" + name + ", accountSubtypes=" + accountSubtypes + ", accounts="
-				+ accounts + "]";
+		return "AccountType [id=" + id + ", name=" + name + ", accountSubtypes=" + accountSubtypes + "]";
 	}
+
+
+
 	
 	
 	

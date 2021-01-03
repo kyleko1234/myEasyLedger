@@ -27,7 +27,7 @@ import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
-import com.easyledger.api.model.AccountSubtype;
+import com.easyledger.api.model.AccountSubtypeMetadata;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;

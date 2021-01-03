@@ -19,7 +19,7 @@ import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
-import com.easyledger.api.model.AccountSubtype;
+import com.easyledger.api.model.AccountSubtypeMetadata;
 import com.easyledger.api.model.Category;
 import com.easyledger.api.model.LineItem;
 import com.easyledger.api.model.Organization;
@@ -84,7 +84,7 @@ public class LineItemController {
     @GetMapping("/accountSubtype/{id}/lineItem")
     public Page<LineItemDTO> getAllLineItemsForAccountSubtype(@PathVariable(value="id") Long accountSubtypeId, Pageable pageable, Authentication authentication)
     	throws ResourceNotFoundException, UnauthorizedException {
-	    AccountSubtype accountSubtype = accountSubtypeRepo.findById(accountSubtypeId)
+	    AccountSubtypeMetadata accountSubtype = accountSubtypeRepo.findById(accountSubtypeId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Account subtype not found for this id :: " + accountSubtypeId));
 	    authorizationService.authorizeByOrganizationId(authentication, accountSubtype.getOrganization().getId());
 	    return lineItemRepo.getAllLineItemsForAccountSubtype(accountSubtypeId, pageable);

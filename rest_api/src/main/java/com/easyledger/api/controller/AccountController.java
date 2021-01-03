@@ -39,25 +39,23 @@ import com.easyledger.api.service.AccountService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v0.1")
+@RequestMapping("/v0.2")
 public class AccountController {
 
 	private AccountRepository accountRepo;
 	private LineItemRepository lineItemRepo;
 	private AccountService accountService;
 	private OrganizationRepository organizationRepo;
-	private CategoryRepository categoryRepo;
 	private AuthorizationService authorizationService;
 	
     public AccountController (AccountRepository accountRepo, AccountService accountService, 
-    		OrganizationRepository organizationRepo, LineItemRepository lineItemRepo, CategoryRepository categoryRepo, 
+    		OrganizationRepository organizationRepo, LineItemRepository lineItemRepo, 
     		AuthorizationService authorizationService) {
 		super();
 		this.accountRepo = accountRepo;
 		this.accountService = accountService;
 		this.organizationRepo = organizationRepo;
 		this.lineItemRepo = lineItemRepo;
-		this.categoryRepo = categoryRepo;
 		this.authorizationService = authorizationService;
 	}
 
@@ -89,9 +87,9 @@ public class AccountController {
         throws ResourceNotFoundException, UnauthorizedException {
     	Account account = accountRepo.findById(accountId)
     			.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-    	authorizationService.authorizeByOrganizationId(authentication, account.getOrganization().getId());
-    	
-        AccountBalanceDTO result = accountRepo.getAccountBalanceById(accountId);
+        //TODO: refactor 404 checking to use ExistsById
+    	AccountBalanceDTO result = accountRepo.getAccountBalanceById(accountId);
+        authorizationService.authorizeByOrganizationId(authentication, result.getOrganizationId());
         return result;
     }
     
@@ -108,7 +106,7 @@ public class AccountController {
     	authorizationService.authorizeByOrganizationId(authentication, organizationId);
     	return accountRepo.getAllAccountBalancesForOrganization(organizationId);
     }
-    
+    //START HERE
     @GetMapping("/organization/{id}/accountBalance/{startDate}/{endDate}")
     public List<AccountBalanceDTO> getAllAccountBalancesForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId, 
     		@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
