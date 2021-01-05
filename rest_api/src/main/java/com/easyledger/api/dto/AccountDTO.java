@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.easyledger.api.model.Account;
-import com.easyledger.api.model.Category;
 
 
 public class AccountDTO {

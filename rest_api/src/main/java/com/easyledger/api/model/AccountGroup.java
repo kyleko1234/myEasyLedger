@@ -57,7 +57,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    account_subtype.account_type_id = account_type.id AND  " + 
 				"    account_group.deleted = false " + 
 				"ORDER BY account_type.id ASC, account_group.name",
-		resultSetMapping = "accountSubtypeDTOMapping"
+		resultSetMapping = "accountGroupDTOMapping"
 )
 
 @Entity

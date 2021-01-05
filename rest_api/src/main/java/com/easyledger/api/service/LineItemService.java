@@ -12,7 +12,6 @@ import com.easyledger.api.model.Account;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
 import com.easyledger.api.repository.AccountRepository;
-import com.easyledger.api.repository.JournalEntryRepository;
 
 @Service
 public class LineItemService {
@@ -27,7 +26,7 @@ public class LineItemService {
 	// Creates new LineItem entity object from a LineItemDTO.
 	// A LineItem entity object cannot be created without a parent Entry entity object. The parent Entry should be passed as input along with the LineItemDTO.
 	// Ignores the lineItemId field in the input LineItemDTO, and automatically generates a new ID when saved to the database.
-	// Requires that accountId and categoryId point to valid entities within the database.
+	// Requires that accountId points to valid entities within the database.
 	public LineItem createLineItemFromDTO (LineItemDTO dto, JournalEntry journalEntry) 
 			throws ResourceNotFoundException {
 		LineItem product = new LineItem();

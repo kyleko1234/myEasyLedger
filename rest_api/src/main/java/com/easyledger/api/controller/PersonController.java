@@ -86,7 +86,7 @@ public class PersonController {
     }
     
  /*   @DeleteMapping("/person/{id}")
-    public Map<String, Boolean> deleteCategory(@PathVariable(value = "id") Long personId)
+    public Map<String, Boolean> deletePerson(@PathVariable(value = "id") Long personId)
         throws ResourceNotFoundException, ConflictException {
         Person person = personRepo.findById(personId)
         	.orElseThrow(() -> new ResourceNotFoundException("person not found for this id :: " + personId));
