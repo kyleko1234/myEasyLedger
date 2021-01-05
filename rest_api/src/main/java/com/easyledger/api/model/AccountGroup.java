@@ -18,44 +18,45 @@ import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
-import com.easyledger.api.dto.AccountSubtypeDTO;
+import com.easyledger.api.dto.AccountGroupDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SqlResultSetMapping( //maps native SQL query to AccountDTO class
-		name = "accountSubtypeDTOMapping",
+		name = "accountGroupDTOMapping",
 		classes = {
 				@ConstructorResult(
-						targetClass = AccountSubtypeDTO.class,
+						targetClass = AccountGroupDTO.class,
 						columns = {
+								@ColumnResult(name = "accountGroupId"),
+								@ColumnResult(name = "accountGroupName"),
 								@ColumnResult(name = "accountSubtypeId"),
 								@ColumnResult(name = "accountSubtypeName"),
 								@ColumnResult(name = "accountTypeId"),
 								@ColumnResult(name = "accountTypeName"),
 								@ColumnResult(name = "organizationId"),
 								@ColumnResult(name = "organizationName"),
-								@ColumnResult(name = "affectsRetainedEarnings"),
 								@ColumnResult(name = "deleted")
 						}
 				)
 		}
 )	
 @NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts for that organization
-		name = "AccountSubtype.getAllAccountSubtypesForOrganization",
-		query = "SELECT " + 
-				"  account_subtype.id AS accountSubtypeId, " + 
-				"  account_subtype.name AS accountSubtypeName, " + 
-				"  account_subtype.account_type_id AS accountTypeId, " + 
-				"  account_type.name AS accountTypeName, " + 
-				"  account_subtype.organization_id AS organizationId, " + 
-				"  organization.name AS organizationName, " + 
-				"  account_subtype.affects_retained_earnings AS affectsRetainedEarnings, " + 
-				"  account_subtype.deleted AS deleted " + 
-				"FROM account_subtype, account_type, organization " + 
-				"WHERE account_subtype.account_type_id = account_type.id " + 
-				"  AND account_subtype.organization_id = organization.id " + 
-				"  AND account_subtype.deleted = false " + 
-				"  AND organization.id = ? " + 
-				"ORDER BY account_subtype.account_type_id ASC, account_subtype.name ASC",
+		name = "AccountGroup.getAllAccountGroupsForOrganization",
+		query = "SELECT  " + 
+				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName, " + 
+				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, " + 
+				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
+				"    organization.id AS organizationId, organization.name AS organizationName, " + 
+				"    account_group.deleted AS deleted " + 
+				"FROM " + 
+				"    account_group, account_subtype, account_type, organization " + 
+				"WHERE  " + 
+				"    organization.id = ? AND " + 
+				"    account_group.organization_id = organization.id AND  " + 
+				"    account_group.account_subtype_id = account_subtype.id AND  " + 
+				"    account_subtype.account_type_id = account_type.id AND  " + 
+				"    account_group.deleted = false " + 
+				"ORDER BY account_type.id ASC, account_group.name",
 		resultSetMapping = "accountSubtypeDTOMapping"
 )
 
@@ -72,7 +73,7 @@ public class AccountGroup {
 	@Column(name = "deleted")
 	private boolean deleted;
 		
-	@OneToMany (mappedBy = "accountGroup")
+	@OneToMany(mappedBy = "accountGroup")
 	@JsonIgnore
 	private Set<Account> accounts;
 	

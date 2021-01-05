@@ -23,19 +23,19 @@ import com.easyledger.api.exception.AppException;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
-import com.easyledger.api.model.AccountSubtypeMetadata;
+import com.easyledger.api.model.AccountGroup;
+import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.AccountType;
-import com.easyledger.api.model.Category;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.model.Role;
 import com.easyledger.api.model.VerificationToken;
 import com.easyledger.api.payload.ApiResponse;
 import com.easyledger.api.payload.SignUpRequest;
+import com.easyledger.api.repository.AccountGroupRepository;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.repository.AccountTypeRepository;
-import com.easyledger.api.repository.CategoryRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.repository.RoleRepository;
@@ -56,6 +56,9 @@ public class PersonService {
 	private VerificationService verificationService;
 	
 	@Autowired
+	private AccountGroupRepository accountGroupRepo;
+	
+	@Autowired
 	private AccountSubtypeRepository accountSubtypeRepo;
 	
 	@Autowired
@@ -63,17 +66,14 @@ public class PersonService {
 	
 	@Autowired
 	private AccountRepository accountRepo;
-	
-	@Autowired
-	private CategoryRepository categoryRepo;
-	
+		
     @Autowired
     PasswordEncoder passwordEncoder;
 
 
 	public PersonService(OrganizationRepository organizationRepo, PersonRepository personRepo, PasswordEncoder passwordEncoder, RoleRepository roleRepo,
-			VerificationService verificationService, AccountTypeRepository accountTypeRepo, AccountSubtypeRepository accountSubtypeRepo, AccountRepository accountRepo, 
-			CategoryRepository categoryRepo) {
+			VerificationService verificationService, AccountTypeRepository accountTypeRepo, AccountSubtypeRepository accountSubtypeRepo, 
+			AccountRepository accountRepo, AccountGroupRepository accountGroupRepo) {
 		super();
 		this.organizationRepo = organizationRepo;
 		this.personRepo = personRepo;
@@ -83,7 +83,7 @@ public class PersonService {
 		this.accountTypeRepo = accountTypeRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.accountRepo = accountRepo;
-		this.categoryRepo = categoryRepo;
+		this.accountGroupRepo = accountGroupRepo;
 	}
 	
 	public void updatePerson(Person person, Map<Object, Object> fields) 
@@ -169,60 +169,18 @@ public class PersonService {
     	
 	}
 	
-	/* Automatically populate a person with default accounts, subtypes, categories. Assumes that the account_type table is already populated with
-	 * default values (id1:Assets id2:Liabilities id3:Owner's Equity id4:Income id5:Expenses).
-	 * Default fields:
-	 * Account Subtype: Cash(Asset), Bank Accounts(Asset), Credit Cards(Liability)
-	 * Account: My Personal Wallet(Cash), Savings Account #1(Bank Accounts), Checking Account #1 (Bank Accounts), Investment Account #1(Bank Accounts)
-	 * 		Credit Card #1(Credit Cards), Personal Income (Income), Personal Expenses(Expense)
-	 * Category: 
-	 * 		Personal Income: Job #1, Project #1, Other
-	 * 		Personal Expenses: Grocery, Dining, Apparel, Living, Transportation, Education, Entertainment, Other */
+	/* Automatically populate a person with default AccountGroups. By default we create a corresponding AccountGroup for every AccountSubtype. */
 	private void autoPopulateOrganization(Organization organization) {
-		List<AccountType> accountTypes = accountTypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
-		
-		//create and persist subtypes
-		AccountSubtypeMetadata cash = new AccountSubtypeMetadata("Cash", accountTypes.get(0));
-		AccountSubtypeMetadata bankAccounts = new AccountSubtypeMetadata("Bank Accounts", accountTypes.get(0));
-		AccountSubtypeMetadata creditCards = new AccountSubtypeMetadata("Credit Cards", accountTypes.get(1));
-
-
-		AccountSubtypeMetadata[] accountSubtypes = {cash, bankAccounts, creditCards}; 
-		for (AccountSubtypeMetadata accountSubtype : accountSubtypes) {
-			accountSubtype.setOrganization(organization);
+		List<AccountSubtype> accountSubtypes = accountSubtypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
+		ArrayList<AccountGroup> defaultAccountGroups = new ArrayList<AccountGroup>();
+		for (AccountSubtype accountSubtype : accountSubtypes) {
+			AccountGroup group = new AccountGroup(accountSubtype.getName(), accountSubtype);
+			defaultAccountGroups.add(group);
 		}
-		accountSubtypeRepo.saveAll(Arrays.asList(accountSubtypes));
-		
-		//create and persist accounts
-		Account myPersonalWallet = new Account("My Personal Wallet", cash.getAccountType(), cash);
-		Account savingsAccount = new Account("Savings Account #1", bankAccounts.getAccountType(), bankAccounts);
-		Account checkingAccount = new Account("Checking Account #1", bankAccounts.getAccountType(), bankAccounts);
-		Account investmentAccount = new Account("Investment Account #1", bankAccounts.getAccountType(), bankAccounts);
-		Account creditCardOne = new Account("Credit Card #1", creditCards.getAccountType(), creditCards);
-		Account personalIncome = new Account("Personal Income", accountTypes.get(3));
-		Account personalExpenses = new Account("Personal Expenses", accountTypes.get(4));
-		Account[] accounts = {myPersonalWallet, savingsAccount, checkingAccount, investmentAccount, creditCardOne, 
-				personalIncome, personalExpenses};
-		for (Account account : accounts) {
-			account.setOrganization(organization);
+		for (AccountGroup accountGroup : defaultAccountGroups) {
+			accountGroup.setOrganization(organization);
 		}
-		accountRepo.saveAll(Arrays.asList(accounts));
-
-		//create and persist categories
-		Category job = new Category("Job #1", personalIncome);
-		Category project = new Category("Project #1", personalIncome);
-		Category otherIncome = new Category("Other", personalIncome);
-		Category grocery = new Category("Grocery", personalExpenses);
-		Category dining = new Category("Dining", personalExpenses);
-		Category apparel = new Category("Apparel", personalExpenses);
-		Category living = new Category("Living", personalExpenses);
-		Category transportation = new Category("Transportation", personalExpenses);
-		Category education = new Category("Education", personalExpenses);
-		Category entertainment = new Category("Entertainment", personalExpenses);
-		Category otherExpenses = new Category("Other", personalExpenses);
-		Category[] categories = {job, project, otherIncome, grocery, dining, apparel, living, transportation,
-				education, entertainment, otherExpenses};
-		categoryRepo.saveAll(Arrays.asList(categories));
+		accountGroupRepo.saveAll(defaultAccountGroups);
 		
 	}
 	

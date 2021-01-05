@@ -28,13 +28,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 						columns = {
 								@ColumnResult(name = "accountId"),
 								@ColumnResult(name = "accountName"),
+								@ColumnResult(name = "accountGroupId"),
+								@ColumnResult(name = "accountGroupName"),
 								@ColumnResult(name = "accountSubtypeId"),
 								@ColumnResult(name = "accountSubtypeName"),
 								@ColumnResult(name = "accountTypeId"),
 								@ColumnResult(name = "accountTypeName"),
 								@ColumnResult(name = "amount"),
-								@ColumnResult(name = "categoryId"),
-								@ColumnResult(name = "categoryName"),
 								@ColumnResult(name = "description"),
 								@ColumnResult(name = "journalEntryId"),
 								@ColumnResult(name = "journalEntryDate"),
@@ -47,53 +47,51 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @NamedNativeQuery( //retrieves all undeleted LineItems in undeleted entries for an account when given an accountId
 		name = "LineItem.getAllLineItemsForAccount",
 		query = "SELECT " + 
-				"    line_item.id AS lineItemId, " + 
-				"    line_item.journal_entry_id AS journalEntryId, " + 
-				"    journal_entry.journal_entry_date AS journalEntryDate, " + 
-				"    line_item.account_id AS accountId, " + 
-				"    line_item.is_credit AS isCredit, " + 
-				"    line_item.amount AS amount, " + 
-				"    line_item.description AS description, " + 
-				"    line_item.category_id AS categoryId, " + 
-				"    category.name AS categoryName, " + 
-				"    account.name AS accountName, " + 
-				"    account.account_type_id AS accountTypeId, " + 
-				"    account_type.name AS accountTypeName, " + 
-				"    account_subtype.id AS accountSubtypeId, " + 
-				"    account_subtype.name AS accountSubtypeName " + 
+				"    account.id AS accountId, account.name AS accountName, " + 
+				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName, " + 
+				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, " + 
+				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
+				"    line_item.amount AS amount, line_item.description AS description, " + 
+				"    journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, " + 
+				"    line_item.is_credit AS isCredit, line_item.id AS lineItemId " + 
 				"FROM " + 
-				"    line_item LEFT OUTER JOIN category on line_item.category_id = category.id, " + 
-				"    account LEFT OUTER JOIN account_subtype on account.account_subtype_id = account_subtype.id " + 
-				"    LEFT OUTER JOIN account_type on account.account_type_id = account_type.id, " + 
-				"	 journal_entry " + 
-				"WHERE line_item.account_id = account.id AND account.id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false " + 
-				"ORDER BY journal_entry.journal_entry_date DESC, line_item.id DESC",
+				"    account, account_group, account_subtype, account_type, line_item, journal_entry " + 
+				"WHERE " + 
+				"    account.id = ? AND  " + 
+				"    line_item.account_id = account.id AND " + 
+				"    line_item.journal_entry_id = journal_entry.id AND " + 
+				"    account.account_group_id = account_group.id AND " + 
+				"    account_group.account_subtype_id = account_subtype.id AND  " + 
+				"    account_subtype.account_type_id = account_type.id AND  " + 
+				"    journal_entry.deleted = false " + 
+				"ORDER BY " + 
+				"    journal_entry.journal_entry_date DESC, line_item.id DESC " + 
+				"",
 		resultSetMapping = "lineItemDTOMapping"
 )
-@NamedNativeQuery( //retrieves all undeleted LineItems in undeleted entries for an account subtype when given an accountSubtypeId
-		name = "LineItem.getAllLineItemsForAccountSubtype",
+@NamedNativeQuery( //retrieves all undeleted LineItems in undeleted entries for an account group when given an accountGroupId
+		name = "LineItem.getAllLineItemsForAccountGroup",
 		query = "SELECT " + 
-				"    line_item.id AS lineItemId, " + 
-				"    line_item.journal_entry_id AS journalEntryId, " + 
-				"    journal_entry.journal_entry_date AS journalEntryDate, " + 
-				"    line_item.account_id AS accountId, " + 
-				"    line_item.is_credit AS isCredit, " + 
-				"    line_item.amount AS amount, " + 
-				"    line_item.description AS description, " + 
-				"    line_item.category_id AS categoryId, " + 
-				"    category.name AS categoryName, " + 
-				"    account.name AS accountName, " + 
-				"    account.account_type_id AS accountTypeId, " + 
-				"    account_type.name AS accountTypeName, " + 
-				"    account_subtype.id AS accountSubtypeId, " + 
-				"    account_subtype.name AS accountSubtypeName " + 
+				"    account.id AS accountId, account.name AS accountName, " + 
+				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName, " + 
+				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, " + 
+				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
+				"    line_item.amount AS amount, line_item.description AS description, " + 
+				"    journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, " + 
+				"    line_item.is_credit AS isCredit, line_item.id AS lineItemId " + 
 				"FROM " + 
-				"    line_item LEFT OUTER JOIN category on line_item.category_id = category.id, " + 
-				"    account LEFT OUTER JOIN account_subtype on account.account_subtype_id = account_subtype.id " + 
-				"    LEFT OUTER JOIN account_type on account.account_type_id = account_type.id, " + 
-				"	 journal_entry " + 
-				"WHERE line_item.account_id = account.id AND account.account_subtype_id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false " + 
-				"ORDER BY journal_entry.journal_entry_date DESC, line_item.id DESC",
+				"    account, account_group, account_subtype, account_type, line_item, journal_entry " + 
+				"WHERE " + 
+				"    account_group.id = ? AND  " + 
+				"    line_item.account_id = account.id AND " + 
+				"    line_item.journal_entry_id = journal_entry.id AND " + 
+				"    account.account_group_id = account_group.id AND " + 
+				"    account_group.account_subtype_id = account_subtype.id AND  " + 
+				"    account_subtype.account_type_id = account_type.id AND  " + 
+				"    journal_entry.deleted = false " + 
+				"ORDER BY " + 
+				"    journal_entry.journal_entry_date DESC, line_item.id DESC " + 
+				"",
 		resultSetMapping = "lineItemDTOMapping"
 )
 @SqlResultSetMapping(//sqlresultsetmapping for counting query
@@ -106,8 +104,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 		resultSetMapping = "lineItemDTOMapping.count"
 )
 @NamedNativeQuery( //query to count number of LineItems in order to use Pageable on LineItem.getAllLineItemsForAccountSubtype
-		name = "LineItem.getAllLineItemsForAccountSubtype.count",
-		query = "SELECT count(*) AS count from line_item, account, journal_entry WHERE line_item.account_id = account.id AND account.account_subtype_id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false",
+		name = "LineItem.getAllLineItemsForAccountGroup.count",
+		query = "SELECT count(*) AS count from line_item, account, account_group, journal_entry  " + 
+				"	WHERE  " + 
+				"		account_group.id = ? AND  " + 
+				"		line_item.account_id = account.id AND  " + 
+				"		account_group.id = account.account_group_id AND " + 
+				"		line_item.journal_entry_id = journal_entry.id AND  " + 
+				"		journal_entry.deleted = false AND " + 
+				"		account.deleted = false ",
 		resultSetMapping = "lineItemDTOMapping.count"
 )
 

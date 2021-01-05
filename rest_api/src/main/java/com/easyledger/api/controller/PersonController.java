@@ -1,24 +1,17 @@
 package com.easyledger.api.controller;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
 
-import org.springframework.util.ReflectionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,13 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
-import com.easyledger.api.model.Category;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.service.PersonService;
 
 @RestController
-@RequestMapping("/v0.1")
+@RequestMapping("/v0.2")
 public class PersonController {
 	private PersonRepository personRepo;
 	private PersonService personService;

@@ -42,24 +42,19 @@ import com.easyledger.api.viewmodel.JournalEntryViewModel;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v0.1")
+@RequestMapping("/v0.2")
 public class JournalEntryController {
 	private JournalEntryRepository journalEntryRepo;
 	private JournalEntryService journalEntryService;
-	private LineItemService lineItemService;
 	private LineItemRepository lineItemRepo;
-	private OrganizationRepository organizationRepo;
 	private AuthorizationService authorizationService;
 
 	public JournalEntryController(JournalEntryRepository journalEntryRepo, JournalEntryService journalEntryService, 
-			LineItemService lineItemService, LineItemRepository lineItemRepo, OrganizationRepository organizationRepo, 
-			AuthorizationService authorizationService) {
+			LineItemRepository lineItemRepo, AuthorizationService authorizationService) {
 		super();
 		this.journalEntryRepo = journalEntryRepo;
 		this.journalEntryService = journalEntryService;
-		this.lineItemService = lineItemService;
 		this.lineItemRepo = lineItemRepo;
-		this.organizationRepo = organizationRepo;
 		this.authorizationService = authorizationService;
 	}
 

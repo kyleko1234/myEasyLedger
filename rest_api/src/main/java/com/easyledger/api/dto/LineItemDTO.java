@@ -244,11 +244,11 @@ public class LineItemDTO {
 		this.journalEntryDate = journalEntryDate;
 	}
 
-	public boolean isCredit() {
+	public boolean isIsCredit() {
 		return isCredit;
 	}
 
-	public void setCredit(boolean isCredit) {
+	public void setIsCredit(boolean isCredit) {
 		this.isCredit = isCredit;
 	}
 

@@ -31,9 +31,7 @@ import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.repository.AccountRepository;
-import com.easyledger.api.repository.CategoryRepository;
 import com.easyledger.api.repository.LineItemRepository;
-import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.service.AccountService;
 
@@ -45,16 +43,13 @@ public class AccountController {
 	private AccountRepository accountRepo;
 	private LineItemRepository lineItemRepo;
 	private AccountService accountService;
-	private OrganizationRepository organizationRepo;
 	private AuthorizationService authorizationService;
 	
     public AccountController (AccountRepository accountRepo, AccountService accountService, 
-    		OrganizationRepository organizationRepo, LineItemRepository lineItemRepo, 
-    		AuthorizationService authorizationService) {
+    		LineItemRepository lineItemRepo, AuthorizationService authorizationService) {
 		super();
 		this.accountRepo = accountRepo;
 		this.accountService = accountService;
-		this.organizationRepo = organizationRepo;
 		this.lineItemRepo = lineItemRepo;
 		this.authorizationService = authorizationService;
 	}
@@ -106,7 +101,7 @@ public class AccountController {
     	authorizationService.authorizeByOrganizationId(authentication, organizationId);
     	return accountRepo.getAllAccountBalancesForOrganization(organizationId);
     }
-    //START HERE
+    
     @GetMapping("/organization/{id}/accountBalance/{startDate}/{endDate}")
     public List<AccountBalanceDTO> getAllAccountBalancesForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId, 
     		@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
@@ -138,7 +133,6 @@ public class AccountController {
     	return new AccountDTO(updatedAccount);
     	}
 
-    //TODO maybe forbid editing of account's organization field?
     @PutMapping("/account/{id}")
     public ResponseEntity<AccountDTO> updateAccount(@PathVariable(value = "id") Long accountId,
         @Valid @RequestBody AccountDTO dto, Authentication authentication) 
@@ -151,7 +145,7 @@ public class AccountController {
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
     	
     	authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
-    	authorizationService.authorizeByOrganizationId(authentication, account.getOrganization().getId());
+    	authorizationService.authorizeByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
     	
     	final Account updatedAccount = accountRepo.save(accountDetails);
     	AccountDTO updatedDto = new AccountDTO(updatedAccount);
@@ -163,11 +157,8 @@ public class AccountController {
         throws ResourceNotFoundException, ConflictException, UnauthorizedException {
         Account account = accountRepo.findById(accountId)
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-        authorizationService.authorizeByOrganizationId(authentication, account.getOrganization().getId());
-        boolean accountContainsCategories = categoryRepo.accountContainsCategories(accountId);
-        if (accountContainsCategories) {
-        	throw new ConflictException("Please remove all categories from this account before deleting the account.");
-        }
+        authorizationService.authorizeByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
+
         boolean accountContainsLineItems = lineItemRepo.accountContainsLineItems(accountId);
         if (accountContainsLineItems) {
         	throw new ConflictException("Please remove all line items from this account before deleting the account.");

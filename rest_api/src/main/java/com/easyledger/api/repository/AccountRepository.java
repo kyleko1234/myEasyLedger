@@ -30,9 +30,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 	public AccountBalanceDTO getAccountBalanceById(Long accountId);
 	
 	@Query(
-		value = "SELECT CASE EXISTS (SELECT 1 from account WHERE account.account_subtype_id = ? AND account.deleted = false) "
+		value = "SELECT CASE EXISTS (SELECT 1 from account WHERE account.account_group_id = ? AND account.deleted = false) "
 				+ "WHEN true THEN true ELSE false END",
 		nativeQuery = true)
-	public boolean accountSubtypeContainsAccounts(Long accountSubtypeId);
+	public boolean accountGroupContainsAccounts(Long accountGroupId);
 	
 }

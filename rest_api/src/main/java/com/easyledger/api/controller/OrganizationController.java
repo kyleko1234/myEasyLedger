@@ -1,10 +1,7 @@
 package com.easyledger.api.controller;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -12,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,19 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
-import com.easyledger.api.model.AccountSubtypeMetadata;
-import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.security.AuthorizationService;
 
 @RestController
-@RequestMapping("/v0.1")
+@RequestMapping("/v0.2")
 public class OrganizationController {
 	
 	private OrganizationRepository organizationRepo;

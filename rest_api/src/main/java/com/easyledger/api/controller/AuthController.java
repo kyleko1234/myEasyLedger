@@ -47,7 +47,7 @@ import com.easyledger.api.service.PersonService;
 import com.easyledger.api.service.VerificationService;
 
 @RestController
-@RequestMapping("/v0.1")
+@RequestMapping("/v0.2")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;

@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
-import com.easyledger.api.viewmodel.AccountTypeSummaryViewModel;
+import com.easyledger.api.dto.AccountTypeSummaryDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		name = "accountTypeSummaryViewModelMapping",
 		classes = {
 				@ConstructorResult(
-						targetClass = AccountTypeSummaryViewModel.class,
+						targetClass = AccountTypeSummaryDTO.class,
 						columns = {
 								@ColumnResult(name = "accountTypeId"),
 								@ColumnResult(name = "accountTypeName"),
@@ -42,12 +42,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditAmount, " + 
 				"    journal_entry.year_month AS yearMonth " + 
 				"FROM " + 
-				"    account_type, account " + 
-				"    LEFT JOIN line_item on line_item.account_id = account.id " + 
-				"    LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id  " + 
-				"        AND journal_entry.year_month >= :yearMonth " + 
-				"WHERE account.account_type_id = account_type.id AND account.deleted = false AND journal_entry.deleted = false AND account.organization_id = :organizationId " + 
-				"GROUP BY account_type.id, journal_entry.year_month  " + 
+				"    account_type, line_item, journal_entry, account_subtype, account_group, account, organization " + 
+				"WHERE  " + 
+				"    organization.id = :organizationId AND " + 
+				"    account_subtype.account_type_id = account_type.id AND  " + 
+				"    account_group.account_subtype_id = account_subtype.id AND  " + 
+				"    account_group.organization_id = organization.id AND  " + 
+				"    account.account_group_id = account_group.id AND  " + 
+				"    line_item.account_id = account.id AND  " + 
+				"    line_item.journal_entry_id = journal_entry.id AND  " + 
+				"    journal_entry.year_month >= :yearMonth " + 
+				"GROUP BY " + 
+				"    account_type.id, journal_entry.year_month " + 
 				"ORDER BY journal_entry.year_month ASC, account_type.id DESC",
 		resultSetMapping = "accountTypeSummaryViewModelMapping"
 )

@@ -12,20 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easyledger.api.dto.AccountSubtypeDTO;
-import com.easyledger.api.dto.CategoryDTO;
+import com.easyledger.api.dto.AccountTypeSummaryDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
-import com.easyledger.api.model.AccountSubtypeMetadata;
 import com.easyledger.api.model.AccountType;
 import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.security.AuthorizationService;
-import com.easyledger.api.viewmodel.AccountTypeSummaryViewModel;
-import com.easyledger.api.model.Category;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v0.1")
+@RequestMapping("/v0.2")
 public class AccountTypeController {
 
 	private AccountTypeRepository accountTypeRepo;
@@ -51,9 +47,9 @@ public class AccountTypeController {
         return ResponseEntity.ok().body(accountType);
     }
     
-    //get monthly account type summaries for organization with organziationId for the past (int months) months
+    //get monthly account type summaries for organization with organizationId for the past (int months) months
     @GetMapping("/organization/{id}/accountTypeSummary/monthly/{numberOfMonths}")
-    public List<AccountTypeSummaryViewModel> getMonthlyAccountTypeSummaries(@PathVariable(value = "id") Long organizationId, @PathVariable(value = "numberOfMonths") int months,
+    public List<AccountTypeSummaryDTO> getMonthlyAccountTypeSummaries(@PathVariable(value = "id") Long organizationId, @PathVariable(value = "numberOfMonths") int months,
     		Authentication authentication) throws UnauthorizedException {
     	
     	//check authorization
