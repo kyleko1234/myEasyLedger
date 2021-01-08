@@ -13,5 +13,6 @@ AccountTypes represent the main categories of accounts. The API allows you to re
 ___
 ### Contents
 - [[The AccountType Object]]
+- [[Retrieve Monthly Account Type Summaries for An Organization for the Past N Months]]
 - [[Retrieve an AccountType]]
 - [[List All AccountTypes]]

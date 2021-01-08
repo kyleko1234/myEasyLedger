@@ -23,7 +23,7 @@
           "type": "markdown",
           "state": {
             "file": "Easy Ledger.md",
-            "mode": "preview"
+            "mode": "source"
           }
         },
         "group": "bd85d377df6c24a6"
@@ -100,14 +100,14 @@
   },
   "lastOpenFiles": [
     "Easy Ledger.md",
-    "AccountSubtype/Contents/Create an AccountSubtype.md",
-    "AccountSubtype/Contents/Update an AccountSubtype.md",
-    "AccountSubtype/Contents/The AccountSubtype Object.md",
-    "AccountSubtype/Contents/Delete an AccountSubtype.md",
-    "AccountSubtype/Contents/List All AccountSubtypes.md",
-    "AccountSubtype/Contents/List All AccountSubtypes Belonging to an Organization.md",
-    "AccountSubtype/Contents/Retrieve an AccountSubtype.md",
-    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
-    "Account/Contents/Update an Account.md"
+    "Organization/Contents/List All Persons in an Organization.md",
+    "Organization/Contents/Retrieve an Organization.md",
+    "Organization/Contents/Create an Organization.md",
+    "Organization/Contents/List All Organizations.md",
+    "Organization/Contents/The Organization Object.md",
+    "Organization/Contents/Update an Organization.md",
+    "Organization/Organization.md",
+    "JournalEntry/Contents/Delete a JournalEntry.md",
+    "JournalEntry/Contents/Update a JournalEntry.md"
   ]
 }

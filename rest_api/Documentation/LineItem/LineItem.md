@@ -7,5 +7,4 @@ ___
 - [[Retrieve a LineItem]]
 - [[List All LineItems]]
 - [[Retrieve All LineItems for an Account]]
-- [[Retrieve All LineItems for a Category]]
-- [[Retrieve All LineItems for an Account Subtype]]
+- [[Retrieve All LineItems for an Account Group]]

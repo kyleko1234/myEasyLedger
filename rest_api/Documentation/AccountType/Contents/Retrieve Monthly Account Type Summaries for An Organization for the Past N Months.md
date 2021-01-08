@@ -16,7 +16,7 @@ ___
 
 
 #### Sample Request
-`GET /v0.1/organization/1/accountTypeSummary/monthly/8` <br/>
+`GET /organization/1/accountTypeSummary/monthly/8` <br/>
 
 #### Sample Response
 ```json
@@ -24,23 +24,37 @@ ___
     {
         "accountTypeId": 5,
         "accountTypeName": "Expenses",
-        "debitAmount": 80,
-        "creditAmount": 10,
-        "yearMonth": 202004
+        "debitAmount": 8180,
+        "creditAmount": 0,
+        "yearMonth": 202011
+    },
+    {
+        "accountTypeId": 4,
+        "accountTypeName": "Income",
+        "debitAmount": 0,
+        "creditAmount": 24000,
+        "yearMonth": 202011
+    },
+    {
+        "accountTypeId": 3,
+        "accountTypeName": "Owner's Equity",
+        "debitAmount": 3000,
+        "creditAmount": 400000,
+        "yearMonth": 202011
     },
     {
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
-        "debitAmount": 30,
-        "creditAmount": 30,
-        "yearMonth": 202004
+        "debitAmount": 0,
+        "creditAmount": 22500,
+        "yearMonth": 202011
     },
     {
         "accountTypeId": 1,
         "accountTypeName": "Assets",
-        "debitAmount": 40,
-        "creditAmount": 110,
-        "yearMonth": 202004
+        "debitAmount": 473750,
+        "creditAmount": 38430,
+        "yearMonth": 202011
     }
 ]
 ```

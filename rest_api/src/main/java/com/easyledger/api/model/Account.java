@@ -90,7 +90,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )	
 @NamedNativeQuery( //TODO: UNTESTED takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization
 		name = "Account.getAllAccountBalancesForOrganization",
-		query = "SELECT account.id AS account_id, account.name AS accountName, account_group.id AS account_group_id, account_group.name AS accountGroupName, " + 
+		query = "SELECT account.id AS accountId, account.name AS accountName, account_group.id AS accountGroupId, account_group.name AS accountGroupName, " + 
 				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
 				"    organization.id AS organizationId, organization.name AS organizationName, " + 
 				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal,  " + 
@@ -111,7 +111,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )
 @NamedNativeQuery( //TODO: TEST takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization up until the given date
 		name = "Account.getAllAccountBalancesForOrganizationUpToDate",
-		query = "SELECT account.id AS account_id, account.name AS accountName, account_group.id AS account_group_id, account_group.name AS accountGroupName, " + 
+		query = "SELECT account.id AS accountId, account.name AS accountName, account_group.id AS accountGroupId, account_group.name AS accountGroupName, " + 
 				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
 				"    organization.id AS organizationId, organization.name AS organizationName, " + 
 				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS debitTotal,  " + 
@@ -132,7 +132,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )
 @NamedNativeQuery( //TODO: TEST takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization for the given time period
 		name = "Account.getAllAccountBalancesForOrganizationBetweenDates",
-		query = "SELECT account.id AS account_id, account.name AS accountName, account_group.id AS account_group_id, account_group.name AS accountGroupName, " + 
+		query = "SELECT account.id AS accountId, account.name AS accountName, account_group.id AS accountGroupId, account_group.name AS accountGroupName, " + 
 				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
 				"    organization.id AS organizationId, organization.name AS organizationName, " + 
 				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS debitTotal,  " + 

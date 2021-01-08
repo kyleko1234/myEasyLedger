@@ -7,26 +7,26 @@ The id of the Account which this LineItem affects.
 - **accountName (`String` 40)**<br/>
 The name of the Account which this LineItem affects.
 
-- **accountSubtypeId (optional `Long`)**<br/>
-The id of the subtype of this LineItem’s account, if it has a subtype.
+- **accountGroupId ( `Long`)**<br/>
+The id of the group of this LineItem’s account.
 
-- **accountSubtypeName (optional `String` 40)**<br/>
-The name of the subtype of this LineItem’s account, if it has a subtype.
+- **accountGroupName ( `String` 64)**<br/>
+The name of the group of this LineItem’s account.
+
+- **accountSubtypeId ( `Long`)**<br/>
+The id of the subtype of this LineItem’s account.
+
+- **accountSubtypeName ( `String` 64)**<br/>
+The name of the subtype of this LineItem’s account.
 
 - **accountTypeId (`Long`)**<br/>
 The id of the type of the Account that this LineItem affects. Easy Ledger assumes that there are exactly five account types: Assets (1), Liabilities (2), Owner’s Equity (3), Income (4), and Expenses (5).
 
+- **accountTypeName (`String` 64)**<br/>
+The name of the type of the Account that this LineItem affects. Easy Ledger assumes that there are exactly five account types: Assets (1), Liabilities (2), Owner’s Equity (3), Income (4), and Expenses (5).
+
 - **amount (`BigDecimal`)**<br/>
 The amount that this lineItem is recording.
-
-- **accountTypeName (`String` 20)**<br/>
-The name of the type of the Account that this LineItem affects.
-
-- **categoryId (optional `Long`)**<br/>
-The id of the category in which this LineItem falls. This is optional and should generally only be used for Expense and Income accounts.
-
-- **categoryName (optional `String` 40)**<br/>
-If this LineItem affects an Income or Expense account, this describes the category of Income or Expense.
 
 - **description (optional `String` 255)**<br/>
 A brief description of this LineItem.
@@ -46,19 +46,19 @@ ___
 #### Sample Object
 ``` json 
 {
-    "accountId": 5,
-    "accountName": "Personal Expenses",
-    "accountSubtypeId": null,
-    "accountSubtypeName": null,
-    "accountTypeId": 5,
-    "accountTypeName": "Expenses",
-    "amount": 20.00,
-    "categoryId": 2,
-    "categoryName": "Dining",
-    "description": "Dining expenses",
-    "journalEntryId": 2,
-    "journalEntryDate": "2020-04-18",
+    "accountId": 1,
+    "accountName": "Cash",
+    "accountGroupId": 1,
+    "accountGroupName": "Cash",
+    "accountSubtypeId": 1,
+    "accountSubtypeName": "Cash and cash equivalents",
+    "accountTypeId": 1,
+    "accountTypeName": "Assets",
+    "amount": 400000,
+    "description": "Cash influx from initial offering",
+    "journalEntryId": 1,
+    "journalEntryDate": "2020-11-01",
     "isCredit": false,
-    "lineItemId": 3
+    "lineItemId": 1
 }
 ```

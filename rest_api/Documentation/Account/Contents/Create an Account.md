@@ -1,7 +1,7 @@
 ### Create an account
 Endpoint: `POST /account`
 
-Authorization: User may only create an account for an organization that they belong to.
+Authorization: AccountGroup must be provided. AccountGroup must belong to an organization that the user belongs to.
 
 Creates an account with the values of the parameters passed.
 ___
@@ -9,14 +9,8 @@ ___
 - **accountName (`String` 40)**<br/>
 The name of this account.
 
-- **accountTypeId (`Long`)**<br/>
+- **accountGroupId (`Long`)**<br/>
 The id of the type for this account.
-
-- **accountSubtypeId (optional `Long`)**<br/>
-The id of the subtype for this account.
-
-- **organizationId (`Long`)** <br/>
-The id of the organization that this account belongs to.
 
 ___
 
@@ -29,10 +23,8 @@ ___
 Body:
 ```json
 {
-    "accountName": "Personal Cash",
-    "accountTypeId": 1,
-    "accountSubtypeId": 1,
-	"organizationId": 1
+    "accountName": "Cash Equivalents",
+    "accountGroupId": 1
 }
 ```
 <br/>
@@ -41,12 +33,14 @@ Body:
 #### Sample Response
 ```json
 {
-    "accountId": 1,
-    "accountName": "Personal Cash",
+    "accountId": 15,
+    "accountName": "Cash Equivalents",
+    "accountGroupId": 1,
+    "accountGroupName": "Cash",
+    "accountSubtypeId": 1,
+    "accountSubtypeName": "Cash and cash equivalents",
     "accountTypeId": 1,
     "accountTypeName": "Assets",
-    "accountSubtypeId": 1,
-    "accountSubtypeName": "Cash",
     "organizationId": 1,
     "organizationName": "Sample organization",
     "deleted": false

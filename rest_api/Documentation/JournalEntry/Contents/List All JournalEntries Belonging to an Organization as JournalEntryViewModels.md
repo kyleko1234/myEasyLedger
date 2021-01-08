@@ -22,25 +22,25 @@ ___
 {
     "content": [
         {
-            "journalEntryId": 6,
-            "journalEntryDate": "2020-04-21",
-            "description": "Lunch at Whole Foods",
-            "debitAmount": 40.00,
-            "creditAmount": 40.00
+            "journalEntryId": 10,
+            "journalEntryDate": "2020-11-30",
+            "description": "Paid salary for the month of November $7,500",
+            "debitAmount": 7500,
+            "creditAmount": 7500
         },
         {
-            "journalEntryId": 5,
-            "journalEntryDate": "2020-04-20",
-            "description": "Pay credit card balance",
-            "debitAmount": 30.00,
-            "creditAmount": 30.00
+            "journalEntryId": 9,
+            "journalEntryDate": "2020-11-29",
+            "description": "Received $20,000 cash from clients billed on November 21.",
+            "debitAmount": 20000,
+            "creditAmount": 20000
         },
         {
-            "journalEntryId": 4,
-            "journalEntryDate": "2020-04-19",
-            "description": "Transfer venmo balance to bank",
-            "debitAmount": 30.00,
-            "creditAmount": 30.00
+            "journalEntryId": 8,
+            "journalEntryDate": "2020-11-28",
+            "description": "Paid utility bills for the month of November $180.",
+            "debitAmount": 180,
+            "creditAmount": 180
         }
     ],
     "pageable": {
@@ -55,9 +55,9 @@ ___
         "paged": true,
         "unpaged": false
     },
-    "totalPages": 2,
-    "totalElements": 6,
     "last": false,
+    "totalPages": 4,
+    "totalElements": 10,
     "size": 3,
     "sort": {
         "sorted": false,

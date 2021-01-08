@@ -14,8 +14,16 @@ public class AccountTypeSummaryDTO {
 			BigDecimal creditAmount, Integer yearMonth) {
 		this.accountTypeId = accountTypeId.longValueExact();
 		this.accountTypeName = accountTypeName;
-		this.debitAmount = debitAmount;
-		this.creditAmount = creditAmount;
+		if (debitAmount == null) {
+			this.debitAmount = new BigDecimal(0);
+		} else {
+			this.debitAmount = debitAmount;
+		}
+		if (creditAmount == null) {
+			this.creditAmount = new BigDecimal(0);
+		} else {
+			this.creditAmount = creditAmount;
+		}
 		this.yearMonth = yearMonth;
 	}
 	

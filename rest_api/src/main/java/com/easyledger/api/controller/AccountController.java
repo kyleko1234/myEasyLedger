@@ -127,8 +127,8 @@ public class AccountController {
     	if (dto.getAccountId() != null) {
     		throw new ConflictException("Please do not attempt to manually create an account id.");
     	}
-    	authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
     	Account account = accountService.createAccountFromDTO(dto);
+    	authorizationService.authorizeByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
     	final Account updatedAccount = accountRepo.save(account);
     	return new AccountDTO(updatedAccount);
     	}

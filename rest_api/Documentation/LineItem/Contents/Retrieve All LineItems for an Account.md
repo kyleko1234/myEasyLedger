@@ -21,36 +21,36 @@ ___
 {
     "content": [
         {
-            "accountId": 2,
-            "accountName": "Personal Checking",
-            "accountSubtypeId": 2,
-            "accountSubtypeName": "Checking Account",
+            "accountId": 1,
+            "accountName": "Cash",
+            "accountGroupId": 1,
+            "accountGroupName": "Cash",
+            "accountSubtypeId": 1,
+            "accountSubtypeName": "Cash and cash equivalents",
             "accountTypeId": 1,
             "accountTypeName": "Assets",
-            "amount": 30.00,
-            "categoryId": null,
-            "categoryName": null,
-            "description": "paid credit balance from checking acc",
-            "journalEntryId": 5,
-            "journalEntryDate": "2020-04-20",
+            "amount": 7500,
+            "description": "Paid salary expense for November",
+            "journalEntryId": 10,
+            "journalEntryDate": "2020-11-30",
             "isCredit": true,
-            "lineItemId": 11
+            "lineItemId": 21
         },
         {
-            "accountId": 2,
-            "accountName": "Personal Checking",
-            "accountSubtypeId": 2,
-            "accountSubtypeName": "Checking Account",
+            "accountId": 1,
+            "accountName": "Cash",
+            "accountGroupId": 1,
+            "accountGroupName": "Cash",
+            "accountSubtypeId": 1,
+            "accountSubtypeName": "Cash and cash equivalents",
             "accountTypeId": 1,
             "accountTypeName": "Assets",
-            "amount": 30.00,
-            "categoryId": null,
-            "categoryName": null,
-            "description": "venmo transfer to bank",
-            "journalEntryId": 4,
-            "journalEntryDate": "2020-04-19",
+            "amount": 20000,
+            "description": "Collected cash from clients billed on November 21",
+            "journalEntryId": 9,
+            "journalEntryDate": "2020-11-29",
             "isCredit": false,
-            "lineItemId": 8
+            "lineItemId": 18
         }
     ],
     "pageable": {
@@ -65,9 +65,9 @@ ___
         "paged": true,
         "unpaged": false
     },
-    "totalPages": 1,
-    "totalElements": 2,
-    "last": true,
+    "last": false,
+    "totalPages": 4,
+    "totalElements": 7,
     "size": 2,
     "sort": {
         "sorted": false,

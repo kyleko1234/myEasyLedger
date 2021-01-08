@@ -1,25 +1,26 @@
-### Retrieve an account
-Endpoint: `GET /account/{id}`
+### Retrieve an account group
+Endpoint: `GET /accountGroup/{id}`
 
-Authorization: Requesting user must belong to the organization that owns this account. 
+Authorization: Requesting user must belong to the organization that owns this account group.
 
-Retrieves an account using the specified id.
+Retrieves an account group using the specified id.
 ___
+
 #### Request Body Parameters
 None
 ___
 #### Returns
-Returns an account object if a valid ID was supplied, otherwise returns HTTP 404 and an error.
+Returns an AccountGroup object if a valid ID was supplied, otherwise returns HTTP 404 and an error.
 ___
+
+
 #### Sample Request
-`GET /account/1`
+`GET /accountGroup/1`
 <br/>
 
 #### Sample Response
 ```json
 {
-    "accountId": 1,
-    "accountName": "Cash",
     "accountGroupId": 1,
     "accountGroupName": "Cash",
     "accountSubtypeId": 1,
@@ -31,5 +32,3 @@ ___
     "deleted": false
 }
 ```
-
-

@@ -27,8 +27,6 @@ List of LineItems to be contained in this entry. Each entry’s LineItems must b
         Account that this LineItem affects.
     - **amount (`BigDecimal`)**<br/>
         Amount of money that this LineItem represents.
-   -  **categoryId (optional `Long`)**<br/>
-If this is an expense LineItem, the type of expense it represents.
    -  **description (optional `String` 255)**<br/>
         A description for this LineItem.
     - **isCredit (`boolean`)**<br/>
@@ -42,24 +40,22 @@ ___
 Body:
 ```json 
 {
-    "journalEntryId": 1,
-    "journalEntryDate": "2020-04-21",
-    "description": "grocery shopping",
+    "journalEntryId": 11,
+    "journalEntryDate": "2020-11-01",
+    "description": "Issued a whole bunch of shares of common stock at $20 per share",
     "personId": 1,
     "organizationId": 1,
     "lineItems": [
         {
-            "accountId": 5,
-            "amount": 40.00,
-            "categoryId": 1,
-            "description": "Grocery expenses",
+            "accountId": 1,
+            "amount": 400000,
+            "description": "Cash influx from initial offering",
             "isCredit": false
         },
         {
-            "accountId": 1,
-            "amount": 40.00,
-            "categoryId": null,
-            "description": "Cash payment for groceries",
+            "accountId": 9,
+            "amount": 400000,
+            "description": "Issued 20000 shares of common at 20 per",
             "isCredit": true
         }
     ]
@@ -71,45 +67,44 @@ Body:
 #### Sample Response
 ```json
 {
-    "journalEntryId": 1,
-    "journalEntryDate": "2020-04-11",
-    "description": "Grocery for the week",
+    "journalEntryId": 11,
+    "journalEntryDate": "2020-11-01",
+    "description": "Issued a whole bunch of shares of common stock at $20 per share",
     "personId": 1,
     "organizationId": 1,
     "lineItems": [
         {
             "accountId": 1,
-            "accountName": "Personal Cash",
+            "accountName": "Cash",
+            "accountGroupId": 1,
+            "accountGroupName": "Cash",
             "accountSubtypeId": 1,
-            "accountSubtypeName": "Cash",
+            "accountSubtypeName": "Cash and cash equivalents",
             "accountTypeId": 1,
             "accountTypeName": "Assets",
-            "amount": 40.00,
-            "categoryId": null,
-            "categoryName": null,
-            "description": "Cash payment for groceries",
-            "journalEntryId": 1,
-            "journalEntryDate": "2020-04-11",
-            "isCredit": true,
-            "lineItemId": 2
+            "amount": 400000,
+            "description": "Cash influx from initial offering",
+            "journalEntryId": 11,
+            "journalEntryDate": "2020-11-01",
+            "isCredit": false,
+            "lineItemId": 24
         },
         {
-            "accountId": 5,
-            "accountName": "Personal Expenses",
-            "accountSubtypeId": null,
-            "accountSubtypeName": null,
-            "accountTypeId": 5,
-            "accountTypeName": "Expenses",
-            "amount": 40.00,
-            "categoryId": 1,
-            "categoryName": "Grocery",
-            "description": "Grocery expenses",
-            "journalEntryId": 1,
-            "journalEntryDate": "2020-04-11",
-            "isCredit": false,
-            "lineItemId": 1
+            "accountId": 9,
+            "accountName": "Capital stock",
+            "accountGroupId": 6,
+            "accountGroupName": "Paid-in Capital",
+            "accountSubtypeId": 19,
+            "accountSubtypeName": "Paid-in capital",
+            "accountTypeId": 3,
+            "accountTypeName": "Owner's Equity",
+            "amount": 400000,
+            "description": "Issued 20000 shares of common at 20 per",
+            "journalEntryId": 11,
+            "journalEntryDate": "2020-11-01",
+            "isCredit": true,
+            "lineItemId": 25
         }
     ],
     "deleted": false
-}
-```
+}```

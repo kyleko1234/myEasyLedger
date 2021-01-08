@@ -84,10 +84,13 @@ public class AccountGroupController {
     @ResponseStatus(HttpStatus.CREATED)
     public AccountGroupDTO createAccountSubtype(@Valid @RequestBody AccountGroupDTO dto, Authentication authentication) 
     	throws ResourceNotFoundException, ConflictException, UnauthorizedException {
-    	if (dto.getAccountSubtypeId() != null) {
-    		throw new ConflictException("Please do not attempt to manually create an accountSubtypeId.");
+    	if (dto.getAccountGroupId() != null) {
+    		throw new ConflictException("Please do not attempt to manually create an accountGroupId.");
     	}
     	authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
+    	if (dto.getAccountSubtypeId() == null) {
+    		throw new ConflictException("Each AccountGroup must have an AccountSubtype.");
+    	}
     	AccountGroup accountGroup = accountGroupService.createAccountGroupFromDTO(dto);
     	final AccountGroup updatedAccountGroup = accountGroupRepo.save(accountGroup);
     	return new AccountGroupDTO(updatedAccountGroup);

@@ -20,18 +20,18 @@ ____
 #### Sample Response
 ```json
 {
-    "accountId": 5,
-    "accountName": "Personal Expenses",
-    "accountSubtypeId": null,
-    "accountSubtypeName": null,
+    "accountId": 12,
+    "accountName": "Office Rent",
+    "accountGroupId": 9,
+    "accountGroupName": "Selling, general, and administration",
+    "accountSubtypeId": 26,
+    "accountSubtypeName": "Selling, general, and administration",
     "accountTypeId": 5,
     "accountTypeName": "Expenses",
-    "amount": 20.00,
-    "categoryId": 2,
-    "categoryName": "Dining",
-    "description": "Dining expenses",
+    "amount": 500,
+    "description": "Office rent expense, November",
     "journalEntryId": 2,
-    "journalEntryDate": "2020-04-18",
+    "journalEntryDate": "2020-11-03",
     "isCredit": false,
     "lineItemId": 3
 }

@@ -26,7 +26,7 @@ public class AccountService {
 		Account product = new Account();
 		product.setId(dto.getAccountId());
 		product.setName(dto.getAccountName());
-		product.setDeleted(dto.isDeleted());
+//		product.setDeleted(dto.isDeleted());
 		
 		AccountGroup accountGroup = accountGroupRepo.findById(dto.getAccountGroupId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("AccountGroup not found for this id :: " + dto.getAccountGroupId()));

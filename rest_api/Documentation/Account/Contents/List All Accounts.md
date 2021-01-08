@@ -23,11 +23,13 @@ ___
 [
 	{
 		"accountId": 1,
-		"accountName": "Personal Cash",
+		"accountName": "Cash",
+		"accountGroupId": 1,
+		"accountGroupName": "Cash",
+		"accountSubtypeId": 1,
+		"accountSubtypeName": "Cash and cash equivalents",
 		"accountTypeId": 1,
 		"accountTypeName": "Assets",
-		"accountSubtypeId": 1,
-		"accountSubtypeName": "Cash",
 		"organizationId": 1,
 		"organizationName": "Sample organization",
 		"deleted": false

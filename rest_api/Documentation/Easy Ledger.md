@@ -1,4 +1,4 @@
-# Easy Ledger API v0.1 Documentation
+# Easy Ledger API v0.2 Documentation
 ___
 
 ### Objects
@@ -7,13 +7,13 @@ ___
 - [[LineItem]]
 - [[Organization]]
 - [[Account]]
-- [[AccountType]]
 - [[AccountSubtype]]
-- [[Category]]
+- [[AccountType]]
+- [[AccountGroup]]
 ___
 ### List of Endpoints
 
-Prefix all endpoints with `http://{host}/v0.1/`
+Prefix all endpoints with `http://{host}/v0.2/`
 - [[Sign In | POST /auth/signin]]
 - [[Sign Up| POST /auth/signup]]
 - [[Refresh JWT|GET /auth/refresh]]
@@ -33,8 +33,7 @@ Prefix all endpoints with `http://{host}/v0.1/`
 - [[List All LineItems| GET /lineItem]]
 - [[Retrieve a LineItem|GET /lineItem/{id}]]
 - [[Retrieve All LineItems for an Account|GET /account/{id}/lineItem]]**
-- [[Retrieve All LineItems for a Category|GET /category/{id}/lineItem]]**
-- [[Retrieve All LineItems for an Account Subtype|GET /accountSubtype/{id}/lineItem]]**
+- [[Retrieve All LineItems for an Account Group|GET /accountGroup/{id}/lineItem]]**
 <br/><br/>
 - [[List All Organizations|GET /organization]]
 - [[Retrieve an Organization|GET /organization/{id}]]
@@ -55,24 +54,18 @@ Prefix all endpoints with `http://{host}/v0.1/`
 <br/><br/>
 - [[List All AccountTypes|GET /accountType]]
 - [[Retrieve an AccountType|GET /accountType/{id}]]
+- [[Retrieve Monthly Account Type Summaries for An Organization for the Past N Months|GET /organization/{id}/accountTypeSummary/monthly/{monthsAgo}]]
 <br/><br/>
 - [[List All AccountSubtypes|GET /accountSubtype]]
-- [[Retrieve an AccountSubtype|GET /accountSubtype/{id}]]**
-- [[List All AccountSubtypes Belonging to an Organization|GET /organization/{id}/accountSubtype]]*
-- [[Create an AccountSubtype| POST /accountSubtype]]**
-- [[Update an AccountSubtype|PUT /accountSubtype/{id}]]**
-- [[Delete an AccountSubtype| DELETE /accountSubtype/{id}]]**
+- [[Retrieve an AccountSubtype|GET /accountSubtype/{id}]]
 <br/><br/>
-- [[List All Categories|GET /category]]
-- [[Retrieve a Category|GET /category/{id}]]
-- [[Retrieve a CategoryBalance| GET /category/{id}/categoryBalance]]**
-- [[List All Categories Belonging to an Organization|GET /organization/{id}/category]]*
-- [[List All Categories Belonging to an Organization As CategoryBalance Objects| GET /organization/{id}/categoryBalance]]*
-- [[List All Categories Belonging to an Organization As CategoryBalance Objects| GET /organization/{id}/categoryBalance/{startDate}/{endDate}]]
-- [[Create a Category|POST /category]]**
-- [[Update a Category|PUT /category/{id}]]**
-- [[Delete a Category|DELETE /category/{id}]]**
-
+- [[List All AccountGroups|GET /accountGroup]]
+- [[Retrieve an AccountGroup|GET /accountGroup/{id}]]
+- [[List All AccountGroups Belonging to an Organization|GET /organization/{id}/accountGroup]]
+- [[Create an AccountGroup| POST /accountGroup]]
+- [[Update an AccountGroup|PUT /accountGroup/{id}]]
+- [[Delete an AccountGroup| DELETE /accountGroup/{id}]]
+<br/><br/>
 
 
 

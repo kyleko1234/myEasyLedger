@@ -1,107 +1,263 @@
 ### List all account subtypes
 Endpoint: `GET /accountSubtype`
 
-Authorization: `ROLE_ADMIN`
-
-Returns a list of all account subtypes in the database.
+Retrieves a list of all valid account subtypes.
 ___
 
 #### Request Body Parameters
 None
 ___
 #### Returns
-Returns a list of all subtypes in the database.
+Returns a list of all valid AccountSubtype objects.
 ___
-
-
 #### Sample Request
-`GET /accountSubtype`
+`GET /accountSubtype/`
 <br/>
 
 #### Sample Response
 ```json
 [
     {
-        "accountSubtypeId": 1,
-        "accountSubtypeName": "Cash",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
+        "id": 1,
+        "name": "Cash and cash equivalents",
+        "accountType": {
+            "id": 1,
+            "name": "Assets"
+        }
     },
     {
-        "accountSubtypeId": 2,
-        "accountSubtypeName": "Checking Account",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
+        "id": 2,
+        "name": "Current marketable securities",
+        "accountType": {
+            "id": 1,
+            "name": "Assets"
+        }
     },
     {
-        "accountSubtypeId": 3,
-        "accountSubtypeName": "Savings Account",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
+        "id": 3,
+        "name": "Receivables",
+        "accountType": {
+            "id": 1,
+            "name": "Assets"
+        }
     },
     {
-        "accountSubtypeId": 4,
-        "accountSubtypeName": "Mobile Payment Account",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
+        "id": 4,
+        "name": "Inventories",
+        "accountType": {
+            "id": 1,
+            "name": "Assets"
+        }
     },
     {
-        "accountSubtypeId": 5,
-        "accountSubtypeName": "Investment Account",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
+        "id": 5,
+        "name": "Other current assets",
+        "accountType": {
+            "id": 1,
+            "name": "Assets"
+        }
     },
     {
-        "accountSubtypeId": 6,
-        "accountSubtypeName": "Mortgage",
-        "accountTypeId": 2,
-        "accountTypeName": "Liabilities",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
+        "id": 6,
+        "name": "Property",
+        "accountType": {
+            "id": 1,
+            "name": "Assets"
+        }
     },
     {
-        "accountSubtypeId": 7,
-        "accountSubtypeName": "Line of Credit",
-        "accountTypeId": 2,
-        "accountTypeName": "Liabilities",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
+        "id": 7,
+        "name": "Plant and Equipment",
+        "accountType": {
+            "id": 1,
+            "name": "Assets"
+        }
     },
     {
-        "accountSubtypeId": 8,
-        "accountSubtypeName": "Accounts Payable",
-        "accountTypeId": 2,
-        "accountTypeName": "Liabilities",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
+        "id": 8,
+        "name": "Non-current marketable securities",
+        "accountType": {
+            "id": 1,
+            "name": "Assets"
+        }
     },
     {
-        "accountSubtypeId": 9,
-        "accountSubtypeName": "Accounts Receivable",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "deleted": false
+        "id": 9,
+        "name": "Other non-current assets",
+        "accountType": {
+            "id": 1,
+            "name": "Assets"
+        }
     },
-	...
+    {
+        "id": 10,
+        "name": "Cash and cash equivalents",
+        "accountType": {
+            "id": 1,
+            "name": "Assets"
+        }
+    },
+    {
+        "id": 11,
+        "name": "Payables",
+        "accountType": {
+            "id": 2,
+            "name": "Liabilities"
+        }
+    },
+    {
+        "id": 12,
+        "name": "Deferred revenue",
+        "accountType": {
+            "id": 2,
+            "name": "Liabilities"
+        }
+    },
+    {
+        "id": 13,
+        "name": "Commercial paper",
+        "accountType": {
+            "id": 2,
+            "name": "Liabilities"
+        }
+    },
+    {
+        "id": 14,
+        "name": "Current term debt",
+        "accountType": {
+            "id": 2,
+            "name": "Liabilities"
+        }
+    },
+    {
+        "id": 15,
+        "name": "Deferred tax",
+        "accountType": {
+            "id": 5,
+            "name": "Expenses"
+        }
+    },
+    {
+        "id": 16,
+        "name": "Other current liabilities",
+        "accountType": {
+            "id": 2,
+            "name": "Liabilities"
+        }
+    },
+    {
+        "id": 17,
+        "name": "Non-current term debt",
+        "accountType": {
+            "id": 2,
+            "name": "Liabilities"
+        }
+    },
+    {
+        "id": 18,
+        "name": "Other non-current liabilities",
+        "accountType": {
+            "id": 2,
+            "name": "Liabilities"
+        }
+    },
+    {
+        "id": 19,
+        "name": "Paid-in capital",
+        "accountType": {
+            "id": 3,
+            "name": "Owner's Equity"
+        }
+    },
+    {
+        "id": 20,
+        "name": "Dividends and equivalents",
+        "accountType": {
+            "id": 3,
+            "name": "Owner's Equity"
+        }
+    },
+    {
+        "id": 21,
+        "name": "Other equity items",
+        "accountType": {
+            "id": 3,
+            "name": "Owner's Equity"
+        }
+    },
+    {
+        "id": 22,
+        "name": "Revenue",
+        "accountType": {
+            "id": 4,
+            "name": "Income"
+        }
+    },
+    {
+        "id": 23,
+        "name": "Other income",
+        "accountType": {
+            "id": 4,
+            "name": "Income"
+        }
+    },
+    {
+        "id": 24,
+        "name": "Cost of sales",
+        "accountType": {
+            "id": 5,
+            "name": "Expenses"
+        }
+    },
+    {
+        "id": 25,
+        "name": "Research and development",
+        "accountType": {
+            "id": 5,
+            "name": "Expenses"
+        }
+    },
+    {
+        "id": 26,
+        "name": "Selling, general, and administration",
+        "accountType": {
+            "id": 5,
+            "name": "Expenses"
+        }
+    },
+    {
+        "id": 27,
+        "name": "Depreciation",
+        "accountType": {
+            "id": 5,
+            "name": "Expenses"
+        }
+    },
+    {
+        "id": 28,
+        "name": "Amortization",
+        "accountType": {
+            "id": 5,
+            "name": "Expenses"
+        }
+    },
+    {
+        "id": 29,
+        "name": "Other expenses",
+        "accountType": {
+            "id": 5,
+            "name": "Expenses"
+        }
+    },
+    {
+        "id": 30,
+        "name": "Income taxes",
+        "accountType": {
+            "id": 5,
+            "name": "Expenses"
+        }
+    }
 ]
 ```
+
+

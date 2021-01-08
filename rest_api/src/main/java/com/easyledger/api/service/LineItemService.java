@@ -34,7 +34,7 @@ public class LineItemService {
 		product.setAmount(dto.getAmount());
 		product.setDescription(dto.getDescription());
 		
-		
+		//TODO: check if account actually belongs to the person editing this lineItem
 		Account account = accountRepo.findById(dto.getAccountId())
 				.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + dto.getAccountId()));
 		product.setAccount(account);

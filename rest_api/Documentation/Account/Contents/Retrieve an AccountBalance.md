@@ -9,7 +9,7 @@ ___
 None
 ___
 #### Returns
-Returns an account object if a valid ID was supplied, otherwise returns HTTP 404 and an error.
+Returns an account object if a valid ID was supplied, otherwise returns HTTP 404 and an error. 
 ___
 #### Sample Request
 `GET /account/1/accountBalance`
@@ -19,13 +19,17 @@ ___
 ```json
 {
     "accountId": 1,
-    "accountName": "My Personal Wallet",
+    "accountName": "Cash",
+    "accountGroupId": 1,
+    "accountGroupName": "Cash",
+    "accountSubtypeId": 1,
+    "accountSubtypeName": "Cash and cash equivalents",
     "accountTypeId": 1,
     "accountTypeName": "Assets",
-    "accountSubtypeId": 1,
-    "accountSubtypeName": "Cash",
-    "debitTotal": 0,
-    "creditTotal": 80
+    "organizationId": 1,
+    "organizationName": "Sample organization",
+    "debitTotal": 420000,
+    "creditTotal": 18430
 }
 ```
 

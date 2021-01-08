@@ -21,38 +21,22 @@ ___
 #### Sample Response
 ```json 
 [
-    {
-        "accountId": 5,
-        "accountName": "Personal Expenses",
-        "accountSubtypeId": null,
-        "accountSubtypeName": null,
-        "accountTypeId": 5,
-        "accountTypeName": "Expenses",
-        "amount": 40.00,
-        "categoryId": 1,
-        "categoryName": "Grocery",
-        "description": "Grocery expenses",
-        "journalEntryId": 1,
-		"journalEntryDate": "2020-04-11",
-        "isCredit": false,
-        "lineItemId": 1
-    },
-    {
-        "accountId": 1,
-        "accountName": "Cash",
-        "accountSubtypeId": 1,
-        "accountSubtypeName": "Cash",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "amount": 40.00,
-        "categoryId": null,
-        "categoryName": null,
-        "description": "Cash payment for groceries",
-        "journalEntryId": 1,
-		"journalEntryDate": "2020-04-11",
-        "isCredit": true,
-        "lineItemId": 2
-    }, 
+	{
+		"accountId": 1,
+		"accountName": "Cash",
+		"accountGroupId": 1,
+		"accountGroupName": "Cash",
+		"accountSubtypeId": 1,
+		"accountSubtypeName": "Cash and cash equivalents",
+		"accountTypeId": 1,
+		"accountTypeName": "Assets",
+		"amount": 400000,
+		"description": "Cash influx from initial offering",
+		"journalEntryId": 1,
+		"journalEntryDate": "2020-11-01",
+		"isCredit": false,
+		"lineItemId": 1
+	},
     ...
 ]
 ```
