@@ -6,11 +6,10 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
   const appContext = React.useContext(PageSettings);
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
-      { Header: 'Description', accessor: 'description', width:'40%'},
-      { Header: 'Account', accessor: 'accountName', width:'20%'},
-      { Header: 'Category', accessor: 'categoryName', width:'20%'},
-      { Header: 'Debit', accessor: 'debitAmount', width:'10%'},
-      { Header: 'Credit', accessor: 'creditAmount', width:'10%'},
+      { Header: 'Description', accessor: 'description', width:'50%'},
+      { Header: 'Account', accessor: 'accountName', width:'24%'},
+      { Header: 'Debit', accessor: 'debitAmount', width:'13%'},
+      { Header: 'Credit', accessor: 'creditAmount', width:'13%'},
     ],
     []
   )
@@ -98,7 +97,6 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
         <tfoot>
           <tr>
             <td>Total</td>
-            <td></td>
             <td></td>
             <td className="text-right">
               {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}

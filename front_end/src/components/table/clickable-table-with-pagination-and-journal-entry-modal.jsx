@@ -69,7 +69,6 @@ function TableOfJournalEntries({
   const [journalEntryDescription, setJournalEntryDescription] = React.useState('');
   const [journalEntryDate, setJournalEntryDate] = React.useState('');
   const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
-  const [categories, setCategories] = React.useState([]);
   const [accounts, setAccounts] = React.useState([]);
 
   const [alertMessages, setAlertMessages] = React.useState([]);
@@ -84,12 +83,9 @@ function TableOfJournalEntries({
           lineItemId: lineItem.lineItemId,
           accountName: lineItem.accountName,
           accountId: lineItem.accountId,
-          accountTypeId: lineItem.accountTypeId,
           description: lineItem.description,
           debitAmount: (lineItem.isCredit ? null : lineItem.amount),
-          creditAmount: (lineItem.isCredit ? lineItem.amount : null),
-          categoryName: lineItem.categoryName,
-          categoryId: lineItem.categoryId
+          creditAmount: (lineItem.isCredit ? lineItem.amount : null)
         };
         formattedLineItems.push(formattedLineItem);
       })
@@ -110,23 +106,17 @@ function TableOfJournalEntries({
       lineItemId: "",
       accountName: "",
       accountId: "",
-      accountTypeId: "",
       description: "",
       debitAmount: 0,
-      creditAmount: 0,
-      categoryName: "",
-      categoryId: ""
+      creditAmount: 0
     }, 
     {
       lineItemId: "",
       accountName: "",
       accountId: "",
-      accountTypeId: "",
       description: "",
       debitAmount: 0,
-      creditAmount: 0,
-      categoryName: "",
-      categoryId: ""
+      creditAmount: 0
     }])
     toggleEditMode();
     setCreateMode(true);
@@ -146,11 +136,6 @@ function TableOfJournalEntries({
   
   //initially retrieve categories and accounts from API
   React.useEffect(() => {
-    axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/category`).then(response => {
-      const categories = response.data;
-      setCategories(categories);
-    })
-      .catch(console.log);
     axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
       const accounts = response.data;
       setAccounts(accounts);
@@ -159,12 +144,7 @@ function TableOfJournalEntries({
   }, [API_BASE_URL, appContext.currentOrganization])
 
   //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
-  const refreshAccountsAndCategories = () => {
-      axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/category`).then(response => {
-        const categories = response.data;
-        setCategories(categories);
-      })
-        .catch(console.log);
+  const refreshAccounts = () => {
       axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
         const accounts = response.data;
         setAccounts(accounts);
@@ -198,8 +178,6 @@ function TableOfJournalEntries({
     let missingDescription = false;
     let missingAmount = false;
     let missingAccount = false;
-    let missingCategory = false;
-    let accountTypesWithCategories = [4, 5];
     lineItemData.forEach(lineItem => { // check for missing fields within lineItems, and sum debits and credits.
       if (!lineItem.description) {
         missingDescription = true;
@@ -209,9 +187,6 @@ function TableOfJournalEntries({
       }
       if (!lineItem.accountId) {
         missingAccount = true;
-      }
-      if (accountTypesWithCategories.includes(lineItem.accountTypeId) && !lineItem.categoryId) {
-        missingCategory = true;
       }
       
       // sum debits and credits
@@ -232,9 +207,6 @@ function TableOfJournalEntries({
     if (missingAccount) {
       errorMessages.push("Line-items must be assigned to an account.");
     }
-    if (missingCategory) {
-      errorMessages.push("Owner's equity, income, and expense accounts require their line-items to be categorized.");
-    }
     if (debitSum.toFixed(2) !== creditSum.toFixed(2)) {
       errorMessages.push("Debits and Credits must balance.")
     }
@@ -249,7 +221,6 @@ function TableOfJournalEntries({
       return {
         accountId: lineItem.accountId,
         amount: (lineItem.debitAmount ? lineItem.debitAmount : lineItem.creditAmount),
-        categoryId: lineItem.categoryId,
         description: lineItem.description,
         isCredit: (lineItem.creditAmount ? true : false)
       }
@@ -272,7 +243,7 @@ function TableOfJournalEntries({
         fetchJournalEntry(response.data.journalEntryId);
         setCreateMode(false);
         toggleEditMode();
-      });
+      }).catch(console.log);
   }
 
   const putJournalEntry = (id, data) => {
@@ -282,7 +253,7 @@ function TableOfJournalEntries({
         fetchData({pageIndex, pageSize});
         fetchJournalEntry(id);
         toggleEditMode();
-      });
+      }).catch(console.log);
   }
 
   const handleSaveJournalEntryButton = () => {
@@ -391,7 +362,6 @@ function TableOfJournalEntries({
               data={lineItemData} setLineItemData={setLineItemData}
               journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
               journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
-              categories={categories}
               accounts={accounts}
               alertMessages={alertMessages}>
             </JournalEntryEditMode> :
@@ -431,7 +401,7 @@ function TableOfJournalEntries({
             <>
               <div>{/*empty div to push the other two buttons to the right*/}</div>
               <div>
-                <button className="btn btn-primary" onClick={() => {toggleEditMode(); refreshAccountsAndCategories()}} style={{ width: "10ch" }}>Edit</button>
+                <button className="btn btn-primary" onClick={() => {toggleEditMode(); refreshAccounts()}} style={{ width: "10ch" }}>Edit</button>
                 <button className="btn btn-white m-l-10" onClick={() => toggleJournalEntryExpanded()} style={{ width: "10ch" }}>Close</button>
               </div>
             </>

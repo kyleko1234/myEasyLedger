@@ -7,7 +7,6 @@ function JournalEntryEditMode({
     data, setLineItemData,
     journalEntryDate, setJournalEntryDate,
     journalEntryDescription, setJournalEntryDescription,
-    categories,
     accounts,
     alertMessages
 }) {
@@ -15,11 +14,10 @@ function JournalEntryEditMode({
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
-            { Header: 'Description', accessor: 'description', width:'40%', minWidth:"9em" },
-            { Header: 'Account', accessor: 'accountName', width:'18%', minWidth:"6em" },
-            { Header: 'Category', accessor: 'categoryName', width:'18%', minWidth:"6em" },
-            { Header: 'Debit', accessor: 'debitAmount', width:'10%', minWidth:"6em" },
-            { Header: 'Credit', accessor: 'creditAmount', width:'10%', minWidth:"6em" },
+            { Header: 'Description', accessor: 'description', width:'50%', minWidth:"9em" },
+            { Header: 'Account', accessor: 'accountName', width:'20%', minWidth:"6em" },
+            { Header: 'Debit', accessor: 'debitAmount', width:'13%', minWidth:"6em" },
+            { Header: 'Credit', accessor: 'creditAmount', width:'13%', minWidth:"6em" },
         ],
         []
     )
@@ -40,7 +38,6 @@ function JournalEntryEditMode({
     
     const returnFormByColumnType = cell => {
         const columnId = cell.column.id;
-        const accountTypesWithCategories = [4, 5];
         switch (columnId) {
             case "description":
                 return( 
@@ -96,12 +93,6 @@ function JournalEntryEditMode({
                                 let selectedAccount = accounts.find(account => account.accountId.toString() === event.target.value);
                                 updatedLineItemData[cell.row.index].accountId = selectedAccount.accountId;
                                 updatedLineItemData[cell.row.index].accountName = selectedAccount.accountName;
-                                updatedLineItemData[cell.row.index].accountTypeId = selectedAccount.accountTypeId;
-                                updatedLineItemData[cell.row.index].categoryId = '';
-                                if (!accountTypesWithCategories.includes(selectedAccount.accountTypeId)) {
-                                    updatedLineItemData[cell.row.index].categoryId = null;
-                                    updatedLineItemData[cell.row.index].categoryName = null;
-                                }
                                 setLineItemData(updatedLineItemData);
                             }}
                         >
@@ -116,45 +107,6 @@ function JournalEntryEditMode({
                         </select>
                     </>
                 )
-            case "categoryName":
-                if (accountTypesWithCategories.includes(data[cell.row.index].accountTypeId)) {
-                    const categoriesForThisAccount = categories.filter(category => category.accountId.toString() === data[cell.row.index].accountId.toString());
-                    return(
-                        <>
-                            <select
-                                value={data[cell.row.index].categoryId ? data[cell.row.index].categoryId : "" }
-                                className="form-control"
-                                onChange={event => {
-                                    let updatedLineItemData = data.slice();
-                                    let selectedCategory = categories.find(category => category.categoryId.toString() === event.target.value);
-                                    updatedLineItemData[cell.row.index].categoryId = selectedCategory.categoryId;
-                                    updatedLineItemData[cell.row.index].categoryName = selectedCategory.categoryName;
-                                    setLineItemData(updatedLineItemData);
-                                }}
-                            >
-                                <option value='' disabled className="font-italic">Select a category...</option>
-
-                                {categoriesForThisAccount.map(
-                                    (category) => {
-                                        return(
-                                            <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
-                                        )
-                                    }
-                                )}
-                            </select>
-                        </>
-                    )
-                } else {
-                    return(
-                        <>
-                            <select
-                                value=""
-                                readOnly
-                                className="form-control">
-                            </select>
-                        </>
-                    )
-                }
             default:
                 return (cell.value);
         }
@@ -166,12 +118,9 @@ function JournalEntryEditMode({
             lineItemId: "",
             accountName: "",
             accountId: "",
-            accountTypeId: "",
             description: "",
             debitAmount: 0,
             creditAmount: 0,
-            categoryName: "",
-            categoryId: "",
         })
         setLineItemData(updatedLineItemData);
     }

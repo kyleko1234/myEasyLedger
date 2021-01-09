@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "JournalEntry/Contents/Update a JournalEntry.md",
             "mode": "source"
           }
         },
@@ -22,8 +22,8 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
-            "mode": "source"
+            "file": "JournalEntry/Contents/Update a JournalEntry.md",
+            "mode": "preview"
           }
         },
         "group": "bd85d377df6c24a6"
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md",
+                "file": "JournalEntry/Contents/Update a JournalEntry.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,6 +99,8 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "JournalEntry/Contents/Update a JournalEntry.md",
+    "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
     "Easy Ledger.md",
     "Organization/Contents/List All Persons in an Organization.md",
     "Organization/Contents/Retrieve an Organization.md",
@@ -106,8 +108,6 @@
     "Organization/Contents/List All Organizations.md",
     "Organization/Contents/The Organization Object.md",
     "Organization/Contents/Update an Organization.md",
-    "Organization/Organization.md",
-    "JournalEntry/Contents/Delete a JournalEntry.md",
-    "JournalEntry/Contents/Update a JournalEntry.md"
+    "Organization/Organization.md"
   ]
 }
