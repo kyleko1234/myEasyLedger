@@ -5,10 +5,10 @@ import classnames from 'classnames';
 import { PageSettings } from '../../../config/page-settings';
 
 class ChartOfAccountsOverview extends React.Component {
-    //required props: accounts, accountSubtypes, categories, parentPath, utils
+    //required props: accounts, accountGroups, accountTypes, parentPath, utils
 
     //required utils: setSelectedAccountSubtypeId, toggleAddAnAccountFromSubtypeModal, setSelectedAccountTypeId, toggleAddAnAccountSubtypeModal,
-    //    toggleAddAnAccountWithoutSubtypeModal, toggleAddACategoryModal, setSelectedAccountId
+    //    toggleAddAnAccountWithoutSubtypeModal, setSelectedAccountId
     
     static contextType = PageSettings;
 
@@ -27,7 +27,7 @@ class ChartOfAccountsOverview extends React.Component {
         }
     }
 
-    renderNewSubtypeOrAccountButton() {
+    renderAddNewAccountGroupButton() {
         switch (this.state.activeTab) {
             case '1':
                 return (
@@ -35,9 +35,9 @@ class ChartOfAccountsOverview extends React.Component {
                         className="btn btn-sm btn-primary my-1"
                         onClick={() => {
                             this.props.utils.setSelectedAccountTypeId(1);
-                            this.props.utils.toggleAddAnAccountSubtypeModal();
+                            this.props.utils.toggleAddAnAccountGroupModal();
                         }}
-                    > Create an asset subtype </button>
+                    > Create an asset account group </button>
                 )
             case '2':
                 return (
@@ -45,9 +45,9 @@ class ChartOfAccountsOverview extends React.Component {
                         className="btn btn-sm btn-primary my-1"
                         onClick={() => {
                             this.props.utils.setSelectedAccountTypeId(2);
-                            this.props.utils.toggleAddAnAccountSubtypeModal();
+                            this.props.utils.toggleAddAnAccountGroupModal();
                         }}
-                    > Create a liability subtype </button>
+                    > Create a liability account group </button>
                 )
             case '3':
                 return (
@@ -55,9 +55,9 @@ class ChartOfAccountsOverview extends React.Component {
                         className="btn btn-sm btn-primary my-1"
                         onClick={() => {
                             this.props.utils.setSelectedAccountTypeId(3);
-                            this.props.utils.toggleAddAnAccountSubtypeModal();
+                            this.props.utils.toggleAddAnAccountGroupModal();
                         }}
-                    > Create an equity subtype </button>
+                    > Create an equity account group </button>
                 )
             case '4':
                 return(
@@ -65,9 +65,9 @@ class ChartOfAccountsOverview extends React.Component {
                         className="btn btn-sm btn-primary my-1"
                         onClick={() => {
                             this.props.utils.setSelectedAccountTypeId(4);
-                            this.props.utils.toggleAddAnAccountWithoutSubtypeModal();
+                            this.props.utils.toggleAddAnAccountGroupModal();
                         }}
-                    > Create an income account </button>
+                    > Create an income account group </button>
                 )
             case '5':
                 return (
@@ -75,9 +75,9 @@ class ChartOfAccountsOverview extends React.Component {
                         className="btn btn-sm btn-primary my-1"
                         onClick={() => {
                             this.props.utils.setSelectedAccountTypeId(5);
-                            this.props.utils.toggleAddAnAccountWithoutSubtypeModal();
+                            this.props.utils.toggleAddAnAccountGroupModal();
                         }}
-                    > Create an expense account </button>
+                    > Create an expense account group </button>
                 )
             
         }
@@ -93,8 +93,8 @@ class ChartOfAccountsOverview extends React.Component {
 
                 <h1 className="page-header">Chart of Accounts </h1>
 
-                <div className="rounded bg-light" style={{ border: "0.5px solid silver" }}>
-                    <Nav tabs className="d-flex justify-content-between px-3"> {/* Strangely, using a forEach loop to save space here causes React to refuse to render tabs */}
+                <div >
+                    <Nav pills className="d-flex justify-content-between px-3 mb-3"> {/* Strangely, using a forEach loop to save space here causes React to refuse to render tabs */}
                         <div className="row">
                             <NavItem>
                                 <NavLink
@@ -138,25 +138,25 @@ class ChartOfAccountsOverview extends React.Component {
                             </NavItem>
                         </div>
                         <div>                        
-                            {this.renderNewSubtypeOrAccountButton()}
+                            {this.renderAddNewAccountGroupButton()}
                         </div>
                     </Nav>
                     <TabContent activeTab={this.state.activeTab} className="rounded-0">
                         <TabPane tabId="1"> {/* tabId for a tab must be the same as AccountTypeId for that tab */}
-                            {this.props.accountSubtypes.slice()
-                                .filter((accountSubtype => accountSubtype.accountTypeId === 1))
-                                .map((accountSubtype) => {
+                            {this.props.accountGroups.slice()
+                                .filter((accountGroup => accountGroup.accountTypeId === 1))
+                                .map((accountGroup) => {
                                     return (
-                                        <div key={accountSubtype.accountSubtypeId}>
+                                        <div key={accountGroup.accountGroupId}>
                                                 <Link
-                                                    to={`${this.props.parentPath}/accountSubtypeDetails/${accountSubtype.accountSubtypeId}`} 
+                                                    to={`${this.props.parentPath}/accountGroupDetails/${accountGroup.accountGroupId}`} 
                                                     className="row rounded bg-light py-1 px-2 border text-decoration-none"
                                                 >
-                                                    <h5 className="my-0">{accountSubtype.accountSubtypeName}</h5>
+                                                    <h5 className="my-0">{accountGroup.accountGroupName}</h5>
                                                 </Link>
                                             <div className="px-1">
                                                 {this.props.accounts.slice()
-                                                    .filter(account => account.accountSubtypeId === accountSubtype.accountSubtypeId) //careful of === here, may cause problems in the future. if for some reason subtypes refuse to render, try casting both sides to strings first!
+                                                    .filter(account => account.accountGroupId === accountGroup.accountGroupId) //careful of === here, may cause problems in the future. if for some reason subtypes refuse to render, try casting both sides to strings first!
                                                     .map(account => {
                                                         return (
                                                                 <Link 
@@ -174,212 +174,17 @@ class ChartOfAccountsOverview extends React.Component {
                                                         )
                                                     })}
 
-                                                    {/* Add an Account [from subtype] button. Will open a modal to add a new account of this subtype.
+                                                    {/* Add an Account button. Will open a modal to add a new account in this account group.
                                                         Renders at the bottom of the list of accounts for every subtype. */}
                                                     <button 
                                                         className="btn btn-block btn-xs btn-default border-0 font-weight-normal my-1"
                                                         onClick={() => {
-                                                            this.props.utils.setSelectedAccountSubtypeId(accountSubtype.accountSubtypeId);
-                                                            this.props.utils.toggleAddAnAccountFromSubtypeModal();
+                                                            this.props.utils.setSelectedAccountGroupId(accountGroup.accountGroupId);
+                                                            this.props.utils.toggleAddAnAccountModal();
                                                             }}
                                                         >
                                                         <i className="ion ion-md-add fa-fw fa-lg"></i>Add a new account
                                                     </button>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                        </TabPane>
-                        <TabPane tabId="2">
-                            {this.props.accountSubtypes.slice()
-                                .filter((accountSubtype => accountSubtype.accountTypeId === 2))
-                                .map((accountSubtype) => {
-                                    return (
-                                        <div key={accountSubtype.accountSubtypeId}>
-                                                <Link
-                                                    to={`${this.props.parentPath}/accountSubtypeDetails/${accountSubtype.accountSubtypeId}`} 
-                                                    className="row rounded bg-light py-1 px-2 border text-decoration-none"
-                                                >
-                                                    <h5 className="my-0">{accountSubtype.accountSubtypeName}</h5>
-                                                </Link>
-                                            <div className="px-1">
-                                                {this.props.accounts.slice()
-                                                    .filter(account => account.accountSubtypeId === accountSubtype.accountSubtypeId)
-                                                    .map(account => {
-                                                        return (
-                                                                <Link 
-                                                                    to={`${this.props.parentPath}/accountDetails/${account.accountId}`}
-                                                                    className={"row bg-white d-flex justify-content-between py-1 px-1 border-bottom text-decoration-none"}
-                                                                    key={account.accountId}
-                                                                >
-                                                                    <span>{account.accountName}</span>
-                                                                    <span className={account.debitTotal < account.creditTotal ? "text-red" : ""}>
-                                                                        {new Intl.NumberFormat(this.context.locale, { style: 'currency', currency: this.context.currency }).format(account.creditTotal - account.debitTotal)}
-                                                                    </span>
-                                                                    {/* For each account in this subtype, render a row. Each row is clickable, and includes the account name and the account balance. Liabilities are increased by credits and decreased by debits. Render red for positive liabilities, black for zero or negative.
-                                                                        Clicking the row will send the user to the account-details component, where they can view and edit details for the selected account. */}
-                                
-                                                                </Link>
-                                                        )
-                                                    })}
-
-                                                    {/* Add an Account [from subtype] button. Will open a modal to add a new account of this subtype.
-                                                        Renders at the bottom of the list of accounts for every subtype. */}
-                                                    <button 
-                                                        className="btn btn-block btn-xs btn-default border-0 font-weight-normal my-1"
-                                                        onClick={() => {
-                                                            this.props.utils.setSelectedAccountSubtypeId(accountSubtype.accountSubtypeId);
-                                                            this.props.utils.toggleAddAnAccountFromSubtypeModal();
-                                                            }}
-                                                        >
-                                                        <i className="ion ion-md-add fa-fw fa-lg"></i>Add a new account
-                                                    </button>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                        </TabPane>
-                        <TabPane tabId="3"> {/* tabId for a tab must be the same as AccountTypeId for that tab */}
-                            {this.props.accountSubtypes.slice()
-                                .filter((accountSubtype => accountSubtype.accountTypeId === 3))
-                                .map((accountSubtype) => {
-                                    return (
-                                        <div key={accountSubtype.accountSubtypeId}>
-                                                <Link
-                                                    to={`${this.props.parentPath}/accountSubtypeDetails/${accountSubtype.accountSubtypeId}`} 
-                                                    className="row rounded bg-light py-1 px-2 border text-decoration-none"
-                                                >
-                                                    <h5 className="my-0">{accountSubtype.accountSubtypeName}</h5>
-                                                </Link>
-                                            <div className="px-1">
-                                                {this.props.accounts.slice()
-                                                    .filter(account => account.accountSubtypeId === accountSubtype.accountSubtypeId)
-                                                    .map(account => {
-                                                        return (
-                                                                <Link 
-                                                                    to={`${this.props.parentPath}/accountDetails/${account.accountId}`}
-                                                                    className={"row bg-white d-flex justify-content-between py-1 px-1 border-bottom text-decoration-none"}
-                                                                    key={account.accountId}
-                                                                >
-                                                                    <span>{account.accountName}</span>
-                                                                    <span> {/** TODO: figure out when to render red text for equity accounts */}
-                                                                        {new Intl.NumberFormat(this.context.locale, { style: 'currency', currency: this.context.currency }).format(account.creditTotal - account.debitTotal)}
-                                                                    </span>
-                                                                    {/* For each account in this subtype, render a row. Each row is clickable, and includes the account name and the account balance.
-                                                                        Clicking the row will send the user to the account-details component, where they can view and edit details for the selected account. */}
-                                
-                                                                </Link>
-                                                        )
-                                                    })}
-
-                                                    {/* Add an Account [from subtype] button. Will open a modal to add a new account of this subtype.
-                                                        Renders at the bottom of the list of accounts for every subtype. */}
-                                                    <button 
-                                                        className="btn btn-block btn-xs btn-default border-0 font-weight-normal my-1"
-                                                        onClick={() => {
-                                                            this.props.utils.setSelectedAccountSubtypeId(accountSubtype.accountSubtypeId);
-                                                            this.props.utils.toggleAddAnAccountFromSubtypeModal();
-                                                            }}
-                                                        >
-                                                        <i className="ion ion-md-add fa-fw fa-lg"></i>Add a new account
-                                                    </button>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                        </TabPane>
-                        <TabPane tabId="4"> 
-                            {this.props.accounts.slice()
-                                .filter((account => account.accountTypeId === 4))
-                                .map((account) => {
-                                    return (
-                                        <div key={account.accountId}>
-                                                <Link
-                                                    to={`${this.props.parentPath}/accountDetails/${account.accountId}`} 
-                                                    className="row rounded bg-light py-1 px-2 border text-decoration-none"
-                                                >
-                                                    <h5 className="my-0">{account.accountName}</h5>
-                                                </Link>
-                                            <div className="px-1">
-                                                {this.props.categories.slice()
-                                                    .filter(category => category.accountId === account.accountId)
-                                                    .map(category => {
-                                                        return (
-                                                                <Link 
-                                                                    to={`${this.props.parentPath}/categoryDetails/${category.categoryId}`}
-                                                                    className={"row bg-white d-flex justify-content-between py-1 px-1 border-bottom text-decoration-none"}
-                                                                    key={category.categoryId}
-                                                                >
-                                                                    <span>{category.categoryName}</span>
-                                                                    <span className={category.debitTotal > category.creditTotal ? "text-red" : ""}> {/** Income categories use black for excess credits and red for excess debits */}
-                                                                        {new Intl.NumberFormat(this.context.locale, { style: 'currency', currency: this.context.currency }).format(category.creditTotal - category.debitTotal)}
-                                                                    </span>
-                                                                    {/* For each account in this subtype, render a row. Each row is clickable, and includes the account name and the account balance.
-                                                                        Clicking the row will send the user to the account-details component, where they can view and edit details for the selected account. */}
-        
-                                                                </Link>
-                                                        )
-                                                    })}
-
-                                                    {/* Add a Category button. Will open a modal to add a new category into this income account.
-                                                        Renders at the bottom of the list of categories for every income account. */}
-                                                    <button 
-                                                        className="btn btn-block btn-xs btn-default border-0 font-weight-normal my-1"
-                                                        onClick={() => {
-                                                            this.props.utils.setSelectedAccountId(account.accountId);
-                                                            this.props.utils.toggleAddACategoryModal();
-                                                            }}
-                                                        >
-                                                        <i className="ion ion-md-add fa-fw fa-lg"></i>Add a new category
-                                                    </button> 
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                        </TabPane>
-                        <TabPane tabId="5"> 
-                            {this.props.accounts.slice()
-                                .filter((account => account.accountTypeId === 5))
-                                .map((account) => {
-                                    return (
-                                        <div key={account.accountId}>
-                                                <Link
-                                                    to={`${this.props.parentPath}/accountDetails/${account.accountId}`} 
-                                                    className="row rounded bg-light py-1 px-2 border text-decoration-none"
-                                                >
-                                                    <h5 className="my-0">{account.accountName}</h5>
-                                                </Link>
-                                            <div className="px-1">
-                                                {this.props.categories.slice()
-                                                    .filter(category => category.accountId === account.accountId)
-                                                    .map(category => {
-                                                        return (
-                                                                <Link 
-                                                                    to={`${this.props.parentPath}/categoryDetails/${category.categoryId}`}
-                                                                    className={"row bg-white d-flex justify-content-between py-1 px-1 border-bottom text-decoration-none"}
-                                                                    key={category.categoryId}
-                                                                >
-                                                                    <span>{category.categoryName}</span>
-                                                                    <span className={category.debitTotal > category.creditTotal ? "text-red" : ""}> {/** Expense categories use black for excess credits and red for excess debits */}
-                                                                        {new Intl.NumberFormat(this.context.locale, { style: 'currency', currency: this.context.currency }).format(category.debitTotal - category.creditTotal)}
-                                                                    </span>
-                                                                    {/* For each account in this subtype, render a row. Each row is clickable, and includes the account name and the account balance.
-                                                                        Clicking the row will send the user to the account-details component, where they can view and edit details for the selected account. */}
-        
-                                                                </Link>
-                                                        )
-                                                    })}
-                                                    {/* Add a Category button. Will open a modal to add a new category into this income account.
-                                                        Renders at the bottom of the list of categories for every income account. */}
-                                                    <button 
-                                                        className="btn btn-block btn-xs btn-default border-0 font-weight-normal my-1"
-                                                        onClick={() => {
-                                                            this.props.utils.setSelectedAccountId(account.accountId);
-                                                            this.props.utils.toggleAddACategoryModal();
-                                                            }}
-                                                        >
-                                                        <i className="ion ion-md-add fa-fw fa-lg"></i>Add a new category
-                                                    </button> 
                                             </div>
                                         </div>
                                     )

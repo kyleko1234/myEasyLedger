@@ -6,7 +6,7 @@ Authorization: AccountGroup must be provided. AccountGroup must belong to an org
 Creates an account with the values of the parameters passed.
 ___
 #### Request Body Parameters
-- **accountName (`String` 40)**<br/>
+- **accountName (`String` 64)**<br/>
 The name of this account.
 
 - **accountGroupId (`Long`)**<br/>

@@ -144,7 +144,6 @@ public class AccountController {
     	Account account = accountRepo.findById(accountId)
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
     	
-    	authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
     	authorizationService.authorizeByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
     	
     	final Account updatedAccount = accountRepo.save(accountDetails);

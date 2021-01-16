@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "JournalEntry/Contents/Update a JournalEntry.md",
+            "file": "Account/Contents/Create an Account.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "JournalEntry/Contents/Update a JournalEntry.md",
+            "file": "Account/Contents/Create an Account.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JournalEntry/Contents/Update a JournalEntry.md",
+                "file": "Account/Contents/Create an Account.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +99,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "JournalEntry/Contents/Update a JournalEntry.md",
-    "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
-    "Easy Ledger.md",
-    "Organization/Contents/List All Persons in an Organization.md",
-    "Organization/Contents/Retrieve an Organization.md",
-    "Organization/Contents/Create an Organization.md",
-    "Organization/Contents/List All Organizations.md",
-    "Organization/Contents/The Organization Object.md",
-    "Organization/Contents/Update an Organization.md",
-    "Organization/Organization.md"
+    "Account/Contents/Create an Account.md",
+    "AccountGroup/Contents/Update an AccountGroup.md",
+    "AccountGroup/Contents/Create an AccountGroup.md",
+    "AccountGroup/AccountGroup.md",
+    "AccountSubtype/Contents/The AccountSubtype Object.md",
+    "AccountSubtype/AccountSubtype.md",
+    "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
+    "AccountSubtype/Contents/List All AccountSubtypes.md",
+    "Account/Contents/Update an Account.md",
+    "JournalEntry/Contents/Update a JournalEntry.md"
   ]
 }

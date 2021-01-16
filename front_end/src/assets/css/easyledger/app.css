@@ -20,3 +20,17 @@
 .width-125 {
     width: 125px !important;
 }
+
+.width-10ch {
+    width: 10ch !important;
+}
+
+.widget-list-content .widget-list-hover-icon.btn.btn-icon {
+    visibility: hidden;
+}
+
+.widget-list-content:hover .widget-list-hover-icon.btn.btn-icon,
+.widget-list-content:focus .widget-list-hover-icon.btn.btn-icon {
+    visibility: visible;
+}
+

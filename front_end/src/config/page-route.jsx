@@ -62,13 +62,13 @@ import HelperCSS from './../pages/helper/helper-css.js';
 
 import Journals from './../pages/journals/journals.js';
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
-import Categories from './../pages/categories/categories.js';
 import RegistrationSuccessful from './../pages/user/registration-successful.js';
 import Logout from './../pages/user/logout.js';
 import Dashboard from './../pages/dashboard/dashboard.js';
 import Reports from './../pages/reports/reports.js';
 import IncomeStatementReport from '../pages/reports/income-statement-report.js';
 import BalanceSheetReport from '../pages/reports/balance-sheet-report.js';
+import AccountDetails from '../pages/chart-of-accounts/account-details.js';
 
 const routes = [
   {
@@ -373,9 +373,19 @@ const routes = [
     component: Journals,
   },
   {
-    path: '/chartofaccounts',
+    path: '/chart-of-accounts',
+    exact: true,
+    component: () => <Redirect to="/chart-of-accounts/1" />,
+  },
+  {
+    path: '/chart-of-accounts/:activeTabId',
     title: 'Chart Of Accounts',
     component: ChartOfAccounts,
+  },
+  {
+    path: '/account/:id',
+    title: 'Account Details',
+    component: AccountDetails,
   },
   {
     path: '/user/registration-successful',

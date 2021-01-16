@@ -37,7 +37,7 @@ const Menu = [
     ]
   },*/
   { path: '/journals', icon: 'fa fa-list-alt', title: 'Journals' },
-  { path: '/chartofaccounts', icon: 'fa fa-columns', title: 'Chart Of Accounts' },
+  { path: '/chart-of-accounts', icon: 'fa fa-columns', title: 'Chart Of Accounts' },
   { path: '/reports', icon: 'fa fa-file-alt', title: 'Reports' },
 /*  { path: '/frontend', icon: 'fa fa-star', title: 'FrontEnd',
     children: [
