@@ -158,6 +158,9 @@ function TableOfJournalEntries({
     switch (columnId) {
       case "creditAmount":
       case "debitAmount":
+        if (cell.value == 0) {
+          return '';
+        }
         return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cell.value));
       default:
         return (cell.value);
@@ -281,16 +284,18 @@ function TableOfJournalEntries({
   return (
     <>
       <div className="widget widget-rounded m-b-30">
-        <div className="widget-header d-flex justify-content-between bg-light">
-          <span className="h5 my-2 mx-2 align-self-center">
-            {tableTitle}
-          </span>
-          <span>
-            {hasAddEntryButton ? 
-              <button className="btn btn-sm mx-2 my-2 btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
-                <i className="ion ion-md-add fa-fw fa-lg"></i>Add an entry
-              </button> : null}
-          </span>
+        <div className="widget-header bg-light">
+          <h4 className="widget-header-title d-flex justify-content-between ">
+            <div className="align-self-center">{tableTitle}</div>
+            <div>
+              {hasAddEntryButton ? 
+                <button className="btn btn-sm btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
+                  <i className="ion ion-md-add fa-fw fa-lg"></i>Add an entry
+                </button> : null}
+            </div>
+
+          </h4>
+     
         </div>
         <div className="table-responsive bg-white border-top">
           <table className="table table-hover m-b-0 text-inverse" {...getTableProps()}>

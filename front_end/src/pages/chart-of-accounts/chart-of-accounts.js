@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { Alert, Modal, ModalHeader, ModalBody, ModalFooter, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import {API_BASE_URL} from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
-import Select from 'react-select'
+import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 
@@ -462,4 +462,4 @@ class ChartOfAccounts extends React.Component {
     }
 }
 
-export default ChartOfAccounts
+export default ChartOfAccounts;
