@@ -41,3 +41,7 @@
 a.icon-link-text-muted:hover {
     color: #c8c8c8 !important;
 }
+
+.overflow-visible {
+    overflow: visible;
+}

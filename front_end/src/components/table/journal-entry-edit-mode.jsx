@@ -1,13 +1,14 @@
-import React from 'react'
-import { useTable } from 'react-table'
-import { Alert } from 'reactstrap'
-import { PageSettings } from '../../config/page-settings'
+import React from 'react';
+import { useTable } from 'react-table';
+import { Alert } from 'reactstrap';
+import { PageSettings } from '../../config/page-settings';
+import Select from 'react-select';
 
 function JournalEntryEditMode({
     data, setLineItemData,
     journalEntryDate, setJournalEntryDate,
     journalEntryDescription, setJournalEntryDescription,
-    accounts,
+    accountOptions,
     alertMessages
 }) {
     const appContext = React.useContext(PageSettings);
@@ -84,28 +85,21 @@ function JournalEntryEditMode({
                 )
             case "accountName":
                 return(
-                    <>
-                        <select
-                            value={(data[cell.row.index].accountId)}
-                            className="form-control"
-                            onChange={event => {
-                                let updatedLineItemData = data.slice();
-                                let selectedAccount = accounts.find(account => account.accountId.toString() === event.target.value);
-                                updatedLineItemData[cell.row.index].accountId = selectedAccount.accountId;
-                                updatedLineItemData[cell.row.index].accountName = selectedAccount.accountName;
-                                setLineItemData(updatedLineItemData);
-                            }}
-                        >
-                            <option value='' disabled className="font-italic">Select an account...</option>
-                            {accounts.map(
-                                (account) => {
-                                    return(
-                                        <option key={account.accountId} value={account.accountId}>{account.accountName}</option>
-                                    )
-                                }
-                            )}
-                        </select>
-                    </>
+                        <Select
+                                    options={accountOptions}
+                                    value={accountOptions.find(accountOption => accountOption.object.accountId == data[cell.row.index].accountId)}
+                                    isSearchable={true}
+                                    menuPortalTarget={document.body}
+                                    styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                    menuPlacement={'auto'}
+                                    onChange={(selectedOption) => {
+                                        let updatedLineItemData = data.slice();
+                                        updatedLineItemData[cell.row.index].accountId = selectedOption.object.accountId;
+                                        updatedLineItemData[cell.row.index].accountName = selectedOption.object.accountName;
+                                        setLineItemData(updatedLineItemData);
+                                    }}
+                        />
+
                 )
             default:
                 return (cell.value);

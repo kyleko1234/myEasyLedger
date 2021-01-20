@@ -69,7 +69,7 @@ function TableOfJournalEntries({
   const [journalEntryDescription, setJournalEntryDescription] = React.useState('');
   const [journalEntryDate, setJournalEntryDate] = React.useState('');
   const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
-  const [accounts, setAccounts] = React.useState([]);
+  const [accountOptions, setAccountOptions] = React.useState([]);
 
   const [alertMessages, setAlertMessages] = React.useState([]);
 
@@ -137,19 +137,31 @@ function TableOfJournalEntries({
   //initially retrieve categories and accounts from API
   React.useEffect(() => {
     axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
-      const accounts = response.data;
-      setAccounts(accounts);
+      const formattedAccounts = response.data.map(account => {
+        return({
+          value: account.accountId,
+          label: account.accountName,
+          object: account
+        })
+      });
+      setAccountOptions(formattedAccounts);
     })
       .catch(console.log);
   }, [API_BASE_URL, appContext.currentOrganization])
 
   //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
   const refreshAccounts = () => {
-      axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
-        const accounts = response.data;
-        setAccounts(accounts);
-      })
-        .catch(console.log);
+    axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
+      const formattedAccounts = response.data.map(account => {
+        return({
+          value: account.accountId,
+          label: account.accountName,
+          object: account
+        })
+      });
+      setAccountOptions(formattedAccounts);
+    })
+      .catch(console.log);
   }
 
   //format table cell value based on column name and locale
@@ -367,7 +379,7 @@ function TableOfJournalEntries({
               data={lineItemData} setLineItemData={setLineItemData}
               journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
               journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
-              accounts={accounts}
+              accountOptions={accountOptions}
               alertMessages={alertMessages}>
             </JournalEntryEditMode> :
             <JournalEntryViewMode

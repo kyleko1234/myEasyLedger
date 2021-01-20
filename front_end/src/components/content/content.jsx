@@ -10,7 +10,7 @@ function setTitle(path, routeArray) {
 			pageTitle = 'Easy Ledger | ' + routeArray[i].title;
 		}
 	}
-	document.title = (pageTitle) ? pageTitle : 'Easy Ledger | React App';
+	document.title = (pageTitle) ? pageTitle : 'Easy Ledger';
 }
 
 function handleRedirectToLogin(isAuthenticated, isLoading) {
@@ -23,13 +23,11 @@ function handleRedirectToLogin(isAuthenticated, isLoading) {
 
 class Content extends React.Component {
 	componentDidMount() {
-		setTitle(this.props.history.location.pathname, routes);
-	}
-	componentWillMount() {
-    this.props.history.listen(() => {
+		this.props.history.listen(() => {
 			setTitle(this.props.history.location.pathname, routes);
-    });
-  }
+		})
+	}
+
 
 
   
@@ -51,7 +49,7 @@ class Content extends React.Component {
 				)
 			}
 			</PageSettings.Consumer>
-		)
+		);
 	}
 }
 

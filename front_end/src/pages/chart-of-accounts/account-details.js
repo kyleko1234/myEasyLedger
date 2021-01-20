@@ -68,7 +68,7 @@ function AccountDetails(props) {
             setAccountGroupOptions(formattedAccountGroupOptions);
         }).catch(console.log);
 
-    })
+    }, [])
 
     const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
         // This will get called when the table needs new data

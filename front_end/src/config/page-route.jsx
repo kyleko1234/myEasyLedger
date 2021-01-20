@@ -374,6 +374,7 @@ const routes = [
   },
   {
     path: '/chart-of-accounts',
+    title: 'Chart Of Accounts',
     exact: true,
     component: () => <Redirect to="/chart-of-accounts/1" />,
   },

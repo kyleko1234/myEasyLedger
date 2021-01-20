@@ -267,7 +267,7 @@ class ChartOfAccounts extends React.Component {
                                                 <span className="d-sm-block px-3">{accountType.name}</span>
                                             </NavLink>
                                         </NavItem>
-                                    )
+                                    );
                                 })}
                             </div>
                             <button
@@ -291,15 +291,15 @@ class ChartOfAccounts extends React.Component {
                                                     <div className="widget-list-content d-flex justify-content-between align-items-center">
                                                         <h4 className="widget-list-title">{accountGroup.accountGroupName}</h4>
                                                         <div>
-                                                            <button className="widget-list-hover-icon btn btn-light btn-sm btn-icon mx-1" onClick={() => this.handleAddAnAccountToAccountGroupButton(accountGroup)}>
+                                                            <Link className="icon-link-text-muted p-l-15" to="#" onClick={() => this.handleAddAnAccountToAccountGroupButton(accountGroup)}>
                                                                 <i className="fa fa-plus"></i>
-                                                            </button>
-                                                            <button className="widget-list-hover-icon btn btn-light btn-sm btn-icon mx-1" onClick={() => this.handleEditAccountGroupButton(accountGroup)}>
+                                                            </Link>
+                                                            <Link className="icon-link-text-muted p-l-15" to="#" onClick={() => this.handleEditAccountGroupButton(accountGroup)}>
                                                                 <i className="fa fa-edit"></i>
-                                                            </button>
-                                                            <button className="widget-list-hover-icon btn btn-light btn-sm btn-icon mx-1" onClick={() => this.handleDeleteAccountGroupButton(accountGroup)}>
+                                                            </Link>
+                                                            <Link className="icon-link-text-muted p-l-15" to="#" onClick={() => this.handleDeleteAccountGroupButton(accountGroup)}>
                                                                 <i className="fa fa-trash-alt"></i>
-                                                            </button>
+                                                            </Link>
                                                         </div>
 
 
@@ -315,13 +315,13 @@ class ChartOfAccounts extends React.Component {
                                                                 <i className="fa fa-angle-right fa-lg text-muted"></i>
                                                             </div>
                                                         </Link>
-                                                    )
+                                                    );
                                                 })}
                                             </React.Fragment>
-                                        )
+                                        );
                                     })}
                                 </TabPane>
-                            )
+                            );
                         })
                     }
                 </TabContent>
