@@ -3,17 +3,27 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL} from '../../../utils/constants';
 import { PageSettings } from '../../../config/page-settings';
-import { Collapse } from 'reactstrap';
 
 function BalanceSheetRender() {
     const appContext = React.useContext(PageSettings);
 
     const today = new Date();
     const [endDate, setEndDate] = React.useState(today.toISOString().split('T')[0]);
+    const [previousPeriodEndDate, setPreviousPeriodEndDate] = React.useState(today.getFullYear - 1 + "-12-31");
+    const [currentPeriodStartDate, setCurrentPeriodStartDate] = React.useState(today.getFullYear + "-01-01");
     const [loading, setLoading] = React.useState(true);
     const [accountBalances, setAccountBalances] = React.useState([]);
+    const [previousPeriodAccountBalances, setPreviousPeriodAccountBalances] = React.useState([]);
+    const [currentPeriodAccountBalances, setCurrentPeriodAccountBalances] = React.useState([]);
+    const [accountGroups, setAccountGroups] = React.useState([]);
     const [accountSubtypes, setAccountSubtypes] = React.useState([]);
     
+    const handleChangeDate = date => {
+        setEndDate(date);
+        setCurrentPeriodStartDate(date.slice(0, 4) + "-01-01");
+        setPreviousPeriodEndDate(parseInt(date.slice(0, 4)) - 1 + "-12-31");
+    }
+
     const numberAsCurrency = (number) => {
         if (number == 0) {
             return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(0);
@@ -21,15 +31,7 @@ function BalanceSheetRender() {
         return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number)
     }
 
-    const totalDebitsMinusCreditsForSubtype = (accountSubtypeId) => {
-        let debitTotal = 0;
-        let creditTotal = 0;
-        accountBalances.filter(accountBalance => accountBalance.accountSubtypeId === accountSubtypeId).forEach(accountBalance => {
-            debitTotal += accountBalance.debitTotal;
-            creditTotal += accountBalance.creditTotal;
-        })
-        return debitTotal - creditTotal;
-    }
+    
     const totalDebitsMinusCreditsForType = (accountTypeId) => {
         let debitTotal = 0;
         let creditTotal = 0;
@@ -69,12 +71,12 @@ function BalanceSheetRender() {
                 <h4 className="widget-header-title width-half">Balance Sheet</h4>
                 <span className="widget-header-title d-flex flex-row justify-content-end">
                          <label className="col-form-label px-2 width-125 text-right">As of: </label>
-                         <input type="date" className="form-control form-control-sm align-self-center width-125" value={endDate} onChange={event => setEndDate(event.target.value)}/>
+                         <input type="date" className="form-control form-control-sm align-self-center width-125" value={endDate} onChange={event => handleChangeDate(event.target.value)}/>
                 </span>
             </div>
             <div className="px-2">
                 {loading? "Loading..." : 
-                <div>
+                /* <div>
                     <table className="table m-b-30">
                         <thead>
                             <tr>
@@ -232,7 +234,7 @@ function BalanceSheetRender() {
                         </tfoot>
                     </table>
 
-                </div>
+                </div> */ "Coming soon"
                 }
             </div>
         </div>
