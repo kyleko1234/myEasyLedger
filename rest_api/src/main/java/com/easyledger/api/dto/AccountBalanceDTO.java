@@ -17,6 +17,7 @@ public class AccountBalanceDTO {
 	private String organizationName;
 	private BigDecimal debitTotal;
 	private BigDecimal creditTotal;
+	private BigDecimal debitsMinusCredits;
 
 	
 	public AccountBalanceDTO(BigInteger accountId, String accountName, BigInteger accountGroupId, String accountGroupName,
@@ -43,6 +44,8 @@ public class AccountBalanceDTO {
 		} else {
 			this.creditTotal = new BigDecimal(0);
 		}
+		
+		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
 	}
 
 
@@ -157,6 +160,7 @@ public class AccountBalanceDTO {
 
 	public void setDebitTotal(BigDecimal debitTotal) {
 		this.debitTotal = debitTotal;
+		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
 	}
 
 
@@ -167,6 +171,12 @@ public class AccountBalanceDTO {
 
 	public void setCreditTotal(BigDecimal creditTotal) {
 		this.creditTotal = creditTotal;
+		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
+	}
+
+
+	public BigDecimal getDebitsMinusCredits() {
+		return debitsMinusCredits;
 	}
 
 

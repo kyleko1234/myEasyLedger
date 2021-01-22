@@ -29,8 +29,9 @@ ___
     "organizationId": 1,
     "organizationName": "Sample organization",
     "debitTotal": 420000,
-    "creditTotal": 18430
-}
+    "creditTotal": 18430,
+    "debitsMinusCredits": 401570
+
 ```
 
 

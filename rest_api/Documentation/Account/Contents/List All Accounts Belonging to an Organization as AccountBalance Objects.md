@@ -39,7 +39,8 @@ ___
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 24000,
-        "creditTotal": 20000
+        "creditTotal": 20000,
+        "debitsMinusCredits": 4000
     },
     {
         "accountId": 1,
@@ -53,7 +54,8 @@ ___
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 420000,
-        "creditTotal": 18430
+        "creditTotal": 18430,
+        "debitsMinusCredits": 401570
     },
     {
         "accountId": 4,
@@ -61,13 +63,14 @@ ___
         "accountGroupId": 4,
         "accountGroupName": "Equipment",
         "accountSubtypeId": 7,
-        "accountSubtypeName": "Plant and Equipment",
+        "accountSubtypeName": "Plant and equipment",
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 4500,
-        "creditTotal": 0
+        "creditTotal": 0,
+        "debitsMinusCredits": 4500
     },
     {
         "accountId": 3,
@@ -81,7 +84,8 @@ ___
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 250,
-        "creditTotal": 0
+        "creditTotal": 0,
+        "debitsMinusCredits": 250
     },
     {
         "accountId": 5,
@@ -89,13 +93,14 @@ ___
         "accountGroupId": 4,
         "accountGroupName": "Equipment",
         "accountSubtypeId": 7,
-        "accountSubtypeName": "Plant and Equipment",
+        "accountSubtypeName": "Plant and equipment",
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 25000,
-        "creditTotal": 0
+        "creditTotal": 0,
+        "debitsMinusCredits": 25000
     },
     {
         "accountId": 7,
@@ -103,13 +108,14 @@ ___
         "accountGroupId": 5,
         "accountGroupName": "Payables",
         "accountSubtypeId": 11,
-        "accountSubtypeName": "Payables",
+        "accountSubtypeName": "Deferred revenue",
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 0,
-        "creditTotal": 4500
+        "creditTotal": 4500,
+        "debitsMinusCredits": -4500
     },
     {
         "accountId": 8,
@@ -117,13 +123,14 @@ ___
         "accountGroupId": 5,
         "accountGroupName": "Payables",
         "accountSubtypeId": 11,
-        "accountSubtypeName": "Payables",
+        "accountSubtypeName": "Deferred revenue",
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 0,
-        "creditTotal": 3000
+        "creditTotal": 3000,
+        "debitsMinusCredits": -3000
     },
     {
         "accountId": 6,
@@ -131,13 +138,14 @@ ___
         "accountGroupId": 5,
         "accountGroupName": "Payables",
         "accountSubtypeId": 11,
-        "accountSubtypeName": "Payables",
+        "accountSubtypeName": "Deferred revenue",
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 0,
-        "creditTotal": 15000
+        "creditTotal": 15000,
+        "debitsMinusCredits": -15000
     },
     {
         "accountId": 9,
@@ -145,13 +153,14 @@ ___
         "accountGroupId": 6,
         "accountGroupName": "Paid-in Capital",
         "accountSubtypeId": 19,
-        "accountSubtypeName": "Paid-in capital",
+        "accountSubtypeName": "Dividends and equivalents",
         "accountTypeId": 3,
         "accountTypeName": "Owner's Equity",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 0,
-        "creditTotal": 400000
+        "creditTotal": 400000,
+        "debitsMinusCredits": -400000
     },
     {
         "accountId": 10,
@@ -159,13 +168,14 @@ ___
         "accountGroupId": 7,
         "accountGroupName": "Dividends and equivalents",
         "accountSubtypeId": 20,
-        "accountSubtypeName": "Dividends and equivalents",
+        "accountSubtypeName": "Other equity items",
         "accountTypeId": 3,
         "accountTypeName": "Owner's Equity",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 3000,
-        "creditTotal": 0
+        "creditTotal": 0,
+        "debitsMinusCredits": 3000
     },
     {
         "accountId": 11,
@@ -173,13 +183,14 @@ ___
         "accountGroupId": 8,
         "accountGroupName": "Revenue",
         "accountSubtypeId": 22,
-        "accountSubtypeName": "Revenue",
+        "accountSubtypeName": "Other income",
         "accountTypeId": 4,
         "accountTypeName": "Income",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 0,
-        "creditTotal": 24000
+        "creditTotal": 24000,
+        "debitsMinusCredits": -24000
     },
     {
         "accountId": 12,
@@ -187,13 +198,14 @@ ___
         "accountGroupId": 9,
         "accountGroupName": "Selling, general, and administration",
         "accountSubtypeId": 26,
-        "accountSubtypeName": "Selling, general, and administration",
+        "accountSubtypeName": "Depreciation",
         "accountTypeId": 5,
         "accountTypeName": "Expenses",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 500,
-        "creditTotal": 0
+        "creditTotal": 0,
+        "debitsMinusCredits": 500
     },
     {
         "accountId": 13,
@@ -201,13 +213,14 @@ ___
         "accountGroupId": 9,
         "accountGroupName": "Selling, general, and administration",
         "accountSubtypeId": 26,
-        "accountSubtypeName": "Selling, general, and administration",
+        "accountSubtypeName": "Depreciation",
         "accountTypeId": 5,
         "accountTypeName": "Expenses",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 7500,
-        "creditTotal": 0
+        "creditTotal": 0,
+        "debitsMinusCredits": 7500
     },
     {
         "accountId": 14,
@@ -215,13 +228,14 @@ ___
         "accountGroupId": 9,
         "accountGroupName": "Selling, general, and administration",
         "accountSubtypeId": 26,
-        "accountSubtypeName": "Selling, general, and administration",
+        "accountSubtypeName": "Depreciation",
         "accountTypeId": 5,
         "accountTypeName": "Expenses",
         "organizationId": 1,
         "organizationName": "Sample organization",
         "debitTotal": 180,
-        "creditTotal": 0
+        "creditTotal": 0,
+        "debitsMinusCredits": 180
     }
 ]
 ```
