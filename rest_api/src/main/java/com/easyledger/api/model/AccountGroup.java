@@ -92,12 +92,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal,  " + 
 				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
 				"FROM      " + 
-				"    account_group, account LEFT JOIN line_item ON line_item.account_id = account.id LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id, account_subtype, account_type, organization      " + 
+				"    account_group  " + 
+				"        LEFT JOIN account ON account.account_group_id = account_group.id AND account.deleted = false  " + 
+				"        LEFT JOIN line_item ON line_item.account_id = account.id  " + 
+				"        LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id,  " + 
+				"    account_subtype, account_type, organization      " + 
 				"WHERE       " + 
 				"    organization.id = ? AND      " + 
 				"    account_group.organization_id = organization.id AND     " + 
-				"    account_group.id = account.account_group_id AND  " + 
-				"    account.deleted = false AND   " + 
 				"    account_group.account_subtype_id = account_subtype.id AND       " + 
 				"    account_subtype.account_type_id = account_type.id AND       " + 
 				"    account_group.deleted = false     " + 

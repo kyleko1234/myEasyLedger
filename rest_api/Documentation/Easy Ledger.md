@@ -58,6 +58,7 @@ Prefix all endpoints with `http://{host}/v0.2/`
 <br/><br/>
 - [[List All AccountSubtypes|GET /accountSubtype]]
 - [[Retrieve an AccountSubtype|GET /accountSubtype/{id}]]
+- [[List All AccountSubtype Balances for an Organization|GET /organization/{id}/accountSubtypeBalance]]
 <br/><br/>
 - [[List All AccountGroups|GET /accountGroup]]
 - [[Retrieve an AccountGroup|GET /accountGroup/{id}]]

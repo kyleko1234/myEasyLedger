@@ -100,14 +100,14 @@
   },
   "lastOpenFiles": [
     "Easy Ledger.md",
+    "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md",
+    "AccountSubtype/AccountSubtype.md",
+    "AccountSubtype/Contents/The AccountSubtype Object.md",
+    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+    "AccountSubtype/Contents/Untitled.md",
     "AccountGroup/AccountGroup.md",
     "AccountGroup/Contents/List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects.md",
     "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
-    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
-    "AccountGroup/Contents/Untitled.md",
-    "Account/Contents/Retrieve an AccountBalance.md",
-    "AccountSubtype/AccountSubtype.md",
-    "LineItem/Contents/Retrieve All LineItems for an Account.md",
-    "LineItem/LineItem.md"
+    "AccountGroup/Contents/Untitled.md"
   ]
 }
