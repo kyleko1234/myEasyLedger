@@ -62,6 +62,7 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[List All AccountGroups|GET /accountGroup]]
 - [[Retrieve an AccountGroup|GET /accountGroup/{id}]]
 - [[List All AccountGroups Belonging to an Organization|GET /organization/{id}/accountGroup]]
+- [[List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects|GET /organization/{id}/accountGroupBalance]]
 - [[Create an AccountGroup| POST /accountGroup]]
 - [[Update an AccountGroup|PUT /accountGroup/{id}]]
 - [[Delete an AccountGroup| DELETE /accountGroup/{id}]]

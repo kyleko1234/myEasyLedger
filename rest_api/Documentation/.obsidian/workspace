@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+            "file": "Easy Ledger.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+            "file": "Easy Ledger.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+                "file": "Easy Ledger.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +99,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Easy Ledger.md",
+    "AccountGroup/AccountGroup.md",
+    "AccountGroup/Contents/List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects.md",
+    "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
     "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+    "AccountGroup/Contents/Untitled.md",
     "Account/Contents/Retrieve an AccountBalance.md",
     "AccountSubtype/AccountSubtype.md",
     "LineItem/Contents/Retrieve All LineItems for an Account.md",
-    "LineItem/LineItem.md",
-    "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
-    "Account/Contents/Update an Account.md",
-    "Account/Contents/The Account Object.md",
-    "Account/Contents/Create an Account.md",
-    "AccountGroup/Contents/Update an AccountGroup.md"
+    "LineItem/LineItem.md"
   ]
 }

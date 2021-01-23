@@ -12,4 +12,5 @@ ___
 - [[Delete an AccountGroup]]
 - [[List All AccountGroups]]
 - [[List All AccountGroups Belonging to an Organization]]
+- [[List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects]]
 

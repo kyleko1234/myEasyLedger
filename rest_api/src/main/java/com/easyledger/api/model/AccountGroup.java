@@ -18,10 +18,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
+import com.easyledger.api.dto.AccountGroupBalanceDTO;
 import com.easyledger.api.dto.AccountGroupDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@SqlResultSetMapping( //maps native SQL query to AccountDTO class
+@SqlResultSetMapping( //maps native SQL query to AccountGroupDTO class
 		name = "accountGroupDTOMapping",
 		classes = {
 				@ConstructorResult(
@@ -40,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				)
 		}
 )	
-@NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts for that organization
+@NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted account groups for that organization
 		name = "AccountGroup.getAllAccountGroupsForOrganization",
 		query = "SELECT  " + 
 				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName, " + 
@@ -59,6 +60,53 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"ORDER BY account_type.id ASC, account_group.name",
 		resultSetMapping = "accountGroupDTOMapping"
 )
+
+@SqlResultSetMapping( //maps native SQL query to AccountGroupBalanceDTO class
+		name = "accountGroupBalanceDTOMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = AccountGroupBalanceDTO.class,
+						columns = {
+								@ColumnResult(name = "accountGroupId"),
+								@ColumnResult(name = "accountGroupName"),
+								@ColumnResult(name = "accountSubtypeId"),
+								@ColumnResult(name = "accountSubtypeName"),
+								@ColumnResult(name = "accountTypeId"),
+								@ColumnResult(name = "accountTypeName"),
+								@ColumnResult(name = "organizationId"),
+								@ColumnResult(name = "organizationName"),
+								@ColumnResult(name = "debitTotal"),
+								@ColumnResult(name = "creditTotal")
+						}
+				)
+		}
+)	
+
+@NamedNativeQuery( //takes an organization ID as a parameter and returns AccountGroupBalanceDTO objects for all undeleted account groups for that organization
+		name = "AccountGroup.getAllAccountGroupBalancesForOrganization",
+		query = "SELECT   " + 
+				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName,      " + 
+				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,      " + 
+				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName,      " + 
+				"    organization.id AS organizationId, organization.name AS organizationName,    " + 
+				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal,  " + 
+				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
+				"FROM      " + 
+				"    account_group, account LEFT JOIN line_item ON line_item.account_id = account.id LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id, account_subtype, account_type, organization      " + 
+				"WHERE       " + 
+				"    organization.id = ? AND      " + 
+				"    account_group.organization_id = organization.id AND     " + 
+				"    account_group.id = account.account_group_id AND  " + 
+				"    account.deleted = false AND   " + 
+				"    account_group.account_subtype_id = account_subtype.id AND       " + 
+				"    account_subtype.account_type_id = account_type.id AND       " + 
+				"    account_group.deleted = false     " + 
+				"GROUP BY account_group.id, account_subtype.id, account_type.id, organization.id " + 
+				"ORDER BY account_type.id ASC, account_group.name  ",
+		resultSetMapping = "accountGroupBalanceDTOMapping"
+)
+
+
 
 @Entity
 @Table(name = "account_group")

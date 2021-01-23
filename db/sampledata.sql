@@ -127,11 +127,11 @@ INSERT INTO account_group(name, account_subtype_id, organization_id)
         ('Accounts Receivable', 3, 1),
         ('Inventories', 4, 1),
         ('Equipment', 7, 1),
-        ('Payables', 11, 1),
-        ('Paid-in Capital', 19, 1),
-        ('Dividends and equivalents', 20, 1),
-        ('Revenue', 22, 1),
-        ('Selling, general, and administration', 26, 1);
+        ('Payables', 10, 1),
+        ('Paid-in Capital', 18, 1),
+        ('Dividends and equivalents', 19, 1),
+        ('Revenue', 21, 1),
+        ('Selling, general, and administration', 25, 1);
 
 /**     1    ('Cash', 1, 1),
         2    ('Accounts Receivable', 3, 1),

@@ -45,7 +45,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				)
 		}
 )	
-@NamedNativeQuery( //TODO: UNTESTED  takes an organization ID as a parameter and returns all undeleted accounts for that organization
+@NamedNativeQuery( //  takes an organization ID as a parameter and returns all undeleted accounts for that organization
 		name = "Account.getAllAccountsForOrganization",
 		query = "SELECT account.id AS accountId, account.name AS accountName,  " + 
 				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName,  " + 
@@ -88,7 +88,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				)
 		}
 )	
-@NamedNativeQuery( //TODO: UNTESTED takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization
+@NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization
 		name = "Account.getAllAccountBalancesForOrganization",
 		query = "SELECT account.id AS accountId, account.name AS accountName, account_group.id AS accountGroupId, account_group.name AS accountGroupName,       " + 
 				"     account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,       " + 
@@ -107,7 +107,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"ORDER BY account_type.id, account.name",
 		resultSetMapping = "accountBalanceDTOMapping"
 )
-@NamedNativeQuery( //TODO: TEST takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization up until the given date
+@NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization up until the given date
 		name = "Account.getAllAccountBalancesForOrganizationUpToDate",
 		query = "SELECT account.id AS accountId, account.name AS accountName, account_group.id AS accountGroupId, account_group.name AS accountGroupName,       " + 
 				"     account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,       " + 
@@ -126,7 +126,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"ORDER BY account_type.id, account.name ",
 		resultSetMapping = "accountBalanceDTOMapping"
 )
-@NamedNativeQuery( //TODO: TEST takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization for the given time period
+@NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization for the given time period
 		name = "Account.getAllAccountBalancesForOrganizationBetweenDates",
 		query = "SELECT account.id AS accountId, account.name AS accountName, account_group.id AS accountGroupId, account_group.name AS accountGroupName,       " + 
 				"     account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,       " + 
@@ -145,7 +145,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"ORDER BY account_type.id, account.name ",
 		resultSetMapping = "accountBalanceDTOMapping"
 )
-@NamedNativeQuery( //TODO: UNTESTED --takes an account ID as a parameter and returns an account with balances with that id 
+@NamedNativeQuery( // --takes an account ID as a parameter and returns an account with balances with that id 
 		name = "Account.getAccountBalanceById",
 		query = "SELECT account.id AS accountId, account.name AS accountName, account.account_group_id AS accountGroupId,       " + 
 				"    account_group.name AS accountGroupName, account_group.account_subtype_id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,       " + 

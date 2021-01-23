@@ -1,11 +1,9 @@
 package com.easyledger.api.dto;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import com.easyledger.api.model.AccountGroup;
-
-public class AccountGroupDTO {
-	
+public class AccountGroupBalanceDTO {
 	private Long accountGroupId;
 	private String accountGroupName;
 	private Long accountSubtypeId;
@@ -14,23 +12,13 @@ public class AccountGroupDTO {
 	private String accountTypeName;
 	private Long organizationId;
 	private String organizationName;
-	private boolean deleted;
+	private BigDecimal debitTotal;
+	private BigDecimal creditTotal;
+	private BigDecimal debitsMinusCredits;
 	
-	public AccountGroupDTO(AccountGroup accountGroup) {
-		this.accountGroupId = accountGroup.getId();
-		this.accountGroupName = accountGroup.getName();
-		this.accountSubtypeId = accountGroup.getAccountSubtype().getId();
-		this.accountSubtypeName = accountGroup.getAccountSubtype().getName();
-		this.accountTypeId = accountGroup.getAccountSubtype().getAccountType().getId();
-		this.accountTypeName = accountGroup.getAccountSubtype().getAccountType().getName();
-		this.organizationId = accountGroup.getOrganization().getId();
-		this.organizationName = accountGroup.getOrganization().getName();
-		this.deleted = accountGroup.isDeleted();
-	}
-	
-	public AccountGroupDTO(BigInteger accountGroupId, String accountGroupName, BigInteger accountSubtypeId,
+	public AccountGroupBalanceDTO(BigInteger accountGroupId, String accountGroupName, BigInteger accountSubtypeId,
 			String accountSubtypeName, BigInteger accountTypeId, String accountTypeName, BigInteger organizationId,
-			String organizationName, boolean deleted) {
+			String organizationName, BigDecimal debitTotal, BigDecimal creditTotal) {
 		this.accountGroupId = accountGroupId.longValueExact();
 		this.accountGroupName = accountGroupName;
 		this.accountSubtypeId = accountSubtypeId.longValueExact();
@@ -39,13 +27,18 @@ public class AccountGroupDTO {
 		this.accountTypeName = accountTypeName;
 		this.organizationId = organizationId.longValueExact();
 		this.organizationName = organizationName;
-		this.deleted = deleted;
+		if (debitTotal != null) {
+			this.debitTotal = debitTotal;
+		} else {
+			this.debitTotal = new BigDecimal(0);
+		}
+		if (creditTotal != null) {
+			this.creditTotal = creditTotal;
+		} else {
+			this.creditTotal = new BigDecimal(0);
+		}
+		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
 	}
-
-	public AccountGroupDTO() {
-	}
-
-	//Getters, Setters, toString
 
 	public Long getAccountGroupId() {
 		return accountGroupId;
@@ -111,23 +104,36 @@ public class AccountGroupDTO {
 		this.organizationName = organizationName;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
+	public BigDecimal getDebitTotal() {
+		return debitTotal;
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setDebitTotal(BigDecimal debitTotal) {
+		this.debitTotal = debitTotal;
+		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
+	}
+
+	public BigDecimal getCreditTotal() {
+		return creditTotal;
+	}
+
+	public void setCreditTotal(BigDecimal creditTotal) {
+		this.creditTotal = creditTotal;
+		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
+	}
+
+	public BigDecimal getDebitsMinusCredits() {
+		return debitsMinusCredits;
 	}
 
 	@Override
 	public String toString() {
-		return "AccountGroupDTO [accountGroupId=" + accountGroupId + ", accountGroupName=" + accountGroupName
+		return "AccountGroupBalanceDTO [accountGroupId=" + accountGroupId + ", accountGroupName=" + accountGroupName
 				+ ", accountSubtypeId=" + accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName
 				+ ", accountTypeId=" + accountTypeId + ", accountTypeName=" + accountTypeName + ", organizationId="
-				+ organizationId + ", organizationName=" + organizationName + ", deleted=" + deleted + "]";
+				+ organizationId + ", organizationName=" + organizationName + ", debitTotal=" + debitTotal
+				+ ", creditTotal=" + creditTotal + ", debitsMinusCredits=" + debitsMinusCredits + "]";
 	}
-
-
 	
-
+	
 }

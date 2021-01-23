@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.AccountGroupBalanceDTO;
 import com.easyledger.api.dto.AccountGroupDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -78,6 +79,13 @@ public class AccountGroupController {
     	throws UnauthorizedException {
     	authorizationService.authorizeByOrganizationId(authentication, organizationId);
     	return accountGroupRepo.getAllAccountGroupsForOrganization(organizationId);
+    }
+    
+    @GetMapping("/organization/{id}/accountGroupBalance")
+    public List<AccountGroupBalanceDTO> getAllAccountGroupBalancesForOrganization(@PathVariable(value = "id") Long organizationId, Authentication authentication)
+    	throws UnauthorizedException {
+    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	return accountGroupRepo.getAllAccountGroupBalancesForOrganization(organizationId);
     }
     
     @PostMapping("/accountGroup")
