@@ -1,12 +1,18 @@
 ### List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects
 Endpoints: 
 - `GET /organization/{id}/accountGroupBalance`
+- `GET /organization/{id}/accountGroupBalance/{endDate}`
+- `GET /organization/{id}/accountGroupBalance/{startDate}/{endDate}`
 
 
 
 Authorization: Requesting user must belong to the organization with the specified id.
 
 Returns a list of all undeleted account groups belonging to an organization with the specified id. These AccountGroups are presented as AccountGroupBalance objects, which are special AccountGroup objects that include information on the total debit and credit amounts of all undeleted line items affecting the account. The results are ordered by AccountTypeId, then by AccountGroupName alphabetically.
+
+Date parameters should be provided in `yyyy-mm-dd` format. If no date parameters are given, the resulting creditTotal and debitTotal fields in the returned objects will encompass all undeleted LineItems. If one date parameter is given, the resulting totals will encompass all LineItems dated up to and including the given date. If two date parameters are given, the resulting totals will encompass the date range between the given start date and end date, inclusive.
+
+If start date and end date are the same date, the resulting totals will only encompass LineItems dated for that day. If the given end date is earlier than the given start date, all resulting totals will be 0.
 
 ___
 #### Request Body Parameters

@@ -1,6 +1,7 @@
 package com.easyledger.api.repository;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,12 @@ public interface AccountSubtypeRepository extends JpaRepository<AccountSubtype, 
 	
 	@Query(nativeQuery = true)
 	public List<AccountSubtypeBalanceDTO> getAllAccountSubtypeBalancesForOrganization(Long organizationId);
+	
+	@Query(nativeQuery = true)
+	public List<AccountSubtypeBalanceDTO> getAllAccountSubtypeBalancesForOrganizationUpToDate(Long organizationId, LocalDate endDate);
+
+	@Query(nativeQuery = true)
+	public List<AccountSubtypeBalanceDTO> getAllAccountSubtypeBalancesForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate);
+
 }
 
