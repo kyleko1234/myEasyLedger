@@ -72,7 +72,7 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[Update an AccountGroup|PUT /accountGroup/{id}]]
 - [[Delete an AccountGroup| DELETE /accountGroup/{id}]]
 <br/><br/>
-
+- [[Generate a Balance Sheet|GET /organization/{id}/reports/balanceSheet/{endDate}]]
 
 
 
