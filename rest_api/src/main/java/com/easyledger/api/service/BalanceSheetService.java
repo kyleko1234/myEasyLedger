@@ -47,6 +47,8 @@ public class BalanceSheetService {
 		
 		LocalDate prevYearEnd = LocalDate.parse((endDate.getYear() - 1) + "-12-31");
 		LocalDate currYearStart = LocalDate.parse(endDate.getYear() + "-01-01");
+		generatedBalanceSheet.setPrevPeriodEndDate(prevYearEnd);
+		generatedBalanceSheet.setCurrPeriodStartDate(currYearStart);
 		
 		List<AccountSubtypeBalanceDTO> totalAccountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationUpToDate(organizationId, endDate);
 		List<AccountSubtypeBalanceDTO> prevPeriodAccountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationUpToDate(organizationId, prevYearEnd);

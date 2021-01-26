@@ -7,6 +7,40 @@ Generates a balance sheet, dated as of the given `endDate` for the organization 
 Authorization: The requesting user must belong to the organization for which this report is being generated.
 
 ___
+#### Response Body Structure
+```json
+{
+    "organizationId": Long,
+    "asOfDate": LocalDate (in format yyyy-MM-dd),    
+	"prevPeriodEndDate": LocalDate (in format yyyy-MM-dd),
+    "currPeriodStartDate": LocalDate (in format yyyy-MM-dd),
+    "balanceSheetAssets": {
+        "totalCurrentAssets": BigDecimal,
+        "totalNonCurrentAssets": BigDecimal,
+        "totalAssets": BigDecimal,
+        "currentAssetsSubtypeBalances": List<AccountSubtypeBalance>,
+        "nonCurrentAssetsSubtypeBalances": List<AccountSubtypeBalance>
+    },
+    "balanceSheetLiabilities": {
+        "totalCurrentLiabilities": BigDecimal,
+        "totalNonCurrentLiabilities": BigDecimal,
+        "totalLiabilities": BigDecimal,
+        "currentLiabilitiesSubtypeBalances": List<AccountSubtypeBalance>,
+        "nonCurrentLiabilitiesSubtypeBalances": List<AccountSubtypeBalance>
+    },
+    "balanceSheetEquity": {
+        "totalEquityItems": BigDecimal,
+        "prevPeriodRetainedEarnings": BigDecimal,
+        "currPeriodNetIncome": BigDecimal,
+        "currPeriodDividendsAndEquivalents": BigDecimal,
+        "totalRetainedEarnings": BigDecimal,
+        "totalEquity": BigDecimal,
+        "equityItemsSubtypeBalances": List<AccountSubtypeBalance>
+    },
+    "accountGroupBalances": List<AccountGroupBalance>,
+    "accountBalances": List<AccountGroupBalance>
+}
+```
 
 #### Sample Request
 `GET /organization/1/reports/balanceSheet/2021-01-23`
@@ -17,6 +51,8 @@ ___
 {
     "organizationId": 1,
     "asOfDate": "2021-01-23",
+	"prevPeriodEndDate": "2020-12-31",
+	"currPeriodStartDate": "2021-01-01",
     "balanceSheetAssets": {
         "totalCurrentAssets": 405820,
         "totalNonCurrentAssets": 29500,

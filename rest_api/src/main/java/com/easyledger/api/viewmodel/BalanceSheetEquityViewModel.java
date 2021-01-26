@@ -28,7 +28,7 @@ public class BalanceSheetEquityViewModel {
 		for (AccountSubtypeBalanceDTO subtypeBalance : totalSubtypeBalances) {
 			if (EQUITY_ITEMS_SUBTYPE_IDS.contains(subtypeBalance.getAccountSubtypeId())) {
 				equityItemsSubtypeBalances.add(subtypeBalance);
-				totalEquityItems.subtract(subtypeBalance.getDebitsMinusCredits()); //use BigDecimal.subtract since equity is increased by credits and decreased by debits; i.e. equity amount = debitsMinusCredits * -1
+				totalEquityItems = totalEquityItems.subtract(subtypeBalance.getDebitsMinusCredits()); //use BigDecimal.subtract since equity is increased by credits and decreased by debits; i.e. equity amount = debitsMinusCredits * -1
 			}
 		}
 		for (AccountSubtypeBalanceDTO subtypeBalance : prevPeriodSubtypeBalances) {

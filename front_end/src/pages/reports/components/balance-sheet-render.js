@@ -102,40 +102,30 @@ function BalanceSheetRender() {
             <div className="px-2">
                 {loading? "Loading..." : 
                 <div>
-                    <table className="table m-b-30">
+                    <table className="table table-striped m-t-5">
                         <thead><tr><th>Assets</th></tr></thead>
                         <tbody>
-                            <tr><td className="p-l-30 ">
-                                <table className="table table-nested">
-                                    <thead><tr><th>Current assets</th></tr></thead>
-                                    <tbody>
-                                        {balanceSheetAssets.currentAssetsSubtypeBalances.map(subtypeBalance => {
-                                            return(
-                                                <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
-                                                    <div>{subtypeBalance.accountSubtypeName}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits)}</div>
-                                                </td></tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                    <tfoot><tr><td className="d-flex justify-content-between">
-                                        <div>Total current assets</div><div>{numberAsCurrency(balanceSheetAssets.totalCurrentAssets)}</div>
-                                    </td></tr></tfoot>
-                                </table>
-                                <table className="table table-nested">
-                                    <thead><tr><th>Non-current assets</th></tr></thead>
-                                    <tbody>
-                                        {balanceSheetAssets.nonCurrentAssetsSubtypeBalances.map(subtypeBalance => {
-                                            return(
-                                                <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
-                                                    <div>{subtypeBalance.accountSubtypeName}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits)}</div>
-                                                </td></tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                    <tfoot><tr><td className="d-flex justify-content-between">
-                                        <div>Total non-current assets</div><div>{numberAsCurrency(balanceSheetAssets.totalNonCurrentAssets)}</div>
-                                    </td></tr></tfoot>
-                                </table>
+                            <tr><td className="p-l-30 font-weight-600">Current assets</td></tr>
+                            {balanceSheetAssets.currentAssetsSubtypeBalances.map(subtypeBalance => {
+                                return(
+                                    <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
+                                        <div className="p-l-30">{subtypeBalance.accountSubtypeName}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits)}</div>
+                                    </td></tr>
+                                )
+                            })}
+                            <tr><td className="d-flex justify-content-between font-weight-600 p-l-30">
+                                        <div className="p-l-60">Total current assets</div><div>{numberAsCurrency(balanceSheetAssets.totalCurrentAssets)}</div>
+                            </td></tr>
+                            <tr><td className="p-l-30 font-weight-600">Non-current assets</td></tr>
+                            {balanceSheetAssets.nonCurrentAssetsSubtypeBalances.map(subtypeBalance => {
+                                return(
+                                    <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
+                                        <div className="p-l-30">{subtypeBalance.accountSubtypeName}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits)}</div>
+                                    </td></tr>
+                                )
+                            })}
+                            <tr><td className="d-flex justify-content-between font-weight-600 p-l-30">
+                                <div className="p-l-60">Total non-current assets</div><div>{numberAsCurrency(balanceSheetAssets.totalNonCurrentAssets)}</div>
                             </td></tr>
                         </tbody>
                         <tfoot><tr><td className="d-flex justify-content-between">
@@ -143,48 +133,42 @@ function BalanceSheetRender() {
                         </td></tr></tfoot>
                     </table>
 
-                    <table className="table m-b-30">
+                    <hr/>
+
+                    <table className="table table-striped">
                         <thead><tr><th>Liabilities</th></tr></thead>
                         <tbody>
-                            <tr><td className="p-l-30">
-                                <table className="table table-nested m-b-15">
-                                    <thead><tr><th>Current liabilities</th></tr></thead>
-                                    <tbody>
-                                        {balanceSheetLiabilities.currentLiabilitiesSubtypeBalances.map(subtypeBalance => {
-                                            return(
-                                                <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
-                                                    <div>{subtypeBalance.accountSubtypeName}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
-                                                </td></tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                    <tfoot><tr><td className="d-flex justify-content-between">
-                                        <div>Total current liabilities</div><div>{numberAsCurrency(balanceSheetLiabilities.totalCurrentLiabilities)}</div>
-                                    </td></tr></tfoot>
-                                </table>
-                                <table className="table table-nested m-b-15">
-                                    <thead><tr><th>Non-current liabilities</th></tr></thead>
-                                    <tbody>
-                                        {balanceSheetLiabilities.nonCurrentLiabilitiesSubtypeBalances.map(subtypeBalance => {
-                                            return(
-                                                <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
-                                                    <div>{subtypeBalance.accountSubtypeName}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
-                                                </td></tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                    <tfoot><tr><td className="d-flex justify-content-between">
-                                        <div>Total non-current liabilities</div><div>{numberAsCurrency(balanceSheetLiabilities.totalNonCurrentLiabilities)}</div>
-                                    </td></tr></tfoot>
-                                </table>
+                            <tr><td className="p-l-30 font-weight-600">Current liabilities</td></tr>
+                            {balanceSheetLiabilities.currentLiabilitiesSubtypeBalances.map(subtypeBalance => {
+                                return(
+                                    <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
+                                        <div className="p-l-30">{subtypeBalance.accountSubtypeName}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
+                                    </td></tr>
+                                )
+                            })}
+                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600">
+                                        <div className="p-l-60">Total current liabilities</div><div>{numberAsCurrency(balanceSheetLiabilities.totalCurrentLiabilities)}</div>
+                            </td></tr>
+                            <tr><td className="p-l-30 font-weight-600">Non-current liabilities</td></tr>
+                            {balanceSheetLiabilities.nonCurrentLiabilitiesSubtypeBalances.map(subtypeBalance => {
+                                return(
+                                    <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
+                                        <div className="p-l-30">{subtypeBalance.accountSubtypeName}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
+                                    </td></tr>
+                                )
+                            })}
+                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600">
+                                <div className="p-l-60">Total non-current liabilities</div><div>{numberAsCurrency(balanceSheetLiabilities.totalNonCurrentLiabilities)}</div>
                             </td></tr>
                         </tbody>
                         <tfoot><tr><td className="d-flex justify-content-between">
                             <div>Total liabilities</div><div>{numberAsCurrency(balanceSheetLiabilities.totalLiabilities)}</div>
                         </td></tr></tfoot>
                     </table>
+
+                    <hr/>
                     
-                    <table className="table table-nested m-b-30">
+                    <table className="table table-striped">
                         <thead><tr><th>Equity</th></tr></thead>
                         <tbody>
                             {balanceSheetEquity.equityItemsSubtypeBalances.map(subtypeBalance => {
@@ -194,24 +178,18 @@ function BalanceSheetRender() {
                                     </td></tr>
                                 )
                             })}
-                            <tr><td className="p-l-30 py-0">
-                                <table className="table table-nested">
-                                    <thead><tr><th className="px-0">Retained Earnings</th></tr></thead>
-                                    <tbody>
-                                        <tr><td className="p-l-30 d-flex justify-content-between">
-                                            <div>{`Beginning balances (up to ${prevPeriodEndDate})`}</div><div>{numberAsCurrency(balanceSheetEquity.prevPeriodRetainedEarnings)}</div>
-                                        </td></tr>
-                                        <tr><td className="p-l-30 d-flex justify-content-between">
-                                            <div>{`Net income for current period (from ${currPeriodStartDate} to ${asOfDate})`}</div><div>{numberAsCurrency(balanceSheetEquity.currPeriodNetIncome)}</div>
-                                        </td></tr>
-                                        <tr><td className="p-l-30 d-flex justify-content-between">
-                                            <div>{`Less dividends and equivalents for current period (from ${currPeriodStartDate} to ${asOfDate})`}</div><div>{numberAsCurrency(balanceSheetEquity.currPeriodDividendsAndEquivalents)}</div>
-                                        </td></tr>
-                                    </tbody>
-                                    <tfoot><tr><td className="d-flex justify-content-between p-l-0">
-                                        <div>Ending balances of retained earnings</div><div>{numberAsCurrency(balanceSheetEquity.totalRetainedEarnings)}</div>
-                                    </td></tr></tfoot>
-                                </table>
+                            <tr><td className="p-l-30 font-weight-600"> Retained Earnings</td></tr>
+                            <tr><td className="p-l-30 d-flex justify-content-between">
+                                <div className="p-l-30">{`Beginning balances (up to ${prevPeriodEndDate})`}</div><div>{numberAsCurrency(balanceSheetEquity.prevPeriodRetainedEarnings)}</div>
+                            </td></tr>
+                            <tr><td className="p-l-30 d-flex justify-content-between">
+                                <div className="p-l-30">{`Net income for current period (from ${currPeriodStartDate} to ${asOfDate})`}</div><div>{numberAsCurrency(balanceSheetEquity.currPeriodNetIncome)}</div>
+                            </td></tr>
+                            <tr><td className="p-l-30 d-flex justify-content-between">
+                                <div className="p-l-30">{`Less dividends and equivalents for current period (from ${currPeriodStartDate} to ${asOfDate})`}</div><div>{numberAsCurrency(balanceSheetEquity.currPeriodDividendsAndEquivalents)}</div>
+                            </td></tr>
+                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600">
+                                        <div className="p-l-60">Ending balances of retained earnings</div><div>{numberAsCurrency(balanceSheetEquity.totalRetainedEarnings)}</div>
                             </td></tr>
                         </tbody>
                         <tfoot><tr><td className="d-flex justify-content-between">

@@ -8,6 +8,10 @@
     padding-left: 60px !important;
 }
 
+.m-t-16 {
+    margin-top: 16px !important;
+}
+
 .table tfoot tr td {
     font-weight: 600;
     border-top: 1px solid #aeaeae;
@@ -44,4 +48,8 @@ a.icon-link-text-muted:hover {
 
 .overflow-visible {
     overflow: visible;
+}
+
+.font-weight-600 {
+    font-weight: 600 !important;
 }

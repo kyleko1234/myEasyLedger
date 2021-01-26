@@ -6,11 +6,10 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Reports/Contents/Generate a Balance Sheet.md",
             "mode": "source"
           }
         },
@@ -19,10 +18,11 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Reports/Contents/Generate a Balance Sheet.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md",
+                "file": "Reports/Contents/Generate a Balance Sheet.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,9 +99,9 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "Easy Ledger.md",
     "Reports/Contents/Generate a Balance Sheet.md",
     "Reports/Reports.md",
+    "Easy Ledger.md",
     "AccountSubtype/AccountSubtype.md",
     "AccountSubtype/Contents/Retrieve an AccountSubtype.md",
     "Reports/Untitled.md",
