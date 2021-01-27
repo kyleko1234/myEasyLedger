@@ -1,209 +1,64 @@
-### Generate a Balance Sheet
+### Generate an Income Statement
 
-Endpoint: `GET /organization/{id}/reports/balanceSheet/{endDate}`
+Endpoint: `GET /organization/{id}/reports/incomeStatement/{startDate}/{endDate}`
 
-Generates a balance sheet, dated as of the given `endDate` for the organization with the given id. Date should be given in `yyyy-MM-dd` format.
+Generates a income statement for the period from `startDate` to  `endDate` inclusive, for the organization with the given id. Dates should be given in `yyyy-MM-dd` format.
 
 Authorization: The requesting user must belong to the organization for which this report is being generated.
-
 ___
-#### Response Body Structure
+#### Response body structure
 ```json
 {
-    "organizationId": Long,
-    "asOfDate": LocalDate (in format yyyy-MM-dd),    
-	"prevPeriodEndDate": LocalDate (in format yyyy-MM-dd),
-    "currPeriodStartDate": LocalDate (in format yyyy-MM-dd),
-    "balanceSheetAssets": {
-        "totalCurrentAssets": BigDecimal,
-        "totalNonCurrentAssets": BigDecimal,
-        "totalAssets": BigDecimal,
-        "currentAssetsSubtypeBalances": List<AccountSubtypeBalance>,
-		"currentAssetsSubtypeIds": [
-            1,
-            2,
-            3,
-            4,
-            5
-        ],
-        "nonCurrentAssetsSubtypeIds": [
-            6,
-            7,
-            8,
-            9
-        ],
-		"nonCurrentAssetsSubtypeBalances": List<AccountSubtypeBalance>
-    },
-    "balanceSheetLiabilities": {
-        "totalCurrentLiabilities": BigDecimal,
-        "totalNonCurrentLiabilities": BigDecimal,
-        "totalLiabilities": BigDecimal,
-        "currentLiabilitiesSubtypeBalances": List<AccountSubtypeBalance>,
-        "nonCurrentLiabilitiesSubtypeBalances": List<AccountSubtypeBalance>,     "currentLiabilitiesSubtypeIds": [
-            10,
-            11,
-            12,
-            13,
-            14,
-            15
-        ],
-        "nonCurrentLiabilitiesSubtypeIds": [
-            16,
-            17
-        ]
-    },
-    "balanceSheetEquity": {
-        "totalEquityItems": BigDecimal,
-        "prevPeriodRetainedEarnings": BigDecimal,
-        "currPeriodNetIncome": BigDecimal,
-        "currPeriodDividendsAndEquivalents": BigDecimal,
-        "totalRetainedEarnings": BigDecimal,
-        "totalEquity": BigDecimal,
-        "equityItemsSubtypeBalances": List<AccountSubtypeBalance>,
-		"equityItemsSubtypeIds": [
-            18,
-            20
-        ],
-        "dividendsAndEquivalentsSubtypeIds": [
-            19
-        ],
-        "incomeSubtypeIds": [
-            21,
-            22
-        ],
-        "expensesSubtypeIds": [
-            23,
-            24,
-            25,
-            26,
-            27,
-            28,
-            29
-        ]
-
-    },
-    "accountGroupBalances": List<AccountGroupBalance>,
-    "accountBalances": List<AccountGroupBalance>
+    "startDate": LocalDate,
+    "endDate": LocalDate,
+    "totalRevenue": BigDecimal,
+    "totalCostOfSales": BigDecimal,
+    "grossMargin": BigDecimal,
+    "totalResearchAndDevelopment": BigDecimal,
+    "totalSalesGeneralAndAdministration": BigDecimal,
+    "totalDepreciation": BigDecimal,
+    "totalAmortization": BigDecimal,
+    "totalOperatingExpenses": BigDecimal,
+    "operatingIncome": BigDecimal,
+    "otherIncomeExpense": BigDecimal,
+    "incomeBeforeTax": BigDecimal,
+    "incomeTax": BigDecimal,
+    "netIncome": BigDecimal,
+    "accountGroupBalances": List<AccountGroupBalanceDTO>,
+    "accountBalances": List<AccountBalanceDTO>,
+    "revenueSubtypeId": 21,
+    "otherIncomeSubtypeId": 22,
+    "costOfSalesSubtypeId": 23,
+    "researchAndDevelopmentSubtypeId": 24,
+    "sgaSubtypeId": 25,
+    "depreciationSubtypeId": 26,
+    "amortizationSubtypeId": 27,
+    "otherExpensesSubtypeId": 28,
+    "incomeTaxSubtypeId": 29
 }
 ```
-
+___
 #### Sample Request
-`GET /organization/1/reports/balanceSheet/2021-01-23`
-<br/> <br/>
-
+	GET /organization/1/reports/incomeStatement/2020-11-01/2021-01-23`
+	
 #### Sample Response
 ```json
 {
-    "organizationId": 1,
-    "asOfDate": "2021-01-23",
-    "prevPeriodEndDate": "2020-12-31",
-    "currPeriodStartDate": "2021-01-01",
-    "balanceSheetAssets": {
-        "totalCurrentAssets": 405820,
-        "totalNonCurrentAssets": 29500,
-        "totalAssets": 435320,
-        "currentAssetsSubtypeBalances": [
-            {
-                "accountSubtypeId": 1,
-                "accountSubtypeName": "Cash and cash equivalents",
-                "accountTypeId": 1,
-                "accountTypeName": "Assets",
-                "organizationId": 1,
-                "organizationName": "Sample organization",
-                "debitTotal": 420000,
-                "creditTotal": 18430,
-                "debitsMinusCredits": 401570
-            },
-            {
-                "accountSubtypeId": 3,
-                "accountSubtypeName": "Receivables",
-                "accountTypeId": 1,
-                "accountTypeName": "Assets",
-                "organizationId": 1,
-                "organizationName": "Sample organization",
-                "debitTotal": 24000,
-                "creditTotal": 20000,
-                "debitsMinusCredits": 4000
-            },
-            {
-                "accountSubtypeId": 4,
-                "accountSubtypeName": "Inventories",
-                "accountTypeId": 1,
-                "accountTypeName": "Assets",
-                "organizationId": 1,
-                "organizationName": "Sample organization",
-                "debitTotal": 250,
-                "creditTotal": 0,
-                "debitsMinusCredits": 250
-            }
-        ],
-        "nonCurrentAssetsSubtypeBalances": [
-            {
-                "accountSubtypeId": 7,
-                "accountSubtypeName": "Plant and equipment",
-                "accountTypeId": 1,
-                "accountTypeName": "Assets",
-                "organizationId": 1,
-                "organizationName": "Sample organization",
-                "debitTotal": 29500,
-                "creditTotal": 0,
-                "debitsMinusCredits": 29500
-            }
-        ],
-        "currentAssetsSubtypeIds": [
-            1,
-            2,
-            3,
-            4,
-            5
-        ],
-        "nonCurrentAssetsSubtypeIds": [
-            6,
-            7,
-            8,
-            9
-        ]
-    },
-    "balanceSheetLiabilities": {
-        "totalCurrentLiabilities": 22500,
-        "totalNonCurrentLiabilities": 0,
-        "totalLiabilities": 22500,
-        "currentLiabilitiesSubtypeBalances": [
-            {
-                "accountSubtypeId": 10,
-                "accountSubtypeName": "Payables",
-                "accountTypeId": 2,
-                "accountTypeName": "Liabilities",
-                "organizationId": 1,
-                "organizationName": "Sample organization",
-                "debitTotal": 0,
-                "creditTotal": 22500,
-                "debitsMinusCredits": -22500
-            }
-        ],
-        "nonCurrentLiabilitiesSubtypeBalances": []
-    },
-    "balanceSheetEquity": {
-        "totalEquityItems": 400000,
-        "prevPeriodRetainedEarnings": 12820,
-        "currPeriodNetIncome": 0,
-        "currPeriodDividendsAndEquivalents": 0,
-        "totalRetainedEarnings": 12820,
-        "totalEquity": 412820,
-        "equityItemsSubtypeBalances": [
-            {
-                "accountSubtypeId": 18,
-                "accountSubtypeName": "Paid-in capital",
-                "accountTypeId": 3,
-                "accountTypeName": "Owner's Equity",
-                "organizationId": 1,
-                "organizationName": "Sample organization",
-                "debitTotal": 0,
-                "creditTotal": 400000,
-                "debitsMinusCredits": -400000
-            }
-        ]
-    },
+    "startDate": "2020-11-01",
+    "endDate": "2021-01-23",
+    "totalRevenue": 24000,
+    "totalCostOfSales": 0,
+    "grossMargin": 24000,
+    "totalResearchAndDevelopment": 0,
+    "totalSalesGeneralAndAdministration": 8180,
+    "totalDepreciation": 0,
+    "totalAmortization": 0,
+    "totalOperatingExpenses": 8180,
+    "operatingIncome": 15820,
+    "otherIncomeExpense": 0,
+    "incomeBeforeTax": 15820,
+    "incomeTax": 0,
+    "netIncome": 15820,
     "accountGroupBalances": [
         {
             "accountGroupId": 2,
@@ -547,6 +402,15 @@ ___
             "creditTotal": 0,
             "debitsMinusCredits": 180
         }
-    ]
+    ],
+    "revenueSubtypeId": 21,
+    "otherIncomeSubtypeId": 22,
+    "costOfSalesSubtypeId": 23,
+    "researchAndDevelopmentSubtypeId": 24,
+    "sgaSubtypeId": 25,
+    "depreciationSubtypeId": 26,
+    "amortizationSubtypeId": 27,
+    "otherExpensesSubtypeId": 28,
+    "incomeTaxSubtypeId": 29
 }
 ```

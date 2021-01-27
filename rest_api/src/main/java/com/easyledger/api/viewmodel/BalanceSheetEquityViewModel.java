@@ -52,22 +52,22 @@ public class BalanceSheetEquityViewModel {
 	}
 
 
-	public static ArrayList<Long> getEquityItemsSubtypeIds() {
+	public ArrayList<Long> getEquityItemsSubtypeIds() {
 		return EQUITY_ITEMS_SUBTYPE_IDS;
 	}
 
 
-	public static ArrayList<Long> getDividendsAndEquivalentsSubtypeIds() {
+	public ArrayList<Long> getDividendsAndEquivalentsSubtypeIds() {
 		return DIVIDENDS_AND_EQUIVALENTS_SUBTYPE_IDS;
 	}
 
 
-	public static ArrayList<Long> getIncomeSubtypeIds() {
+	public ArrayList<Long> getIncomeSubtypeIds() {
 		return INCOME_SUBTYPE_IDS;
 	}
 
 
-	public static ArrayList<Long> getExpensesSubtypeIds() {
+	public ArrayList<Long> getExpensesSubtypeIds() {
 		return EXPENSES_SUBTYPE_IDS;
 	}
 

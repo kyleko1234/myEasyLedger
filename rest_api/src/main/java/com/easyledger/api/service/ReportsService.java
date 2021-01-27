@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.easyledger.api.dto.AccountBalanceDTO;
+import com.easyledger.api.dto.AccountGroupBalanceDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 import com.easyledger.api.repository.AccountGroupRepository;
 import com.easyledger.api.repository.AccountRepository;
@@ -14,9 +16,10 @@ import com.easyledger.api.viewmodel.BalanceSheetAssetsViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetEquityViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetLiabilitiesViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetViewModel;
+import com.easyledger.api.viewmodel.IncomeStatementViewModel;
 
 @Service
-public class BalanceSheetService {
+public class ReportsService {
 	@Autowired
 	private AccountRepository accountRepo;
 	
@@ -28,7 +31,7 @@ public class BalanceSheetService {
 	
 	
 	
-	public BalanceSheetService(AccountRepository accountRepo, AccountGroupRepository accountGroupRepo,
+	public ReportsService(AccountRepository accountRepo, AccountGroupRepository accountGroupRepo,
 			AccountSubtypeRepository accountSubtypeRepo) {
 		super();
 		this.accountRepo = accountRepo;
@@ -59,5 +62,14 @@ public class BalanceSheetService {
 		generatedBalanceSheet.setBalanceSheetEquity(new BalanceSheetEquityViewModel(prevPeriodAccountSubtypeBalances, currPeriodAccountSubtypeBalances, totalAccountSubtypeBalances));
 		return generatedBalanceSheet;
 	}
+	
+	public IncomeStatementViewModel getIncomeStatementViewModelForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate) {
+		List<AccountSubtypeBalanceDTO> accountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
+		List<AccountGroupBalanceDTO> accountGroupBalances = accountGroupRepo.getAllAccountGroupBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
+		List<AccountBalanceDTO> accountBalances = accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
+		
+		return new IncomeStatementViewModel(accountSubtypeBalances, accountGroupBalances, accountBalances, startDate, endDate);
+	}
+	
 
 }

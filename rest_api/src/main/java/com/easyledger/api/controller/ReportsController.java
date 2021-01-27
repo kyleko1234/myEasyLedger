@@ -14,20 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.security.AuthorizationService;
-import com.easyledger.api.service.BalanceSheetService;
+import com.easyledger.api.service.ReportsService;
 import com.easyledger.api.viewmodel.BalanceSheetViewModel;
+import com.easyledger.api.viewmodel.IncomeStatementViewModel;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/v0.2")
 public class ReportsController {
-	private BalanceSheetService balanceSheetService;
+	private ReportsService reportsService;
 	private AuthorizationService authorizationService;
 	
 	
-    public ReportsController(BalanceSheetService balanceSheetService, AuthorizationService authorizationService) {
+    public ReportsController(ReportsService reportsService, AuthorizationService authorizationService) {
 		super();
-		this.balanceSheetService = balanceSheetService;
+		this.reportsService = reportsService;
 		this.authorizationService = authorizationService;
 	}
 
@@ -44,6 +45,17 @@ public class ReportsController {
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
     		throws UnauthorizedException {
 		authorizationService.authorizeByOrganizationId(authentication, organizationId);
-		return balanceSheetService.getBalanceSheetViewModelForOrganizationUpToDate(organizationId, endDate);
+		return reportsService.getBalanceSheetViewModelForOrganizationUpToDate(organizationId, endDate);
 	}
+	
+	@GetMapping("/organization/{id}/reports/incomeStatement/{startDate}/{endDate}") 
+	public IncomeStatementViewModel getIncomeStatementViewModelForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId,
+			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
+			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
+	throws UnauthorizedException {
+		authorizationService.authorizeByOrganizationId(authentication, organizationId);
+		return reportsService.getIncomeStatementViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
+	}
+
+	
 }

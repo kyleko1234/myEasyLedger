@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL} from '../../../utils/constants';
 import { PageSettings } from '../../../config/page-settings';

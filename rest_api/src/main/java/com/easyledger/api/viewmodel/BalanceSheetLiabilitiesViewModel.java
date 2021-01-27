@@ -34,12 +34,12 @@ public class BalanceSheetLiabilitiesViewModel {
 	}
 
 
-	public static ArrayList<Long> getCurrentLiabilitiesSubtypeIds() {
+	public ArrayList<Long> getCurrentLiabilitiesSubtypeIds() {
 		return CURRENT_LIABILITIES_SUBTYPE_IDS;
 	}
 
 
-	public static ArrayList<Long> getNonCurrentLiabilitiesSubtypeIds() {
+	public ArrayList<Long> getNonCurrentLiabilitiesSubtypeIds() {
 		return NON_CURRENT_LIABILITIES_SUBTYPE_IDS;
 	}
 

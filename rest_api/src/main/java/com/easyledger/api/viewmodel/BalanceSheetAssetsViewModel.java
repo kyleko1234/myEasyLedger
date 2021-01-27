@@ -34,12 +34,12 @@ public class BalanceSheetAssetsViewModel {
 	}
 
 
-	public static ArrayList<Long> getCurrentAssetsSubtypeIds() {
+	public ArrayList<Long> getCurrentAssetsSubtypeIds() {
 		return CURRENT_ASSETS_SUBTYPE_IDS;
 	}
 
 
-	public static ArrayList<Long> getNonCurrentAssetsSubtypeIds() {
+	public ArrayList<Long> getNonCurrentAssetsSubtypeIds() {
 		return NON_CURRENT_ASSETS_SUBTYPE_IDS;
 	}
 

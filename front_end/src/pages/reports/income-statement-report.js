@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
-import ReportRender from './components/report-render.js';
+import IncomeStatementRender from './components/income-statement-render';
 
 function IncomeStatementReport() {
     const appContext = React.useContext(PageSettings);
@@ -15,7 +15,7 @@ function IncomeStatementReport() {
             </ol>
             <h1 className="page-header">Income Statement Report </h1>
             <div>
-                {appContext.isLoading? "Loading..." : <ReportRender title="Income Statement" dateRange={true}/>}
+                {appContext.isLoading? "Loading..." : <IncomeStatementRender/>}
             </div>
 		</div>
     )
