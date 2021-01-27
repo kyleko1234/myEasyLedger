@@ -50,6 +50,10 @@ a.icon-link-text-muted:hover {
     overflow: visible;
 }
 
+.visibility-hidden {
+    visibility: hidden !important;
+}
+
 .font-weight-600 {
     font-weight: 600 !important;
 }
