@@ -3,6 +3,7 @@ import { Bar, defaults } from 'react-chartjs-2';
 import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
+import {incomeAndExpenseSummaryText} from './income-and-expense-summary-text.js';
 
 function IncomeAndExpenseSummary() {
     const appContext = React.useContext(PageSettings);
@@ -74,40 +75,40 @@ function IncomeAndExpenseSummary() {
         let monthString = ''
         switch (month) {
             case 1:
-                monthString = " Jan";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" Jan"];
                 break;
             case 2:
-                monthString = " Feb";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" Feb"];
                 break;
             case 3:
-                monthString = " Mar";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" Mar"];
                 break;
             case 4:
-                monthString = " Apr";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" Apr"];
                 break;
             case 5:
-                monthString = " May";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" May"];
                 break;
             case 6:
-                monthString = " June";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" June"];
                 break;
             case 7:
-                monthString = " July";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" July"];
                 break;
             case 8:
-                monthString = " Aug";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" Aug"];
                 break;
             case 9:
-                monthString = " Sept";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" Sept"];
                 break;
             case 10:
-                monthString = " Oct";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" Oct"];
                 break;
             case 11:
-                monthString = " Nov";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" Nov"];
                 break;
             case 12:
-                monthString = " Dec";
+                monthString = incomeAndExpenseSummaryText[appContext.locale][" Dec"];
                 break;
             default:
                 break;
@@ -120,13 +121,13 @@ function IncomeAndExpenseSummary() {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Income',
+                label: incomeAndExpenseSummaryText[appContext.locale]["Income"],
                 borderWidth: 2,
                 borderColor: '#727cb6',
                 backgroundColor: 'rgba(114, 124, 182, 0.3)',
                 data: incomeData
             }, {
-                label: 'Expenses',
+                label: incomeAndExpenseSummaryText[appContext.locale]["Expenses"],
                 borderWidth: 2,
                 borderColor: '#8f103c',
                 backgroundColor: 'rgba(143, 16, 60, 0.3)',
@@ -147,7 +148,7 @@ function IncomeAndExpenseSummary() {
     return (
         <div className="card border-0 widget widget-rounded mb-3">
             <div className="widget-header bg-light border-bottom">
-                <h4 className="widget-header-title">Income and Expenses</h4>
+                <h4 className="widget-header-title">{incomeAndExpenseSummaryText[appContext.locale]["Income and Expenses"]}</h4>
             </div>
             {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                 <div className="card-body" style={{ height: '500px' }}>

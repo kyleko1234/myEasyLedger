@@ -3,8 +3,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants.js';
 import { PageSettings } from '../../../config/page-settings';
 import { useHistory } from "react-router-dom";
-import PerfectScrollbar from 'react-perfect-scrollbar';
-
+import {balanceSummaryText} from "./balance-summary-text.js";
 
 
 function BalanceSummary() {
@@ -12,7 +11,6 @@ function BalanceSummary() {
     const history = useHistory();
     const [loading, setLoading] = React.useState(true);
     const [assetAndLiabilityAccounts, setAssetAndLiabilityAccounts] = React.useState([]);
-    const labels = ["Account", "Balance"];
 
     //fetch data on component mount
     React.useEffect(() => {
@@ -32,15 +30,15 @@ function BalanceSummary() {
     return (
         <div className="widget widget-rounded mb-3">
             <div className="widget-header bg-light border-bottom">
-                <h4 className="widget-header-title">Balance Summary</h4>
+                <h4 className="widget-header-title">{balanceSummaryText[appContext.locale]["Balance Summary"]}</h4>
             </div>
             <div className="overflow-auto px-2" style={{ height: '500px' }}>
                 {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                     <table className='table table-hover'>
                         <thead>
                             <tr>
-                                <th>Account</th>
-                                <th className="text-right">Balance</th>
+                                <th>{balanceSummaryText[appContext.locale]["Account"]}</th>
+                                <th className="text-right">{balanceSummaryText[appContext.locale]["Balance"]}</th>
                             </tr>
                         </thead>
                         <tbody>
