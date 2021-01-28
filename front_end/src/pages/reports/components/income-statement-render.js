@@ -39,7 +39,7 @@ function IncomeStatementRender() {
 
     const [totalRevenue, setTotalRevenue] = React.useState(null);
     const [totalCostOfSales, setTotalCostOfSales] = React.useState(null);
-    const [grossMargin, setGrossMargin] = React.useState(null);
+    const [grossProfit, setGrossProfit] = React.useState(null);
     const [rd, setRd] = React.useState(null);
     const [sga, setSga] = React.useState(null);
     const [depreciation, setDepreciation] = React.useState(null);
@@ -72,7 +72,7 @@ function IncomeStatementRender() {
                 if (response.data) {
                     setTotalRevenue(response.data.totalRevenue);
                     setTotalCostOfSales(response.data.totalCostOfSales);
-                    setGrossMargin(response.data.grossMargin);
+                    setGrossProfit(response.data.grossProfit);
                     setRd(response.data.totalResearchAndDevelopment);
                     setSga(response.data.totalSalesGeneralAndAdministration);
                     setDepreciation(response.data.totalDepreciation);
@@ -138,28 +138,37 @@ function IncomeStatementRender() {
                 <div>
                     <table className="table table-striped m-b-0">
                         <tbody>
-                            <tr><td className="font-weight-600">Revenue</td></tr>
-                            {accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == revenueSubtypeId).map(accountGroup => {
-                                return(
-                                    <tr><td className="d-flex justify-content-between p-l-30"><div>{accountGroup.accountGroupName}</div><div>{numberAsCurrency(accountGroup.debitsMinusCredits * -1)}</div></td></tr>
-                                )
-                            })}
-                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">Total revenue</div><div>{numberAsCurrency(totalRevenue)}</div></td></tr>
-                            <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
-                            <tr><td className="font-weight-600">Cost of sales</td></tr>
-                            {accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == costOfSalesSubtypeId).map(accountGroup => {
-                                return(
-                                    <tr><td className="d-flex justify-content-between p-l-30"><div>{accountGroup.accountGroupName}</div><div>{numberAsCurrency(accountGroup.debitsMinusCredits)}</div></td></tr>
-                                )
-                            })}
-                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">Total cost of sales</div><div>{numberAsCurrency(totalCostOfSales)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">Gross margin</div><div>{numberAsCurrency(grossMargin)}</div></td></tr>
+                            {!accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == revenueSubtypeId).length? null : 
+                                <>
+                                <tr><td className="font-weight-600">Revenue</td></tr>
+                                    {accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == revenueSubtypeId).map(accountGroup => {
+                                        return(
+                                            <tr key={accountGroup.accountGroupId}><td className="d-flex justify-content-between p-l-30"><div>{accountGroup.accountGroupName}</div><div>{numberAsCurrency(accountGroup.debitsMinusCredits * -1)}</div></td></tr>
+                                        )
+                                    })}
+                                    <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">Total revenue</div><div>{numberAsCurrency(totalRevenue)}</div></td></tr>
+                                    <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
+                                </>
+                            }
+                            {!accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == costOfSalesSubtypeId).length? null : 
+                                <>
+                                    <tr><td className="font-weight-600">Cost of sales</td></tr>
+                                    {accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == costOfSalesSubtypeId).map(accountGroup => {
+                                        return(
+                                            <tr key={accountGroup.accountGroupId}><td className="d-flex justify-content-between p-l-30"><div>{accountGroup.accountGroupName}</div><div>{numberAsCurrency(accountGroup.debitsMinusCredits)}</div></td></tr>
+                                        )
+                                    })}
+                                    <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">Total cost of sales</div><div>{numberAsCurrency(totalCostOfSales)}</div></td></tr>
+                                    <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
+                                </>
+                            }
+                            <tr><td className="d-flex justify-content-between font-weight-600"><div>Gross profit</div><div>{numberAsCurrency(grossProfit)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                             <tr><td className="font-weight-600">Operating expenses</td></tr>
-                            <tr><td className="d-flex justify-content-between p-l-30"><div>Research and development</div><div>{numberAsCurrency(rd)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between p-l-30"><div>Sales, general, and administration</div><div>{numberAsCurrency(sga)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between p-l-30"><div>Depreciation</div><div>{numberAsCurrency(depreciation)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between p-l-30"><div>Amortization</div><div>{numberAsCurrency(amortization)}</div></td></tr>
+                            {!rd? null : <tr><td className="d-flex justify-content-between p-l-30"><div>Research and development</div><div>{numberAsCurrency(rd)}</div></td></tr>}
+                            {!sga? null : <tr><td className="d-flex justify-content-between p-l-30"><div>Sales, general, and administration</div><div>{numberAsCurrency(sga)}</div></td></tr>}
+                            {!depreciation? null : <tr><td className="d-flex justify-content-between p-l-30"><div>Depreciation</div><div>{numberAsCurrency(depreciation)}</div></td></tr>}
+                            {!amortization? null : <tr><td className="d-flex justify-content-between p-l-30"><div>Amortization</div><div>{numberAsCurrency(amortization)}</div></td></tr>}
                             <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">Total operating expenses</div><div>{numberAsCurrency(totalOperatingExpenses)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                             <tr><td className="d-flex justify-content-between font-weight-600"><div>Operating income</div><div>{numberAsCurrency(operatingIncome)}</div></td></tr>

@@ -26,7 +26,7 @@ public class IncomeStatementViewModel {
 	
 	private BigDecimal totalRevenue = new BigDecimal(0); //positive value
 	private BigDecimal totalCostOfSales = new BigDecimal(0); //positive value
-	private BigDecimal grossMargin = new BigDecimal(0); // revenue - cost of sales
+	private BigDecimal grossProfit = new BigDecimal(0); // revenue - cost of sales
 	
 	private BigDecimal totalResearchAndDevelopment = new BigDecimal(0); //positive value
 	private BigDecimal totalSalesGeneralAndAdministration = new BigDecimal(0); //positive value
@@ -76,9 +76,9 @@ public class IncomeStatementViewModel {
 				incomeTax = incomeTax.add(subtypeBalance.getDebitsMinusCredits());
 			}
 		}
-		grossMargin = totalRevenue.subtract(totalCostOfSales);
+		grossProfit = totalRevenue.subtract(totalCostOfSales);
 		totalOperatingExpenses = totalResearchAndDevelopment.add(totalSalesGeneralAndAdministration.add(totalDepreciation.add(totalAmortization)));
-		operatingIncome = grossMargin.subtract(totalOperatingExpenses);
+		operatingIncome = grossProfit.subtract(totalOperatingExpenses);
 		incomeBeforeTax = operatingIncome.add(otherIncomeExpense);
 		netIncome = incomeBeforeTax.subtract(incomeTax);
 	}
@@ -135,8 +135,8 @@ public class IncomeStatementViewModel {
 		return totalCostOfSales;
 	}
 
-	public BigDecimal getGrossMargin() {
-		return grossMargin;
+	public BigDecimal getGrossProfit() {
+		return grossProfit;
 	}
 
 	public BigDecimal getTotalResearchAndDevelopment() {
@@ -190,7 +190,7 @@ public class IncomeStatementViewModel {
 	@Override
 	public String toString() {
 		return "IncomeStatementViewModel [startDate=" + startDate + ", endDate=" + endDate + ", totalRevenue="
-				+ totalRevenue + ", totalCostOfSales=" + totalCostOfSales + ", grossMargin=" + grossMargin
+				+ totalRevenue + ", totalCostOfSales=" + totalCostOfSales + ", grossProfit=" + grossProfit
 				+ ", totalResearchAndDevelopment=" + totalResearchAndDevelopment
 				+ ", totalSalesGeneralAndAdministration=" + totalSalesGeneralAndAdministration + ", totalDepreciation="
 				+ totalDepreciation + ", totalAmortization=" + totalAmortization + ", totalOperatingExpenses="
