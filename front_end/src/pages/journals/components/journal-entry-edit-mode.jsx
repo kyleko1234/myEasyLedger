@@ -3,6 +3,7 @@ import { useTable } from 'react-table';
 import { Alert } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import Select from 'react-select';
+import {journalEntryEditModeText} from './journal-entry-edit-mode-text';
 
 function JournalEntryEditMode({
     data, setLineItemData,
@@ -15,10 +16,10 @@ function JournalEntryEditMode({
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
-            { Header: 'Description', accessor: 'description', width:'50%', minWidth:"9em" },
-            { Header: 'Account', accessor: 'accountName', width:'20%', minWidth:"6em" },
-            { Header: 'Debit', accessor: 'debitAmount', width:'13%', minWidth:"6em" },
-            { Header: 'Credit', accessor: 'creditAmount', width:'13%', minWidth:"6em" },
+            { Header: journalEntryEditModeText[appContext.locale]['Description'], accessor: 'description', width:'50%', minWidth:"9em" },
+            { Header: journalEntryEditModeText[appContext.locale]['Account'], accessor: 'accountName', width:'20%', minWidth:"6em" },
+            { Header: journalEntryEditModeText[appContext.locale]['Debit'], accessor: 'debitAmount', width:'13%', minWidth:"6em" },
+            { Header: journalEntryEditModeText[appContext.locale]['Credit'], accessor: 'creditAmount', width:'13%', minWidth:"6em" },
         ],
         []
     )
@@ -154,7 +155,7 @@ function JournalEntryEditMode({
             }
 
             <div className="row m-b-10">
-                <div className="col-md-1"><strong>Date</strong></div> 
+                <div className="col-md-1"><strong>{journalEntryEditModeText[appContext.locale]["Date"]}</strong></div> 
                 <div className="col-md-2">
                     <input 
                         type="date" 
@@ -164,7 +165,7 @@ function JournalEntryEditMode({
                     </div>
             </div>
             <div className="row m-b-10">
-                <div className="col-md-1"><strong>Description</strong></div> 
+                <div className="col-md-1"><strong>{journalEntryEditModeText[appContext.locale]["Description"]}</strong></div> 
                 <div className="col-md-11">
                     <input 
                         type="text" 
@@ -216,8 +217,7 @@ function JournalEntryEditMode({
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td>Total</td>
-                            <td></td>
+                            <td>{journalEntryEditModeText[appContext.locale]["Total"]}</td>
                             <td></td>
                             <td>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</td>
                             <td>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</td>
@@ -226,7 +226,7 @@ function JournalEntryEditMode({
                     </tfoot>
                 </table>
                 <button className="btn btn-light btn-block row" style={{margin:"auto", padding:"1em", borderStyle:"solid", borderColor:"LightGray", borderWidth:"1px"}} onClick={() => addEmptyLineItem()}>
-                    <i className="ion ion-md-add fa-fw fa-lg"></i>Add a Line Item
+                    <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
                 </button>
             </div>
         </>

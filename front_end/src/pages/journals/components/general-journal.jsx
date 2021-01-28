@@ -3,6 +3,7 @@ import { API_BASE_URL } from '../../../utils/constants.js';
 import axios from 'axios';
 import { PageSettings } from '../../../config/page-settings';
 import TableOfJournalEntries from './table-of-journal-entries';
+import {generalJournalText} from './general-journal-text.js';
 
 
 function GeneralJournal() {
@@ -11,10 +12,10 @@ function GeneralJournal() {
   
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
-      { Header: 'Date', accessor: 'journalEntryDate', width:"20%"},
-      { Header: 'Description', accessor: 'description', width:"50%"},
-      { Header: 'Debit', accessor: 'debitAmount', width:"15%"},
-      { Header: 'Credit', accessor: 'creditAmount', width: "15%"},
+      { Header: generalJournalText[appContext.locale]["Date"], accessor: 'journalEntryDate', width:"20%"},
+      { Header: generalJournalText[appContext.locale]["Description"], accessor: 'description', width:"50%"},
+      { Header: generalJournalText[appContext.locale]["Debit"], accessor: 'debitAmount', width:"15%"},
+      { Header: generalJournalText[appContext.locale]["Credit"], accessor: 'creditAmount', width: "15%"},
     ],
     []
   )
@@ -46,7 +47,7 @@ function GeneralJournal() {
         fetchData={fetchData}
         pageCount={pageCount}
         elementCount={elementCount}
-        tableTitle="Accounting Entries"
+        tableTitle={generalJournalText[appContext.locale]["Accounting Entries"]}
         hasAddEntryButton={true}
       />
     </div>

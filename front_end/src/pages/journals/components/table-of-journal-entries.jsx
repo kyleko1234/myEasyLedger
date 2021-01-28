@@ -7,6 +7,7 @@ import {API_BASE_URL} from '../../../utils/constants.js';
 import JournalEntryViewMode from './journal-entry-view-mode';
 import JournalEntryEditMode from './journal-entry-edit-mode';
 import { PageSettings } from '../../../config/page-settings.js';
+import {tableOfJournalEntriesText} from './table-of-journal-entries-text.js';
 
 //Generates a table with react-table 7 using pagination
 
@@ -182,10 +183,10 @@ function TableOfJournalEntries({
   const checkEntryForValidationErrors = () => {
     let errorMessages = [];
     if (!journalEntryDate) {
-      errorMessages.push("Please choose a date for this entry.");
+      errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Please choose a date for this entry."]);
     }
     if (!journalEntryDescription) {
-      errorMessages.push("Please provide a description for this entry.");
+      errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Please provide a description for this entry."]);
     }
 
     let debitSum = 0;
@@ -214,16 +215,16 @@ function TableOfJournalEntries({
     })
     //move missing description and missing amount error messages out of the loop to avoid duplicate messages
     if (missingDescription) {
-      errorMessages.push("Line-items must have a description.");
+      errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Line-items must have a description."]);
     }
     if (missingAmount) {
-      errorMessages.push("Line-items must have either a debit or credit.");
+      errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Line-items must have either a debit or credit."]);
     }
     if (missingAccount) {
-      errorMessages.push("Line-items must be assigned to an account.");
+      errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Line-items must be assigned to an account."]);
     }
     if (debitSum.toFixed(2) !== creditSum.toFixed(2)) {
-      errorMessages.push("Debits and Credits must balance.")
+      errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Debits and Credits must balance."])
     }
     setAlertMessages(errorMessages);
     return errorMessages;
@@ -302,7 +303,7 @@ function TableOfJournalEntries({
             <div>
               {hasAddEntryButton ? 
                 <button className="btn btn-sm btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
-                  <i className="ion ion-md-add fa-fw fa-lg"></i>Add an entry
+                  <i className="ion ion-md-add fa-fw fa-lg"></i>{tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                 </button> : null}
             </div>
 
@@ -315,7 +316,7 @@ function TableOfJournalEntries({
               {headerGroups.map(headerGroup => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
-                    <th style={{width: column.width}} className={column.Header == "Debit" || column.Header == "Credit" ? "text-right" : ""} {...column.getHeaderProps()}>
+                    <th style={{width: column.width}} className={column.id == "debitAmount" || column.id == "creditAmount" ? "text-right" : ""} {...column.getHeaderProps()}>
                       {column.render('Header')}
                       <span>
                         {column.isSorted
@@ -325,6 +326,7 @@ function TableOfJournalEntries({
                           : ''}
                       </span>
                     </th>
+
                   ))}
                 </tr>
               ))}
@@ -335,7 +337,7 @@ function TableOfJournalEntries({
                 return (
                   <tr className="cursor-pointer" onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
                     {row.cells.map(cell => {
-                      return <td className={cell.column.Header == "Debit" || cell.column.Header == "Credit" ? "text-right" : ""} {...cell.getCellProps()}> {formatCellValue(cell)} </td>
+                      return <td className={cell.column.id == "debitAmount" || cell.column.id == "creditAmount" ? "text-right" : ""} {...cell.getCellProps()}> {formatCellValue(cell)} </td>
                     })}
                   </tr>
                 )
@@ -347,7 +349,7 @@ function TableOfJournalEntries({
           <span style={{ width: "25ch" }}>
             <ul className="pager align-self-center m-t-0 m-b-0">
               <li className={canPreviousPage ? "previous" : "previous disabled"}>
-                {canPreviousPage ? <Link onClick={() => previousPage()} to="/journals">&larr; Newer</Link> : null}
+                {canPreviousPage ? <Link onClick={() => previousPage()} to="/journals">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link> : null}
               </li>
             </ul>
           </span>
@@ -358,7 +360,7 @@ function TableOfJournalEntries({
           <span>
             <ul className="pager align-self-center m-t-0 m-b-0" style={{ width: "25ch" }}>
               <li className={canNextPage ? "next" : "next disabled"}>
-                {canNextPage ? <Link onClick={() => nextPage()} to="/journals">Older &rarr;</Link> : null}
+                {canNextPage ? <Link onClick={() => nextPage()} to="/journals">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link> : null}
               </li>
             </ul>
           </span>
@@ -372,7 +374,7 @@ function TableOfJournalEntries({
         backdrop={editMode ? "static" : true}
         centered={true}
       >
-        <ModalHeader style={{backgroundColor: "#e4e4e4"}}>Journal Entry</ModalHeader>
+        <ModalHeader style={{backgroundColor: "#e4e4e4"}}>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
         <ModalBody className="bg-light">
           {editMode ?
             <JournalEntryEditMode
@@ -398,13 +400,13 @@ function TableOfJournalEntries({
                 <button 
                   className="btn btn-red" 
                   style={{ width: "10ch" }}
-                  onClick={() => handleDeleteJournalEntryButton(journalEntryId)}>Delete</button>}
+                  onClick={() => handleDeleteJournalEntryButton(journalEntryId)}>{tableOfJournalEntriesText[appContext.locale]["Delete"]}</button>}
               </div>
               <div>
                 <button className="btn btn-primary"
                   style={{ width: "10ch" }}
                   onClick={() => handleSaveJournalEntryButton()}>
-                  Save</button>
+                  {tableOfJournalEntriesText[appContext.locale]["Save"]}</button>
                 <button
                   className="btn btn-white m-l-10"
                   style={{ width: "10ch" }}
@@ -412,14 +414,14 @@ function TableOfJournalEntries({
                     createMode ? cancelCreateMode() : fetchJournalEntry(journalEntryId);
                     toggleEditMode();
                   }}>
-                  Cancel</button>
+                  {tableOfJournalEntriesText[appContext.locale]["Cancel"]}</button>
               </div>
             </> :
             <>
               <div>{/*empty div to push the other two buttons to the right*/}</div>
               <div>
-                <button className="btn btn-primary" onClick={() => {toggleEditMode(); refreshAccounts()}} style={{ width: "10ch" }}>Edit</button>
-                <button className="btn btn-white m-l-10" onClick={() => toggleJournalEntryExpanded()} style={{ width: "10ch" }}>Close</button>
+                <button className="btn btn-primary" onClick={() => {toggleEditMode(); refreshAccounts()}} style={{ width: "10ch" }}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
+                <button className="btn btn-white m-l-10" onClick={() => toggleJournalEntryExpanded()} style={{ width: "10ch" }}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
               </div>
             </>
           }

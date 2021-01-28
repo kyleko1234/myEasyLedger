@@ -1,15 +1,16 @@
-import React from 'react'
-import { useTable } from 'react-table'
-import { PageSettings } from '../../../config/page-settings'
+import React from 'react';
+import { useTable } from 'react-table';
+import { PageSettings } from '../../../config/page-settings';
+import {journalEntryViewModeText} from './journal-entry-view-mode-text.js'
 
 function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}) {
   const appContext = React.useContext(PageSettings);
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
-      { Header: 'Description', accessor: 'description', width:'50%'},
-      { Header: 'Account', accessor: 'accountName', width:'24%'},
-      { Header: 'Debit', accessor: 'debitAmount', width:'13%'},
-      { Header: 'Credit', accessor: 'creditAmount', width:'13%'},
+      { Header: journalEntryViewModeText[appContext.locale]['Description'], accessor: 'description', width:'50%'},
+      { Header: journalEntryViewModeText[appContext.locale]['Account'], accessor: 'accountName', width:'24%'},
+      { Header: journalEntryViewModeText[appContext.locale]['Debit'], accessor: 'debitAmount', width:'13%'},
+      { Header: journalEntryViewModeText[appContext.locale]['Credit'], accessor: 'creditAmount', width:'13%'},
     ],
     []
   )
@@ -57,10 +58,10 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
   return (
     <>
       <div className="row m-b-10">
-        <div className="col-md-1"><strong>Date</strong></div> <div className="col-md-11">{journalEntryDate}</div>
+        <div className="col-md-1"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-md-11">{journalEntryDate}</div>
       </div>
       <div className="row m-b-10">
-        <div className="col-md-1"><strong>Description</strong></div> <div className="col-md-11">{journalEntryDescription}</div>
+        <div className="col-md-1"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-md-11">{journalEntryDescription}</div>
       </div>
       <br></br>
       
@@ -72,7 +73,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
               {headerGroup.headers.map(column => (
                 // Add the sorting props to control sorting. For this example
                 // we can add them into the header props
-                <th {...column.getHeaderProps()} style={{width: column.width}} className={column.Header == "Debit" || column.Header == "Credit" ? "text-right" : ""}>
+                <th {...column.getHeaderProps()} style={{width: column.width}} className={column.id == "debitAmount" || column.id == "creditAmount" ? "text-right" : ""}>
                   {column.render('Header')}
                 </th>
               ))}
@@ -87,7 +88,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
                 <tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
                     return (
-                      <td className={cell.column.Header == "Debit" || cell.column.Header == "Credit" ? "text-right" : ""} {...cell.getCellProps()}>{formatCell(cell)}</td>
+                      <td className={cell.column.id == "debitAmount" || cell.column.id == "creditAmount" ? "text-right" : ""} {...cell.getCellProps()}>{formatCell(cell)}</td>
                     )
                   })}
                 </tr>
@@ -96,7 +97,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
         </tbody>
         <tfoot>
           <tr>
-            <td>Total</td>
+            <td>{journalEntryViewModeText[appContext.locale]["Total"]}</td>
             <td></td>
             <td className="text-right">
               {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}
