@@ -254,7 +254,7 @@ class ChartOfAccounts extends React.Component {
                 </ol>
                 <h1 className="page-header">Chart of Accounts </h1>
                 <Nav pills className="d-block">
-                    {!this.state.accountTypes ? "Loading..." : 
+                    {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                         <div className="d-flex justify-content-between px-3 mb-3">
                             <div className="row">
                                 {this.state.accountTypes.map(accountType => { //render a pills navlink for each accountType returned by the server, with the active accountType being the one that has an id that matches the url param.
@@ -280,7 +280,7 @@ class ChartOfAccounts extends React.Component {
                     }
                 </Nav>
                 <TabContent activeTab={this.props.match.params.activeTabId} className="widget widget-rounded widget-list widget-list-rounded m-b-30"> {/** active tab is the tab with an activeTabId that matches the url path parameter*/}
-                    {!this.state.accountTypes? "Loading..." : 
+                    {!this.state.accountTypes? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                         this.state.accountTypes.map(accountType => {
                             return(
                                 <TabPane tabId={accountType.id.toString()} key={accountType.id.toString()}>
@@ -347,7 +347,7 @@ class ChartOfAccounts extends React.Component {
                                 <label className="col-md-4 col-form-label">
                                     Account Type
                                 </label>
-                                {!this.state.selectedAccountTypeOption? "Loading..." : 
+                                {!this.state.selectedAccountTypeOption? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                                     <div className="col-md-8">
                                         <Select 
                                             options={this.state.accountTypeOptions} 
@@ -364,7 +364,7 @@ class ChartOfAccounts extends React.Component {
                                 <label className="col-md-4 col-form-label">
                                     Account Subtype
                                 </label>
-                                {!this.state.selectedAccountTypeOption? "Loading..." : 
+                                {!this.state.selectedAccountTypeOption? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                                     <div className="col-md-8">
                                         <Select 
                                             options={this.state.accountSubtypeOptions.filter(accountSubtypeOption => accountSubtypeOption.object.accountType.id == this.state.selectedAccountTypeOption.object.id)} 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTable } from 'react-table';
 import { Alert } from 'reactstrap';
-import { PageSettings } from '../../config/page-settings';
+import { PageSettings } from '../../../config/page-settings';
 import Select from 'react-select';
 
 function JournalEntryEditMode({

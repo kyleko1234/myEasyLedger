@@ -3,10 +3,10 @@ import { useTable, usePagination } from 'react-table'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {API_BASE_URL} from '../../utils/constants.js';
+import {API_BASE_URL} from '../../../utils/constants.js';
 import JournalEntryViewMode from './journal-entry-view-mode';
 import JournalEntryEditMode from './journal-entry-edit-mode';
-import { PageSettings } from '../../config/page-settings.js';
+import { PageSettings } from '../../../config/page-settings.js';
 
 //Generates a table with react-table 7 using pagination
 

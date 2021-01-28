@@ -1,11 +1,9 @@
 import React from 'react';
-import ClickableTableWithPaginationAndJournalEntryModal from '../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
+import TableOfJournalEntries from '../journals/components/table-of-journal-entries';
 import {API_BASE_URL} from '../../utils/constants';
 import axios from 'axios';
-import {Link, Redirect, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import AccountDetailsSidebar from "./components/account-details-sidebar";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from "reactstrap";
-import SweetAlert from 'react-bootstrap-sweetalert';
 import { PageSettings } from '../../config/page-settings';
 
 
@@ -120,7 +118,7 @@ function AccountDetails(props) {
 
             <div className="row">
                 <span className="col-md-8">
-                    {selectedAccount ? <ClickableTableWithPaginationAndJournalEntryModal
+                    {selectedAccount ? <TableOfJournalEntries
                         columns={columns}
                         data={data}
                         fetchData={fetchData}
@@ -128,7 +126,8 @@ function AccountDetails(props) {
                         elementCount={elementCount}
                         tableTitle={selectedAccount.accountName}
                         hasAddEntryButton={false}
-                    /> : "Loading..."}
+                    /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
+                    /* we reuse TableOfJournalEntries component, even though it's more like a TableOfLineItems here */} 
                 </span>
                 <span className="col-md-4">
                     <div>
@@ -137,7 +136,7 @@ function AccountDetails(props) {
                             accountGroupOptions={accountGroupOptions}
                             refreshAccountData={refreshAccountData}
                             elementCount={elementCount}
-                        /> : "Loading..."}
+                        /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
                     </div>
                 </span>
             </div>

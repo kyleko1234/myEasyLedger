@@ -134,7 +134,7 @@ function IncomeStatementRender() {
                 </div>
             </div>
             <div>
-                {loading? "Loading..." : 
+                {loading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                 <div>
                     <table className="table table-striped m-b-0">
                         <tbody>

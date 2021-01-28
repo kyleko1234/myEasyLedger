@@ -149,7 +149,7 @@ function IncomeAndExpenseSummary() {
             <div className="widget-header bg-light border-bottom">
                 <h4 className="widget-header-title">Income and Expenses</h4>
             </div>
-            {loading ? <div>Loading...</div> :
+            {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                 <div className="card-body" style={{ height: '500px' }}>
                     <Bar className="text-white" data={barChart.data} options={barChart.options} />
                 </div>

@@ -1,8 +1,8 @@
 import React from 'react';
-import ClickableTableWithPaginationAndJournalEntryModal from '../../../components/table/clickable-table-with-pagination-and-journal-entry-modal';
 import { API_BASE_URL } from '../../../utils/constants.js';
 import axios from 'axios';
 import { PageSettings } from '../../../config/page-settings';
+import TableOfJournalEntries from './table-of-journal-entries';
 
 
 function GeneralJournal() {
@@ -40,7 +40,7 @@ function GeneralJournal() {
   
   return (
     <div >
-      <ClickableTableWithPaginationAndJournalEntryModal
+      <TableOfJournalEntries
         columns={columns}
         data={data}
         fetchData={fetchData}

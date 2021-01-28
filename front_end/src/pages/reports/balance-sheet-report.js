@@ -15,7 +15,7 @@ function BalanceSheetReport() {
             </ol>
             <h1 className="page-header">Balance Sheet Report </h1>
             <div>
-                {appContext.isLoading? "Loading..." : <BalanceSheetRender/>}
+                {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : <BalanceSheetRender/>}
             </div>
 		</div>
     )

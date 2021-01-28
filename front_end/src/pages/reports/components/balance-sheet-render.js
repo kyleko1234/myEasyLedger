@@ -99,7 +99,7 @@ function BalanceSheetRender() {
                 </span>
             </div>
             <div className="px-2">
-                {loading? "Loading..." : 
+                {loading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                 <div>
                     <table className="table table-striped m-t-5">
                         <thead><tr><th>Assets</th></tr></thead>

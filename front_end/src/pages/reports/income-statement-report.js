@@ -15,7 +15,7 @@ function IncomeStatementReport() {
             </ol>
             <h1 className="page-header">Income Statement Report </h1>
             <div>
-                {appContext.isLoading? "Loading..." : <IncomeStatementRender/>}
+                {appContext.isLoading? <div className="d-flex justify-content-center fa-3x"><i className="fas fa-circle-notch fa-spin"></i></div> : <IncomeStatementRender/>}
             </div>
 		</div>
     )

@@ -14,7 +14,7 @@ function Reports() {
             </ol>
             <h1 className="page-header">Reports </h1>
             <div>
-                {appContext.isLoading? "Loading..." : <ReportTypeList />}
+                {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : <ReportTypeList />}
             </div>
 		</div>
     )
