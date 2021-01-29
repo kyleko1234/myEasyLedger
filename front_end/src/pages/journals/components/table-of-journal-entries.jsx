@@ -356,12 +356,12 @@ function TableOfJournalEntries({
           <span className="align-self-center">
             Showing {((pageIndex * page.length) + 1) + "-" + ((pageIndex + 1) * page.length)} of {elementCount}{' '}
                       results
-          </span>
+          </span>{/**TODO replace with page selector */}
           <span>
             <ul className="pager align-self-center m-t-0 m-b-0" style={{ width: "25ch" }}>
               <li className={canNextPage ? "next" : "next disabled"}>
                 {canNextPage ? <Link onClick={() => nextPage()} to="/journals">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link> : null}
-              </li>
+              </li> 
             </ul>
           </span>
         </div>

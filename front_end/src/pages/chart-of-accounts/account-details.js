@@ -5,7 +5,7 @@ import axios from 'axios';
 import {Link, useParams} from 'react-router-dom';
 import AccountDetailsSidebar from "./components/account-details-sidebar";
 import { PageSettings } from '../../config/page-settings';
-
+import {accountDetailsText} from './account-details-text.js';
 
 
 function AccountDetails(props) {
@@ -14,10 +14,10 @@ function AccountDetails(props) {
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
-            { Header: 'Date', accessor: 'journalEntryDate', width: "20%" },
-            { Header: 'Description', accessor: 'description', width: "60%" },
-            { Header: 'Debit', accessor: 'debitAmount', width: "10%" },
-            { Header: 'Credit', accessor: 'creditAmount', width: "10%" },
+            { Header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', width: "20%" },
+            { Header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', width: "60%" },
+            { Header: accountDetailsText[appContext.locale]['Debit'], accessor: 'debitAmount', width: "10%" },
+            { Header: accountDetailsText[appContext.locale]['Credit'], accessor: 'creditAmount', width: "10%" },
         ],
         []
     )
@@ -108,12 +108,12 @@ function AccountDetails(props) {
     return (
         <>
             <ol className="breadcrumb float-xl-right">
-                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                <li className="breadcrumb-item"><Link to="/chart-of-accounts">Chart of Accounts</Link></li>
-                <li className="breadcrumb-item active">Account Details</li>
+                <li className="breadcrumb-item"><Link to="/">{accountDetailsText[appContext.locale]["Home"]}</Link></li>
+                <li className="breadcrumb-item"><Link to="/chart-of-accounts">{accountDetailsText[appContext.locale]["Chart of Accounts"]}</Link></li>
+                <li className="breadcrumb-item active">{accountDetailsText[appContext.locale]["Account Details"]}</li>
             </ol>
 
-            <h1 className="page-header">Account Details</h1>
+            <h1 className="page-header">{accountDetailsText[appContext.locale]["Account Details"]}</h1>
 
 
             <div className="row">

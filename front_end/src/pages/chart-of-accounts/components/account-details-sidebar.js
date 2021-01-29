@@ -6,6 +6,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import Select from 'react-select';
 import axios from 'axios';
 import {API_BASE_URL} from '../../../utils/constants';
+import {accountDetailsSidebarText} from './account-details-sidebar-text.js';
 
 function AccountDetailsSidebar(props) {
     /*  required props: accountId, accountName, accountGroupId, accountGroupName, debitTotal, creditTotal, accountTypeName, 
@@ -96,7 +97,7 @@ function AccountDetailsSidebar(props) {
     return (
         <div className="widget widget-rounded mb-3">
             <div className="widget-header bg-light border-bottom">
-                <h4 className="widget-header-title">Account Details</h4>
+                <h4 className="widget-header-title">{accountDetailsSidebarText[appContext.locale]["Account Details"]}</h4>
                 <div className="widget-header-icon">
                     <Link to="#" onClick={toggleEditAccountModal} className="icon-link-text-muted"><i className="fas fa-fw fa-edit"></i></Link>
                 </div>
@@ -109,42 +110,42 @@ function AccountDetailsSidebar(props) {
                 <table className="table table-nested">
                     <tbody>
                         <tr>
-                            <td>Account Name:</td>
+                            <td>{accountDetailsSidebarText[appContext.locale]["Account Name:"]}</td>
                             <td>{props.accountName}</td>
                         </tr>
                         <tr>
-                            <td>Account Group:</td>
+                            <td>{accountDetailsSidebarText[appContext.locale]["Account Group:"]}</td>
                             <td>{props.accountGroupName}</td>
                         </tr>
                         <tr>
-                            <td>Account Type:</td>
+                            <td>{accountDetailsSidebarText[appContext.locale]["Account Type:"]}</td>
                             <td>{props.accountTypeName}</td>
                         </tr>
                         <tr>
-                            <td>Total Debit Amount:</td>
+                            <td>{accountDetailsSidebarText[appContext.locale]["Total Debit Amount:"]}</td>
                             <td>{formatCurrency(props.debitTotal)}</td>
                         </tr>
                         <tr>
-                            <td>Total Credit Amount:</td>
+                            <td>{accountDetailsSidebarText[appContext.locale]["Total Credit Amount:"]}</td>
                             <td>{formatCurrency(props.creditTotal)}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <Modal isOpen={editAccountModal} toggle={toggleEditAccountModal} centered={true}>
-                <ModalHeader>Edit Account Details</ModalHeader>
+                <ModalHeader>{accountDetailsSidebarText[appContext.locale]["Edit Account Details"]}</ModalHeader>
                 <ModalBody>
                     {
                         noAccountNameAlert ?
                             <Alert color="danger">
-                                Please provide a name for your account.
+                                {accountDetailsSidebarText[appContext.locale]["Please provide a name for your account."]}
                             </Alert>
                             : null
                     }
                     <form onSubmit={event => { event.preventDefault(); handleSaveEditAccount() }}>
                         <div className="form-group row">
                             <label className="col-form-label col-md-3">
-                                Account Name
+                                {accountDetailsSidebarText[appContext.locale]["Account Name"]}
                             </label>
                             <div className="col-md-9">
                                 <input
@@ -158,7 +159,7 @@ function AccountDetailsSidebar(props) {
                         </div>
                         <div className="form-group row">
                             <label className="col-form-label col-md-3">
-                                Account Group
+                                {accountDetailsSidebarText[appContext.locale]["Account Group"]}
                             </label>
                             <div className="col-md-9">
                                 <Select
@@ -176,37 +177,39 @@ function AccountDetailsSidebar(props) {
                         className="btn btn-primary width-10ch"
                         onClick={handleSaveEditAccount}
                     >
-                        Save
+                        {accountDetailsSidebarText[appContext.locale]["Save"]}
                     </button>
                     <button
                         className="btn btn-white width-10ch"
                         onClick={toggleEditAccountModal}
                     >
-                        Cancel
+                        {accountDetailsSidebarText[appContext.locale]["Cancel"]}
                     </button>
                 </ModalFooter>
             </Modal>
 
             {deleteAccountAlert ? 
                 <SweetAlert primary showCancel
-                    confirmBtnText="Yes, delete it!"
+                    confirmBtnText={accountDetailsSidebarText[appContext.locale]["Yes, delete it!"]}
                     confirmBtnBsStyle="primary"
                     cancelBtnBsStyle="default"
-                    title="Are you sure?"
+                    cancelBtnText={accountDetailsSidebarText[appContext.locale]["Cancel"]}
+                    title={accountDetailsSidebarText[appContext.locale]["Are you sure?"]}
                     onConfirm={() => handleConfirmDeleteAccountButton()}
                     onCancel={() => toggleDeleteAccountAlert()}
                 >
-                    Are you sure you want to delete this account?
+                    {accountDetailsSidebarText[appContext.locale]["Are you sure you want to delete this account?"]}
                 </SweetAlert> 
             : null}
             {cannotDeleteAccountAlert ? 
                 <SweetAlert danger showConfirm={false} showCancel={true}
                     cancelBtnBsStyle="default"
-                    title="Cannot delete this account."
+                    cancelBtnText={accountDetailsSidebarText[appContext.locale]["Cancel"]}
+                    title={accountDetailsSidebarText[appContext.locale]["Cannot delete this account."]}
                     onConfirm={() => toggleCannotDeleteAccountAlert()}
                     onCancel={() => toggleCannotDeleteAccountAlert()}
                 >
-                    Please remove all line items from this account and try again.
+                    {accountDetailsSidebarText[appContext.locale]["Please remove all line items from this account and try again."]}
                 </SweetAlert> 
             : null}
 

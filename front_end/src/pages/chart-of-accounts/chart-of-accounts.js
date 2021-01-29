@@ -6,6 +6,7 @@ import {API_BASE_URL} from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
 import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import {chartOfAccountsText} from './chart-of-accounts-text.js';
 
 
 
@@ -66,7 +67,7 @@ class ChartOfAccounts extends React.Component {
         axios.get(`${API_BASE_URL}/accountType`).then(response => {
             this.setState({ accountTypes: response.data});
             if (response.data) {
-                let formattedAccountTypes = response.data.map(accountType => ({value: accountType.id, label: accountType.name, object: accountType}))
+                let formattedAccountTypes = response.data.map(accountType => ({value: accountType.id, label: chartOfAccountsText[this.context.locale][accountType.name], object: accountType}))
                 this.setState({accountTypeOptions: formattedAccountTypes, selectedAccountTypeOption: formattedAccountTypes.find(formattedAccountType => formattedAccountType.object.id == this.props.match.params.activeTabId)})
             }
         })
@@ -78,7 +79,7 @@ class ChartOfAccounts extends React.Component {
         }).catch(console.log);
         axios.get(`${API_BASE_URL}/accountSubtype`).then(response => {
             if (response.data) {
-                let formattedAccountSubtypes = response.data.map(accountSubtype => ({value: accountSubtype.id, label: accountSubtype.name, object: accountSubtype}));
+                let formattedAccountSubtypes = response.data.map(accountSubtype => ({value: accountSubtype.id, label: chartOfAccountsText[this.context.locale][accountSubtype.name], object: accountSubtype}));
                 this.setState({ accountSubtypeOptions: formattedAccountSubtypes });
             }
         }).catch(console.log);
@@ -249,10 +250,10 @@ class ChartOfAccounts extends React.Component {
         return (
             <div>
                 <ol className="breadcrumb float-xl-right">
-                    <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                    <li className="breadcrumb-item active">Chart of Accounts</li>
+                    <li className="breadcrumb-item"><Link to="/">{chartOfAccountsText[this.context.locale]["Home"]}</Link></li>
+                    <li className="breadcrumb-item active">{chartOfAccountsText[this.context.locale]["Chart of Accounts"]}</li>
                 </ol>
-                <h1 className="page-header">Chart of Accounts </h1>
+                <h1 className="page-header">{chartOfAccountsText[this.context.locale]["Chart of Accounts"]} </h1>
                 <Nav pills className="d-block">
                     {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                         <div className="d-flex justify-content-between px-3 mb-3">
@@ -275,7 +276,7 @@ class ChartOfAccounts extends React.Component {
                                 onClick={() => {
                                     this.handleAddAnAccountGroupButton();
                                 }}
-                            > Create an account group </button>  
+                            > {chartOfAccountsText[this.context.locale]["Create an account group"]} </button>  
                         </div>
                     }
                 </Nav>
@@ -327,10 +328,10 @@ class ChartOfAccounts extends React.Component {
                 </TabContent>
                 
                 <Modal isOpen={this.state.editAccountGroupModal} toggle={() => this.toggleEditAccountGroupModal()} centered={true} >
-                    <ModalHeader> Create a New Account Group </ModalHeader>
+                    <ModalHeader> {chartOfAccountsText[this.context.locale]["Create a New Account Group"]} </ModalHeader>
                     <ModalBody>
-                        {this.state.accountGroupNameAlert? <Alert color="danger">Please provide a name for your account group.</Alert> : null}
-                        {this.state.accountSubtypeRequiredAlert ? <Alert color="danger">Please provide an account subtype for your account group.</Alert> : null}
+                        {this.state.accountGroupNameAlert? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide a name for your account group."]}</Alert> : null}
+                        {this.state.accountSubtypeRequiredAlert ? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide an account subtype for your account group."]}</Alert> : null}
                         <form onSubmit={event => {event.preventDefault(); this.handleSaveAnAccountGroupButton()}}>
                             <div className="form-group row">
                                 <label className="col-md-4 col-form-label">
@@ -345,7 +346,7 @@ class ChartOfAccounts extends React.Component {
                             </div>
                             <div className="form-group row">
                                 <label className="col-md-4 col-form-label">
-                                    Account Type
+                                    {chartOfAccountsText[this.context.locale]["Account Type"]}
                                 </label>
                                 {!this.state.selectedAccountTypeOption? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                                     <div className="col-md-8">
@@ -362,7 +363,7 @@ class ChartOfAccounts extends React.Component {
                             </div>
                             <div className="form-group row">
                                 <label className="col-md-4 col-form-label">
-                                    Account Subtype
+                                    {chartOfAccountsText[this.context.locale]["Account Subtype"]}
                                 </label>
                                 {!this.state.selectedAccountTypeOption? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                                     <div className="col-md-8">
@@ -381,51 +382,53 @@ class ChartOfAccounts extends React.Component {
                     </ModalBody>
                     <ModalFooter>
                             <button className="btn btn-primary width-10ch" onClick={() => this.handleSaveAnAccountGroupButton()}>
-                                Save
+                                {chartOfAccountsText[this.context.locale]["Save"]}
                             </button>
                             <button className="btn btn-white width-10ch" onClick={()=> this.toggleEditAccountGroupModal()}>
-                                Cancel
+                                {chartOfAccountsText[this.context.locale]["Cancel"]}
                             </button>
                     </ModalFooter>
                 </Modal>
 
                 {this.state.deleteAccountGroupAlert ?
                     <SweetAlert primary showCancel
-                        confirmBtnText="Yes, delete it!"
+                        confirmBtnText={chartOfAccountsText[this.context.locale]["Yes, delete it!"]}
                         confirmBtnBsStyle="primary"
+                        cancelBtnText={chartOfAccountsText[this.context.locale]["Cancel"]}
                         cancelBtnBsStyle="default"
-                        title="Are you sure?"
+                        title={chartOfAccountsText[this.context.locale]["Are you sure?"]}
                         onConfirm={this.handleConfirmDeleteAccountGroupButton}
                         onCancel={this.toggleDeleteAccountGroupAlert}
                     >
-                        Are you sure you want to delete this account group?
+                        {chartOfAccountsText[this.context.locale]["Are you sure you want to delete this account group?"]}
                     </SweetAlert>
                 : null}
                 {this.state.cannotDeleteAccountGroupAlert ?
                     <SweetAlert danger showConfirm={false} showCancel={true}
                         cancelBtnBsStyle="default"
-                        title="Cannot delete this account."
+                        cancelBtnText={chartOfAccountsText[this.context.locale]["Cancel"]}
+                        title={chartOfAccountsText[this.context.locale]["Cannot delete this account."]}
                         onConfirm={this.toggleCannotDeleteAccountGroupAlert}
                         onCancel={this.toggleCannotDeleteAccountGroupAlert}
                     >
-                        Cannot delete this account group. Please delete all accounts in this account group and try again.
+                        {chartOfAccountsText[this.context.locale]["Cannot delete this account group. Please delete all accounts in this account group and try again."]}
                     </SweetAlert>
                 : null}
 
                 <Modal isOpen={this.state.addAnAccountModal} toggle={() => this.toggleAddAnAccountModal()} centered={true}>
-                    <ModalHeader> Add an Account </ModalHeader>
+                    <ModalHeader> {chartOfAccountsText[this.context.locale]["Add an Account"]} </ModalHeader>
                     <ModalBody>
                         {
                             this.state.accountNameAlert ? 
                                 <Alert color="danger">
-                                    Please provide a name for your account.
+                                    {chartOfAccountsText[this.context.locale]["Please provide a name for your account."]}
                                 </Alert>
                             : null
                         }
                         <form onSubmit={event => {event.preventDefault(); this.handleSaveNewAccount()}}>
                             <div className="form-group row">
                                 <label className="col-form-label col-md-3">
-                                    Account Name
+                                    {chartOfAccountsText[this.context.locale]["Account Name"]}
                                 </label>
                                 <div className="col-md-9">
                                     <input 
@@ -444,7 +447,7 @@ class ChartOfAccounts extends React.Component {
                             className="btn btn-primary width-10ch" 
                             onClick={() => this.handleSaveNewAccount()} 
                         >
-                            Save
+                            {chartOfAccountsText[this.context.locale]["Save"]}
                         </button>
                         <button 
                             className="btn btn-white width-10ch" 
@@ -452,7 +455,7 @@ class ChartOfAccounts extends React.Component {
                                 this.toggleAddAnAccountModal();
                             }} 
                         >
-                            Cancel
+                            {chartOfAccountsText[this.context.locale]["Cancel"]}
                         </button>
                     </ModalFooter>
                 </Modal>
