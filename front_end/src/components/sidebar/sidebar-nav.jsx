@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
 import SidebarNavList from './sidebar-nav-list.jsx';
 import menus from './menu.jsx';
+import {sidebarText} from './sidebar-text.js';
 
 class SidebarNav extends React.Component {
 	static contextType = PageSettings;
@@ -82,7 +83,7 @@ class SidebarNav extends React.Component {
 						<input type="text" className="form-control" placeholder="Sidebar menu filter..." onKeyUp={this.handleSidebarSearch} />
 					</li>
 				)}
-				<li className="nav-header">Navigation</li>
+				<li className="nav-header">{sidebarText[this.context.locale]["Navigation"]}</li>
 				{this.state.menus.map((menu, i) => (
 					<Route path={menu.path} exact={menu.exact} key={i} children={({ match }) => (
 						<SidebarNavList

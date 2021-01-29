@@ -1,8 +1,11 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
+import {sidebarText} from './sidebar-text.js';
 
 class SidebarNavList extends React.Component {
+	static contextType = PageSettings;
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -26,7 +29,7 @@ class SidebarNavList extends React.Component {
 		var caret = (this.props.data.children && !this.props.data.badge) && <b className="caret"></b>;
 		var label = this.props.data.label && <span className="label label-theme m-l-5">{this.props.data.label}</span>;
 		var badge = this.props.data.badge && <span className="badge pull-right">{this.props.data.badge}</span>;
-		var title = this.props.data.title && <span>{this.props.data.title} {label}</span>;
+		var title = this.props.data.title && <span>{sidebarText[this.context.locale][this.props.data.title]} {label}</span>;
 		var highlight = this.props.data.highlight && <i className="fa fa-paper-plane text-theme"></i>;
 		
 		return (

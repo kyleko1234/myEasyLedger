@@ -99,10 +99,10 @@ function AccountDetailsSidebar(props) {
             <div className="widget-header bg-light border-bottom">
                 <h4 className="widget-header-title">{accountDetailsSidebarText[appContext.locale]["Account Details"]}</h4>
                 <div className="widget-header-icon">
-                    <Link to="#" onClick={toggleEditAccountModal} className="icon-link-text-muted"><i className="fas fa-fw fa-edit"></i></Link>
+                    <Link replace to="#" onClick={toggleEditAccountModal} className="icon-link-text-muted"><i className="fas fa-fw fa-edit"></i></Link>
                 </div>
                 <div className="widget-header-icon">
-                    <Link to="#" onClick={toggleDeleteAccountAlert} className="icon-link-text-muted"><i className="fas fa-fw fa-trash-alt"></i></Link>
+                    <Link replace to="#" onClick={toggleDeleteAccountAlert} className="icon-link-text-muted"><i className="fas fa-fw fa-trash-alt"></i></Link>
                 </div>
 
             </div>

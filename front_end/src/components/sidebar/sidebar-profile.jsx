@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
 import {API_BASE_URL} from '../../utils/constants.js';
 import axios from 'axios';
+import {sidebarText} from './sidebar-text.js';
 
 class SidebarProfile extends React.Component {
 	static contextType = PageSettings;
@@ -66,10 +67,8 @@ class SidebarProfile extends React.Component {
 							</li>
 							<li>
 								<ul className={"nav nav-profile " + (this.state.profileActive && !pageSidebarMinify ? "d-block " : "")}>
-									<li><Link to="/"><i className="fa fa-cog"></i> Settings</Link></li>
-									<li><Link to="/"><i className="fa fa-pencil-alt"></i> Send Feedback</Link></li>
-									<li><Link to="/"><i className="fa fa-question-circle"></i> Helps</Link></li>
-									<li><Link to="#" onClick={logout}><i className="fa fa-sign-out-alt"></i> Sign Out</Link></li>
+									<li><Link to="/"><i className="fa fa-cog"></i> {sidebarText[this.context.locale]["Settings"]}</Link></li>
+									<li><Link to="#" onClick={logout}><i className="fa fa-sign-out-alt"></i> {sidebarText[this.context.locale]["Sign Out"]}</Link></li>
 								</ul>
 							</li>
 						</ul>
