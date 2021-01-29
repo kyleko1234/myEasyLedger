@@ -2,6 +2,7 @@ import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL} from '../../../utils/constants';
 import axios from 'axios';
+import {incomeStatementRenderText} from './income-statement-render-text';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -123,11 +124,11 @@ function IncomeStatementRender() {
             <div className="widget-header bg-light border-bottom">
                 <div className="widget-header-title">
                     <div className="form-inline justify-content-between">
-                        <div className="font-weight-600">Income Statement</div>    
+                        <div className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Income Statement"]}</div>    
                         <div className="form-group">
-                            <label className="ml-sm-5 px-1">From: </label>
+                            <label className="ml-sm-5 px-1">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
                             <input type="date" className="form-control form-control-sm width-125" value={startDate} onChange={event => handleChangeStartDate(event.target.value)} />
-                            <label className="ml-sm-5 px-1">to: </label>
+                            <label className="ml-sm-5 px-1">{incomeStatementRenderText[appContext.locale]["to:"]} </label>
                             <input type="date" className="form-control form-control-sm width-125" value={endDate} onChange={event => handleChangeEndDate(event.target.value)} />
                         </div> 
                     </div>
@@ -140,43 +141,43 @@ function IncomeStatementRender() {
                         <tbody>
                             {!accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == revenueSubtypeId).length? null : 
                                 <>
-                                <tr><td className="font-weight-600">Revenue</td></tr>
+                                <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Revenue"]}</td></tr>
                                     {accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == revenueSubtypeId).map(accountGroup => {
                                         return(
                                             <tr key={accountGroup.accountGroupId}><td className="d-flex justify-content-between p-l-30"><div>{accountGroup.accountGroupName}</div><div>{numberAsCurrency(accountGroup.debitsMinusCredits * -1)}</div></td></tr>
                                         )
                                     })}
-                                    <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">Total revenue</div><div>{numberAsCurrency(totalRevenue)}</div></td></tr>
+                                    <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total revenue"]}</div><div>{numberAsCurrency(totalRevenue)}</div></td></tr>
                                     <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                                 </>
                             }
                             {!accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == costOfSalesSubtypeId).length? null : 
                                 <>
-                                    <tr><td className="font-weight-600">Cost of sales</td></tr>
+                                    <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Cost of sales"]}</td></tr>
                                     {accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == costOfSalesSubtypeId).map(accountGroup => {
                                         return(
                                             <tr key={accountGroup.accountGroupId}><td className="d-flex justify-content-between p-l-30"><div>{accountGroup.accountGroupName}</div><div>{numberAsCurrency(accountGroup.debitsMinusCredits)}</div></td></tr>
                                         )
                                     })}
-                                    <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">Total cost of sales</div><div>{numberAsCurrency(totalCostOfSales)}</div></td></tr>
+                                    <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div><div>{numberAsCurrency(totalCostOfSales)}</div></td></tr>
                                     <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                                 </>
                             }
-                            <tr><td className="d-flex justify-content-between font-weight-600"><div>Gross profit</div><div>{numberAsCurrency(grossProfit)}</div></td></tr>
+                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Gross profit"]}</div><div>{numberAsCurrency(grossProfit)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
-                            <tr><td className="font-weight-600">Operating expenses</td></tr>
-                            {!rd? null : <tr><td className="d-flex justify-content-between p-l-30"><div>Research and development</div><div>{numberAsCurrency(rd)}</div></td></tr>}
-                            {!sga? null : <tr><td className="d-flex justify-content-between p-l-30"><div>Sales, general, and administration</div><div>{numberAsCurrency(sga)}</div></td></tr>}
-                            {!depreciation? null : <tr><td className="d-flex justify-content-between p-l-30"><div>Depreciation</div><div>{numberAsCurrency(depreciation)}</div></td></tr>}
-                            {!amortization? null : <tr><td className="d-flex justify-content-between p-l-30"><div>Amortization</div><div>{numberAsCurrency(amortization)}</div></td></tr>}
-                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">Total operating expenses</div><div>{numberAsCurrency(totalOperatingExpenses)}</div></td></tr>
+                            <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Operating expenses"]}</td></tr>
+                            {!rd? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Research and development"]}</div><div>{numberAsCurrency(rd)}</div></td></tr>}
+                            {!sga? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Sales, general, and administration"]}</div><div>{numberAsCurrency(sga)}</div></td></tr>}
+                            {!depreciation? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Depreciation"]}</div><div>{numberAsCurrency(depreciation)}</div></td></tr>}
+                            {!amortization? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Amortization"]}</div><div>{numberAsCurrency(amortization)}</div></td></tr>}
+                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total operating expenses"]}</div><div>{numberAsCurrency(totalOperatingExpenses)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
-                            <tr><td className="d-flex justify-content-between font-weight-600"><div>Operating income</div><div>{numberAsCurrency(operatingIncome)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between"><div>Other income/expense, net</div><div>{numberAsCurrency(netOtherIncomeExpense)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between font-weight-600"><div>Income before tax</div><div>{numberAsCurrency(incomeBeforeTax)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between"><div>Income tax</div><div>{numberAsCurrency(incomeTax)}</div></td></tr>
+                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Operating income"]}</div><div>{numberAsCurrency(operatingIncome)}</div></td></tr>
+                            <tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Other income/expense, net"]}</div><div>{numberAsCurrency(netOtherIncomeExpense)}</div></td></tr>
+                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Income before tax"]}</div><div>{numberAsCurrency(incomeBeforeTax)}</div></td></tr>
+                            <tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Income tax"]}</div><div>{numberAsCurrency(incomeTax)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
-                            <tr><td className="d-flex justify-content-between font-weight-600"><div>Net income</div><div>{numberAsCurrency(netIncome)}</div></td></tr>
+                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Net income"]}</div><div>{numberAsCurrency(netIncome)}</div></td></tr>
                         </tbody>
                     </table>
                 </div>
