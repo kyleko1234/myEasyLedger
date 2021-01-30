@@ -6,7 +6,7 @@ import {Link, useParams} from 'react-router-dom';
 import AccountDetailsSidebar from "./components/account-details-sidebar";
 import { PageSettings } from '../../config/page-settings';
 import {accountDetailsText} from './account-details-text.js';
-
+import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 
 function AccountDetails(props) {
 
@@ -113,7 +113,10 @@ function AccountDetails(props) {
                 <li className="breadcrumb-item active">{accountDetailsText[appContext.locale]["Account Details"]}</li>
             </ol>
 
-            <h1 className="page-header">{accountDetailsText[appContext.locale]["Account Details"]}</h1>
+            <h1 className="page-header">
+                {accountDetailsText[appContext.locale]["Account Details"]}
+                <ToggleMobileSidebarButton className="d-md-none float-right "/>
+            </h1>
 
 
             <div className="row">

@@ -7,6 +7,7 @@ import { PageSettings } from '../../config/page-settings.js';
 import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import {chartOfAccountsText} from './chart-of-accounts-text.js';
+import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 
 
 
@@ -253,11 +254,14 @@ class ChartOfAccounts extends React.Component {
                     <li className="breadcrumb-item"><Link to="/">{chartOfAccountsText[this.context.locale]["Home"]}</Link></li>
                     <li className="breadcrumb-item active">{chartOfAccountsText[this.context.locale]["Chart of Accounts"]}</li>
                 </ol>
-                <h1 className="page-header">{chartOfAccountsText[this.context.locale]["Chart of Accounts"]} </h1>
-                <Nav pills className="d-block">
+                <h1 className="page-header">
+                    {chartOfAccountsText[this.context.locale]["Chart of Accounts"]} 
+                    <ToggleMobileSidebarButton className="d-md-none float-right "/>
+                </h1>
+                <Nav pills justified className="d-block">
                     {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                         <div className="d-flex justify-content-between px-3 mb-3">
-                            <div className="row">
+                            <div className="row ">
                                 {this.state.accountTypes.map(accountType => { //render a pills navlink for each accountType returned by the server, with the active accountType being the one that has an id that matches the url param.
                                     return(
                                         <NavItem key={accountType.id}>
@@ -265,14 +269,15 @@ class ChartOfAccounts extends React.Component {
                                                 className={this.props.match.params.activeTabId == accountType.id ? "active" : "cursor-pointer"}
                                                 onClick={() => this.props.history.push(`/chart-of-accounts/${accountType.id}`)}
                                             >
-                                                <span className="d-sm-block px-3">{accountType.name}</span>
+                                                <span className="d-sm-block px-3">{chartOfAccountsText[this.context.locale][accountType.name]}</span>
                                             </NavLink>
                                         </NavItem>
                                     );
                                 })}
+
                             </div>
                             <button
-                                className="btn btn-primary my-1"
+                                className="btn btn-primary my-1 ml-3"
                                 onClick={() => {
                                     this.handleAddAnAccountGroupButton();
                                 }}

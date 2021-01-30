@@ -3,7 +3,7 @@ export const chartOfAccountsText = {
         //Account Type Names.
         "Assets": "Assets",
         "Liabilities": "Liabilities",
-        "Owner's Equity": "Owner's Equity",
+        "Owner's Equity": "Equity",
         "Income": "Income",
         "Expenses": "Expenses",
 
