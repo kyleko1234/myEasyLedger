@@ -101,7 +101,8 @@ function TableOfJournalEntries({
   }
   const openEditorForNewEntry = () => {
     setJournalEntryId(null);
-    setJournalEntryDate('');
+    let today = new Date();
+    setJournalEntryDate(today.toISOString().split('T')[0]);
     setJournalEntryDescription('');
     setLineItemData([{
       lineItemId: "",
@@ -272,6 +273,14 @@ function TableOfJournalEntries({
       }).catch(console.log);
   }
 
+  const handleCopyJournalEntryButton = () => {
+      let today = new Date();
+      setJournalEntryDate(today.toISOString().split('T')[0]);
+      toggleEditMode();
+      setCreateMode(true);
+      setJournalEntryId(null); //must set journalEntryId to null, otherwise program will edit the original journal entry instead of posting a copy to the server. Server requires journalEntryId to be null for POST requests, so we cannot check for createMode=true to determine PUT/POST instead.
+    }
+
   const handleSaveJournalEntryButton = () => {
     if (checkEntryForValidationErrors().length === 0) {
       let formattedEntry = formatJournalEntryToSendToServer();
@@ -290,7 +299,6 @@ function TableOfJournalEntries({
         toggleEditMode();
         toggleJournalEntryExpanded();
     });
-
   }
 
   // Render the UI for your table
@@ -420,8 +428,9 @@ function TableOfJournalEntries({
             <>
               <div>{/*empty div to push the other two buttons to the right*/}</div>
               <div>
-                <button className="btn btn-primary" onClick={() => {toggleEditMode(); refreshAccounts()}} style={{ width: "10ch" }}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
-                <button className="btn btn-white m-l-10" onClick={() => toggleJournalEntryExpanded()} style={{ width: "10ch" }}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
+                <button className="btn btn-info width-10ch" onClick={() => {handleCopyJournalEntryButton()}}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
+                <button className="btn btn-primary m-l-10 width-10ch" onClick={() => {toggleEditMode(); refreshAccounts()}}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
+                <button className="btn btn-white m-l-10 width-10ch" onClick={() => toggleJournalEntryExpanded()}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
               </div>
             </>
           }

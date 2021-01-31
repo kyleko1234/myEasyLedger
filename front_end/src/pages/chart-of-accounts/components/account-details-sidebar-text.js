@@ -20,6 +20,5 @@ export const accountDetailsSidebarText = {
 
         "Are you sure you want to delete this account?": "Are you sure you want to delete this account?",
         "Please remove all line items from this account and try again.": "Please remove all line items from this account and try again."
-
     }
 }

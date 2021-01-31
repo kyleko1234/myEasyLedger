@@ -17,6 +17,7 @@ export const tableOfJournalEntriesText = {
         "Save": "Save",
         "Cancel": "Cancel",
 
+        "Copy": "Copy",
         "Edit": "Edit",
         "Close": "Close"
     }

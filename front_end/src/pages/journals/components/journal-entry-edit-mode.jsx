@@ -138,6 +138,12 @@ function JournalEntryEditMode({
         setLineItemData(updatedLineItemData);
     }
 
+    const handleCopyDescriptionToLineItemsButton = () => {
+        let updatedLineItemData = data.slice();
+        updatedLineItemData.forEach(lineItem => lineItem.description = journalEntryDescription);
+        setLineItemData(updatedLineItemData);
+    }
+
     return (
         <>
             { alertMessages.length ? 
@@ -155,8 +161,8 @@ function JournalEntryEditMode({
             }
 
             <div className="row m-b-10">
-                <div className="col-md-1"><strong>{journalEntryEditModeText[appContext.locale]["Date"]}</strong></div> 
-                <div className="col-md-2">
+                <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Date"]}</strong></div> 
+                <div className="col-xl-2">
                     <input 
                         type="date" 
                         className="form-control"
@@ -165,14 +171,17 @@ function JournalEntryEditMode({
                     </div>
             </div>
             <div className="row m-b-10">
-                <div className="col-md-1"><strong>{journalEntryEditModeText[appContext.locale]["Description"]}</strong></div> 
-                <div className="col-md-11">
+                <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Description"]}</strong></div> 
+                <div className="col-xl-8">
                     <input 
                         type="text" 
                         className="form-control"
                         value={journalEntryDescription} 
                         onChange={event => setJournalEntryDescription(event.target.value)}/>
-                    </div>
+                </div>
+                <button className="btn btn-light border border-rounded m-x-10 my-3 my-xl-0" onClick={handleCopyDescriptionToLineItemsButton}>
+                    {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
+                </button>
             </div>
             <br></br>
 

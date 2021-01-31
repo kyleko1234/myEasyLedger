@@ -9,6 +9,7 @@ export const journalEntryEditModeText = {
         "Description": "Description",
         
         "Total": "Total",
-        "Add a Line Item": "Add a Line Item"
+        "Add a Line Item": "Add a Line Item",
+        "Copy description to line items": "Copy description to line items"
     }
 }
