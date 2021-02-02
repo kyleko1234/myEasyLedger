@@ -69,6 +69,7 @@ import Reports from './../pages/reports/reports.js';
 import IncomeStatementReport from '../pages/reports/income-statement-report.js';
 import BalanceSheetReport from '../pages/reports/balance-sheet-report.js';
 import AccountDetails from '../pages/chart-of-accounts/account-details.js';
+import Settings from '../pages/settings/settings.js';
 
 const routes = [
   {
@@ -421,6 +422,11 @@ const routes = [
     exact: true,
     title: 'Income Statement Report',
     component: IncomeStatementReport
+  },
+  {
+    path: '/settings',
+    title: 'Settings',
+    component: Settings
   }
 
 ];

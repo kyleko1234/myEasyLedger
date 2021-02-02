@@ -141,8 +141,16 @@ function RegisterV3Render(props) {
                         <div className="register-buttons">
                             <button type="submit" className="btn btn-primary btn-block btn-lg">{registerV3Text[appContext.locale]["Sign Up"]}</button>
                         </div>
-                        <div className="m-t-20 m-b-40 p-b-40 text-inverse">
+                        <div className="m-t-20 p-b-40 text-inverse">
                             {registerV3Text[appContext.locale]["Already a member"]}
+                        </div>
+                        <div>
+                            {appContext.locale == "en-US" ? <b className="mr-3 font-weight-600">English (US)</b> : 
+                                <Link replace to="#" onClick={() => appContext.handleSetLocale("en-US")} className="mr-3">English (US)</Link>
+                            }
+                            {appContext.locale == "zh-TW" ? <b className="mr-3 font-weight-600">Chinese (Traditional)</b> : 
+                                <Link replace to="#" onClick={() => appContext.handleSetLocale("zh-TW")} className="mr-3">Chinese (Traditional)</Link>
+                            }
                         </div>
                         <hr />
                         <p className="text-center">

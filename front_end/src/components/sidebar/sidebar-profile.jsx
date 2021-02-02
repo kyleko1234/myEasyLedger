@@ -70,7 +70,7 @@ class SidebarProfile extends React.Component {
 							</li>
 							<li>
 								<ul className={"nav nav-profile " + (this.state.profileActive && !pageSidebarMinify ? "d-block " : "")}>
-									<li><Link to="/"><i className="fa fa-cog"></i> {sidebarText[this.context.locale]["Settings"]}</Link></li>
+									<li><Link to="/settings"><i className="fa fa-cog"></i> {sidebarText[this.context.locale]["Settings"]}</Link></li>
 									<li><Link to="#" onClick={logout}><i className="fa fa-sign-out-alt"></i> {sidebarText[this.context.locale]["Sign Out"]}</Link></li>
 								</ul>
 							</li>
