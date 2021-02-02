@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
 import GeneralJournal from './components/general-journal';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
-import {journalsText} from './journals-text.js';
+import {journalsText} from '../../utils/i18n/journals-text.js';
 
 
 

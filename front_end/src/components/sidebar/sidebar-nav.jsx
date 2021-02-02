@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
 import SidebarNavList from './sidebar-nav-list.jsx';
 import menus from './menu.jsx';
-import {sidebarText} from './sidebar-text.js';
+import {sidebarText} from '../../utils/i18n/sidebar-text.js';
 
 class SidebarNav extends React.Component {
 	static contextType = PageSettings;

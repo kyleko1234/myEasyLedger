@@ -3,7 +3,7 @@ import { useTable } from 'react-table';
 import { Alert } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import Select from 'react-select';
-import {journalEntryEditModeText} from './journal-entry-edit-mode-text';
+import {journalEntryEditModeText} from '../../../utils/i18n/journal-entry-edit-mode-text';
 
 function JournalEntryEditMode({
     data, setLineItemData,

@@ -5,7 +5,7 @@ import axios from 'axios';
 import {Link, useParams} from 'react-router-dom';
 import AccountDetailsSidebar from "./components/account-details-sidebar";
 import { PageSettings } from '../../config/page-settings';
-import {accountDetailsText} from './account-details-text.js';
+import {accountDetailsText} from '../../utils/i18n/account-details-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 
 function AccountDetails(props) {

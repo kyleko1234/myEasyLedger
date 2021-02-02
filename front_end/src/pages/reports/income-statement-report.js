@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
 import IncomeStatementRender from './components/income-statement-render';
-import {incomeStatementReportText} from './income-statement-report-text';
+import {incomeStatementReportText} from '../../utils/i18n/income-statement-report-text';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 
 function IncomeStatementReport() {

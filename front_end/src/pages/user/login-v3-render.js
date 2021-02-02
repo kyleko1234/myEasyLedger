@@ -4,6 +4,7 @@ import {PageSettings} from '../../config/page-settings.js';
 import {ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN} from '../../utils/constants.js';
 import axios from 'axios';
 import {Alert} from 'reactstrap';
+import {loginV3Text} from '../../utils/i18n/login-v3-text'
 
 function LoginV3Render(props) {
     //required props: history
@@ -61,7 +62,7 @@ function LoginV3Render(props) {
                 <div className="news-caption">
                     <h4 className="caption-title"><b>Easy</b> Ledger App</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        {loginV3Text[appContext.locale]["App description 1"]}
                     </p>
                 </div>
             </div>
@@ -69,37 +70,36 @@ function LoginV3Render(props) {
                 <div className="login-header">
                     <div className="brand">
                         <span className="logo"></span> <b>Easy</b> Ledger
-                        <small>responsive bootstrap 4 admin template</small>
                     </div>
                     <div className="icon">
                         <i className="fa fa-sign-in"></i>
                     </div>
                 </div>
                 <div className="login-content">
-                    {loginAlert? <Alert color="danger">Invalid email or password.</Alert> : null}
+                    {loginAlert? <Alert color="danger">{loginV3Text[appContext.locale]["Invalid email or password."]}</Alert> : null}
                     {accountDisabledAlert? 
                         <Alert color="danger">
-                            The email address for this account has not been verified. Please follow the instructions in your verification email to verify this account.
-                            &nbsp;<Link to="#" onClick={() => handleResendEmail()} className="alert-link">Click here to send a new verification email.</Link>
+                            {loginV3Text[appContext.locale]["Email not verified"]}
+                            &nbsp;<Link to="#" onClick={() => handleResendEmail()} className="alert-link">{loginV3Text[appContext.locale]["Click here to send a new verification email."]}</Link>
                         </Alert> 
                     : null}
-                    {verificationSentAlert? <Alert color="success">Verification email sent!</Alert> : null}
+                    {verificationSentAlert? <Alert color="success">{loginV3Text[appContext.locale]["Verification email sent!"]}</Alert> : null}
                     <form className="margin-bottom-0" onSubmit={event => handleSubmit(event)}>
                         <div className="form-group m-b-15">
-                            <input type="email" className="form-control form-control-lg" placeholder="Email Address" required value={emailInput} onChange={event => setEmailInput(event.target.value)}/>
+                            <input type="email" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Email Address"]} required value={emailInput} onChange={event => setEmailInput(event.target.value)}/>
                         </div>
                         <div className="form-group m-b-15">
-                            <input type="password" className="form-control form-control-lg" placeholder="Password" required value={passwordInput} onChange={event => setPasswordInput(event.target.value)} />
+                            <input type="password" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Password"]} required value={passwordInput} onChange={event => setPasswordInput(event.target.value)} />
                         </div>
                         <div className="login-buttons">
-                            <button type="submit" className="btn btn-success btn-block btn-lg">Sign me in</button>
+                            <button type="submit" className="btn btn-success btn-block btn-lg">{loginV3Text[appContext.locale]["Sign me in"]}</button>
                         </div>
                         <div className="m-t-20 m-b-40 p-b-40 text-inverse">
-                            Not a member yet? Click <Link to="/user/register-v3" className="text-success">here</Link> to register.
+                            {loginV3Text[appContext.locale]["Not a member"]}
                         </div>
                         <hr />
                         <p className="text-center text-grey-darker">
-                            &copy; Color Admin All Right Reserved 2020
+                            {loginV3Text[appContext.locale]["Copyright text"]}
                         </p>
                     </form>
                 </div>

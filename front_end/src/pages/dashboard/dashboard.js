@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import BalanceSummary from './components/balance-summary';
 import IncomeAndExpenseSummary from './components/income-and-expense-summary';
 import { PageSettings } from '../../config/page-settings';
-import {dashboardText} from './dashboard-text';
+import {dashboardText} from '../../utils/i18n/dashboard-text';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 
 

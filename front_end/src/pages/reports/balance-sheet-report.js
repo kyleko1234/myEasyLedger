@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
 import BalanceSheetRender from './components/balance-sheet-render';
-import {balanceSheetReportText} from './balance-sheet-report-text.js';
+import {balanceSheetReportText} from '../../utils/i18n/balance-sheet-report-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 
 function BalanceSheetReport() {

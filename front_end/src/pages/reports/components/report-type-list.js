@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from '../../../config/page-settings';
-import {reportTypeListText} from './report-type-list-text';
+import {reportTypeListText} from '../../../utils/i18n/report-type-list-text';
 
 function ReportTypeList() {
     const appContext = React.useContext(PageSettings);

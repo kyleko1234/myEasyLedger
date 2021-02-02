@@ -3,7 +3,7 @@ import { Bar, defaults } from 'react-chartjs-2';
 import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
-import {incomeAndExpenseSummaryText} from './income-and-expense-summary-text.js';
+import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expense-summary-text.js';
 
 function IncomeAndExpenseSummary() {
     const appContext = React.useContext(PageSettings);

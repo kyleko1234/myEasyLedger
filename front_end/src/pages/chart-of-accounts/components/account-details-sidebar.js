@@ -6,7 +6,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import Select from 'react-select';
 import axios from 'axios';
 import {API_BASE_URL} from '../../../utils/constants';
-import {accountDetailsSidebarText} from './account-details-sidebar-text.js';
+import {accountDetailsSidebarText} from '../../../utils/i18n/account-details-sidebar-text.js';
 
 function AccountDetailsSidebar(props) {
     /*  required props: accountId, accountName, accountGroupId, accountGroupName, debitTotal, creditTotal, accountTypeName, 

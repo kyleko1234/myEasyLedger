@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { API_BASE_URL} from '../../../utils/constants';
 import { PageSettings } from '../../../config/page-settings';
-import {balanceSheetRenderText} from './balance-sheet-render-text.js';
+import {balanceSheetRenderText} from '../../../utils/i18n/balance-sheet-render-text.js';
 
 /**
  * BALANCE SHEET FORMAT

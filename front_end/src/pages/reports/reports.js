@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
 import ReportTypeList from './components/report-type-list.js';
-import {reportsText} from './reports-text.js';
+import {reportsText} from '../../utils/i18n/reports-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 function Reports() {
     const appContext = React.useContext(PageSettings);

@@ -2,7 +2,7 @@ import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL} from '../../../utils/constants';
 import axios from 'axios';
-import {incomeStatementRenderText} from './income-statement-render-text';
+import {incomeStatementRenderText} from '../../../utils/i18n/income-statement-render-text';
 
 /**
  * INCOME STATEMENT FORMAT

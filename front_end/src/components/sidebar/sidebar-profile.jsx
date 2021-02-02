@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
 import {API_BASE_URL} from '../../utils/constants.js';
 import axios from 'axios';
-import {sidebarText} from './sidebar-text.js';
+import {sidebarText} from '../../utils/i18n/sidebar-text.js';
 
 class SidebarProfile extends React.Component {
 	static contextType = PageSettings;

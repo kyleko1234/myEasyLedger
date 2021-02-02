@@ -7,7 +7,7 @@ import {API_BASE_URL} from '../../../utils/constants.js';
 import JournalEntryViewMode from './journal-entry-view-mode';
 import JournalEntryEditMode from './journal-entry-edit-mode';
 import { PageSettings } from '../../../config/page-settings.js';
-import {tableOfJournalEntriesText} from './table-of-journal-entries-text.js';
+import {tableOfJournalEntriesText} from '../../../utils/i18n/table-of-journal-entries-text.js';
 
 //Generates a table with react-table 7 using pagination
 

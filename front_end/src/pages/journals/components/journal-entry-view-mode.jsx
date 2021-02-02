@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTable } from 'react-table';
 import { PageSettings } from '../../../config/page-settings';
-import {journalEntryViewModeText} from './journal-entry-view-mode-text.js'
+import {journalEntryViewModeText} from '../../../utils/i18n/journal-entry-view-mode-text.js'
 
 function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}) {
   const appContext = React.useContext(PageSettings);

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants.js';
 import { PageSettings } from '../../../config/page-settings';
 import { useHistory } from "react-router-dom";
-import {balanceSummaryText} from "./balance-summary-text.js";
+import {balanceSummaryText} from "../../../utils/i18n/balance-summary-text.js";
 
 
 function BalanceSummary() {

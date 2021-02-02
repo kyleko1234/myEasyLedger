@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
-import {sidebarText} from './sidebar-text.js';
+import {sidebarText} from '../../utils/i18n/sidebar-text.js';
 
 class SidebarNavList extends React.Component {
 	static contextType = PageSettings;

@@ -6,7 +6,7 @@ import {API_BASE_URL} from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
 import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import {chartOfAccountsText} from './chart-of-accounts-text.js';
+import {chartOfAccountsText} from '../../utils/i18n/chart-of-accounts-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 
 
