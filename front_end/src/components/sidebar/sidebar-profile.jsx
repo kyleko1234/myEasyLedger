@@ -12,13 +12,14 @@ class SidebarProfile extends React.Component {
 		super(props);
 
 		this.getUserInfo = () => {
-			this.setState({loading: true});
-			axios.get(`${API_BASE_URL}/person/${this.context.currentUser}`).then(response => {
-				this.setState({userInfo: response.data});
-				this.context.handleSetCurrentOrganization(response.data.organizations[0].id);
-				this.setState({loading: false});
-			}).catch(console.log);	
-			
+			this.setState({loading: true}, () => {
+				axios.get(`${API_BASE_URL}/person/${this.context.currentUser}`).then(response => {
+					this.context.handleSetCurrentOrganization(response.data.organizations[0].id);
+					this.setState({userInfo: response.data}, () => {
+						this.setState({loading: false});
+					});
+				}).catch(console.log);	
+			});
 		}
 
 		this.state = {
@@ -30,7 +31,9 @@ class SidebarProfile extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getUserInfo();
+		if (this.context.isAuthenticated) {
+			this.getUserInfo();
+		}
 	}
 
 	handleProfileExpand(e) {

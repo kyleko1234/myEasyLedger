@@ -17,5 +17,24 @@ export const incomeAndExpenseSummaryText = {
         "Expenses": "Expenses",
 
         "Income and Expenses": "Income and Expenses"
+    },
+    "zh-TW": {
+        " Jan": " TRANSLATION HERE",
+        " Feb": " TRANSLATION HERE",
+        " Mar": " TRANSLATION HERE",
+        " Apr": " TRANSLATION HERE",
+        " May": " TRANSLATION HERE",
+        " June": " TRANSLATION HERE",
+        " July": " TRANSLATION HERE",
+        " Aug": " TRANSLATION HERE",
+        " Sept": " TRANSLATION HERE",
+        " Oct": " TRANSLATION HERE",
+        " Nov": " TRANSLATION HERE",
+        " Dec": " TRANSLATION HERE",
+
+        "Income": "TRANSLATION HERE",
+        "Expenses": "TRANSLATION HERE",
+
+        "Income and Expenses": "TRANSLATION HERE"
     }
 }

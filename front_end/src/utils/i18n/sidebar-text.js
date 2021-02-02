@@ -9,5 +9,16 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Journals": "Journals",
         "Chart of Accounts": "Chart of Accounts",
         "Reports": "Reports"
+    },
+    "zh-TW": {
+        "Navigation": "TRANSLATION GOES HERE",
+        "Settings": "TRANSLATION GOES HERE",
+        "Sign Out": "TRANSLATION GOES HERE",
+
+        //menu items
+        "Dashboard": "TRANSLATION GOES HERE",
+        "Journals": "TRANSLATION GOES HERE",
+        "Chart of Accounts": "TRANSLATION GOES HERE",
+        "Reports": "TRANSLATION GOES HERE"
     }
 }

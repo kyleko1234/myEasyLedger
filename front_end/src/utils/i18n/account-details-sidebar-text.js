@@ -20,5 +20,27 @@ export const accountDetailsSidebarText = {
 
         "Are you sure you want to delete this account?": "Are you sure you want to delete this account?",
         "Please remove all line items from this account and try again.": "Please remove all line items from this account and try again."
+    },
+    "zh-TW": {
+        "Account Details": "TRANSLATION HERE",
+        "Account Name:": "TRANSLATION HERE:",
+        "Account Group:": "TRANSLATION HERE:",
+        "Account Type:": "TRANSLATION HERE:",
+        "Total Debit Amount:": "TRANSLATION HERE:",
+        "Total Credit Amount:": "TRANSLATION HERE:",
+
+        "Edit Account Details": "TRANSLATION HERE",
+        "Account Name": "TRANSLATION HERE",
+        "Please provide a name for your account.": "TRANSLATION HERE",
+        "Account Group": "TRANSLATION HERE",
+
+        "Save": "TRANSLATION HERE",
+        "Cancel": "TRANSLATION HERE",
+        "Yes, delete it!": "TRANSLATION HERE",
+        "Are you sure?": "TRANSLATION HERE",
+        "Cannot delete this account.": "TRANSLATION HERE",
+
+        "Are you sure you want to delete this account?": "TRANSLATION HERE",
+        "Please remove all line items from this account and try again.": "TRANSLATION HERE"
     }
 }

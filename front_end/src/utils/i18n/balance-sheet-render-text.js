@@ -61,6 +61,69 @@ export const balanceSheetRenderText = {
         "Amortization": "Amortization", 
         "Other expenses": "Other expenses", 
         "Income taxes": "Income taxes", 
+    },
+    "zh-TW": {
+        "Balance Sheet": "TRANSLATION HERE",
+        "As of:": "TRANSLATION HERE",
 
+        "Assets": "TRANSLATION HERE",
+        "Current assets": "TRANSLATION HERE",
+        "Total current assets": "TRANSLATION HERE",
+        "Non-current assets": "TRANSLATION HERE",
+        "Total non-current assets": "TRANSLATION HERE",
+        "Total assets": "TRANSLATION HERE",
+
+        "Liabilities": "TRANSLATION HERE",
+        "Current liabilities": "TRANSLATION HERE",
+        "Total current liabilities": "TRANSLATION HERE",
+        "Non-current liabilities": "TRANSLATION HERE",
+        "Total non-current liabilities": "TRANSLATION HERE",
+        "Total liabilities": "TRANSLATION HERE",
+
+        "Equity": "TRANSLATION HERE",
+        "Retained Earnings": "TRANSLATION HERE",
+        "Beginning balances": (prevPeriodEndDate) => {
+            return `Beginning balances (up to ${prevPeriodEndDate})`;
+        },
+        "Net income for current period": (currPeriodStartDate, asOfDate) => {
+            return `Net income for current period (from ${currPeriodStartDate} to ${asOfDate})`;
+        },  
+        "Dividends for current period": (currPeriodStartDate, asOfDate) => {
+            return `Less dividends and equivalents for current period (from ${currPeriodStartDate} to ${asOfDate})`;
+        },
+        "Ending balances of retained earnings": "TRANSLATION HERE",
+        "Total equity": "TRANSLATION HERE",
+
+        //Account Subtype Names.
+        "Cash and cash equivalents": "TRANSLATION HERE", 
+        "Current marketable securities": "TRANSLATION HERE", 
+        "Receivables": "TRANSLATION HERE", 
+        "Inventories": "TRANSLATION HERE", 
+        "Other current assets": "TRANSLATION HERE", 
+        "Property": "TRANSLATION HERE", 
+        "Plant and equipment": "TRANSLATION HERE", 
+        "Non-current marketable securities": "TRANSLATION HERE", 
+        "Other non-current assets": "TRANSLATION HERE", 
+        "Payables": "TRANSLATION HERE", 
+        "Deferred revenue": "TRANSLATION HERE", 
+        "Commercial paper": "TRANSLATION HERE", 
+        "Current term debt": "TRANSLATION HERE", 
+        "Deferred tax": "TRANSLATION HERE", 
+        "Other current liabilities": "TRANSLATION HERE", 
+        "Non-current term debt": "TRANSLATION HERE", 
+        "Other non-current liabilities": "TRANSLATION HERE", 
+        "Paid-in capital": "TRANSLATION HERE", 
+        "Dividends and equivalents": "TRANSLATION HERE", 
+        "Other equity items": "TRANSLATION HERE", 
+        "Revenue": "TRANSLATION HERE", 
+        "Other income": "TRANSLATION HERE", 
+        "Cost of sales": "TRANSLATION HERE", 
+        "Research and development": "TRANSLATION HERE", 
+        "Selling, general, and administration": "TRANSLATION HERE", 
+        "Depreciation": "TRANSLATION HERE", 
+        "Amortization": "TRANSLATION HERE", 
+        "Other expenses": "TRANSLATION HERE", 
+        "Income taxes": "TRANSLATION HERE", 
     }
+
 }

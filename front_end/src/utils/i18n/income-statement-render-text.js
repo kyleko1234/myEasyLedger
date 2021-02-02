@@ -24,5 +24,31 @@ export const incomeStatementRenderText = {
         "Income tax": "Income tax",
 
         "Net income": "Net income"
+    },
+    "zh-TW": {
+        "Income Statment": "TRANSLATION HERE",
+        "From:": "TRANSLATION HERE:",
+        "To:": "TRANSLATION HERE:",
+
+        "Revenue": "TRANSLATION HERE",
+        "Total revenue": "TRANSLATION HERE",
+        "Cost of sales": "TRANSLATION HERE",
+        "Total cost of sales": "TRANSLATION HERE",
+        
+        "Gross profit": "TRANSLATION HERE",
+        
+        "Operating expenses": "TRANSLATION HERE",
+        "Research and development": "TRANSLATION HERE",
+        "Sales, general, and administration": "TRANSLATION HERE",
+        "Depreciation": "TRANSLATION HERE",
+        "Amortization": "TRANSLATION HERE",
+        "Total operating expenses": "TRANSLATION HERE",
+        
+        "Operating income": "TRANSLATION HERE",
+        "Other income/expense, net": "TRANSLATION HERE",
+        "Income before tax": "TRANSLATION HERE",
+        "Income tax": "TRANSLATION HERE",
+
+        "Net income": "TRANSLATION HERE"
     }
 }

@@ -6,5 +6,13 @@ export const generalJournalText = {
         "Credit": "Credit",
 
         "Accounting Entries": "Accounting Entries"
+    },
+    "zh-TW": {
+        "Date": "TRANSLATION HERE",
+        "Description": "TRANSLATION HERE",
+        "Debit": "TRANSLATION HERE",
+        "Credit": "TRANSLATION HERE",
+
+        "Accounting Entries": "TRANSLATION HERE"
     }
 }

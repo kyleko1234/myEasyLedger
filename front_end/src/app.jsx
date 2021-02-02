@@ -281,21 +281,32 @@ class App extends React.Component {
 		}
 
 
-		this.checkForAuthentication = () => {
-			this.setState({isLoading: true})
-			let jwtToken = localStorage.getItem(ACCESS_TOKEN);
-			if (jwtToken) {
-				let decodedJwtToken = jwt_decode(jwtToken);
-				this.setState({currentUser: decodedJwtToken.sub});
-				this.setState({currentOrganization: decodedJwtToken.organizations[0].id})
-				this.setState({isAuthenticated: true});
-				console.log("authenticated with bearer " + jwtToken);
-				this.setState({isLoading: false})
-			} else {
-				this.setState({isAuthenticated: false});
-				console.log("not authenticated");
-				this.setState({isLoading: false})
-			}
+		this.checkForAuthentication = () => { //TODO refactor to ensure that setstate works correctly
+			this.setState({isLoading: true}, () => {
+				let jwtToken = localStorage.getItem(ACCESS_TOKEN);
+				if (jwtToken) {
+					let decodedJwtToken = jwt_decode(jwtToken);
+					this.setState({
+						currentUser: decodedJwtToken.sub, 
+						currentOrganization: decodedJwtToken.organizations[0].id,
+						isAuthenticated: true
+					}, () => this.setState({isLoading: false}));
+					console.log("authenticated with bearer " + jwtToken);
+				} else {
+					this.setState({
+						isAuthenticated: false,
+						isLoading: false
+					});
+					console.log("not authenticated");
+				}	
+			})
+		}
+
+		this.handleSetLocale = (value) => {
+			this.setState({locale: value});
+		}
+		this.handleSetCurrency = (value) => {
+			this.setState({currency: value});
 		}
 
 		this.logout = () => {
@@ -385,7 +396,8 @@ class App extends React.Component {
 
 			locale: 'en-US',
 			currency: 'USD',
-			
+			handleSetLocale: this.handleSetLocale,
+			handleSetCurrency: this.handleSetCurrency,
 
 			handleSetCurrentUser: this.handleSetCurrentUser,
 			handleSetCurrentOrganization: this.handleSetCurrentOrganization,
