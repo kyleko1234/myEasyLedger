@@ -16,6 +16,9 @@ Email address of the user. Cannot be an email already belonging to an existing u
 - **password (optional `string` 64)**<br/>
 Password of the user. Should be stored as BCrypt hash.
 
+- **locales (optional `string` 64)** <br/>
+Locale representing the language settings for the user. A list of valid locales is found [[Easy Ledger#Currently supported locales|here]].
+
 - **organizationIds (optional `Array<Integer>`)**<br/>
 The full list of IDs for the organizations that this person belongs to. All organizations that the person belongs to must be included in this list; the person will be removed from any organizations not passed into this list. To remove a person from all organizations, pass an empty list. Internally organizationIds is parsed from the `ArrayList<Integer>` in the JSON request body into a `Set<Long>`.
 ___

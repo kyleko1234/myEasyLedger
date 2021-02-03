@@ -55,7 +55,8 @@ function RegisterV3Render(props) {
             password: passwordInput,
             reEnterPassword: reEnterPasswordInput,
             agree: agreeInput,
-            organizationName: organizationNameInput
+            organizationName: organizationNameInput,
+            locale: appContext.locale
         }
 
         axios.post(`${API_BASE_URL}/auth/signup`, requestBody).then(response => {
@@ -148,8 +149,8 @@ function RegisterV3Render(props) {
                             {appContext.locale == "en-US" ? <b className="mr-3 font-weight-600">English (US)</b> : 
                                 <Link replace to="#" onClick={() => appContext.handleSetLocale("en-US")} className="mr-3">English (US)</Link>
                             }
-                            {appContext.locale == "zh-TW" ? <b className="mr-3 font-weight-600">Chinese (Traditional)</b> : 
-                                <Link replace to="#" onClick={() => appContext.handleSetLocale("zh-TW")} className="mr-3">Chinese (Traditional)</Link>
+                            {appContext.locale == "zh-TW" ? <b className="mr-3 font-weight-600">中文 (繁體)</b> : 
+                                <Link replace to="#" onClick={() => appContext.handleSetLocale("zh-TW")} className="mr-3">中文 (繁體)</Link>
                             }
                         </div>
                         <hr />

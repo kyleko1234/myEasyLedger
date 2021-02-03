@@ -15,7 +15,7 @@ function IncomeAndExpenseSummary() {
 
     //fetch data on component mount
     React.useEffect(() => {
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountTypeSummary/monthly/${numberOfMonths - 1}`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountTypeSummary/monthly/${numberOfMonths - 1}`).then(response => {
             if (response.data) { //Warning: proper formatting of data for the bar chart relies on server-side sorting of AccountTypeSummary by yearMonth ascending.
                 let incomeAndExpenseData = response.data.filter(accountTypeSummary => accountTypeSummary.accountTypeId == 4 || accountTypeSummary.accountTypeId == 5);
                 let unparsedLabels = [];

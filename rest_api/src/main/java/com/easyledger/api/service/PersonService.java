@@ -127,13 +127,18 @@ public class PersonService {
         				//Json's list of int is automatically parsed as ArrayList<Integer> by Spring
 	        			ArrayList<Integer> organizationIds = (ArrayList<Integer>) v;
 	        			for (Integer organizationId : organizationIds) {
-	        				//cast Integer to Long
+	        				//cast Integer to Long because apparently java has no elegant way to do that
 	        				Long id = Long.valueOf(organizationId.longValue());
 	        				person.addOrganization(organizationRepo.findById(id)
 	            					.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId.toString())));
 	            			}
         			}
         			break;
+        		case "locale":
+        			assertValidLocale(v.toString());
+        			person.setLocale(v.toString());
+        			break;
+        			
         	}  	
         }
 	}
@@ -144,13 +149,14 @@ public class PersonService {
 	//The created Person will be unverified (i.e. person.enabled = false). The VerificationToken for the person is returned by this method, and should be used by the AuthController to create a verification link and send a verification email to the user.
 	public VerificationToken createPersonFromSignUpRequest(SignUpRequest signUpRequest) throws ConflictException { 
     	assertUniqueEmail(signUpRequest.getEmail());
+    	assertValidLocale(signUpRequest.getLocale());
     	
     	//create and persist organization from signUpRequest
     	Organization organization = new Organization(signUpRequest.getOrganizationName());
     	organizationRepo.save(organization);
     	
     	//create a person from signUpRequest, with enabled=false
-    	Person person = new Person(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPassword(), false);
+    	Person person = new Person(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPassword(), false, signUpRequest.getLocale());
     	person.setPassword(passwordEncoder.encode(person.getPassword()));
     	person.addOrganization(organization);
     	
@@ -200,6 +206,14 @@ public class PersonService {
         if (personRepo.existsByEmail(formattedEmail)) {
         	throw new ConflictException("Person already registered with this email :: " + email.trim());
         }
+    }
+    
+    public void assertValidLocale(String locale)
+    	throws ConflictException {
+    	List<String> supportedLocales = new ArrayList<String>(Arrays.asList("en-US", "zh-TW"));
+    	if (!supportedLocales.contains(locale)) {
+    		throw new ConflictException("Given locale is invalid or not yet supported.");
+    	}
     }
         
 }

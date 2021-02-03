@@ -44,6 +44,9 @@ public class Person {
 	@JsonIgnore
 	private boolean enabled;
 	
+	@Column(name = "locale")
+	private String locale;
+	
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries;
@@ -70,13 +73,14 @@ public class Person {
 		this.roles = new HashSet<Role>();
 	}
 	
-	public Person(String firstName, String lastName, String email, String password, boolean enabled) {
+	public Person(String firstName, String lastName, String email, String password, boolean enabled, String locale) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email.toLowerCase().trim();
 		this.password = password;
 		this.organizations = new HashSet<Organization>();
 		this.enabled = enabled;
+		this.locale = locale;
 	}
 	
 	//Add and Remove organizations
@@ -163,6 +167,14 @@ public class Person {
 		this.enabled = enabled;
 	}
 
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
 	public Set<JournalEntry> getJournalEntries() {
 		return journalEntries;
 	}
@@ -190,10 +202,9 @@ public class Person {
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", journalEntries=" + journalEntries + ", organizations=" + organizations
-				+ "]";
-	}
-	
+				+ ", password=" + password + ", enabled=" + enabled + ", locale=" + locale + ", journalEntries="
+				+ journalEntries + ", organizations=" + organizations + ", roles=" + roles + "]";
+	}	
 	
 	
 }

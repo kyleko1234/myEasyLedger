@@ -14,7 +14,7 @@ function BalanceSummary() {
 
     //fetch data on component mount
     React.useEffect(() => {
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountBalance`).then(response => {
             if (response.data) {
                 let filteredAccounts = response.data.filter(accountBalance => accountBalance.accountTypeId == 1 || accountBalance.accountTypeId == 2);
                 filteredAccounts.forEach(account => (account.amount = (account.accountTypeId == 1 ?

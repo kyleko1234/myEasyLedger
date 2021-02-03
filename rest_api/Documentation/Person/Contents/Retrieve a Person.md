@@ -23,6 +23,7 @@ ___
     "firstName": "Kyle",
     "lastName": "Ko",
     "email": "kyleko1234@gmail.com",
+	"locale": "en-US",
     "organizations": [
         {
             "id": 1,

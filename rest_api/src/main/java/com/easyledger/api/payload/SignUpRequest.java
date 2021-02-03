@@ -34,6 +34,8 @@ public class SignUpRequest {
 	
 	private boolean agree;
 	
+	private String locale;
+	
 	@NotBlank
 	@Size(max = 50)
 	private String organizationName;
@@ -92,6 +94,14 @@ public class SignUpRequest {
 
 	public void setAgree(boolean agree) {
 		this.agree = agree;
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
 	}
 
 	public String getOrganizationName() {

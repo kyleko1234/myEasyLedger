@@ -41,7 +41,7 @@ function AccountDetails(props) {
             setSelectedAccount(selectedAccount);
         }).catch(console.log);
         
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountGroup`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountGroup`).then(response => {
             let formattedAccountGroupOptions = response.data.map(accountGroup => ({
                 value: accountGroup.accountGroupId,
                 label: accountGroup.accountGroupName,
@@ -57,7 +57,7 @@ function AccountDetails(props) {
             setSelectedAccount(account);
         }).catch(console.log)
 
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountGroup`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountGroup`).then(response => {
             let formattedAccountGroupOptions = response.data.map(accountGroup => ({
                 value: accountGroup.accountGroupId,
                 label: accountGroup.accountGroupName,
@@ -94,7 +94,7 @@ function AccountDetails(props) {
             let account = response.data;
             setSelectedAccount(account);
         }).catch(console.log)
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/accountGroup`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountGroup`).then(response => {
             let formattedAccountGroupOptions = response.data.map(accountGroup => ({
                 value: accountGroup.accountGroupId,
                 label: accountGroup.accountGroupName,

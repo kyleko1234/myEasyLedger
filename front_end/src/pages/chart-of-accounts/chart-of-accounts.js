@@ -72,10 +72,10 @@ class ChartOfAccounts extends React.Component {
                 this.setState({accountTypeOptions: formattedAccountTypes, selectedAccountTypeOption: formattedAccountTypes.find(formattedAccountType => formattedAccountType.object.id == this.props.match.params.activeTabId)})
             }
         })
-        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganization}/accountGroup`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/accountGroup`).then(response => {
             this.setState({ accountGroups: response.data});
         })
-        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganization}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/accountBalance`).then(response => {
             this.setState({ accounts: response.data });
         }).catch(console.log);
         axios.get(`${API_BASE_URL}/accountSubtype`).then(response => {
@@ -144,7 +144,7 @@ class ChartOfAccounts extends React.Component {
                 let postedObject = {
                     accountGroupName: this.state.accountGroupNameInput,
                     accountSubtypeId: this.state.selectedAccountSubtypeOption.object.id,
-                    organizationId: this.context.currentOrganization
+                    organizationId: this.context.currentOrganizationId
                 };
                 await this.postAccountGroup(postedObject);
                 this.toggleEditAccountGroupModal();
@@ -153,7 +153,7 @@ class ChartOfAccounts extends React.Component {
                     accountGroupId: this.state.selectedAccountGroupId,
                     accountGroupName: this.state.accountGroupNameInput,
                     accountSubtypeId: this.state.selectedAccountSubtypeOption.object.id,
-                    organizationId: this.context.currentOrganization
+                    organizationId: this.context.currentOrganizationId
                 };
                 await this.putAccountGroup(this.state.selectedAccountGroupId, putObject);
                 this.toggleEditAccountGroupModal();

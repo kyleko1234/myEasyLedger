@@ -138,7 +138,7 @@ function TableOfJournalEntries({
   
   //initially retrieve categories and accounts from API
   React.useEffect(() => {
-    axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
+    axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
       const formattedAccounts = response.data.map(account => {
         return({
           value: account.accountId,
@@ -149,11 +149,11 @@ function TableOfJournalEntries({
       setAccountOptions(formattedAccounts);
     })
       .catch(console.log);
-  }, [API_BASE_URL, appContext.currentOrganization])
+  }, [API_BASE_URL, appContext.currentOrganizationId])
 
   //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
   const refreshAccounts = () => {
-    axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/account`).then(response => {
+    axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
       const formattedAccounts = response.data.map(account => {
         return({
           value: account.accountId,
@@ -246,8 +246,8 @@ function TableOfJournalEntries({
       journalEntryId : journalEntryId,
       journalEntryDate: journalEntryDate,
       description: journalEntryDescription,
-      personId: appContext.currentUser,
-      organizationId: appContext.currentOrganization,
+      personId: appContext.personId,
+      organizationId: appContext.currentOrganizationId,
       lineItems: lineItems
     }
   }

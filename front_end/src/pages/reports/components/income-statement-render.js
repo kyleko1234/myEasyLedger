@@ -69,7 +69,7 @@ function IncomeStatementRender() {
     React.useEffect(() => {
         async function fetchData() {
             setLoading(true);
-            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/reports/incomeStatement/${startDate}/${endDate}`).then(response => {
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement/${startDate}/${endDate}`).then(response => {
                 if (response.data) {
                     setTotalRevenue(response.data.totalRevenue);
                     setTotalCostOfSales(response.data.totalCostOfSales);

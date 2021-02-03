@@ -29,7 +29,7 @@ function GeneralJournal() {
     // This will get called when the table needs new data
         
     //fetch data from Easy Ledger API
-    const url = `${API_BASE_URL}/organization/${appContext.currentOrganization}/journalEntryViewModel/?page=${pageIndex}&size=${pageSize}`;
+    const url = `${API_BASE_URL}/organization/${appContext.currentOrganizationId}/journalEntryViewModel/?page=${pageIndex}&size=${pageSize}`;
     axios.get(url).then(response => {
         var dataContent = response.data.content;
         setData(dataContent);
@@ -37,7 +37,7 @@ function GeneralJournal() {
         setElementCount(response.data.totalElements);
       })
       .catch(console.log);
-  }, [API_BASE_URL, appContext.currentOrganization])
+  }, [API_BASE_URL, appContext.currentOrganizationId])
   
   return (
     <div >

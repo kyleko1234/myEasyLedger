@@ -71,7 +71,7 @@ function BalanceSheetRender() {
     React.useEffect(() => {
         async function fetchData() {
             setLoading(true);
-            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganization}/reports/balanceSheet/${endDate}`).then(response => {
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDate}`).then(response => {
                 if (response.data) {
                     setAsOfDate(response.data.asOfDate);
                     setPrevPeriodEndDate(response.data.prevPeriodEndDate);

@@ -8,7 +8,7 @@ import TopMenu from './components/top-menu/top-menu.jsx';
 import Content from './components/content/content.jsx';
 import Footer from './components/footer/footer.jsx';
 import FloatSubMenu from './components/float-sub-menu/float-sub-menu.jsx';
-import { ACCESS_TOKEN } from './utils/constants.js';
+import { ACCESS_TOKEN, API_BASE_URL} from './utils/constants.js';
 import jwt_decode from 'jwt-decode';
 import interceptors from "./utils/interceptors"; //interceptors for API requests, used for auth purposes.
 import axios from 'axios';
@@ -270,25 +270,19 @@ class App extends React.Component {
 			}
 		}
 
-		this.handleSetCurrentUser = (value) => {
-			this.setState({currentUser: value});
-			console.log('setting state with current user ' + value);
-			console.log(this.state.currentUser);
-		}
-
-		this.handleSetCurrentOrganization = (value) => {
-			this.setState({currentOrganization: value});
+		this.handleSetCurrentOrganizationId = (value) => {
+			this.setState({currentOrganizationId: value});
 		}
 
 
 		this.checkForAuthentication = () => { //TODO refactor to ensure that setstate works correctly
-			this.setState({isLoading: true}, () => {
+			this.setState({isLoading: true}, async () => {
 				let jwtToken = localStorage.getItem(ACCESS_TOKEN);
 				if (jwtToken) {
 					let decodedJwtToken = jwt_decode(jwtToken);
+					await this.fetchUserInfo(decodedJwtToken.sub)
 					this.setState({
-						currentUser: decodedJwtToken.sub, 
-						currentOrganization: decodedJwtToken.organizations[0].id,
+						currentOrganizationId: decodedJwtToken.organizations[0].id,
 						isAuthenticated: true
 					}, () => this.setState({isLoading: false}));
 					console.log("authenticated with bearer " + jwtToken);
@@ -300,6 +294,19 @@ class App extends React.Component {
 					console.log("not authenticated");
 				}	
 			})
+		}
+
+		this.fetchUserInfo = async (id) => {
+			await axios.get(`${API_BASE_URL}/person/${id}`).then(response => {
+				this.setState({
+					personId: id,
+					organizations: response.data.organizations,
+					firstName: response.data.firstName,
+					lastName: response.data.lastName,
+					email: response.data.email,
+					locale: response.data.locale,
+				})
+			}).catch(console.log);
 		}
 
 		this.handleSetLocale = (value) => {
@@ -388,10 +395,15 @@ class App extends React.Component {
 			handleSetBodyWhiteBg: this.handleSetBodyWhiteBg,
 			handleSetPageBoxedLayout: this.handleSetPageBoxedLayout,
 
+			fetchUserInfo: this.fetchUserInfo,
 			isAuthenticated: false,
 			isLoading: true,
-			currentUser: null,
-			currentOrganization: null,
+			personId: null,
+			currentOrganizationId: null,
+			organizations: null,
+			firstName: '',
+			lastName: '',
+			email: '',
 
 
 			locale: 'en-US',
@@ -399,8 +411,7 @@ class App extends React.Component {
 			handleSetLocale: this.handleSetLocale,
 			handleSetCurrency: this.handleSetCurrency,
 
-			handleSetCurrentUser: this.handleSetCurrentUser,
-			handleSetCurrentOrganization: this.handleSetCurrentOrganization,
+			handleSetCurrentOrganizationId: this.handleSetCurrentOrganizationId,
 
 			checkForAuthentication: this.checkForAuthentication,
 			logout: this.logout

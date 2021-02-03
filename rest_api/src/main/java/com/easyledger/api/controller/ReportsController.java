@@ -32,13 +32,6 @@ public class ReportsController {
 		this.authorizationService = authorizationService;
 	}
 
-	@GetMapping("/test1")
-    public LocalDate testMePlease() {
-		LocalDate endDate = LocalDate.parse("2021-01-23");
-		LocalDate prevYearEnd = LocalDate.parse((endDate.getYear() - 1) + "-12-31");
-		LocalDate currYearStart = LocalDate.parse(endDate.getYear() + "-01-01");
-		return currYearStart;
-    }
 	
 	@GetMapping("/organization/{id}/reports/balanceSheet/{endDate}") 
 	public BalanceSheetViewModel getBalanceSheetViewModelForOrganizationUpToDate(@PathVariable(value = "id") Long organizationId, 

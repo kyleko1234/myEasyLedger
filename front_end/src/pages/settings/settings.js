@@ -11,7 +11,7 @@ function Settings() {
     
     const localeOptions = [
         {value: "en-US", label: "English (US)"},
-        {value: "zh-TW", label: "Chinese (Traditional)"}
+        {value: "zh-TW", label: "中文 (繁體)"}
     ];
 
     const handleChangeLocaleOption = (selectedOption) => {
@@ -26,7 +26,7 @@ function Settings() {
         <div>
             <ol className="breadcrumb float-xl-right">
                 <li className="breadcrumb-item"><Link to="/">{settingsText[appContext.locale]["Home"]}</Link></li>
-                <li className="breadcrumb-item active"><Link to="/reports">{settingsText[appContext.locale]["Settings"]}</Link></li>
+                <li className="breadcrumb-item active">{settingsText[appContext.locale]["Settings"]}</li>
             </ol>
             <h1 className="page-header">
                     {settingsText[appContext.locale]["Settings"]} 

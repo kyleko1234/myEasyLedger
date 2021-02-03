@@ -88,9 +88,9 @@ INSERT INTO account_subtype(name, account_type_id)
 
 
 
-INSERT INTO person(first_name, last_name, email, password, enabled)
+INSERT INTO person(first_name, last_name, email, password, enabled, locale)
     VALUES
-        ('Kyle', 'Ko', 'kyleko1234@gmail.com', '$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG', TRUE);
+        ('Kyle', 'Ko', 'kyleko1234@gmail.com', '$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG', TRUE, 'en-US');
 
 /** id | first_name | last_name | email             | password
      1 | 'Kyle'   | 'Ko'    | kyleko1234@gmail.com  | $2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG (bcrypted 'admin')

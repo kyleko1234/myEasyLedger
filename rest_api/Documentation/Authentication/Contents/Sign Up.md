@@ -24,6 +24,9 @@ The password of the user being signed up, once again. `confirmPassword` and `pas
 
 - **agree (`boolean`)** <br/>
 A boolean signifying that the user agrees to the terms and conditions of using this software.
+f
+- **locale(`string` 64)** <br/>
+Locale representing the language setting for the user. A list of valid locales is found [[Easy Ledger#Currently supported locales|here]].
 
 - **organizationName (`String 50`)** <br/>
 The name of the first organization for this person. A user must have at least one organization, so it is required to provide an organization name on sign-up.

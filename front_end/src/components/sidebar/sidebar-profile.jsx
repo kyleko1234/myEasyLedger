@@ -13,8 +13,8 @@ class SidebarProfile extends React.Component {
 
 		this.getUserInfo = () => {
 			this.setState({loading: true}, () => {
-				axios.get(`${API_BASE_URL}/person/${this.context.currentUser}`).then(response => {
-					this.context.handleSetCurrentOrganization(response.data.organizations[0].id);
+				axios.get(`${API_BASE_URL}/person/${this.context.personId}`).then(response => {
+					this.context.handleSetCurrentOrganizationId(response.data.organizations[0].id);
 					this.setState({userInfo: response.data}, () => {
 						this.setState({loading: false});
 					});
