@@ -19,6 +19,10 @@ Password of the user, stored as a BCrypt hash. Not returned as a result of GET r
 - **locale (`string` 64)**<br/>
 String representing the locale for the user's language setting. A list of supported locales can be found [[Easy Ledger#Currently supported locales|here]].
 
+- **currentOrganizationId (optional`Long`)**<br/>
+The current organization that the user is viewing information or making edits for. This should be an organization that the user belongs to; otherwise any requests involving organizationId will likely return an unauthorized exception. This field can be null! It is suggested that the default behavior of a client is to treat this field as organizations[0].id if this field is null.
+
+
 - **organizationIds (`Array<Integer>`)**<br/>
 List of IDs of organizations that this Person belongs to. When an organization that a person belongs to is deleted, it is automatically deleted from this list. This is used for convenience of PATCHing a person. 
 
@@ -36,18 +40,20 @@ ___
     "firstName": "Kyle",
     "lastName": "Ko",
     "email": "kyleko1234@gmail.com",
-	"locale": "en-US",
+    "locale": "en-US",
+    "currentOrganizationId": 1,
     "organizations": [
         {
             "id": 1,
-            "name": "Sample organization"
+            "name": "Sample organization",
+            "currency": "USD",
+            "isEnterprise": true
         }
     ],
     "roles": [
         {
-            "id": 2,
-            "name": "ROLE_ADMIN"
+            "id": 1,
+            "name": "ROLE_USER"
         }
     ]
-}
-```
+}```

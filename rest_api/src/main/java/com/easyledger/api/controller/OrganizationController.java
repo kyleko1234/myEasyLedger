@@ -24,19 +24,27 @@ import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.repository.OrganizationRepository;
+import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.security.AuthorizationService;
+import com.easyledger.api.security.UserPrincipal;
+import com.easyledger.api.service.PersonService;
 
 @RestController
 @RequestMapping("/v0.2")
 public class OrganizationController {
 	
 	private OrganizationRepository organizationRepo;
+	private PersonRepository personRepo;
+	private PersonService personService;
 	private AuthorizationService authorizationService;
 
-	public OrganizationController(OrganizationRepository organizationRepo, AuthorizationService authorizationService) {
+	public OrganizationController(OrganizationRepository organizationRepo, PersonRepository personRepo,
+			PersonService personService, AuthorizationService authorizationService) {
 		super();
 		this.organizationRepo = organizationRepo;
+		this.personRepo = personRepo;
 		this.authorizationService = authorizationService;
+		this.personService = personService;
 	}
 	
 	@Secured("ROLE_ADMIN")
@@ -67,12 +75,21 @@ public class OrganizationController {
 	//TODO change this to POST /organization/person/{personId}, with personId being the creator of this organization and automatically adding the creator to the organization.
 	@PostMapping("/organization")
     @ResponseStatus(HttpStatus.CREATED)
-	public Organization createOrganization(@Valid @RequestBody Organization organization)
-		throws ConflictException {
+	public Organization createOrganization(@Valid @RequestBody Organization organization, Authentication authentication)
+		throws ConflictException, ResourceNotFoundException {
 		if (organization.getId() != null) {
 			throw new ConflictException("Please do not attempt to manually create an organization id.");
 		}
-		return organizationRepo.save(organization);
+		Organization savedOrganization = organizationRepo.save(organization);
+		personService.autoPopulateOrganization(savedOrganization);
+		
+		Person currentUser = personRepo.findById(((UserPrincipal) authentication.getPrincipal()).getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + ((UserPrincipal) authentication.getPrincipal()).getId()));
+		currentUser.addOrganization(savedOrganization);
+		currentUser.setCurrentOrganizationId(savedOrganization.getId());
+		personRepo.save(currentUser);
+		
+		return savedOrganization;
 	}
 	
 	@PutMapping("/organization/{id}")
@@ -83,7 +100,10 @@ public class OrganizationController {
 			throw new ConflictException("Organization ID in request body does not match URI.");
 		}
 		authorizationService.authorizeByOrganizationId(authentication, organizationId);
-		return organizationRepo.save(organization);
+		Organization oldOrganization = organizationRepo.findById(organizationId)
+	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+		oldOrganization.setName(organization.getName()); //only allow users to change the name field
+		return organizationRepo.save(oldOrganization);
 	}
 	
 /*    @DeleteMapping("/organization/{id}")

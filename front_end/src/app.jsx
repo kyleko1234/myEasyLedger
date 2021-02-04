@@ -280,9 +280,8 @@ class App extends React.Component {
 				let jwtToken = localStorage.getItem(ACCESS_TOKEN);
 				if (jwtToken) {
 					let decodedJwtToken = jwt_decode(jwtToken);
-					await this.fetchUserInfo(decodedJwtToken.sub)
+					await this.fetchUserInfo(decodedJwtToken.sub) //it is important to await the completion of this functino, otherwise you will make many http calls with null personId or organizationIds
 					this.setState({
-						currentOrganizationId: decodedJwtToken.organizations[0].id,
 						isAuthenticated: true
 					}, () => this.setState({isLoading: false}));
 					console.log("authenticated with bearer " + jwtToken);
@@ -297,7 +296,7 @@ class App extends React.Component {
 		}
 
 		this.fetchUserInfo = async (id) => {
-			await axios.get(`${API_BASE_URL}/person/${id}`).then(response => {
+			await axios.get(`${API_BASE_URL}/person/${id}`).then(response => { //it is very important to await the completion of this function otherwise you will make many http requests with null organizationId or personIds
 				this.setState({
 					personId: id,
 					organizations: response.data.organizations,
@@ -305,6 +304,15 @@ class App extends React.Component {
 					lastName: response.data.lastName,
 					email: response.data.email,
 					locale: response.data.locale,
+					currentOrganizationId: (response.data.currentOrganizationId? response.data.currentOrganizationId: response.data.organizations[0].id)
+				}, () => {
+					axios.get(`${API_BASE_URL}/organization/${this.state.currentOrganizationId}`).then(response => {
+						this.setState({
+							currentOrganizationName: response.data.name,
+							currency: response.data.currency,
+							isEnterprise: response.data.isEnterprise
+						})
+					}).catch(console.log)	
 				})
 			}).catch(console.log);
 		}
@@ -405,9 +413,10 @@ class App extends React.Component {
 			lastName: '',
 			email: '',
 
-
 			locale: 'en-US',
+			currentOrganizationName: '',
 			currency: 'USD',
+			isEnterprise: false,
 			handleSetLocale: this.handleSetLocale,
 			handleSetCurrency: this.handleSetCurrency,
 

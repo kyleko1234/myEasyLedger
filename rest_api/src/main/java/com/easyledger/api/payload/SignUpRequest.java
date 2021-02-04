@@ -37,8 +37,12 @@ public class SignUpRequest {
 	private String locale;
 	
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 64)
 	private String organizationName;
+	
+	private String currency;
+	
+	private boolean isEnterprise;
 
 	public String getFirstName() {
 		return firstName;
@@ -112,7 +116,22 @@ public class SignUpRequest {
 		this.organizationName = organizationName;
 	}
 
-	
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	public boolean isIsEnterprise() {
+		return isEnterprise;
+	}
+
+	public void setIsEnterprise(boolean isEnterprise) {
+		this.isEnterprise = isEnterprise;
+	}
+
 	//TODO: write confirmValidEmail to perform a regex check for a properly formatted email
 	private boolean confirmMatchingEmail() throws ConflictException{ 
 		if (!email.equals(reEnterEmail)) {

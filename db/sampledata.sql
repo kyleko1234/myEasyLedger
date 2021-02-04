@@ -88,9 +88,9 @@ INSERT INTO account_subtype(name, account_type_id)
 
 
 
-INSERT INTO person(first_name, last_name, email, password, enabled, locale)
+INSERT INTO person(first_name, last_name, email, password, enabled, locale, current_organization_id)
     VALUES
-        ('Kyle', 'Ko', 'kyleko1234@gmail.com', '$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG', TRUE, 'en-US');
+        ('Kyle', 'Ko', 'kyleko1234@gmail.com', '$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG', TRUE, 'en-US', 1);
 
 /** id | first_name | last_name | email             | password
      1 | 'Kyle'   | 'Ko'    | kyleko1234@gmail.com  | $2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG (bcrypted 'admin')
@@ -103,9 +103,9 @@ INSERT INTO person_role(person_id, role_id)
             1 | 1      
             2 | 1      */
 
-INSERT INTO organization(name)
+INSERT INTO organization(name, currency, is_enterprise)
     VALUES
-        ('Sample organization');
+        ('Sample organization', 'USD', TRUE);
 /** id | name
      1 | 'Sample organization'
      2 | 'Moon Services, Inc (SAMPLE DATA)' **/

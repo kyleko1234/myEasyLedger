@@ -44,13 +44,25 @@ Body:
 #### Sample Response
 ```json
 {
-    "personId": 1,
-    "firstName": "Sample",
-    "lastName": "User",
-    "email": "sampleuser@gmail.com",
-    "password": "*******",
-    "organizationIds": [
-        1, 2
+    "id": 1,
+    "firstName": "Kyle",
+    "lastName": "Ko",
+    "email": "kyleko1234@gmail.com",
+    "locale": "en-US",
+    "currentOrganizationId": null,
+    "organizations": [
+        {
+            "id": 1,
+            "name": "Sample organization",
+            "currency": "USD",
+            "isEnterprise": true
+        }
+    ],
+    "roles": [
+        {
+            "id": 1,
+            "name": "ROLE_USER"
+        }
     ]
 }
 ```

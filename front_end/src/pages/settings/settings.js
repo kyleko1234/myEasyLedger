@@ -4,7 +4,8 @@ import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-si
 import Select from 'react-select';
 import { PageSettings } from '../../config/page-settings';
 import {settingsText} from '../../utils/i18n/settings-text';
-
+import axios from 'axios';
+import {API_BASE_URL} from '../../utils/constants'
 function Settings() {
     const appContext = React.useContext(PageSettings);
     const [selectedLocale, setSelectedLocale] = React.useState(appContext.locale);
@@ -19,7 +20,13 @@ function Settings() {
     }
 
     const handleSaveButton = () => {
-        appContext.handleSetLocale(selectedLocale);
+        let payload = {
+            locale: selectedLocale
+        }
+        axios.patch(`${API_BASE_URL}/person/${appContext.personId}`, payload).then(response => {
+            console.log(response);
+            appContext.fetchUserInfo(appContext.personId);
+        })
     }
 
     return(

@@ -28,8 +28,14 @@ f
 - **locale(`string` 64)** <br/>
 Locale representing the language setting for the user. A list of valid locales is found [[Easy Ledger#Currently supported locales|here]].
 
-- **organizationName (`String 50`)** <br/>
+- **organizationName (`String 64`)** <br/>
 The name of the first organization for this person. A user must have at least one organization, so it is required to provide an organization name on sign-up.
+
+- **currency (`string` 64)**<br/>
+The currency that this organization does business in. Should not be changed after creation. A list of supported currencies is provided [[Easy Ledger#Currently supported currencies|here]]
+
+- **isEnterprise (`boolean`)**<br/>
+True if this organization uses double-entry accounting, false if not. Should not be changed after creation.
 
 ___
 #### Returns
@@ -49,7 +55,10 @@ Body:
     "password": "macpro",
 	"reEnterPassword": "macpro",
 	"agree": true,
-	"organizationName": "Apple Computer Incorporated"
+	"locale": "en-US",
+	"organizationName": "Apple Computer Incorporated",
+	"currency": "USD",
+	"isEnterprise": true
 }
 ```
 

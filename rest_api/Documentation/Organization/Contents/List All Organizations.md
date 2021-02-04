@@ -22,10 +22,12 @@ ___
 #### Sample Response
 ```json
 [
-    {
-        "id": 1,
-        "name": "Sample organization"
-    },
+   {
+    "id": 1,
+    "name": "Sample organization",
+    "currency": "USD",
+    "isEnterprise": true
+	},
     ...
 ]
 ```

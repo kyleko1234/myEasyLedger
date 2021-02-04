@@ -6,12 +6,21 @@ A unique identifier for this object.
 
 - **name (`String` 50)**
 The name of this organization.
+
+- **currency (`string` 64)**<br/>
+The currency that this organization does business in. Should not be changed after creation. A list of supported currencies is provided [[Easy Ledger#Currently supported currencies|here]]
+
+- **isEnterprise (`boolean`)**<br/>
+True if this organization uses double-entry accounting, false if not. Should not be changed after creation.
+
 ___
 #### Sample Object
 ```json
 {
     "id": 1,
-    "name": "Sample organization"
+    "name": "Sample organization",
+    "currency": "USD",
+    "isEnterprise": true
 }
 ```
 

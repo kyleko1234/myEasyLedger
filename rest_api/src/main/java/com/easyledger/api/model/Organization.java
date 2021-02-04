@@ -27,6 +27,12 @@ public class Organization {
 	
 	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "currency")
+	private String currency;
+	
+	@Column(name = "is_enterprise")
+	private boolean isEnterprise;
 
 	@ManyToMany(mappedBy = "organizations")
 	@JsonIgnore
@@ -41,8 +47,10 @@ public class Organization {
 	private Set<AccountGroup> accountGroups = new HashSet<AccountGroup>();
 	
 	
-	public Organization(String name) {
+	public Organization(String name, String currency, boolean isEnterprise) {
 		this.name = name;
+		this.currency = currency;
+		this.isEnterprise = isEnterprise;
 	}
 	
 	public Organization() {
@@ -64,6 +72,22 @@ public class Organization {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	public boolean isIsEnterprise() {
+		return isEnterprise;
+	}
+
+	public void setIsEnterprise(boolean isEnterprise) {
+		this.isEnterprise = isEnterprise;
 	}
 
 	public Set<Person> getPersons() {
@@ -93,8 +117,9 @@ public class Organization {
 
 	@Override
 	public String toString() {
-		return "Organization [id=" + id + ", name=" + name + ", persons=" + persons + ", journalEntries="
-				+ journalEntries + ", accountGroups=" + accountGroups + "]";
+		return "Organization [id=" + id + ", name=" + name + ", currency=" + currency + ", isEnterprise=" + isEnterprise
+				+ ", persons=" + persons + ", journalEntries=" + journalEntries + ", accountGroups=" + accountGroups
+				+ "]";
 	}
 	
 

@@ -22,6 +22,8 @@ ___
 ```json
 {
     "id": 1,
-    "name": "Sample organization"
+    "name": "Sample organization",
+    "currency": "USD",
+    "isEnterprise": true
 }
 ```

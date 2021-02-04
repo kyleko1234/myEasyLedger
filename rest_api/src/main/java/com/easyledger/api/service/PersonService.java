@@ -152,7 +152,7 @@ public class PersonService {
     	assertValidLocale(signUpRequest.getLocale());
     	
     	//create and persist organization from signUpRequest
-    	Organization organization = new Organization(signUpRequest.getOrganizationName());
+    	Organization organization = new Organization(signUpRequest.getOrganizationName(), signUpRequest.getCurrency(), signUpRequest.isIsEnterprise());
     	organizationRepo.save(organization);
     	
     	//create a person from signUpRequest, with enabled=false
@@ -176,7 +176,7 @@ public class PersonService {
 	}
 	
 	/* Automatically populate a person with default AccountGroups. By default we create a corresponding AccountGroup for every AccountSubtype. */
-	private void autoPopulateOrganization(Organization organization) {
+	public void autoPopulateOrganization(Organization organization) {
 		List<AccountSubtype> accountSubtypes = accountSubtypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
 		ArrayList<AccountGroup> defaultAccountGroups = new ArrayList<AccountGroup>();
 		for (AccountSubtype accountSubtype : accountSubtypes) {

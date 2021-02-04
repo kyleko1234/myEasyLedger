@@ -47,6 +47,9 @@ public class Person {
 	@Column(name = "locale")
 	private String locale;
 	
+	@Column(name = "current_organization_id")
+	private Long currentOrganizationId;
+	
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries;
@@ -175,6 +178,14 @@ public class Person {
 		this.locale = locale;
 	}
 
+	public Long getCurrentOrganizationId() {
+		return currentOrganizationId;
+	}
+
+	public void setCurrentOrganizationId(Long currentOrganizationId) {
+		this.currentOrganizationId = currentOrganizationId;
+	}
+
 	public Set<JournalEntry> getJournalEntries() {
 		return journalEntries;
 	}
@@ -202,9 +213,10 @@ public class Person {
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", enabled=" + enabled + ", locale=" + locale + ", journalEntries="
-				+ journalEntries + ", organizations=" + organizations + ", roles=" + roles + "]";
-	}	
+				+ ", password=" + password + ", enabled=" + enabled + ", locale=" + locale + ", currentOrganizationId="
+				+ currentOrganizationId + ", journalEntries=" + journalEntries + ", organizations=" + organizations
+				+ ", roles=" + roles + "]";
+	}
 	
 	
 }

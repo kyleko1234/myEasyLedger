@@ -79,3 +79,6 @@ Prefix all endpoints with `http://{host}/v0.2/`
 ### Currently supported locales
 - "en-US"
 - "zh-TW"
+### Currently supported currencies
+- "USD"
+- "TWD"

@@ -3,7 +3,7 @@ Endpoint: `PUT /organization/{id}`
 
 Authorization: Requesting user must belong to the requested organization.
 
-Updates an organization with the values of the parameters passed.
+Updates an organization with the values of the parameters passed. Only organization name can be updated. At this time the API will ignore attempts to update Currency and isEnterprise fields.
 ___
 
 #### Request Body Parameters

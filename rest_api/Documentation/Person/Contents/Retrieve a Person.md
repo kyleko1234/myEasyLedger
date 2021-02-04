@@ -23,17 +23,20 @@ ___
     "firstName": "Kyle",
     "lastName": "Ko",
     "email": "kyleko1234@gmail.com",
-	"locale": "en-US",
+    "locale": "en-US",
+    "currentOrganizationId": 1,
     "organizations": [
         {
             "id": 1,
-            "name": "Sample organization"
+            "name": "Sample organization",
+            "currency": "USD",
+            "isEnterprise": true
         }
     ],
     "roles": [
         {
-            "id": 2,
-            "name": "ROLE_ADMIN"
+            "id": 1,
+            "name": "ROLE_USER"
         }
     ]
 }
