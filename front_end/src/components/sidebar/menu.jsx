@@ -7,7 +7,7 @@ const Menu = [
       { path: '/email/detail', title: 'Detail' }
     ]
   }, */
-  { path: '/widgets', icon: 'fab fa-simplybuilt', title: 'Widgets', label: 'NEW' }, /*
+  { path: '/widgets', icon: 'fab fa-simplybuilt', title: 'Widgets', label: 'NEW' }, 
   { path: '/ui', icon: 'fa fa-gem', title: 'UI Elements', label: 'NEW',
     children: [
       { path: '/ui/general', title: 'General', highlight: true },
@@ -23,7 +23,7 @@ const Menu = [
       { path: '/ui/language-bar-icon', title: 'Language Bar & Icon' },
       { path: '/ui/social-buttons', title: 'Social Buttons' }
     ]
-  },
+  }, /*
   { path: '/bootstrap-4', img: '/assets/img/logo/logo-bs4.png', title: 'Bootstrap 4', label: 'NEW' },
   { path: '/form', icon: 'fa fa-list-ol', title: 'Form Stuff', label: 'NEW',
     children: [

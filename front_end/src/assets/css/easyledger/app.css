@@ -62,3 +62,7 @@ a.icon-link-text-muted:hover {
 .font-weight-600 {
     font-weight: 600 !important;
 }
+
+.sidebar .nav .sub-menu > li.expand > a {
+    color: #fff;
+}

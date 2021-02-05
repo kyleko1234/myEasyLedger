@@ -25,9 +25,11 @@ class SidebarProfile extends React.Component {
 		this.state = {
 			profileActive: 0,
 			loading: true,
-			userInfo: null
+			userInfo: null,
+			organizationsExpanded: false
 		};
 		this.handleProfileExpand = this.handleProfileExpand.bind(this);
+		this.toggleExpandOrganizations = this.toggleExpandOrganizations.bind(this);
 	}
 
 	componentDidMount() {
@@ -42,11 +44,17 @@ class SidebarProfile extends React.Component {
 			profileActive: !this.state.profileActive,
 		}));
 	}
+
+	toggleExpandOrganizations() {
+		this.setState(state => ({
+			organizationsExpanded: !this.state.organizationsExpanded
+		}));
+	}
   
 	render() {
 		return (
 			<PageSettings.Consumer>
-				{({pageSidebarMinify, logout}) => (
+				{({pageSidebarMinify, logout, locale, organizations, currentOrganizationId, handleSetCurrentOrganizationId}) => (
 					this.state.loading ? 
 						<ul className="nav">
 							<li className="nav-profile">
@@ -56,7 +64,7 @@ class SidebarProfile extends React.Component {
 						:
 						<ul className="nav">
 							<li className={"nav-profile " + (this.state.profileActive ? "expand " : "")}>
-								<Link to="/" onClick={this.handleProfileExpand}>
+								<Link replace to="/" onClick={this.handleProfileExpand}>
 									<div className="cover with-shadow"></div>
 									<div className="image">
 										<img src="/assets/img/user/user-13.jpg" alt="" />
@@ -70,8 +78,18 @@ class SidebarProfile extends React.Component {
 							</li>
 							<li>
 								<ul className={"nav nav-profile " + (this.state.profileActive && !pageSidebarMinify ? "d-block " : "")}>
-									<li><Link to="/settings"><i className="fa fa-cog"></i> {sidebarText[this.context.locale]["Settings"]}</Link></li>
-									<li><Link to="#" onClick={logout}><i className="fa fa-sign-out-alt"></i> {sidebarText[this.context.locale]["Sign Out"]}</Link></li>
+									<li className={"has-sub " + (this.state.organizationsExpanded? "expand" : "closed")}>
+										<Link replace to="#" onClick={this.toggleExpandOrganizations}><i className="fa fa-book"></i> {sidebarText[locale]["My EasyLedgers"]} <b className="caret"></b></Link>
+											<ul className={"sub-menu "+ (this.state.organizationsExpanded? "d-block" : "")}>
+												{organizations.map(organization => {
+													return(
+														<li key={organization.id} className={currentOrganizationId == organization.id? "bg-white-transparent-1 expand": ""}><Link replace to="#" onClick={() => handleSetCurrentOrganizationId(organization.id)}>{organization.name}</Link></li>
+													)
+												})}
+											</ul>
+									</li>
+									<li><Link to="/settings"><i className="fa fa-cog"></i> {sidebarText[locale]["Settings"]}</Link></li>
+									<li><Link to="#" onClick={logout}><i className="fa fa-sign-out-alt"></i> {sidebarText[locale]["Sign Out"]}</Link></li>
 								</ul>
 							</li>
 						</ul>
