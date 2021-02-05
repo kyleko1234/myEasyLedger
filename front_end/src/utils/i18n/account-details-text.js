@@ -11,14 +11,14 @@ export const accountDetailsText = {
 
     },
     "zh-TW": {
-        "Date": "TRANSLATION HERE",
-        "Description": "TRANSLATION HERE",
-        "Debit": "TRANSLATION HERE",
-        "Credit": "TRANSLATION HERE",
+        "Date": "日期",
+        "Description": "描述",
+        "Debit": "借方",
+        "Credit": "貸方",
 
-        "Home": "TRANSLATION HERE",
-        "Chart of Accounts": "TRANSLATION HERE",
-        "Account Details": "TRANSLATION HERE"
+        "Home": "首頁",
+        "Chart of Accounts": "會計科目表",
+        "Account Details": "科目說明"
 
     },
 

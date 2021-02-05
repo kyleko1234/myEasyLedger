@@ -22,25 +22,25 @@ export const accountDetailsSidebarText = {
         "Please remove all line items from this account and try again.": "Please remove all line items from this account and try again."
     },
     "zh-TW": {
-        "Account Details": "TRANSLATION HERE",
-        "Account Name:": "TRANSLATION HERE:",
-        "Account Group:": "TRANSLATION HERE:",
-        "Account Type:": "TRANSLATION HERE:",
-        "Total Debit Amount:": "TRANSLATION HERE:",
-        "Total Credit Amount:": "TRANSLATION HERE:",
+        "Account Details": "科目說明",
+        "Account Name:": "科目名稱:",
+        "Account Group:": "性質(二級科目):",
+        "Account Type:": "類別(一級科目):",
+        "Total Debit Amount:": "借方加總:",
+        "Total Credit Amount:": "貸方加總:",
 
-        "Edit Account Details": "TRANSLATION HERE",
-        "Account Name": "TRANSLATION HERE",
-        "Please provide a name for your account.": "TRANSLATION HERE",
-        "Account Group": "TRANSLATION HERE",
+        "Edit Account Details": "修改科目說明",
+        "Account Name": "科目名稱",
+        "Please provide a name for your account.": "請填寫會計科目名稱。",
+        "Account Group": "性質(二級科目)",
 
-        "Save": "TRANSLATION HERE",
-        "Cancel": "TRANSLATION HERE",
-        "Yes, delete it!": "TRANSLATION HERE",
-        "Are you sure?": "TRANSLATION HERE",
-        "Cannot delete this account.": "TRANSLATION HERE",
+        "Save": "儲存",
+        "Cancel": "取消",
+        "Yes, delete it!": "是的，删除它！",
+        "Are you sure?": "你真的確定嗎？",
+        "Cannot delete this account.": "無法删除本科目。",
 
-        "Are you sure you want to delete this account?": "TRANSLATION HERE",
-        "Please remove all line items from this account and try again.": "TRANSLATION HERE"
+        "Are you sure you want to delete this account?": "你真的確定要删除這個科目嗎？",
+        "Please remove all line items from this account and try again.": "請先删除本科目下所有的帳目後再試一次。"
     }
 }

@@ -5,8 +5,8 @@ export const balanceSheetReportText = {
         "Balance Sheet Report": "Balance Sheet Report"
     },
     "zh-TW": {
-        "Home": "TRANSLATION HERE",
-        "Reports": "TRANSLATION HERE",
-        "Balance Sheet Report": "TRANSLATION HERE"
+        "Home": "首頁",
+        "Reports": "報表",
+        "Balance Sheet Report": "資產負債表"
     }
 }
