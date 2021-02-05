@@ -5,8 +5,8 @@ export const balanceSummaryText = {
         "Balance": "Balance"
     },
     "zh-TW": {
-        "Balance Summary": "TRANSLATION HERE",
-        "Account": "TRANSLATION HERE",
-        "Balance": "TRANSLATION HERE"
+        "Balance Summary": "餘額總覧",
+        "Account": "科目",
+        "Balance": "餘額"
     }
 }
