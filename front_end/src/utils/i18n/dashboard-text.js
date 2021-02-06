@@ -4,7 +4,7 @@ export const dashboardText = {
         "Home": "Home"
     }, 
     "zh-TW": {
-        "Dashboard": "TRANSLATION HERE",
-        "Home": "TRANSLATION HERE"
+        "Dashboard": "帳目概覽",
+        "Home": "首頁"
     }
 }

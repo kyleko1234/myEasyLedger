@@ -24,15 +24,15 @@ export const accountDetailsSidebarText = {
     "zh-TW": {
         "Account Details": "科目說明",
         "Account Name:": "科目名稱:",
-        "Account Group:": "性質(二級科目):",
-        "Account Type:": "類別(一級科目):",
+        "Account Group:": "科目群:",
+        "Account Type:": "主類別:",
         "Total Debit Amount:": "借方加總:",
         "Total Credit Amount:": "貸方加總:",
 
         "Edit Account Details": "修改科目說明",
         "Account Name": "科目名稱",
         "Please provide a name for your account.": "請填寫會計科目名稱。",
-        "Account Group": "性質(二級科目)",
+        "Account Group": "科目群",
 
         "Save": "儲存",
         "Cancel": "取消",

@@ -19,22 +19,22 @@ export const incomeAndExpenseSummaryText = {
         "Income and Expenses": "Income and Expenses"
     },
     "zh-TW": {
-        " Jan": " TRANSLATION HERE",
-        " Feb": " TRANSLATION HERE",
-        " Mar": " TRANSLATION HERE",
-        " Apr": " TRANSLATION HERE",
-        " May": " TRANSLATION HERE",
-        " June": " TRANSLATION HERE",
-        " July": " TRANSLATION HERE",
-        " Aug": " TRANSLATION HERE",
-        " Sept": " TRANSLATION HERE",
-        " Oct": " TRANSLATION HERE",
-        " Nov": " TRANSLATION HERE",
-        " Dec": " TRANSLATION HERE",
+        " Jan": " 一月",
+        " Feb": " 二月",
+        " Mar": " 三月",
+        " Apr": " 四月",
+        " May": " 五月",
+        " June": " 六月",
+        " July": " 七月",
+        " Aug": " 八月",
+        " Sept": " 九月",
+        " Oct": " 十月",
+        " Nov": " 十一月",
+        " Dec": " 十二月",
 
-        "Income": "TRANSLATION HERE",
-        "Expenses": "TRANSLATION HERE",
+        "Income": "收入",
+        "Expenses": "支出",
 
-        "Income and Expenses": "TRANSLATION HERE"
+        "Income and Expenses": "收入與支出"
     }
 }

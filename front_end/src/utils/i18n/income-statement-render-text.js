@@ -26,29 +26,29 @@ export const incomeStatementRenderText = {
         "Net income": "Net income"
     },
     "zh-TW": {
-        "Income Statment": "TRANSLATION HERE",
-        "From:": "TRANSLATION HERE:",
-        "To:": "TRANSLATION HERE:",
+        "Income Statment": "損益表",
+        "From:": "自:",
+        "To:": "至:",
 
-        "Revenue": "TRANSLATION HERE",
-        "Total revenue": "TRANSLATION HERE",
-        "Cost of sales": "TRANSLATION HERE",
-        "Total cost of sales": "TRANSLATION HERE",
+        "Revenue": "收入",
+        "Total revenue": "收入合計",
+        "Cost of sales": "銷貨成本",
+        "Total cost of sales": "銷貨成本合計",
         
-        "Gross profit": "TRANSLATION HERE",
+        "Gross profit": "銷貨毛利",
         
-        "Operating expenses": "TRANSLATION HERE",
-        "Research and development": "TRANSLATION HERE",
-        "Sales, general, and administration": "TRANSLATION HERE",
-        "Depreciation": "TRANSLATION HERE",
-        "Amortization": "TRANSLATION HERE",
-        "Total operating expenses": "TRANSLATION HERE",
+        "Operating expenses": "營業費用",
+        "Research and development": "研究發展費用",
+        "Sales, general, and administration": "銷售、總務及管理費用",
+        "Depreciation": "折舊",
+        "Amortization": "攤銷",
+        "Total operating expenses": "營業費用合計",
         
-        "Operating income": "TRANSLATION HERE",
-        "Other income/expense, net": "TRANSLATION HERE",
-        "Income before tax": "TRANSLATION HERE",
-        "Income tax": "TRANSLATION HERE",
+        "Operating income": "營業收入",
+        "Other income/expense, net": "其它 淨 收入／支出",
+        "Income before tax": "稅前收入",
+        "Income tax": "所得稅",
 
-        "Net income": "TRANSLATION HERE"
+        "Net income": "淨利"
     }
 }
