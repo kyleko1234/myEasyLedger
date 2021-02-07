@@ -4,7 +4,7 @@ export const journalsText = {
         "Home": "Home"
     },
     "zh-TW": {
-        "Journals": "TRANSLATION GOES HERE",
-        "Home": "TRANSLATION GOES HERE "
+        "Journals": "分類帳",
+        "Home": "首頁"
     }
 }

@@ -8,11 +8,11 @@ export const generalJournalText = {
         "Accounting Entries": "Accounting Entries"
     },
     "zh-TW": {
-        "Date": "TRANSLATION HERE",
-        "Description": "TRANSLATION HERE",
-        "Debit": "TRANSLATION HERE",
-        "Credit": "TRANSLATION HERE",
+        "Date": "日期",
+        "Description": "描述",
+        "Debit": "借方",
+        "Credit": "貸方",
 
-        "Accounting Entries": "TRANSLATION HERE"
+        "Accounting Entries": "記帳分錄"
     }
 }

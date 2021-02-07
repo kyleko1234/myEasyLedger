@@ -14,7 +14,7 @@ import {incomeStatementRenderText} from '../../../utils/i18n/income-statement-re
  * 23 Cost of sales
  *      COS account groups
  *          total COS
- *          Gross Margin 
+ *          Gross Profit 
  * empty
  * Operating Expenses
  *      24 R&D

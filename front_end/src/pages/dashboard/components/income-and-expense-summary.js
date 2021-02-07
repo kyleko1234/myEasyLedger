@@ -63,7 +63,7 @@ function IncomeAndExpenseSummary() {
             setLoading(false);
         }).catch(console.log);
 
-    }, [])
+    }, [appContext.currentOrganizationId])
 
     defaults.global.defaultFontColor = "#333"; //chartJS font color
 

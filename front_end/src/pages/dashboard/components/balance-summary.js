@@ -24,7 +24,7 @@ function BalanceSummary() {
             setLoading(false);
         }).catch(console.log);
 
-    }, [])
+    }, [appContext.currentOrganizationId])
 
 
     return (

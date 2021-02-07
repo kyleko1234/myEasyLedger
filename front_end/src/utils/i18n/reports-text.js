@@ -4,7 +4,7 @@ export const reportsText = {
         "Reports": "Reports"
     },
     "zh-TW": {
-        "Home": "TRANSLATION GOES HERE",
-        "Reports": "TRANSLATION GOES HERE"
+        "Home": "首頁",
+        "Reports": "報表"
     }
 }

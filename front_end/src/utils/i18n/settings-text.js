@@ -7,10 +7,10 @@ export const settingsText = {
         "Save": "Save"
     },
     "zh-TW": {
-        "Home": "Home",
-        "Settings": "Settings",
+        "Home": "首頁",
+        "Settings": "設定",
 
-        "Language": "Language",
-        "Save": "Save"
+        "Language": "語言",
+        "Save": "儲存"
     }
 }

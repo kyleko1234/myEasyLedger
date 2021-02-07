@@ -4,7 +4,7 @@ import {PageSettings} from '../../config/page-settings.js';
 import {ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN} from '../../utils/constants.js';
 import axios from 'axios';
 import {Alert} from 'reactstrap';
-import {loginV3Text} from '../../utils/i18n/login-v3-text'
+import {loginV3Text} from '../../utils/i18n/login-v3-text.js'
 
 function LoginV3Render(props) {
     //required props: history

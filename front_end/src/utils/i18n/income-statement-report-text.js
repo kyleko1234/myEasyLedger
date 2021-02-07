@@ -5,8 +5,8 @@ export const incomeStatementReportText = {
         "Income Statement Report": "Income Statement Report"
     },
     "zh-TW": {
-        "Home": "TRANSLATION HERE",
-        "Reports": "TRANSLATION HERE",
-        "Income Statement Report": "TRANSLATION HERE"
+        "Home": "首頁",
+        "Reports": "報表",
+        "Income Statement Report": "損益表"
     }
 }
