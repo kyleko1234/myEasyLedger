@@ -11,14 +11,14 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Reports": "Reports"
     },
     "zh-TW": {
-        "Navigation": "TRANSLATION GOES HERE",
-        "Settings": "TRANSLATION GOES HERE",
-        "Sign Out": "TRANSLATION GOES HERE",
+        "Navigation": "網站導覽",
+        "Settings": "設定",
+        "Sign Out": "登出",
 
         //menu items
-        "Dashboard": "TRANSLATION GOES HERE",
-        "Journals": "TRANSLATION GOES HERE",
-        "Chart of Accounts": "TRANSLATION GOES HERE",
-        "Reports": "TRANSLATION GOES HERE"
+        "Dashboard": "帳目概覽",
+        "Journals": "分類帳",
+        "Chart of Accounts": "會計科目表",
+        "Reports": "報表"
     }
 }

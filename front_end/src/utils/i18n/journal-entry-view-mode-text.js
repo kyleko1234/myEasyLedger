@@ -11,14 +11,14 @@ export const journalEntryViewModeText = {
         "Total": "Total"
     },
     "zh-TW": {
-        "Description": "TRANSLATION GOES HERE",
-        "Account": "TRANSLATION GOES HERE",
-        "Debit": "TRANSLATION GOES HERE",
-        "Credit": "TRANSLATION GOES HERE",
+        "Description": "描述",
+        "Account": "科目",
+        "Debit": "借方",
+        "Credit": "貸方",
 
-        "Date": "TRANSLATION GOES HERE",
-        "Description": "TRANSLATION GOES HERE",
+        "Date": "日期",
+        "Description": "描述",
 
-        "Total": "TRANSLATION GOES HERE"
+        "Total": "加總"
     }
 }

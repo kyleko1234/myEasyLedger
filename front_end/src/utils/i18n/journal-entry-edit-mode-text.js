@@ -13,16 +13,16 @@ export const journalEntryEditModeText = {
         "Copy description to line items": "Copy description to line items"
     },
     "zh-TW" : {
-        "Description": "TRANSLATION HERE",
-        "Account": "TRANSLATION HERE",
-        "Debit": "TRANSLATION HERE",
+        "Description": "描述",
+        "Account": "科目",
+        "Debit": "借方",
         "Credit": "TRANSLATION HERE",
 
-        "Date": "TRANSLATION HERE",
-        "Description": "TRANSLATION HERE",
+        "Date": "日期",
+        "Description": "描述",
         
-        "Total": "TRANSLATION HERE",
-        "Add a Line Item": "TRANSLATION HERE",
-        "Copy description to line items": "TRANSLATION HERE"
+        "Total": "加總",
+        "Add a Line Item": "加一個單行項目",
+        "Copy description to line items": "複製「描述」到各個單行項目"
     }
 }
