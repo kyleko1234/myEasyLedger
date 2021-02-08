@@ -48,7 +48,6 @@ public class JwtTokenProvider {
 		
 		return Jwts.builder()
 				.setSubject(Long.toString(userPrincipal.getId()))
-				.claim("organizations", userPrincipal.getOrganizations())
 				.setIssuedAt(new Date())
 				.setExpiration(expiryDate)
 				.signWith(SignatureAlgorithm.HS512, jwtSecret)
@@ -63,7 +62,6 @@ public class JwtTokenProvider {
 		
 		return Jwts.builder()
 				.setSubject(Long.toString(userPrincipal.getId()))
-				.claim("organizations", userPrincipal.getOrganizations())
 				.setIssuedAt(new Date())
 				.setExpiration(expiryDate)
 				.signWith(SignatureAlgorithm.HS512, jwtSecret)

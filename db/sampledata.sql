@@ -12,12 +12,14 @@ INSERT INTO permission_type(name)
     VALUES
         ('VIEW'),
         ('EDIT'),
-        ('ADMIN');
+        ('ADMIN'),
+        ('OWN');
 /**
     id | name
      1 | VIEW
      2 | EDIT
      3 | ADMIN
+     4 | OWN
 */
 
 INSERT INTO account_type(name)
@@ -124,13 +126,9 @@ INSERT INTO organization(name, currency, is_enterprise)
 
 INSERT INTO permission(person_id, organization_id, permission_type_id)
     VALUES
-        (1, 1, 1),
-        (1, 1, 2),
-        (1, 1, 3);
+        (1, 1, 4);
 /** id | person_id | organization_id | permission_type_id
-     1 |         1 | 1               | 1
-     2 |         1 | 1               | 2
-     3 |         1 | 1               | 3      **/
+     1 |         1 | 1               | 4    **/
 
 
 INSERT INTO account_group(name, account_subtype_id, organization_id)

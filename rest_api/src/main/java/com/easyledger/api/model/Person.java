@@ -54,14 +54,9 @@ public class Person {
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries;
 	
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST },
-    			fetch = FetchType.EAGER)
-    @JoinTable(
-			name = "organization_person",
-			joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"))
-	private Set<Organization> organizations;
-    
+	@OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+	private Set<Permission> permissions;
+	
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST },
     			fetch = FetchType.EAGER)
     @JoinTable(
@@ -72,7 +67,7 @@ public class Person {
 
 
 	public Person() {
-		this.organizations = new HashSet<Organization>();
+		this.permissions = new HashSet<Permission>();
 		this.roles = new HashSet<Role>();
 	}
 	
@@ -81,27 +76,11 @@ public class Person {
 		this.lastName = lastName;
 		this.email = email.toLowerCase().trim();
 		this.password = password;
-		this.organizations = new HashSet<Organization>();
+		this.permissions = new HashSet<Permission>();
 		this.enabled = enabled;
 		this.locale = locale;
 	}
 	
-	//Add and Remove organizations
-	public void addOrganization(Organization organization) {
-		this.organizations.add(organization);
-		organization.getPersons().add(this);
-	}
-	
-	public void removeOrganization(Organization organization) {
-		this.organizations.remove(organization);
-		organization.getPersons().remove(this);
-	}
-	
-	public void removeOrganizations() {
-		for (Organization organization : new HashSet<>(organizations)) {
-			removeOrganization(organization);
-		}
-	}
 	
 	//Add and Remove roles
 	public void addRole(Role role) {
@@ -194,12 +173,12 @@ public class Person {
 		this.journalEntries = journalEntries;
 	}
 	
-	public Set<Organization> getOrganizations() {
-		return organizations;
+	public Set<Permission> getPermissions() {
+		return permissions;
 	}
 
-	public void setOrganizations(Set<Organization> organizations) {
-		this.organizations = organizations;
+	public void setPermissions(Set<Permission> permissions) {
+		this.permissions = permissions;
 	}
 
 	public Set<Role> getRoles() {
@@ -214,7 +193,7 @@ public class Person {
 	public String toString() {
 		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + ", enabled=" + enabled + ", locale=" + locale + ", currentOrganizationId="
-				+ currentOrganizationId + ", journalEntries=" + journalEntries + ", organizations=" + organizations
+				+ currentOrganizationId + ", journalEntries=" + journalEntries + ", permissions=" + permissions
 				+ ", roles=" + roles + "]";
 	}
 	
