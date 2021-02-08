@@ -27,6 +27,8 @@ import com.easyledger.api.model.AccountGroup;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.AccountType;
 import com.easyledger.api.model.Organization;
+import com.easyledger.api.model.Permission;
+import com.easyledger.api.model.PermissionType;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.model.Role;
 import com.easyledger.api.model.VerificationToken;
@@ -37,6 +39,8 @@ import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.repository.OrganizationRepository;
+import com.easyledger.api.repository.PermissionRepository;
+import com.easyledger.api.repository.PermissionTypeRepository;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.repository.RoleRepository;
 
@@ -62,6 +66,12 @@ public class PersonService {
 	private AccountSubtypeRepository accountSubtypeRepo;
 	
 	@Autowired
+	private PermissionRepository permissionRepo;
+	
+	@Autowired
+	private PermissionTypeRepository permissionTypeRepo;
+	
+	@Autowired
 	private AccountTypeRepository accountTypeRepo;
 	
 	@Autowired
@@ -73,6 +83,7 @@ public class PersonService {
 
 	public PersonService(OrganizationRepository organizationRepo, PersonRepository personRepo, PasswordEncoder passwordEncoder, RoleRepository roleRepo,
 			VerificationService verificationService, AccountTypeRepository accountTypeRepo, AccountSubtypeRepository accountSubtypeRepo, 
+			PermissionRepository permissionRepo, PermissionTypeRepository permissionTypeRepo,
 			AccountRepository accountRepo, AccountGroupRepository accountGroupRepo) {
 		super();
 		this.organizationRepo = organizationRepo;
@@ -82,6 +93,8 @@ public class PersonService {
 		this.verificationService = verificationService;
 		this.accountTypeRepo = accountTypeRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
+		this.permissionRepo = permissionRepo;
+		this.permissionTypeRepo = permissionTypeRepo;
 		this.accountRepo = accountRepo;
 		this.accountGroupRepo = accountGroupRepo;
 	}
@@ -121,19 +134,6 @@ public class PersonService {
         			person.setPassword(passwordEncoder.encode(v.toString()));
         			break;
         			
-        		case "organizationIds":
-        			person.removeOrganizations();
-        			if (v != null) {
-        				//Json's list of int is automatically parsed as ArrayList<Integer> by Spring
-	        			ArrayList<Integer> organizationIds = (ArrayList<Integer>) v;
-	        			for (Integer organizationId : organizationIds) {
-	        				//cast Integer to Long because apparently java has no elegant way to do that
-	        				Long id = Long.valueOf(organizationId.longValue());
-	        				person.addOrganization(organizationRepo.findById(id)
-	            					.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId.toString())));
-	            			}
-        			}
-        			break;
         		case "locale":
         			assertValidLocale(v.toString());
         			person.setLocale(v.toString());
@@ -158,7 +158,16 @@ public class PersonService {
     	//create a person from signUpRequest, with enabled=false
     	Person person = new Person(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPassword(), false, signUpRequest.getLocale());
     	person.setPassword(passwordEncoder.encode(person.getPassword()));
-    	person.addOrganization(organization);
+    	
+    	Permission permission = new Permission();
+    	PermissionType own = permissionTypeRepo.findByName("OWN")
+    			.orElseThrow(() -> new AppException("OWN is not a valid permission type."));
+    	
+    	permission.setPermissionType(own);
+    	permission.setPerson(person);
+    	permission.setOrganization(organization);
+    	
+    	permissionRepo.save(permission);
     	
     	Role userRole = roleRepo.findByName("ROLE_USER")
     			.orElseThrow(() -> new AppException("ROLE_USER does not exist."));

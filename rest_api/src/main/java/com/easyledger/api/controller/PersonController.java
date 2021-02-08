@@ -54,23 +54,6 @@ public class PersonController {
     	return ResponseEntity.ok().body(person);
     }
     
-    @Deprecated
-    @Secured("ROLE_ADMIN")
-    @PostMapping("/person")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Person> createPerson(@RequestBody Map<Object, Object> fields) 
-    	throws ConflictException, ResourceNotFoundException {
-    	
-    	Person person = new Person();
-        personService.updatePerson(person, fields);
-        personService.assertCompletePerson(person);
-        if (person.getId() != null) {
-        	throw new ConflictException("Please do not attempt to manually create a personId.");
-        }
-    	final Person updatedPerson = personRepo.save(person);
-    	return ResponseEntity.ok(updatedPerson);
-    }
-    
     //TODO allow client to update roles?
     @PreAuthorize("#id == principal.getId()")
     @PatchMapping("/person/{id}")

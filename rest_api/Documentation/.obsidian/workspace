@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Organization/Contents/Retrieve an Organization.md",
+            "file": "Person/Contents/Create a Person.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Organization/Contents/Retrieve an Organization.md",
+            "file": "Person/Contents/Create a Person.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Organization/Contents/Retrieve an Organization.md",
+                "file": "Person/Contents/Create a Person.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +99,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Person/Contents/Create a Person.md",
+    "Easy Ledger.md",
+    "Organization/Organization.md",
+    "Organization/Contents/Update an Organization.md",
+    "Organization/Contents/List All Persons in an Organization.md",
     "Organization/Contents/Retrieve an Organization.md",
     "Person/Person.md",
-    "Person/Contents/Create a Person.md",
     "Person/Contents/List All Persons.md",
     "Person/Contents/Retrieve a Person.md",
-    "Person/Contents/The Person Object.md",
-    "Person/Contents/Update a Person.md",
-    "Organization/Contents/Create an Organization.md",
-    "Organization/Contents/List All Organizations.md",
-    "Organization/Contents/List All Persons in an Organization.md"
+    "Person/Contents/The Person Object.md"
   ]
 }

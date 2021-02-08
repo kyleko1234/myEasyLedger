@@ -31,8 +31,11 @@ public class Permission {
 	public Permission(Person person, Organization organization, PermissionType permissionType) {
 		super();
 		this.person = person;
+		person.getPermissions().add(this);
 		this.organization = organization;
+		organization.getPermissions().add(this);
 		this.permissionType = permissionType;
+		permissionType.getPermissions().add(this);
 	}
 	
 	public Permission() {

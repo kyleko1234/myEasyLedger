@@ -9,7 +9,6 @@ ___
 - [[Retrieve an Organization]]
 - [[Update an Organization]]
 - [[List All Organizations]]
-- [[List All Persons in an Organization]]
 
 
 

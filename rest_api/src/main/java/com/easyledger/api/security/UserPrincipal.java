@@ -25,17 +25,15 @@ public class UserPrincipal implements UserDetails {
 	private String password;
 	
 	private Collection<? extends GrantedAuthority> authorities;
-	private Set<Organization> organizations;
 
 	public UserPrincipal(Long id, String firstName, String lastName, String email, String password,
-			Collection<? extends GrantedAuthority> authorities, Set<Organization> organizations, boolean enabled) {
+			Collection<? extends GrantedAuthority> authorities, boolean enabled) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
-		this.organizations = organizations;
 		this.enabled = enabled;
 	}
 
@@ -47,7 +45,7 @@ public class UserPrincipal implements UserDetails {
 		).collect(Collectors.toList());
 		
 		return new UserPrincipal(user.getId(), user.getFirstName(), user.getLastName(), 
-				user.getEmail(), user.getPassword(), authorities, user.getOrganizations(), user.isEnabled());
+				user.getEmail(), user.getPassword(), authorities, user.isEnabled());
 	}
 
 
@@ -71,15 +69,10 @@ public class UserPrincipal implements UserDetails {
 		return email;
 	}
 	
-	public Set<Organization> getOrganizations() {
-		return organizations;
-	}
-	
 	@Override
 	public String getUsername() {
 		return email;
 	}
-
 
 	@Override
 	public String getPassword() {
