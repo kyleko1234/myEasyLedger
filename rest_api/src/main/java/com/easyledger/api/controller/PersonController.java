@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.repository.PersonRepository;
+import com.easyledger.api.security.AuthorizationService;
+import com.easyledger.api.security.UserPrincipal;
 import com.easyledger.api.service.PersonService;
 
 @RestController
@@ -28,12 +32,14 @@ import com.easyledger.api.service.PersonService;
 public class PersonController {
 	private PersonRepository personRepo;
 	private PersonService personService;
+	private AuthorizationService authorizationService;
 
 
-	public PersonController(PersonRepository personRepo, PersonService personService) {
+	public PersonController(PersonRepository personRepo, PersonService personService, AuthorizationService authorizationService) {
 		super();
 		this.personRepo = personRepo;
 		this.personService = personService;
+		this.authorizationService = authorizationService;
 	}
 
 	@Secured("ROLE_ADMIN")
@@ -50,10 +56,9 @@ public class PersonController {
         throws ResourceNotFoundException {
     	Person person = personRepo.findById(personId)
     		.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + personId)); 
-        //PersonDTO dto = new PersonDTO(person);
     	return ResponseEntity.ok().body(person);
     }
-    
+	
     //TODO allow client to update roles?
     @PreAuthorize("#id == principal.getId()")
     @PatchMapping("/person/{id}")

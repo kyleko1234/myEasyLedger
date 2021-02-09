@@ -67,7 +67,7 @@ public class OrganizationController {
 		throws ResourceNotFoundException, UnauthorizedException {
 		Organization organization = organizationRepo.findById(organizationId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
-		authorizationService.authorizeByOrganizationId(authentication, organizationId);
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return ResponseEntity.ok(organization);
 	}
 	
@@ -115,7 +115,7 @@ public class OrganizationController {
 		if (!organization.getId().equals(organizationId)) {
 			throw new ConflictException("Organization ID in request body does not match URI.");
 		}
-		authorizationService.authorizeByOrganizationId(authentication, organizationId);
+		authorizationService.authorizeAdminPermissionsByOrganizationId(authentication, organizationId);
 		Organization oldOrganization = organizationRepo.findById(organizationId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
 		oldOrganization.setName(organization.getName()); //only allow users to change the name field

@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.easyledger.api.model.Organization;
+import com.easyledger.api.model.Permission;
 import com.easyledger.api.model.Person;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,6 +21,7 @@ public class UserPrincipal implements UserDetails {
 	private String lastName;
 	private String email;
 	private boolean enabled;
+	private Set<Permission> permissions;
 	
 	@JsonIgnore 
 	private String password;
@@ -27,7 +29,7 @@ public class UserPrincipal implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserPrincipal(Long id, String firstName, String lastName, String email, String password,
-			Collection<? extends GrantedAuthority> authorities, boolean enabled) {
+			Collection<? extends GrantedAuthority> authorities, boolean enabled, Set<Permission> permissions) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -35,6 +37,7 @@ public class UserPrincipal implements UserDetails {
 		this.password = password;
 		this.authorities = authorities;
 		this.enabled = enabled;
+		this.permissions = permissions;
 	}
 
 
@@ -45,7 +48,7 @@ public class UserPrincipal implements UserDetails {
 		).collect(Collectors.toList());
 		
 		return new UserPrincipal(user.getId(), user.getFirstName(), user.getLastName(), 
-				user.getEmail(), user.getPassword(), authorities, user.isEnabled());
+				user.getEmail(), user.getPassword(), authorities, user.isEnabled(), user.getPermissions());
 	}
 
 
@@ -67,6 +70,10 @@ public class UserPrincipal implements UserDetails {
 
 	public String getEmail() {
 		return email;
+	}
+	
+	public Set<Permission> getPermissions() {
+		return permissions;
 	}
 	
 	@Override

@@ -60,7 +60,7 @@ public class LineItemController {
         throws ResourceNotFoundException, UnauthorizedException {
     	LineItem lineItem = lineItemRepo.findById(lineItemId)
     		.orElseThrow(() -> new ResourceNotFoundException("Line-item not found for this id :: " + lineItemId)); 
-    	authorizationService.authorizeByOrganizationId(authentication, lineItem.getJournalEntry().getOrganization().getId());
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, lineItem.getJournalEntry().getOrganization().getId());
     	LineItemDTO lineItemDTO = new LineItemDTO(lineItem);
         return ResponseEntity.ok().body(lineItemDTO);
     }
@@ -70,7 +70,7 @@ public class LineItemController {
     	throws ResourceNotFoundException, UnauthorizedException {
 	    Account account = accountRepo.findById(accountId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-	    authorizationService.authorizeByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
+	    authorizationService.authorizeViewPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
 	    return lineItemRepo.getAllLineItemsForAccount(accountId, pageable);
     }
     
@@ -79,7 +79,7 @@ public class LineItemController {
     	throws ResourceNotFoundException, UnauthorizedException {
 	    AccountGroup accountGroup = accountGroupRepo.findById(accountGroupId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("AccountGroup not found for this id :: " + accountGroupId));
-	    authorizationService.authorizeByOrganizationId(authentication, accountGroup.getOrganization().getId());
+	    authorizationService.authorizeViewPermissionsByOrganizationId(authentication, accountGroup.getOrganization().getId());
 	    return lineItemRepo.getAllLineItemsForAccountGroup(accountGroupId, pageable);
     }
     
