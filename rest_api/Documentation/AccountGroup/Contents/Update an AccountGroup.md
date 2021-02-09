@@ -1,7 +1,7 @@
 ### Update an AccountGroup
 Endpoint: `PUT /accountGroup/{id}`
 
-Authorization: User must belong to the organization that owns the specified account group and the organization that this account group is being updated to belong to.
+Authorization: User must have EDIT permissions for the organization that owns the specified account group and the organization that this account group is being updated to belong to.
 
 Updates an account group with the values of the parameters passed. All parameters must be passed in order to update the object. Any parameters not passed are set to null. Cannot be used to update the "deleted" field; use `DELETE /accountGroup/{id}` instead.
 ___

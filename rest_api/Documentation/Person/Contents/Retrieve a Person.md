@@ -25,12 +25,19 @@ ___
     "email": "kyleko1234@gmail.com",
     "locale": "en-US",
     "currentOrganizationId": 1,
-    "organizations": [
+    "permissions": [
         {
             "id": 1,
-            "name": "Sample organization",
-            "currency": "USD",
-            "isEnterprise": true
+            "organization": {
+                "id": 1,
+                "name": "Sample organization",
+                "currency": "USD",
+                "isEnterprise": true
+            },
+            "permissionType": {
+                "id": 4,
+                "name": "OWN"
+            }
         }
     ],
     "roles": [

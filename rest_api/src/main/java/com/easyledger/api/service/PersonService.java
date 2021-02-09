@@ -1,38 +1,28 @@
 package com.easyledger.api.service;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 
 import com.easyledger.api.exception.AppException;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
-import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountGroup;
 import com.easyledger.api.model.AccountSubtype;
-import com.easyledger.api.model.AccountType;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Permission;
 import com.easyledger.api.model.PermissionType;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.model.Role;
 import com.easyledger.api.model.VerificationToken;
-import com.easyledger.api.payload.ApiResponse;
 import com.easyledger.api.payload.SignUpRequest;
 import com.easyledger.api.repository.AccountGroupRepository;
 import com.easyledger.api.repository.AccountRepository;
@@ -71,31 +61,23 @@ public class PersonService {
 	@Autowired
 	private PermissionTypeRepository permissionTypeRepo;
 	
-	@Autowired
-	private AccountTypeRepository accountTypeRepo;
-	
-	@Autowired
-	private AccountRepository accountRepo;
-		
     @Autowired
     PasswordEncoder passwordEncoder;
 
 
 	public PersonService(OrganizationRepository organizationRepo, PersonRepository personRepo, PasswordEncoder passwordEncoder, RoleRepository roleRepo,
-			VerificationService verificationService, AccountTypeRepository accountTypeRepo, AccountSubtypeRepository accountSubtypeRepo, 
+			VerificationService verificationService, AccountSubtypeRepository accountSubtypeRepo, 
 			PermissionRepository permissionRepo, PermissionTypeRepository permissionTypeRepo,
-			AccountRepository accountRepo, AccountGroupRepository accountGroupRepo) {
+			AccountGroupRepository accountGroupRepo) {
 		super();
 		this.organizationRepo = organizationRepo;
 		this.personRepo = personRepo;
 		this.passwordEncoder = passwordEncoder;
 		this.roleRepo = roleRepo;
 		this.verificationService = verificationService;
-		this.accountTypeRepo = accountTypeRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.permissionRepo = permissionRepo;
 		this.permissionTypeRepo = permissionTypeRepo;
-		this.accountRepo = accountRepo;
 		this.accountGroupRepo = accountGroupRepo;
 	}
 	

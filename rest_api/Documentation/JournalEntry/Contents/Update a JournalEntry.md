@@ -1,7 +1,7 @@
 ### Update an JournalEntry
 Endpoint: `PUT /journalEntry/{id}`
 
-Authorization: User making the request must belong to the organization that owns the specified entry.
+Authorization: User making the request must have EDIT permissions for the organization that owns the specified entry.
 
 Updates an journal entry with the specified id by setting the value of the parameters passed. All parameters must be passed; any unpassed parameters will set the attribute to null. All existing LineItems will be destroyed and replaced with LineItems passed in the request body. A journal entry will keep the same id after an update, but its LineItems will be assigned new ids after an update regardless of whether the updated list of LineItems is different from that of the existing Entry. 
 ___

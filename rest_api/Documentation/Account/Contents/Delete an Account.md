@@ -1,7 +1,7 @@
 ### Delete an account
 Endpoint: `DELETE /account/{id}`
 
-Authorization: User must belong to the organization that owns the specified account.
+Authorization: User must have EDIT permissinos for the associated Organization.
 
 Soft-deletes the account with the specified id. Accounts can only be deleted if there are no LineItems associated with them. Any LineItems will need to be removed or updated to modify a different account before deletion of the account.
 ___

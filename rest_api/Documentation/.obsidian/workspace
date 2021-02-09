@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Create a Person.md",
+            "file": "Organization/Contents/Create an Organization.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Create a Person.md",
+            "file": "Organization/Contents/Create an Organization.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Person/Contents/Create a Person.md",
+                "file": "Organization/Contents/Create an Organization.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +99,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "Person/Contents/Create a Person.md",
-    "Easy Ledger.md",
-    "Organization/Organization.md",
-    "Organization/Contents/Update an Organization.md",
-    "Organization/Contents/List All Persons in an Organization.md",
-    "Organization/Contents/Retrieve an Organization.md",
-    "Person/Person.md",
-    "Person/Contents/List All Persons.md",
-    "Person/Contents/Retrieve a Person.md",
-    "Person/Contents/The Person Object.md"
+    "Organization/Contents/Create an Organization.md",
+    "Account/Contents/Update an Account.md",
+    "Account/Contents/Retrieve an Account.md",
+    "Account/Contents/List All Accounts Belonging to an Organization.md",
+    "Account/Contents/List All Accounts.md",
+    "Account/Contents/Delete an Account.md",
+    "Account/Contents/Create an Account.md",
+    "AccountGroup/Contents/Update an AccountGroup.md",
+    "AccountGroup/Contents/The AccountGroup Object.md",
+    "AccountGroup/Contents/Retrieve an AccountGroup.md"
   ]
 }

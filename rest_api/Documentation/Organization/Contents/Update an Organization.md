@@ -1,7 +1,7 @@
 ### Update an organization
 Endpoint: `PUT /organization/{id}`
 
-Authorization: Requesting user must belong to the requested organization.
+Authorization: Requesting user must have ADMIN permissions for this organization.
 
 Updates an organization with the values of the parameters passed. Only organization name can be updated. At this time the API will ignore attempts to update Currency and isEnterprise fields.
 ___
