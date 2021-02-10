@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,12 +15,48 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
+import com.easyledger.api.dto.AccountTypeSummaryDTO;
+import com.easyledger.api.dto.PersonInRosterDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+
+@SqlResultSetMapping( 
+		name = "personInRosterDTOMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = PersonInRosterDTO.class,
+						columns = {
+								@ColumnResult(name = "personId"),
+								@ColumnResult(name = "firstName"),
+								@ColumnResult(name = "lastName"),
+								@ColumnResult(name = "email"),
+								@ColumnResult(name = "permissionTypeId"),
+								@ColumnResult(name = "permissionTypeName")
+						}
+				)
+		}
+)	
+@NamedNativeQuery( //retrieves all undeleted entries for the given organization and maps them into EntryViewModels
+		name = "Person.getAllPersonsInOrganization",
+		query = "SELECT  " + 
+				"    person.id AS personId, person.first_name AS firstName, person.last_name AS lastName, person.email AS email, " + 
+				"    permission_type.id AS permissionTypeId, permission_type.name AS permissionTypeName " + 
+				"FROM person, permission_type, permission, organization " + 
+				"WHERE " + 
+				"    permission.person_id = person.id AND " + 
+				"    permission.organization_id = organization.id AND " + 
+				"    permission.permission_type_id = permission_type.id AND  " + 
+				"    organization.id = :organizationId " + 
+				"ORDER BY person.last_name",
+		resultSetMapping = "personInRosterDTOMapping"
+)
 
 @Entity
 @Table(name = "person")

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.PersonInRosterDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
@@ -62,7 +63,7 @@ public class PersonController {
     //TODO allow client to update roles?
     @PreAuthorize("#id == principal.getId()")
     @PatchMapping("/person/{id}")
-    public ResponseEntity<Person> patchPerson(@PathVariable Long id, @RequestBody Map<Object, Object> fields) 
+    public ResponseEntity<Person> patchPerson(@PathVariable(value = "id") Long id, @RequestBody Map<Object, Object> fields) 
     	throws ConflictException, ResourceNotFoundException {
         Person person = personRepo.findById(id)
         	.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + id));
@@ -71,6 +72,13 @@ public class PersonController {
         
     	final Person updatedPerson = personRepo.save(person);
     	return ResponseEntity.ok(person);
+    }
+    
+    @GetMapping("/organization/{organizationId}/person")
+    public List<PersonInRosterDTO> getAllPersonsInOrganization(@PathVariable(value = "organizationId") Long organizationId, Authentication authentication) 
+    		throws UnauthorizedException {
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+    	return personRepo.getAllPersonsInOrganization(organizationId);
     }
     
  /*   @DeleteMapping("/person/{id}")
