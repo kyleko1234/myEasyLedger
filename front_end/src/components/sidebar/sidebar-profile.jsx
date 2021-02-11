@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
-import {API_BASE_URL} from '../../utils/constants.js';
+import {API_BASE_URL, FIRSTNAME_LASTNAME_LOCALES} from '../../utils/constants.js';
 import axios from 'axios';
 import {sidebarText} from '../../utils/i18n/sidebar-text.js';
 
-const FIRSTNAME_LASTNAME_LOCALES = ["en-US"];
 class SidebarProfile extends React.Component {
 	static contextType = PageSettings;
 

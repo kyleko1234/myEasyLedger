@@ -5,15 +5,10 @@ import Select from 'react-select';
 import { PageSettings } from '../../config/page-settings';
 import {settingsText} from '../../utils/i18n/settings-text';
 import axios from 'axios';
-import {API_BASE_URL} from '../../utils/constants'
+import {API_BASE_URL, LOCALE_OPTIONS} from '../../utils/constants'
 function Settings() {
     const appContext = React.useContext(PageSettings);
     const [selectedLocale, setSelectedLocale] = React.useState(appContext.locale);
-    
-    const localeOptions = [
-        {value: "en-US", label: "English (US)"},
-        {value: "zh-TW", label: "中文 (繁體)"}
-    ];
 
     const handleChangeLocaleOption = (selectedOption) => {
         setSelectedLocale(selectedOption.value);
@@ -46,9 +41,9 @@ function Settings() {
                     </label>
                     <div className="col-md-4">
                         <Select
-                            options={localeOptions}
+                            options={LOCALE_OPTIONS}
                             onChange={handleChangeLocaleOption}
-                            value={localeOptions.find(localeOption => localeOption.value == selectedLocale)}
+                            value={LOCALE_OPTIONS.find(localeOption => localeOption.value == selectedLocale)}
                             menuPortalTarget={document.body}
                             styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                             menuPlacement={'auto'}

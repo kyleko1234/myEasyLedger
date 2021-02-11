@@ -3,8 +3,9 @@ import axios from 'axios';
 import { Alert } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import {PageSettings} from '../../config/page-settings.js';
-import {API_BASE_URL} from '../../utils/constants.js';
+import {API_BASE_URL, LOCALE_OPTIONS, CURRENCY_OPTIONS} from '../../utils/constants.js';
 import {registerV3Text} from '../../utils/i18n/register-v3-text';
+import Select from 'react-select';
 
 function RegisterV3Render(props) {
     //required props: history
@@ -17,6 +18,8 @@ function RegisterV3Render(props) {
     const [passwordInput, setPasswordInput] = React.useState('');
     const [reEnterPasswordInput, setReEnterPasswordInput] = React.useState('');
     const [agreeInput, setAgreeInput] = React.useState(false);
+    const [selectedCurrency, setSelectedCurrency] = React.useState(CURRENCY_OPTIONS.find(option => option.value == "USD"));
+    const [isEnterprise, setIsEnterprise] = React.useState(true);
 
     const [emailMatchAlert, setEmailMatchAlert] = React.useState(false);
     const [emailTakenAlert, setEmailTakenAlert] = React.useState(false);
@@ -56,7 +59,9 @@ function RegisterV3Render(props) {
             reEnterPassword: reEnterPasswordInput,
             agree: agreeInput,
             organizationName: organizationNameInput,
-            locale: appContext.locale
+            locale: appContext.locale,
+            isEnterprise: isEnterprise,
+            currency: selectedCurrency.value
         }
 
         axios.post(`${API_BASE_URL}/auth/signup`, requestBody).then(response => {
@@ -129,6 +134,28 @@ function RegisterV3Render(props) {
                             </div>
                         </div>
                         {passwordMatchAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Password does not match."]}</Alert> : null}
+                        <label className="control-label">Currency<span className="text-danger">*</span></label>
+                        <div className="row m-b-15">
+                            <div className="col-md-12">
+                                <Select
+                                    options={CURRENCY_OPTIONS}
+                                    value={selectedCurrency}
+                                    isSearchable={true}
+                                    onChange={(selectedOption) => {
+                                        setSelectedCurrency(selectedOption);
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="checkbox checkbox-css m-b-30">
+                            <div className="checkbox checkbox-css m-b-30">
+                                <input type="checkbox" id="agreement_checkbox" value={isEnterprise} onChange={() => setIsEnterprise(!isEnterprise)} />
+                                <label htmlFor="agreement_checkbox">
+                                    isEnterprise
+                                    {/** TODO: make this look good */}
+                                </label> 
+                            </div>
+                        </div>
                         <div className="checkbox checkbox-css m-b-30">
                             <div className="checkbox checkbox-css m-b-30">
                                 <input type="checkbox" id="agreement_checkbox" value={agreeInput} onChange={() => setAgreeInput(!agreeInput)} />
@@ -146,12 +173,13 @@ function RegisterV3Render(props) {
                             {registerV3Text[appContext.locale]["Already a member"]}
                         </div>
                         <div>
-                            {appContext.locale == "en-US" ? <b className="mr-3 font-weight-600">English (US)</b> : 
-                                <Link replace to="#" onClick={() => appContext.handleSetLocale("en-US")} className="mr-3">English (US)</Link>
-                            }
-                            {appContext.locale == "zh-TW" ? <b className="mr-3 font-weight-600">中文 (繁體)</b> : 
-                                <Link replace to="#" onClick={() => appContext.handleSetLocale("zh-TW")} className="mr-3">中文 (繁體)</Link>
-                            }
+                            {LOCALE_OPTIONS.map(localeOption => {
+                                return(
+                                    appContext.locale == localeOption.value? 
+                                    <b className="mr-3 font-weight-600">{localeOption.label}</b> : 
+                                    <Link replace to="#" onClick={() => appContext.handleSetLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
+                                )
+                            })}
                         </div>
                         <hr />
                         <p className="text-center">

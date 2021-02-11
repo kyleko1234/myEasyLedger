@@ -270,11 +270,6 @@ class App extends React.Component {
 			}
 		}
 
-		this.handleSetCurrentOrganizationId = (value) => {
-			this.setState({currentOrganizationId: value});
-		}
-
-
 		this.checkForAuthentication = () => { //TODO refactor to ensure that setstate works correctly
 			this.setState({isLoading: true}, async () => {
 				let jwtToken = localStorage.getItem(ACCESS_TOKEN);
@@ -410,6 +405,7 @@ class App extends React.Component {
 			currentOrganizationId: null,
 			permissions: null,
 			locale: 'en-US',
+			handleSetLocale: this.handleSetLocale,
 
 			currentOrganizationName: '',
 			currentPermissionTypeId: null,
