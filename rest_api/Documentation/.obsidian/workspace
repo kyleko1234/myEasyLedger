@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/List All Persons in an Organization.md",
+            "file": "Permission/Contents/Delete a Permission Object.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/List All Persons in an Organization.md",
+            "file": "Permission/Contents/Delete a Permission Object.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Person/Contents/List All Persons in an Organization.md",
+                "file": "Permission/Contents/Delete a Permission Object.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +99,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Permission/Contents/Untitled.md",
+    "Permission/Contents/Create a Permission for an Organization.md",
+    "Easy Ledger.md",
+    "Permission/Permission.md",
+    "Person/Person.md",
+    "Person/Contents/List All Persons in an Organization.md",
     "Person/Contents/Untitled.md",
     "Organization/Contents/Create an Organization.md",
     "Account/Contents/Update an Account.md",
-    "Account/Contents/Retrieve an Account.md",
-    "Account/Contents/List All Accounts Belonging to an Organization.md",
-    "Account/Contents/List All Accounts.md",
-    "Account/Contents/Delete an Account.md",
-    "Account/Contents/Create an Account.md",
-    "AccountGroup/Contents/Update an AccountGroup.md",
-    "AccountGroup/Contents/The AccountGroup Object.md"
+    "Account/Contents/Retrieve an Account.md"
   ]
 }

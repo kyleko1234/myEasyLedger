@@ -4,7 +4,7 @@
 ---
 ### Contents
 - [[The Person Object]]
-- [[Create a Person]]
 - [[Retrieve a Person]]
 - [[Update a Person]]
 - [[List All Persons]]
+- [[List All Persons in an Organization]]

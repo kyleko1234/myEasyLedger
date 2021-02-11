@@ -11,7 +11,8 @@ The type of permission that the person has with the organization.
 
 Permission objects can be thought of as belonging to Person objects, and can be found in the `permissions` field of [[The Person Object]].
 
-
+___
+#### Permission Types
 The four permission levels are represented by PermissionType objects, which have the following fields: 
 - id
 - name

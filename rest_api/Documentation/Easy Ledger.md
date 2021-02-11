@@ -21,6 +21,7 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[List All Persons|GET /person]]
 - [[Retrieve a Person|GET /person/{id}]]
 - [[Update a Person|PATCH /person/{id}]]
+- [[List All Persons in an Organization|GET /organization/{organizationId}/person]]
 <br/> <br/>
 - [[List All JournalEntries|GET /journalEntry]]
 - [[List All JournalEntries Belonging to an Organization as JournalEntryViewModels|GET /organization/{id}/journalEntryViewModel]]*

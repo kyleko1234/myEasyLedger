@@ -55,4 +55,13 @@ public class AuthorizationService {
 		throw new UnauthorizedException("User is not authorized to access this resource.");
 	}
 	
+	public void assertHigherPermissionType(Authentication authentication, Long organizationId, Long permissionType) throws UnauthorizedException {
+		Set<Permission> permissions = ((UserPrincipal) authentication.getPrincipal()).getPermissions();
+		for (Permission permission : permissions) {
+			if (permission.getOrganization().getId() == organizationId && permission.getPermissionType().getId() > permissionType) {
+				return;
+			}
+		}
+		throw new UnauthorizedException("User is not authorized to access this resource.");
+	}
 }

@@ -18,7 +18,7 @@ public class Permission {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "person_id")
 	@JsonIgnore
 	private Person person;

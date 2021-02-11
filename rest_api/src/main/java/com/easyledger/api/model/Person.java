@@ -38,7 +38,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 								@ColumnResult(name = "lastName"),
 								@ColumnResult(name = "email"),
 								@ColumnResult(name = "permissionTypeId"),
-								@ColumnResult(name = "permissionTypeName")
+								@ColumnResult(name = "permissionTypeName"),
+								@ColumnResult(name = "permissionId")
 						}
 				)
 		}
@@ -47,7 +48,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 		name = "Person.getAllPersonsInOrganization",
 		query = "SELECT  " + 
 				"    person.id AS personId, person.first_name AS firstName, person.last_name AS lastName, person.email AS email, " + 
-				"    permission_type.id AS permissionTypeId, permission_type.name AS permissionTypeName " + 
+				"    permission_type.id AS permissionTypeId, permission_type.name AS permissionTypeName, " + 
+				"    permission.id AS permissionId " + 
 				"FROM person, permission_type, permission, organization " + 
 				"WHERE " + 
 				"    permission.person_id = person.id AND " + 
