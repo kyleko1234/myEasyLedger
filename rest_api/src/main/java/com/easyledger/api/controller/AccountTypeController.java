@@ -53,7 +53,7 @@ public class AccountTypeController {
     		Authentication authentication) throws UnauthorizedException {
     	
     	//check authorization
-    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	
     	//get current year and month as ints
     	LocalDate now = LocalDate.now();

@@ -73,7 +73,7 @@ public class JournalEntryController {
 	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganization (
 			@PathVariable(value = "id") Long organizationId, Authentication authentication, Pageable pageable) throws ResourceNotFoundException, UnauthorizedException {		
 		
-		authorizationService.authorizeByOrganizationId(authentication, organizationId);
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		
 		return journalEntryRepo.getAllJournalEntryViewModelsForOrganization(organizationId, pageable);
 	}
@@ -85,7 +85,7 @@ public class JournalEntryController {
     	JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
     		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId)); 
     	JournalEntryDTO journalEntryDTO = new JournalEntryDTO(journalEntry);
-    	authorizationService.authorizeByOrganizationId(authentication, journalEntryDTO.getOrganizationId());
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, journalEntryDTO.getOrganizationId());
         return ResponseEntity.ok().body(journalEntryDTO);
     }
     
@@ -95,7 +95,7 @@ public class JournalEntryController {
         JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
        .orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
 
-        authorizationService.authorizeByOrganizationId(authentication, journalEntry.getOrganization().getId());
+        authorizationService.authorizeEditPermissionsByOrganizationId(authentication, journalEntry.getOrganization().getId());
         
         journalEntry.setDeleted(true);
         journalEntryRepo.save(journalEntry);
@@ -124,8 +124,8 @@ public class JournalEntryController {
     	JournalEntry oldJournalEntry = journalEntryRepo.findById(id)
         	.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + id)); 
     	
-    	authorizationService.authorizeByOrganizationId(authentication, oldJournalEntry.getOrganization().getId());
-    	authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
+    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, oldJournalEntry.getOrganization().getId());
+    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
     	
     	//Delete old LineItems.
     	Iterator<LineItem> oldLineItemIterator = oldJournalEntry.getLineItems().iterator();
@@ -166,7 +166,7 @@ public class JournalEntryController {
     		throw new ConflictException("Please do not attempt to manually create an EntryId.");
     	}
     	
-    	authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
+    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
     	
     	//Create Entry entity object from DTO
     	JournalEntry updatedJournalEntry = journalEntryService.createJournalEntryFromDTO(dto);

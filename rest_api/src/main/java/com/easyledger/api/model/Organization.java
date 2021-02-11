@@ -34,9 +34,9 @@ public class Organization {
 	@Column(name = "is_enterprise")
 	private boolean isEnterprise;
 
-	@ManyToMany(mappedBy = "organizations")
+	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
-	private Set<Person> persons = new HashSet<Person>();
+	private Set<Permission> permissions = new HashSet<Permission>();
 
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
@@ -90,12 +90,12 @@ public class Organization {
 		this.isEnterprise = isEnterprise;
 	}
 
-	public Set<Person> getPersons() {
-		return persons;
+	public Set<Permission> getPermissions() {
+		return permissions;
 	}
 
-	public void setPersons(Set<Person> persons) {
-		this.persons = persons;
+	public void setPermissions(Set<Permission> permissions) {
+		this.permissions = permissions;
 	}
 	
 
@@ -118,7 +118,7 @@ public class Organization {
 	@Override
 	public String toString() {
 		return "Organization [id=" + id + ", name=" + name + ", currency=" + currency + ", isEnterprise=" + isEnterprise
-				+ ", persons=" + persons + ", journalEntries=" + journalEntries + ", accountGroups=" + accountGroups
+				+ ", permissions=" + permissions + ", journalEntries=" + journalEntries + ", accountGroups=" + accountGroups
 				+ "]";
 	}
 	

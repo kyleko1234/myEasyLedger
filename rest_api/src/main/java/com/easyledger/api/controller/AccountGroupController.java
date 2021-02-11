@@ -73,7 +73,7 @@ public class AccountGroupController {
         throws ResourceNotFoundException, UnauthorizedException {
         AccountGroup accountGroup = accountGroupRepo.findById(accountGroupId)
           .orElseThrow(() -> new ResourceNotFoundException("AccountGroup not found for this id :: " + accountGroupId));
-        authorizationService.authorizeByOrganizationId(authentication, accountGroup.getOrganization().getId());
+        authorizationService.authorizeViewPermissionsByOrganizationId(authentication, accountGroup.getOrganization().getId());
         AccountGroupDTO dto = new AccountGroupDTO(accountGroup);
         return ResponseEntity.ok().body(dto);
     }
@@ -81,14 +81,14 @@ public class AccountGroupController {
     @GetMapping("/organization/{id}/accountGroup")
     public List<AccountGroupDTO> getAllAccountGroupsForOrganization(@PathVariable(value = "id") Long organizationId, Authentication authentication)
     	throws UnauthorizedException {
-    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return accountGroupRepo.getAllAccountGroupsForOrganization(organizationId);
     }
     
     @GetMapping("/organization/{id}/accountGroupBalance")
     public List<AccountGroupBalanceDTO> getAllAccountGroupBalancesForOrganization(@PathVariable(value = "id") Long organizationId, Authentication authentication)
     	throws UnauthorizedException {
-    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return accountGroupRepo.getAllAccountGroupBalancesForOrganization(organizationId);
     }
     
@@ -96,7 +96,7 @@ public class AccountGroupController {
     public List<AccountGroupBalanceDTO> getAllAccountGroupBalancesForOrganizationUpToDate(@PathVariable(value = "id") Long organizationId, 
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication)
     	throws UnauthorizedException {
-    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return accountGroupRepo.getAllAccountGroupBalancesForOrganizationUpToDate(organizationId, endDate);
     }
     
@@ -105,7 +105,7 @@ public class AccountGroupController {
     		@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication)
     	throws UnauthorizedException {
-    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return accountGroupRepo.getAllAccountGroupBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
     }
 
@@ -117,7 +117,7 @@ public class AccountGroupController {
     	if (dto.getAccountGroupId() != null) {
     		throw new ConflictException("Please do not attempt to manually create an accountGroupId.");
     	}
-    	authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
+    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
     	if (dto.getAccountSubtypeId() == null) {
     		throw new ConflictException("Each AccountGroup must have an AccountSubtype.");
     	}
@@ -135,8 +135,8 @@ public class AccountGroupController {
         }
     	AccountGroup oldAccountGroup = accountGroupRepo.findById(accountGroupId)
         	.orElseThrow(() -> new ResourceNotFoundException("AccountGroup not found for this id :: " + accountGroupId));
-    	authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
-    	authorizationService.authorizeByOrganizationId(authentication, oldAccountGroup.getOrganization().getId());
+    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
+    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, oldAccountGroup.getOrganization().getId());
     	final AccountGroup updatedAccountGroup = accountGroupRepo.save(accountGroupDetails);
     	AccountGroupDTO newDto = new AccountGroupDTO(updatedAccountGroup);
         return ResponseEntity.ok(newDto);
@@ -147,7 +147,7 @@ public class AccountGroupController {
         throws ResourceNotFoundException, ConflictException, UnauthorizedException {
         AccountGroup accountGroup = accountGroupRepo.findById(accountGroupId)
         	.orElseThrow(() -> new ResourceNotFoundException("AccountGroup not found for this id :: " + accountGroupId));
-        authorizationService.authorizeByOrganizationId(authentication, accountGroup.getOrganization().getId());
+        authorizationService.authorizeEditPermissionsByOrganizationId(authentication, accountGroup.getOrganization().getId());
         boolean accountGroupContainsAccounts = accountRepo.accountGroupContainsAccounts(accountGroupId);
         if (accountGroupContainsAccounts) {
         	throw new ConflictException("Please remove all accounts from this AccountGroup before deleting the AccountGroup.");

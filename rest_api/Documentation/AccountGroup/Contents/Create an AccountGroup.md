@@ -1,7 +1,7 @@
 ### Create an AccountGroup
 Endpoint: `POST /accountGroup`
 
-Authorization: User can only create an account group for an organization that they belong to.
+Authorization: User can only create an account group for an organization that they have EDIT permissions for.
 
 Creates an account group with the values of the parameters passed.
 

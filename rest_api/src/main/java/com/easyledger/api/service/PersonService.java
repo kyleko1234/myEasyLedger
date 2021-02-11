@@ -1,42 +1,36 @@
 package com.easyledger.api.service;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 
 import com.easyledger.api.exception.AppException;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
-import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountGroup;
 import com.easyledger.api.model.AccountSubtype;
-import com.easyledger.api.model.AccountType;
 import com.easyledger.api.model.Organization;
+import com.easyledger.api.model.Permission;
+import com.easyledger.api.model.PermissionType;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.model.Role;
 import com.easyledger.api.model.VerificationToken;
-import com.easyledger.api.payload.ApiResponse;
 import com.easyledger.api.payload.SignUpRequest;
 import com.easyledger.api.repository.AccountGroupRepository;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.repository.OrganizationRepository;
+import com.easyledger.api.repository.PermissionRepository;
+import com.easyledger.api.repository.PermissionTypeRepository;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.repository.RoleRepository;
 
@@ -62,27 +56,28 @@ public class PersonService {
 	private AccountSubtypeRepository accountSubtypeRepo;
 	
 	@Autowired
-	private AccountTypeRepository accountTypeRepo;
+	private PermissionRepository permissionRepo;
 	
 	@Autowired
-	private AccountRepository accountRepo;
-		
+	private PermissionTypeRepository permissionTypeRepo;
+	
     @Autowired
     PasswordEncoder passwordEncoder;
 
 
 	public PersonService(OrganizationRepository organizationRepo, PersonRepository personRepo, PasswordEncoder passwordEncoder, RoleRepository roleRepo,
-			VerificationService verificationService, AccountTypeRepository accountTypeRepo, AccountSubtypeRepository accountSubtypeRepo, 
-			AccountRepository accountRepo, AccountGroupRepository accountGroupRepo) {
+			VerificationService verificationService, AccountSubtypeRepository accountSubtypeRepo, 
+			PermissionRepository permissionRepo, PermissionTypeRepository permissionTypeRepo,
+			AccountGroupRepository accountGroupRepo) {
 		super();
 		this.organizationRepo = organizationRepo;
 		this.personRepo = personRepo;
 		this.passwordEncoder = passwordEncoder;
 		this.roleRepo = roleRepo;
 		this.verificationService = verificationService;
-		this.accountTypeRepo = accountTypeRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
-		this.accountRepo = accountRepo;
+		this.permissionRepo = permissionRepo;
+		this.permissionTypeRepo = permissionTypeRepo;
 		this.accountGroupRepo = accountGroupRepo;
 	}
 	
@@ -121,24 +116,14 @@ public class PersonService {
         			person.setPassword(passwordEncoder.encode(v.toString()));
         			break;
         			
-        		case "organizationIds":
-        			person.removeOrganizations();
-        			if (v != null) {
-        				//Json's list of int is automatically parsed as ArrayList<Integer> by Spring
-	        			ArrayList<Integer> organizationIds = (ArrayList<Integer>) v;
-	        			for (Integer organizationId : organizationIds) {
-	        				//cast Integer to Long because apparently java has no elegant way to do that
-	        				Long id = Long.valueOf(organizationId.longValue());
-	        				person.addOrganization(organizationRepo.findById(id)
-	            					.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId.toString())));
-	            			}
-        			}
-        			break;
         		case "locale":
         			assertValidLocale(v.toString());
         			person.setLocale(v.toString());
         			break;
-        			
+        		
+        		case "currentOrganizationId":
+        			person.setCurrentOrganizationId((long) v);
+        			break;
         	}  	
         }
 	}
@@ -158,7 +143,16 @@ public class PersonService {
     	//create a person from signUpRequest, with enabled=false
     	Person person = new Person(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPassword(), false, signUpRequest.getLocale());
     	person.setPassword(passwordEncoder.encode(person.getPassword()));
-    	person.addOrganization(organization);
+    	
+    	Permission permission = new Permission();
+    	PermissionType own = permissionTypeRepo.findByName("OWN")
+    			.orElseThrow(() -> new AppException("OWN is not a valid permission type."));
+    	
+    	permission.setPermissionType(own);
+    	permission.setPerson(person);
+    	permission.setOrganization(organization);
+    	
+    	permissionRepo.save(permission);
     	
     	Role userRole = roleRepo.findByName("ROLE_USER")
     			.orElseThrow(() -> new AppException("ROLE_USER does not exist."));

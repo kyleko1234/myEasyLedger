@@ -22,13 +22,9 @@ String representing the locale for the user's language setting. A list of suppor
 - **currentOrganizationId (optional`Long`)**<br/>
 The current organization that the user is viewing information or making edits for. This should be an organization that the user belongs to; otherwise any requests involving organizationId will likely return an unauthorized exception. This field can be null! It is suggested that the default behavior of a client is to treat this field as organizations[0].id if this field is null.
 
-
-- **organizationIds (`Array<Integer>`)**<br/>
-List of IDs of organizations that this Person belongs to. When an organization that a person belongs to is deleted, it is automatically deleted from this list. This is used for convenience of PATCHing a person. 
-
-- **organizations (`Array<Organization>`**<br/>
-List of organization objects with name and ID that this person belongs to. This field is used for GET requests only; PATCH requests need only send an array of IDs.
-
+- **permissions(`Array<Permission>`)**<br/>
+ A list of Permission objects that affect this user. See [[Permission]]. A Person can be expected to have exactly one permission object for each organization they belong to.
+ 
 - **roles (`Array<Role>`)** <br/>
 List of roles that this person holds, with ID and name of role. Currently there are two roles: ROLE_USER and ROLE_ADMIN. There are not yet any functional differences between the two roles.
 ___
@@ -42,12 +38,19 @@ ___
     "email": "kyleko1234@gmail.com",
     "locale": "en-US",
     "currentOrganizationId": 1,
-    "organizations": [
+    "permissions": [
         {
             "id": 1,
-            "name": "Sample organization",
-            "currency": "USD",
-            "isEnterprise": true
+            "organization": {
+                "id": 1,
+                "name": "Sample organization",
+                "currency": "USD",
+                "isEnterprise": true
+            },
+            "permissionType": {
+                "id": 4,
+                "name": "OWN"
+            }
         }
     ],
     "roles": [
@@ -56,4 +59,5 @@ ___
             "name": "ROLE_USER"
         }
     ]
-}```
+}
+```

@@ -1,7 +1,7 @@
 ### Create an account
 Endpoint: `POST /account`
 
-Authorization: AccountGroup must be provided. AccountGroup must belong to an organization that the user belongs to.
+Authorization: AccountGroup must be provided. User must have EDIT permissions for the associated Organization.
 
 Creates an account with the values of the parameters passed.
 ___

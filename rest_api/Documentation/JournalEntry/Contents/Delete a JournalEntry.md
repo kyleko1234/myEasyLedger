@@ -1,7 +1,7 @@
 ### Delete a  JournalEntry
 Endpoint: `DELETE /journalEntry/{id}`
 
-Authorization: User making the request must belong to the organization that owns the specified entry..
+Authorization: User making the request must have EDIT permissions for the organization that owns the specified entry..
 
 Soft-deletes a journal entry and all the line items contained in that entry using the specified entry id.
 ___

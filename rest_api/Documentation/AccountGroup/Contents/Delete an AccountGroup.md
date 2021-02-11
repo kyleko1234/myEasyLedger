@@ -1,7 +1,7 @@
 ### Delete an account subtype
 Endpoint: `DELETE /accountGroup/{id}`
 
-Authorization: User must belong to an organization that owns the account group that is to be deleted.
+Authorization: User must have EDIT permissions for an organization that owns the account group that is to be deleted.
 
 Soft-deletes the account group with the specified id. AccountGroups can only be deleted if there are no Accounts associated with them. Any Accounts will need to be removed or updated to belong to a different group before deletion of the AccountGroup can occur.
 ___

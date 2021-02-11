@@ -73,7 +73,7 @@ public class AccountController {
         Account account = accountRepo.findById(accountId)
           .orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
         AccountDTO dto = new AccountDTO(account);
-        authorizationService.authorizeByOrganizationId(authentication, dto.getOrganizationId());
+        authorizationService.authorizeViewPermissionsByOrganizationId(authentication, dto.getOrganizationId());
         return ResponseEntity.ok().body(dto);
     }
     
@@ -84,21 +84,21 @@ public class AccountController {
     			.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
         //TODO: refactor 404 checking to use ExistsById
     	AccountBalanceDTO result = accountRepo.getAccountBalanceById(accountId);
-        authorizationService.authorizeByOrganizationId(authentication, result.getOrganizationId());
+        authorizationService.authorizeViewPermissionsByOrganizationId(authentication, result.getOrganizationId());
         return result;
     }
     
     @GetMapping("/organization/{id}/account")
     public List<AccountDTO> getAllAccountsForOrganization(@PathVariable(value = "id") Long organizationId, Authentication authentication)
     	throws UnauthorizedException {
-    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return accountRepo.getAllAccountsForOrganization(organizationId);
     }
     
     @GetMapping("/organization/{id}/accountBalance")
     public List<AccountBalanceDTO> getAllAccountBalancesForOrganization(@PathVariable(value = "id") Long organizationId, Authentication authentication)
     	throws UnauthorizedException {
-    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return accountRepo.getAllAccountBalancesForOrganization(organizationId);
     }
     
@@ -107,7 +107,7 @@ public class AccountController {
     		@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication)
     	throws UnauthorizedException {
-    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
     }
     
@@ -115,7 +115,7 @@ public class AccountController {
     public List<AccountBalanceDTO> getAllAccountBalancesForOrganizationUpToDate(@PathVariable(value = "id") Long organizationId, 
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication)
     	throws UnauthorizedException {
-    	authorizationService.authorizeByOrganizationId(authentication, organizationId);
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, endDate);
     }
 
@@ -128,7 +128,7 @@ public class AccountController {
     		throw new ConflictException("Please do not attempt to manually create an account id.");
     	}
     	Account account = accountService.createAccountFromDTO(dto);
-    	authorizationService.authorizeByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
+    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
     	final Account updatedAccount = accountRepo.save(account);
     	return new AccountDTO(updatedAccount);
     	}
@@ -144,7 +144,7 @@ public class AccountController {
     	Account account = accountRepo.findById(accountId)
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
     	
-    	authorizationService.authorizeByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
+    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
     	
     	final Account updatedAccount = accountRepo.save(accountDetails);
     	AccountDTO updatedDto = new AccountDTO(updatedAccount);
@@ -156,7 +156,7 @@ public class AccountController {
         throws ResourceNotFoundException, ConflictException, UnauthorizedException {
         Account account = accountRepo.findById(accountId)
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-        authorizationService.authorizeByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
+        authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
 
         boolean accountContainsLineItems = lineItemRepo.accountContainsLineItems(accountId);
         if (accountContainsLineItems) {

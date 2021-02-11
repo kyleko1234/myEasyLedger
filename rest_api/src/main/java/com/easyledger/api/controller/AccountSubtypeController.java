@@ -47,7 +47,7 @@ public class AccountSubtypeController {
 	@GetMapping("/organization/{id}/accountSubtypeBalance")
 	public List<AccountSubtypeBalanceDTO> getAllAccountSubtypeBalancesForOrganization(@PathVariable(value = "id") Long organizationId, Authentication authentication)
 		throws UnauthorizedException {
-		authorizationService.authorizeByOrganizationId(authentication, organizationId);
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganization(organizationId);
 	}
 	
@@ -55,7 +55,7 @@ public class AccountSubtypeController {
 	public List<AccountSubtypeBalanceDTO> getAllAccountSubtypeBalancesForOrganizationUpToDate(@PathVariable(value = "id") Long organizationId, 
 			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
 	throws UnauthorizedException {
-		authorizationService.authorizeByOrganizationId(authentication, organizationId);
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationUpToDate(organizationId, endDate);
 	}
 	
@@ -64,7 +64,7 @@ public class AccountSubtypeController {
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
 			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
 	throws UnauthorizedException {
-		authorizationService.authorizeByOrganizationId(authentication, organizationId);
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
 }

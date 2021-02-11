@@ -14,16 +14,13 @@ Last name of the user.
 Email address of the user. Cannot be an email already belonging to an existing user.
 
 - **password (optional `string` 64)**<br/>
-Password of the user. Should be stored as BCrypt hash.
+Password of the user. 
 
 - **locale (optional `string` 64)** <br/>
 Locale representing the language settings for the user. A list of valid locales is found [[Easy Ledger#Currently supported locales|here]].
 
-- **organizationIds (optional `Array<Integer>`)**<br/>
-The full list of IDs for the organizations that this person belongs to. All organizations that the person belongs to must be included in this list; the person will be removed from any organizations not passed into this list. To remove a person from all organizations, pass an empty list. Internally organizationIds is parsed from the `ArrayList<Integer>` in the JSON request body into a `Set<Long>`.
-
 - **currentOrganizationId (optional`Long`)**<br/>
-The current organization that the user is viewing information or making edits for. This should be an organization that the user belongs to; otherwise any requests involving organizationId will likely return an unauthorized exception.
+The current organization that the user is viewing information or making edits for. This should be an organization that the user belongs to; otherwise any requests involving organizationId will likely return an unauthorized exception. The API does not validate this field!
 ___
 #### Returns
 Returns the HTTP 200 and the person object if update is successful. Returns HTTP 404 if specified id does not belong to an existing person. Returns HTTP 409 if a supplied email already belongs to another user, upon an attempt to update email or password fields to null, or upon an attempt to update a person’s id.
