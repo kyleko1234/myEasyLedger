@@ -120,7 +120,10 @@ public class PersonService {
         			assertValidLocale(v.toString());
         			person.setLocale(v.toString());
         			break;
-        			
+        		
+        		case "currentOrganizationId":
+        			person.setCurrentOrganizationId((long) v);
+        			break;
         	}  	
         }
 	}

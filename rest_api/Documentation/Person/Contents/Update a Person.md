@@ -20,7 +20,7 @@ Password of the user.
 Locale representing the language settings for the user. A list of valid locales is found [[Easy Ledger#Currently supported locales|here]].
 
 - **currentOrganizationId (optional`Long`)**<br/>
-The current organization that the user is viewing information or making edits for. This should be an organization that the user belongs to; otherwise any requests involving organizationId will likely return an unauthorized exception.
+The current organization that the user is viewing information or making edits for. This should be an organization that the user belongs to; otherwise any requests involving organizationId will likely return an unauthorized exception. The API does not validate this field!
 ___
 #### Returns
 Returns the HTTP 200 and the person object if update is successful. Returns HTTP 404 if specified id does not belong to an existing person. Returns HTTP 409 if a supplied email already belongs to another user, upon an attempt to update email or password fields to null, or upon an attempt to update a person’s id.

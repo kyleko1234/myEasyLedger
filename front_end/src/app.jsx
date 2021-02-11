@@ -280,7 +280,7 @@ class App extends React.Component {
 				let jwtToken = localStorage.getItem(ACCESS_TOKEN);
 				if (jwtToken) {
 					let decodedJwtToken = jwt_decode(jwtToken);
-					await this.fetchUserInfo(decodedJwtToken.sub) //it is important to await the completion of this functino, otherwise you will make many http calls with null personId or organizationIds
+					await this.fetchUserInfo(decodedJwtToken.sub) //it is important to await the completion of this function, otherwise you will make many http calls with null personId or organizationIds
 					this.setState({
 						isAuthenticated: true
 					}, () => this.setState({isLoading: false}));
@@ -299,29 +299,26 @@ class App extends React.Component {
 			await axios.get(`${API_BASE_URL}/person/${id}`).then(response => { //it is very important to await the completion of this function otherwise you will make many http requests with null organizationId or personIds
 				this.setState({
 					personId: id,
-					organizations: response.data.organizations,
+					permissions: response.data.permissions,
 					firstName: response.data.firstName,
 					lastName: response.data.lastName,
 					email: response.data.email,
 					locale: response.data.locale,
-					currentOrganizationId: (response.data.currentOrganizationId? response.data.currentOrganizationId: response.data.organizations[0].id)
+					currentOrganizationId: (response.data.currentOrganizationId? response.data.currentOrganizationId: response.data.permissions[0].organization.id)
 				}, () => {
-					axios.get(`${API_BASE_URL}/organization/${this.state.currentOrganizationId}`).then(response => {
-						this.setState({
-							currentOrganizationName: response.data.name,
-							currency: response.data.currency,
-							isEnterprise: response.data.isEnterprise
-						})
-					}).catch(console.log)	
-				})
+					let currentPermission = this.state.permissions.find(permission => permission.organization.id == this.state.currentOrganizationId)
+					this.setState({
+						currentPermissionTypeId: currentPermission.permissionType.id,
+						currentOrganizationName: currentPermission.organization.name,
+						currency: currentPermission.organization.currency,
+						isEnterprise: currentPermission.organization.isEnterprise
+					})
+				})	
 			}).catch(console.log);
 		}
 
 		this.handleSetLocale = (value) => {
 			this.setState({locale: value});
-		}
-		this.handleSetCurrency = (value) => {
-			this.setState({currency: value});
 		}
 
 		this.logout = () => {
@@ -407,20 +404,17 @@ class App extends React.Component {
 			isAuthenticated: false,
 			isLoading: true,
 			personId: null,
-			currentOrganizationId: null,
-			organizations: null,
 			firstName: '',
 			lastName: '',
 			email: '',
-
+			currentOrganizationId: null,
+			permissions: null,
 			locale: 'en-US',
+
 			currentOrganizationName: '',
+			currentPermissionTypeId: null,
 			currency: 'USD',
 			isEnterprise: false,
-			handleSetLocale: this.handleSetLocale,
-			handleSetCurrency: this.handleSetCurrency,
-
-			handleSetCurrentOrganizationId: this.handleSetCurrentOrganizationId,
 
 			checkForAuthentication: this.checkForAuthentication,
 			logout: this.logout

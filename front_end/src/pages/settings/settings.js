@@ -19,14 +19,14 @@ function Settings() {
         setSelectedLocale(selectedOption.value);
     }
 
-    const handleSaveButton = () => {
-        let payload = {
+    const handleSaveButton = async () => {
+        let requestBody = {
             locale: selectedLocale
         }
-        axios.patch(`${API_BASE_URL}/person/${appContext.personId}`, payload).then(response => {
+        await axios.patch(`${API_BASE_URL}/person/${appContext.personId}`, requestBody).then(response => {
             console.log(response);
-            appContext.fetchUserInfo(appContext.personId);
-        })
+        }).catch(console.log);
+        appContext.fetchUserInfo(appContext.personId);
     }
 
     return(

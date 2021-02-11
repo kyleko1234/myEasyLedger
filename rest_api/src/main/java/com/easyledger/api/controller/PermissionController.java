@@ -112,6 +112,5 @@ public class PermissionController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
-	
 
 }
