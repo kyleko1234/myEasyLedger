@@ -37,6 +37,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 								@ColumnResult(name = "firstName"),
 								@ColumnResult(name = "lastName"),
 								@ColumnResult(name = "email"),
+								@ColumnResult(name = "locale"),
 								@ColumnResult(name = "permissionTypeId"),
 								@ColumnResult(name = "permissionTypeName"),
 								@ColumnResult(name = "permissionId")
@@ -47,7 +48,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @NamedNativeQuery( //retrieves all undeleted entries for the given organization and maps them into EntryViewModels
 		name = "Person.getAllPersonsInOrganization",
 		query = "SELECT  " + 
-				"    person.id AS personId, person.first_name AS firstName, person.last_name AS lastName, person.email AS email, " + 
+				"    person.id AS personId, person.first_name AS firstName, person.last_name AS lastName, person.email AS email, person.locale AS locale, " + 
 				"    permission_type.id AS permissionTypeId, permission_type.name AS permissionTypeName, " + 
 				"    permission.id AS permissionId " + 
 				"FROM person, permission_type, permission, organization " + 

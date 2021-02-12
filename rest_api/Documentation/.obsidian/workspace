@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Update a Person.md",
+            "file": "Person/Contents/List All Persons in an Organization.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Update a Person.md",
+            "file": "Person/Contents/List All Persons in an Organization.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Person/Contents/Update a Person.md",
+                "file": "Person/Contents/List All Persons in an Organization.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,13 +99,13 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Person/Contents/List All Persons in an Organization.md",
     "Person/Contents/Update a Person.md",
     "Permission/Contents/Untitled.md",
     "Permission/Contents/Create a Permission for an Organization.md",
     "Easy Ledger.md",
     "Permission/Permission.md",
     "Person/Person.md",
-    "Person/Contents/List All Persons in an Organization.md",
     "Person/Contents/Untitled.md",
     "Organization/Contents/Create an Organization.md",
     "Account/Contents/Update an Account.md"

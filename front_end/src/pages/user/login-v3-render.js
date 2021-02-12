@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {PageSettings} from '../../config/page-settings.js';
-import {ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN} from '../../utils/constants.js';
+import {ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN, LOCALE_OPTIONS} from '../../utils/constants.js';
 import axios from 'axios';
 import {Alert} from 'reactstrap';
 import {loginV3Text} from '../../utils/i18n/login-v3-text.js'
@@ -96,6 +96,15 @@ function LoginV3Render(props) {
                         </div>
                         <div className="m-t-20 m-b-40 p-b-40 text-inverse">
                             {loginV3Text[appContext.locale]["Not a member"]}
+                        </div>
+                        <div>
+                            {LOCALE_OPTIONS.map(localeOption => {
+                                return (
+                                    appContext.locale == localeOption.value ?
+                                        <b className="mr-3 font-weight-600">{localeOption.label}</b> :
+                                        <Link replace to="#" onClick={() => appContext.handleSetLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
+                                )
+                            })}
                         </div>
                         <hr />
                         <p className="text-center text-grey-darker">

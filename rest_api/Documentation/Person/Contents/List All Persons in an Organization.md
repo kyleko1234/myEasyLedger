@@ -14,6 +14,7 @@ ___
         "firstName": String,
         "lastName": String,
         "email": String,
+		"locale": "en-US",
         "permissionTypeId": Long,
         "permissionTypeName": String
     },
@@ -21,7 +22,7 @@ ___
 ]
 ```
 
-personId, firstName, lastName, email correspond to fields from [[The Person Object]].
+personId, firstName, lastName, email, locale correspond to fields from [[The Person Object]].
 
 permissionTypeId, permissionTypeName correspond to fields from [[Permission]].
 

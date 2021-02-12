@@ -405,7 +405,7 @@ class App extends React.Component {
 			currentOrganizationId: null,
 			permissions: null,
 			locale: 'en-US',
-			handleSetLocale: this.handleSetLocale,
+			handleSetLocale: this.handleSetLocale, //setting a user's locale should call PATCH /person/{personId} and then fetchUserInfo(personId); however, changing the locale on the registration/login pages should call handleSetLocale()
 
 			currentOrganizationName: '',
 			currentPermissionTypeId: null,

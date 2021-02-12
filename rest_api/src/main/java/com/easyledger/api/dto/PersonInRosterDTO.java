@@ -9,16 +9,18 @@ public class PersonInRosterDTO {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String locale;
 	private Long permissionTypeId;
 	private String permissionTypeName;
 	private Long permissionId;
 	
-	public PersonInRosterDTO(BigInteger personId, String firstName, String lastName, String email, BigInteger permissionTypeId,
+	public PersonInRosterDTO(BigInteger personId, String firstName, String lastName, String email, String locale, BigInteger permissionTypeId,
 			String permissionTypeName, BigInteger permissionId) {
 		this.personId = personId.longValueExact();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.locale = locale;
 		this.permissionTypeId = permissionTypeId.longValueExact();
 		this.permissionTypeName = permissionTypeName;
 		this.permissionId = permissionId.longValueExact();
@@ -29,6 +31,7 @@ public class PersonInRosterDTO {
 		this.firstName = permission.getPerson().getFirstName();
 		this.lastName = permission.getPerson().getLastName();
 		this.email = permission.getPerson().getEmail();
+		this.locale = permission.getPerson().getLocale();
 		this.permissionTypeId =  permission.getPermissionType().getId();
 		this.permissionTypeName = permission.getPermissionType().getName();
 		this.permissionId = permission.getId();
@@ -68,6 +71,14 @@ public class PersonInRosterDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
 	}
 
 	public Long getPermissionTypeId() {
