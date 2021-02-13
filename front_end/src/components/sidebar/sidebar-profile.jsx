@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
 import {API_BASE_URL, FIRSTNAME_LASTNAME_LOCALES} from '../../utils/constants.js';
 import axios from 'axios';
@@ -35,12 +35,14 @@ class SidebarProfile extends React.Component {
 
 	async handleChangeCurrentOrganization(organizationId) {
 		let requestBody = {
-			currentOrganizationId: organizationId
+			currentOrganizationId: parseInt(organizationId)
 		}
 		await axios.patch(`${API_BASE_URL}/person/${this.context.personId}`, requestBody).then(response => {
 			console.log(response);
 		}).catch(console.log);
-		this.context.fetchUserInfo(this.context.personId);
+		await this.context.fetchUserInfo(this.context.personId);
+		this.setState({profileActive: 0, organizationsExpanded: false})
+		this.props.history.push("/");
 	}
   
 	render() {
@@ -96,4 +98,4 @@ class SidebarProfile extends React.Component {
 	}
 }
 
-export default SidebarProfile;
+export default withRouter(SidebarProfile);;

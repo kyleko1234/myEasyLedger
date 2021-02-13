@@ -122,7 +122,7 @@ public class PersonService {
         			break;
         		
         		case "currentOrganizationId":
-        			person.setCurrentOrganizationId((long) v);
+        			person.setCurrentOrganizationId(Long.valueOf(((Integer) v).longValue()));
         			break;
         	}  	
         }

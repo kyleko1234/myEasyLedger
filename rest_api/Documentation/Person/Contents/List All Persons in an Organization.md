@@ -10,13 +10,14 @@ ___
 ```json
 [
     {
-        "personId": Long,
-        "firstName": String,
-        "lastName": String,
-        "email": String,
-		"locale": "en-US",
-        "permissionTypeId": Long,
-        "permissionTypeName": String
+        "personId": 1,
+        "firstName": "Kyle",
+        "lastName": "Ko",
+        "email": "kyleko1234@gmail.com",
+        "locale": "en-US",
+        "permissionTypeId": 4,
+        "permissionTypeName": "OWN",
+        "permissionId": 1
     },
 	... etc
 ]

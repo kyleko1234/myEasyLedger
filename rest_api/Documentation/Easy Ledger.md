@@ -72,6 +72,11 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[Delete an AccountGroup| DELETE /accountGroup/{id}]]
 <br/><br/>
 - [[Generate a Balance Sheet|GET /organization/{id}/reports/balanceSheet/{endDate}]]
+- [[Generate an Income Statement|GET /organization/{id}/reports/incomeStatement/{startDate}/{endDate}]]
+<br/><br/>
+- [[Create a Permission for an Organization|POST /organization/{organizationId}/permission]]
+- [[Edit a Permission Object|PATCH /permission/{permissionId}]]
+- [[Delete a Permission Object|DELETE /permission/{permissionId}]]
 
 
 

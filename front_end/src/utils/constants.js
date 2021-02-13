@@ -8,7 +8,8 @@ export const LOCALE_OPTIONS = [
     {value: "zh-TW", label: "中文 (繁體)"}
 ]
 
-export const CURRENCY_OPTIONS = [
+export const CURRENCY_OPTIONS = (locale) => 
+[
     {value: "AED", label: "United Arab Emirates Dirham"},
     {value: "AFN", label: "Afghan Afghani"},
     {value: "ALL", label: "Albanian Lek"},
@@ -35,7 +36,7 @@ export const CURRENCY_OPTIONS = [
     {value: "CDF", label: "Congolese Franc"},
     {value: "CHF", label: "Swiss Franc"},
     {value: "CLP", label: "Chilean Peso"},
-    {value: "CNY", label: "Chinese Renminbi Yuan"},
+    {value: "CNY", label: CURRENCY_I18N[locale]["CNY"]},
     {value: "COP", label: "Colombian Peso"},
     {value: "CRC", label: "Costa Rican Colón"},
     {value: "CVE", label: "Cape Verdean Escudo"},
@@ -46,7 +47,7 @@ export const CURRENCY_OPTIONS = [
     {value: "DZD", label: "Algerian Dinar"},
     {value: "EGP", label: "Egyptian Pound"},
     {value: "ETB", label: "Ethiopian Birr"},
-    {value: "EUR", label: "Euro"},
+    {value: "EUR", label: CURRENCY_I18N[locale]["EUR"]},
     {value: "FJD", label: "Fijian Dollar"},
     {value: "FKP", label: "Falkland Islands Pound"},
     {value: "GBP", label: "British Pound"},
@@ -66,7 +67,7 @@ export const CURRENCY_OPTIONS = [
     {value: "INR", label: "Indian Rupee"},
     {value: "ISK", label: "Icelandic Króna"},
     {value: "JMD", label: "Jamaican Dollar"},
-    {value: "JPY", label: "Japanese Yen"},
+    {value: "JPY", label: CURRENCY_I18N[locale]["JPY"]},
     {value: "KES", label: "Kenyan Shilling"},
     {value: "KGS", label: "Kyrgyzstani Som"},
     {value: "KHR", label: "Cambodian Riel"},
@@ -127,11 +128,11 @@ export const CURRENCY_OPTIONS = [
     {value: "TOP", label: "Tongan Paʻanga"},
     {value: "TRY", label: "Turkish Lira"},
     {value: "TTD", label: "Trinidad and Tobago Dollar"},
-    {value: "TWD", label: "New Taiwan Dollar"},
+    {value: "TWD", label: CURRENCY_I18N[locale]["TWD"]},
     {value: "TZS", label: "Tanzanian Shilling"},
     {value: "UAH", label: "Ukrainian Hryvnia"},
     {value: "UGX", label: "Ugandan Shilling"},
-    {value: "USD", label: "United States Dollar"},
+    {value: "USD", label: CURRENCY_I18N[locale]["USD"]},
     {value: "UYU", label: "Uruguayan Peso"},
     {value: "UZS", label: "Uzbekistani Som"},
     {value: "VND", label: "Vietnamese Đồng"},
@@ -145,3 +146,42 @@ export const CURRENCY_OPTIONS = [
     {value: "ZAR", label: "South African Rand"},
     {value: "ZMW", label: "Zambian Kwacha"}
 ]
+// cny yen usd twd eur
+const CURRENCY_I18N = {
+    "en-US": {
+        "CNY": "Chinese Renminbi Yuan",
+        "JPY": "Japanese Yen",
+        "USD": "United States Dollar",
+        "TWD": "New Taiwan Dollar",
+        "EUR": "Euro"
+    },
+    "zh-TW": {
+        "CNY": "TRANSLATION",
+        "JPY": "TRANSLATION",
+        "USD": "TRANSLATION",
+        "TWD": "TRANSLATION",
+        "EUR": "TRANSLATION"
+    }
+}
+
+export const PERMISSION_TYPE_OPTIONS = (locale) => [
+    {value: 1, label: PERMISSION_TYPE_I18N[locale]["VIEW"]},
+    {value: 2, label: PERMISSION_TYPE_I18N[locale]["EDIT"]},
+    {value: 3, label: PERMISSION_TYPE_I18N[locale]["ADMIN"]},
+    {value: 4, label: PERMISSION_TYPE_I18N[locale]["OWN"]}
+]
+
+const PERMISSION_TYPE_I18N = {
+    "en-US": {
+        "VIEW": "VIEW",
+        "EDIT": "EDIT",
+        "ADMIN": "ADMIN",
+        "OWN": "OWN"
+    },
+    "zh-TW": {
+        "VIEW": "TRANSLATION",
+        "EDIT": "TRANSLATION",
+        "ADMIN": "TRANSLATION",
+        "OWN": "TRANSLATION"
+    } 
+}

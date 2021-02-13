@@ -1,12 +1,12 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
-import {Link, useHistory} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import Select from 'react-select';
 import axios from 'axios';
-import {API_BASE_URL} from '../../../utils/constants';
-import {accountDetailsSidebarText} from '../../../utils/i18n/account-details-sidebar-text.js';
+import { API_BASE_URL } from '../../../utils/constants';
+import { accountDetailsSidebarText } from '../../../utils/i18n/account-details-sidebar-text.js';
 
 function AccountDetailsSidebar(props) {
     /*  required props: accountId, accountName, accountGroupId, accountGroupName, debitTotal, creditTotal, accountTypeName, 
@@ -18,10 +18,10 @@ function AccountDetailsSidebar(props) {
 
     const [accountNameInput, setAccountNameInput] = React.useState(props.accountName);
     const [selectedAccountGroupOption, setSelectedAccountGroupOption] = React.useState(props.accountGroupOptions.find(accountGroupOption => accountGroupOption.object.accountGroupId == props.accountGroupId));
-    
+
     const [editAccountModal, setEditAccountModal] = React.useState(false);
     const [noAccountNameAlert, setNoAccountNameAlert] = React.useState(false);
-    
+
     const [deleteAccountAlert, setDeleteAccountAlert] = React.useState(false);
     const toggleDeleteAccountAlert = () => {
         setDeleteAccountAlert(!deleteAccountAlert);
@@ -86,10 +86,10 @@ function AccountDetailsSidebar(props) {
             console.log(response);
             history.push("/chart-of-accounts");
         }).catch(console.log);
-    } 
+    }
     /** End API calls */
 
-    
+
     const formatCurrency = number => {
         return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number);
     }
@@ -157,20 +157,20 @@ function AccountDetailsSidebar(props) {
                                 />
                             </div>
                         </div>
-                        <div className="form-group row">
-                            <label className="col-form-label col-md-3">
-                                {accountDetailsSidebarText[appContext.locale]["Account Group"]}
-                            </label>
-                            <div className="col-md-9">
-                                <Select
-                                    options={props.accountGroupOptions}
-                                    value={selectedAccountGroupOption}
-                                    isSearchable={true}
-                                    onChange={handleChangeAccountGroupOption}
-                                />
-                            </div>
-                        </div>
                     </form>
+                    <div className="form-group row">
+                        <label className="col-form-label col-md-3">
+                            {accountDetailsSidebarText[appContext.locale]["Account Group"]}
+                        </label>
+                        <div className="col-md-9">
+                            <Select
+                                options={props.accountGroupOptions}
+                                value={selectedAccountGroupOption}
+                                isSearchable={true}
+                                onChange={handleChangeAccountGroupOption}
+                            />
+                        </div>
+                    </div>
                 </ModalBody>
                 <ModalFooter>
                     <button
@@ -188,7 +188,7 @@ function AccountDetailsSidebar(props) {
                 </ModalFooter>
             </Modal>
 
-            {deleteAccountAlert ? 
+            {deleteAccountAlert ?
                 <SweetAlert primary showCancel
                     confirmBtnText={accountDetailsSidebarText[appContext.locale]["Yes, delete it!"]}
                     confirmBtnBsStyle="primary"
@@ -199,9 +199,9 @@ function AccountDetailsSidebar(props) {
                     onCancel={() => toggleDeleteAccountAlert()}
                 >
                     {accountDetailsSidebarText[appContext.locale]["Are you sure you want to delete this account?"]}
-                </SweetAlert> 
-            : null}
-            {cannotDeleteAccountAlert ? 
+                </SweetAlert>
+                : null}
+            {cannotDeleteAccountAlert ?
                 <SweetAlert danger showConfirm={false} showCancel={true}
                     cancelBtnBsStyle="default"
                     cancelBtnText={accountDetailsSidebarText[appContext.locale]["Cancel"]}
@@ -210,8 +210,8 @@ function AccountDetailsSidebar(props) {
                     onCancel={() => toggleCannotDeleteAccountAlert()}
                 >
                     {accountDetailsSidebarText[appContext.locale]["Please remove all line items from this account and try again."]}
-                </SweetAlert> 
-            : null}
+                </SweetAlert>
+                : null}
 
         </div>
     )

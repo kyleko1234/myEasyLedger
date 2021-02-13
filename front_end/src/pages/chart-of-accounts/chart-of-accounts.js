@@ -2,11 +2,11 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { Alert, Modal, ModalHeader, ModalBody, ModalFooter, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
-import {API_BASE_URL} from '../../utils/constants.js';
+import { API_BASE_URL } from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
 import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import {chartOfAccountsText} from '../../utils/i18n/chart-of-accounts-text.js';
+import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 
 
@@ -21,15 +21,15 @@ class ChartOfAccounts extends React.Component {
         super(props);
         this.state = {
             accounts: [],
-            accountGroups: [], 
-            accountTypes: [], 
+            accountGroups: [],
+            accountTypes: [],
 
             editAccountGroupModal: false,
             accountGroupNameAlert: false,
             accountSubtypeRequiredAlert: false,
             selectedAccountGroupId: null,
             accountGroupNameInput: '',
-            
+
             accountTypeOptions: [], //for react-select; accountTypes are formatted as {value: accountType.id, label: accountType.name, object: accountType}
             accountSubtypeOptions: [], //for react-select; accountSubtypes are formatted as {value: accountSubtypeId, label: accountSubtypeName, object: accountSubtype}
             disableChangeAccountType: false, // disables the react-select field for changing an account group's account type
@@ -59,28 +59,28 @@ class ChartOfAccounts extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.match.params.activeTabId !== prevProps.match.params.activeTabId ) {
-            this.setState({selectedAccountTypeOption: this.state.accountTypeOptions.find(accountTypeOption => accountTypeOption.value == this.props.match.params.activeTabId)})
+        if (this.props.match.params.activeTabId !== prevProps.match.params.activeTabId) {
+            this.setState({ selectedAccountTypeOption: this.state.accountTypeOptions.find(accountTypeOption => accountTypeOption.value == this.props.match.params.activeTabId) })
         }
     }
 
     fetchData() {
         axios.get(`${API_BASE_URL}/accountType`).then(response => {
-            this.setState({ accountTypes: response.data});
+            this.setState({ accountTypes: response.data });
             if (response.data) {
-                let formattedAccountTypes = response.data.map(accountType => ({value: accountType.id, label: chartOfAccountsText[this.context.locale][accountType.name], object: accountType}))
-                this.setState({accountTypeOptions: formattedAccountTypes, selectedAccountTypeOption: formattedAccountTypes.find(formattedAccountType => formattedAccountType.object.id == this.props.match.params.activeTabId)})
+                let formattedAccountTypes = response.data.map(accountType => ({ value: accountType.id, label: chartOfAccountsText[this.context.locale][accountType.name], object: accountType }))
+                this.setState({ accountTypeOptions: formattedAccountTypes, selectedAccountTypeOption: formattedAccountTypes.find(formattedAccountType => formattedAccountType.object.id == this.props.match.params.activeTabId) })
             }
         })
         axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/accountGroup`).then(response => {
-            this.setState({ accountGroups: response.data});
+            this.setState({ accountGroups: response.data });
         })
         axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/accountBalance`).then(response => {
             this.setState({ accounts: response.data });
         }).catch(console.log);
         axios.get(`${API_BASE_URL}/accountSubtype`).then(response => {
             if (response.data) {
-                let formattedAccountSubtypes = response.data.map(accountSubtype => ({value: accountSubtype.id, label: chartOfAccountsText[this.context.locale][accountSubtype.name], object: accountSubtype}));
+                let formattedAccountSubtypes = response.data.map(accountSubtype => ({ value: accountSubtype.id, label: chartOfAccountsText[this.context.locale][accountSubtype.name], object: accountSubtype }));
                 this.setState({ accountSubtypeOptions: formattedAccountSubtypes });
             }
         }).catch(console.log);
@@ -92,9 +92,9 @@ class ChartOfAccounts extends React.Component {
         this.toggleEditAccountGroupModal();
     }
 
-    handleEditAccountGroupButton(accountGroup) { 
-    //editing an account group prepopulates form fields with data for the selected account group, and disables the field for editing account type.
-    //this function should only be called when opening the modal form for editing an account group. the modal should be closed by resetting all fields using toggleEditAccountGroupModal()
+    handleEditAccountGroupButton(accountGroup) {
+        //editing an account group prepopulates form fields with data for the selected account group, and disables the field for editing account type.
+        //this function should only be called when opening the modal form for editing an account group. the modal should be closed by resetting all fields using toggleEditAccountGroupModal()
         this.setState(state => (
             {
                 selectedAccountGroupId: accountGroup.accountGroupId,
@@ -124,19 +124,19 @@ class ChartOfAccounts extends React.Component {
     }
 
     handleChangeAccountSubtypeOption(selectedAccountSubtypeOption) {
-        this.setState({selectedAccountSubtypeOption: selectedAccountSubtypeOption});
+        this.setState({ selectedAccountSubtypeOption: selectedAccountSubtypeOption });
     }
 
     handleChangeAccountTypeOption(selectedAccountTypeOption) {
-        this.setState({selectedAccountTypeOption: selectedAccountTypeOption, selectedAccountSubtypeOption: null});
+        this.setState({ selectedAccountTypeOption: selectedAccountTypeOption, selectedAccountSubtypeOption: null });
     }
 
     async handleSaveAnAccountGroupButton() {
         if (!this.state.accountGroupNameInput) {
-            this.setState({accountGroupNameAlert: true});
+            this.setState({ accountGroupNameAlert: true });
         }
         if (!this.state.selectedAccountSubtypeOption) {
-            this.setState({accountSubtypeRequiredAlert: true});
+            this.setState({ accountSubtypeRequiredAlert: true });
         }
 
         if (this.state.accountGroupNameInput && this.state.selectedAccountSubtypeOption) {
@@ -164,15 +164,15 @@ class ChartOfAccounts extends React.Component {
 
     /** Utility functions for deleting account group */
     toggleDeleteAccountGroupAlert() {
-        this.setState(state => ({deleteAccountGroupAlert: !state.deleteAccountGroupAlert}));
+        this.setState(state => ({ deleteAccountGroupAlert: !state.deleteAccountGroupAlert }));
     }
 
     toggleCannotDeleteAccountGroupAlert() {
-        this.setState(state => ({cannotDeleteAccountGroupAlert: !state.cannotDeleteAccountGroupAlert}))
+        this.setState(state => ({ cannotDeleteAccountGroupAlert: !state.cannotDeleteAccountGroupAlert }))
     }
 
     handleDeleteAccountGroupButton(accountGroup) {
-        this.setState(state => ({selectedAccountGroupId: accountGroup.accountGroupId}));
+        this.setState(state => ({ selectedAccountGroupId: accountGroup.accountGroupId }));
         this.toggleDeleteAccountGroupAlert();
     }
 
@@ -186,14 +186,14 @@ class ChartOfAccounts extends React.Component {
         }
     }
     /** End utility functions for deleting account group */
-    
+
     /** Utility functions for adding account to account group */
     toggleAddAnAccountModal() {
-        this.setState(state => ({addAnAccountModal: !state.addAnAccountModal, accountNameInput: '', accountNameAlert: false}))
+        this.setState(state => ({ addAnAccountModal: !state.addAnAccountModal, accountNameInput: '', accountNameAlert: false }))
     }
 
     handleAddAnAccountToAccountGroupButton(accountGroup) {
-        this.setState(state => ({selectedAccountGroupId: accountGroup.accountGroupId}));
+        this.setState(state => ({ selectedAccountGroupId: accountGroup.accountGroupId }));
         this.toggleAddAnAccountModal();
     }
 
@@ -208,7 +208,7 @@ class ChartOfAccounts extends React.Component {
 
     /** End utility functions for adding account to account group */
 
-    
+
     /** api calls for posting/putting/deleting objects to server */
     async postAccountGroup(accountGroup) {
         axios.post(`${API_BASE_URL}/accountGroup`, accountGroup).then(response => {
@@ -255,17 +255,17 @@ class ChartOfAccounts extends React.Component {
                     <li className="breadcrumb-item active">{chartOfAccountsText[this.context.locale]["Chart of Accounts"]}</li>
                 </ol>
                 <h1 className="page-header">
-                    {chartOfAccountsText[this.context.locale]["Chart of Accounts"]} 
-                    <ToggleMobileSidebarButton className="d-md-none float-right "/>
+                    {chartOfAccountsText[this.context.locale]["Chart of Accounts"]}
+                    <ToggleMobileSidebarButton className="d-md-none float-right " />
                 </h1>
                 <Nav pills justified className="d-block">
-                    {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
+                    {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                         <div className="d-flex justify-content-between px-3 mb-3">
                             <div className="row ">
                                 {this.state.accountTypes.map(accountType => { //render a pills navlink for each accountType returned by the server, with the active accountType being the one that has an id that matches the url param.
-                                    return(
+                                    return (
                                         <NavItem key={accountType.id}>
-                                            <NavLink 
+                                            <NavLink
                                                 className={this.props.match.params.activeTabId == accountType.id ? "active" : "cursor-pointer"}
                                                 onClick={() => this.props.history.push(`/chart-of-accounts/${accountType.id}`)}
                                             >
@@ -281,17 +281,17 @@ class ChartOfAccounts extends React.Component {
                                 onClick={() => {
                                     this.handleAddAnAccountGroupButton();
                                 }}
-                            > {chartOfAccountsText[this.context.locale]["Create an account group"]} </button>  
+                            > {chartOfAccountsText[this.context.locale]["Create an account group"]} </button>
                         </div>
                     }
                 </Nav>
                 <TabContent activeTab={this.props.match.params.activeTabId} className="widget widget-rounded widget-list widget-list-rounded m-b-30"> {/** active tab is the tab with an activeTabId that matches the url path parameter*/}
-                    {!this.state.accountTypes? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
+                    {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                         this.state.accountTypes.map(accountType => {
-                            return(
+                            return (
                                 <TabPane tabId={accountType.id.toString()} key={accountType.id.toString()}>
                                     {this.state.accountGroups.filter(accountGroup => accountGroup.accountTypeId == accountType.id).map(accountGroup => { // render a bg-light accountgroup widget list item for each accountGroup in this accountType, then render all of the accounts for at accountGroup
-                                        return(
+                                        return (
                                             <React.Fragment key={accountGroup.accountGroupId}>
                                                 <div className="widget-list-item bg-light">
                                                     <div className="widget-list-content d-flex justify-content-between align-items-center">
@@ -311,8 +311,8 @@ class ChartOfAccounts extends React.Component {
 
                                                     </div>
                                                 </div>
-                                                {!this.state.accounts? null : this.state.accounts.filter(account => account.accountGroupId == accountGroup.accountGroupId).map(account => {
-                                                    return(
+                                                {!this.state.accounts ? null : this.state.accounts.filter(account => account.accountGroupId == accountGroup.accountGroupId).map(account => {
+                                                    return (
                                                         <Link className="widget-list-item bg-white" to={`/account/${account.accountId}`} key={account.accountId.toString()}>
                                                             <div className="widget-list-content p-l-30">
                                                                 <div className="widget-list-title">{account.accountName}</div>
@@ -331,67 +331,67 @@ class ChartOfAccounts extends React.Component {
                         })
                     }
                 </TabContent>
-                
+
                 <Modal isOpen={this.state.editAccountGroupModal} toggle={() => this.toggleEditAccountGroupModal()} centered={true} >
                     <ModalHeader> {chartOfAccountsText[this.context.locale]["Create a New Account Group"]} </ModalHeader>
                     <ModalBody>
-                        {this.state.accountGroupNameAlert? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide a name for your account group."]}</Alert> : null}
+                        {this.state.accountGroupNameAlert ? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide a name for your account group."]}</Alert> : null}
                         {this.state.accountSubtypeRequiredAlert ? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide an account subtype for your account group."]}</Alert> : null}
-                        <form onSubmit={event => {event.preventDefault(); this.handleSaveAnAccountGroupButton()}}>
+                        <form onSubmit={event => { event.preventDefault(); this.handleSaveAnAccountGroupButton() }}>
                             <div className="form-group row">
                                 <label className="col-md-4 col-form-label">
                                     Account Group Name
                                 </label>
                                 <div className="col-md-8">
-                                    <input type="text" className="form-control" 
-                                        value={this.state.accountGroupNameInput} 
-                                        onChange={event => this.setState({accountGroupNameInput: event.target.value})}
+                                    <input type="text" className="form-control"
+                                        value={this.state.accountGroupNameInput}
+                                        onChange={event => this.setState({ accountGroupNameInput: event.target.value })}
                                     />
                                 </div>
                             </div>
-                            <div className="form-group row">
-                                <label className="col-md-4 col-form-label">
-                                    {chartOfAccountsText[this.context.locale]["Account Type"]}
-                                </label>
-                                {!this.state.selectedAccountTypeOption? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
-                                    <div className="col-md-8">
-                                        <Select 
-                                            options={this.state.accountTypeOptions} 
-                                            value={this.state.selectedAccountTypeOption} 
-                                            isSearchable={true} 
-                                            isDisabled={this.state.disableChangeAccountType}
-                                            onChange={this.handleChangeAccountTypeOption}
-                                        />
-                                        {/**TODO: style the SELECT components to match form-control */}
-                                    </div>
-                                }
-                            </div>
-                            <div className="form-group row">
-                                <label className="col-md-4 col-form-label">
-                                    {chartOfAccountsText[this.context.locale]["Account Subtype"]}
-                                </label>
-                                {!this.state.selectedAccountTypeOption? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
-                                    <div className="col-md-8">
-                                        <Select 
-                                            options={this.state.accountSubtypeOptions.filter(accountSubtypeOption => accountSubtypeOption.object.accountType.id == this.state.selectedAccountTypeOption.object.id)} 
-                                            value={this.state.selectedAccountSubtypeOption}
-                                            isSearchable={true} 
-                                            onChange={this.handleChangeAccountSubtypeOption}
-                                        />
-                                        {/**TODO: style the SELECT components to match form-control */}
-                                    </div>
-                                }
-                            </div>
-
                         </form>
+                        <div className="form-group row">
+                            <label className="col-md-4 col-form-label">
+                                {chartOfAccountsText[this.context.locale]["Account Type"]}
+                            </label>
+                            {!this.state.selectedAccountTypeOption ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                                <div className="col-md-8">
+                                    <Select
+                                        options={this.state.accountTypeOptions}
+                                        value={this.state.selectedAccountTypeOption}
+                                        isSearchable={true}
+                                        isDisabled={this.state.disableChangeAccountType}
+                                        onChange={this.handleChangeAccountTypeOption}
+                                    />
+                                    {/**TODO: style the SELECT components to match form-control */}
+                                </div>
+                            }
+                        </div>
+                        <div className="form-group row">
+                            <label className="col-md-4 col-form-label">
+                                {chartOfAccountsText[this.context.locale]["Account Subtype"]}
+                            </label>
+                            {!this.state.selectedAccountTypeOption ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                                <div className="col-md-8">
+                                    <Select
+                                        options={this.state.accountSubtypeOptions.filter(accountSubtypeOption => accountSubtypeOption.object.accountType.id == this.state.selectedAccountTypeOption.object.id)}
+                                        value={this.state.selectedAccountSubtypeOption}
+                                        isSearchable={true}
+                                        onChange={this.handleChangeAccountSubtypeOption}
+                                    />
+                                    {/**TODO: style the SELECT components to match form-control */}
+                                </div>
+                            }
+                        </div>
+
                     </ModalBody>
                     <ModalFooter>
-                            <button className="btn btn-primary width-10ch" onClick={() => this.handleSaveAnAccountGroupButton()}>
-                                {chartOfAccountsText[this.context.locale]["Save"]}
-                            </button>
-                            <button className="btn btn-white width-10ch" onClick={()=> this.toggleEditAccountGroupModal()}>
-                                {chartOfAccountsText[this.context.locale]["Cancel"]}
-                            </button>
+                        <button className="btn btn-primary width-10ch" onClick={() => this.handleSaveAnAccountGroupButton()}>
+                            {chartOfAccountsText[this.context.locale]["Save"]}
+                        </button>
+                        <button className="btn btn-white width-10ch" onClick={() => this.toggleEditAccountGroupModal()}>
+                            {chartOfAccountsText[this.context.locale]["Cancel"]}
+                        </button>
                     </ModalFooter>
                 </Modal>
 
@@ -407,7 +407,7 @@ class ChartOfAccounts extends React.Component {
                     >
                         {chartOfAccountsText[this.context.locale]["Are you sure you want to delete this account group?"]}
                     </SweetAlert>
-                : null}
+                    : null}
                 {this.state.cannotDeleteAccountGroupAlert ?
                     <SweetAlert danger showConfirm={false} showCancel={true}
                         cancelBtnBsStyle="default"
@@ -418,29 +418,29 @@ class ChartOfAccounts extends React.Component {
                     >
                         {chartOfAccountsText[this.context.locale]["Cannot delete this account group. Please delete all accounts in this account group and try again."]}
                     </SweetAlert>
-                : null}
+                    : null}
 
                 <Modal isOpen={this.state.addAnAccountModal} toggle={() => this.toggleAddAnAccountModal()} centered={true}>
                     <ModalHeader> {chartOfAccountsText[this.context.locale]["Add an Account"]} </ModalHeader>
                     <ModalBody>
                         {
-                            this.state.accountNameAlert ? 
+                            this.state.accountNameAlert ?
                                 <Alert color="danger">
                                     {chartOfAccountsText[this.context.locale]["Please provide a name for your account."]}
                                 </Alert>
-                            : null
+                                : null
                         }
-                        <form onSubmit={event => {event.preventDefault(); this.handleSaveNewAccount()}}>
+                        <form onSubmit={event => { event.preventDefault(); this.handleSaveNewAccount() }}>
                             <div className="form-group row">
                                 <label className="col-form-label col-md-3">
                                     {chartOfAccountsText[this.context.locale]["Account Name"]}
                                 </label>
                                 <div className="col-md-9">
-                                    <input 
-                                        className="form-control" 
+                                    <input
+                                        className="form-control"
                                         value={this.state.accountNameInput}
                                         onChange={event => {
-                                            this.setState({accountNameInput: event.target.value});
+                                            this.setState({ accountNameInput: event.target.value });
                                         }}
                                     />
                                 </div>
@@ -448,17 +448,17 @@ class ChartOfAccounts extends React.Component {
                         </form>
                     </ModalBody>
                     <ModalFooter>
-                        <button 
-                            className="btn btn-primary width-10ch" 
-                            onClick={() => this.handleSaveNewAccount()} 
+                        <button
+                            className="btn btn-primary width-10ch"
+                            onClick={() => this.handleSaveNewAccount()}
                         >
                             {chartOfAccountsText[this.context.locale]["Save"]}
                         </button>
-                        <button 
-                            className="btn btn-white width-10ch" 
+                        <button
+                            className="btn btn-white width-10ch"
                             onClick={() => {
                                 this.toggleAddAnAccountModal();
-                            }} 
+                            }}
                         >
                             {chartOfAccountsText[this.context.locale]["Cancel"]}
                         </button>

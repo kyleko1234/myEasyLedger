@@ -10,7 +10,8 @@ function JournalEntryEditMode({
     journalEntryDate, setJournalEntryDate,
     journalEntryDescription, setJournalEntryDescription,
     accountOptions,
-    alertMessages
+    alertMessages,
+    handleSaveJournalEntryButton
 }) {
     const appContext = React.useContext(PageSettings);
 
@@ -42,49 +43,55 @@ function JournalEntryEditMode({
         const columnId = cell.column.id;
         switch (columnId) {
             case "description":
-                return( 
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={cell.value ? cell.value : ''}
-                        onChange={event => {
-                            let updatedLineItemData = data.slice();
-                            updatedLineItemData[cell.row.index].description = event.target.value;
-                            setLineItemData(updatedLineItemData);
-                        }}
-                    />
+                return(
+                    <form onSubmit={event => {event.preventDefault(); handleSaveJournalEntryButton()}}> 
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={cell.value ? cell.value : ''}
+                            onChange={event => {
+                                let updatedLineItemData = data.slice();
+                                updatedLineItemData[cell.row.index].description = event.target.value;
+                                setLineItemData(updatedLineItemData);
+                            }}
+                        />
+                    </form>
                 )
             case "debitAmount":
                 return(
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={cell.value ? cell.value : ''}
-                        step="any"
-                        onChange={event => {
-                            let updatedLineItemData = data.slice();
-                            updatedLineItemData[cell.row.index].debitAmount = parseFloat(event.target.value);
-                            updatedLineItemData[cell.row.index].creditAmount = null;
-                            setLineItemData(updatedLineItemData);
-                        }}
-                    />
+                    <form onSubmit={event => {event.preventDefault(); handleSaveJournalEntryButton()}}> 
+                        <input
+                            type="number"
+                            className="form-control"
+                            value={cell.value ? cell.value : ''}
+                            step="any"
+                            onChange={event => {
+                                let updatedLineItemData = data.slice();
+                                updatedLineItemData[cell.row.index].debitAmount = parseFloat(event.target.value);
+                                updatedLineItemData[cell.row.index].creditAmount = null;
+                                setLineItemData(updatedLineItemData);
+                            }}
+                        />
+                    </form>
                 )
             case "creditAmount":
                 return(
-                    <input
-                        type="number"
-                        className="form-control"
-                        value={cell.value ? cell.value : ''}
-                        step="any"
-                        onChange={event => {
-                            let updatedLineItemData = data.slice();
-                            updatedLineItemData[cell.row.index].creditAmount = parseFloat(event.target.value);
-                            updatedLineItemData[cell.row.index].debitAmount = null;
-                            setLineItemData(updatedLineItemData);
-                        }}
-                    />
+                    <form onSubmit={event => {event.preventDefault(); handleSaveJournalEntryButton()}}> 
+                        <input
+                            type="number"
+                            className="form-control"
+                            value={cell.value ? cell.value : ''}
+                            step="any"
+                            onChange={event => {
+                                let updatedLineItemData = data.slice();
+                                updatedLineItemData[cell.row.index].creditAmount = parseFloat(event.target.value);
+                                updatedLineItemData[cell.row.index].debitAmount = null;
+                                setLineItemData(updatedLineItemData);
+                            }}
+                        />
+                    </form>
                 )
-            case "accountName":
+            case "accountName": //Select component must exist outside of <form>. This way, form can be submitted with enter key. Forms unfortunately cannot be submitted with enter key when Select component is focused.
                 return(
                         <Select
                                     options={accountOptions}
@@ -159,31 +166,32 @@ function JournalEntryEditMode({
                     </Alert>
                 </div> : null
             }
-
-            <div className="row m-b-10">
-                <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Date"]}</strong></div> 
-                <div className="col-xl-2">
-                    <input 
-                        type="date" 
-                        className="form-control"
-                        value={journalEntryDate} 
-                        onChange={event => setJournalEntryDate(event.target.value)}/>
-                    </div>
-            </div>
-            <div className="row m-b-10">
-                <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Description"]}</strong></div> 
-                <div className="col-xl-8">
-                    <input 
-                        type="text" 
-                        className="form-control"
-                        value={journalEntryDescription} 
-                        onChange={event => setJournalEntryDescription(event.target.value)}/>
+            <form onSubmit={event => {event.preventDefault(); handleSaveJournalEntryButton()}}> 
+                <div className="row m-b-10">
+                    <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Date"]}</strong></div> 
+                    <div className="col-xl-2">
+                        <input 
+                            type="date" 
+                            className="form-control"
+                            value={journalEntryDate} 
+                            onChange={event => setJournalEntryDate(event.target.value)}/>
+                        </div>
                 </div>
-                <button className="btn btn-light border border-rounded m-x-10 my-3 my-xl-0" onClick={handleCopyDescriptionToLineItemsButton}>
-                    {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
-                </button>
-            </div>
-            <br></br>
+                <div className="row m-b-10">
+                    <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Description"]}</strong></div> 
+                    <div className="col-xl-8">
+                        <input 
+                            type="text" 
+                            className="form-control"
+                            value={journalEntryDescription} 
+                            onChange={event => setJournalEntryDescription(event.target.value)}/>
+                    </div>
+                    <button className="btn btn-light border border-rounded m-x-10 my-3 my-xl-0" onClick={handleCopyDescriptionToLineItemsButton}>
+                        {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
+                    </button>
+                </div>
+            </form>
+            <br/>
 
             <div className="table-responsive">
                 <table className="table"{...getTableProps()}>

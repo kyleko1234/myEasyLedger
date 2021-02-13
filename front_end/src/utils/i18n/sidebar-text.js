@@ -12,7 +12,7 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Reports": "Reports"
     },
     "zh-TW": {
-        "My EasyLedgers": "TRANSLATION GOES HERE",
+        "My EasyLedgers": "My EasyLedgers",
         "Navigation": "網站導覽",
         "Settings": "設定",
         "Sign Out": "登出",

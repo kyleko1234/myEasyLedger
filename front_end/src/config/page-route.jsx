@@ -70,6 +70,7 @@ import IncomeStatementReport from '../pages/reports/income-statement-report.js';
 import BalanceSheetReport from '../pages/reports/balance-sheet-report.js';
 import AccountDetails from '../pages/chart-of-accounts/account-details.js';
 import Settings from '../pages/settings/settings.js';
+import ManageEasyLedger from '../pages/settings/manage-easyledger';
 
 const routes = [
   {
@@ -427,6 +428,11 @@ const routes = [
     path: '/settings',
     title: 'Settings',
     component: Settings
+  },
+  {
+    path: '/manage-easyledger/:organizationId',
+    title: 'Manage EasyLedger',
+    component: ManageEasyLedger
   }
 
 ];

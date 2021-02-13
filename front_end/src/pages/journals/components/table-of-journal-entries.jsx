@@ -379,7 +379,6 @@ function TableOfJournalEntries({
         isOpen={journalEntryExpanded}
         toggle={() => toggleJournalEntryExpanded()}
         size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
-        backdrop={editMode ? "static" : true}
         centered={true}
       >
         <ModalHeader style={{backgroundColor: "#e4e4e4"}}>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
@@ -390,7 +389,8 @@ function TableOfJournalEntries({
               journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
               journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
               accountOptions={accountOptions}
-              alertMessages={alertMessages}>
+              alertMessages={alertMessages}
+              handleSaveJournalEntryButton={handleSaveJournalEntryButton}>
             </JournalEntryEditMode> :
             <JournalEntryViewMode
               data={lineItemData}
