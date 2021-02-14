@@ -71,6 +71,7 @@ import BalanceSheetReport from '../pages/reports/balance-sheet-report.js';
 import AccountDetails from '../pages/chart-of-accounts/account-details.js';
 import Settings from '../pages/settings/settings.js';
 import ManageEasyLedger from '../pages/settings/manage-easyledger';
+import CreateANewOrganization from '../components/sidebar/create-a-new-organization.js';
 
 const routes = [
   {
@@ -433,6 +434,11 @@ const routes = [
     path: '/manage-easyledger/:organizationId',
     title: 'Manage EasyLedger',
     component: ManageEasyLedger
+  },
+  {
+    path: '/create-a-new-easyledger',
+    title: 'Create a New EasyLedger',
+    component: CreateANewOrganization
   }
 
 ];

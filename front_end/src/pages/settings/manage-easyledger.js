@@ -11,7 +11,7 @@ function ManageEasyLedger(props) {
         <div>
             <ol className="breadcrumb float-xl-right">
                 <li className="breadcrumb-item"><Link to="/">{settingsText[appContext.locale]["Home"]}</Link></li>
-                <li className="breadcrumb-item"><Link to="/">{settingsText[appContext.locale]["Settings"]}</Link></li>
+                <li className="breadcrumb-item"><Link to="/settings">{settingsText[appContext.locale]["Settings"]}</Link></li>
                 <li className="breadcrumb-item active">{appContext.permissions.find(permission => permission.organization.id = props.match.params.organizationId).organization.name + " " + settingsText[appContext.locale]["Settings"]}</li>
             </ol>
             <h1 className="page-header">

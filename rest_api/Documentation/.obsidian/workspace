@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Permission/Contents/Delete a Permission Object.md",
+            "file": "Organization/Contents/Create an Organization.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Permission/Contents/Delete a Permission Object.md",
+            "file": "Organization/Contents/Create an Organization.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Permission/Contents/Delete a Permission Object.md",
+                "file": "Organization/Contents/Create an Organization.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,6 +99,7 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Organization/Contents/Create an Organization.md",
     "Permission/Contents/Delete a Permission Object.md",
     "Permission/Contents/Edit a Permission Object.md",
     "Person/Contents/List All Persons in an Organization.md",
@@ -107,7 +108,6 @@
     "Reports/Contents/Generate an Income Statement.md",
     "Person/Contents/Update a Person.md",
     "Permission/Contents/Untitled.md",
-    "Permission/Permission.md",
-    "Person/Person.md"
+    "Permission/Permission.md"
   ]
 }

@@ -17,7 +17,7 @@ class SidebarProfile extends React.Component {
 		};
 		this.handleProfileExpand = this.handleProfileExpand.bind(this);
 		this.toggleExpandOrganizations = this.toggleExpandOrganizations.bind(this);
-	
+		this.handleCollapseAll = this.handleCollapseAll.bind(this);
 	}
 
 	handleProfileExpand(e) {
@@ -33,6 +33,13 @@ class SidebarProfile extends React.Component {
 		}));
 	}
 
+	handleCollapseAll() {
+		this.setState(state => ({
+			profileActive: 0, 
+			organizationsExpanded: false
+		}))
+	}
+
 	async handleChangeCurrentOrganization(organizationId) {
 		let requestBody = {
 			currentOrganizationId: parseInt(organizationId)
@@ -41,7 +48,7 @@ class SidebarProfile extends React.Component {
 			console.log(response);
 		}).catch(console.log);
 		await this.context.fetchUserInfo(this.context.personId);
-		this.setState({profileActive: 0, organizationsExpanded: false})
+		this.handleCollapseAll();
 		this.props.history.push("/");
 	}
   
@@ -84,6 +91,9 @@ class SidebarProfile extends React.Component {
 														</li>
 													)
 												})}
+												<li>
+													<Link replace to="/create-a-new-easyledger" onClick={this.handleCollapseAll}><i className="ion ion-md-add"></i>{" "}<i>{sidebarText[locale]["Create a new EasyLedger..."]}</i></Link>
+												</li>
 											</ul>
 									</li>
 									<li><Link to="/settings"><i className="fa fa-cog"></i> {sidebarText[locale]["Settings"]}</Link></li>
