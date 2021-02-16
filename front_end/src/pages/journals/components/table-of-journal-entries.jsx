@@ -133,7 +133,7 @@ function TableOfJournalEntries({
 
   // Listen for changes in pagination and use the state to fetch our new data
   React.useEffect(() => {
-    fetchData({ pageIndex, pageSize })
+    fetchData({ pageIndex, pageSize });
   }, [fetchData, pageIndex, pageSize])
   
   //initially retrieve categories and accounts from API
@@ -362,7 +362,7 @@ function TableOfJournalEntries({
             </ul>
           </span>
           <span className="align-self-center">
-            Showing {((pageIndex * page.length) + 1) + "-" + ((pageIndex + 1) * page.length)} of {elementCount}{' '}
+            Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + page.length)} of {elementCount}{' '}
                       results
           </span>{/**TODO replace with page selector */}
           <span>

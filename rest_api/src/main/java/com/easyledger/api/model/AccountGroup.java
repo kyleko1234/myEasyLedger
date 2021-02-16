@@ -183,7 +183,7 @@ public class AccountGroup {
 	@JoinColumn(name = "account_subtype_id", nullable = false)
 	private AccountSubtype accountSubtype;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "organization_id", nullable = false)
 	private Organization organization;
 	

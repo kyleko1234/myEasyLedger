@@ -92,12 +92,13 @@ function JournalEntryEditMode({
                     </form>
                 )
             case "accountName": //Select component must exist outside of <form>. This way, form can be submitted with enter key. Forms unfortunately cannot be submitted with enter key when Select component is focused.
-                return(
+                return( 
                         <Select
                                     options={accountOptions}
                                     value={accountOptions.find(accountOption => accountOption.object.accountId == data[cell.row.index].accountId)}
                                     isSearchable={true}
                                     menuPortalTarget={document.body}
+                                    menuShouldScrollIntoView={false}
                                     styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                     menuPlacement={'auto'}
                                     onChange={(selectedOption) => {
@@ -166,31 +167,29 @@ function JournalEntryEditMode({
                     </Alert>
                 </div> : null
             }
-            <form onSubmit={event => {event.preventDefault(); handleSaveJournalEntryButton()}}> 
-                <div className="row m-b-10">
-                    <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Date"]}</strong></div> 
-                    <div className="col-xl-2">
-                        <input 
-                            type="date" 
-                            className="form-control"
-                            value={journalEntryDate} 
-                            onChange={event => setJournalEntryDate(event.target.value)}/>
-                        </div>
-                </div>
-                <div className="row m-b-10">
-                    <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Description"]}</strong></div> 
-                    <div className="col-xl-8">
-                        <input 
-                            type="text" 
-                            className="form-control"
-                            value={journalEntryDescription} 
-                            onChange={event => setJournalEntryDescription(event.target.value)}/>
+            <div className="row m-b-10">
+                <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Date"]}</strong></div> 
+                <div className="col-xl-2">
+                    <input 
+                        type="date" 
+                        className="form-control"
+                        value={journalEntryDate} 
+                        onChange={event => setJournalEntryDate(event.target.value)}/>
                     </div>
-                    <button className="btn btn-light border border-rounded m-x-10 my-3 my-xl-0" onClick={handleCopyDescriptionToLineItemsButton}>
-                        {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
-                    </button>
+            </div>
+            <div className="row m-b-10">
+                <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Description"]}</strong></div> 
+                <div className="col-xl-8">
+                    <input 
+                        type="text" 
+                        className="form-control"
+                        value={journalEntryDescription} 
+                        onChange={event => setJournalEntryDescription(event.target.value)}/>
                 </div>
-            </form>
+                <button className="btn btn-light border border-rounded m-x-10 my-3 my-xl-0" onClick={handleCopyDescriptionToLineItemsButton}>
+                    {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
+                </button>
+            </div>
             <br/>
 
             <div className="table-responsive">

@@ -139,7 +139,7 @@ public class LineItem {
 	@JoinColumn(name = "account_id", nullable = false)
 	private Account account;
 		
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "journal_entry_id", nullable = false)
 	private JournalEntry journalEntry;

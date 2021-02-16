@@ -97,15 +97,14 @@ public class JournalEntry {
 	
 	@OneToMany(	mappedBy = "journalEntry",
 				cascade = CascadeType.REMOVE,
-				orphanRemoval = true,
-				fetch = FetchType.EAGER)
+				orphanRemoval = true) //IMPORTANT: do not eagerly fetch lineitems. Due to weird quirk of jpa, attempting eager fetching here will result in duplicate line items - specifically, one set of lineitems for each organization in db.
 	private List<LineItem> lineItems;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "person_id")
 	private Person person;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "organization_id")
 	private Organization organization;
 	

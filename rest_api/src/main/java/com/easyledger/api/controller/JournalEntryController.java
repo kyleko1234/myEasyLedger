@@ -89,6 +89,14 @@ public class JournalEntryController {
         return ResponseEntity.ok().body(journalEntryDTO);
     }
     
+    
+    @GetMapping("/test1")
+    public JournalEntry test1() throws ResourceNotFoundException {
+    	JournalEntry journalEntry = journalEntryRepo.findById((long) 10)
+        		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: ")); 
+    	return journalEntry;
+    }
+    
     @DeleteMapping("/journalEntry/{id}")
     public Map<String, Boolean> deleteJournalEntry(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
          throws ResourceNotFoundException, UnauthorizedException {
@@ -155,6 +163,8 @@ public class JournalEntryController {
     	return ResponseEntity.ok().body(newEntryDTO);
 
     }
+    
+    
 
     @Transactional(rollbackFor=Exception.class)
     @PostMapping("/journalEntry")
