@@ -20,7 +20,9 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Dashboard": "Dashboard",
         "Journals": "Journals",
         "Chart of Accounts": "Chart of Accounts",
-        "Reports": "Reports"
+        "Reports": "Reports",
+        "Accounts": "Accounts",
+        "Categories": "Categories"
     },
     "zh-TW": {
         "Home": "首頁",
@@ -43,6 +45,9 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Dashboard": "帳目概覽",
         "Journals": "分類帳",
         "Chart of Accounts": "會計科目表",
-        "Reports": "報表"
+        "Reports": "報表",
+        "Accounts": "TRANSLATION",
+        "Categories": "TRANSLATION"
+
     }
 }

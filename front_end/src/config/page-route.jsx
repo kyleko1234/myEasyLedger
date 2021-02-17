@@ -60,7 +60,7 @@ import LoginV3 from './../pages/user/login-v3.js';
 import RegisterV3 from './../pages/user/register-v3.js';
 import HelperCSS from './../pages/helper/helper-css.js';
 
-import Journals from './../pages/journals/journals.js';
+import Journals from '../pages/journals/journals.js';
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
 import RegistrationSuccessful from './../pages/user/registration-successful.js';
 import Logout from './../pages/user/logout.js';
@@ -72,6 +72,8 @@ import AccountDetails from '../pages/chart-of-accounts/account-details.js';
 import Settings from '../pages/settings/settings.js';
 import ManageEasyLedger from '../pages/settings/manage-easyledger';
 import CreateANewOrganization from '../components/sidebar/create-a-new-organization.js';
+import Accounts from '../pages/accounts/accounts.js';
+import Categories from '../pages/categories/categories.js';
 
 const routes = [
   {
@@ -387,7 +389,7 @@ const routes = [
     component: ChartOfAccounts,
   },
   {
-    path: '/account/:id',
+    path: '/account-details/:id',
     title: 'Account Details',
     component: AccountDetails,
   },
@@ -439,6 +441,28 @@ const routes = [
     path: '/create-a-new-easyledger',
     title: 'Create a New EasyLedger',
     component: CreateANewOrganization
+  },
+  {
+    path: '/accounts',
+    title: 'Accounts',
+    exact: true,
+    component: () => <Redirect to="/accounts/1" />,
+  },
+  {
+    path: '/accounts/:activeTabId',
+    title: 'Accounts',
+    component: Accounts
+  },
+  {
+    path: '/categories',
+    title: 'Categories',
+    exact: true,
+    component: () => <Redirect to="/categories/4" />,
+  },
+  {
+    path: '/categories/:activeTabId',
+    title: 'Categories',
+    component: Categories
   }
 
 ];

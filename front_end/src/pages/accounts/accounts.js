@@ -11,7 +11,7 @@ import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-si
 
 
 
-class Categories extends React.Component {
+class Accounts extends React.Component {
     /** Renders a Chart of Accounts. This component uses pills tabs for the different account types. The url param this.props.match.params.activeTabId indicates the current open tab, in order for tab history to be preserved.
      *  this.props.match.params.activeTabId should always match the accountType.id of the accountType being currently viewed. 
     */
@@ -48,7 +48,6 @@ class Categories extends React.Component {
         this.handleConfirmDeleteAccountGroupButton = this.handleConfirmDeleteAccountGroupButton.bind(this);
         this.toggleDeleteAccountGroupAlert = this.toggleDeleteAccountGroupAlert.bind(this);
         this.toggleCannotDeleteAccountGroupAlert = this.toggleCannotDeleteAccountGroupAlert.bind(this);
-        this.toggleEditAccountGroupModal = this.toggleEditAccountGroupModal.bind(this);
         this.setEditAccountGroupFalse = this.setEditAccountGroupFalse.bind(this);
 
     }
@@ -65,11 +64,11 @@ class Categories extends React.Component {
 
     fetchData() {
         axios.get(`${API_BASE_URL}/accountType`).then(response => {
-            let incomeAndExpensesAccountTypeIds = [4, 5];
-            let incomeAndExpensesAccountTypes = response.data.filter(accountType => incomeAndExpensesAccountTypeIds.includes(accountType.id));
-            this.setState({ accountTypes: incomeAndExpensesAccountTypes });
+            let assetsAndLiabilitiesAccountTypeIds = [1, 2];
+            let assetsAndLiabilitiesAccountTypes = response.data.filter(accountType => assetsAndLiabilitiesAccountTypeIds.includes(accountType.id));
+            this.setState({ accountTypes: assetsAndLiabilitiesAccountTypes });
             if (response.data) {
-                let formattedAccountTypes = incomeAndExpensesAccountTypes.map(accountType => ({ value: accountType.id, label: chartOfAccountsText[this.context.locale][accountType.name], object: accountType }))
+                let formattedAccountTypes = assetsAndLiabilitiesAccountTypes.map(accountType => ({ value: accountType.id, label: chartOfAccountsText[this.context.locale][accountType.name], object: accountType }))
                 this.setState({ accountTypeOptions: formattedAccountTypes, selectedAccountTypeOption: formattedAccountTypes.find(formattedAccountType => formattedAccountType.object.id == this.props.match.params.activeTabId) })
             }
         })
@@ -97,7 +96,7 @@ class Categories extends React.Component {
                 disableChangeAccountType: true,
                 accountGroupNameAlert: false,
                 editAccountGroupModal: true,
-                editAccountGroup: true,
+                editAccountGroup: true
             }
         ))
     }
@@ -111,8 +110,7 @@ class Categories extends React.Component {
                 disableChangeAccountType: false,
                 accountGroupNameAlert: false,
                 editAccountGroupModal: !state.editAccountGroupModal,
-            }
-        ));
+            }));
     }
 
     setEditAccountGroupFalse() { //called after modal transitions out. ensures that title does not change until modal is done transitioning.
@@ -134,7 +132,7 @@ class Categories extends React.Component {
             if (!this.state.selectedAccountGroupId) {
                 let postedObject = {
                     accountGroupName: this.state.accountGroupNameInput,
-                    accountSubtypeId: this.state.selectedAccountTypeOption.value == 4 ? 22 : 28, //hardcode; for single-entry (personal) organizations, we shove all income account groups into 'other income' subtype and all expenses into 'other expenses'
+                    accountSubtypeId: this.state.selectedAccountTypeOption.value == 1 ? 5 : 15, //hardcode; for single-entry (personal) organizations, we shove all asset account groups into 'other current assets' and all liabilities into 'other current liabilities'
                     organizationId: this.context.currentOrganizationId
                 };
                 await this.postAccountGroup(postedObject);
@@ -143,7 +141,7 @@ class Categories extends React.Component {
                 let putObject = {
                     accountGroupId: this.state.selectedAccountGroupId,
                     accountGroupName: this.state.accountGroupNameInput,
-                    accountSubtypeId: this.state.selectedAccountTypeOption.value == 4 ? 22 : 28,
+                    accountSubtypeId: this.state.selectedAccountTypeOption.value == 1 ? 5 : 15,
                     organizationId: this.context.currentOrganizationId
                 };
                 await this.putAccountGroup(this.state.selectedAccountGroupId, putObject);
@@ -243,10 +241,10 @@ class Categories extends React.Component {
             <div>
                 <ol className="breadcrumb float-xl-right">
                     <li className="breadcrumb-item"><Link to="/">{chartOfAccountsText[this.context.locale]["Home"]}</Link></li>
-                    <li className="breadcrumb-item active">{chartOfAccountsText[this.context.locale]["Categories"]}</li>
+                    <li className="breadcrumb-item active">{chartOfAccountsText[this.context.locale]["Accounts"]}</li>
                 </ol>
                 <h1 className="page-header">
-                    {chartOfAccountsText[this.context.locale]["Categories"]}
+                    {chartOfAccountsText[this.context.locale]["Accounts"]}
                     <ToggleMobileSidebarButton className="d-md-none float-right " />
                 </h1>
                 <Nav pills justified className="d-block">
@@ -258,7 +256,7 @@ class Categories extends React.Component {
                                         <NavItem key={accountType.id}>
                                             <NavLink
                                                 className={this.props.match.params.activeTabId == accountType.id ? "active" : "cursor-pointer"}
-                                                onClick={() => this.props.history.push(`/categories/${accountType.id}`)}
+                                                onClick={() => this.props.history.push(`/accounts/${accountType.id}`)}
                                             >
                                                 <span className="d-sm-block px-3">{chartOfAccountsText[this.context.locale][accountType.name]}</span>
                                             </NavLink>
@@ -272,7 +270,7 @@ class Categories extends React.Component {
                                 onClick={() => {
                                     this.handleAddAnAccountGroupButton();
                                 }}
-                            > {chartOfAccountsText[this.context.locale]["Create a category group"]} </button>
+                            > {chartOfAccountsText[this.context.locale]["Create an account group"]} </button>
                         </div>
                     }
                 </Nav>
@@ -323,14 +321,14 @@ class Categories extends React.Component {
                     }
                 </TabContent>
 
-                <Modal isOpen={this.state.editAccountGroupModal} toggle={() => this.toggleEditAccountGroupModal()} centered={true} onClosed={this.setEditAccountGroupFalse} >
-                    <ModalHeader> {this.state.editAccountGroup? chartOfAccountsText[this.context.locale]["Edit Category Group Details"]: chartOfAccountsText[this.context.locale]["Create a New Category Group"]} </ModalHeader>
+                <Modal isOpen={this.state.editAccountGroupModal} toggle={() => this.toggleEditAccountGroupModal()} centered={true} onClosed={this.setEditAccountGroupFalse}>
+                    <ModalHeader> {this.state.editAccountGroup? chartOfAccountsText[this.context.locale]["Edit Account Group Details"] : chartOfAccountsText[this.context.locale]["Create a New Account Group"]} </ModalHeader>
                     <ModalBody>
-                        {this.state.accountGroupNameAlert ? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide a name for your category group."]}</Alert> : null}
+                        {this.state.accountGroupNameAlert ? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide a name for your account group."]}</Alert> : null}
                         <form onSubmit={event => { event.preventDefault(); this.handleSaveAnAccountGroupButton() }}>
                             <div className="form-group row">
                                 <label className="col-md-4 col-form-label">
-                                    {["Category Group Name"]}
+                                    {chartOfAccountsText[this.context.locale]["Account Group Name"]}
                                 </label>
                                 <div className="col-md-8">
                                     <input type="text" className="form-control"
@@ -342,7 +340,7 @@ class Categories extends React.Component {
                         </form>
                         <div className="form-group row">
                             <label className="col-md-4 col-form-label">
-                                {chartOfAccountsText[this.context.locale]["Category Type"]}
+                                {chartOfAccountsText[this.context.locale]["Account Type"]}
                             </label>
                             {!this.state.selectedAccountTypeOption ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                                 <div className="col-md-8">
@@ -378,35 +376,35 @@ class Categories extends React.Component {
                         onConfirm={this.handleConfirmDeleteAccountGroupButton}
                         onCancel={this.toggleDeleteAccountGroupAlert}
                     >
-                        {chartOfAccountsText[this.context.locale]["Are you sure you want to delete this category group?"]}
+                        {chartOfAccountsText[this.context.locale]["Are you sure you want to delete this account group?"]}
                     </SweetAlert>
                     : null}
                 {this.state.cannotDeleteAccountGroupAlert ?
                     <SweetAlert danger showConfirm={false} showCancel={true}
                         cancelBtnBsStyle="default"
                         cancelBtnText={chartOfAccountsText[this.context.locale]["Cancel"]}
-                        title={chartOfAccountsText[this.context.locale]["Cannot delete this category."]}
+                        title={chartOfAccountsText[this.context.locale]["Cannot delete this account."]}
                         onConfirm={this.toggleCannotDeleteAccountGroupAlert}
                         onCancel={this.toggleCannotDeleteAccountGroupAlert}
                     >
-                        {chartOfAccountsText[this.context.locale]["Cannot delete this category group. Please delete all categories in this category group and try again."]}
+                        {chartOfAccountsText[this.context.locale]["Cannot delete this account group. Please delete all accounts in this account group and try again."]}
                     </SweetAlert>
                     : null}
 
                 <Modal isOpen={this.state.addAnAccountModal} toggle={() => this.toggleAddAnAccountModal()} centered={true}>
-                    <ModalHeader> {chartOfAccountsText[this.context.locale]["Add a Category"]} </ModalHeader>
+                    <ModalHeader> {chartOfAccountsText[this.context.locale]["Add an Account"]} </ModalHeader>
                     <ModalBody>
                         {
                             this.state.accountNameAlert ?
                                 <Alert color="danger">
-                                    {chartOfAccountsText[this.context.locale]["Please provide a name for your category."]}
+                                    {chartOfAccountsText[this.context.locale]["Please provide a name for your account."]}
                                 </Alert>
                                 : null
                         }
                         <form onSubmit={event => { event.preventDefault(); this.handleSaveNewAccount() }}>
                             <div className="form-group row">
                                 <label className="col-form-label col-md-3">
-                                    {chartOfAccountsText[this.context.locale]["Category Name"]}
+                                    {chartOfAccountsText[this.context.locale]["Account Name"]}
                                 </label>
                                 <div className="col-md-9">
                                     <input
@@ -443,4 +441,4 @@ class Categories extends React.Component {
     }
 }
 
-export default Categories;
+export default Accounts;

@@ -29,6 +29,7 @@ class ChartOfAccounts extends React.Component {
             accountSubtypeRequiredAlert: false,
             selectedAccountGroupId: null,
             accountGroupNameInput: '',
+            editAccountGroup: false,  //when true, editAccountGroupModal will have 'edit' in title instead of 'create new'
 
             accountTypeOptions: [], //for react-select; accountTypes are formatted as {value: accountType.id, label: accountType.name, object: accountType}
             accountSubtypeOptions: [], //for react-select; accountSubtypes are formatted as {value: accountSubtypeId, label: accountSubtypeName, object: accountSubtype}
@@ -51,7 +52,7 @@ class ChartOfAccounts extends React.Component {
         this.handleConfirmDeleteAccountGroupButton = this.handleConfirmDeleteAccountGroupButton.bind(this);
         this.toggleDeleteAccountGroupAlert = this.toggleDeleteAccountGroupAlert.bind(this);
         this.toggleCannotDeleteAccountGroupAlert = this.toggleCannotDeleteAccountGroupAlert.bind(this);
-
+        this.setEditAccountGroupFalse = this.setEditAccountGroupFalse.bind(this);
     }
 
     componentDidMount() {
@@ -105,6 +106,7 @@ class ChartOfAccounts extends React.Component {
                 accountGroupNameAlert: false,
                 accountSubtypeRequiredAlert: false,
                 editAccountGroupModal: true,
+                editAccountGroup: true
             }
         ))
     }
@@ -122,6 +124,13 @@ class ChartOfAccounts extends React.Component {
                 editAccountGroupModal: !state.editAccountGroupModal
             }));
     }
+
+    setEditAccountGroupFalse() { //called after modal transitions out. ensures that title does not change until modal is done transitioning.
+        this.setState(state => (
+            {editAccountGroup: false}
+        ))
+    }
+
 
     handleChangeAccountSubtypeOption(selectedAccountSubtypeOption) {
         this.setState({ selectedAccountSubtypeOption: selectedAccountSubtypeOption });
@@ -313,7 +322,7 @@ class ChartOfAccounts extends React.Component {
                                                 </div>
                                                 {!this.state.accounts ? null : this.state.accounts.filter(account => account.accountGroupId == accountGroup.accountGroupId).map(account => {
                                                     return (
-                                                        <Link className="widget-list-item bg-white" to={`/account/${account.accountId}`} key={account.accountId.toString()}>
+                                                        <Link className="widget-list-item bg-white" to={`/account-details/${account.accountId}`} key={account.accountId.toString()}>
                                                             <div className="widget-list-content p-l-30">
                                                                 <div className="widget-list-title">{account.accountName}</div>
                                                             </div>
@@ -332,15 +341,15 @@ class ChartOfAccounts extends React.Component {
                     }
                 </TabContent>
 
-                <Modal isOpen={this.state.editAccountGroupModal} toggle={() => this.toggleEditAccountGroupModal()} centered={true} >
-                    <ModalHeader> {chartOfAccountsText[this.context.locale]["Create a New Account Group"]} </ModalHeader>
+                <Modal isOpen={this.state.editAccountGroupModal} toggle={() => this.toggleEditAccountGroupModal()} centered={true} onClosed={this.setEditAccountGroupFalse}>
+                    <ModalHeader> {this.state.editAccountGroup? chartOfAccountsText[this.context.locale]["Edit Account Group Details"]: chartOfAccountsText[this.context.locale]["Create a New Account Group"]} </ModalHeader>
                     <ModalBody>
                         {this.state.accountGroupNameAlert ? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide a name for your account group."]}</Alert> : null}
                         {this.state.accountSubtypeRequiredAlert ? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide an account subtype for your account group."]}</Alert> : null}
                         <form onSubmit={event => { event.preventDefault(); this.handleSaveAnAccountGroupButton() }}>
                             <div className="form-group row">
                                 <label className="col-md-4 col-form-label">
-                                    Account Group Name
+                                    {chartOfAccountsText[this.context.locale]["Account Group Name"]}
                                 </label>
                                 <div className="col-md-8">
                                     <input type="text" className="form-control"

@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
-import GeneralJournal from './components/general-journal';
+import GeneralJournal from './enterprise/general-journal';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
-import {journalsText} from '../../utils/i18n/journals-text.js';
+import { journalsText } from '../../utils/i18n/journals-text.js';
 
 
 
 class Journals extends React.Component {
 	static contextType = PageSettings;
 
-    componentDidMount() {
+	componentDidMount() {
 
-    }
+	}
 	render() {
 
 
@@ -24,11 +24,13 @@ class Journals extends React.Component {
 				</ol>
 				<h1 className="page-header">
 					{journalsText[this.context.locale]["Journals"]}
-					<ToggleMobileSidebarButton className="d-md-none float-right "/>
+					<ToggleMobileSidebarButton className="d-md-none float-right " />
 				</h1>
+				{this.context.isEnterprise?
 					<div>
-						<GeneralJournal/>
+						<GeneralJournal />
 					</div>
+				: null}
 			</div>
 		)
 	}

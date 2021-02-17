@@ -301,6 +301,13 @@ function TableOfJournalEntries({
     });
   }
 
+  const handleExitJournalEntryModal = () => {
+    setCreateMode(false);
+    setEditMode(false);
+    setAlertMessages([]);
+    toggleJournalEntryExpanded();
+  }
+
   // Render the UI for your table
   return (
     <>
@@ -377,7 +384,7 @@ function TableOfJournalEntries({
       {/* Modal that opens when a row in the table is clicked */}
       <Modal
         isOpen={journalEntryExpanded}
-        toggle={() => toggleJournalEntryExpanded()}
+        toggle={handleExitJournalEntryModal}
         size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
         centered={true}
       >

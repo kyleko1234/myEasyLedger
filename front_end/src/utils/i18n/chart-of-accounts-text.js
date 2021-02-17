@@ -44,6 +44,7 @@ export const chartOfAccountsText = {
         "Create a New Account Group": "Create a New Account Group",
         "Please provide a name for your account group.": "Please provide a name for your account group.",
         "Please provide an account subtype for your account group.": "Please provide an account subtype for your account group.",
+        "Account Group Name": "Account Group Name",
         "Account Type": "Account Type",
         "Account Subtype": "Account Subtype",
         "Save": "Save",
@@ -58,6 +59,26 @@ export const chartOfAccountsText = {
         "Add an Account": "Add an Account",
         "Please provide a name for your account.": "Please provide a name for your account.",
         "Account Name": "Account Name",
+
+        "Accounts": "Accounts",
+        "Categories": "Categories",
+        "Create a category group": "Create a category group",
+        "Create a New Category Group": "Create a New Category Group",
+        "Please provide a name for your category group.": "Please provide a name for your category group.",
+        "Category Group Name": "Category Group Name",
+        "Category Type": "Category Type",
+        "Edit Category Group Details": "Edit Category Group Details",
+        "Edit Account Group Details": "Edit Account Group Details",
+
+        "Are you sure you want to delete this category group?": "Are you sure you want to delete this category group?",
+        "Cannot delete this category group. Please delete all categories in this category group and try again.": "Cannot delete this category group. Please delete all categories in this category group and try again.",
+        "Cannot delete this category.": "Cannot delete this category.",
+        "Add a Category": "Add a Category",
+        "Please provide a name for your category.": "Please provide a name for your category.",
+        "Category Name": "Category Name",
+
+
+
     }, 
     "zh-TW": {
         //Account Type Names.
@@ -104,6 +125,7 @@ export const chartOfAccountsText = {
         "Create a New Account Group": "建立一個新科目群",
         "Please provide a name for your account group.": "請給科目群取個名稱。",
         "Please provide an account subtype for your account group.": "請將科目群歸在一個子類別之下。",
+        "Account Group Name": "Account Group Name",
         "Account Type": "主類別",
         "Account Subtype": "子類別",
         "Save": "儲存",
@@ -118,5 +140,26 @@ export const chartOfAccountsText = {
         "Add an Account": "增設一個科目",
         "Please provide a name for your account.": "請提供科目名稱。",
         "Account Name": "科目名稱",
+
+
+        "Accounts": "TRANSLATION",
+        "Categories": "TRANSLATION",
+        "Create a category group": "TRANSLATION",
+        "Create a New Category Group": "TRANSLATION",
+        "Please provide a name for your category group.": "TRANSLATION",
+        "Category Group Name": "TRANSLATION",
+        "Category Type": "TRANSLATION",
+        "Edit Category Group Details": "TRANSLATION",
+        "Edit Account Group Details": "TRANSLATION",
+
+
+        "Are you sure you want to delete this category group?": "TRANSLATION?",
+        "Cannot delete this category group. Please delete all categories in this category group and try again.": "TRANSLATION",
+        "Cannot delete this category.": "TRANSLATION",
+        "Add a Category": "TRANSLATION",
+        "Please provide a name for your category.": "TRANSLATION",
+        "Category Name": "TRANSLATION",
+
+
     }
 }

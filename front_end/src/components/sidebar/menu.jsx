@@ -1,4 +1,4 @@
-const Menu = [
+export const enterpriseMenu = [
   { path: '/dashboard', icon: 'fa fa-th', title: 'Dashboard'},
   /*{ path: '/email', icon: 'fa fa-hdd', title: 'Email', badge: '10',
     children: [
@@ -142,4 +142,10 @@ const Menu = [
   },*/
 ]
 
-export default Menu;
+export const personalMenu = [
+  { path: '/dashboard', icon: 'fa fa-th', title: 'Dashboard'},
+  //{ path: '/journals', icon: 'fa fa-list-alt', title: 'Journals' },
+  { path: '/accounts', icon: 'fa fa-columns', title: 'Accounts' },
+  { path: '/categories', icon: 'fa fa-columns', title: 'Categories' },
+  { path: '/reports', icon: 'fa fa-file-alt', title: 'Reports' }
+]
