@@ -192,13 +192,9 @@ function TableOfJournalEntries({
 
     let debitSum = 0;
     let creditSum = 0;
-    let missingDescription = false;
     let missingAmount = false;
     let missingAccount = false;
     lineItemData.forEach(lineItem => { // check for missing fields within lineItems, and sum debits and credits.
-      if (!lineItem.description) {
-        missingDescription = true;
-      }
       if (!lineItem.creditAmount && !lineItem.debitAmount) { 
         missingAmount = true;
       }
@@ -215,9 +211,6 @@ function TableOfJournalEntries({
       }
     })
     //move missing description and missing amount error messages out of the loop to avoid duplicate messages
-    if (missingDescription) {
-      errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Line-items must have a description."]);
-    }
     if (missingAmount) {
       errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Line-items must have either a debit or credit."]);
     }

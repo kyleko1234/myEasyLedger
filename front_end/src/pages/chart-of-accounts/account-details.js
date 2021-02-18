@@ -119,30 +119,33 @@ function AccountDetails(props) {
             </h1>
 
 
-            <div className="row">
-                <span className="col-md-8">
-                    {selectedAccount ? <TableOfJournalEntries
-                        columns={columns}
-                        data={data}
-                        fetchData={fetchData}
-                        pageCount={pageCount}
-                        elementCount={elementCount}
-                        tableTitle={selectedAccount.accountName}
-                        hasAddEntryButton={false}
-                    /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
-                    /* we reuse TableOfJournalEntries component, even though it's more like a TableOfLineItems here */} 
-                </span>
-                <span className="col-md-4">
-                    <div>
-                        {selectedAccount && accountGroupOptions ? <AccountDetailsSidebar
-                            {...selectedAccount}
-                            accountGroupOptions={accountGroupOptions}
-                            refreshAccountData={refreshAccountData}
+            {appContext.isEnterprise?
+                <div className="row">
+                    <span className="col-md-8">
+                        {selectedAccount ? <TableOfJournalEntries
+                            columns={columns}
+                            data={data}
+                            fetchData={fetchData}
+                            pageCount={pageCount}
                             elementCount={elementCount}
-                        /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
-                    </div>
-                </span>
-            </div>
+                            tableTitle={selectedAccount.accountName}
+                            hasAddEntryButton={false}
+                        /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
+                        /* we reuse TableOfJournalEntries component, even though it's more like a TableOfLineItems here */} 
+                    </span>
+                    <span className="col-md-4">
+                        <div>
+                            {selectedAccount && accountGroupOptions ? <AccountDetailsSidebar
+                                {...selectedAccount}
+                                accountGroupOptions={accountGroupOptions}
+                                refreshAccountData={refreshAccountData}
+                                elementCount={elementCount}
+                            /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
+                        </div>
+                    </span>
+                </div> 
+                : null
+            }
 
         </>
     )

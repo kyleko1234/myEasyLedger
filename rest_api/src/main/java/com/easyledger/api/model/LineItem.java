@@ -51,8 +51,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName, " + 
 				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, " + 
 				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
-				"    line_item.amount AS amount, line_item.description AS description, " + 
-				"    journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, " + 
+				"    line_item.amount AS amount, " + 
+				"    journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, " + 
 				"    line_item.is_credit AS isCredit, line_item.id AS lineItemId " + 
 				"FROM " + 
 				"    account, account_group, account_subtype, account_type, line_item, journal_entry " + 
@@ -76,8 +76,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName, " + 
 				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, " + 
 				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
-				"    line_item.amount AS amount, line_item.description AS description, " + 
-				"    journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, " + 
+				"    line_item.amount AS amount, " + 
+				"    journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, " + 
 				"    line_item.is_credit AS isCredit, line_item.id AS lineItemId " + 
 				"FROM " + 
 				"    account, account_group, account_subtype, account_type, line_item, journal_entry " + 
