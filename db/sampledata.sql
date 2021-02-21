@@ -248,4 +248,27 @@ INSERT INTO line_item(journal_entry_id, account_id, is_credit, amount, descripti
         (10, 13, FALSE, 7500, 'Paid salary expense for November'),
         (10, 1, TRUE, 7500, 'Paid salary expense for November');
 
+-------------------------------
+
+INSERT INTO journal_entry(journal_entry_date, organization_id, person_id, description, year_month)
+    VALUES
+        ('2021-02-16', 3, 1, 'Paycheck', 202011),
+        ('2021-02-17', 3, 1, 'Paid Rent', 202011),
+        ('2021-02-18', 3, 1, 'Split Transaction Test', 202011);
+
+INSERT INTO line_item(journal_entry_id, account_id, is_credit, amount, description)
+    VALUES
+        (17, 18, FALSE, 2000, 'Paycheck'),
+        (17, 19, TRUE, 2000, 'Paycheck'),
+
+        (18, 18, TRUE, 1000, 'Paid Rent'),
+        (18, 22, FALSE, 1000, 'Paid Rent'),
+
+        (19, 18, TRUE, 550, 'Split Transaction Test'),
+        (19, 20, FALSE, 250, 'Groceries'),
+        (19, 21, FALSE, 300, 'Expensive Takeout');
+
+
+
+
 

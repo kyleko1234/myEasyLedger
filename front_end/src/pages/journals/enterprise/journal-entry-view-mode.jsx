@@ -7,7 +7,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
   const appContext = React.useContext(PageSettings);
   const columns = React.useMemo(
     () => [ // accessor is the "key" in the data},
-      { Header: journalEntryViewModeText[appContext.locale]['Description'], accessor: 'description', width:'50%'},
+      { Header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', width:'50%'},
       { Header: journalEntryViewModeText[appContext.locale]['Account'], accessor: 'accountName', width:'24%'},
       { Header: journalEntryViewModeText[appContext.locale]['Debit'], accessor: 'debitAmount', width:'13%'},
       { Header: journalEntryViewModeText[appContext.locale]['Credit'], accessor: 'creditAmount', width:'13%'},

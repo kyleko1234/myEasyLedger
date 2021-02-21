@@ -8,6 +8,24 @@ export const LOCALE_OPTIONS = [
     {value: "zh-TW", label: "中文 (繁體)"}
 ]
 
+// cny yen usd twd eur
+const CURRENCY_I18N = {
+    "en-US": {
+        "CNY": "Chinese Renminbi Yuan",
+        "JPY": "Japanese Yen",
+        "USD": "United States Dollar",
+        "TWD": "New Taiwan Dollar",
+        "EUR": "Euro"
+    },
+    "zh-TW": {
+        "CNY": "TRANSLATION",
+        "JPY": "TRANSLATION",
+        "USD": "TRANSLATION",
+        "TWD": "TRANSLATION",
+        "EUR": "TRANSLATION"
+    }
+}
+
 export const CURRENCY_OPTIONS = (locale) => 
 [
     {value: "AED", label: "United Arab Emirates Dirham"},
@@ -146,30 +164,8 @@ export const CURRENCY_OPTIONS = (locale) =>
     {value: "ZAR", label: "South African Rand"},
     {value: "ZMW", label: "Zambian Kwacha"}
 ]
-// cny yen usd twd eur
-const CURRENCY_I18N = {
-    "en-US": {
-        "CNY": "Chinese Renminbi Yuan",
-        "JPY": "Japanese Yen",
-        "USD": "United States Dollar",
-        "TWD": "New Taiwan Dollar",
-        "EUR": "Euro"
-    },
-    "zh-TW": {
-        "CNY": "TRANSLATION",
-        "JPY": "TRANSLATION",
-        "USD": "TRANSLATION",
-        "TWD": "TRANSLATION",
-        "EUR": "TRANSLATION"
-    }
-}
 
-export const PERMISSION_TYPE_OPTIONS = (locale) => [
-    {value: 1, label: PERMISSION_TYPE_I18N[locale]["VIEW"]},
-    {value: 2, label: PERMISSION_TYPE_I18N[locale]["EDIT"]},
-    {value: 3, label: PERMISSION_TYPE_I18N[locale]["ADMIN"]},
-    {value: 4, label: PERMISSION_TYPE_I18N[locale]["OWN"]}
-]
+
 
 const PERMISSION_TYPE_I18N = {
     "en-US": {
@@ -184,4 +180,39 @@ const PERMISSION_TYPE_I18N = {
         "ADMIN": "TRANSLATION",
         "OWN": "TRANSLATION"
     } 
+}
+
+export const PERMISSION_TYPE_OPTIONS = (locale) => [
+    {value: 1, label: PERMISSION_TYPE_I18N[locale]["VIEW"]},
+    {value: 2, label: PERMISSION_TYPE_I18N[locale]["EDIT"]},
+    {value: 3, label: PERMISSION_TYPE_I18N[locale]["ADMIN"]},
+    {value: 4, label: PERMISSION_TYPE_I18N[locale]["OWN"]}
+]
+
+//transaction type objects/options to assist with data entry logic for organizations where isEnterprise = false.
+//transactions can be thought of as a two LineItem process; moving value the account of the first LineItem to the account of the second LineItem.
+//AccountTypeId and isCredit in these objects refer to the AccountType and Credit/Debit status of the second LineItem in this conceptual pairing
+//Expense transactions generally decrease personal asset value; therefore the asset/liability account is credited and the expense account is debited
+//Income transactions do the opposite, so the asset/liability account is debited and the income account is credited
+//Transfers are transactions debiting one asset/liability account and crediting another; in this case they are conceptualized as moving value FROM the first TO the second; ergo the first account is credited and the second is debited.
+//If you have an equity account in an organization where isEnterprise = false, you did something wrong
+export const PERSONAL_TRANSACTION_TYPES = (locale) => [
+    {value: 1, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Expense"], accountTypeId: 5, isCredit: false},
+    {value: 2, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Income"], accountTypeId: 4, isCredit: true},
+    {value: 3, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Transfer"], accountTypeId: 1, isCredit: false},
+    {value: 4, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Transfer"], accountTypeId: 2, isCredit: false},
+]
+
+const PERSONAL_TRANSACTION_TYPES_I18N = {
+    "en-US": {
+        "Expense": "Expense",
+        "Income": "Income",
+        "Transfer": "Transfer"
+    },
+    "zh-TW": {
+        "Expense": "TRANSLATION",
+        "Income": "TRANSLATION",
+        "Transfer": "TRANSLATION"
+    }
+
 }

@@ -406,18 +406,15 @@ function TableOfJournalEntries({
               <div>
                 {createMode ? null : 
                 <button 
-                  className="btn btn-red" 
-                  style={{ width: "10ch" }}
+                  className="btn btn-red width-10ch" 
                   onClick={() => handleDeleteJournalEntryButton(journalEntryId)}>{tableOfJournalEntriesText[appContext.locale]["Delete"]}</button>}
               </div>
               <div>
-                <button className="btn btn-primary"
-                  style={{ width: "10ch" }}
+                <button className="btn btn-primary width-10ch"
                   onClick={() => handleSaveJournalEntryButton()}>
                   {tableOfJournalEntriesText[appContext.locale]["Save"]}</button>
                 <button
-                  className="btn btn-white m-l-10"
-                  style={{ width: "10ch" }}
+                  className="btn btn-white m-l-10 width-10ch"
                   onClick={() => {
                     createMode ? cancelCreateMode() : fetchJournalEntry(journalEntryId);
                     toggleEditMode();

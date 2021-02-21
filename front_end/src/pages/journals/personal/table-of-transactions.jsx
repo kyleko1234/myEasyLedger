@@ -1,6 +1,13 @@
 import React from 'react';
 import { useTable, usePagination } from 'react-table';
-import tableOfJournalEntriesText from '../../../utils/i18n/table-of-journal-entries-text.js';
+import {tableOfJournalEntriesText} from '../../../utils/i18n/table-of-journal-entries-text.js';
+import {Link} from 'react-router-dom';
+import { PageSettings } from '../../../config/page-settings.js';
+import { API_BASE_URL, PERSONAL_TRANSACTION_TYPES } from '../../../utils/constants.js';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import axios from 'axios';
+import TransactionViewMode from './transaction-view-mode.jsx';
+
 
 // Let's add a fetchData method to our Table component that will be used to fetch
 // new data when pagination state changes
@@ -46,15 +53,91 @@ function TableOfTransactions({
         usePagination
     )
 
+    const appContext = React.useContext(PageSettings);
+    const transactionTypeOptions = PERSONAL_TRANSACTION_TYPES(appContext.locale);
+
     // Listen for changes in pagination and use the state to fetch our new data
     React.useEffect(() => {
         fetchData({ pageIndex, pageSize })
     }, [fetchData, pageIndex, pageSize])
 
-    const openEditorForNewEntry = () => {
+    const [editMode, setEditMode] = React.useState(false); //Toggle editmode for an expanded entry
+    const [createMode, setCreateMode] = React.useState(false);
+    
+    const [transactionExpanded, setTransactionExpanded] = React.useState(false);
+    const [journalEntryId, setJournalEntryId] = React.useState(null);
+    const [journalEntryDescription, setJournalEntryDescription] = React.useState('');
+    const [journalEntryDate, setJournalEntryDate] = React.useState('');
+    const [fromAccountId, setFromAccountId] = React.useState(null);
+    const [fromAccountName, setFromAccountName] = React.useState(null);
+    const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
+    const [accountOptions, setAccountOptions] = React.useState([]);
+    const [categoryOptions, setCategoryOptions] = React.useState([]);
+
+    const [alertMessages, setAlertMessages] = React.useState([]);
+
+    const expandTransaction = (i) => {
+        fetchJournalEntry(i);
+        toggleTransactionExpanded();
+    }
+
+    const toggleTransactionExpanded = () => {
+        setTransactionExpanded(!transactionExpanded);
+    }
+    const handleTransactionModalOnClose = () => {
 
     }
-    // Render the UI for your table
+    const openEditorForNewTransaction = () => {
+
+    }
+
+    const fetchJournalEntry = (i) => {
+        axios.get(`${API_BASE_URL}/journalEntry/${i}`).then(response => {
+            let journalEntry = response.data;
+
+            //set the selected journalentry's id, date, desc as state
+            setJournalEntryId(journalEntry.journalEntryId);
+            setJournalEntryDate(journalEntry.journalEntryDate);
+            setJournalEntryDescription(journalEntry.description);
+            
+            let lineItems = journalEntry.lineItems.slice();
+            lineItems.sort((a, b) => (a.lineItemId > b.lineItemId) ? 1 : -1) //ensure lineItems are sorted by lineItemId ascending
+            
+            //remove the first lineitem from the array, and set its account as the 'from' account
+            let firstLineItem = lineItems.shift();
+            setFromAccountId(firstLineItem.accountId);
+            setFromAccountName(firstLineItem.accountName);
+            //format line items for display
+            let formattedLineItems = lineItems.map(lineItem => {
+                let transactionType = transactionTypeOptions.find(transactionType => transactionType.accountTypeId == lineItem.accountTypeId);
+                return({
+                    lineItemId: lineItem.lineItemId,
+                    accountName: lineItem.accountName,
+                    accountId: lineItem.accountId,
+                    description: lineItem.description,
+                    transactionType: transactionType,
+                    transactionTypeName: transactionType.label,
+                    amount: transactionType.isCredit == lineItem.isCredit? lineItem.amount : lineItem.amount * -1
+                });
+            });
+            setLineItemData(formattedLineItems);    
+        }).catch(console.log);
+    }
+
+    const formatCellValue = cell => {
+        let columnId = cell.column.id;
+        switch (columnId) {
+          case "creditAmount":
+          case "debitAmount":
+            if (cell.value == 0) {
+              return '';
+            }
+            return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cell.value));
+          default:
+            return (cell.value);
+        }
+    }
+
     return (
         <>
             <div className="widget widget-rounded m-b-30">
@@ -63,7 +146,7 @@ function TableOfTransactions({
                         <div className="align-self-center">{tableTitle}</div>
                         <div>
                             {hasAddEntryButton ?
-                                <button className="btn btn-sm btn-primary align-self-center" onClick={openEditorForNewEntry}>
+                                <button className="btn btn-sm btn-primary align-self-center" onClick={openEditorForNewTransaction}>
                                     <i className="ion ion-md-add fa-fw fa-lg"></i> Add a new transaction
                                 </button> : null}
                         </div>
@@ -75,7 +158,7 @@ function TableOfTransactions({
                             {headerGroups.map(headerGroup => (
                                 <tr {...headerGroup.getHeaderGroupProps()}>
                                     {headerGroup.headers.map(column => (
-                                        <th {...column.getHeaderProps()}>
+                                        <th style={{width: column.width}} className={column.id == "debitAmount" || column.id == "creditAmount" ? "text-right" : ""} {...column.getHeaderProps()}>
                                             {column.render('Header')}
                                             <span>
                                                 {column.isSorted
@@ -93,9 +176,9 @@ function TableOfTransactions({
                             {page.map((row, i) => {
                                 prepareRow(row)
                                 return (
-                                    <tr {...row.getRowProps()}>
+                                    <tr className="cursor-pointer" onClick={() => expandTransaction(data[i].journalEntryId)} {...row.getRowProps()}>
                                         {row.cells.map(cell => {
-                                            return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                            return <td className={cell.column.id == "debitAmount" || cell.column.id == "creditAmount" ? "text-right" : ""} {...cell.getCellProps()}> {formatCellValue(cell)} </td>
                                         })}
                                     </tr>
                                 )
@@ -124,6 +207,33 @@ function TableOfTransactions({
                     </span>
                 </div>
             </div>
+            
+            <Modal
+                isOpen={transactionExpanded}
+                toggle={toggleTransactionExpanded}
+                onClosed={handleTransactionModalOnClose}
+                size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
+                centered={true}
+            >
+                <ModalHeader style={{backgroundColor: "#e4e4e4"}}>
+                    Transaction
+                </ModalHeader>
+                <ModalBody>
+                    {editMode? null :
+                        <TransactionViewMode
+                            data={lineItemData}
+                            journalEntryDescription={journalEntryDescription}
+                            journalEntryDate={journalEntryDate}
+                            fromAccountName={fromAccountName}
+                        />
+                    }
+                </ModalBody>
+                <ModalFooter style={{backgroundColor: "#e4e4e4"}}>
+
+                </ModalFooter>
+            </Modal>
         </>
     )
 }
+
+export default TableOfTransactions;

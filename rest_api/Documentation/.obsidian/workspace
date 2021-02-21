@@ -6,11 +6,10 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "LineItem/Contents/Retrieve All LineItems for an Account Group.md",
+            "file": "JournalEntry/Contents/Create a JournalEntry.md",
             "mode": "source"
           }
         },
@@ -19,10 +18,11 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
+        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "LineItem/Contents/Retrieve All LineItems for an Account Group.md",
+            "file": "JournalEntry/Contents/Create a JournalEntry.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "LineItem/Contents/Retrieve All LineItems for an Account Group.md",
+                "file": "JournalEntry/Contents/Create a JournalEntry.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +99,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "JournalEntry/Contents/Create a JournalEntry.md",
+    "JournalEntry/Contents/The JournalEntry Object.md",
+    "JournalEntry/JournalEntry.md",
+    "JournalEntry/Contents/Delete a JournalEntry.md",
     "LineItem/Contents/Retrieve All LineItems for an Account Group.md",
     "LineItem/Contents/Retrieve All LineItems for an Account.md",
     "Organization/Contents/Create an Organization.md",
     "Permission/Contents/Delete a Permission Object.md",
     "Permission/Contents/Edit a Permission Object.md",
-    "Person/Contents/List All Persons in an Organization.md",
-    "Easy Ledger.md",
-    "Permission/Contents/Create a Permission for an Organization.md",
-    "Reports/Contents/Generate an Income Statement.md",
-    "Person/Contents/Update a Person.md"
+    "Person/Contents/List All Persons in an Organization.md"
   ]
 }

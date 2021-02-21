@@ -6,6 +6,6 @@ ___
 - [[Create a JournalEntry]]
 - [[Retrieve a JournalEntry]]
 - [[Update a JournalEntry]]
-- [[Delete a  JournalEntry]]
+- [[Delete a JournalEntry]]
 - [[List All JournalEntries]]
 - [[List All JournalEntries Belonging to an Organization as JournalEntryViewModels]]

@@ -1,6 +1,6 @@
 export const journalEntryEditModeText = {
     "en-US" : {
-        "Description": "Description",
+        "Memo": "Memo",
         "Account": "Account",
         "Debit": "Debit",
         "Credit": "Credit",
@@ -13,10 +13,10 @@ export const journalEntryEditModeText = {
         "Copy description to line items": "Copy description to line items"
     },
     "zh-TW" : {
-        "Description": "描述",
+        "Memo": "TRANSLATION",
         "Account": "科目",
         "Debit": "借方",
-        "Credit": "TRANSLATION HERE",
+        "Credit": "貸方",
 
         "Date": "日期",
         "Description": "描述",
