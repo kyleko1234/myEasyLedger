@@ -100,14 +100,14 @@
   },
   "lastOpenFiles": [
     "JournalEntry/Contents/Create a JournalEntry.md",
+    "Account/Contents/The Account Object.md",
+    "Account/Account.md",
     "JournalEntry/Contents/The JournalEntry Object.md",
     "JournalEntry/JournalEntry.md",
     "JournalEntry/Contents/Delete a JournalEntry.md",
     "LineItem/Contents/Retrieve All LineItems for an Account Group.md",
     "LineItem/Contents/Retrieve All LineItems for an Account.md",
     "Organization/Contents/Create an Organization.md",
-    "Permission/Contents/Delete a Permission Object.md",
-    "Permission/Contents/Edit a Permission Object.md",
-    "Person/Contents/List All Persons in an Organization.md"
+    "Permission/Contents/Delete a Permission Object.md"
   ]
 }

@@ -8,9 +8,9 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
             { Header: journalEntryViewModeText[appContext.locale]['Transaction Type'], accessor: 'transactionTypeName', width: '25%' },
-            { Header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', width: '25%' },
             { Header: journalEntryViewModeText[appContext.locale]['Category or Account'], accessor: 'accountName', width: '25%' },
             { Header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', width: '25%' },
+            { Header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', width: '25%' },
         ],
         []
     )
@@ -58,14 +58,14 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
     return (
         <>
             <div className="row m-b-10">
-                <div className="col-md-1"><strong>{journalEntryViewModeText[appContext.locale]["From Account"]}</strong></div> <div className="col-md-11">{fromAccountName}</div>
+                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["From Account"]}</strong></div> <div className="col-lg-10">{fromAccountName}</div>
             </div>
 
             <div className="row m-b-10">
-                <div className="col-md-1"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-md-11">{journalEntryDate}</div>
+                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-lg-10">{journalEntryDate}</div>
             </div>
             <div className="row m-b-10">
-                <div className="col-md-1"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-md-11">{journalEntryDescription}</div>
+                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-lg-10">{journalEntryDescription}</div>
             </div>
             <br></br>
 
@@ -103,11 +103,11 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                     <tfoot>
                         <tr>
                             <td>{journalEntryViewModeText[appContext.locale]["Total"]}</td>
+                            <td></td>
+                            <td></td>
                             <td className="text-right">
                                 {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmounts())}
                             </td>
-                            <td></td>
-                            <td></td>
                         </tr>
                     </tfoot>
                 </table>

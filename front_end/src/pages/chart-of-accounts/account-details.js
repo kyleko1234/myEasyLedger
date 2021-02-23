@@ -1,5 +1,5 @@
 import React from 'react';
-import TableOfJournalEntries from '../journals/components/table-of-journal-entries';
+import TableOfJournalEntries from '../journals/enterprise/table-of-journal-entries';
 import { API_BASE_URL } from '../../utils/constants';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
@@ -168,6 +168,7 @@ function AccountDetails(props) {
                             pageCount={pageCount}
                             elementCount={elementCount}
                             tableTitle={selectedAccount.accountName}
+                            parentComponentAccountId={selectedAccountId}
                             hasAddEntryButton={true}
                         /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
                     </div>

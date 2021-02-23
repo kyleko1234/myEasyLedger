@@ -197,10 +197,9 @@ export const PERMISSION_TYPE_OPTIONS = (locale) => [
 //Transfers are transactions debiting one asset/liability account and crediting another; in this case they are conceptualized as moving value FROM the first TO the second; ergo the first account is credited and the second is debited.
 //If you have an equity account in an organization where isEnterprise = false, you did something wrong
 export const PERSONAL_TRANSACTION_TYPES = (locale) => [
-    {value: 1, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Expense"], accountTypeId: 5, isCredit: false},
-    {value: 2, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Income"], accountTypeId: 4, isCredit: true},
-    {value: 3, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Transfer"], accountTypeId: 1, isCredit: false},
-    {value: 4, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Transfer"], accountTypeId: 2, isCredit: false},
+    {value: 1, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Expense"], accountTypeIds: [5], isCredit: false},
+    {value: 2, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Income"], accountTypeIds: [4], isCredit: true},
+    {value: 3, label: PERSONAL_TRANSACTION_TYPES_I18N[locale]["Transfer"], accountTypeIds: [1, 2], isCredit: false}
 ]
 
 const PERSONAL_TRANSACTION_TYPES_I18N = {
