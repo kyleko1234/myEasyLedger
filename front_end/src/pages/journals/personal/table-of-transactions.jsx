@@ -171,13 +171,13 @@ function TableOfTransactions({
     const populateAlertMessages = () => {
         let newAlertMessages = [];
         if (!fromAccountId) {
-            newAlertMessages.push("Transaction must be assigned to an account.");
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must be assigned to an account."]);
         }
         if (!journalEntryDate) {
-            newAlertMessages.push("Transaction must have a date.")
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must have a date."])
         }
         if (!journalEntryDescription) {
-            newAlertMessages.push("Transaction must be given a description.")
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must be given a description."])
         }
         let missingAccount = false;
         let missingAmount = false;
@@ -194,13 +194,13 @@ function TableOfTransactions({
             }
         })
         if (missingAccount) {
-            newAlertMessages.push("Line-items must be assigned to an account or category.");
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Line-items must be assigned to an account or category."]);
         }
         if (missingAmount) {
-            newAlertMessages.push("Please provide an amount for each item.");
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Please provide an amount for each item."]);
         }
         if (missingTransactionType) {
-            newAlertMessages.push("Please specify a transaction type for each item.");
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Please specify a transaction type for each item."]);
         }
         setAlertMessages(newAlertMessages);
         return(newAlertMessages);
@@ -320,7 +320,7 @@ function TableOfTransactions({
                         <div>
                             {hasAddEntryButton ?
                                 <button className="btn btn-sm btn-primary align-self-center" onClick={openEditorForNewTransaction}>
-                                    <i className="ion ion-md-add fa-fw fa-lg"></i> Add a new transaction
+                                    <i className="ion ion-md-add fa-fw fa-lg"></i> {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
                                 </button> : null}
                         </div>
                     </h4>
