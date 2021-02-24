@@ -8,6 +8,7 @@ import { PageSettings } from '../../config/page-settings';
 import { accountDetailsText } from '../../utils/i18n/account-details-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 import TableOfTransactions from '../journals/personal/table-of-transactions';
+import BalanceSummary from '../dashboard/components/balance-summary';
 
 function AccountDetails(props) {
 
@@ -46,6 +47,7 @@ function AccountDetails(props) {
     //
     const [selectedAccount, setSelectedAccount] = React.useState(null);
     const [accountGroupOptions, setAccountGroupOptions] = React.useState(null);
+    const [refreshToken, setRefreshToken] = React.useState(0); //set this to a random number when a child component updates to force all child components to update together. Theoretically children components might fail to update if you get two identical random numbers in a row but lmao you're never gonna be able to reproduce this, just refresh
 
     //initially fetch account data, list of subtypes, list of categories, list of types from API
     React.useEffect(() => {
@@ -115,8 +117,8 @@ function AccountDetails(props) {
             }))
             setAccountGroupOptions(formattedAccountGroupOptions);
         }).catch(console.log);
-
-    }, [])
+        setRefreshToken(Math.random());
+    }, [selectedAccountId])
 
     return (
         <>
@@ -131,8 +133,6 @@ function AccountDetails(props) {
                 {accountDetailsText[appContext.locale]["Account Details"]}
                 <ToggleMobileSidebarButton className="d-md-none float-right " />
             </h1>
-
-
             {appContext.isEnterprise ?
                 <div className="row">
                     <div className="col-lg-8">
@@ -172,6 +172,14 @@ function AccountDetails(props) {
                             hasAddEntryButton={true}
                         /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
                     </div>
+                    <div className="col-lg-4">
+                        <div>
+                            {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                            <BalanceSummary widgetTitle="Account Switcher" selectedAccountId={selectedAccountId} externalRefreshToken={refreshToken}/>
+                            }
+                        </div>
+                    </div>
+
                 </div>
             }
 

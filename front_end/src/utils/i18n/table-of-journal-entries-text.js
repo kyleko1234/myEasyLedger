@@ -23,7 +23,9 @@ export const tableOfJournalEntriesText = {
         "Line-items must be assigned to an account or category.": "Line-items must be assigned to an account or category.",
         "Please provide an amount for each item.": "Please provide an amount for each item.",
         "Please specify a transaction type for each item.": "Please specify a transaction type for each item.",
-        "Add a new transaction": "Add a new transaction"
+        "Add a new transaction": "Add a new transaction",
+        "Transaction must have at least one item.": "Transaction must have at least one item.",
+        "Entry must have line-items.": "Entry must have line-items."
     },
     "zh-TW": {
         "Please choose a date for this entry.": "請為分錄選一個日期。",
@@ -49,6 +51,8 @@ export const tableOfJournalEntriesText = {
         "Line-items must be assigned to an account or category.": "TRANSLATION",
         "Please provide an amount for each item.": "TRANSLATION",
         "Please specify a transaction type for each item.": "TRANSLATION",
-        "Add a new transaction": "TRANSLATION"
+        "Add a new transaction": "TRANSLATION",
+        "Transaction must have at least one item.": "TRANSLATION",
+        "Entry must have line-items.": "TRANSLATION"
     }
 }

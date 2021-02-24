@@ -67,3 +67,7 @@ a.icon-link-text-muted:hover {
     color: #fff;
 }
 
+.bg-white-hover {
+    background-color: #f3f3f3 !important;
+}
+

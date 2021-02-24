@@ -61,7 +61,7 @@ function TableOfTransactions({
     // Listen for changes in pagination and use the state to fetch our new data
     React.useEffect(() => {
         fetchData({ pageIndex, pageSize })
-    }, [fetchData, pageIndex, pageSize])
+    }, [fetchData, pageIndex, pageSize, parentComponentAccountId])
 
     const [editMode, setEditMode] = React.useState(false); //Toggle editmode for an expanded entry
     const [createMode, setCreateMode] = React.useState(false);
@@ -174,10 +174,13 @@ function TableOfTransactions({
             newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must be assigned to an account."]);
         }
         if (!journalEntryDate) {
-            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must have a date."])
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must have a date."]);
         }
         if (!journalEntryDescription) {
-            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must be given a description."])
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must be given a description."]);
+        }
+        if (lineItemData.length == 0) {
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must have at least one item."]);
         }
         let missingAccount = false;
         let missingAmount = false;
@@ -391,7 +394,7 @@ function TableOfTransactions({
                 <ModalHeader style={{ backgroundColor: "#e4e4e4" }}>
                     Transaction
                 </ModalHeader>
-                <ModalBody>
+                <ModalBody className="bg-light">
                     {editMode ?
                         <TransactionEditMode
                             data={lineItemData}

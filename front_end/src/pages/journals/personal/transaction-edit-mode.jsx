@@ -138,6 +138,12 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
         setLineItemData(updatedLineItemData);
     }
 
+    const removeLineItem = i => {
+        let updatedLineItemData = data.slice();
+        updatedLineItemData.splice(i, 1);
+        setLineItemData(updatedLineItemData);
+    }
+
     return (
         <>
             { alertMessages.length ? 
@@ -206,6 +212,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                         {column.render('Header')}
                                     </th>
                                 ))}
+                                <th></th>
                             </tr>
                         ))}
                     </thead>
@@ -220,6 +227,11 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                                 <td {...cell.getCellProps()}>{returnFormByColumnType(cell)}</td>
                                             )
                                         })}
+                                        <td>
+                                            <button className="btn btn-lg btn-icon btn-light" onClick={() => removeLineItem(i)}>
+                                                <i className="ion ion-md-close fa-fw fa-lg"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 )
                             }
@@ -233,6 +245,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                             <td>
                                 {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmounts())}
                             </td>
+                            <td></td>
                         </tr>
                     </tfoot>
                 </table>

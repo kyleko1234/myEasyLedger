@@ -189,7 +189,9 @@ function TableOfJournalEntries({
     if (!journalEntryDescription) {
       errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Please provide a description for this entry."]);
     }
-
+    if (lineItemData.length == 0) {
+      errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Entry must have line-items."]);
+    }
     let debitSum = 0;
     let creditSum = 0;
     let missingAmount = false;
