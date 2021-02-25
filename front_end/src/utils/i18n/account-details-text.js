@@ -6,11 +6,14 @@ export const accountDetailsText = {
         "Credit": "Credit",
         "Inflow": "Inflow",
         "Outflow": "Outflow",
-
         "Home": "Home",
         "Chart of Accounts": "Chart of Accounts",
         "Accounts": "Accounts",
-        "Account Details": "Account Details"
+        "Account Details": "Account Details",
+        
+        "Categories": "Categories",
+        "Category Details": "Category Details",
+        "Amount": "Amount"
 
     },
     "zh-TW": {
@@ -24,7 +27,12 @@ export const accountDetailsText = {
         "Home": "首頁",
         "Chart of Accounts": "會計科目表",
         "Accounts": "TRANSLATION",
-        "Account Details": "科目說明"
+        "Account Details": "科目說明",
+
+        "Categories": "TRANSLATION",
+        "Category Details": "TRANSLATION",
+        "Amount": "TRANSLATION"
+
 
     },
 

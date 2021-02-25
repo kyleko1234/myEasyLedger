@@ -74,6 +74,7 @@ import ManageEasyLedger from '../pages/settings/manage-easyledger';
 import CreateANewOrganization from '../components/sidebar/create-a-new-organization.js';
 import Accounts from '../pages/accounts/accounts.js';
 import Categories from '../pages/categories/categories.js';
+import CategoryDetails from '../pages/categories/category-details.js';
 
 const routes = [
   {
@@ -463,7 +464,12 @@ const routes = [
     path: '/categories/:activeTabId',
     title: 'Categories',
     component: Categories
-  }
+  },
+  {
+    path: '/category-details/:id',
+    title: 'Category Details',
+    component: CategoryDetails,
+  },
 
 ];
 

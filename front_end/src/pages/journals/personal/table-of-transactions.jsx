@@ -23,7 +23,8 @@ function TableOfTransactions({
     elementCount,
     tableTitle,
     hasAddEntryButton,
-    parentComponentAccountId
+    parentComponentAccountId,
+    loading
 }) {
     const {
         getTableProps,
@@ -305,6 +306,7 @@ function TableOfTransactions({
         switch (columnId) {
             case "creditAmount":
             case "debitAmount":
+            case "amount":
                 if (cell.value == 0) {
                     return '';
                 }
@@ -316,73 +318,75 @@ function TableOfTransactions({
 
     return (
         <>
-            <div className="widget widget-rounded m-b-30">
-                <div className="widget-header bg-light">
-                    <h4 className="widget-header-title d-flex justify-content-between ">
-                        <div className="align-self-center">{tableTitle}</div>
-                        <div>
-                            {hasAddEntryButton ?
-                                <button className="btn btn-sm btn-primary align-self-center" onClick={openEditorForNewTransaction}>
-                                    <i className="ion ion-md-add fa-fw fa-lg"></i> {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
-                                </button> : null}
-                        </div>
-                    </h4>
-                </div>
-                <div className="table-responsive bg-white border-top">
-                    <table {...getTableProps()} className="table table-hover m-b-0 text-inverse">
-                        <thead>
-                            {headerGroups.map(headerGroup => (
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map(column => (
-                                        <th style={{ width: column.width }} className={column.id == "debitAmount" || column.id == "creditAmount" ? "text-right" : ""} {...column.getHeaderProps()}>
-                                            {column.render('Header')}
-                                            <span>
-                                                {column.isSorted
-                                                    ? column.isSortedDesc
-                                                        ? ' 🔽'
-                                                        : ' 🔼'
-                                                    : ''}
-                                            </span>
-                                        </th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {page.map((row, i) => {
-                                prepareRow(row)
-                                return (
-                                    <tr className="cursor-pointer" onClick={() => expandTransaction(data[i].journalEntryId)} {...row.getRowProps()}>
-                                        {row.cells.map(cell => {
-                                            return <td className={cell.column.id == "debitAmount" || cell.column.id == "creditAmount" ? "text-right" : ""} {...cell.getCellProps()}> {formatCellValue(cell)} </td>
-                                        })}
+            {//*loading? <div className="widget widget-rounded"><div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div></div> :  this line is commented out for now since seeing a loading spinner every time you close a modal is incredibly annoying
+                <div className="widget widget-rounded m-b-30">
+                    <div className="widget-header bg-light">
+                        <h4 className="widget-header-title d-flex justify-content-between ">
+                            <div className="align-self-center">{tableTitle}</div>
+                            <div>
+                                {hasAddEntryButton ?
+                                    <button className="btn btn-sm btn-primary align-self-center" onClick={openEditorForNewTransaction}>
+                                        <i className="ion ion-md-add fa-fw fa-lg"></i> {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
+                                    </button> : null}
+                            </div>
+                        </h4>
+                    </div>
+                    <div className="table-responsive bg-white border-top">
+                        <table {...getTableProps()} className="table table-hover m-b-0 text-inverse">
+                            <thead>
+                                {headerGroups.map(headerGroup => (
+                                    <tr {...headerGroup.getHeaderGroupProps()}>
+                                        {headerGroup.headers.map(column => (
+                                            <th style={{ width: column.width }} className={column.id == "debitAmount" || column.id == "creditAmount" || column.id == "amount" ? "text-right" : ""} {...column.getHeaderProps()}>
+                                                {column.render('Header')}
+                                                <span>
+                                                    {column.isSorted
+                                                        ? column.isSortedDesc
+                                                            ? ' 🔽'
+                                                            : ' 🔼'
+                                                        : ''}
+                                                </span>
+                                            </th>
+                                        ))}
                                     </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
+                                ))}
+                            </thead>
+                            <tbody {...getTableBodyProps()}>
+                                {page.map((row, i) => {
+                                    prepareRow(row)
+                                    return (
+                                        <tr className="cursor-pointer" onClick={() => expandTransaction(data[i].journalEntryId)} {...row.getRowProps()}>
+                                            {row.cells.map(cell => {
+                                                return <td className={cell.column.id == "debitAmount" || cell.column.id == "creditAmount" || cell.column.id == "amount" ? "text-right" : ""} {...cell.getCellProps()}> {formatCellValue(cell)} </td>
+                                            })}
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="d-flex justify-content-between px-1 py-2 border-top bg-light" >
+                        <span style={{ width: "25ch" }}>
+                            <ul className="pager align-self-center m-t-0 m-b-0">
+                                <li className={canPreviousPage ? "previous" : "previous disabled"}>
+                                    {canPreviousPage ? <Link onClick={() => previousPage()} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link> : null}
+                                </li>
+                            </ul>
+                        </span>
+                        <span className="align-self-center">
+                            Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + page.length)} of {elementCount}{' '}
+                            results
+                        </span>{/**TODO replace with page selector */}
+                        <span>
+                            <ul className="pager align-self-center m-t-0 m-b-0" style={{ width: "25ch" }}>
+                                <li className={canNextPage ? "next" : "next disabled"}>
+                                    {canNextPage ? <Link onClick={() => nextPage()} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link> : null}
+                                </li>
+                            </ul>
+                        </span>
+                    </div>
                 </div>
-                <div className="d-flex justify-content-between px-1 py-2 border-top bg-light" >
-                    <span style={{ width: "25ch" }}>
-                        <ul className="pager align-self-center m-t-0 m-b-0">
-                            <li className={canPreviousPage ? "previous" : "previous disabled"}>
-                                {canPreviousPage ? <Link onClick={() => previousPage()} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link> : null}
-                            </li>
-                        </ul>
-                    </span>
-                    <span className="align-self-center">
-                        Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + page.length)} of {elementCount}{' '}
-                        results
-                    </span>{/**TODO replace with page selector */}
-                    <span>
-                        <ul className="pager align-self-center m-t-0 m-b-0" style={{ width: "25ch" }}>
-                            <li className={canNextPage ? "next" : "next disabled"}>
-                                {canNextPage ? <Link onClick={() => nextPage()} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link> : null}
-                            </li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
+            }
 
             <Modal
                 isOpen={transactionExpanded}

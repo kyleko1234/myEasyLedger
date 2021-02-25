@@ -304,7 +304,7 @@ class Categories extends React.Component {
                                                 </div>
                                                 {!this.state.accounts ? null : this.state.accounts.filter(account => account.accountGroupId == accountGroup.accountGroupId).map(account => {
                                                     return (
-                                                        <Link className="widget-list-item bg-white" to={`/account-details/${account.accountId}`} key={account.accountId.toString()}>
+                                                        <Link className="widget-list-item bg-white" to={`/category-details/${account.accountId}`} key={account.accountId.toString()}>
                                                             <div className="widget-list-content p-l-30">
                                                                 <div className="widget-list-title">{account.accountName}</div>
                                                             </div>

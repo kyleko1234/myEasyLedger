@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "JournalEntry/Contents/Create a JournalEntry.md",
+            "file": "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "JournalEntry/Contents/Create a JournalEntry.md",
+            "file": "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JournalEntry/Contents/Create a JournalEntry.md",
+                "file": "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,6 +99,7 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
     "JournalEntry/Contents/Create a JournalEntry.md",
     "Account/Contents/The Account Object.md",
     "Account/Account.md",
@@ -107,7 +108,6 @@
     "JournalEntry/Contents/Delete a JournalEntry.md",
     "LineItem/Contents/Retrieve All LineItems for an Account Group.md",
     "LineItem/Contents/Retrieve All LineItems for an Account.md",
-    "Organization/Contents/Create an Organization.md",
-    "Permission/Contents/Delete a Permission Object.md"
+    "Organization/Contents/Create an Organization.md"
   ]
 }

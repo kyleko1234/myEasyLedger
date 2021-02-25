@@ -215,3 +215,6 @@ const PERSONAL_TRANSACTION_TYPES_I18N = {
     }
 
 }
+
+export const CATEGORY_ACCOUNT_TYPES = [4, 5];
+export const NON_CATEGORY_ACCOUNT_TYPES = [1, 2];

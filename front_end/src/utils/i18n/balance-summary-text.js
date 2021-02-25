@@ -3,12 +3,15 @@ export const balanceSummaryText = {
         "Balance Summary": "Balance Summary",
         "Account": "Account",
         "Balance": "Balance",
-        "Account Switcher": "Account Switcher"
+        "Switch Accounts": "Switch Accounts",
+        "Switch Categories": "Switch Categories"
     },
     "zh-TW": {
         "Balance Summary": "餘額總覽",
         "Account": "科目",
         "Balance": "餘額",
-        "Account Switcher": "TRANSLATION"
+        "Switch Accounts": "TRANSLATION",
+        "Switch Categories": "TRANSLATION"
+
     }
 }
