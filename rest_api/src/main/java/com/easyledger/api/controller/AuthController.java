@@ -94,7 +94,7 @@ public class AuthController {
     
     @PostMapping("/auth/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public String registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws ConflictException, MessagingException {
+    public String registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws ConflictException, MessagingException, ResourceNotFoundException {
     	//validate fields on the signUpRequest Form, asserting that confirmEmail and confirmPassword fields match and that the user has agreed to terms and conditions.
     	signUpRequest.validateRequest();
     	

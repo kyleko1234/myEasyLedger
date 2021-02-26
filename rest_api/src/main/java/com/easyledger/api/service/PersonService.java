@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.easyledger.api.exception.AppException;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountGroup;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.Organization;
@@ -56,6 +57,9 @@ public class PersonService {
 	private AccountSubtypeRepository accountSubtypeRepo;
 	
 	@Autowired
+	private AccountRepository accountRepo;
+	
+	@Autowired
 	private PermissionRepository permissionRepo;
 	
 	@Autowired
@@ -68,7 +72,7 @@ public class PersonService {
 	public PersonService(OrganizationRepository organizationRepo, PersonRepository personRepo, PasswordEncoder passwordEncoder, RoleRepository roleRepo,
 			VerificationService verificationService, AccountSubtypeRepository accountSubtypeRepo, 
 			PermissionRepository permissionRepo, PermissionTypeRepository permissionTypeRepo,
-			AccountGroupRepository accountGroupRepo) {
+			AccountGroupRepository accountGroupRepo, AccountRepository accountRepo) {
 		super();
 		this.organizationRepo = organizationRepo;
 		this.personRepo = personRepo;
@@ -79,6 +83,7 @@ public class PersonService {
 		this.permissionRepo = permissionRepo;
 		this.permissionTypeRepo = permissionTypeRepo;
 		this.accountGroupRepo = accountGroupRepo;
+		this.accountRepo = accountRepo;
 	}
 	
 	public void updatePerson(Person person, Map<Object, Object> fields) 
@@ -132,7 +137,7 @@ public class PersonService {
 	//before calling this method it is recommended to validate the signup request by calling signUpRequest.validateRequest()
 	//creates a and persists an person, an organization for the person, and a verification token, based on the data from the signuprequest form.
 	//The created Person will be unverified (i.e. person.enabled = false). The VerificationToken for the person is returned by this method, and should be used by the AuthController to create a verification link and send a verification email to the user.
-	public VerificationToken createPersonFromSignUpRequest(SignUpRequest signUpRequest) throws ConflictException { 
+	public VerificationToken createPersonFromSignUpRequest(SignUpRequest signUpRequest) throws ConflictException, ResourceNotFoundException { 
     	assertUniqueEmail(signUpRequest.getEmail());
     	assertValidLocale(signUpRequest.getLocale());
     	
@@ -170,17 +175,63 @@ public class PersonService {
 	}
 	
 	/* Automatically populate a person with default AccountGroups. By default we create a corresponding AccountGroup for every AccountSubtype. */
-	public void autoPopulateOrganization(Organization organization) {
-		List<AccountSubtype> accountSubtypes = accountSubtypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
-		ArrayList<AccountGroup> defaultAccountGroups = new ArrayList<AccountGroup>();
-		for (AccountSubtype accountSubtype : accountSubtypes) {
-			AccountGroup group = new AccountGroup(accountSubtype.getName(), accountSubtype);
-			defaultAccountGroups.add(group);
+	public void autoPopulateOrganization(Organization organization) throws ResourceNotFoundException {
+		if (organization.isIsEnterprise()) {
+			List<AccountSubtype> accountSubtypes = accountSubtypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
+			ArrayList<AccountGroup> defaultAccountGroups = new ArrayList<AccountGroup>();
+			for (AccountSubtype accountSubtype : accountSubtypes) {
+				AccountGroup group = new AccountGroup(accountSubtype.getName(), accountSubtype);
+				defaultAccountGroups.add(group);
+			}
+			for (AccountGroup accountGroup : defaultAccountGroups) {
+				accountGroup.setOrganization(organization);
+			}
+			accountGroupRepo.saveAll(defaultAccountGroups);
+		} else {
+			AccountSubtype otherCurrentAssets = accountSubtypeRepo.findById((long) 5)
+					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+			AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 15)
+					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 15"));
+			AccountSubtype otherIncome = accountSubtypeRepo.findById((long) 22)
+					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 22"));
+			AccountSubtype otherExpenses = accountSubtypeRepo.findById((long) 28)
+					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 28"));
+			
+			AccountGroup cash = new AccountGroup("Cash", otherCurrentAssets);
+			AccountGroup bankAccounts = new AccountGroup("Bank Accounts", otherCurrentAssets);
+			AccountGroup creditCards = new AccountGroup("Credit Cards", otherCurrentLiabilities);
+			AccountGroup jobs = new AccountGroup("Jobs", otherIncome);
+			AccountGroup projects = new AccountGroup("Projects", otherIncome);
+			AccountGroup food = new AccountGroup("Food", otherExpenses);
+			AccountGroup living = new AccountGroup("Living", otherExpenses);
+			AccountGroup transportation = new AccountGroup("Transportation", otherExpenses);
+			AccountGroup education = new AccountGroup("Education", otherExpenses);
+			AccountGroup discretionary = new AccountGroup("Discretionary", otherExpenses);
+			
+			List<AccountGroup> accountGroups = Arrays.asList(cash, bankAccounts, creditCards, jobs, projects, food, living, transportation, education, discretionary);
+			for (AccountGroup accountGroup : accountGroups) {
+				accountGroup.setOrganization(organization);
+				accountGroupRepo.save(accountGroup);
+			}
+			
+			Account cashAccount = new Account("Cash", cash);
+			Account savingsAccount = new Account("Savings Account", bankAccounts);
+			Account checkingAccount = new Account("Checking Account", bankAccounts);
+			Account investmentAccount = new Account("Investment Account", bankAccounts);
+			Account creditCard = new Account("Credit Card #1", creditCards);
+			Account job = new Account("Job #1", jobs);
+			Account project = new Account("Project #1", projects);
+			Account groceries = new Account("Groceries", food);
+			Account dining = new Account("Dining", food);
+			Account rent = new Account("Rent", living);
+			Account transportationAccount = new Account("Transportation", transportation);
+			Account tuition = new Account("Tuition", education);
+			Account apparel = new Account("Apparel", discretionary);
+			Account entertainment = new Account("Entertainment", discretionary);
+			
+			accountRepo.saveAll(Arrays.asList(cashAccount, savingsAccount, checkingAccount, investmentAccount, creditCard,
+					job, project, groceries, dining, rent, transportationAccount, tuition, apparel, entertainment));
 		}
-		for (AccountGroup accountGroup : defaultAccountGroups) {
-			accountGroup.setOrganization(organization);
-		}
-		accountGroupRepo.saveAll(defaultAccountGroups);
 		
 	}
 	

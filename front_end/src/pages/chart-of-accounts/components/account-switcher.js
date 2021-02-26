@@ -65,7 +65,7 @@ function AccountSwitcher(props) {
     }
     return (
         <div className="widget widget-rounded widget-list widget-list-rounded mb-3">
-            <div className="widget-header bg-light border-bottom">
+            <div className="widget-header border-bottom">
                 <h4 className="widget-header-title">{balanceSummaryText[appContext.locale][props.widgetTitle]}</h4>
             </div>
             <div className="overflow-auto" style={{ height: '500px' }}>
