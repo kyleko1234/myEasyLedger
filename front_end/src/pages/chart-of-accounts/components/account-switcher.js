@@ -81,9 +81,9 @@ function AccountSwitcher(props) {
                                 {accounts ? 
                                     accounts.filter(account => account.accountGroupId == accountGroup.accountGroupId).map(account => {
                                         return(
-                                            <>
+                                            <React.Fragment key={account.accountId}>
                                                 {account.accountId == props.selectedAccountId? 
-                                                    <div className="widget-list-item bg-white-hover" key={account.accountId}>
+                                                    <div className="widget-list-item bg-white-hover">
                                                         <div className="widget-list-content p-l-30">
                                                             <div className="widget-list-title">{account.accountName}</div>
                                                         </div>
@@ -97,7 +97,7 @@ function AccountSwitcher(props) {
                                                         </div>
                                                     </div>
                                                     :
-                                                    <Link className="widget-list-item bg-white" to={props.category? `/category-details/${account.accountId}`: `/account-details/${account.accountId}`} key={account.accountId}>
+                                                    <Link className="widget-list-item bg-white" to={props.category? `/category-details/${account.accountId}`: `/account-details/${account.accountId}`}>
                                                         <div className="widget-list-content p-l-30">
                                                             <div className="widget-list-title">{account.accountName}</div>
                                                         </div>
@@ -111,7 +111,7 @@ function AccountSwitcher(props) {
                                                         </div>
                                                     </Link>
                                                 }
-                                            </>
+                                            </React.Fragment>
                                         )
                                     })
                                 : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}

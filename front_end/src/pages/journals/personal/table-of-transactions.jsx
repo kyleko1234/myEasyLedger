@@ -8,6 +8,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
 import TransactionViewMode from './transaction-view-mode.jsx';
 import TransactionEditMode from './transaction-edit-mode.jsx';
+import AccountDetailsEditor from '../../chart-of-accounts/components/account-details-editor.js';
 
 
 // Let's add a fetchData method to our Table component that will be used to fetch
@@ -75,8 +76,12 @@ function TableOfTransactions({
     const [fromAccountName, setFromAccountName] = React.useState(null);
     const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
     const [accountOptions, setAccountOptions] = React.useState([]);
-
     const [alertMessages, setAlertMessages] = React.useState([]);
+
+    const [accountDetailsEditorModal, setAccountDetailsEditorModal] = React.useState(false);
+    const toggleAccountDetailsEditorModal = () => {
+        setAccountDetailsEditorModal(!accountDetailsEditorModal)
+    };
 
 
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
@@ -322,7 +327,14 @@ function TableOfTransactions({
                 <div className="widget widget-rounded m-b-30">
                     <div className="widget-header bg-light">
                         <h4 className="widget-header-title d-flex justify-content-between ">
-                            <div className="align-self-center">{tableTitle}</div>
+                            <div className="align-self-center">
+                                {tableTitle}
+                                {parentComponentAccountId? 
+                                    <Link replace className="icon-link-text-muted m-l-10" to="#" onClick={toggleAccountDetailsEditorModal}>
+                                        <i className="fa fa-edit"></i>
+                                    </Link> 
+                                : null}
+                            </div>
                             <div>
                                 {hasAddEntryButton ?
                                     <button className="btn btn-sm btn-primary align-self-center" onClick={openEditorForNewTransaction}>
@@ -430,7 +442,7 @@ function TableOfTransactions({
                             <div>
                                 {createMode ? null :
                                     <button
-                                        className="btn btn-red width-10ch"
+                                        className="btn btn-danger width-10ch"
                                         onClick={handleDeleteTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Delete"]}</button>}
                             </div>
                             <div>
@@ -454,6 +466,7 @@ function TableOfTransactions({
                     }
                 </ModalFooter>
             </Modal>
+            {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} elementCount={elementCount}/> : null}
         </>
     )
 }

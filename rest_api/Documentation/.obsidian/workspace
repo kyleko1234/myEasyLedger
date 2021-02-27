@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "AccountSubtype/AccountSubtype.md",
+            "file": "Account/Contents/Update an Account.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "AccountSubtype/AccountSubtype.md",
+            "file": "Account/Contents/Update an Account.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AccountSubtype/AccountSubtype.md",
+                "file": "Account/Contents/Update an Account.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,15 +99,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "AccountSubtype/AccountSubtype.md",
+    "Account/Contents/Update an Account.md",
+    "AccountGroup/Contents/Update an AccountGroup.md",
+    "AccountGroup/Contents/The AccountGroup Object.md",
     "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
+    "AccountGroup/Contents/List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects.md",
+    "AccountSubtype/AccountSubtype.md",
     "JournalEntry/Contents/Create a JournalEntry.md",
     "Account/Contents/The Account Object.md",
     "Account/Account.md",
-    "JournalEntry/Contents/The JournalEntry Object.md",
-    "JournalEntry/JournalEntry.md",
-    "JournalEntry/Contents/Delete a JournalEntry.md",
-    "LineItem/Contents/Retrieve All LineItems for an Account Group.md",
-    "LineItem/Contents/Retrieve All LineItems for an Account.md"
+    "JournalEntry/Contents/The JournalEntry Object.md"
   ]
 }

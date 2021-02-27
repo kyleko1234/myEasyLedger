@@ -408,7 +408,7 @@ function TableOfJournalEntries({
               <div>
                 {createMode ? null : 
                 <button 
-                  className="btn btn-red width-10ch" 
+                  className="btn btn-danger width-10ch" 
                   onClick={() => handleDeleteJournalEntryButton(journalEntryId)}>{tableOfJournalEntriesText[appContext.locale]["Delete"]}</button>}
               </div>
               <div>
