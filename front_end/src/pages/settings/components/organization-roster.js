@@ -14,6 +14,7 @@ function OrganizationRoster(props) {
     //TODO: currently users may only edit and remove those with lower permissions, i.e. owners cannot edit their own permissions, and may not add others to owner permissions. maybe change this at some point.
     const appContext = React.useContext(PageSettings);
     const permissionTypeOptions = PERMISSION_TYPE_OPTIONS(appContext.locale);
+    const ownPermissionForCurrentOrganization = appContext.permissions.find(permission => permission.organization.id == props.organizationId);
     const [loading, setLoading] = React.useState(true);
     const [personInRosterDTOs, setPersonInRosterDTOs] = React.useState(null);
     const [addAPersonModal, setAddAPersonModal] = React.useState(false);
@@ -31,12 +32,13 @@ function OrganizationRoster(props) {
         fetchRoster(props.organizationId);
     }, [props.organizationId])
 
-    const fetchRoster = (organizationId) => {
-        axios.get(`${API_BASE_URL}/organization/${organizationId}/person`).then(response => {
+    const fetchRoster = async (organizationId) => {
+        await axios.get(`${API_BASE_URL}/organization/${organizationId}/person`).then(response => {
             setPersonInRosterDTOs(response.data);
             setLoading(false);
         }).catch(console.log);
     }
+
 
     const toggleAddAPersonModal = () => {
         setAddAPersonModal(!addAPersonModal);
@@ -106,8 +108,8 @@ function OrganizationRoster(props) {
     return (
         <div className="widget widget-rounded mb-3">
             <div className="widget-header bg-light border-bottom">
-                <h4 className="widget-header-title">{"People with access to " + appContext.currentOrganizationName}</h4>
-                {appContext.currentPermissionTypeId >= 3? 
+                <h4 className="widget-header-title">{"People with access to " + ownPermissionForCurrentOrganization.organization.name}</h4>
+                {ownPermissionForCurrentOrganization.permissionType.id >= 3? 
                     <div className="px-3">
                         <Link replace className="icon-link-text-muted" to="#" onClick={toggleAddAPersonModal}>
                             <i className="fa fa-plus"></i>
@@ -147,8 +149,9 @@ function OrganizationRoster(props) {
                     </table>
                 }
             </div>
+            <button onClick={() => console.log(ownPermissionForCurrentOrganization)}>TEST</button>
             <Modal isOpen={addAPersonModal} toggle={toggleAddAPersonModal} centered={true} size="lg">
-                <ModalHeader> {settingsText[appContext.locale]["Add user modal header"](appContext.currentOrganizationName)} </ModalHeader>
+                <ModalHeader> {settingsText[appContext.locale]["Add user modal header"](ownPermissionForCurrentOrganization.organization.name)} </ModalHeader>
                 <ModalBody>
                     {emailNotFoundAlert ?
                         <Alert color="danger">
@@ -177,7 +180,7 @@ function OrganizationRoster(props) {
                             </label>
                         <div className="col-lg-7">
                             <Select
-                                options={permissionTypeOptions.filter(option => option.value < appContext.currentPermissionTypeId)}
+                                options={permissionTypeOptions.filter(option => option.value < ownPermissionForCurrentOrganization.permissionType.id)}
                                 value={selectedPermissionTypeOption}
                                 isSearchable={true}
                                 onChange={handleChangePermissionTypeOption}
@@ -229,7 +232,7 @@ function OrganizationRoster(props) {
                             </label>
                             <div className="col-lg-6">
                                 <Select
-                                    options={permissionTypeOptions.filter(option => option.value < appContext.currentPermissionTypeId)}
+                                    options={permissionTypeOptions.filter(option => option.value < ownPermissionForCurrentOrganization.permissionType.id)}
                                     value={selectedPermissionTypeOption}
                                     isSearchable={true}
                                     onChange={handleChangePermissionTypeOption}

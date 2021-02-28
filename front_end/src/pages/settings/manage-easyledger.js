@@ -12,10 +12,10 @@ function ManageEasyLedger(props) {
             <ol className="breadcrumb float-xl-right">
                 <li className="breadcrumb-item"><Link to="/">{settingsText[appContext.locale]["Home"]}</Link></li>
                 <li className="breadcrumb-item"><Link to="/settings">{settingsText[appContext.locale]["Settings"]}</Link></li>
-                <li className="breadcrumb-item active">{appContext.permissions.find(permission => permission.organization.id = props.match.params.organizationId).organization.name + " " + settingsText[appContext.locale]["Settings"]}</li>
+                <li className="breadcrumb-item active">{appContext.permissions.find(permission => permission.organization.id == props.match.params.organizationId).organization.name + " " + settingsText[appContext.locale]["Settings"]}</li>
             </ol>
             <h1 className="page-header">
-                {appContext.permissions.find(permission => permission.organization.id = props.match.params.organizationId).organization.name + " " + settingsText[appContext.locale]["Settings"]}
+                {appContext.permissions.find(permission => permission.organization.id == props.match.params.organizationId).organization.name + " " + settingsText[appContext.locale]["Settings"]}
                 <ToggleMobileSidebarButton className="d-md-none float-right " />
             </h1>
             <OrganizationRoster organizationId={props.match.params.organizationId}/>
