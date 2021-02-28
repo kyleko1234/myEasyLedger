@@ -8,6 +8,7 @@ import JournalEntryViewMode from './journal-entry-view-mode';
 import JournalEntryEditMode from './journal-entry-edit-mode';
 import { PageSettings } from '../../../config/page-settings.js';
 import {tableOfJournalEntriesText} from '../../../utils/i18n/table-of-journal-entries-text.js';
+import AccountDetailsEditor from '../../chart-of-accounts/components/account-details-editor';
 
 //Generates a table with react-table 7 using pagination
 
@@ -21,7 +22,9 @@ function TableOfJournalEntries({
   pageCount: controlledPageCount,
   elementCount,
   tableTitle,
-  hasAddEntryButton
+  hasAddEntryButton,
+  parentComponentAccountId
+  
 }) {
   const {
     getTableProps,
@@ -71,8 +74,10 @@ function TableOfJournalEntries({
   const [journalEntryDate, setJournalEntryDate] = React.useState('');
   const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
   const [accountOptions, setAccountOptions] = React.useState([]);
-
   const [alertMessages, setAlertMessages] = React.useState([]);
+
+  const [accountDetailsEditorModal, setAccountDetailsEditorModal] = React.useState(false);
+  const toggleAccountDetailsEditorModal = () => setAccountDetailsEditorModal(!accountDetailsEditorModal);
 
   const fetchJournalEntry = i => {
     const url = `${API_BASE_URL}/journalEntry/${i}`;
@@ -309,7 +314,14 @@ function TableOfJournalEntries({
       <div className="widget widget-rounded m-b-30">
         <div className="widget-header bg-light">
           <h4 className="widget-header-title d-flex justify-content-between ">
-            <div className="align-self-center">{tableTitle}</div>
+            <div className="align-self-center">
+              {tableTitle}
+              {parentComponentAccountId? 
+                  <Link replace className="icon-link-text-muted m-l-10" to="#" onClick={toggleAccountDetailsEditorModal}>
+                      <i className="fa fa-edit"></i>
+                  </Link> 
+              : null}
+            </div>
             <div>
               {hasAddEntryButton ? 
                 <button className="btn btn-sm btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
@@ -435,6 +447,7 @@ function TableOfJournalEntries({
           }
         </ModalFooter>
       </Modal>
+      {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} elementCount={elementCount}/> : null}
     </>
   )
 }

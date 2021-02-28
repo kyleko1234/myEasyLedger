@@ -3,12 +3,10 @@ import TableOfJournalEntries from '../journals/enterprise/table-of-journal-entri
 import { API_BASE_URL } from '../../utils/constants';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import AccountDetailsSidebar from "./components/account-details-sidebar";
 import { PageSettings } from '../../config/page-settings';
 import { accountDetailsText } from '../../utils/i18n/account-details-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 import TableOfTransactions from '../journals/personal/table-of-transactions';
-import BalanceSummary from '../dashboard/components/balance-summary';
 import AccountSwitcher from './components/account-switcher';
 
 function AccountDetails(props) {
@@ -66,23 +64,6 @@ function AccountDetails(props) {
             }))
             setAccountGroupOptions(formattedAccountGroupOptions);
         }).catch(console.log);
-    }, [])
-
-    const refreshAccountData = React.useCallback(() => {
-        axios.get(`${API_BASE_URL}/account/${selectedAccountId}/accountBalance`).then(response => {
-            let account = response.data;
-            setSelectedAccount(account);
-        }).catch(console.log)
-
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountGroup`).then(response => {
-            let formattedAccountGroupOptions = response.data.map(accountGroup => ({
-                value: accountGroup.accountGroupId,
-                label: accountGroup.accountGroupName,
-                object: accountGroup
-            }))
-            setAccountGroupOptions(formattedAccountGroupOptions);
-        }).catch(console.log);
-
     }, [])
 
     const fetchData = React.useCallback(async ({ pageSize, pageIndex }) => {
@@ -152,19 +133,18 @@ function AccountDetails(props) {
                             elementCount={elementCount}
                             tableTitle={selectedAccount.accountName}
                             hasAddEntryButton={false}
+                            parentComponentAccountId={selectedAccountId}
                         /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
                         /* we reuse TableOfJournalEntries component, even though it's more like a TableOfLineItems here */}
                     </div>
                     <div className="col-lg-4">
                         <div>
-                            {selectedAccount && accountGroupOptions ? <AccountDetailsSidebar
-                                {...selectedAccount}
-                                accountGroupOptions={accountGroupOptions}
-                                refreshAccountData={refreshAccountData}
-                                elementCount={elementCount}
-                            /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
+                            {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                            <AccountSwitcher widgetTitle="Switch Accounts" isEnterprise={appContext.isEnterprise} category={false} selectedAccountId={selectedAccountId} externalRefreshToken={refreshToken}/>
+                            }
                         </div>
                     </div>
+
                 </div>
                 :
                 <div className="row">
@@ -184,7 +164,7 @@ function AccountDetails(props) {
                     <div className="col-lg-4">
                         <div>
                             {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                            <AccountSwitcher widgetTitle="Switch Accounts" category={false} selectedAccountId={selectedAccountId} externalRefreshToken={refreshToken}/>
+                            <AccountSwitcher widgetTitle="Switch Accounts" isEnterprise={appContext.isEnterprise} category={false} selectedAccountId={selectedAccountId} externalRefreshToken={refreshToken}/>
                             }
                         </div>
                     </div>

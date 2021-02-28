@@ -216,5 +216,28 @@ const PERSONAL_TRANSACTION_TYPES_I18N = {
 
 }
 
+export const ACCOUNT_TYPE_OPTIONS = locale => [
+    {value: 1, label: ACCOUNT_TYPE_OPTIONS_I18N[locale]["Assets"], object: {id: 1, name: "Assets"}},
+    {value: 2, label: ACCOUNT_TYPE_OPTIONS_I18N[locale]["Liabilities"], object: {id: 1, name: "Liabilities"}},
+    {value: 3, label: ACCOUNT_TYPE_OPTIONS_I18N[locale]["Equity"], object: {id: 1, name: "Owner's Equity"}},
+    {value: 4, label: ACCOUNT_TYPE_OPTIONS_I18N[locale]["Income"], object: {id: 1, name: "Income"}},
+    {value: 5, label: ACCOUNT_TYPE_OPTIONS_I18N[locale]["Expenses"], object: {id: 1, name: "Expenses"}},
+]
+const ACCOUNT_TYPE_OPTIONS_I18N = {
+    "en-US": {
+        "Assets": "Assets",
+        "Liabilities": "Liabilities",
+        "Equity": "Equity",
+        "Income": "Income",
+        "Expenses": "Expenses"
+    },
+    "zh-TW": {
+        "Assets": "TRANSLATION",
+        "Liabilities": "TRANSLATION",
+        "Equity": "TRANSLATION",
+        "Income": "TRANSLATION",
+        "Expenses": "TRANSLATION"
+    }
+}
 export const CATEGORY_ACCOUNT_TYPES = [4, 5];
 export const NON_CATEGORY_ACCOUNT_TYPES = [1, 2];
