@@ -252,9 +252,9 @@ INSERT INTO line_item(journal_entry_id, account_id, is_credit, amount, descripti
 
 INSERT INTO journal_entry(journal_entry_date, organization_id, person_id, description, year_month)
     VALUES
-        ('2021-02-16', 3, 1, 'Paycheck', 202011),
-        ('2021-02-17', 3, 1, 'Paid Rent', 202011),
-        ('2021-02-18', 3, 1, 'Split Transaction Test', 202011);
+        ('2021-02-16', 3, 1, 'Paycheck', 202102),
+        ('2021-02-17', 3, 1, 'Paid Rent', 202102),
+        ('2021-02-18', 3, 1, 'Split Transaction Test', 202102);
 
 INSERT INTO line_item(journal_entry_id, account_id, is_credit, amount, description)
     VALUES

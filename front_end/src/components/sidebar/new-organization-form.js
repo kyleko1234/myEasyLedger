@@ -27,9 +27,9 @@ function NewOrganizationForm(props) {
             currency: selectedCurrency,
             isEnterprise: isEnterprise
         };
-        await axios.post(`${API_BASE_URL}/organization`, requestBody).then(response => {
+        await axios.post(`${API_BASE_URL}/organization`, requestBody).then(async response => {
             console.log(response);
-            appContext.fetchUserInfo(appContext.personId);
+            await appContext.fetchUserInfo(appContext.personId);
             history.push("/");
         }).catch(console.log);
     }
