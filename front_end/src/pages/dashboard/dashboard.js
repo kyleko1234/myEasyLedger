@@ -8,9 +8,7 @@ import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-si
 
 function Dashboard() {
     const appContext = React.useContext(PageSettings);
-    const handleTest = () => {
-        console.log(appContext.permissions)
-    }
+
     return (
         <div>
             <ol className="breadcrumb float-xl-right">
@@ -20,7 +18,6 @@ function Dashboard() {
                 {appContext.currentOrganizationName + " - " + dashboardText[appContext.locale]["Dashboard"]}
                 <ToggleMobileSidebarButton className="d-md-none float-right "/>
             </h1>
-            <button onClick={handleTest}>TEST</button>
             <div className="row">
                 <div className="col-xl-8 col-lg-6">
                     {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
