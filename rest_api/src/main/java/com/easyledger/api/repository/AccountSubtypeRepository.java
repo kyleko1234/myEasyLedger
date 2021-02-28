@@ -23,5 +23,6 @@ public interface AccountSubtypeRepository extends JpaRepository<AccountSubtype, 
 	@Query(nativeQuery = true)
 	public List<AccountSubtypeBalanceDTO> getAllAccountSubtypeBalancesForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate);
 
+	public List<AccountSubtype> findAllByOrderByIdAsc();
 }
 

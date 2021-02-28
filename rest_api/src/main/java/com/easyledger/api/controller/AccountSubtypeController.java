@@ -34,7 +34,7 @@ public class AccountSubtypeController {
 	
 	@GetMapping("/accountSubtype")
 	public List<AccountSubtype> getAllAccountSubtypes() {
-		return accountSubtypeRepo.findAll();
+		return accountSubtypeRepo.findAllByOrderByIdAsc();
 	}
 	
 	@GetMapping("/accountSubtype/{id}")
