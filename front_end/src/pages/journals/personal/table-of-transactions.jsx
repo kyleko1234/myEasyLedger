@@ -326,7 +326,7 @@ function TableOfTransactions({
             {//*loading? <div className="widget widget-rounded"><div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div></div> :  this line is commented out for now since seeing a loading spinner every time you close a modal is incredibly annoying
                 <div className="widget widget-rounded m-b-30">
                     <div className="widget-header bg-light">
-                        <h4 className="widget-header-title d-flex justify-content-between ">
+                        <h4 className="widget-header-title d-flex justify-content-between">
                             <div className="align-self-center">
                                 {tableTitle}
                                 {parentComponentAccountId? 

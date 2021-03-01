@@ -5,10 +5,8 @@ import { PageSettings } from '../../config/page-settings';
 import {dashboardText} from '../../utils/i18n/dashboard-text';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 
-
 function Dashboard() {
     const appContext = React.useContext(PageSettings);
-
     return (
         <div>
             <ol className="breadcrumb float-xl-right">
@@ -28,7 +26,6 @@ function Dashboard() {
                     <BalanceSummary widgetTitle="Balance Summary"/>}
                 </div>
             </div>
-
 		</div>
     )
 

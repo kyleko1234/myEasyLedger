@@ -71,3 +71,39 @@ a.icon-link-text-muted:hover {
     background-color: #f3f3f3 !important;
 }
 
+
+.rotating-caret {
+    display: block;
+    float: left;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    text-align: center;
+    font-size: 11px;
+    border: none;
+    font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro", "FontAwesome" !important;
+    font-weight: 900;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+}
+.rotating-caret:before {
+    content: "\f054";
+    display: block;
+    text-align: center;
+    opacity: 0.5;
+    transition: all 0.2s linear;
+}
+.expand.rotating-caret:before{
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+.border-bottom-d5d5d5 {
+    border-bottom: 1px solid #d5d5d5;
+}
+
+a.bg-light.nohover:hover,
+a.bg-light.nohover:focus {
+    background-color: #f9f9f9 !important
+}

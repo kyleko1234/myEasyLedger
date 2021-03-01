@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Permission/Permission.md",
+            "file": "Reports/Contents/Generate a Balance Sheet.md",
             "mode": "source"
           }
         },
@@ -22,7 +22,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Permission/Permission.md",
+            "file": "Reports/Contents/Generate a Balance Sheet.md",
             "mode": "preview"
           }
         },
@@ -82,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Permission/Permission.md",
+                "file": "Reports/Contents/Generate a Balance Sheet.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,6 +99,7 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Reports/Contents/Generate a Balance Sheet.md",
     "Permission/Permission.md",
     "AccountType/AccountType.md",
     "Account/Contents/Update an Account.md",
@@ -107,7 +108,6 @@
     "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
     "AccountGroup/Contents/List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects.md",
     "AccountSubtype/AccountSubtype.md",
-    "JournalEntry/Contents/Create a JournalEntry.md",
-    "Account/Contents/The Account Object.md"
+    "JournalEntry/Contents/Create a JournalEntry.md"
   ]
 }

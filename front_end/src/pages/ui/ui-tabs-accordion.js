@@ -236,7 +236,7 @@ class UITabsAccordion extends React.Component {
 							{
 								this.state.collapse.map((value, i) => (
 								<Card className="bg-dark text-white" key={i}>
-									<CardHeader className={'card-header bg-dark-darker text-white pointer-cursor ' + (!value.collapse ? 'collapsed ' : '')} onClick={() => this.toggleCollapse(value.id)}>
+									<CardHeader className={'card-header bg-dark-darker text-white cursor-pointer ' + (!value.collapse ? 'collapsed ' : '')} onClick={() => this.toggleCollapse(value.id)}>
 										<i className="fa fa-circle f-s-8 mr-2 text-indigo"></i> Collapsible Group Item #{value.id}
 									</CardHeader>
 									<Collapse isOpen={value.collapse}>
