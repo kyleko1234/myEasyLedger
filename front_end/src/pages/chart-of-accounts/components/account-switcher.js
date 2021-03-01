@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { balanceSummaryText } from "../../../utils/i18n/balance-summary-text.js";
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
+import { WidgetHeader, WidgetList, ExpandableWidgetListItem, WidgetListItem } from '../../../components/widget/widget.jsx';
 
 
 function AccountSwitcher(props) {
@@ -20,8 +21,15 @@ function AccountSwitcher(props) {
 
     const [loading, setLoading] = React.useState(true);
     const [accountGroups, setAccountGroups] = React.useState([]);
+    const [forceExpandToken, setForceExpandToken] = React.useState(null);
     const [accounts, setAccounts] = React.useState([]);
     const [selectedAccountTypeOptionId, setSelectedAccountTypeOptionId] = React.useState(null);
+
+    const handleExpandAll = () => {
+        setForceExpandToken(Math.random());
+    }
+
+
     //fetch data on component mount
     React.useEffect(() => {
         setLoading(true);
@@ -66,11 +74,12 @@ function AccountSwitcher(props) {
         )
     }
     return (
-        <div className="widget widget-rounded widget-list widget-list-rounded mb-3">
-            <div className="widget-header border-bottom bg-light">
-                <h4 className="widget-header-title">{balanceSummaryText[appContext.locale][props.widgetTitle]}</h4>
-            </div>
-            <div className="row px-3 py-2 border-bottom">
+        <WidgetList>
+            <WidgetHeader className="bg-light">
+                <div>{balanceSummaryText[appContext.locale][props.widgetTitle]}</div>
+                <Link replace to="#" onClick={handleExpandAll} className="font-weight-normal">{balanceSummaryText[appContext.locale]["(Expand All)"]}</Link>
+            </WidgetHeader>
+            <div className="row px-3 py-2">
                 <label className="col-form-label col-md-6">
                     {props.category? balanceSummaryText[appContext.locale]["Select a category type:"]: balanceSummaryText[appContext.locale]["Select an account type:"]}
                 </label>
@@ -80,63 +89,55 @@ function AccountSwitcher(props) {
                             (props.category? accountTypeOptions.filter(accountTypeOption => CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value)): accountTypeOptions.filter(accountTypeOption => NON_CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value)))}
                         value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == selectedAccountTypeOptionId)}
                         onChange={selectedOption => setSelectedAccountTypeOptionId(selectedOption.value)}
+                        menuPortalTarget={document.body}
+                        menuShouldScrollIntoView={false}
+                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                        menuPlacement={'auto'}
+
                     />
                 </div>
             </div>
-
-            <div className="overflow-auto" style={{ height: '500px' }}>
+            <div className="overflow-auto" style={{ maxHeight: '750px' }}>
                 {//loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :     --add this line in case you need a loading spinner. currently it is removed because it is annoying to see a spinner every click.
+                    
                     accountGroups.filter(accountGroup => accountGroup.accountTypeId == selectedAccountTypeOptionId).map(accountGroup => {
                         return (
-                            <React.Fragment key={accountGroup.accountGroupId}>
-                                <div className="widget-list-item bg-light">
-                                    <div className="widget-list-content font-weight-600">
-                                        <div className="widget-list-title">{accountGroup.accountGroupName}</div>
-                                    </div>
-                                </div>
+                            <ExpandableWidgetListItem key={accountGroup.accountGroupId} parentText={accountGroup.accountGroupName} parentClassName="bg-light nohover rounded-0" forceExpandToken={forceExpandToken}>
                                 {accounts ?
                                     accounts.filter(account => account.accountGroupId == accountGroup.accountGroupId).map(account => {
                                         return (
                                             <React.Fragment key={account.accountId}>
                                                 {account.accountId == props.selectedAccountId ?
-                                                    <div className="widget-list-item bg-white-hover">
-                                                        <div className="widget-list-content p-l-30">
-                                                            <div className="widget-list-title">{account.accountName}</div>
+                                                    <WidgetListItem className="widget-list-item bg-white-hover">
+                                                        <div className="p-l-30">
+                                                            {account.accountName}
                                                         </div>
                                                         {props.category || props.isEnterprise ? null :
-                                                            <div className="widget-list-content text-right">
+                                                            <div className=" text-right">
                                                                 {formatBalance(account.accountTypeId, account.amount)}
                                                             </div>
                                                         }
-                                                        <div className="m-r-10 widget-list-action text-right">
-                                                            <i className="fa fa-angle-right fa-lg text-muted"></i>
-                                                        </div>
-                                                    </div>
+                                                    </WidgetListItem>
                                                     :
-                                                    <Link className="widget-list-item bg-white" to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`}>
-                                                        <div className="widget-list-content p-l-30">
-                                                            <div className="widget-list-title">{account.accountName}</div>
-                                                        </div>
+                                                    <WidgetListItem link className=" bg-white" to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`}>
+                                                        <div className="p-l-30">{account.accountName}</div>
                                                         {props.category || props.isEnterprise ? null :
-                                                            <div className="widget-list-content text-right">
+                                                            <div className=" text-right">
                                                                 {formatBalance(account.accountTypeId, account.amount)}
                                                             </div>
                                                         }
-                                                        <div className="m-r-10 widget-list-action text-right">
-                                                            <i className="fa fa-angle-right fa-lg text-muted"></i>
-                                                        </div>
-                                                    </Link>
+                                                    </WidgetListItem>
                                                 }
                                             </React.Fragment>
                                         )
                                     })
                                     : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
-                            </React.Fragment>
+                            </ExpandableWidgetListItem>
                         )
                     })
                 }
             </div>
-        </div>
+        </WidgetList>
     )
 }
 AccountSwitcher.defaultProps = {

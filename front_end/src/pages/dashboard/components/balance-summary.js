@@ -4,6 +4,7 @@ import { API_BASE_URL } from '../../../utils/constants.js';
 import { PageSettings } from '../../../config/page-settings';
 import { useHistory } from "react-router-dom";
 import {balanceSummaryText} from "../../../utils/i18n/balance-summary-text.js";
+import {Widget, WidgetHeader} from "../../../components/widget/widget.jsx";
 
 
 function BalanceSummary(props) {
@@ -32,10 +33,10 @@ function BalanceSummary(props) {
 
 
     return (
-        <div className="widget widget-rounded mb-3">
-            <div className="widget-header bg-light border-bottom">
-                <h4 className="widget-header-title">{balanceSummaryText[appContext.locale][props.widgetTitle]}</h4>
-            </div>
+        <Widget rounded>
+            <WidgetHeader className="bg-light">
+                {balanceSummaryText[appContext.locale][props.widgetTitle]}
+            </WidgetHeader>
             <div className="overflow-auto px-2" style={{ height: '500px' }}>
                 {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                     <table className='table table-hover'>
@@ -62,7 +63,7 @@ function BalanceSummary(props) {
                     </table>
                 }
             </div>
-        </div>
+        </Widget>
     )
 }
 

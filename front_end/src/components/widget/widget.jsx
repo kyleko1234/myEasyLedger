@@ -90,6 +90,9 @@ export function WidgetListItem(props) {
                         </div>
                     )
                 }): <div className="widget-list-content">{props.children}</div>}
+                <div className="m-r-10 widget-list-action text-right">
+                    <i className="fa fa-angle-right fa-lg text-muted invisible"></i>
+                </div>
             </div>
         )
     }
@@ -105,15 +108,26 @@ WidgetListItem.defaultProps = {
  * props:
  * parentText (string),
  * parentClassName (string), default=""
- * isOpen (optional Boolean),
  * bold (boolean), default=true
+ * forceUpdateToken optional(number)
+ * defaultIsOpen (boolean), default=false
  */
 export function ExpandableWidgetListItem(props) {
-    const [isOpen, setIsOpen] = React.useState(props.isOpen === undefined? false: props.isOpen);
+    const [isOpen, setIsOpen] = React.useState(props.defaultIsOpen);
     const toggleIsOpen = () => setIsOpen(!isOpen);
+
+    const refreshRef = React.useRef(0);
+
+    React.useEffect(() => {
+        if (refreshRef.current > 0) {
+            setIsOpen(true);
+        }
+        refreshRef.current++;
+    }, [props.forceExpandToken])
+
     return(
         <>
-            <Link replace className={"widget-list-item " + (isOpen? " border-bottom-d5d5d5 " : "") + props.parentClassName} to="#" onClick={toggleIsOpen}>
+            <Link replace className={"widget-list-item border-top-d5d5d5 " + (isOpen? " border-bottom-d5d5d5 " : "") + props.parentClassName} to="#" onClick={toggleIsOpen}>
                 <div className="widget-list-content d-flex">
                     <b className={"rotating-caret align-self-center " + (isOpen? " expand ": "")} ></b>
                     <div className={"align-self-center m-l-5 " + (props.bold? " font-weight-600 " : "")}>{props.parentText}</div>
@@ -127,5 +141,6 @@ export function ExpandableWidgetListItem(props) {
 }
 ExpandableWidgetListItem.defaultProps = {
     parentClassName: "",
-    bold: true
+    bold: true,
+    defaultIsOpen: false
 }

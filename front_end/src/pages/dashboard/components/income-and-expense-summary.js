@@ -4,6 +4,7 @@ import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
 import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expense-summary-text.js';
+import { Widget, WidgetHeader } from '../../../components/widget/widget';
 
 function IncomeAndExpenseSummary() {
     const appContext = React.useContext(PageSettings);
@@ -146,16 +147,16 @@ function IncomeAndExpenseSummary() {
 
 
     return (
-        <div className="card border-0 widget widget-rounded mb-3">
-            <div className="widget-header bg-light border-bottom">
-                <h4 className="widget-header-title">{incomeAndExpenseSummaryText[appContext.locale]["Income and Expenses"]}</h4>
-            </div>
+        <Widget>
+            <WidgetHeader className="bg-light">
+                {incomeAndExpenseSummaryText[appContext.locale]["Income and Expenses"]}
+            </WidgetHeader>
             {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                 <div className="card-body" style={{ height: '500px' }}>
                     <Bar className="text-white" data={barChart.data} options={barChart.options} />
                 </div>
             }
-        </div>
+        </Widget>
     )
 }
 
