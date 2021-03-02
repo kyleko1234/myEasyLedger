@@ -6,6 +6,7 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
+        "dimension": 53.98037077426391,
         "active": true,
         "state": {
           "type": "markdown",
@@ -19,6 +20,7 @@
       {
         "id": "f6364cec6a3f3c3c",
         "type": "leaf",
+        "dimension": 46.0196292257361,
         "state": {
           "type": "markdown",
           "state": {
@@ -100,14 +102,14 @@
   },
   "lastOpenFiles": [
     "Reports/Contents/Generate a Balance Sheet.md",
+    "AccountGroup/Contents/List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects.md",
+    "AccountGroup/AccountGroup.md",
     "Permission/Permission.md",
     "AccountType/AccountType.md",
     "Account/Contents/Update an Account.md",
     "AccountGroup/Contents/Update an AccountGroup.md",
     "AccountGroup/Contents/The AccountGroup Object.md",
     "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
-    "AccountGroup/Contents/List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects.md",
-    "AccountSubtype/AccountSubtype.md",
-    "JournalEntry/Contents/Create a JournalEntry.md"
+    "AccountSubtype/AccountSubtype.md"
   ]
 }

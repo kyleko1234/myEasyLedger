@@ -109,7 +109,7 @@ WidgetListItem.defaultProps = {
  * parentText (string),
  * parentClassName (string), default=""
  * bold (boolean), default=true
- * forceUpdateToken optional(number)
+ * forceExpandToken optional(number)
  * defaultIsOpen (boolean), default=false
  */
 export function ExpandableWidgetListItem(props) {

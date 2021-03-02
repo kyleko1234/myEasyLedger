@@ -1,6 +1,6 @@
 export const incomeStatementRenderText = {
     "en-US": {
-        "Income Statment": "Income Statement",
+        "Income Statement": "Income Statement",
         "From:": "From:",
         "To:": "To:",
 
@@ -26,7 +26,7 @@ export const incomeStatementRenderText = {
         "Net income": "Net income"
     },
     "zh-TW": {
-        "Income Statment": "損益表",
+        "Income Statement": "損益表",
         "From:": "自:",
         "To:": "至:",
 

@@ -75,6 +75,7 @@ import CreateANewOrganization from '../components/sidebar/create-a-new-organizat
 import Accounts from '../pages/accounts/accounts.js';
 import Categories from '../pages/categories/categories.js';
 import CategoryDetails from '../pages/categories/category-details.js';
+import NetWorthReport from '../pages/reports/net-worth-report.js';
 
 const routes = [
   {
@@ -470,7 +471,11 @@ const routes = [
     title: 'Category Details',
     component: CategoryDetails,
   },
-
+  {
+    path: '/reports/net-worth',
+    title: 'Net Worth Report',
+    component: NetWorthReport,
+  },
 ];
 
 
