@@ -32,6 +32,9 @@ function ReportTypeList() {
                 <WidgetListItem link to="/reports/net-worth" className="bg-white">
                     <div className="p-l-30">{reportTypeListText[appContext.locale]["Net Worth"]}</div>
                 </WidgetListItem>
+                <WidgetListItem link to="/reports/income-expense" className="bg-white">
+                    <div className="p-l-30">{reportTypeListText[appContext.locale]["Income and Expense Report"]}</div>
+                </WidgetListItem>
             </WidgetList>
         )
     }

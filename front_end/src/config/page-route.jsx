@@ -76,6 +76,7 @@ import Accounts from '../pages/accounts/accounts.js';
 import Categories from '../pages/categories/categories.js';
 import CategoryDetails from '../pages/categories/category-details.js';
 import NetWorthReport from '../pages/reports/net-worth-report.js';
+import IncomeExpenseReport from '../pages/reports/income-expense-report.js';
 
 const routes = [
   {
@@ -476,6 +477,12 @@ const routes = [
     title: 'Net Worth Report',
     component: NetWorthReport,
   },
+  {
+    path: '/reports/income-expense',
+    title: 'Income and Expense Report',
+    component: IncomeExpenseReport,
+  },
+
 ];
 
 
