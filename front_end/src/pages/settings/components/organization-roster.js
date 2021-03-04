@@ -149,7 +149,6 @@ function OrganizationRoster(props) {
                     </table>
                 }
             </div>
-            <button onClick={() => console.log(ownPermissionForCurrentOrganization)}>TEST</button>
             <Modal isOpen={addAPersonModal} toggle={toggleAddAPersonModal} centered={true} size="lg">
                 <ModalHeader> {settingsText[appContext.locale]["Add user modal header"](ownPermissionForCurrentOrganization.organization.name)} </ModalHeader>
                 <ModalBody>
