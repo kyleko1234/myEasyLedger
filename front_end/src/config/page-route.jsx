@@ -77,6 +77,7 @@ import Categories from '../pages/categories/categories.js';
 import CategoryDetails from '../pages/categories/category-details.js';
 import NetWorthReport from '../pages/reports/net-worth-report.js';
 import IncomeExpenseReport from '../pages/reports/income-expense-report.js';
+import CashFlowReport from '../pages/reports/cash-flow-report.js';
 
 const routes = [
   {
@@ -482,6 +483,12 @@ const routes = [
     title: 'Income and Expense Report',
     component: IncomeExpenseReport,
   },
+  {
+    path: '/reports/cash-flow',
+    title: 'Cash Flow Report',
+    component: CashFlowReport,
+  },
+
 
 ];
 

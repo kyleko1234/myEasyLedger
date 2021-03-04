@@ -16,8 +16,11 @@ function ReportTypeList() {
                 <WidgetListItem link to="/reports/balance-sheet" className="bg-white">
                         <div className="p-l-30">{reportTypeListText[appContext.locale]["Balance Sheet"]}</div>
                 </WidgetListItem>
-                <WidgetListItem link to="/reports/income-statement" className="widget-list-item bg-white">
+                <WidgetListItem link to="/reports/income-statement" className="bg-white">
                         <div className="p-l-30">{reportTypeListText[appContext.locale]["Income Statement"]}</div>
+                </WidgetListItem>
+                <WidgetListItem link to="/reports/cash-flow" className="bg-white">
+                        <div className="p-l-30">{reportTypeListText[appContext.locale]["Cash Flow"]}</div>
                 </WidgetListItem>
     
             </WidgetList>
