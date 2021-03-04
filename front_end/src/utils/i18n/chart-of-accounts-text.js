@@ -82,11 +82,11 @@ export const chartOfAccountsText = {
     }, 
     "zh-TW": {
         //Account Type Names.
-        "Assets": "TRANSLATION HERE",
-        "Liabilities": "TRANSLATION HERE",
-        "Owner's Equity": "TRANSLATION HERE",
-        "Income": "TRANSLATION HERE",
-        "Expenses": "TRANSLATION HERE",
+        "Assets": "資產",
+        "Liabilities": "負債",
+        "Owner's Equity": "業主權益",
+        "Income": "收入",
+        "Expenses": "支出",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "現金及約當現金", 
@@ -137,28 +137,28 @@ export const chartOfAccountsText = {
         "Cannot delete this account group. Please delete all accounts in this account group and try again.": "無法删除此科目群，請先删除此科目群下所有的科目後再試一次。",
         "Cannot delete this account.": "無法删除此科目。",
 
-        "Add an Account": "增設一個科目",
-        "Please provide a name for your account.": "請提供科目名稱。",
+        "Add an Account": "增設一個新科目",
+        "Please provide a name for your account.": "請給科目取個名稱。",
         "Account Name": "科目名稱",
 
 
-        "Accounts": "TRANSLATION",
-        "Categories": "TRANSLATION",
-        "Create a category group": "TRANSLATION",
-        "Create a New Category Group": "TRANSLATION",
-        "Please provide a name for your category group.": "TRANSLATION",
-        "Category Group Name": "TRANSLATION",
-        "Category Type": "TRANSLATION",
-        "Edit Category Group Details": "TRANSLATION",
-        "Edit Account Group Details": "TRANSLATION",
+        "Accounts": "科目",
+        "Categories": "類別",
+        "Create a category group": "建立一個類別群",
+        "Create a New Category Group": "建立一個新的類別群",
+        "Please provide a name for your category group.": "請給類別群取個名稱",
+        "Category Group Name": "科目群名稱",
+        "Category Type": "主類別",
+        "Edit Category Group Details": "修改類別群",
+        "Edit Account Group Details": "修改科目群",
 
 
-        "Are you sure you want to delete this category group?": "TRANSLATION?",
-        "Cannot delete this category group. Please delete all categories in this category group and try again.": "TRANSLATION",
-        "Cannot delete this category.": "TRANSLATION",
-        "Add a Category": "TRANSLATION",
-        "Please provide a name for your category.": "TRANSLATION",
-        "Category Name": "TRANSLATION",
+        "Are you sure you want to delete this category group?": "你真的確定要删除這個類別群嗎？",
+        "Cannot delete this category group. Please delete all categories in this category group and try again.": "無法删除此類別群，請先删除此類別群下所有的類別後再試一次。",
+        "Cannot delete this category.": "無法删除此類別。",
+        "Add a Category": "增設一個新類別",
+        "Please provide a name for your category.": "請給類別取個名稱。",
+        "Category Name": "類別名稱",
 
 
     }

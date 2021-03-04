@@ -24,6 +24,6 @@ export const netWorthReportText = {
         "Liabilities": "負債",
         "Total Liabilities": "負債總計",
         "Total Net Worth": "TRANSLATION",
-        "Total accountGroupName": accountGroupName => "Total " + accountGroupName, //TRANSLATION
+        "Total accountGroupName": accountGroupName => accountGroupName + "合計"
     }
 }

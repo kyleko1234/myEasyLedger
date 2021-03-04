@@ -16,18 +16,18 @@ export const journalEntryViewModeText = {
         
     },
     "zh-TW": {
-        "Memo": "TRANSLATION",
+        "Memo": "註記",
         "Account": "科目",
         "Debit": "借方",
         "Credit": "貸方",
         "Date": "日期",
         "Description": "描述",
-        "Total": "加總",
+        "Total": "合計",
 
-        "Transaction Type": "TRANSLATION",
-        "Category or Account": "TRANSLATION",
-        "Amount": "TRANSLATION",
-        "From Account": "TRANSLATION"
+        "Transaction Type": "交易類別",
+        "Category or Account": "類別或帳戶",
+        "Amount": "金額",
+        "From Account": "從哪個帳戶"
 
 
     }

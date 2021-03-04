@@ -27,11 +27,11 @@ export const settingsText = {
         "Home": "首頁",
         "Settings": "設定",
 
-        "Personal Settings": "TRANSLATION HERE",
+        "Personal Settings": "個人設定",
         "Language": "語言",
         "Save": "儲存",
 
-        "Manage my EasyLedgers...": "TRANSLATION HERE"
+        "Manage my EasyLedgers...": "管理我的 EasyLedgers..."
 
     }
 }

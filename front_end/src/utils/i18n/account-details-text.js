@@ -21,17 +21,17 @@ export const accountDetailsText = {
         "Description": "描述",
         "Debit": "借方",
         "Credit": "貸方",
-        "Inflow": "TRANSLATION",
-        "Outflow": "TRANSLATION",
+        "Inflow": "流入",
+        "Outflow": "流出",
 
         "Home": "首頁",
         "Chart of Accounts": "會計科目表",
-        "Accounts": "TRANSLATION",
+        "Accounts": "科目",
         "Account Details": "科目說明",
 
-        "Categories": "TRANSLATION",
-        "Category Details": "TRANSLATION",
-        "Amount": "TRANSLATION"
+        "Categories": "類別",
+        "Category Details": "類別說明",
+        "Amount": "金額"
 
 
     },

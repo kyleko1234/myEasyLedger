@@ -7,6 +7,6 @@ export const cashFlowReportText = {
     "zh-TW": {
         "Home": "首頁",
         "Reports": "報表",
-        "Cash Flow Report": "TRANSLATION"
+        "Cash Flow Report": "現金流量表"
     }
 }

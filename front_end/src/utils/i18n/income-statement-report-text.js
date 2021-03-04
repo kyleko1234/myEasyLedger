@@ -9,6 +9,6 @@ export const incomeStatementReportText = {
         "Home": "首頁",
         "Reports": "報表",
         "Income Statement Report": "損益表",
-        "Income and Expense Report": "TRANSLATION"
+        "Income and Expense Report": "收入支出報告"
     }
 }
