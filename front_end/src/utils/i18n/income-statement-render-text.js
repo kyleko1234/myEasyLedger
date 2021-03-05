@@ -51,13 +51,13 @@ export const incomeStatementRenderText = {
         "Income tax": "所得稅",
         "Net income": "淨利",
 
-        "Income and Expense Report": "TRANSLATION",
-        "Income": "TRANSLATION",
-        "Total Income": "TRANSLATION",
-        "Expenses": "TRANSLATION",
-        "Total Expenses": "TRANSLATION",
-        "Total Income less Expenses": "TRANSLATION",
-        "Total accountGroupName": accountGroupName => "Total " + accountGroupName, //TRANSLATION
+        "Income and Expense Report": "損益表",
+        "Income": "收益",
+        "Total Income": "合計收益",
+        "Expenses": "費用",
+        "Total Expenses": "合計費用",
+        "Total Income less Expenses": "總收益 減 總費用",
+        "Total accountGroupName": accountGroupName => accountGroupName + "合計"
 
 
     }

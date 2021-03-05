@@ -45,14 +45,14 @@ export const tableOfJournalEntriesText = {
         "Edit": "修改",
         "Close": "關閉",
 
-        "Transaction must be assigned to an account.": "TRANSLATION",
-        "Transaction must have a date.": "TRANSLATION",
-        "Transaction must be given a description.": "TRANSLATION",
-        "Line-items must be assigned to an account or category.": "TRANSLATION",
-        "Please provide an amount for each item.": "TRANSLATION",
-        "Please specify a transaction type for each item.": "TRANSLATION",
-        "Add a new transaction": "TRANSLATION",
-        "Transaction must have at least one item.": "TRANSLATION",
-        "Entry must have line-items.": "TRANSLATION"
+        "Transaction must be assigned to an account.": "交易紀錄必需要有針對的帳戶。",
+        "Transaction must have a date.": "交易記錄必需要有日期。",
+        "Transaction must be given a description.": "交易記錄必需要有描述。",
+        "Line-items must be assigned to an account or category.": "單行項目必需要有針對的帳戶或類別。",
+        "Please provide an amount for each item.": "請為每個項目記錄下交易金額。",
+        "Please specify a transaction type for each item.": "請為每個單行項目指定其交易類別。",
+        "Add a new transaction": "記錄一個新的交易",
+        "Transaction must have at least one item.": "一筆交易記錄至少要有一個單行項目",
+        "Entry must have line-items.": "一筆分錄至少要有一個單行項目"
     }
 }

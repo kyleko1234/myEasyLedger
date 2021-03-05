@@ -209,9 +209,9 @@ const PERSONAL_TRANSACTION_TYPES_I18N = {
         "Transfer": "Transfer"
     },
     "zh-TW": {
-        "Expense": "TRANSLATION",
-        "Income": "TRANSLATION",
-        "Transfer": "TRANSLATION"
+        "Expense": "支出",
+        "Income": "收入",
+        "Transfer": "轉帳"
     }
 
 }
@@ -232,11 +232,11 @@ const ACCOUNT_TYPE_OPTIONS_I18N = {
         "Expenses": "Expenses"
     },
     "zh-TW": {
-        "Assets": "TRANSLATION",
-        "Liabilities": "TRANSLATION",
-        "Equity": "TRANSLATION",
-        "Income": "TRANSLATION",
-        "Expenses": "TRANSLATION"
+        "Assets": "資產",
+        "Liabilities": "負債",
+        "Equity": "業主權益",
+        "Income": "收入",
+        "Expenses": "支出"
     }
 }
 export const CATEGORY_ACCOUNT_TYPES = [4, 5];

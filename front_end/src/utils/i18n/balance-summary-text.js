@@ -13,11 +13,11 @@ export const balanceSummaryText = {
         "Balance Summary": "餘額總覽",
         "Account": "科目",
         "Balance": "餘額",
-        "Switch Accounts": "TRANSLATION",
-        "Switch Categories": "TRANSLATION",
-        "Select a category type:": "TRANSLATION",
-        "Select an account type:": "TRANSLATION",
-        "(Expand All)": "TRANSLATION"
+        "Switch Accounts": "切換科目",
+        "Switch Categories": "切換類別",
+        "Select a category type:": "選擇一個主類別",
+        "Select an account type:": "選擇一個科目類別",
+        "(Expand All)": "(展開所有選項)"
 
 
     }
