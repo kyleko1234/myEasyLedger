@@ -17,7 +17,7 @@ import { Widget, WidgetHeader } from '../../../components/widget/widget';
  *  CASH FLOW FROM OPERATING:
  * 
  *  INVESTING ACTIVITIES: 
- *      Purchases of marketable securities
+ *      Subtract increase of marketable securities
  *      Proceeds from maturities of marketable securities
  *      Proceeds of sales of marketable securities
  *      Payments for acquisition of PPE

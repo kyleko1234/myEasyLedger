@@ -68,6 +68,9 @@ INSERT INTO account_subtype(name, account_type_id)
         ('Other expenses', 5),
         ('Income taxes', 5);
 
+        -- income from investment subtype
+        -- add interest expense
+
     /** 1  ('Cash and cash equivalents', 1),
         2  ('Current marketable securities', 1),
         3  ('Receivables', 1),

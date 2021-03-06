@@ -11,7 +11,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Reports/Contents/Generate a Balance Sheet.md",
+            "file": "Account/Contents/Retrieve an AccountBalance.md",
             "mode": "source"
           }
         },
@@ -24,7 +24,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Reports/Contents/Generate a Balance Sheet.md",
+            "file": "Account/Contents/Retrieve an AccountBalance.md",
             "mode": "preview"
           }
         },
@@ -84,7 +84,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Reports/Contents/Generate a Balance Sheet.md",
+                "file": "Account/Contents/Retrieve an AccountBalance.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,6 +101,8 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Account/Contents/Retrieve an AccountBalance.md",
+    "Account/Contents/List All Accounts Belonging to an Organization.md",
     "Reports/Contents/Generate a Balance Sheet.md",
     "AccountGroup/Contents/List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects.md",
     "AccountGroup/AccountGroup.md",
@@ -108,8 +110,6 @@
     "AccountType/AccountType.md",
     "Account/Contents/Update an Account.md",
     "AccountGroup/Contents/Update an AccountGroup.md",
-    "AccountGroup/Contents/The AccountGroup Object.md",
-    "AccountGroup/Contents/List All AccountGroups Belonging to an Organization.md",
-    "AccountSubtype/AccountSubtype.md"
+    "AccountGroup/Contents/The AccountGroup Object.md"
   ]
 }
