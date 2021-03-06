@@ -1,5 +1,6 @@
 package com.easyledger.api.dto;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +19,11 @@ public class AccountDTO {
 	private String accountTypeName;
 	private Long organizationId;
 	private String organizationName;
+	private BigDecimal debitTotal;
+	private BigDecimal creditTotal;
+	private BigDecimal initialDebitAmount;
+	private BigDecimal initialCreditAmount;
+	private BigDecimal totalDebitsMinusCredits;
 	private boolean deleted;
 	
 	public AccountDTO(Account account) {
@@ -31,12 +37,18 @@ public class AccountDTO {
 		this.accountTypeName = account.getAccountGroup().getAccountSubtype().getAccountType().getName();
 		this.organizationId = account.getAccountGroup().getOrganization().getId();
 		this.organizationName = account.getAccountGroup().getOrganization().getName();
+		this.debitTotal = account.getDebitTotal();
+		this.creditTotal = account.getCreditTotal();
+		this.initialDebitAmount = account.getInitialDebitAmount();
+		this.initialCreditAmount = account.getInitialCreditAmount();
+		this.totalDebitsMinusCredits = account.getDebitTotal().subtract(account.getCreditTotal());
 		this.deleted = account.isDeleted();
 	}
 	
 	public AccountDTO(BigInteger accountId, String accountName, BigInteger accountGroupId, String accountGroupName,
 			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
-			BigInteger organizationId, String organizationName, boolean deleted) {
+			BigInteger organizationId, String organizationName, BigDecimal debitTotal, BigDecimal creditTotal, 
+			BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean deleted) {
 		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
 		this.accountGroupId = accountGroupId.longValueExact();
@@ -47,6 +59,11 @@ public class AccountDTO {
 		this.accountTypeName = accountTypeName;
 		this.organizationId = organizationId.longValueExact();
 		this.organizationName = organizationName;
+		this.debitTotal = debitTotal;
+		this.creditTotal = creditTotal;
+		this.initialDebitAmount = initialDebitAmount;
+		this.initialCreditAmount = initialCreditAmount;
+		this.totalDebitsMinusCredits = debitTotal.subtract(creditTotal);
 		this.deleted = deleted;
 	}
 
@@ -133,6 +150,46 @@ public class AccountDTO {
 		this.organizationName = organizationName;
 	}
 
+	public BigDecimal getDebitTotal() {
+		return debitTotal;
+	}
+
+	public void setDebitTotal(BigDecimal debitTotal) {
+		this.debitTotal = debitTotal;
+	}
+
+	public BigDecimal getCreditTotal() {
+		return creditTotal;
+	}
+
+	public void setCreditTotal(BigDecimal creditTotal) {
+		this.creditTotal = creditTotal;
+	}
+
+	public BigDecimal getInitialDebitAmount() {
+		return initialDebitAmount;
+	}
+
+	public void setInitialDebitAmount(BigDecimal initialDebitAmount) {
+		this.initialDebitAmount = initialDebitAmount;
+	}
+
+	public BigDecimal getInitialCreditAmount() {
+		return initialCreditAmount;
+	}
+
+	public void setInitialCreditAmount(BigDecimal initialCreditAmount) {
+		this.initialCreditAmount = initialCreditAmount;
+	}
+	
+	public BigDecimal getTotalDebitsMinusCredits() {
+		return totalDebitsMinusCredits;
+	}
+
+	public void setTotalDebitsMinusCredits(BigDecimal totalDebitsMinusCredits) {
+		this.totalDebitsMinusCredits = totalDebitsMinusCredits;
+	}
+
 	public boolean isDeleted() {
 		return deleted;
 	}
@@ -147,10 +204,9 @@ public class AccountDTO {
 				+ accountGroupId + ", accountGroupName=" + accountGroupName + ", accountSubtypeId=" + accountSubtypeId
 				+ ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
 				+ ", accountTypeName=" + accountTypeName + ", organizationId=" + organizationId + ", organizationName="
-				+ organizationName + ", deleted=" + deleted + "]";
+				+ organizationName + ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal
+				+ ", initialDebitAmount=" + initialDebitAmount + ", initialCreditAmount=" + initialCreditAmount
+				+ ", totalDebitsMinusCredits=" + totalDebitsMinusCredits + ", deleted=" + deleted + "]";
 	}
-
-
-
 	
 }

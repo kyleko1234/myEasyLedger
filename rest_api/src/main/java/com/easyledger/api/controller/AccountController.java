@@ -77,29 +77,11 @@ public class AccountController {
         return ResponseEntity.ok().body(dto);
     }
     
-    @GetMapping("/account/{id}/accountBalance")
-    public AccountBalanceDTO getAccountBalanceById(@PathVariable(value = "id") Long accountId, Authentication authentication)
-        throws ResourceNotFoundException, UnauthorizedException {
-    	Account account = accountRepo.findById(accountId)
-    			.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-        //TODO: refactor 404 checking to use ExistsById
-    	AccountBalanceDTO result = accountRepo.getAccountBalanceById(accountId);
-        authorizationService.authorizeViewPermissionsByOrganizationId(authentication, result.getOrganizationId());
-        return result;
-    }
-    
     @GetMapping("/organization/{id}/account")
     public List<AccountDTO> getAllAccountsForOrganization(@PathVariable(value = "id") Long organizationId, Authentication authentication)
     	throws UnauthorizedException {
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return accountRepo.getAllAccountsForOrganization(organizationId);
-    }
-    
-    @GetMapping("/organization/{id}/accountBalance")
-    public List<AccountBalanceDTO> getAllAccountBalancesForOrganization(@PathVariable(value = "id") Long organizationId, Authentication authentication)
-    	throws UnauthorizedException {
-    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
-    	return accountRepo.getAllAccountBalancesForOrganization(organizationId);
     }
     
     @GetMapping("/organization/{id}/accountBalance/{startDate}/{endDate}")
