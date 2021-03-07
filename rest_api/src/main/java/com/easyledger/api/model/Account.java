@@ -120,9 +120,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		query = "SELECT account.id AS accountId, account.name AS accountName, account_group.id AS accountGroupId, account_group.name AS accountGroupName,          " + 
 				"     account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,          " + 
 				"     organization.id AS organizationId, organization.name AS organizationName,          " + 
-				"     SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfDebitLineItems,           " + 
-				"     SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfCreditLineItems, " + 
-				"     account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount           " + 
+				"     SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS debitTotal,           " + 
+				"     SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS creditTotal, " + 
+				"     account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount, account.deleted AS deleted         " + 
 				"FROM account LEFT JOIN line_item ON line_item.account_id = account.id LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id, account_group, account_subtype, account_type, organization         " + 
 				"WHERE           " + 
 				"     organization.id = :organizationId AND           " + 
@@ -133,7 +133,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"     account.deleted = false           " + 
 				"GROUP BY account.id, account_group.id, account_subtype.id, account_type.id, organization.id           " + 
 				"ORDER BY account_type.id, account.name  ",
-		resultSetMapping = "accountBalanceDTOMapping"
+		resultSetMapping = "accountDTOMapping"
 )
 
 @Entity

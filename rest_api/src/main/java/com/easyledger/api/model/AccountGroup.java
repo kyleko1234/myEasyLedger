@@ -107,7 +107,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )
 
 @SqlResultSetMapping( //maps native SQL query to AccountGroupBalanceDTO class
-		name = "accountGroupBalanceDTOWithDatesMapping",
+		name = "accountGroupBalanceDTOAlternateMapping",
 		classes = {
 				@ConstructorResult(
 						targetClass = AccountGroupBalanceDTO.class,
@@ -154,7 +154,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    account_group.deleted = false        " + 
 				"GROUP BY account_group.id, account_subtype.id, account_type.id, organization.id    " + 
 				"ORDER BY account_type.id ASC, account_group.name   " ,
-		resultSetMapping = "accountGroupBalanceDTOWithDatesMapping"
+		resultSetMapping = "accountGroupBalanceDTOAlternateMapping"
 )
 
 @NamedNativeQuery( //takes an organization ID as a parameter and returns AccountGroupBalanceDTO objects for all undeleted account groups for that organization
@@ -164,9 +164,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,         " + 
 				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName,         " + 
 				"    organization.id AS organizationId, organization.name AS organizationName,       " + 
-				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfDebitLineItems,     " + 
-				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfCreditLineItems, " + 
-				"    SUM(account.initial_debit_amount) AS sumOfInitialDebitAmounts, SUM(account.initial_credit_amount) AS sumOfInitialCreditAmounts    " + 
+				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS debitTotal,     " + 
+				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS creditTotal " + 
 				"FROM         " + 
 				"    account_group     " + 
 				"        LEFT JOIN account ON account.account_group_id = account_group.id AND account.deleted = false     " + 
@@ -181,7 +180,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    account_group.deleted = false        " + 
 				"GROUP BY account_group.id, account_subtype.id, account_type.id, organization.id    " + 
 				"ORDER BY account_type.id ASC, account_group.name  ",
-		resultSetMapping = "accountGroupBalanceDTOWithDatesMapping"
+		resultSetMapping = "accountGroupBalanceDTOMapping"
 )
 
 

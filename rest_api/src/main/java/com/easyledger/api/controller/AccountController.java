@@ -85,19 +85,13 @@ public class AccountController {
     }
     
     @GetMapping("/organization/{id}/accountBalance/{startDate}/{endDate}")
-    public List<AccountBalanceDTO> getAllAccountBalancesForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId, 
+    public List<AccountDTO> getAllAccountBalancesForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId, 
     		@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication)
     	throws UnauthorizedException {
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
-    	List<AccountBalanceDTO> response = accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
     	//because this is a date range, our totals should ignore initial amounts for debits and credits.
-    	for (AccountBalanceDTO account : response) {
-    		account.setDebitTotal(account.getSumOfDebitLineItems());
-    		account.setCreditTotal(account.getSumOfCreditLineItems());
-    		account.setDebitsMinusCredits(account.getDebitTotal().subtract(account.getCreditTotal()));
-    	}
-    	return response;
+    	return accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
     }
     
     @GetMapping("/organization/{id}/accountBalance/{endDate}")

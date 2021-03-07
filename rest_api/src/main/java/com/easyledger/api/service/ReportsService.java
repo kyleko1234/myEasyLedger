@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easyledger.api.dto.AccountBalanceDTO;
+import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.dto.AccountGroupBalanceDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 import com.easyledger.api.repository.AccountGroupRepository;
@@ -66,7 +67,7 @@ public class ReportsService {
 	public IncomeStatementViewModel getIncomeStatementViewModelForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate) {
 		List<AccountSubtypeBalanceDTO> accountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
 		List<AccountGroupBalanceDTO> accountGroupBalances = accountGroupRepo.getAllAccountGroupBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
-		List<AccountBalanceDTO> accountBalances = accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
+		List<AccountDTO> accountBalances = accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
 		
 		return new IncomeStatementViewModel(accountSubtypeBalances, accountGroupBalances, accountBalances, startDate, endDate);
 	}

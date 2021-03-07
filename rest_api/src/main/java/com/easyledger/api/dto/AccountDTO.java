@@ -59,11 +59,19 @@ public class AccountDTO {
 		this.accountTypeName = accountTypeName;
 		this.organizationId = organizationId.longValueExact();
 		this.organizationName = organizationName;
-		this.debitTotal = debitTotal;
-		this.creditTotal = creditTotal;
+		if (debitTotal != null) {
+			this.debitTotal = debitTotal;
+		} else {
+			this.debitTotal = new BigDecimal(0);
+		}
+		if (creditTotal != null) {
+			this.creditTotal = creditTotal;
+		} else {
+			this.creditTotal = new BigDecimal(0);
+		}
 		this.initialDebitAmount = initialDebitAmount;
 		this.initialCreditAmount = initialCreditAmount;
-		this.totalDebitsMinusCredits = debitTotal.subtract(creditTotal);
+		this.totalDebitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
 		this.deleted = deleted;
 	}
 

@@ -18,7 +18,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 	public List<AccountDTO> getAllAccountsForOrganization(Long organizationId);
 		
 	@Query(nativeQuery = true)
-	public List<AccountBalanceDTO> getAllAccountBalancesForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate);
+	public List<AccountDTO> getAllAccountBalancesForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate);
 	
 	@Query(nativeQuery = true)
 	public List<AccountBalanceDTO> getAllAccountBalancesForOrganizationUpToDate(Long organizationId, LocalDate endDate);

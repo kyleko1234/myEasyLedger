@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.easyledger.api.dto.AccountBalanceDTO;
+import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.dto.AccountGroupBalanceDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 
@@ -42,10 +43,10 @@ public class IncomeStatementViewModel {
 	private BigDecimal netIncome = new BigDecimal(0); // incomeBeforeTax - incomeTax
 	
 	private List<AccountGroupBalanceDTO> accountGroupBalances;
-	private List<AccountBalanceDTO> accountBalances;
+	private List<AccountDTO> accountBalances;
 	
 	public IncomeStatementViewModel(List<AccountSubtypeBalanceDTO> accountSubtypeBalances, List<AccountGroupBalanceDTO> accountGroupBalances,
-			List<AccountBalanceDTO> accountBalances, LocalDate startDate, LocalDate endDate) {
+			List<AccountDTO> accountBalances, LocalDate startDate, LocalDate endDate) {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.accountGroupBalances = accountGroupBalances;
@@ -183,7 +184,7 @@ public class IncomeStatementViewModel {
 		return accountGroupBalances;
 	}
 
-	public List<AccountBalanceDTO> getAccountBalances() {
+	public List<AccountDTO> getAccountBalances() {
 		return accountBalances;
 	}
 
