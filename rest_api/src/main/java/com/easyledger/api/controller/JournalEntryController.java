@@ -30,8 +30,10 @@ import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
+import com.easyledger.api.model.Account;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
+import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.JournalEntryRepository;
 import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;
@@ -47,14 +49,16 @@ public class JournalEntryController {
 	private JournalEntryRepository journalEntryRepo;
 	private JournalEntryService journalEntryService;
 	private LineItemRepository lineItemRepo;
+	private AccountRepository accountRepo;
 	private AuthorizationService authorizationService;
 
 	public JournalEntryController(JournalEntryRepository journalEntryRepo, JournalEntryService journalEntryService, 
-			LineItemRepository lineItemRepo, AuthorizationService authorizationService) {
+			LineItemRepository lineItemRepo, AccountRepository accountRepo, AuthorizationService authorizationService) {
 		super();
 		this.journalEntryRepo = journalEntryRepo;
 		this.journalEntryService = journalEntryService;
 		this.lineItemRepo = lineItemRepo;
+		this.accountRepo = accountRepo;
 		this.authorizationService = authorizationService;
 	}
 
@@ -88,15 +92,7 @@ public class JournalEntryController {
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, journalEntryDTO.getOrganizationId());
         return ResponseEntity.ok().body(journalEntryDTO);
     }
-    
-    
-    @GetMapping("/test1")
-    public JournalEntry test1() throws ResourceNotFoundException {
-    	JournalEntry journalEntry = journalEntryRepo.findById((long) 10)
-        		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: ")); 
-    	return journalEntry;
-    }
-    
+        
     @DeleteMapping("/journalEntry/{id}")
     public Map<String, Boolean> deleteJournalEntry(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
          throws ResourceNotFoundException, UnauthorizedException {
@@ -104,7 +100,16 @@ public class JournalEntryController {
        .orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
 
         authorizationService.authorizeEditPermissionsByOrganizationId(authentication, journalEntry.getOrganization().getId());
-        
+        //update account debitTotal and creditTotal for each line item
+        for (LineItem lineItem : journalEntry.getLineItems()) { 
+        	Account account = lineItem.getAccount();
+        	if (lineItem.isIsCredit()) {
+        		account.setCreditTotal(account.getCreditTotal().subtract(lineItem.getAmount()));
+        	} else {
+        		account.setDebitTotal(account.getDebitTotal().subtract(lineItem.getAmount()));
+        	}
+        	accountRepo.save(account);
+        }
         journalEntry.setDeleted(true);
         journalEntryRepo.save(journalEntry);
         Map<String, Boolean> response = new HashMap<>();
@@ -138,7 +143,15 @@ public class JournalEntryController {
     	//Delete old LineItems.
     	Iterator<LineItem> oldLineItemIterator = oldJournalEntry.getLineItems().iterator();
     	while (oldLineItemIterator.hasNext()) {
-    		lineItemRepo.deleteById(oldLineItemIterator.next().getId());
+    		LineItem nextItem = oldLineItemIterator.next();
+    		Account account = nextItem.getAccount(); //update account totals when deleting line items
+        	if (nextItem.isIsCredit()) {
+        		account.setCreditTotal(account.getCreditTotal().subtract(nextItem.getAmount()));
+        	} else {
+        		account.setDebitTotal(account.getDebitTotal().subtract(nextItem.getAmount()));
+        	}
+        	accountRepo.save(account);
+    		lineItemRepo.deleteById(nextItem.getId());
     	}
     	
     	//Replace entry with data from the request body. Will create new LineItems to replace old ones.
@@ -155,7 +168,15 @@ public class JournalEntryController {
     	Iterator<LineItem> newLineItemIterator = updatedJournalEntry.getLineItems().iterator();
     	journalEntryRepo.save(updatedJournalEntry);
     	while (newLineItemIterator.hasNext()) {
-    		lineItemRepo.save(newLineItemIterator.next());
+    		LineItem nextItem = newLineItemIterator.next();
+    		Account account = nextItem.getAccount(); //update account totals when creating line items
+        	if (nextItem.isIsCredit()) {
+        		account.setCreditTotal(account.getCreditTotal().add(nextItem.getAmount()));
+        	} else {
+        		account.setDebitTotal(account.getDebitTotal().add(nextItem.getAmount()));
+        	}
+        	accountRepo.save(account);    		
+    		lineItemRepo.save(nextItem);
     	}
     		    
     	//Return updated entry.
@@ -190,7 +211,15 @@ public class JournalEntryController {
     	Iterator<LineItem> newLineItemIterator = updatedJournalEntry.getLineItems().iterator();
     	journalEntryRepo.save(updatedJournalEntry);
     	while (newLineItemIterator.hasNext()) {
-    		lineItemRepo.save(newLineItemIterator.next());
+    		LineItem nextItem = newLineItemIterator.next();
+    		Account account = nextItem.getAccount(); //update account totals when creating line items
+        	if (nextItem.isIsCredit()) {
+        		account.setCreditTotal(account.getCreditTotal().add(nextItem.getAmount()));
+        	} else {
+        		account.setDebitTotal(account.getDebitTotal().add(nextItem.getAmount()));
+        	}
+        	accountRepo.save(account);    		
+    		lineItemRepo.save(nextItem);
     	}
     		    
     	//Return updated entry.

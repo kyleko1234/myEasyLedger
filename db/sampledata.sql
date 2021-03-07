@@ -170,7 +170,7 @@ INSERT INTO account(name, account_group_id, initial_debit_amount, initial_credit
         ('Dividends', 7, 0, 0, 3000, 0),
         ('Service revenue', 8, 0, 0, 0, 24000),
         ('Office Rent', 9, 0, 0, 500, 0),
-        ('Payroll', 9, 0, 0, 0, 7500),
+        ('Payroll', 9, 0, 0, 7500, 0),
         ('Utilities', 9, 0, 0, 0, 180);
 
 /*      1     ('Cash', 1),
