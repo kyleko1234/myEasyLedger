@@ -1,5 +1,7 @@
 package com.easyledger.api.service;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +23,22 @@ public class AccountService {
 		this.accountGroupRepo = accountGroupRepo;
 	}
 	
+	//ignores attempts to edit debitTotal and creditTotal
 	public Account createAccountFromDTO(AccountDTO dto) 
 			throws ResourceNotFoundException, ConflictException {
 		Account product = new Account();
 		product.setId(dto.getAccountId());
 		product.setName(dto.getAccountName());
+		if (dto.getInitialDebitAmount() != null) {
+			product.setInitialDebitAmount(dto.getInitialDebitAmount());
+		} else {
+			product.setInitialDebitAmount(new BigDecimal(0));
+		}
+		if (dto.getInitialCreditAmount() != null) {
+			product.setInitialCreditAmount(dto.getInitialCreditAmount());
+		} else {
+			product.setInitialCreditAmount(new BigDecimal(0));
+		}
 //		product.setDeleted(dto.isDeleted());
 		
 		AccountGroup accountGroup = accountGroupRepo.findById(dto.getAccountGroupId())

@@ -156,22 +156,22 @@ INSERT INTO account_group(name, account_subtype_id, organization_id)
         8    ('Revenue', 22, 1),
         9    ('Selling, general, and administration', 26, 1); */
 
-INSERT INTO account(name, account_group_id)
-    VALUES
-        ('Cash', 1),
-        ('Accounts receivable', 2),
-        ('Office supplies', 3),
-        ('Office equipment', 4),
-        ('Vehicles', 4),
-        ('Notes payable', 5),
-        ('Accounts payable', 5),
-        ('Dividends payable', 5),
-        ('Capital stock', 6),
-        ('Dividends', 7),
-        ('Service revenue', 8),
-        ('Office Rent', 9),
-        ('Payroll', 9),
-        ('Utilities', 9);
+INSERT INTO account(name, account_group_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total)
+    VALUES 
+        ('Cash', 1, 0, 0, 420000, 18430),
+        ('Accounts receivable', 2, 0, 0, 24000, 20000),
+        ('Office supplies', 3, 0, 0, 250, 0),
+        ('Office equipment', 4, 0, 0, 4500, 0),
+        ('Vehicles', 4, 0, 0, 25000, 0),
+        ('Notes payable', 5, 0, 0, 15000, 0),
+        ('Accounts payable', 5, 0, 0, 0, 4500),
+        ('Dividends payable', 5, 0, 0, 0, 3000),
+        ('Capital stock', 6, 0, 0, 0, 400000),
+        ('Dividends', 7, 0, 0, 3000, 0),
+        ('Service revenue', 8, 0, 0, 0, 24000),
+        ('Office Rent', 9, 0, 0, 500, 0),
+        ('Payroll', 9, 0, 0, 0, 7500),
+        ('Utilities', 9, 0, 0, 0, 180);
 
 /*      1     ('Cash', 1),
         2     ('Accounts receivable', 2),
