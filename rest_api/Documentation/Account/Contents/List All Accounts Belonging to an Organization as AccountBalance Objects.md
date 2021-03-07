@@ -1,6 +1,5 @@
 ### List All Accounts Belonging to an Organization as AccountBalance Objects
 Endpoints: 
-- `GET /organization/{id}/accountBalance`
 - `GET /organization/{id}/accountBalance/{endDate}`
 - `GET /organization/{id}/accountBalance/{startDate}/{endDate}`
 
@@ -9,6 +8,8 @@ Endpoints:
 Authorization: Requesting user must belong to the organization with the specified id.
 
 Returns a list of all undeleted accounts belonging to an organization with the specified id. These accounts are presented as AccountBalance objects, which are special Account objects that include information on the total debit and credit amounts of all undeleted line items affecting the account. The results are ordered by AccountTypeId, then by AccountName alphabetically.
+
+Account's debitTotal/creditTotal field is a memoized total that is updated with every LineItem put/post/delete. This makes it a relatively cheap operation to fetch, but this means that the Account object can only show the most up-to-date balances of the account. AccountBalance calculates debitTotal and creditTotal by summing all relevant LineItem fields and adding initialDebitAmount (or initialCreditAmount). This allows us to query for specific date ranges at the cost of speed.
 
 Date parameters should be provided in `yyyy-mm-dd` format. If no date parameters are given, the resulting creditTotal and debitTotal fields in the returned objects will encompass all undeleted LineItems. If one date parameter is given, the resulting totals will encompass all LineItems dated up to and including the given date. If two date parameters are given, the resulting totals will encompass the date range between the given start date and end date, inclusive.
 
@@ -38,9 +39,13 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 24000,
+        "sumOfCreditLineItems": 20000,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 24000,
         "creditTotal": 20000,
-        "debitsMinusCredits": 4000
+        "totalDebitsMinusCredits": 4000
     },
     {
         "accountId": 1,
@@ -53,9 +58,13 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 420000,
+        "sumOfCreditLineItems": 18430,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 420000,
         "creditTotal": 18430,
-        "debitsMinusCredits": 401570
+        "totalDebitsMinusCredits": 401570
     },
     {
         "accountId": 4,
@@ -68,9 +77,13 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 4500,
+        "sumOfCreditLineItems": 0,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 4500,
         "creditTotal": 0,
-        "debitsMinusCredits": 4500
+        "totalDebitsMinusCredits": 4500
     },
     {
         "accountId": 3,
@@ -83,9 +96,13 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 250,
+        "sumOfCreditLineItems": 0,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 250,
         "creditTotal": 0,
-        "debitsMinusCredits": 250
+        "totalDebitsMinusCredits": 250
     },
     {
         "accountId": 5,
@@ -98,144 +115,184 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 25000,
+        "sumOfCreditLineItems": 0,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 25000,
         "creditTotal": 0,
-        "debitsMinusCredits": 25000
+        "totalDebitsMinusCredits": 25000
     },
     {
         "accountId": 7,
         "accountName": "Accounts payable",
         "accountGroupId": 5,
         "accountGroupName": "Payables",
-        "accountSubtypeId": 11,
-        "accountSubtypeName": "Deferred revenue",
+        "accountSubtypeId": 10,
+        "accountSubtypeName": "Payables",
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 0,
+        "sumOfCreditLineItems": 4500,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 0,
         "creditTotal": 4500,
-        "debitsMinusCredits": -4500
+        "totalDebitsMinusCredits": -4500
     },
     {
         "accountId": 8,
         "accountName": "Dividends payable",
         "accountGroupId": 5,
         "accountGroupName": "Payables",
-        "accountSubtypeId": 11,
-        "accountSubtypeName": "Deferred revenue",
+        "accountSubtypeId": 10,
+        "accountSubtypeName": "Payables",
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 0,
+        "sumOfCreditLineItems": 3000,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 0,
         "creditTotal": 3000,
-        "debitsMinusCredits": -3000
+        "totalDebitsMinusCredits": -3000
     },
     {
         "accountId": 6,
         "accountName": "Notes payable",
         "accountGroupId": 5,
         "accountGroupName": "Payables",
-        "accountSubtypeId": 11,
-        "accountSubtypeName": "Deferred revenue",
+        "accountSubtypeId": 10,
+        "accountSubtypeName": "Payables",
         "accountTypeId": 2,
         "accountTypeName": "Liabilities",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 0,
+        "sumOfCreditLineItems": 15000,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 0,
         "creditTotal": 15000,
-        "debitsMinusCredits": -15000
+        "totalDebitsMinusCredits": -15000
     },
     {
         "accountId": 9,
         "accountName": "Capital stock",
         "accountGroupId": 6,
         "accountGroupName": "Paid-in Capital",
-        "accountSubtypeId": 19,
-        "accountSubtypeName": "Dividends and equivalents",
+        "accountSubtypeId": 18,
+        "accountSubtypeName": "Paid-in capital",
         "accountTypeId": 3,
         "accountTypeName": "Owner's Equity",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 0,
+        "sumOfCreditLineItems": 400000,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 0,
         "creditTotal": 400000,
-        "debitsMinusCredits": -400000
+        "totalDebitsMinusCredits": -400000
     },
     {
         "accountId": 10,
         "accountName": "Dividends",
         "accountGroupId": 7,
         "accountGroupName": "Dividends and equivalents",
-        "accountSubtypeId": 20,
-        "accountSubtypeName": "Other equity items",
+        "accountSubtypeId": 19,
+        "accountSubtypeName": "Dividends and equivalents",
         "accountTypeId": 3,
         "accountTypeName": "Owner's Equity",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 3000,
+        "sumOfCreditLineItems": 0,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 3000,
         "creditTotal": 0,
-        "debitsMinusCredits": 3000
+        "totalDebitsMinusCredits": 3000
     },
     {
         "accountId": 11,
         "accountName": "Service revenue",
         "accountGroupId": 8,
         "accountGroupName": "Revenue",
-        "accountSubtypeId": 22,
-        "accountSubtypeName": "Other income",
+        "accountSubtypeId": 21,
+        "accountSubtypeName": "Revenue",
         "accountTypeId": 4,
         "accountTypeName": "Income",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 0,
+        "sumOfCreditLineItems": 24000,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 0,
         "creditTotal": 24000,
-        "debitsMinusCredits": -24000
+        "totalDebitsMinusCredits": -24000
     },
     {
         "accountId": 12,
         "accountName": "Office Rent",
         "accountGroupId": 9,
         "accountGroupName": "Selling, general, and administration",
-        "accountSubtypeId": 26,
-        "accountSubtypeName": "Depreciation",
+        "accountSubtypeId": 25,
+        "accountSubtypeName": "Selling, general, and administration",
         "accountTypeId": 5,
         "accountTypeName": "Expenses",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 500,
+        "sumOfCreditLineItems": 0,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 500,
         "creditTotal": 0,
-        "debitsMinusCredits": 500
+        "totalDebitsMinusCredits": 500
     },
     {
         "accountId": 13,
         "accountName": "Payroll",
         "accountGroupId": 9,
         "accountGroupName": "Selling, general, and administration",
-        "accountSubtypeId": 26,
-        "accountSubtypeName": "Depreciation",
+        "accountSubtypeId": 25,
+        "accountSubtypeName": "Selling, general, and administration",
         "accountTypeId": 5,
         "accountTypeName": "Expenses",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 7500,
+        "sumOfCreditLineItems": 0,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 7500,
         "creditTotal": 0,
-        "debitsMinusCredits": 7500
+        "totalDebitsMinusCredits": 7500
     },
     {
         "accountId": 14,
         "accountName": "Utilities",
         "accountGroupId": 9,
         "accountGroupName": "Selling, general, and administration",
-        "accountSubtypeId": 26,
-        "accountSubtypeName": "Depreciation",
+        "accountSubtypeId": 25,
+        "accountSubtypeName": "Selling, general, and administration",
         "accountTypeId": 5,
         "accountTypeName": "Expenses",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": 180,
+        "sumOfCreditLineItems": 0,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
         "debitTotal": 180,
         "creditTotal": 0,
-        "debitsMinusCredits": 180
+        "totalDebitsMinusCredits": 180
     }
 ]
 ```

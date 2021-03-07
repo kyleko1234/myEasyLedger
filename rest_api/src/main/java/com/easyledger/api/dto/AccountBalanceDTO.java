@@ -1,6 +1,7 @@
 package com.easyledger.api.dto;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class AccountBalanceDTO {
 	private Long accountId;
@@ -21,19 +22,19 @@ public class AccountBalanceDTO {
 	private BigDecimal creditTotal;
 	private BigDecimal totalDebitsMinusCredits;
 	
-	public AccountBalanceDTO(Long accountId, String accountName, Long accountGroupId, String accountGroupName,
-			Long accountSubtypeId, String accountSubtypeName, Long accountTypeId, String accountTypeName,
-			Long organizationId, String organizationName, BigDecimal sumOfDebitLineItems,
+	public AccountBalanceDTO(BigInteger accountId, String accountName, BigInteger accountGroupId, String accountGroupName,
+			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
+			BigInteger organizationId, String organizationName, BigDecimal sumOfDebitLineItems,
 			BigDecimal sumOfCreditLineItems, BigDecimal initialDebitAmount, BigDecimal initialCreditAmount) {
-		this.accountId = accountId;
+		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
-		this.accountGroupId = accountGroupId;
+		this.accountGroupId = accountGroupId.longValueExact();
 		this.accountGroupName = accountGroupName;
-		this.accountSubtypeId = accountSubtypeId;
+		this.accountSubtypeId = accountSubtypeId.longValueExact();
 		this.accountSubtypeName = accountSubtypeName;
-		this.accountTypeId = accountTypeId;
+		this.accountTypeId = accountTypeId.longValueExact();
 		this.accountTypeName = accountTypeName;
-		this.organizationId = organizationId;
+		this.organizationId = organizationId.longValueExact();
 		this.organizationName = organizationName;
 		if (sumOfDebitLineItems != null) {
 			this.sumOfDebitLineItems = sumOfDebitLineItems;

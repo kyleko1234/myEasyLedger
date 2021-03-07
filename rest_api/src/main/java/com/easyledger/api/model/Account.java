@@ -57,7 +57,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"     account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,          " + 
 				"     organization.id AS organizationId, organization.name AS organizationName,          " + 
 				"     account.debit_total AS debitTotal, account.credit_total AS creditTotal,  " + 
-				"     account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount          " + 
+				"     account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount, account.deleted AS deleted          " + 
 				"FROM account, account_group, account_subtype, account_type, organization         " + 
 				"WHERE           " + 
 				"     organization.id = :organizationId AND           " + 

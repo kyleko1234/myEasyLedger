@@ -21,19 +21,24 @@ ___
 #### Sample Response
 ```json
 [
-	{
-		"accountId": 1,
-		"accountName": "Cash",
-		"accountGroupId": 1,
-		"accountGroupName": "Cash",
-		"accountSubtypeId": 1,
-		"accountSubtypeName": "Cash and cash equivalents",
-		"accountTypeId": 1,
-		"accountTypeName": "Assets",
-		"organizationId": 1,
-		"organizationName": "Sample organization",
-		"deleted": false
-	},
+    {
+        "accountId": 2,
+        "accountName": "Accounts receivable",
+        "accountGroupId": 2,
+        "accountGroupName": "Accounts Receivable",
+        "accountSubtypeId": 3,
+        "accountSubtypeName": "Receivables",
+        "accountTypeId": 1,
+        "accountTypeName": "Assets",
+        "organizationId": 1,
+        "organizationName": "Sample organization",
+        "debitTotal": 24000,
+        "creditTotal": 20000,
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 4000,
+        "deleted": false
+    },
     ...
 ]
 ```

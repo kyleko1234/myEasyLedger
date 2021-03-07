@@ -12,6 +12,12 @@ The name of this account.
 - **accountGroupId (`Long`)**<br/>
 The id of the type for this account.
 
+- **initialDebitAmount ( `BigDecimal`)**<br/>
+The debit value that this account is initialized at. 
+
+- **initialCreditAmount ( `BigDecimal`)**<br/>
+The credit value that this account is initialized at. 
+
 ___
 
 #### Returns
@@ -24,7 +30,9 @@ Body:
 ```json
 {
     "accountName": "Cash Equivalents",
-    "accountGroupId": 1
+    "accountGroupId": 1,
+	"initialDebitAmount": 0,
+	"initialCreditAmount": 0
 }
 ```
 <br/>
@@ -43,6 +51,11 @@ Body:
     "accountTypeName": "Assets",
     "organizationId": 1,
     "organizationName": "Sample organization",
+    "debitTotal": 1000,
+    "creditTotal": 0,
+    "initialDebitAmount": 1000,
+    "initialCreditAmount": 0,
+    "totalDebitsMinusCredits": 1000,
     "deleted": false
 }
 ```

@@ -13,8 +13,15 @@ The id of the account that is to be updated.
 - **accountName (`String` 40)**<br/>
 The name of this account.
 
-- **accountGroupId (optional `Long`)**<br/>
+- **accountGroupId ( `Long`)**<br/>
 The id of the account group for this account.
+
+- **initialDebitAmount ( `BigDecimal`)**<br/>
+The debit value that this account is initialized at. 
+
+- **initialCreditAmount ( `BigDecimal`)**<br/>
+The credit value that this account is initialized at. 
+
 
 ___
 #### Returns
@@ -30,7 +37,9 @@ Body:
 {
     "accountId": 1,
     "accountName": "Cash",
-    "accountGroupId": 1
+    "accountGroupId": 1,
+	"initialDebitAmount": 0,
+	"initialCreditAmount": 0
 }
 ```
 <br/>
@@ -49,6 +58,11 @@ Body:
     "accountTypeName": "Assets",
     "organizationId": 1,
     "organizationName": "Sample organization",
+    "debitTotal": 420000,
+    "creditTotal": 18430,
+    "initialDebitAmount": 0,
+    "initialCreditAmount": 0,
+    "totalDebitsMinusCredits": 401570,
     "deleted": false
 }
 ```

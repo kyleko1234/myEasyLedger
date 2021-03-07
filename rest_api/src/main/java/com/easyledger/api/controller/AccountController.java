@@ -111,6 +111,8 @@ public class AccountController {
     	}
     	Account account = accountService.createAccountFromDTO(dto);
     	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
+    	account.setDebitTotal(account.getInitialDebitAmount());
+    	account.setCreditTotal(account.getInitialCreditAmount());
     	final Account updatedAccount = accountRepo.save(account);
     	return new AccountDTO(updatedAccount);
     	}
