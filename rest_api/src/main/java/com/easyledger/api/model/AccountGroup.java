@@ -84,80 +84,104 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @NamedNativeQuery( //takes an organization ID as a parameter and returns AccountGroupBalanceDTO objects for all undeleted account groups for that organization
 		name = "AccountGroup.getAllAccountGroupBalancesForOrganization",
-		query = "SELECT   " + 
-				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName,      " + 
-				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,      " + 
-				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName,      " + 
-				"    organization.id AS organizationId, organization.name AS organizationName,    " + 
-				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitTotal,  " + 
-				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditTotal " + 
-				"FROM      " + 
-				"    account_group  " + 
-				"        LEFT JOIN account ON account.account_group_id = account_group.id AND account.deleted = false  " + 
-				"        LEFT JOIN line_item ON line_item.account_id = account.id  " + 
-				"        LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id,  " + 
-				"    account_subtype, account_type, organization      " + 
-				"WHERE       " + 
-				"    organization.id = ? AND      " + 
-				"    account_group.organization_id = organization.id AND     " + 
-				"    account_group.account_subtype_id = account_subtype.id AND       " + 
-				"    account_subtype.account_type_id = account_type.id AND       " + 
-				"    account_group.deleted = false     " + 
-				"GROUP BY account_group.id, account_subtype.id, account_type.id, organization.id " + 
+		query = "SELECT      " + 
+				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName,         " + 
+				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,         " + 
+				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName,         " + 
+				"    organization.id AS organizationId, organization.name AS organizationName,       " + 
+				"    SUM(account.debit_total) AS debitTotal,     " + 
+				"    SUM(account.credit_total) AS creditTotal    " + 
+				"FROM         " + 
+				"    account_group     " + 
+				"        LEFT JOIN account ON account.account_group_id = account_group.id AND account.deleted = false, " + 
+				"    account_subtype, account_type, organization         " + 
+				"WHERE          " + 
+				"    organization.id = ? AND         " + 
+				"    account_group.organization_id = organization.id AND        " + 
+				"    account_group.account_subtype_id = account_subtype.id AND          " + 
+				"    account_subtype.account_type_id = account_type.id AND          " + 
+				"    account_group.deleted = false        " + 
+				"GROUP BY account_group.id, account_subtype.id, account_type.id, organization.id    " + 
 				"ORDER BY account_type.id ASC, account_group.name  ",
 		resultSetMapping = "accountGroupBalanceDTOMapping"
 )
 
+@SqlResultSetMapping( //maps native SQL query to AccountGroupBalanceDTO class
+		name = "accountGroupBalanceDTOWithDatesMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = AccountGroupBalanceDTO.class,
+						columns = {
+								@ColumnResult(name = "accountGroupId"),
+								@ColumnResult(name = "accountGroupName"),
+								@ColumnResult(name = "accountSubtypeId"),
+								@ColumnResult(name = "accountSubtypeName"),
+								@ColumnResult(name = "accountTypeId"),
+								@ColumnResult(name = "accountTypeName"),
+								@ColumnResult(name = "organizationId"),
+								@ColumnResult(name = "organizationName"),
+								@ColumnResult(name = "sumOfDebitLineItems"),
+								@ColumnResult(name = "sumOfCreditLineItems"),
+								@ColumnResult(name = "sumOfInitialDebitAmounts"),
+								@ColumnResult(name = "sumOfInitialCreditAmounts")
+
+						}
+				)
+		}
+)	
+
 @NamedNativeQuery( //takes an organization ID as a parameter and returns AccountGroupBalanceDTO objects for all undeleted account groups for that organization
 		name = "AccountGroup.getAllAccountGroupBalancesForOrganizationUpToDate",
-		query = "SELECT   " + 
-				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName,      " + 
-				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,      " + 
-				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName,      " + 
-				"    organization.id AS organizationId, organization.name AS organizationName,    " + 
-				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS debitTotal,  " + 
-				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS creditTotal " + 
-				"FROM      " + 
-				"    account_group  " + 
-				"        LEFT JOIN account ON account.account_group_id = account_group.id AND account.deleted = false  " + 
-				"        LEFT JOIN line_item ON line_item.account_id = account.id  " + 
-				"        LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id,  " + 
-				"    account_subtype, account_type, organization      " + 
-				"WHERE       " + 
-				"    organization.id = :organizationId AND      " + 
-				"    account_group.organization_id = organization.id AND     " + 
-				"    account_group.account_subtype_id = account_subtype.id AND       " + 
-				"    account_subtype.account_type_id = account_type.id AND       " + 
-				"    account_group.deleted = false     " + 
-				"GROUP BY account_group.id, account_subtype.id, account_type.id, organization.id " + 
-				"ORDER BY account_type.id ASC, account_group.name  ",
-		resultSetMapping = "accountGroupBalanceDTOMapping"
+		query = "SELECT      " + 
+				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName,         " + 
+				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,         " + 
+				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName,         " + 
+				"    organization.id AS organizationId, organization.name AS organizationName,       " + 
+				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfDebitLineItems,     " + 
+				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfCreditLineItems, " + 
+				"    SUM(account.initial_debit_amount) AS sumOfInitialDebitAmounts, SUM(account.initial_credit_amount) AS sumOfInitialCreditAmounts  " + 
+				"FROM         " + 
+				"    account_group     " + 
+				"        LEFT JOIN account ON account.account_group_id = account_group.id AND account.deleted = false     " + 
+				"        LEFT JOIN line_item ON line_item.account_id = account.id     " + 
+				"        LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id,     " + 
+				"    account_subtype, account_type, organization         " + 
+				"WHERE          " + 
+				"    organization.id = :organizationId AND         " + 
+				"    account_group.organization_id = organization.id AND        " + 
+				"    account_group.account_subtype_id = account_subtype.id AND          " + 
+				"    account_subtype.account_type_id = account_type.id AND          " + 
+				"    account_group.deleted = false        " + 
+				"GROUP BY account_group.id, account_subtype.id, account_type.id, organization.id    " + 
+				"ORDER BY account_type.id ASC, account_group.name   " ,
+		resultSetMapping = "accountGroupBalanceDTOWithDatesMapping"
 )
 
 @NamedNativeQuery( //takes an organization ID as a parameter and returns AccountGroupBalanceDTO objects for all undeleted account groups for that organization
 		name = "AccountGroup.getAllAccountGroupBalancesForOrganizationBetweenDates",
-		query = "SELECT   " + 
-				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName,      " + 
-				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,      " + 
-				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName,      " + 
-				"    organization.id AS organizationId, organization.name AS organizationName,    " + 
-				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS debitTotal,  " + 
-				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS creditTotal " + 
-				"FROM      " + 
-				"    account_group  " + 
-				"        LEFT JOIN account ON account.account_group_id = account_group.id AND account.deleted = false  " + 
-				"        LEFT JOIN line_item ON line_item.account_id = account.id  " + 
-				"        LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id,  " + 
-				"    account_subtype, account_type, organization      " + 
-				"WHERE       " + 
-				"    organization.id = :organizationId AND      " + 
-				"    account_group.organization_id = organization.id AND     " + 
-				"    account_group.account_subtype_id = account_subtype.id AND       " + 
-				"    account_subtype.account_type_id = account_type.id AND       " + 
-				"    account_group.deleted = false     " + 
-				"GROUP BY account_group.id, account_subtype.id, account_type.id, organization.id " + 
+		query = "SELECT      " + 
+				"    account_group.id AS accountGroupId, account_group.name AS accountGroupName,         " + 
+				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,         " + 
+				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName,         " + 
+				"    organization.id AS organizationId, organization.name AS organizationName,       " + 
+				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfDebitLineItems,     " + 
+				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfCreditLineItems, " + 
+				"    SUM(account.initial_debit_amount) AS sumOfInitialDebitAmounts, SUM(account.initial_credit_amount) AS sumOfInitialCreditAmounts    " + 
+				"FROM         " + 
+				"    account_group     " + 
+				"        LEFT JOIN account ON account.account_group_id = account_group.id AND account.deleted = false     " + 
+				"        LEFT JOIN line_item ON line_item.account_id = account.id     " + 
+				"        LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id,     " + 
+				"    account_subtype, account_type, organization         " + 
+				"WHERE          " + 
+				"    organization.id = :organizationId AND         " + 
+				"    account_group.organization_id = organization.id AND        " + 
+				"    account_group.account_subtype_id = account_subtype.id AND          " + 
+				"    account_subtype.account_type_id = account_type.id AND          " + 
+				"    account_group.deleted = false        " + 
+				"GROUP BY account_group.id, account_subtype.id, account_type.id, organization.id    " + 
 				"ORDER BY account_type.id ASC, account_group.name  ",
-		resultSetMapping = "accountGroupBalanceDTOMapping"
+		resultSetMapping = "accountGroupBalanceDTOWithDatesMapping"
 )
 
 

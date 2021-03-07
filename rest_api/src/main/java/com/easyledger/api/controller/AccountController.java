@@ -90,7 +90,14 @@ public class AccountController {
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication)
     	throws UnauthorizedException {
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
-    	return accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
+    	List<AccountBalanceDTO> response = accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
+    	//because this is a date range, our totals should ignore initial amounts for debits and credits.
+    	for (AccountBalanceDTO account : response) {
+    		account.setDebitTotal(account.getSumOfDebitLineItems());
+    		account.setCreditTotal(account.getSumOfCreditLineItems());
+    		account.setDebitsMinusCredits(account.getDebitTotal().subtract(account.getCreditTotal()));
+    	}
+    	return response;
     }
     
     @GetMapping("/organization/{id}/accountBalance/{endDate}")

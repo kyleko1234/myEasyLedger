@@ -106,7 +106,14 @@ public class AccountGroupController {
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication)
     	throws UnauthorizedException {
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
-    	return accountGroupRepo.getAllAccountGroupBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
+    	List<AccountGroupBalanceDTO> response = accountGroupRepo.getAllAccountGroupBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
+    	//because this is a date range, remove initial values from response!
+    	for (AccountGroupBalanceDTO accountGroup : response) { 
+    		accountGroup.setDebitTotal(accountGroup.getSumOfDebitLineItems());
+    		accountGroup.setCreditTotal(accountGroup.getSumOfCreditLineItems());
+    		accountGroup.setDebitsMinusCredits(accountGroup.getDebitTotal().subtract(accountGroup.getCreditTotal()));
+    	}
+    	return response;
     }
 
     

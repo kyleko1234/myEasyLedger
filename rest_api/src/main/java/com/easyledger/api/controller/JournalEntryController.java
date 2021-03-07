@@ -184,8 +184,6 @@ public class JournalEntryController {
     	return ResponseEntity.ok().body(newEntryDTO);
 
     }
-    
-    
 
     @Transactional(rollbackFor=Exception.class)
     @PostMapping("/journalEntry")

@@ -20,7 +20,7 @@ public class AccountBalanceDTO {
 	private BigDecimal initialCreditAmount;
 	private BigDecimal debitTotal;
 	private BigDecimal creditTotal;
-	private BigDecimal totalDebitsMinusCredits;
+	private BigDecimal debitsMinusCredits;
 	
 	public AccountBalanceDTO(BigInteger accountId, String accountName, BigInteger accountGroupId, String accountGroupName,
 			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
@@ -50,7 +50,7 @@ public class AccountBalanceDTO {
 		this.initialCreditAmount = initialCreditAmount;
 		this.debitTotal = this.sumOfDebitLineItems.add(initialDebitAmount);
 		this.creditTotal = this.sumOfCreditLineItems.add(initialCreditAmount);
-		this.totalDebitsMinusCredits = debitTotal.subtract(creditTotal);
+		this.debitsMinusCredits = debitTotal.subtract(creditTotal);
 	}
 	
 	public AccountBalanceDTO() {
@@ -185,12 +185,12 @@ public class AccountBalanceDTO {
 		this.creditTotal = creditTotal;
 	}
 
-	public BigDecimal getTotalDebitsMinusCredits() {
-		return totalDebitsMinusCredits;
+	public BigDecimal getDebitsMinusCredits() {
+		return debitsMinusCredits;
 	}
 
-	public void setTotalDebitsMinusCredits(BigDecimal totalDebitsMinusCredits) {
-		this.totalDebitsMinusCredits = totalDebitsMinusCredits;
+	public void setDebitsMinusCredits(BigDecimal debitsMinusCredits) {
+		this.debitsMinusCredits = debitsMinusCredits;
 	}
 
 	@Override
@@ -202,7 +202,7 @@ public class AccountBalanceDTO {
 				+ organizationName + ", sumOfDebitLineItems=" + sumOfDebitLineItems + ", sumOfCreditLineItems="
 				+ sumOfCreditLineItems + ", initialDebitAmount=" + initialDebitAmount + ", initialCreditAmount="
 				+ initialCreditAmount + ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal
-				+ ", totalDebitsMinusCredits=" + totalDebitsMinusCredits + "]";
+				+ ", debitsMinusCredits=" + debitsMinusCredits + "]";
 	}
 
 	
