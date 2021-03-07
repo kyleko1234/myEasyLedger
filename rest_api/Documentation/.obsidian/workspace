@@ -11,7 +11,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Retrieve an AccountBalance.md",
+            "file": "Account/Contents/The Account Object.md",
             "mode": "source"
           }
         },
@@ -24,7 +24,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Retrieve an AccountBalance.md",
+            "file": "Account/Contents/The Account Object.md",
             "mode": "preview"
           }
         },
@@ -84,7 +84,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/Retrieve an AccountBalance.md",
+                "file": "Account/Contents/The Account Object.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,6 +101,7 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Account/Contents/The Account Object.md",
     "Account/Contents/Retrieve an AccountBalance.md",
     "Account/Contents/List All Accounts Belonging to an Organization.md",
     "Reports/Contents/Generate a Balance Sheet.md",
@@ -109,7 +110,6 @@
     "Permission/Permission.md",
     "AccountType/AccountType.md",
     "Account/Contents/Update an Account.md",
-    "AccountGroup/Contents/Update an AccountGroup.md",
-    "AccountGroup/Contents/The AccountGroup Object.md"
+    "AccountGroup/Contents/Update an AccountGroup.md"
   ]
 }

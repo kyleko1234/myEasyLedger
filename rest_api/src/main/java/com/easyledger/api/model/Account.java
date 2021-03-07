@@ -70,7 +70,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		resultSetMapping = "accountDTOMapping"
 )
 @SqlResultSetMapping( //maps native SQL query to AccountDTO class
-		name = "accountDTOMapping",
+		name = "accountBalanceDTOMapping",
 		classes = {
 				@ConstructorResult(
 						targetClass = AccountBalanceDTO.class,
