@@ -183,7 +183,22 @@ public class Account {
 		this.lineItems = new HashSet<LineItem>();
 		this.accountGroup = accountGroup;
 		accountGroup.getAccounts().add(this);
-		}
+		this.initialDebitAmount = new BigDecimal(0);
+		this.initialCreditAmount = new BigDecimal(0);
+		this.debitTotal = initialDebitAmount;
+		this.creditTotal = initialCreditAmount;
+	}
+	
+	public Account(String name, AccountGroup accountGroup, BigDecimal initialDebitAmount, BigDecimal initialCreditAmount) {
+		this.name = name;
+		this.lineItems = new HashSet<LineItem>();
+		this.accountGroup = accountGroup;
+		accountGroup.getAccounts().add(this);
+		this.initialDebitAmount = initialDebitAmount;
+		this.initialCreditAmount = initialCreditAmount;
+		this.debitTotal = initialDebitAmount;
+		this.creditTotal = initialCreditAmount;
+	}
 
 
 	public Long getId() {
