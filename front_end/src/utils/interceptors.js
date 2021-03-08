@@ -10,7 +10,11 @@ async function refreshAccessToken() {
     localStorage.removeItem(REFRESH_TOKEN);
     localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
     localStorage.setItem(REFRESH_TOKEN, response.data.refreshToken);
-  }).catch(console.log);
+  }).catch(error => {
+    console.log(error);
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
+  });
   console.log('Refreshed JWT');
 
 }

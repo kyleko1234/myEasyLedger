@@ -169,9 +169,9 @@ INSERT INTO account(name, account_group_id, initial_debit_amount, initial_credit
         ('Capital stock', 6, 0, 0, 0, 400000),
         ('Dividends', 7, 0, 0, 3000, 0),
         ('Service revenue', 8, 0, 0, 0, 24000),
-        ('Office Rent', 9, 0, 0, 500, 0),
+        ('Office Rent', 9, 0, 500, 0, 0),
         ('Payroll', 9, 0, 0, 7500, 0),
-        ('Utilities', 9, 0, 0, 0, 180);
+        ('Utilities', 9, 0, 0, 180, 0);
 
 /*      1     ('Cash', 1),
         2     ('Accounts receivable', 2),
@@ -194,7 +194,7 @@ INSERT INTO account(name, account_group_id, initial_debit_amount, initial_credit
 INSERT INTO journal_entry(journal_entry_date, organization_id, person_id, description, year_month)
     VALUES
         ('2020-11-01', 1, 1, 'Issued 20,000 shares of common stock at $20 per share', 202011),
-        ('2020-11-03', 1, 1, 'Paid office rent for the month of November $1500', 202011),
+        ('2020-11-03', 1, 1, 'Paid office rent for the month of November $500', 202011),
         ('2020-11-06', 1, 1, 'Purchased office supplies $250', 202011),
         ('2020-11-12', 1, 1, 'Purchased office equipment on account $4,500', 202011),
         ('2020-11-16', 1, 1, 'Purchased business car for $25,000. Paid $10,000 cash and issued a note for the balance.', 202011),

@@ -52,7 +52,7 @@ function BalanceSummary(props) {
                                             {account.accountName}
                                         </td>
                                         <td className={"text-right " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
-                                            {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(account.accountTypeId == 1? account.debitsMinusCredits : account.debitsMinusCredits * -1)}
+                                            {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(account.accountTypeId == 1? account.debitsMinusCredits : (account.debitsMinusCredits == 0? account.debitsMinusCredits : account.debitsMinusCredits * -1))}
                                         </td>
                                     </tr>
                                 )
