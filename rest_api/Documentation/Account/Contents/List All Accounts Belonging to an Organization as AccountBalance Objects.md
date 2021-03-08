@@ -11,7 +11,8 @@ Returns a list of all undeleted accounts belonging to an organization with the s
 
 Account's debitTotal/creditTotal field is a memoized total that is updated with every LineItem put/post/delete. This makes it a relatively cheap operation to fetch, but this means that the Account object can only show the most up-to-date balances of the account. AccountBalance calculates debitTotal and creditTotal by summing all relevant LineItem fields and adding initialDebitAmount (or initialCreditAmount). This allows us to query for specific date ranges at the cost of speed.
 
-'debitAmount' and 'creditAmount' fields should be regarded as the final balances for each AccountBalance object. I In the case that a date range (both a startDate AND and endDate) is provided, the resulting debitTotal and creditTotal (and debitsMinusCredits) will disregard initialDebitAmount and initialCreditAmount.
+'debitAmount' and 'creditAmount' fields should be regarded as the final balances for each AccountBalance object. In the case that a date range (both a startDate AND and endDate) is provided, the resulting debitTotal and creditTotal (and debitsMinusCredits) will disregard initialDebitAmount and initialCreditAmount.
+
 
 Date parameters should be provided in `yyyy-mm-dd` format. If no date parameters are given, the resulting creditTotal and debitTotal fields in the returned objects will encompass all undeleted LineItems. If one date parameter is given, the resulting totals will encompass all LineItems dated up to and including the given date. If two date parameters are given, the resulting totals will encompass the date range between the given start date and end date, inclusive.
 
@@ -24,7 +25,7 @@ ___
 Returns 200 and a list of all accounts belonging to an organization when supplied a valid id. Returns 404 and an error if the organization with the supplied id does not exist in the database.
 ___
 #### Sample Request
-`GET /organization/1/accountBalance`
+`GET /organization/1/accountBalance/2020-10-31/2021-11-01`
 <br/>
 
 #### Sample Response
@@ -41,13 +42,12 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 24000,
-        "sumOfCreditLineItems": 20000,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 24000,
         "creditTotal": 20000,
-        "totalDebitsMinusCredits": 4000
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 4000,
+        "deleted": false
     },
     {
         "accountId": 1,
@@ -60,13 +60,30 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 420000,
-        "sumOfCreditLineItems": 18430,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 420000,
         "creditTotal": 18430,
-        "totalDebitsMinusCredits": 401570
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 401570,
+        "deleted": false
+    },
+    {
+        "accountId": 15,
+        "accountName": "Cash Equivalents",
+        "accountGroupId": 1,
+        "accountGroupName": "Cash",
+        "accountSubtypeId": 1,
+        "accountSubtypeName": "Cash and cash equivalents",
+        "accountTypeId": 1,
+        "accountTypeName": "Assets",
+        "organizationId": 1,
+        "organizationName": "Sample organization",
+        "debitTotal": 0,
+        "creditTotal": 0,
+        "initialDebitAmount": 1000,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 0,
+        "deleted": false
     },
     {
         "accountId": 4,
@@ -79,13 +96,12 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 4500,
-        "sumOfCreditLineItems": 0,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 4500,
         "creditTotal": 0,
-        "totalDebitsMinusCredits": 4500
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 4500,
+        "deleted": false
     },
     {
         "accountId": 3,
@@ -98,13 +114,12 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 250,
-        "sumOfCreditLineItems": 0,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 250,
         "creditTotal": 0,
-        "totalDebitsMinusCredits": 250
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 250,
+        "deleted": false
     },
     {
         "accountId": 5,
@@ -117,13 +132,12 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 25000,
-        "sumOfCreditLineItems": 0,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 25000,
         "creditTotal": 0,
-        "totalDebitsMinusCredits": 25000
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 25000,
+        "deleted": false
     },
     {
         "accountId": 7,
@@ -136,13 +150,12 @@ ___
         "accountTypeName": "Liabilities",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 0,
-        "sumOfCreditLineItems": 4500,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 0,
         "creditTotal": 4500,
-        "totalDebitsMinusCredits": -4500
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": -4500,
+        "deleted": false
     },
     {
         "accountId": 8,
@@ -155,13 +168,12 @@ ___
         "accountTypeName": "Liabilities",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 0,
-        "sumOfCreditLineItems": 3000,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 0,
         "creditTotal": 3000,
-        "totalDebitsMinusCredits": -3000
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": -3000,
+        "deleted": false
     },
     {
         "accountId": 6,
@@ -174,13 +186,12 @@ ___
         "accountTypeName": "Liabilities",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 0,
-        "sumOfCreditLineItems": 15000,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 0,
         "creditTotal": 15000,
-        "totalDebitsMinusCredits": -15000
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": -15000,
+        "deleted": false
     },
     {
         "accountId": 9,
@@ -193,13 +204,12 @@ ___
         "accountTypeName": "Owner's Equity",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 0,
-        "sumOfCreditLineItems": 400000,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 0,
         "creditTotal": 400000,
-        "totalDebitsMinusCredits": -400000
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": -400000,
+        "deleted": false
     },
     {
         "accountId": 10,
@@ -212,13 +222,12 @@ ___
         "accountTypeName": "Owner's Equity",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 3000,
-        "sumOfCreditLineItems": 0,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 3000,
         "creditTotal": 0,
-        "totalDebitsMinusCredits": 3000
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 3000,
+        "deleted": false
     },
     {
         "accountId": 11,
@@ -231,13 +240,12 @@ ___
         "accountTypeName": "Income",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 0,
-        "sumOfCreditLineItems": 24000,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 0,
         "creditTotal": 24000,
-        "totalDebitsMinusCredits": -24000
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": -24000,
+        "deleted": false
     },
     {
         "accountId": 12,
@@ -250,13 +258,12 @@ ___
         "accountTypeName": "Expenses",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 500,
-        "sumOfCreditLineItems": 0,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 500,
         "creditTotal": 0,
-        "totalDebitsMinusCredits": 500
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 500,
+        "deleted": false
     },
     {
         "accountId": 13,
@@ -269,13 +276,12 @@ ___
         "accountTypeName": "Expenses",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 7500,
-        "sumOfCreditLineItems": 0,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 7500,
         "creditTotal": 0,
-        "totalDebitsMinusCredits": 7500
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 7500,
+        "deleted": false
     },
     {
         "accountId": 14,
@@ -288,13 +294,12 @@ ___
         "accountTypeName": "Expenses",
         "organizationId": 1,
         "organizationName": "Sample organization",
-        "sumOfDebitLineItems": 180,
-        "sumOfCreditLineItems": 0,
-        "initialDebitAmount": 0,
-        "initialCreditAmount": 0,
         "debitTotal": 180,
         "creditTotal": 0,
-        "totalDebitsMinusCredits": 180
+        "initialDebitAmount": 0,
+        "initialCreditAmount": 0,
+        "totalDebitsMinusCredits": 180,
+        "deleted": false
     }
 ]
 ```

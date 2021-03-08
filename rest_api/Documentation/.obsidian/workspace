@@ -11,7 +11,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+            "file": "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md",
             "mode": "source"
           }
         },
@@ -24,7 +24,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+            "file": "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md",
             "mode": "preview"
           }
         },
@@ -84,7 +84,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
+                "file": "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,9 +101,9 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
     "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md",
     "AccountGroup/Contents/List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects.md",
+    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
     "Account/Contents/List All Accounts Belonging to an Organization.md",
     "JournalEntry/Contents/Create a JournalEntry.md",
     "Easy Ledger.md",
