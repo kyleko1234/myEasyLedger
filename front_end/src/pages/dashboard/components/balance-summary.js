@@ -19,11 +19,9 @@ function BalanceSummary(props) {
 
     //fetch data on component mount
     React.useEffect(() => {
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
             if (response.data) {
-                let filteredAccounts = response.data.filter(accountBalance => accountBalance.accountTypeId == 1 || accountBalance.accountTypeId == 2);
-                filteredAccounts.forEach(account => (account.amount = (account.accountTypeId == 1 ?
-                    account.debitTotal - account.creditTotal : account.creditTotal - account.debitTotal)));
+                let filteredAccounts = response.data.filter(account => account.accountTypeId == 1 || account.accountTypeId == 2);
                 setAssetAndLiabilityAccounts(filteredAccounts);
             }
             setLoading(false);
@@ -54,7 +52,7 @@ function BalanceSummary(props) {
                                             {account.accountName}
                                         </td>
                                         <td className={"text-right " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
-                                            {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(account.amount)}
+                                            {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(account.accountTypeId == 1? account.debitsMinusCredits : account.debitsMinusCredits * -1)}
                                         </td>
                                     </tr>
                                 )

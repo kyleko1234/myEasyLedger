@@ -51,7 +51,7 @@ function AccountDetails(props) {
     
     //initially fetch account data and list of accountgroups from API
     React.useEffect(() => {
-        axios.get(`${API_BASE_URL}/account/${selectedAccountId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/account/${selectedAccountId}`).then(response => {
             let selectedAccount = response.data
             setSelectedAccount(selectedAccount);
         }).catch(console.log);
@@ -90,7 +90,7 @@ function AccountDetails(props) {
             })
                 .catch(console.log);
             //also refresh account data    
-            await axios.get(`${API_BASE_URL}/account/${selectedAccountId}/accountBalance`).then(response => {
+            await axios.get(`${API_BASE_URL}/account/${selectedAccountId}`).then(response => {
                 let account = response.data;
                 setSelectedAccount(account);
             }).catch(console.log)

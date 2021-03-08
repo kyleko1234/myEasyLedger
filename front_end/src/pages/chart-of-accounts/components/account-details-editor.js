@@ -5,8 +5,8 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants.js';
 import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import {accountDetailsEditorText} from '../../../utils/i18n/account-details-editor-text.js';
-import {useHistory} from 'react-router-dom';
+import { accountDetailsEditorText } from '../../../utils/i18n/account-details-editor-text.js';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -19,6 +19,8 @@ function AccountDetailsEditor(props) {
     const [accountGroupOptions, setAccountGroupOptions] = React.useState([]);
     const [selectedAccountGroupId, setSelectedAccountGroupId] = React.useState(null);
     const [accountTypeId, setAccountTypeId] = React.useState(null);
+    const [initialDebitValueInput, setInitialDebitValueInput] = React.useState(null);
+    const [initialCreditValueInput, setInitialCreditValueInput] = React.useState(null);
     const [noAccountNameAlert, setNoAccountNameAlert] = React.useState(false);
     const [deleteAccountAlert, setDeleteAccountAlert] = React.useState(false);
     const [cannotDeleteAccountAlert, setCannotDeleteAccountAlert] = React.useState(false);
@@ -36,6 +38,8 @@ function AccountDetailsEditor(props) {
                     setAccountNameInput(response.data.accountName);
                     setAccountTypeId(response.data.accountTypeId);
                     setSelectedAccountGroupId(response.data.accountGroupId);
+                    setInitialDebitValueInput(response.data.initialDebitAmount);
+                    setInitialCreditValueInput(response.data.initialCreditAmount);
                 }
             }).catch(console.log);
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountGroup`).then(response => {
@@ -60,7 +64,9 @@ function AccountDetailsEditor(props) {
         let requestBody = {
             accountId: props.selectedAccountId,
             accountName: accountNameInput,
-            accountGroupId: selectedAccountGroupId
+            accountGroupId: selectedAccountGroupId,
+            initialDebitAmount: Number(initialDebitValueInput),
+            initialCreditAmount: Number(initialCreditValueInput)
         }
         if (!accountNameInput) {
             setNoAccountNameAlert(true);
@@ -108,21 +114,21 @@ function AccountDetailsEditor(props) {
         <>
             <Modal isOpen={props.isOpen} toggle={props.toggle} onClosed={modalOnClose} centered={true} >
                 <ModalHeader className="bg-light">
-                    Edit Account Details
+                    {accountDetailsEditorText[appContext.locale]["Edit Account Details"]}
                 </ModalHeader>
                 <ModalBody>
                     {noAccountNameAlert ?
                         <Alert color="danger">
                             {accountDetailsEditorText[appContext.locale]["Please provide a name for your account."]}
                         </Alert>
-                    : null}
+                        : null}
 
                     <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
                         <div className="form-group row">
-                            <label className="col-form-label col-md-3">
-                                Account Name
+                            <label className="col-form-label col-md-4">
+                                {accountDetailsEditorText[appContext.locale]["Account Name"]}
                             </label>
-                            <div className="col-md-9">
+                            <div className="col-md-8">
                                 <input
                                     className="form-control"
                                     value={accountNameInput}
@@ -134,10 +140,10 @@ function AccountDetailsEditor(props) {
                         </div>
                     </form>
                     <div className="form-group row">
-                        <label className="col-form-label col-md-3">
-                            Account Group
+                        <label className="col-form-label col-md-4">
+                            {accountDetailsEditorText[appContext.locale]["Account Group"]}
                         </label>
-                        <div className="col-md-9">
+                        <div className="col-md-8">
                             <Select
                                 options={accountGroupOptions.filter(accountGroupOption => accountGroupOption.object.accountTypeId == accountTypeId)}
                                 value={accountGroupOptions.find(accountGroup => accountGroup.object.accountGroupId == selectedAccountGroupId)}
@@ -145,14 +151,48 @@ function AccountDetailsEditor(props) {
                                 onChange={handleChangeAccountGroupOption}
                             />
                         </div>
-                    </div>            </ModalBody>
+                    </div>
+                    {appContext.isEnterprise? 
+                    <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
+                        <div className="form-group row">
+                            <label className="col-form-label col-md-4">
+                                {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
+                            </label>
+                            <div className="col-md-8">
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    value={initialDebitValueInput}
+                                    onChange={event => {
+                                        setInitialDebitValueInput(event.target.value);
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label className="col-form-label col-md-4">
+                                {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
+                            </label>
+                            <div className="col-md-8">
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    value={initialCreditValueInput}
+                                    onChange={event => {
+                                        setInitialCreditValueInput(event.target.value);
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </form> : null}
+                </ModalBody>
                 <ModalFooter className="bg-light justify-content-between">
                     <div>
-                        <button className="btn btn-danger width-10ch" onClick={handleDeleteButton}>Delete</button>
+                        <button className="btn btn-danger width-10ch" onClick={handleDeleteButton}>{accountDetailsEditorText[appContext.locale]["Delete"]}</button>
                     </div>
                     <div>
-                        <button className="btn btn-primary width-10ch" onClick={handleSaveButton}>Save</button>
-                        <button className="btn btn-white width-10ch m-l-10" onClick={handleCancelButton}>Cancel</button>
+                        <button className="btn btn-primary width-10ch" onClick={handleSaveButton}>{accountDetailsEditorText[appContext.locale]["Save"]}</button>
+                        <button className="btn btn-white width-10ch m-l-10" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
                     </div>
                 </ModalFooter>
             </Modal>
@@ -169,7 +209,7 @@ function AccountDetailsEditor(props) {
                 >
                     {accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this account?"]}
                 </SweetAlert>
-            : null}
+                : null}
             {cannotDeleteAccountAlert ?
                 <SweetAlert danger showConfirm={false} showCancel={true}
                     cancelBtnBsStyle="default"
@@ -178,9 +218,9 @@ function AccountDetailsEditor(props) {
                     onConfirm={toggleCannotDeleteAccountAlert}
                     onCancel={toggleCannotDeleteAccountAlert}
                 >
-                    Please remove all line items from this account and try again.
+                    {accountDetailsEditorText[appContext.locale]["Please remove all line items from this account and try again."]}
                 </SweetAlert>
-            : null}
+                : null}
 
         </>
     )

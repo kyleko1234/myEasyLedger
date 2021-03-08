@@ -76,7 +76,7 @@ class Categories extends React.Component {
         axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/accountGroup`).then(response => {
             this.setState({ accountGroups: response.data });
         })
-        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/account`).then(response => {
             this.setState({ accounts: response.data });
         }).catch(console.log);
     }
@@ -191,7 +191,9 @@ class Categories extends React.Component {
     async handleSaveNewAccount() {
         let postedObject = {
             accountName: this.state.accountNameInput,
-            accountGroupId: this.state.selectedAccountGroupId
+            accountGroupId: this.state.selectedAccountGroupId,
+            initialDebitAmount: 0,
+            initialCreditAmount: 0
         }
         await this.postAccount(postedObject);
         this.toggleAddAnAccountModal();

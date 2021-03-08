@@ -110,10 +110,8 @@ public class AccountController {
     	if (dto.getAccountId() != null) {
     		throw new ConflictException("Please do not attempt to manually create an account id.");
     	}
-    	Account account = accountService.createAccountFromDTO(dto);
+    	Account account = accountService.createNewAccountFromDTO(dto);
     	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
-    	account.setDebitTotal(account.getInitialDebitAmount());
-    	account.setCreditTotal(account.getInitialCreditAmount());
     	final Account updatedAccount = accountRepo.save(account);
     	return new AccountDTO(updatedAccount);
     	}
@@ -122,16 +120,15 @@ public class AccountController {
     public ResponseEntity<AccountDTO> updateAccount(@PathVariable(value = "id") Long accountId,
         @Valid @RequestBody AccountDTO dto, Authentication authentication) 
         		throws ResourceNotFoundException, ConflictException, UnauthorizedException {
-    	Account accountDetails = accountService.createAccountFromDTO(dto);
-        if (!accountId.equals(accountDetails.getId())) {
+        if (!accountId.equals(dto.getAccountId())) {
         	throw new ConflictException("Account ID in request body does not match URI.");
         }
     	Account account = accountRepo.findById(accountId)
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-    	
     	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
-    	
-    	final Account updatedAccount = accountRepo.save(accountDetails);
+    	Account updatedAccount = accountService.updateAccountFromDTO(dto);
+
+    	updatedAccount = accountRepo.save(updatedAccount);
     	AccountDTO updatedDto = new AccountDTO(updatedAccount);
         return ResponseEntity.ok(updatedDto);
     }

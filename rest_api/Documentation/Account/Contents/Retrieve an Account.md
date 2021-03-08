@@ -28,6 +28,11 @@ ___
     "accountTypeName": "Assets",
     "organizationId": 1,
     "organizationName": "Sample organization",
+    "debitTotal": 420000,
+    "creditTotal": 18430,
+    "initialDebitAmount": 0,
+    "initialCreditAmount": 0,
+    "debitsMinusCredits": 401570,
     "deleted": false
 }
 ```

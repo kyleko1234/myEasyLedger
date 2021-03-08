@@ -38,26 +38,13 @@ function AccountSwitcher(props) {
                 setAccountGroups(response.data);
             }
         }).catch(console.log);
-        if (props.category || props.isEnterprise) {
-            axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
-                if (response.data) {
-                    setAccounts(response.data);
-                    setSelectedAccountTypeOptionId(response.data.find(account => account.accountId == props.selectedAccountId).accountTypeId);
-                }
-                setLoading(false);
-            }).catch(console.log);
-        } else {
-            axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountBalance`).then(response => {
-                if (response.data) {
-                    let formattedAccounts = response.data;
-                    formattedAccounts.forEach(account => (account.amount = (account.accountTypeId == 1 ?
-                        account.debitTotal - account.creditTotal : account.creditTotal - account.debitTotal)));
-                    setAccounts(formattedAccounts);
-                    setSelectedAccountTypeOptionId(response.data.find(account => account.accountId == props.selectedAccountId).accountTypeId);
-                }
-                setLoading(false);
-            }).catch(console.log);
-        }
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
+            if (response.data) {
+                setAccounts(response.data);
+                setSelectedAccountTypeOptionId(response.data.find(account => account.accountId == props.selectedAccountId).accountTypeId);
+            }
+            setLoading(false);
+        }).catch(console.log);
     }, [appContext.currentOrganizationId, props.externalRefreshToken])
 
     const formatBalance = (accountTypeId, amount) => {
@@ -114,7 +101,7 @@ function AccountSwitcher(props) {
                                                         </div>
                                                         {props.category || props.isEnterprise ? null :
                                                             <div className=" text-right">
-                                                                {formatBalance(account.accountTypeId, account.amount)}
+                                                                {formatBalance(account.accountTypeId, account.debitsMinusCredits)}
                                                             </div>
                                                         }
                                                     </WidgetListItem>
@@ -123,7 +110,7 @@ function AccountSwitcher(props) {
                                                         <div className="p-l-30">{account.accountName}</div>
                                                         {props.category || props.isEnterprise ? null :
                                                             <div className=" text-right">
-                                                                {formatBalance(account.accountTypeId, account.amount)}
+                                                                {formatBalance(account.accountTypeId, account.debitsMinusCredits)}
                                                             </div>
                                                         }
                                                     </WidgetListItem>

@@ -43,7 +43,7 @@ The debit amount that this account was initialized with. By default this is zero
 - **initialCreditAmount (`BigDecimal`)** <br/>
 The credit amount that this account was initialized with. By default this is zero, but users migrating from other software may find it useful to initialize an account with non-zero values.
 
-- **totalDebitsMinusCredits (`BigDecimal`)** <br/>
+- **debitsMinusCredits (`BigDecimal`)** <br/>
 For utility's sake we provide debitTotal-creditTotal as totalDebitsMinusCredits.
 
 - **deleted (`boolean`)** <br/>
@@ -66,7 +66,7 @@ ___
     "creditTotal": 18430,
     "initialDebitAmount": 0,
     "initialCreditAmount": 0,
-    "totalDebitsMinusCredits": 401570,
+    "debitsMinusCredits": 401570,
     "deleted": false
 }
 ```

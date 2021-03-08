@@ -163,7 +163,7 @@ INSERT INTO account(name, account_group_id, initial_debit_amount, initial_credit
         ('Office supplies', 3, 0, 0, 250, 0),
         ('Office equipment', 4, 0, 0, 4500, 0),
         ('Vehicles', 4, 0, 0, 25000, 0),
-        ('Notes payable', 5, 0, 0, 15000, 0),
+        ('Notes payable', 5, 0, 0, 0, 15000),
         ('Accounts payable', 5, 0, 0, 0, 4500),
         ('Dividends payable', 5, 0, 0, 0, 3000),
         ('Capital stock', 6, 0, 0, 0, 400000),

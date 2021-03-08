@@ -23,7 +23,7 @@ public class AccountDTO {
 	private BigDecimal creditTotal;
 	private BigDecimal initialDebitAmount;
 	private BigDecimal initialCreditAmount;
-	private BigDecimal totalDebitsMinusCredits;
+	private BigDecimal debitsMinusCredits;
 	private boolean deleted;
 	
 	public AccountDTO(Account account) {
@@ -41,7 +41,7 @@ public class AccountDTO {
 		this.creditTotal = account.getCreditTotal();
 		this.initialDebitAmount = account.getInitialDebitAmount();
 		this.initialCreditAmount = account.getInitialCreditAmount();
-		this.totalDebitsMinusCredits = account.getDebitTotal().subtract(account.getCreditTotal());
+		this.debitsMinusCredits = this.getDebitTotal().subtract(this.getCreditTotal());
 		this.deleted = account.isDeleted();
 	}
 	
@@ -71,7 +71,7 @@ public class AccountDTO {
 		}
 		this.initialDebitAmount = initialDebitAmount;
 		this.initialCreditAmount = initialCreditAmount;
-		this.totalDebitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
+		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
 		this.deleted = deleted;
 	}
 
@@ -190,12 +190,12 @@ public class AccountDTO {
 		this.initialCreditAmount = initialCreditAmount;
 	}
 	
-	public BigDecimal getTotalDebitsMinusCredits() {
-		return totalDebitsMinusCredits;
+	public BigDecimal getDebitsMinusCredits() {
+		return debitsMinusCredits;
 	}
 
-	public void setTotalDebitsMinusCredits(BigDecimal totalDebitsMinusCredits) {
-		this.totalDebitsMinusCredits = totalDebitsMinusCredits;
+	public void setDebitsMinusCredits(BigDecimal debitsMinusCredits) {
+		this.debitsMinusCredits = debitsMinusCredits;
 	}
 
 	public boolean isDeleted() {
@@ -214,7 +214,7 @@ public class AccountDTO {
 				+ ", accountTypeName=" + accountTypeName + ", organizationId=" + organizationId + ", organizationName="
 				+ organizationName + ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal
 				+ ", initialDebitAmount=" + initialDebitAmount + ", initialCreditAmount=" + initialCreditAmount
-				+ ", totalDebitsMinusCredits=" + totalDebitsMinusCredits + ", deleted=" + deleted + "]";
+				+ ", totalDebitsMinusCredits=" + debitsMinusCredits + ", deleted=" + deleted + "]";
 	}
 	
 }

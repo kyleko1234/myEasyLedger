@@ -43,7 +43,9 @@ class ChartOfAccounts extends React.Component {
 
             addAnAccountModal: false,
             accountNameAlert: false,
-            accountNameInput: ''
+            accountNameInput: '',
+            initialDebitValueInput: 0,
+            initialCreditValueInput: 0,
         };
 
         this.handleChangeAccountSubtypeOption = this.handleChangeAccountSubtypeOption.bind(this);
@@ -76,7 +78,7 @@ class ChartOfAccounts extends React.Component {
         axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/accountGroup`).then(response => {
             this.setState({ accountGroups: response.data });
         })
-        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/account`).then(response => {
             this.setState({ accounts: response.data });
         }).catch(console.log);
         axios.get(`${API_BASE_URL}/accountSubtype`).then(response => {
@@ -198,7 +200,13 @@ class ChartOfAccounts extends React.Component {
 
     /** Utility functions for adding account to account group */
     toggleAddAnAccountModal() {
-        this.setState(state => ({ addAnAccountModal: !state.addAnAccountModal, accountNameInput: '', accountNameAlert: false }))
+        this.setState(state => ({ 
+            addAnAccountModal: !state.addAnAccountModal, 
+            accountNameInput: '', 
+            initialDebitValueInput: 0, 
+            initialCreditValueInput: 0, 
+            accountNameAlert: false 
+        }))
     }
 
     handleAddAnAccountToAccountGroupButton(accountGroup) {
@@ -209,7 +217,9 @@ class ChartOfAccounts extends React.Component {
     async handleSaveNewAccount() {
         let postedObject = {
             accountName: this.state.accountNameInput,
-            accountGroupId: this.state.selectedAccountGroupId
+            accountGroupId: this.state.selectedAccountGroupId,
+            initialDebitAmount: Number(this.state.initialDebitValueInput),
+            initialCreditAmount: Number(this.state.initialCreditValueInput)
         }
         await this.postAccount(postedObject);
         this.toggleAddAnAccountModal();
@@ -421,7 +431,7 @@ class ChartOfAccounts extends React.Component {
                     <SweetAlert danger showConfirm={false} showCancel={true}
                         cancelBtnBsStyle="default"
                         cancelBtnText={chartOfAccountsText[this.context.locale]["Cancel"]}
-                        title={chartOfAccountsText[this.context.locale]["Cannot delete this account."]}
+                        title={chartOfAccountsText[this.context.locale]["Cannot delete this account group."]}
                         onConfirm={this.toggleCannotDeleteAccountGroupAlert}
                         onCancel={this.toggleCannotDeleteAccountGroupAlert}
                     >
@@ -446,10 +456,41 @@ class ChartOfAccounts extends React.Component {
                                 </label>
                                 <div className="col-md-9">
                                     <input
+                                        type="text"
                                         className="form-control"
                                         value={this.state.accountNameInput}
                                         onChange={event => {
                                             this.setState({ accountNameInput: event.target.value });
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-form-label col-md-3">
+                                    {chartOfAccountsText[this.context.locale]["Initial Debit Value"]}
+                                </label>
+                                <div className="col-md-9">
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        value={this.state.initialDebitValueInput}
+                                        onChange={event => {
+                                            this.setState({ initialDebitValueInput: event.target.value });
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-form-label col-md-3">
+                                    {chartOfAccountsText[this.context.locale]["Initial Credit Value"]}
+                                </label>
+                                <div className="col-md-9">
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        value={this.state.initialCreditValueInput}
+                                        onChange={event => {
+                                            this.setState({ initialCreditValueInput: event.target.value });
                                         }}
                                     />
                                 </div>

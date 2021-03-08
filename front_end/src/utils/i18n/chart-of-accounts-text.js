@@ -49,17 +49,14 @@ export const chartOfAccountsText = {
         "Account Subtype": "Account Subtype",
         "Save": "Save",
         "Cancel": "Cancel",
-
         "Are you sure you want to delete this account group?": "Are you sure you want to delete this account group?",
         "Yes, delete it!": "Yes, delete it!",
         "Are you sure?": "Are you sure?",
         "Cannot delete this account group. Please delete all accounts in this account group and try again.": "Cannot delete this account group. Please delete all accounts in this account group and try again.",
-        "Cannot delete this account.": "Cannot delete this account.",
-
+        "Cannot delete this account group.": "Cannot delete this account group.",
         "Add an Account": "Add an Account",
         "Please provide a name for your account.": "Please provide a name for your account.",
         "Account Name": "Account Name",
-
         "Accounts": "Accounts",
         "Categories": "Categories",
         "Create a category group": "Create a category group",
@@ -69,7 +66,6 @@ export const chartOfAccountsText = {
         "Category Type": "Category Type",
         "Edit Category Group Details": "Edit Category Group Details",
         "Edit Account Group Details": "Edit Account Group Details",
-
         "Are you sure you want to delete this category group?": "Are you sure you want to delete this category group?",
         "Cannot delete this category group. Please delete all categories in this category group and try again.": "Cannot delete this category group. Please delete all categories in this category group and try again.",
         "Cannot delete this category.": "Cannot delete this category.",
@@ -77,6 +73,9 @@ export const chartOfAccountsText = {
         "Please provide a name for your category.": "Please provide a name for your category.",
         "Category Name": "Category Name",
 
+        "Initial Debit Value": "Initial Debit Value",
+        "Initial Credit Value": "Initial Credit Value"
+        
 
 
     }, 
@@ -130,18 +129,14 @@ export const chartOfAccountsText = {
         "Account Subtype": "子類別",
         "Save": "儲存",
         "Cancel": "取消",
-
         "Are you sure you want to delete this account group?": "你確定要删除這個科目群嗎？",
         "Yes, delete it!": "是的，删除它！",
         "Are you sure?": "你確定嗎？",
         "Cannot delete this account group. Please delete all accounts in this account group and try again.": "無法删除此科目群，請先删除此科目群下所有的科目後再試一次。",
-        "Cannot delete this account.": "無法删除此科目。",
-
+        "Cannot delete this account group.": "TRANSLATION",
         "Add an Account": "增設一個新科目",
         "Please provide a name for your account.": "請給科目取個名稱。",
         "Account Name": "科目名稱",
-
-
         "Accounts": "科目",
         "Categories": "類別",
         "Create a category group": "建立一個類別群",
@@ -151,8 +146,6 @@ export const chartOfAccountsText = {
         "Category Type": "主類別",
         "Edit Category Group Details": "修改類別群",
         "Edit Account Group Details": "修改科目群",
-
-
         "Are you sure you want to delete this category group?": "你真的確定要删除這個類別群嗎？",
         "Cannot delete this category group. Please delete all categories in this category group and try again.": "無法删除此類別群，請先删除此類別群下所有的類別後再試一次。",
         "Cannot delete this category.": "無法删除此類別。",
@@ -160,6 +153,8 @@ export const chartOfAccountsText = {
         "Please provide a name for your category.": "請給類別取個名稱。",
         "Category Name": "類別名稱",
 
+        "Initial Debit Value": "TRANSLATION",
+        "Initial Credit Value": "TRANSLATION"
 
     }
 }

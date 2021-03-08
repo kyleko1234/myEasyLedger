@@ -46,7 +46,7 @@ ___
         "creditTotal": 20000,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 4000,
+        "debitsMinusCredits": 4000,
         "deleted": false
     },
     {
@@ -64,7 +64,7 @@ ___
         "creditTotal": 18430,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 401570,
+        "debitsMinusCredits": 401570,
         "deleted": false
     },
     {
@@ -82,7 +82,7 @@ ___
         "creditTotal": 0,
         "initialDebitAmount": 1000,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 0,
+        "debitsMinusCredits": 0,
         "deleted": false
     },
     {
@@ -100,7 +100,7 @@ ___
         "creditTotal": 0,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 4500,
+        "debitsMinusCredits": 4500,
         "deleted": false
     },
     {
@@ -118,7 +118,7 @@ ___
         "creditTotal": 0,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 250,
+        "debitsMinusCredits": 250,
         "deleted": false
     },
     {
@@ -136,7 +136,7 @@ ___
         "creditTotal": 0,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 25000,
+        "debitsMinusCredits": 25000,
         "deleted": false
     },
     {
@@ -154,7 +154,7 @@ ___
         "creditTotal": 4500,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": -4500,
+        "debitsMinusCredits": -4500,
         "deleted": false
     },
     {
@@ -172,7 +172,7 @@ ___
         "creditTotal": 3000,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": -3000,
+        "debitsMinusCredits": -3000,
         "deleted": false
     },
     {
@@ -190,7 +190,7 @@ ___
         "creditTotal": 15000,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": -15000,
+        "debitsMinusCredits": -15000,
         "deleted": false
     },
     {
@@ -208,7 +208,7 @@ ___
         "creditTotal": 400000,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": -400000,
+        "debitsMinusCredits": -400000,
         "deleted": false
     },
     {
@@ -226,7 +226,7 @@ ___
         "creditTotal": 0,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 3000,
+        "debitsMinusCredits": 3000,
         "deleted": false
     },
     {
@@ -244,7 +244,7 @@ ___
         "creditTotal": 24000,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": -24000,
+        "debitsMinusCredits": -24000,
         "deleted": false
     },
     {
@@ -262,7 +262,7 @@ ___
         "creditTotal": 0,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 500,
+        "debitsMinusCredits": 500,
         "deleted": false
     },
     {
@@ -280,7 +280,7 @@ ___
         "creditTotal": 0,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 7500,
+        "debitsMinusCredits": 7500,
         "deleted": false
     },
     {
@@ -298,7 +298,7 @@ ___
         "creditTotal": 0,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 180,
+        "debitsMinusCredits": 180,
         "deleted": false
     }
 ]

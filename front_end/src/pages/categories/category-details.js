@@ -53,7 +53,7 @@ function CategoryDetails(props) {
             })
                 .catch(console.log);
             //also refresh account data    
-            await axios.get(`${API_BASE_URL}/account/${selectedAccountId}/accountBalance`).then(response => {
+            await axios.get(`${API_BASE_URL}/account/${selectedAccountId}/account`).then(response => {
                 let account = response.data;
                 setSelectedAccount(account);
             }).catch(console.log)
@@ -72,7 +72,7 @@ function CategoryDetails(props) {
     }, [selectedAccountId])
 
     const refreshAccountData = () => {
-        axios.get(`${API_BASE_URL}/account/${selectedAccountId}/accountBalance`).then(response => {
+        axios.get(`${API_BASE_URL}/account/${selectedAccountId}`).then(response => {
             let account = response.data;
             setSelectedAccount(account);
         }).catch(console.log)

@@ -36,7 +36,7 @@ ___
         "creditTotal": 20000,
         "initialDebitAmount": 0,
         "initialCreditAmount": 0,
-        "totalDebitsMinusCredits": 4000,
+        "debitsMinusCredits": 4000,
         "deleted": false
     },
     ...

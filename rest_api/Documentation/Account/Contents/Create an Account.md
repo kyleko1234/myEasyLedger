@@ -55,7 +55,7 @@ Body:
     "creditTotal": 0,
     "initialDebitAmount": 1000,
     "initialCreditAmount": 0,
-    "totalDebitsMinusCredits": 1000,
+    "debitsMinusCredits": 1000,
     "deleted": false
 }
 ```
