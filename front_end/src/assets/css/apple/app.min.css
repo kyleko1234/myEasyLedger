@@ -21930,6 +21930,7 @@ a:focus {
         padding-top: 0;
         left: -220px;
         z-index: 1021;
+        transition: 0.2s;
     }
 }
 .sidebar .nav {
@@ -23465,11 +23466,11 @@ a:focus {
     .page-sidebar-toggled .sidebar,
     .page-sidebar-toggled .sidebar-bg {
         left: 0;
-        -webkit-animation: sidebarSlideInLeft 0.2s;
+        /* -webkit-animation: sidebarSlideInLeft 0.2s;
         -moz-animation: sidebarSlideInLeft 0.2s;
         -ms-animation: sidebarSlideInLeft 0.2s;
         -o-animation: sidebarSlideInLeft 0.2s;
-        animation: sidebarSlideInLeft 0.2s;
+        animation: sidebarSlideInLeft 0.2s; */
     }
     .page-sidebar-toggled .sidebar-bg {
         position: fixed;
@@ -23506,11 +23507,11 @@ a:focus {
     .page-sidebar-toggled.page-sidebar-minified.sidebar-bg {
         position: fixed;
         left: 0;
-        -webkit-animation: sidebarSlideInLeft 0.2s;
+        /*-webkit-animation: sidebarSlideInLeft 0.2s;
         -moz-animation: sidebarSlideInLeft 0.2s;
         -ms-animation: sidebarSlideInLeft 0.2s;
         -o-animation: sidebarSlideInLeft 0.2s;
-        animation: sidebarSlideInLeft 0.2s;
+        animation: sidebarSlideInLeft 0.2s; */
     }
 }
 .page-with-light-sidebar .sidebar {
@@ -23961,11 +23962,12 @@ a:focus {
     .page-with-wide-sidebar.page-sidebar-toggled .sidebar,
     .page-with-wide-sidebar.page-sidebar-toggled .sidebar-bg {
         left: 0;
-        -webkit-animation: wideSidebarSlideInLeft 0.2s;
+        transition: 0.2s;
+        /* -webkit-animation: wideSidebarSlideInLeft 0.2s;
         -moz-animation: wideSidebarSlideInLeft 0.2s;
         -ms-animation: wideSidebarSlideInLeft 0.2s;
         -o-animation: wideSidebarSlideInLeft 0.2s;
-        animation: wideSidebarSlideInLeft 0.2s;
+        animation: wideSidebarSlideInLeft 0.2s; */
     }
 }
 @media (max-width: 767.98px) {

@@ -87,7 +87,7 @@ OPERATING ACTIVITIES:
         Add Depreciation and Amortization (subtype)
         Add increase in deferred tax? (subtype)
     Changes in operating assets and liabilities: 
-        Add decrease in receivables (subtype)
+        Add decrease in receivables (subtypes)
         Add increase in payables (subtypes)
         Subtract increase in inventory (subtype)
         Add increase in deferred revenue? (subtype)
@@ -114,3 +114,50 @@ disclosures:
     interest paid
     income taxes paid
     exchanges of major non-cash items?
+
+
+required subtypes!
+ASSETS
+    Cash and cash equivalents
+    Current marketable securities
+    Current receivables
+    Inventory
+    Other current assets
+    PP&E
+    Intangible assets and goodwill
+    Non-current receivables
+    Non-current marketable securities
+    Other non-current assets
+LIABILITIES
+    Current payables
+    Deferred revenue
+    Commercial paper
+    Short-term debt
+    Deferred tax
+    Other current liabilities
+    Long-term debt
+    Non-current payables
+    Other non-current liabilities
+EQUITY
+    Paid-in capital
+    (Share-based compensation?)
+    Dividends and equivalents
+    (Share repurchases?)
+    Other equity items
+INCOME
+    Revenue
+    Income from investing activities
+    Income from financing activities
+    Other income
+EXPENSES
+    Cost of sales
+    R&D
+    SG&A
+    Depreciation and Amortization
+    Other expense
+    Interest expense
+    Tax expense
+    Non-recurring and extraordinary items
+
+
+

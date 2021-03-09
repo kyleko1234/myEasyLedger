@@ -23,6 +23,7 @@ import UISocialButtons from './../pages/ui/ui-social-buttons.js';
 import Bootstrap4 from './../pages/bootstrap/bootstrap-4.js';
 import FormElements from './../pages/form/form-elements.js';
 import FormPlugins from './../pages/form/form-plugins.js';
+import FormWizards from './../pages/form/form-wizards.js';
 import TableBasic from './../pages/table/table-basic.js';
 import ChartJS from './../pages/chart/chart-js.js';
 import ChartD3 from './../pages/chart/chart-d3.js';
@@ -195,6 +196,11 @@ const routes = [
     path: '/form/plugins',
     title: 'Form Plugins',
     component: () => <FormPlugins />,
+  },
+  {
+    path: '/form/wizards',
+    title: 'Form Wizards',
+    component: FormWizards
   },
   {
     path: '/table/basic',
