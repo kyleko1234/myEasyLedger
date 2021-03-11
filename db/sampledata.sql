@@ -38,70 +38,82 @@ INSERT INTO account_type(name)
 
 INSERT INTO account_subtype(name, account_type_id)
     VALUES
-        ('Cash and cash equivalents', 1),
-        ('Current marketable securities', 1),
-        ('Receivables', 1),
-        ('Inventories', 1),
-        ('Other current assets', 1),
-        ('Property', 1),
-        ('Plant and equipment', 1),
-        ('Non-current marketable securities', 1),
-        ('Other non-current assets', 1),
-        ('Payables', 2),
-        ('Deferred revenue', 2),
-        ('Commercial paper', 2),
-        ('Short-term debt', 2),
-        ('Deferred tax', 2),
-        ('Other current liabilities', 2),
-        ('Long-term debt', 2),
-        ('Other non-current liabilities', 2),
-        ('Paid-in capital', 3),
-        ('Dividends and equivalents', 3),
-        ('Other equity items', 3),
-        ('Revenue', 4),
-        ('Other income', 4),
-        ('Cost of sales', 5),
-        ('Research and development', 5),
-        ('Selling, general, and administration', 5),
-        ('Depreciation', 5),
-        ('Amortization', 5),
-        ('Other expenses', 5),
-        ('Income taxes', 5);
+       ('Cash and cash equivalents', 1),
+       ('Current marketable securities', 1),
+       ('Current receivables', 1),
+       ('Inventory', 1),
+       ('Other current assets', 1),
+       ('Property, plant, and equipment', 1),
+       ('Intangible assets and goodwill', 1),
+       ('Non-current receivables', 1),
+       ('Non-current marketable securities', 1),
+       ('Other non-current assets', 1),
+       ('Current payables', 2),
+       ('Deferred revenue', 2),
+       ('Short-term debt', 2),
+       ('Deferred tax', 2),
+       ('Other current liabilities', 2),
+       ('Long-term debt', 2),
+       ('Non-current payables', 2),
+       ('Other non-current liabilities', 2),
+       ('Paid-in capital', 3),
+       ('Share-based compensation', 3),
+       ('Dividends and equivalents', 3),
+       ('Other equity items', 3),
+       ('Revenue', 4),
+       ('Income from investing activities', 4),
+       ('Income from financing activities', 4),
+       ('Other income', 4),
+       ('Cost of sales', 5),
+       ('Research and development', 5),
+       ('Sales, general, and administration', 5),
+       ('Depreciation and Amortization', 5),
+       ('Other expense', 5),
+       ('Interest expense', 5),
+       ('Tax expense', 5),
+       ('Non-recurring and extraordinary items', 5);
 
-        -- income from investment subtype
-        -- add interest expense
-
-    /** 1  ('Cash and cash equivalents', 1),
-        2  ('Current marketable securities', 1),
-        3  ('Receivables', 1),
-        4  ('Inventories', 1),
-        5  ('Other current assets', 1),
-        6  ('Property', 1),
-        7  ('Plant and Equipment', 1),
-        8  ('Non-current marketable securities', 1),
-        9  ('Other non-current assets', 1),
-        10 ('Payables', 2),
-        11 ('Deferred revenue', 2),
-        12 ('Commercial paper', 2),
-        13 ('Current term debt', 2),
-        14 ('Deferred tax', 2),
-        15 ('Other current liabilities', 2),
-        16 ('Non-current term debt', 2),
-        17 ('Other non-current liabilities', 2),
-        18 ('Paid-in capital', 3),
-        19 ('Dividends and equivalents', 3),
-        20 ('Other equity items', 3),
-        21 ('Revenue', 4),
-        22 ('Other income', 4),
-        23 ('Cost of sales', 5),
-        24 ('Research and development', 5),
-        25 ('Selling, General, and Administration', 5),
-        26 ('Depreciation', 5),
-        27 ('Amortization', 5),
-        28 ('Other expenses', 5),
-        29 ('Income taxes', 5); **/
-
-
+        /*
+        ASSETS
+           1 Cash and cash equivalents
+           2 Current marketable securities 
+           3 Current receivables 
+           4 Inventory 
+           5 Other current assets
+           6 PP&E 
+           7 Intangible assets and goodwill
+           8 Non-current receivables 
+           9 Non-current marketable securities
+           10 Other non-current assets
+        LIABILITIES
+           11 Current payables 
+           12 Deferred revenue 
+           13 Short-term debt 
+           14 Deferred tax 
+           15 Other current liabilities
+           16 Long-term debt 
+           17 Non-current payables 
+           18 Other non-current liabilities
+        EQUITY
+           19 Paid-in capital 
+           20 Share-based compensation
+           21 Dividends and equivalents 
+           22 Other equity items
+        INCOME
+           23 Revenue
+           24 Income from investing activities
+           25 Income from financing activities
+           26 Other income
+        EXPENSES
+           27 Cost of sales
+           28 R&D
+           29 SG&A
+           30 Depreciation and Amortization 
+           31 Other expense
+           32 Interest expense 
+           33 Tax expense 
+           34 Non-recurring and extraordinary items
+        */
 
 
 
@@ -139,22 +151,23 @@ INSERT INTO account_group(name, account_subtype_id, organization_id)
         ('Cash', 1, 1),
         ('Accounts Receivable', 3, 1),
         ('Inventories', 4, 1),
-        ('Equipment', 7, 1),
-        ('Payables', 10, 1),
-        ('Paid-in Capital', 18, 1),
-        ('Dividends and equivalents', 19, 1),
-        ('Revenue', 21, 1),
-        ('Selling, general, and administration', 25, 1);
+        ('Equipment', 6, 1),
+        ('Payables', 11, 1),
+        ('Paid-in Capital', 19, 1),
+        ('Dividends and equivalents', 21, 1),
+        ('Revenue', 23, 1),
+        ('Selling, general, and administration', 29, 1);
 
-/**     1    ('Cash', 1, 1),
-        2    ('Accounts Receivable', 3, 1),
-        3    ('Inventories', 4, 1),
-        4    ('Equipment', 7, 1),
-        5    ('Payables', 11, 1),
-        6    ('Paid-in Capital', 19, 1),
-        7    ('Dividends and equivalents', 20, 1)
-        8    ('Revenue', 22, 1),
-        9    ('Selling, general, and administration', 26, 1); */
+/** 1    ('Cash', 1, 1),
+    2    ('Accounts Receivable', 3, 1),
+    3    ('Inventories', 4, 1),
+    4    ('Equipment', 6, 1),
+    5    ('Payables', 11, 1),
+    6    ('Paid-in Capital', 19, 1),
+    7    ('Dividends and equivalents', 21, 1),
+    8    ('Revenue', 23, 1),
+    9    ('Selling, general, and administration', 29, 1);
+ */
 
 INSERT INTO account(name, account_group_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total)
     VALUES 
