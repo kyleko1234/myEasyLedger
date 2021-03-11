@@ -8,8 +8,8 @@ import java.util.List;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 
 public class BalanceSheetLiabilitiesViewModel {
-	static final ArrayList<Long> CURRENT_LIABILITIES_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 10, (long) 11, (long) 12, (long) 13, (long) 14, (long) 15));
-	static final ArrayList<Long> NON_CURRENT_LIABILITIES_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 16, (long) 17));
+	static final ArrayList<Long> CURRENT_LIABILITIES_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 11, (long) 12, (long) 13, (long) 14, (long) 15));
+	static final ArrayList<Long> NON_CURRENT_LIABILITIES_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 16, (long) 17, (long) 18));
 
 	private BigDecimal totalCurrentLiabilities = new BigDecimal(0);
 	private BigDecimal totalNonCurrentLiabilities = new BigDecimal(0);

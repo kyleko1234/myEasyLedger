@@ -6,29 +6,14 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
-        "dimension": 45.58342420937841,
         "active": true,
-        "state": {
-          "type": "markdown",
-          "state": {
-            "file": "AccountSubtype/AccountSubtype.md",
-            "mode": "source"
-          }
-        },
-        "group": "bd85d377df6c24a6"
-      },
-      {
-        "id": "f6364cec6a3f3c3c",
-        "type": "leaf",
-        "dimension": 54.41657579062159,
         "state": {
           "type": "markdown",
           "state": {
             "file": "AccountSubtype/AccountSubtype.md",
             "mode": "preview"
           }
-        },
-        "group": "bd85d377df6c24a6"
+        }
       }
     ],
     "direction": "vertical"
@@ -68,7 +53,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "6eea494a81523bbe",

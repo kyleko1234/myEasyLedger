@@ -9,7 +9,7 @@ import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 
 public class BalanceSheetAssetsViewModel {
 	static final ArrayList<Long> CURRENT_ASSETS_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 1, (long) 2, (long) 3, (long) 4, (long) 5));
-	static final ArrayList<Long> NON_CURRENT_ASSETS_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 6, (long) 7, (long) 8, (long) 9));
+	static final ArrayList<Long> NON_CURRENT_ASSETS_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 6, (long) 7, (long) 8, (long) 9, (long) 10));
 
 	private BigDecimal totalCurrentAssets = new BigDecimal(0);
 	private BigDecimal totalNonCurrentAssets = new BigDecimal(0);
