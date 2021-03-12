@@ -168,7 +168,7 @@ function BalanceSheetRender() {
 
                     <hr/>
                     
-                    <table className="table table-striped">
+                    <table className="table table-striped table-nested">
                         <thead><tr><th>{balanceSheetRenderText[appContext.locale]["Equity"]}</th></tr></thead>
                         <tbody>
                             {balanceSheetEquity.equityItemsSubtypeBalances.map(subtypeBalance => {
