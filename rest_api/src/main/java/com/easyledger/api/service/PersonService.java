@@ -192,10 +192,10 @@ public class PersonService {
 					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
 			AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 15)
 					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 15"));
-			AccountSubtype otherIncome = accountSubtypeRepo.findById((long) 22)
-					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 22"));
-			AccountSubtype otherExpenses = accountSubtypeRepo.findById((long) 28)
-					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 28"));
+			AccountSubtype otherIncome = accountSubtypeRepo.findById((long) 26)
+					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 26"));
+			AccountSubtype otherExpenses = accountSubtypeRepo.findById((long) 31)
+					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 31"));
 			
 			AccountGroup cash = new AccountGroup("Cash", otherCurrentAssets);
 			AccountGroup bankAccounts = new AccountGroup("Bank Accounts", otherCurrentAssets);

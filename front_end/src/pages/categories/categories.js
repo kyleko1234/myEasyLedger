@@ -134,7 +134,7 @@ class Categories extends React.Component {
             if (!this.state.selectedAccountGroupId) {
                 let postedObject = {
                     accountGroupName: this.state.accountGroupNameInput,
-                    accountSubtypeId: this.state.selectedAccountTypeOption.value == 4 ? 22 : 28, //hardcode; for single-entry (personal) organizations, we shove all income account groups into 'other income' subtype and all expenses into 'other expenses'
+                    accountSubtypeId: this.state.selectedAccountTypeOption.value == 4 ? 26 : 31, //hardcode; for single-entry (personal) organizations, we shove all income account groups into 'other income' subtype and all expenses into 'other expenses'
                     organizationId: this.context.currentOrganizationId
                 };
                 await this.postAccountGroup(postedObject);
@@ -143,7 +143,7 @@ class Categories extends React.Component {
                 let putObject = {
                     accountGroupId: this.state.selectedAccountGroupId,
                     accountGroupName: this.state.accountGroupNameInput,
-                    accountSubtypeId: this.state.selectedAccountTypeOption.value == 4 ? 22 : 28,
+                    accountSubtypeId: this.state.selectedAccountTypeOption.value == 4 ? 26 : 31,
                     organizationId: this.context.currentOrganizationId
                 };
                 await this.putAccountGroup(this.state.selectedAccountGroupId, putObject);
