@@ -41,7 +41,7 @@ export const chartOfAccountsText = {
         "Other expense": "Other expense", 
         "Interest expense": "Interest expense",
         "Tax expense": "Tax expense",
-        "Non-recurring and extraordinary items": "Non-recurring and extraordinary items"
+        "Non-recurring and extraordinary items": "Non-recurring and extraordinary items",
 
         "Home": "Home",
         "Chart of Accounts": "Chart of Accounts",
@@ -126,7 +126,7 @@ export const chartOfAccountsText = {
         "Other expense": "其它費用", 
         "Interest expense": "TRANSLATION",
         "Tax expense": "TRANSLATION",
-        "Non-recurring and extraordinary items": "TRANSLATION"
+        "Non-recurring and extraordinary items": "TRANSLATION",
 
         "Home": "首頁",
         "Chart of Accounts": "會計科目表",
