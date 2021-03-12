@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "AccountSubtype/AccountSubtype.md",
+            "file": "Reports/Contents/Generate an Income Statement.md",
             "mode": "preview"
           }
         }
@@ -53,8 +53,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "6eea494a81523bbe",
@@ -70,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AccountSubtype/AccountSubtype.md",
+                "file": "Reports/Contents/Generate an Income Statement.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -87,6 +86,7 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Reports/Contents/Generate an Income Statement.md",
     "AccountSubtype/AccountSubtype.md",
     "Account/Contents/Create an Account.md",
     "Account/Contents/Retrieve an Account.md",
@@ -95,7 +95,6 @@
     "Account/Contents/List All Accounts.md",
     "Account/Contents/List All Accounts Belonging to an Organization.md",
     "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md",
-    "Account/Contents/The Account Object.md",
-    "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md"
+    "Account/Contents/The Account Object.md"
   ]
 }
