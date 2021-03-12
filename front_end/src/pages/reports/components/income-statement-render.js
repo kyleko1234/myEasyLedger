@@ -85,25 +85,34 @@ function IncomeStatementRender() {
                     setGrossProfit(response.data.grossProfit);
                     setRd(response.data.totalResearchAndDevelopment);
                     setSga(response.data.totalSalesGeneralAndAdministration);
-                    setDepreciation(response.data.totalDepreciation);
-                    setAmortization(response.data.totalAmortization);
+                    setDa(response.data.totalDepreciationAndAmortization);
                     setTotalOperatingExpenses(response.data.totalOperatingExpenses);
                     setOperatingIncome(response.data.operatingIncome);
-                    setNetOtherIncomeExpense(response.data.otherIncomeExpense);
-                    setIncomeBeforeTax(response.data.incomeBeforeTax);
-                    setIncomeTax(response.data.incomeTax);
+                    setIncomeFromInvesting(response.data.incomeFromInvesting);
+                    setIncomeFromFinancing(response.data.incomeFromFinancing);
+                    setOtherIncome(response.data.otherIncome);
+                    setOtherExpenses(response.data.otherExpenses);
+                    setTotalOtherIncomeExpense(response.data.totalOtherIncomeExpense);
+                    setEbit(response.data.ebit);
+                    setInterestExpense(response.data.interestExpense);
+                    setEarningsBeforeTax(response.data.earningsBeforeTax);
+                    setTaxExpense(response.data.taxExpense);
+                    setNonRecurringAndExtraordinaryItems(response.data.nonRecurringAndExtraordinaryItems);
                     setNetIncome(response.data.netIncome);
                     setAccountGroupBalances(response.data.accountGroupBalances);
                     setAccountBalances(response.data.accountBalances);
                     setRevenueSubtypeId(response.data.revenueSubtypeId);
+                    setIncomeFromInvestingSubtypeId(response.data.incomeFromInvestingSubtypeId);
+                    setIncomeFromFinancingSubtypeId(response.data.incomeFromFinancingSubtypeId);
                     setOtherIncomeSubtypeId(response.data.otherIncomeSubtypeId);
                     setCostOfSalesSubtypeId(response.data.costOfSalesSubtypeId);
                     setResearchAndDevelopmentSubtypeId(response.data.researchAndDevelopmentSubtypeId);
                     setSgaSubtypeId(response.data.sgaSubtypeId);
-                    setDepreciationSubtypeId(response.data.depreciationSubtypeId);
-                    setAmortizationSubtypeId(response.data.amortizationSubtypeId);
+                    setDepreciationAmortizationSubtypeId(response.data.depreciationAmortizationSubtypeId);
                     setOtherExpensesSubtypeId(response.data.otherExpensesSubtypeId);
-                    setIncomeTaxSubtypeId(response.data.incomeTaxSubtypeId);
+                    setInterestExpenseSubtypeId(response.data.interestExpenseSubtypeId);
+                    setTaxExpenseSubtypeId(response.data.setTaxExpenseSubtypeId);
+                    setNonRecurringSubtypeId(response.data.nonRecurringSubtypeId);
                 }
             }).catch(error => {
                 console.log(error);
@@ -177,15 +186,25 @@ function IncomeStatementRender() {
                             <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Operating expenses"]}</td></tr>
                             {!rd? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Research and development"]}</div><div>{numberAsCurrency(rd)}</div></td></tr>}
                             {!sga? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Sales, general, and administration"]}</div><div>{numberAsCurrency(sga)}</div></td></tr>}
-                            {!depreciation? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Depreciation"]}</div><div>{numberAsCurrency(depreciation)}</div></td></tr>}
-                            {!amortization? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Amortization"]}</div><div>{numberAsCurrency(amortization)}</div></td></tr>}
+                            {!da? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Depreciation and amortization"]}</div><div>{numberAsCurrency(da)}</div></td></tr>}
                             <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total operating expenses"]}</div><div>{numberAsCurrency(totalOperatingExpenses)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                             <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Operating income"]}</div><div>{numberAsCurrency(operatingIncome)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Other income/expense, net"]}</div><div>{numberAsCurrency(netOtherIncomeExpense)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Income before tax"]}</div><div>{numberAsCurrency(incomeBeforeTax)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Income tax"]}</div><div>{numberAsCurrency(incomeTax)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
+                            <tr><td className="font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Other income/expense"]}</div></td></tr>
+                            {!incomeFromInvesting? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Income from investing activities"]}</div><div>{numberAsCurrency(incomeFromInvesting)}</div></td></tr>}
+                            {!incomeFromFinancing? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Income from financing activities"]}</div><div>{numberAsCurrency(incomeFromFinancing)}</div></td></tr>}
+                            {!otherIncome? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Other income"]}</div><div>{numberAsCurrency(otherIncome)}</div></td></tr>}
+                            {!otherExpenses? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Other expenses"]}</div><div>{numberAsCurrency(otherExpenses)}</div></td></tr>}
+                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total other income/expense, net"]}</div><div>{numberAsCurrency(totalOtherIncomeExpense)}</div></td></tr>
+                            <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
+                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Earnings before interest and tax"]}</div><div>{numberAsCurrency(ebit)}</div></td></tr>
+                            <tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Interest expense"]}</div><div>{numberAsCurrency(interestExpense)}</div></td></tr>
+                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Earnings before tax"]}</div><div>{numberAsCurrency(earningsBeforeTax)}</div></td></tr>
+                            <tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Tax expense"]}</div><div>{numberAsCurrency(taxExpense)}</div></td></tr>
+                            <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
+                            {!nonRecurringAndExtraordinaryItems ? null : <><tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Non-recurring and extraordinary items"]}</div><div>{numberAsCurrency(nonRecurringAndExtraordinaryItems)}</div></td></tr>
+                            <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr></>}
                             <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Net income"]}</div><div>{numberAsCurrency(netIncome)}</div></td></tr>
                         </tbody>
                     </table>
