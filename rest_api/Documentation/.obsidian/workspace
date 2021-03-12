@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Reports/Contents/Generate an Income Statement.md",
+            "file": "AccountSubtype/AccountSubtype.md",
             "mode": "preview"
           }
         }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Reports/Contents/Generate an Income Statement.md",
+                "file": "AccountSubtype/AccountSubtype.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -86,8 +86,8 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "Reports/Contents/Generate an Income Statement.md",
     "AccountSubtype/AccountSubtype.md",
+    "Reports/Contents/Generate an Income Statement.md",
     "Account/Contents/Create an Account.md",
     "Account/Contents/Retrieve an Account.md",
     "Account/Contents/Update an Account.md",
