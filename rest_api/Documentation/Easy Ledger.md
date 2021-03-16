@@ -9,7 +9,6 @@ ___
 - [[Account]]
 - [[AccountSubtype]]
 - [[AccountType]]
-- [[AccountGroup]]
 ___
 ### List of Endpoints
 
@@ -59,16 +58,6 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[List All AccountSubtype Balances for an Organization|GET /organization/{id}/accountSubtypeBalance]]
 - [[List All AccountSubtype Balances for an Organization|GET /organization/{id}/accountSubtypeBalance/{endDate}]]
 - [[List All AccountSubtype Balances for an Organization|GET /organization/{id}/accountSubtypeBalance/{startDate}/{endDate}]]
-<br/><br/>
-- [[List All AccountGroups|GET /accountGroup]]
-- [[Retrieve an AccountGroup|GET /accountGroup/{id}]]
-- [[List All AccountGroups Belonging to an Organization|GET /organization/{id}/accountGroup]]
-- [[List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects|GET /organization/{id}/accountGroupBalance]]
-- [[List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects|GET /organization/{id}/accountGroupBalance/{endDate}]]
-- [[List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects|GET /organization/{id}/accountGroupBalance/{startDate}/{endDate}]]
-- [[Create an AccountGroup| POST /accountGroup]]
-- [[Update an AccountGroup|PUT /accountGroup/{id}]]
-- [[Delete an AccountGroup| DELETE /accountGroup/{id}]]
 <br/><br/>
 - [[Generate a Balance Sheet|GET /organization/{id}/reports/balanceSheet/{endDate}]]
 - [[Generate an Income Statement|GET /organization/{id}/reports/incomeStatement/{startDate}/{endDate}]]

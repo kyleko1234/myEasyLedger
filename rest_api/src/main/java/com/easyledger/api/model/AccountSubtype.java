@@ -150,22 +150,22 @@ public class AccountSubtype {
 	
 	@OneToMany(mappedBy = "accountSubtype")
 	@JsonIgnore
-	private Set<AccountGroup> accountGroups;
+	private Set<Account> accounts;
 	
 	public AccountSubtype() {
-		this.accountGroups = new HashSet<AccountGroup>();
+		this.accounts = new HashSet<Account>();
 	}
 
 	public AccountSubtype(String name) {
 		this.name = name;
-		this.accountGroups = new HashSet<AccountGroup>();
+		this.accounts = new HashSet<Account>();
 	}
 	
 	public AccountSubtype(String name, AccountType accountType) {
 		this.name = name;
 		this.accountType = accountType;
 		accountType.getAccountSubtypes().add(this);
-		this.accountGroups = new HashSet<AccountGroup>();
+		this.accounts = new HashSet<Account>();
 	}
 
 	public Long getId() {
@@ -193,18 +193,18 @@ public class AccountSubtype {
 		accountType.getAccountSubtypes().add(this);
 	}
 	
-	public Set<AccountGroup> getAccountGroups() {
-		return accountGroups;
+	public Set<Account> getAccounts() {
+		return accounts;
 	}
 
-	public void setAccountGroups(Set<AccountGroup> accountGroups) {
-		this.accountGroups = accountGroups;
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts = accounts;
 	}
 
 	@Override
 	public String toString() {
-		return "AccountSubtype [id=" + id + ", name=" + name + ", accountType=" + accountType + ", accountGroups="
-				+ accountGroups + "]";
+		return "AccountSubtype [id=" + id + ", name=" + name + ", accountType=" + accountType + ", accounts="
+				+ accounts + "]";
 	}
 
 

@@ -146,7 +146,7 @@ INSERT INTO permission(person_id, organization_id, permission_type_id)
      1 |         1 | 1               | 4    **/
 
 
-INSERT INTO account_group(name, account_subtype_id, organization_id)
+INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amount, initial_credit_amount, debit_total. credit_total)
     VALUES
         ('Cash', 1, 1),
         ('Accounts Receivable', 3, 1),

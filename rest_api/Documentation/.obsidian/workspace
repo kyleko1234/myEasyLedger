@@ -10,8 +10,8 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "AccountSubtype/AccountSubtype.md",
-            "mode": "source"
+            "file": "Easy Ledger.md",
+            "mode": "preview"
           }
         }
       }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AccountSubtype/AccountSubtype.md",
+                "file": "Easy Ledger.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -86,6 +86,8 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Easy Ledger.md",
+    "AccountGroup/AccountGroup.md",
     "AccountSubtype/AccountSubtype.md",
     "Reports/Contents/Generate an Income Statement.md",
     "Reports/Contents/Generate a Balance Sheet.md",
@@ -93,8 +95,6 @@
     "Account/Contents/Retrieve an Account.md",
     "Account/Contents/Update an Account.md",
     "Account/Contents/Delete an Account.md",
-    "Account/Contents/List All Accounts.md",
-    "Account/Contents/List All Accounts Belonging to an Organization.md",
-    "Account/Contents/List All Accounts Belonging to an Organization as AccountBalance Objects.md"
+    "Account/Contents/List All Accounts.md"
   ]
 }

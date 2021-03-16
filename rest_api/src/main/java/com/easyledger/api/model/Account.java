@@ -149,25 +149,40 @@ public class Account {
 	@Column(name = "deleted")
 	private boolean deleted;
 	
-	@Column(name = "debitTotal")
+	@Column(name = "debit_total")
 	private BigDecimal debitTotal;
 	
-	@Column(name = "creditTotal")
+	@Column(name = "credit_total")
 	private BigDecimal creditTotal;
 
-	@Column(name = "initialDebitAmount")
+	@Column(name = "initial_debit_amount")
 	private BigDecimal initialDebitAmount;
 	
-	@Column(name = "initialCreditAmount")
+	@Column(name = "initial_credit_amount")
 	private BigDecimal initialCreditAmount;
+	
+	@Column(name = "has_children")
+	private boolean hasChildren;
+	
+	@ManyToOne
+	@JoinColumn(name = "account_subtype_id")
+	private AccountSubtype accountSubtype;
+
+	@ManyToOne
+	@JoinColumn(name = "organization_id")
+	private Organization organization;
+	
+	@ManyToOne
+	@JoinColumn(name = "parent_account_id")
+	private Account parentAccount;
+	
+	@OneToMany(mappedBy = "parentAccount")
+	@JsonIgnore
+	private Set<Account> childAccounts;
 	
 	@OneToMany(mappedBy = "account")
 	@JsonIgnore
 	private Set<LineItem> lineItems;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "account_group_id", nullable = true)
-	private AccountGroup accountGroup;
 	
 	public Account() {
 		this.lineItems = new HashSet<LineItem>();
@@ -178,22 +193,20 @@ public class Account {
 		this.lineItems = new HashSet<LineItem>();
 		}
 	
-	public Account(String name, AccountGroup accountGroup) {
+	public Account(String name, Account parentAccount) {
 		this.name = name;
 		this.lineItems = new HashSet<LineItem>();
-		this.accountGroup = accountGroup;
-		accountGroup.getAccounts().add(this);
 		this.initialDebitAmount = new BigDecimal(0);
 		this.initialCreditAmount = new BigDecimal(0);
 		this.debitTotal = initialDebitAmount;
 		this.creditTotal = initialCreditAmount;
+		this.parentAccount = parentAccount;
+		parentAccount.getChildAccounts().add(this);
 	}
 	
-	public Account(String name, AccountGroup accountGroup, BigDecimal initialDebitAmount, BigDecimal initialCreditAmount) {
+	public Account(String name, BigDecimal initialDebitAmount, BigDecimal initialCreditAmount) {
 		this.name = name;
 		this.lineItems = new HashSet<LineItem>();
-		this.accountGroup = accountGroup;
-		accountGroup.getAccounts().add(this);
 		this.initialDebitAmount = initialDebitAmount;
 		this.initialCreditAmount = initialCreditAmount;
 		this.debitTotal = initialDebitAmount;
@@ -232,15 +245,6 @@ public class Account {
 	public void setLineItems(Set<LineItem> lineItems) {
 		this.lineItems = lineItems;
 	}
-
-	public AccountGroup getAccountGroup() {
-		return accountGroup;
-	}
-
-	public void setAccountGroup(AccountGroup accountGroup) {
-		this.accountGroup = accountGroup;
-		accountGroup.getAccounts().add(this);
-	}
 	
 	public BigDecimal getDebitTotal() {
 		return debitTotal;
@@ -274,12 +278,56 @@ public class Account {
 		this.initialCreditAmount = initialCreditAmount;
 	}
 
+	public boolean isHasChildren() {
+		return hasChildren;
+	}
+
+	public void setHasChildren(boolean hasChildren) {
+		this.hasChildren = hasChildren;
+	}
+
+	public AccountSubtype getAccountSubtype() {
+		return accountSubtype;
+	}
+
+	public void setAccountSubtype(AccountSubtype accountSubtype) {
+		this.accountSubtype = accountSubtype;
+		accountSubtype.getAccounts().add(this);
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+		organization.getAccounts().add(this);
+	}
+
+	public Account getParentAccount() {
+		return parentAccount;
+	}
+
+	public void setParentAccount(Account parentAccount) {
+		this.parentAccount = parentAccount;
+		parentAccount.getChildAccounts().add(this);
+	}
+
+	public Set<Account> getChildAccounts() {
+		return childAccounts;
+	}
+
+	public void setChildAccounts(Set<Account> childAccounts) {
+		this.childAccounts = childAccounts;
+	}
+
 	@Override
 	public String toString() {
 		return "Account [id=" + id + ", name=" + name + ", deleted=" + deleted + ", debitTotal=" + debitTotal
 				+ ", creditTotal=" + creditTotal + ", initialDebitAmount=" + initialDebitAmount
-				+ ", initialCreditAmount=" + initialCreditAmount + ", lineItems=" + lineItems + ", accountGroup="
-				+ accountGroup + "]";
+				+ ", initialCreditAmount=" + initialCreditAmount + ", hasChildren=" + hasChildren + ", accountSubtype="
+				+ accountSubtype + ", organization=" + organization + ", parentAccount=" + parentAccount
+				+ ", childAccounts=" + childAccounts + ", lineItems=" + lineItems + "]";
 	}
 
 
