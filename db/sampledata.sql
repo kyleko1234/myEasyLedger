@@ -148,15 +148,15 @@ INSERT INTO permission(person_id, organization_id, permission_type_id)
 
 INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total, has_children)
     VALUES
-        ('Cash', 1, 1, 0, 0, 420000, 18430, true),
-        ('Accounts Receivable', 3, 1, 0, 0, 24000, 20000, true),
-        ('Inventories', 4, 1, 0, 0, 250, 0, true),
-        ('Equipment', 6, 1, 0, 0, 29500, 0, true),
-        ('Payables', 11, 1, 0, 0, 0, 22500, true),
-        ('Paid-in Capital', 19, 1, 0, 0, 0, 400000, true),
-        ('Dividends and equivalents', 21, 1, 0, 0, 3000, 0, true),
-        ('Revenue', 23, 1, 0, 0, 0, 24000, true),
-        ('Selling, general, and administration', 29, 1, 0, 0, 8180, 0, true);
+        ('Cash', 1, 1, 0, 0, 0, 0, true),
+        ('Accounts Receivable', 3, 1, 0, 0, 0, 0, true),
+        ('Inventories', 4, 1, 0, 0, 0, 0, true),
+        ('Equipment', 6, 1, 0, 0, 0, 0, true),
+        ('Payables', 11, 1, 0, 0, 0, 0, true),
+        ('Paid-in Capital', 19, 1, 0, 0, 0, 0, true),
+        ('Dividends and equivalents', 21, 1, 0, 0, 0, 0, true),
+        ('Revenue', 23, 1, 0, 0, 0, 0, true),
+        ('Selling, general, and administration', 29, 1, 0, 0, 0, 0, true);
 
 /** 1    ('Cash', 1, 1),
     2    ('Accounts Receivable', 3, 1),
@@ -171,20 +171,20 @@ INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amo
 
 INSERT INTO account(name, organization_id, parent_account_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total, has_children)
     VALUES 
-        ('Cash', 1, 1, 0, 0, 420000, 18430, false),
-        ('Accounts receivable', 1, 2, 0, 0, 24000, 20000, false),
-        ('Office supplies', 1, 3, 0, 0, 250, 0, false),
-        ('Office equipment', 1, 4, 0, 0, 4500, 0, false),
-        ('Vehicles', 1, 4, 0, 0, 25000, 0, false),
-        ('Notes payable', 1, 5, 0, 0, 0, 15000, false),
-        ('Accounts payable', 1, 5, 0, 0, 0, 4500, false),
-        ('Dividends payable', 1, 5, 0, 0, 0, 3000, false),
-        ('Capital stock', 1, 6, 0, 0, 0, 400000, false),
-        ('Dividends', 1, 7, 0, 0, 3000, 0, false),
-        ('Service revenue', 1, 8, 0, 0, 0, 24000, false),
-        ('Office Rent', 1, 9, 0, 0, 500, 0, false),
-        ('Payroll', 1, 9, 0, 0, 7500, 0, false),
-        ('Utilities', 1, 9, 0, 0, 180, 0, false);
+        ('Cash', 1, 1, 0, 0, 0, 0, false),
+        ('Accounts receivable', 1, 2, 0, 0, 0, 0, false),
+        ('Office supplies', 1, 3, 0, 0, 0, 0, false),
+        ('Office equipment', 1, 4, 0, 0, 0, 0, false),
+        ('Vehicles', 1, 4, 0, 0, 0, 0, false),
+        ('Notes payable', 1, 5, 0, 0, 0, 0, false),
+        ('Accounts payable', 1, 5, 0, 0, 0, 0, false),
+        ('Dividends payable', 1, 5, 0, 0, 0, 0, false),
+        ('Capital stock', 1, 6, 0, 0, 0, 0, false),
+        ('Dividends', 1, 7, 0, 0, 0, 0, false),
+        ('Service revenue', 1, 8, 0, 0, 0, 0, false),
+        ('Office Rent', 1, 9, 0, 0, 0, 0, false),
+        ('Payroll', 1, 9, 0, 0, 0, 0, false),
+        ('Utilities', 1, 9, 0, 0, 0, 0, false);
 
 /*      10     ('Cash', 1),
         11     ('Accounts receivable', 2),
