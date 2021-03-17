@@ -146,17 +146,17 @@ INSERT INTO permission(person_id, organization_id, permission_type_id)
      1 |         1 | 1               | 4    **/
 
 
-INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amount, initial_credit_amount, debit_total. credit_total)
+INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total, has_children)
     VALUES
-        ('Cash', 1, 1),
-        ('Accounts Receivable', 3, 1),
-        ('Inventories', 4, 1),
-        ('Equipment', 6, 1),
-        ('Payables', 11, 1),
-        ('Paid-in Capital', 19, 1),
-        ('Dividends and equivalents', 21, 1),
-        ('Revenue', 23, 1),
-        ('Selling, general, and administration', 29, 1);
+        ('Cash', 1, 1, 0, 0, 420000, 18430, true),
+        ('Accounts Receivable', 3, 1, 0, 0, 24000, 20000, true),
+        ('Inventories', 4, 1, 0, 0, 250, 0, true),
+        ('Equipment', 6, 1, 0, 0, 29500, 0, true),
+        ('Payables', 11, 1, 0, 0, 0, 22500, true),
+        ('Paid-in Capital', 19, 1, 0, 0, 0, 400000, true),
+        ('Dividends and equivalents', 21, 1, 0, 0, 3000, 0, true),
+        ('Revenue', 23, 1, 0, 0, 0, 24000, true),
+        ('Selling, general, and administration', 29, 1, 0, 0, 8180, 0, true);
 
 /** 1    ('Cash', 1, 1),
     2    ('Accounts Receivable', 3, 1),
@@ -169,37 +169,37 @@ INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amo
     9    ('Selling, general, and administration', 29, 1);
  */
 
-INSERT INTO account(name, account_group_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total)
+INSERT INTO account(name, organization_id, parent_account_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total, has_children)
     VALUES 
-        ('Cash', 1, 0, 0, 420000, 18430),
-        ('Accounts receivable', 2, 0, 0, 24000, 20000),
-        ('Office supplies', 3, 0, 0, 250, 0),
-        ('Office equipment', 4, 0, 0, 4500, 0),
-        ('Vehicles', 4, 0, 0, 25000, 0),
-        ('Notes payable', 5, 0, 0, 0, 15000),
-        ('Accounts payable', 5, 0, 0, 0, 4500),
-        ('Dividends payable', 5, 0, 0, 0, 3000),
-        ('Capital stock', 6, 0, 0, 0, 400000),
-        ('Dividends', 7, 0, 0, 3000, 0),
-        ('Service revenue', 8, 0, 0, 0, 24000),
-        ('Office Rent', 9, 0, 500, 0, 0),
-        ('Payroll', 9, 0, 0, 7500, 0),
-        ('Utilities', 9, 0, 0, 180, 0);
+        ('Cash', 1, 1, 0, 0, 420000, 18430, false),
+        ('Accounts receivable', 1, 2, 0, 0, 24000, 20000, false),
+        ('Office supplies', 1, 3, 0, 0, 250, 0, false),
+        ('Office equipment', 1, 4, 0, 0, 4500, 0, false),
+        ('Vehicles', 1, 4, 0, 0, 25000, 0, false),
+        ('Notes payable', 1, 5, 0, 0, 0, 15000, false),
+        ('Accounts payable', 1, 5, 0, 0, 0, 4500, false),
+        ('Dividends payable', 1, 5, 0, 0, 0, 3000, false),
+        ('Capital stock', 1, 6, 0, 0, 0, 400000, false),
+        ('Dividends', 1, 7, 0, 0, 3000, 0, false),
+        ('Service revenue', 1, 8, 0, 0, 0, 24000, false),
+        ('Office Rent', 1, 9, 0, 0, 500, 0, false),
+        ('Payroll', 1, 9, 0, 0, 7500, 0, false),
+        ('Utilities', 1, 9, 0, 0, 180, 0, false);
 
-/*      1     ('Cash', 1),
-        2     ('Accounts receivable', 2),
-        3     ('Office supplies', 3),
-        4     ('Office equipment', 4),
-        5     ('Vehicles', 4),
-        6     ('Notes payable', 5),
-        7     ('Accounts payable', 5),
-        8     ('Dividends payable', 5),
-        9     ('Capital stock', 6),
-        10    ('Dividends', 7),
-        11    ('Service revenue', 8),
-        12    ('Office Rent', 9),
-        13    ('Payroll', 9),
-        14    ('Utilities', 9); */
+/*      10     ('Cash', 1),
+        11     ('Accounts receivable', 2),
+        12     ('Office supplies', 3),
+        13     ('Office equipment', 4),
+        14     ('Vehicles', 4),
+        15     ('Notes payable', 5),
+        16     ('Accounts payable', 5),
+        17     ('Dividends payable', 5),
+        18     ('Capital stock', 6),
+        19    ('Dividends', 7),
+        20    ('Service revenue', 8),
+        21    ('Office Rent', 9),
+        22    ('Payroll', 9),
+        23    ('Utilities', 9); */
 
     -----------------END SETUP DATA-------------------
     -----------------BEGIN ENTRY DATA-----------------
@@ -233,36 +233,36 @@ INSERT INTO journal_entry(journal_entry_date, organization_id, person_id, descri
 
 INSERT INTO line_item(journal_entry_id, account_id, is_credit, amount, description)
     VALUES
-        (1, 1, FALSE, 400000, 'Cash influx from initial offering'),
-        (1, 9, TRUE, 400000, 'Issued 20000 shares of common at 20 per'),
+        (1, 10, FALSE, 400000, 'Cash influx from initial offering'),
+        (1, 18, TRUE, 400000, 'Issued 20000 shares of common at 20 per'),
 
-        (2, 12, FALSE, 500, 'Office rent expense, November'),
-        (2, 1, TRUE, 500, 'Paid office rent november in cash'),
+        (2, 21, FALSE, 500, 'Office rent expense, November'),
+        (2, 10, TRUE, 500, 'Paid office rent november in cash'),
 
-        (3, 3, FALSE, 250, 'Purchase of office supplies'),
-        (3, 1, TRUE, 250, 'Purchase of office supplies'),
+        (3, 12, FALSE, 250, 'Purchase of office supplies'),
+        (3, 10, TRUE, 250, 'Purchase of office supplies'),
 
-        (4, 4, FALSE, 4500, 'Purchased office equipment on account'),
-        (4, 7, TRUE, 4500, 'Purchased office equipment on account'),
+        (4, 13, FALSE, 4500, 'Purchased office equipment on account'),
+        (4, 16, TRUE, 4500, 'Purchased office equipment on account'),
 
-        (5, 5, FALSE, 25000, 'Purchased company vehicle'),
-        (5, 1, TRUE, 10000, 'Paid 10000 down for vehicle'),
-        (5, 6, TRUE, 15000, 'Issued 15000 note payable for vehicle'),
+        (5, 14, FALSE, 25000, 'Purchased company vehicle'),
+        (5, 10, TRUE, 10000, 'Paid 10000 down for vehicle'),
+        (5, 15, TRUE, 15000, 'Issued 15000 note payable for vehicle'),
 
-        (6, 2, FALSE, 24000, 'Billed clients on account'),
-        (6, 11, TRUE, 24000, 'Billed clients on account'),
+        (6, 11, FALSE, 24000, 'Billed clients on account'),
+        (6, 20, TRUE, 24000, 'Billed clients on account'),
 
-        (7, 10, FALSE, 3000, 'Dividends declared to be distributed in december'),
-        (7, 8, TRUE, 3000, 'Dividends declared to be distributed in december'),
+        (7, 19, FALSE, 3000, 'Dividends declared to be distributed in december'),
+        (7, 17, TRUE, 3000, 'Dividends declared to be distributed in december'),
 
-        (8, 14, FALSE, 180, 'November utilities paid in cash'),
-        (8, 1, TRUE, 180, 'November utilities paid in cash'),
+        (8, 23, FALSE, 180, 'November utilities paid in cash'),
+        (8, 10, TRUE, 180, 'November utilities paid in cash'),
 
-        (9, 1, FALSE, 20000, 'Collected cash from clients billed on November 21'),
-        (9, 2, TRUE, 20000, 'Collected cash from clients billed on November 21'),
+        (9, 10, FALSE, 20000, 'Collected cash from clients billed on November 21'),
+        (9, 11, TRUE, 20000, 'Collected cash from clients billed on November 21'),
 
-        (10, 13, FALSE, 7500, 'Paid salary expense for November'),
-        (10, 1, TRUE, 7500, 'Paid salary expense for November');
+        (10, 22, FALSE, 7500, 'Paid salary expense for November'),
+        (10, 10, TRUE, 7500, 'Paid salary expense for November');
 
 -------------------------------
 
