@@ -8,8 +8,11 @@
         "type": "leaf",
         "active": true,
         "state": {
-          "type": "graph",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "Account/Contents/Update an Account.md",
+            "mode": "source"
+          }
         }
       }
     ],
@@ -66,6 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Account/Contents/Update an Account.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -82,6 +86,8 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "Account/Contents/Update an Account.md",
+    "JournalEntry/Contents/The JournalEntry Object.md",
     "Easy Ledger.md",
     "AccountGroup/AccountGroup.md",
     "AccountSubtype/AccountSubtype.md",
@@ -89,8 +95,6 @@
     "Reports/Contents/Generate a Balance Sheet.md",
     "Account/Contents/Create an Account.md",
     "Account/Contents/Retrieve an Account.md",
-    "Account/Contents/Update an Account.md",
-    "Account/Contents/Delete an Account.md",
-    "Account/Contents/List All Accounts.md"
+    "Account/Contents/Delete an Account.md"
   ]
 }

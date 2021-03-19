@@ -4,6 +4,7 @@ Endpoint: `PUT /account/{id}`
 Authorization: User must have EDIT permissions for all associated accounts.
 
 Updates an account with the values of the parameters passed. Cannot be used to soft-delete an account; use `DELETE /account/{id}` instead.
+
 ___
 
 #### Request Body Parameters
