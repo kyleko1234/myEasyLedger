@@ -12,27 +12,27 @@ import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountGroup;
 import com.easyledger.api.repository.AccountGroupRepository;
 import com.easyledger.api.repository.AccountRepository;
+import com.easyledger.api.repository.OrganizationRepository;
 
 @Service
 public class AccountService {
 	
 	@Autowired
-	private AccountGroupRepository accountGroupRepo;
+	private OrganizationRepository organizationRepo;
 	
 	@Autowired
 	private AccountRepository accountRepo;
 	
-	public AccountService(AccountGroupRepository accountGroupRepo, AccountRepository accountRepo) {
+	public AccountService(AccountRepository accountRepo, OrganizationRepository organizationRepo) {
 		super();
-		this.accountGroupRepo = accountGroupRepo;
 		this.accountRepo = accountRepo;
+		this.organizationRepo = organizationRepo;
 	}
 	
 	//sets debitTotal and creditTotal to initialDebitAmount and initialCreditAmount
 	public Account createNewAccountFromDTO(AccountDTO dto) 
 			throws ResourceNotFoundException, ConflictException {
 		Account product = new Account();
-		product.setId(dto.getAccountId());
 		product.setName(dto.getAccountName());
 		if (dto.getInitialDebitAmount() != null) {
 			product.setInitialDebitAmount(dto.getInitialDebitAmount());
@@ -49,11 +49,15 @@ public class AccountService {
 			product.setCreditTotal(new BigDecimal(0));
 		}
 //		product.setDeleted(dto.isDeleted());
+		product.setHasChildren(false);
 		
-		AccountGroup accountGroup = accountGroupRepo.findById(dto.getAccountGroupId())
-	    		.orElseThrow(() -> new ResourceNotFoundException("AccountGroup not found for this id :: " + dto.getAccountGroupId()));
-		product.setAccountGroup(accountGroup);
-		
+		if (dto.getParentAccountId() != null) {
+			Account parentAccount = accountRepo.findById(dto.getParentAccountId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Parent account not found for this id :: " + dto.getParentAccountId()));
+			product.setParentAccount(parentAccount);
+			parentAccount.setHasChildren(true);
+			accountRepo.save(parentAccount);
+		}
 		return product;
 	}
 	

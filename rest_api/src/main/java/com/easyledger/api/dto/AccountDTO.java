@@ -24,6 +24,7 @@ public class AccountDTO {
 	private BigDecimal initialDebitAmount;
 	private BigDecimal initialCreditAmount;
 	private BigDecimal debitsMinusCredits;
+	private boolean hasChildren;
 	
 	public AccountDTO(Account account) {
 		this.accountId = account.getId();
@@ -48,16 +49,17 @@ public class AccountDTO {
 		this.initialDebitAmount = account.getInitialDebitAmount();
 		this.initialCreditAmount = account.getInitialCreditAmount();
 		this.debitsMinusCredits = this.getDebitTotal().subtract(this.getCreditTotal());
+		this.hasChildren = account.isHasChildren();
 	}
 	
 	public AccountDTO(BigInteger accountId, String accountName, BigInteger parentAccountId, String parentAccountName,
 			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
 			BigInteger organizationId, String organizationName, BigDecimal debitTotal, BigDecimal creditTotal, 
-			BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean deleted) {
+			BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean hasChildren) {
 		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
-		this.parentAccountId = accountGroupId.longValueExact();
-		this.parentAccountName = accountGroupName;
+		this.parentAccountId = parentAccountId.longValueExact();
+		this.parentAccountName = parentAccountName;
 		this.accountSubtypeId = accountSubtypeId.longValueExact();
 		this.accountSubtypeName = accountSubtypeName;
 		this.accountTypeId = accountTypeId.longValueExact();
@@ -77,6 +79,7 @@ public class AccountDTO {
 		this.initialDebitAmount = initialDebitAmount;
 		this.initialCreditAmount = initialCreditAmount;
 		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
+		this.hasChildren = hasChildren;
 	}
 
 	public AccountDTO() {
@@ -98,20 +101,20 @@ public class AccountDTO {
 		this.accountName = accountName;
 	}
 
-	public Long getAccountGroupId() {
-		return accountGroupId;
+	public Long getParentAccountId() {
+		return parentAccountId;
 	}
 
-	public void setAccountGroupId(Long accountGroupId) {
-		this.accountGroupId = accountGroupId;
+	public void setParentAccountId(Long parentAccountId) {
+		this.parentAccountId = parentAccountId;
 	}
 
-	public String getAccountGroupName() {
-		return accountGroupName;
+	public String getParentAccountName() {
+		return parentAccountName;
 	}
 
-	public void setAccountGroupName(String accountGroupName) {
-		this.accountGroupName = accountGroupName;
+	public void setParentAccountName(String parentAccountName) {
+		this.parentAccountName = parentAccountName;
 	}
 
 	public Long getAccountSubtypeId() {
@@ -202,23 +205,25 @@ public class AccountDTO {
 		this.debitsMinusCredits = debitsMinusCredits;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
+	public boolean isHasChildren() {
+		return hasChildren;
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setHasChildren(boolean hasChildren) {
+		this.hasChildren = hasChildren;
 	}
 
 	@Override
 	public String toString() {
-		return "AccountDTO [accountId=" + accountId + ", accountName=" + accountName + ", accountGroupId="
-				+ accountGroupId + ", accountGroupName=" + accountGroupName + ", accountSubtypeId=" + accountSubtypeId
-				+ ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
+		return "AccountDTO [accountId=" + accountId + ", accountName=" + accountName + ", parentAccountId="
+				+ parentAccountId + ", parentAccountName=" + parentAccountName + ", accountSubtypeId="
+				+ accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
 				+ ", accountTypeName=" + accountTypeName + ", organizationId=" + organizationId + ", organizationName="
 				+ organizationName + ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal
 				+ ", initialDebitAmount=" + initialDebitAmount + ", initialCreditAmount=" + initialCreditAmount
-				+ ", totalDebitsMinusCredits=" + debitsMinusCredits + ", deleted=" + deleted + "]";
+				+ ", debitsMinusCredits=" + debitsMinusCredits + ", hasChildren=" + hasChildren + "]";
 	}
+
+
 	
 }
