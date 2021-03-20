@@ -121,12 +121,8 @@ public class AccountController {
         if (!accountId.equals(dto.getAccountId())) {
         	throw new ConflictException("Account ID in request body does not match URI.");
         }
-    	Account account = accountRepo.findById(accountId)
-        	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
-    	Account updatedAccount = accountService.updateAccountFromDTO(dto);
+    	Account updatedAccount = accountService.updateAccountFromDTO(dto, authentication);
 
-    	updatedAccount = accountRepo.save(updatedAccount);
     	AccountDTO updatedDto = new AccountDTO(updatedAccount);
         return ResponseEntity.ok(updatedDto);
     }

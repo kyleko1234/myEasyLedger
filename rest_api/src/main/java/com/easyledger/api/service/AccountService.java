@@ -11,10 +11,8 @@ import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
-import com.easyledger.api.model.AccountGroup;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.Organization;
-import com.easyledger.api.repository.AccountGroupRepository;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.repository.OrganizationRepository;
@@ -86,26 +84,48 @@ public class AccountService {
 		return accountRepo.save(product);
 	}
 	
-	public Account updateAccountFromDTO(AccountDTO dto, Authentication authentication) throws ResourceNotFoundException {
+	//TODO test this
+	public Account updateAccountFromDTO(AccountDTO dto, Authentication authentication) throws ResourceNotFoundException, UnauthorizedException {
 		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
-		Account account = accountRepo.findById(dto.getAccountId())
+		Account oldAccount = accountRepo.findById(dto.getAccountId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + dto.getAccountId()));
-		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getOrganization().getId());
-		account.setName(dto.getAccountName());
+		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, oldAccount.getOrganization().getId());
+		Account updatedAccount = new Account();
+		updatedAccount.setName(dto.getAccountName());
 		
-		account.setDebitTotal(account.getDebitTotal().subtract(account.getInitialDebitAmount()));
-		account.setInitialDebitAmount(dto.getInitialDebitAmount());
-		account.setDebitTotal(account.getDebitTotal().add(account.getInitialDebitAmount()));
+		updatedAccount.setDebitTotal(oldAccount.getDebitTotal().subtract(oldAccount.getInitialDebitAmount()));
+		updatedAccount.setInitialDebitAmount(dto.getInitialDebitAmount());
+		updatedAccount.setDebitTotal(updatedAccount.getDebitTotal().add(updatedAccount.getInitialDebitAmount()));
 		
-		account.setCreditTotal(account.getCreditTotal().subtract(account.getInitialCreditAmount()));
-		account.setInitialCreditAmount(dto.getInitialCreditAmount());
-		account.setCreditTotal(account.getCreditTotal().add(account.getInitialCreditAmount()));
+		updatedAccount.setCreditTotal(oldAccount.getCreditTotal().subtract(oldAccount.getInitialCreditAmount()));
+		updatedAccount.setInitialCreditAmount(dto.getInitialCreditAmount());
+		updatedAccount.setCreditTotal(updatedAccount.getCreditTotal().add(updatedAccount.getInitialCreditAmount()));
 		
+		Organization organization = organizationRepo.findById(dto.getOrganizationId())
+	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId()));
+		updatedAccount.setOrganization(organization);
 		
-		AccountGroup accountGroup = accountGroupRepo.findById(dto.getAccountGroupId())
-	    		.orElseThrow(() -> new ResourceNotFoundException("AccountGroup not found for this id :: " + dto.getAccountGroupId()));
-		account.setAccountGroup(accountGroup);
-		return account;
+		if (dto.getParentAccountId() != null) {
+			Account parentAccount = accountRepo.findById(dto.getParentAccountId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Parent account not found for this id :: " + dto.getParentAccountId()));
+			updatedAccount.setParentAccount(parentAccount);
+			parentAccount.setHasChildren(true);
+			accountRepo.save(parentAccount);
+		} else {
+			AccountSubtype accountSubtype = accountSubtypeRepo.findById(dto.getAccountSubtypeId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + dto.getAccountSubtypeId()));
+			updatedAccount.setAccountSubtype(accountSubtype);
+		}
+		updatedAccount.setHasChildren(oldAccount.isHasChildren());
+		Account oldParentAccount = oldAccount.getParentAccount();
+		Account returnObject = accountRepo.save(updatedAccount);
+		if (oldParentAccount != null) {
+			if (!accountRepo.accountContainsChildAccounts(oldParentAccount.getId())) {
+				oldParentAccount.setHasChildren(false);
+				accountRepo.save(oldParentAccount);
+			}
+		}
+		return returnObject;
 	}
 	
 	
