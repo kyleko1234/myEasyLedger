@@ -110,9 +110,7 @@ public class AccountController {
     	if (dto.getAccountId() != null) {
     		throw new ConflictException("Please do not attempt to manually create an account id.");
     	}
-    	Account account = accountService.createNewAccountFromDTO(dto);
-    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
-    	final Account updatedAccount = accountRepo.save(account);
+    	Account updatedAccount = accountService.createNewAccountFromDTO(dto, authentication);
     	return new AccountDTO(updatedAccount);
     	}
 
