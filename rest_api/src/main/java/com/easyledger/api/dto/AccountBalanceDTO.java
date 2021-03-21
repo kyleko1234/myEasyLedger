@@ -6,8 +6,8 @@ import java.math.BigInteger;
 public class AccountBalanceDTO {
 	private Long accountId;
 	private String accountName;
-	private Long accountGroupId;
-	private String accountGroupName;
+	private Long parentAccountId;
+	private String parentAccountName;
 	private Long accountSubtypeId;
 	private String accountSubtypeName;
 	private Long accountTypeId;
@@ -21,15 +21,16 @@ public class AccountBalanceDTO {
 	private BigDecimal debitTotal;
 	private BigDecimal creditTotal;
 	private BigDecimal debitsMinusCredits;
+	private boolean hasChildren;
 	
-	public AccountBalanceDTO(BigInteger accountId, String accountName, BigInteger accountGroupId, String accountGroupName,
+	public AccountBalanceDTO(BigInteger accountId, String accountName, BigInteger parentAccountId, String parentAccountName,
 			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
 			BigInteger organizationId, String organizationName, BigDecimal sumOfDebitLineItems,
-			BigDecimal sumOfCreditLineItems, BigDecimal initialDebitAmount, BigDecimal initialCreditAmount) {
+			BigDecimal sumOfCreditLineItems, BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean hasChildren) {
 		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
-		this.accountGroupId = accountGroupId.longValueExact();
-		this.accountGroupName = accountGroupName;
+		this.parentAccountId = parentAccountId.longValueExact();
+		this.parentAccountName = parentAccountName;
 		this.accountSubtypeId = accountSubtypeId.longValueExact();
 		this.accountSubtypeName = accountSubtypeName;
 		this.accountTypeId = accountTypeId.longValueExact();
@@ -51,6 +52,7 @@ public class AccountBalanceDTO {
 		this.debitTotal = this.sumOfDebitLineItems.add(initialDebitAmount);
 		this.creditTotal = this.sumOfCreditLineItems.add(initialCreditAmount);
 		this.debitsMinusCredits = debitTotal.subtract(creditTotal);
+		this.hasChildren = hasChildren;
 	}
 	
 	public AccountBalanceDTO() {
@@ -73,20 +75,20 @@ public class AccountBalanceDTO {
 		this.accountName = accountName;
 	}
 
-	public Long getAccountGroupId() {
-		return accountGroupId;
+	public Long getParentAccountId() {
+		return parentAccountId;
 	}
 
-	public void setAccountGroupId(Long accountGroupId) {
-		this.accountGroupId = accountGroupId;
+	public void setParentAccountId(Long parentAccountId) {
+		this.parentAccountId = parentAccountId;
 	}
 
-	public String getAccountGroupName() {
-		return accountGroupName;
+	public String getParentAccountName() {
+		return parentAccountName;
 	}
 
-	public void setAccountGroupName(String accountGroupName) {
-		this.accountGroupName = accountGroupName;
+	public void setParentAccountName(String parentAccountName) {
+		this.parentAccountName = parentAccountName;
 	}
 
 	public Long getAccountSubtypeId() {
@@ -193,16 +195,24 @@ public class AccountBalanceDTO {
 		this.debitsMinusCredits = debitsMinusCredits;
 	}
 
+	public boolean isHasChildren() {
+		return hasChildren;
+	}
+
+	public void setHasChildren(boolean hasChildren) {
+		this.hasChildren = hasChildren;
+	}
+
 	@Override
 	public String toString() {
-		return "AccountBalanceDTO [accountId=" + accountId + ", accountName=" + accountName + ", accountGroupId="
-				+ accountGroupId + ", accountGroupName=" + accountGroupName + ", accountSubtypeId=" + accountSubtypeId
-				+ ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
+		return "AccountBalanceDTO [accountId=" + accountId + ", accountName=" + accountName + ", parentAccountId="
+				+ parentAccountId + ", parentAccountName=" + parentAccountName + ", accountSubtypeId="
+				+ accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
 				+ ", accountTypeName=" + accountTypeName + ", organizationId=" + organizationId + ", organizationName="
 				+ organizationName + ", sumOfDebitLineItems=" + sumOfDebitLineItems + ", sumOfCreditLineItems="
 				+ sumOfCreditLineItems + ", initialDebitAmount=" + initialDebitAmount + ", initialCreditAmount="
 				+ initialCreditAmount + ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal
-				+ ", debitsMinusCredits=" + debitsMinusCredits + "]";
+				+ ", debitsMinusCredits=" + debitsMinusCredits + ", hasChildren=" + hasChildren + "]";
 	}
 
 	
