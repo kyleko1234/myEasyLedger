@@ -18,9 +18,7 @@ import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
-import com.easyledger.api.model.AccountGroup;
 import com.easyledger.api.model.LineItem;
-import com.easyledger.api.repository.AccountGroupRepository;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.security.AuthorizationService;
@@ -31,15 +29,12 @@ import com.easyledger.api.security.AuthorizationService;
 public class LineItemController {
 	private LineItemRepository lineItemRepo;
 	private AccountRepository accountRepo;
-	private AccountGroupRepository accountGroupRepo;
 	private AuthorizationService authorizationService;
 
-	public LineItemController(LineItemRepository lineItemRepo, AccountRepository accountRepo,
-			AccountGroupRepository accountGroupRepo, AuthorizationService authorizationService) {
+	public LineItemController(LineItemRepository lineItemRepo, AccountRepository accountRepo, AuthorizationService authorizationService) {
 		super();
 		this.lineItemRepo = lineItemRepo;
 		this.accountRepo = accountRepo;
-		this.accountGroupRepo = accountGroupRepo;
 		this.authorizationService = authorizationService;
 	}
 
@@ -70,18 +65,10 @@ public class LineItemController {
     	throws ResourceNotFoundException, UnauthorizedException {
 	    Account account = accountRepo.findById(accountId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-	    authorizationService.authorizeViewPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
+	    authorizationService.authorizeViewPermissionsByOrganizationId(authentication, account.getOrganization().getId());
 	    return lineItemRepo.getAllLineItemsForAccount(accountId, pageable);
     }
     
-    @GetMapping("/accountGroup/{id}/lineItem")
-    public Page<LineItemDTO> getAllLineItemsForAccountGroup(@PathVariable(value="id") Long accountGroupId, Pageable pageable, Authentication authentication)
-    	throws ResourceNotFoundException, UnauthorizedException {
-	    AccountGroup accountGroup = accountGroupRepo.findById(accountGroupId)
-	    		.orElseThrow(() -> new ResourceNotFoundException("AccountGroup not found for this id :: " + accountGroupId));
-	    authorizationService.authorizeViewPermissionsByOrganizationId(authentication, accountGroup.getOrganization().getId());
-	    return lineItemRepo.getAllLineItemsForAccountGroup(accountGroupId, pageable);
-    }
-    
+
 }
 
