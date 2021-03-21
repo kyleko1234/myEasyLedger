@@ -186,11 +186,13 @@ public class Account {
 	
 	public Account() {
 		this.lineItems = new HashSet<LineItem>();
+		this.hasChildren = false;
 	}
 
 	public Account(String name) {
 		this.name = name;
 		this.lineItems = new HashSet<LineItem>();
+		this.hasChildren = false;
 		}
 	
 	public Account(String name, Account parentAccount) {
@@ -202,8 +204,20 @@ public class Account {
 		this.creditTotal = initialCreditAmount;
 		this.parentAccount = parentAccount;
 		parentAccount.getChildAccounts().add(this);
+		this.hasChildren = false;
 	}
 	
+	public Account (String name, AccountSubtype accountSubtype) {
+		this.name = name;
+		this.lineItems = new HashSet<LineItem>();
+		this.initialDebitAmount = new BigDecimal(0);
+		this.initialCreditAmount = new BigDecimal(0);
+		this.debitTotal = initialDebitAmount;
+		this.creditTotal = initialCreditAmount;
+		this.accountSubtype = accountSubtype;
+		accountSubtype.getAccounts().add(this);
+		this.hasChildren = false;
+	}
 	public Account(String name, BigDecimal initialDebitAmount, BigDecimal initialCreditAmount) {
 		this.name = name;
 		this.lineItems = new HashSet<LineItem>();
@@ -211,6 +225,7 @@ public class Account {
 		this.initialCreditAmount = initialCreditAmount;
 		this.debitTotal = initialDebitAmount;
 		this.creditTotal = initialCreditAmount;
+		this.hasChildren = false;
 	}
 
 
