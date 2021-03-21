@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.easyledger.api.dto.AccountBalanceDTO;
-import com.easyledger.api.dto.AccountGroupBalanceDTO;
 
 public class BalanceSheetViewModel {
 	private Long organizationId;
@@ -14,13 +13,12 @@ public class BalanceSheetViewModel {
 	private BalanceSheetAssetsViewModel balanceSheetAssets;
 	private BalanceSheetLiabilitiesViewModel balanceSheetLiabilities;
 	private BalanceSheetEquityViewModel balanceSheetEquity;
-	private List<AccountGroupBalanceDTO> accountGroupBalances;
 	private List<AccountBalanceDTO> accountBalances;
 
 	public BalanceSheetViewModel(Long organizationId, LocalDate asOfDate, LocalDate prevPeriodEndDate,
 			LocalDate currPeriodStartDate, BalanceSheetAssetsViewModel balanceSheetAssets,
 			BalanceSheetLiabilitiesViewModel balanceSheetLiabilities, BalanceSheetEquityViewModel balanceSheetEquity,
-			List<AccountGroupBalanceDTO> accountGroupBalances, List<AccountBalanceDTO> accountBalances) {
+			List<AccountBalanceDTO> accountBalances) {
 		super();
 		this.organizationId = organizationId;
 		this.asOfDate = asOfDate;
@@ -29,7 +27,6 @@ public class BalanceSheetViewModel {
 		this.balanceSheetAssets = balanceSheetAssets;
 		this.balanceSheetLiabilities = balanceSheetLiabilities;
 		this.balanceSheetEquity = balanceSheetEquity;
-		this.accountGroupBalances = accountGroupBalances;
 		this.accountBalances = accountBalances;
 	}
 
@@ -93,14 +90,6 @@ public class BalanceSheetViewModel {
 		this.balanceSheetEquity = balanceSheetEquity;
 	}
 
-	public List<AccountGroupBalanceDTO> getAccountGroupBalances() {
-		return accountGroupBalances;
-	}
-
-	public void setAccountGroupBalances(List<AccountGroupBalanceDTO> accountGroupBalances) {
-		this.accountGroupBalances = accountGroupBalances;
-	}
-
 	public List<AccountBalanceDTO> getAccountBalances() {
 		return accountBalances;
 	}
@@ -114,8 +103,7 @@ public class BalanceSheetViewModel {
 		return "BalanceSheetViewModel [organizationId=" + organizationId + ", asOfDate=" + asOfDate
 				+ ", prevPeriodEndDate=" + prevPeriodEndDate + ", currPeriodStartDate=" + currPeriodStartDate
 				+ ", balanceSheetAssets=" + balanceSheetAssets + ", balanceSheetLiabilities=" + balanceSheetLiabilities
-				+ ", balanceSheetEquity=" + balanceSheetEquity + ", accountGroupBalances=" + accountGroupBalances
-				+ ", accountBalances=" + accountBalances + "]";
+				+ ", balanceSheetEquity=" + balanceSheetEquity + ", accountBalances=" + accountBalances + "]";
 	}
 
 	

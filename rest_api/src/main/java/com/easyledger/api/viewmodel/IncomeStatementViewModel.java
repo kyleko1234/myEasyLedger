@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
-import com.easyledger.api.dto.AccountGroupBalanceDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 
 
@@ -53,14 +52,12 @@ public class IncomeStatementViewModel {
 	
 	private BigDecimal netIncome = new BigDecimal(0); // earningsBeforeTax - tax expense - nonRecurringAndExtraordinaryItems
 	
-	private List<AccountGroupBalanceDTO> accountGroupBalances;
 	private List<AccountDTO> accountBalances;
 	
-	public IncomeStatementViewModel(List<AccountSubtypeBalanceDTO> accountSubtypeBalances, List<AccountGroupBalanceDTO> accountGroupBalances,
+	public IncomeStatementViewModel(List<AccountSubtypeBalanceDTO> accountSubtypeBalances,
 			List<AccountDTO> accountBalances, LocalDate startDate, LocalDate endDate) {
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.accountGroupBalances = accountGroupBalances;
 		this.accountBalances = accountBalances;
 		for (AccountSubtypeBalanceDTO subtypeBalance : accountSubtypeBalances) {
 			if (subtypeBalance.getAccountSubtypeId() == REVENUE_SUBTYPE_ID) {
@@ -232,10 +229,6 @@ public class IncomeStatementViewModel {
 		return netIncome;
 	}
 
-	public List<AccountGroupBalanceDTO> getAccountGroupBalances() {
-		return accountGroupBalances;
-	}
-
 	public List<AccountDTO> getAccountBalances() {
 		return accountBalances;
 	}
@@ -252,9 +245,11 @@ public class IncomeStatementViewModel {
 				+ ", otherExpenses=" + otherExpenses + ", totalOtherIncomeExpense=" + totalOtherIncomeExpense
 				+ ", ebit=" + ebit + ", interestExpense=" + interestExpense + ", earningsBeforeTax=" + earningsBeforeTax
 				+ ", taxExpense=" + taxExpense + ", nonRecurringAndExtraordinaryItems="
-				+ nonRecurringAndExtraordinaryItems + ", netIncome=" + netIncome + ", accountGroupBalances="
-				+ accountGroupBalances + ", accountBalances=" + accountBalances + "]";
+				+ nonRecurringAndExtraordinaryItems + ", netIncome=" + netIncome + ", accountBalances="
+				+ accountBalances + "]";
 	}
+
+
 
 
 	
