@@ -102,7 +102,7 @@ public class AccountController {
     	return accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, endDate);
     }
 
-    
+    //TODO: TEST
     @PostMapping("/account")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountDTO createAccount(@Valid @RequestBody AccountDTO dto, Authentication authentication) 
@@ -114,6 +114,7 @@ public class AccountController {
     	return new AccountDTO(updatedAccount);
     	}
 
+    //TODO: TEST
     @PutMapping("/account/{id}")
     public ResponseEntity<AccountDTO> updateAccount(@PathVariable(value = "id") Long accountId,
         @Valid @RequestBody AccountDTO dto, Authentication authentication) 
@@ -127,19 +128,30 @@ public class AccountController {
         return ResponseEntity.ok(updatedDto);
     }
 
+    //TODO: TEST
     @DeleteMapping("/account/{id}")
     public Map<String, Boolean> deleteAccount(@PathVariable(value = "id") Long accountId, Authentication authentication)
         throws ResourceNotFoundException, ConflictException, UnauthorizedException {
         Account account = accountRepo.findById(accountId)
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-        authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
+        authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getOrganization().getId());
 
         boolean accountContainsLineItems = lineItemRepo.accountContainsLineItems(accountId);
         if (accountContainsLineItems) {
         	throw new ConflictException("Please remove all line items from this account before deleting the account.");
         }
+        if (account.isHasChildren()) {
+        	throw new ConflictException("Cannot delete an account that contains child accounts.");
+        }
         account.setDeleted(true);
+        Account oldParentAccount = account.getParentAccount();
         accountRepo.save(account);
+        if (oldParentAccount != null) {
+        	if (!accountRepo.accountContainsChildAccounts(oldParentAccount.getId())) {
+        		oldParentAccount.setHasChildren(false);
+        		accountRepo.save(oldParentAccount);
+        	}
+        }
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
