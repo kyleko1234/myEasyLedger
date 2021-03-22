@@ -29,12 +29,16 @@ public class AccountBalanceDTO {
 			BigDecimal sumOfCreditLineItems, BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean hasChildren) {
 		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
-		this.parentAccountId = parentAccountId.longValueExact();
-		this.parentAccountName = parentAccountName;
-		this.accountSubtypeId = accountSubtypeId.longValueExact();
-		this.accountSubtypeName = accountSubtypeName;
-		this.accountTypeId = accountTypeId.longValueExact();
-		this.accountTypeName = accountTypeName;
+		if (parentAccountId != null) {
+			this.parentAccountId = parentAccountId.longValueExact();
+			this.parentAccountName = parentAccountName;
+		}
+		if (accountSubtypeId != null) {
+			this.accountSubtypeId = accountSubtypeId.longValueExact();
+			this.accountSubtypeName = accountSubtypeName;
+			this.accountTypeId = accountTypeId.longValueExact();
+			this.accountTypeName = accountTypeName;
+		}
 		this.organizationId = organizationId.longValueExact();
 		this.organizationName = organizationName;
 		if (sumOfDebitLineItems != null) {

@@ -91,6 +91,7 @@ public class AccountService {
 	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + dto.getAccountId()));
 		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, oldAccount.getOrganization().getId());
 		Account updatedAccount = new Account();
+		updatedAccount.setId(dto.getAccountId());
 		updatedAccount.setName(dto.getAccountName());
 		
 		updatedAccount.setDebitTotal(oldAccount.getDebitTotal().subtract(oldAccount.getInitialDebitAmount()));
@@ -104,6 +105,8 @@ public class AccountService {
 		Organization organization = organizationRepo.findById(dto.getOrganizationId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId()));
 		updatedAccount.setOrganization(organization);
+		Account oldParentAccount = oldAccount.getParentAccount();
+		oldParentAccount.getChildAccounts().remove(oldAccount);
 		
 		if (dto.getParentAccountId() != null) {
 			Account parentAccount = accountRepo.findById(dto.getParentAccountId())
@@ -117,7 +120,6 @@ public class AccountService {
 			updatedAccount.setAccountSubtype(accountSubtype);
 		}
 		updatedAccount.setHasChildren(oldAccount.isHasChildren());
-		Account oldParentAccount = oldAccount.getParentAccount();
 		Account returnObject = accountRepo.save(updatedAccount);
 		if (oldParentAccount != null) {
 			if (!accountRepo.accountContainsChildAccounts(oldParentAccount.getId())) {

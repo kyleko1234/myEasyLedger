@@ -42,9 +42,9 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[List All Accounts|GET /account]]
 - [[Retrieve an Account| GET /account/{id}]]
 - [[List All Accounts Belonging to an Organization|GET /organization/{id}/account]]
-- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance]]
-- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance/{endDate}]]
-- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance/{startDate}/{endDate}]]
+- [[Find All Account Balances for an Organization For a Certain Date Range|GET /organization/{id}/accountBalance]]
+- [[Find All Account Balances for an Organization For a Certain Date Range|GET /organization/{id}/accountBalance/{endDate}]]
+- [[Find All Account Balances for an Organization For a Certain Date Range|GET /organization/{id}/accountBalance/{startDate}/{endDate}]]
 - [[Update an Account|PUT /account/{id}]]**
 - [[Create an Account|POST /account]]**
 - [[Delete an Account|DELETE /account/{id}]]**
