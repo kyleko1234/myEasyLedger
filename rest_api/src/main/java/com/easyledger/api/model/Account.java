@@ -33,8 +33,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 						columns = {
 								@ColumnResult(name = "accountId"),
 								@ColumnResult(name = "accountName"),
-								@ColumnResult(name = "accountGroupId"),
-								@ColumnResult(name = "accountGroupName"),
+								@ColumnResult(name = "parentAccountId"),
+								@ColumnResult(name = "parentAccountName"),
 								@ColumnResult(name = "accountSubtypeId"),
 								@ColumnResult(name = "accountSubtypeName"),
 								@ColumnResult(name = "accountTypeId"),
@@ -45,7 +45,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 								@ColumnResult(name = "creditTotal"),
 								@ColumnResult(name = "initialDebitAmount"),
 								@ColumnResult(name = "initialCreditAmount"),
-								@ColumnResult(name = "deleted")
+								@ColumnResult(name = "hasChildren")
 						}
 				)
 		}
@@ -53,20 +53,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //TODO: TEST
 @NamedNativeQuery( //  takes an organization ID as a parameter and returns all undeleted accounts for that organization
 		name = "Account.getAllAccountsForOrganization", 
-		query = "SELECT account.id AS accountId, account.name AS accountName, account_group.id AS accountGroupId, account_group.name AS accountGroupName,          " + 
-				"     account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,          " + 
-				"     organization.id AS organizationId, organization.name AS organizationName,          " + 
-				"     account.debit_total AS debitTotal, account.credit_total AS creditTotal,  " + 
-				"     account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount, account.deleted AS deleted          " + 
-				"FROM account, account_group, account_subtype, account_type, organization         " + 
-				"WHERE           " + 
-				"     organization.id = :organizationId AND           " + 
-				"     account_group.organization_id = organization.id AND           " + 
-				"     account.account_group_id = account_group.id AND           " + 
-				"     account_subtype.id = account_group.account_subtype_id AND           " + 
-				"     account_type.id = account_subtype.account_type_id AND           " + 
-				"     account.deleted = false           " + 
-				"ORDER BY account_type.id, account.name ",
+		query = "SELECT account.id AS accountId, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName, " + 
+				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
+				"    organization.id AS organization_id, organization.name AS organizationName,  " + 
+				"    account.debit_total AS debitTotal, account.credit_total AS creditTotal, account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount, " + 
+				"    account.has_children AS hasChildren " + 
+				"FROM account AS account  " + 
+				"		LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id  " + 
+				"		LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id " + 
+				"		LEFT JOIN account_type ON account_subtype.account_type_id = account_type.id,  " + 
+				"	organization " + 
+				"WHERE  " + 
+				"    organization.id = :organizationId AND " + 
+				"    account.organization_id = organization.id AND  " + 
+				"    account.deleted = false " + 
+				"ORDER BY account.name",
 		resultSetMapping = "accountDTOMapping"
 )
 @SqlResultSetMapping( //maps native SQL query to AccountDTO class
