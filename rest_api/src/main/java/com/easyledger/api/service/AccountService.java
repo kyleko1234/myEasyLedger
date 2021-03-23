@@ -68,9 +68,10 @@ public class AccountService {
 		if (dto.getParentAccountId() != null) {
 			Account parentAccount = accountRepo.findById(dto.getParentAccountId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("Parent account not found for this id :: " + dto.getParentAccountId()));
+			if (parentAccount.getParentAccount() != null) {
+				throw new ConflictException("Child accounts may not contain child accounts of their own.");
+			}
 			product.setParentAccount(parentAccount);
-			parentAccount.setHasChildren(true);
-			accountRepo.save(parentAccount);
 		} else {
 			AccountSubtype accountSubtype = accountSubtypeRepo.findById(dto.getAccountSubtypeId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + dto.getAccountSubtypeId()));
@@ -84,9 +85,9 @@ public class AccountService {
 		return accountRepo.save(product);
 	}
 	
-	//TODO test this
 	//There's probably a more elegant way to do this but alas
-	public Account updateAccountFromDTO(AccountDTO dto, Authentication authentication) throws ResourceNotFoundException, UnauthorizedException {
+	public Account updateAccountFromDTO(AccountDTO dto, Authentication authentication) 
+			throws ResourceNotFoundException, UnauthorizedException, ConflictException {
 		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
 		Account oldAccount = accountRepo.findById(dto.getAccountId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + dto.getAccountId()));
@@ -103,19 +104,23 @@ public class AccountService {
 		updatedAccount.setInitialCreditAmount(dto.getInitialCreditAmount());
 		updatedAccount.setCreditTotal(updatedAccount.getCreditTotal().add(updatedAccount.getInitialCreditAmount()));
 		
-		Organization organization = organizationRepo.findById(dto.getOrganizationId())
-	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId()));
-		updatedAccount.setOrganization(organization);
 		
 		if (dto.getParentAccountId() != null) {
 			Account parentAccount = accountRepo.findById(dto.getParentAccountId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("Parent account not found for this id :: " + dto.getParentAccountId()));
+			if (parentAccount.getParentAccount() != null) {
+				throw new ConflictException("Child accounts may not contain child accounts of their own.");
+			}
 			updatedAccount.setParentAccount(parentAccount);
 		} else {
 			AccountSubtype accountSubtype = accountSubtypeRepo.findById(dto.getAccountSubtypeId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + dto.getAccountSubtypeId()));
 			updatedAccount.setAccountSubtype(accountSubtype);
 		}
+		Organization organization = organizationRepo.findById(dto.getOrganizationId())
+	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId()));
+		updatedAccount.setOrganization(organization);
+
 		updatedAccount.setHasChildren(oldAccount.isHasChildren());
 		Account returnObject = accountRepo.save(updatedAccount);
 		return returnObject;
