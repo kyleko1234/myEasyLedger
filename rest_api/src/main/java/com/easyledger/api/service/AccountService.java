@@ -85,6 +85,7 @@ public class AccountService {
 	}
 	
 	//TODO test this
+	//There's probably a more elegant way to do this but alas
 	public Account updateAccountFromDTO(AccountDTO dto, Authentication authentication) throws ResourceNotFoundException, UnauthorizedException {
 		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
 		Account oldAccount = accountRepo.findById(dto.getAccountId())
@@ -105,15 +106,11 @@ public class AccountService {
 		Organization organization = organizationRepo.findById(dto.getOrganizationId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId()));
 		updatedAccount.setOrganization(organization);
-		Account oldParentAccount = oldAccount.getParentAccount();
-		oldParentAccount.getChildAccounts().remove(oldAccount);
 		
 		if (dto.getParentAccountId() != null) {
 			Account parentAccount = accountRepo.findById(dto.getParentAccountId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("Parent account not found for this id :: " + dto.getParentAccountId()));
 			updatedAccount.setParentAccount(parentAccount);
-			parentAccount.setHasChildren(true);
-			accountRepo.save(parentAccount);
 		} else {
 			AccountSubtype accountSubtype = accountSubtypeRepo.findById(dto.getAccountSubtypeId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + dto.getAccountSubtypeId()));
@@ -121,12 +118,6 @@ public class AccountService {
 		}
 		updatedAccount.setHasChildren(oldAccount.isHasChildren());
 		Account returnObject = accountRepo.save(updatedAccount);
-		if (oldParentAccount != null) {
-			if (!accountRepo.accountContainsChildAccounts(oldParentAccount.getId())) {
-				oldParentAccount.setHasChildren(false);
-				accountRepo.save(oldParentAccount);
-			}
-		}
 		return returnObject;
 	}
 	
