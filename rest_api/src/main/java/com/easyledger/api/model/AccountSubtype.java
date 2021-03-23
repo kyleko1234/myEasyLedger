@@ -61,24 +61,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )	
 @NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted account subtypes with balances for that organization
 		name = "AccountSubtype.getAllAccountSubtypeBalancesForOrganization",
-		query = "SELECT      " + 
-				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,         " + 
-				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName,         " + 
-				"    organization.id AS organizationId, organization.name AS organizationName,       " + 
-				"    SUM(account.debit_total) AS debitTotal,     " + 
-				"    SUM(account.credit_total) AS creditTotal    " + 
-				"FROM         " + 
-				"    account_group    " + 
-				"        LEFT JOIN account ON account.account_group_id = account_group.id AND account.deleted = false, " + 
-				"    account_subtype, account_type, organization         " + 
-				"WHERE          " + 
-				"    organization.id = ? AND         " + 
-				"    account_group.organization_id = organization.id AND        " + 
-				"    account_group.account_subtype_id = account_subtype.id AND          " + 
-				"    account_subtype.account_type_id = account_type.id AND          " + 
-				"    account_group.deleted = false        " + 
-				"GROUP BY account_subtype.id, account_type.id, organization.id    " + 
-				"ORDER BY account_type.id ASC, account_subtype.id ASC  ",
+		query = "SELECT " + 
+				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, " + 
+				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
+				"    organization.id AS organizationId, organization.name AS organizationName, " + 
+				"    SUM(account.debit_total) AS debitTotal, " + 
+				"    SUM(account.credit_total) AS creditTotal " + 
+				"FROM " + 
+				"    account_subtype, account_type, organization, account " + 
+				"WHERE  " + 
+				"    organization.id = ? AND " + 
+				"    account.organization_id = organization.id AND " + 
+				"    account.account_subtype_id = account_subtype.id AND " + 
+				"    account_subtype.account_type_id = account_type.id AND " + 
+				"    account.deleted = false " + 
+				"GROUP BY account_subtype.id, account_type.id, organization.id " + 
+				"ORDER BY account_type.id ASC, account_subtype.id ASC ",
 		resultSetMapping = "accountSubtypeBalanceDTOMapping"
 )
 

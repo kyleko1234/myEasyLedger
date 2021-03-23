@@ -102,7 +102,6 @@ public class AccountController {
     	return accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, endDate);
     }
 
-    //TODO: TEST
     @PostMapping("/account")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountDTO createAccount(@Valid @RequestBody AccountDTO dto, Authentication authentication) 
@@ -114,7 +113,6 @@ public class AccountController {
     	return new AccountDTO(updatedAccount);
     	}
 
-    //TODO: TEST
     @PutMapping("/account/{id}")
     public ResponseEntity<AccountDTO> updateAccount(@PathVariable(value = "id") Long accountId,
         @Valid @RequestBody AccountDTO dto, Authentication authentication) 
