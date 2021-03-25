@@ -39,97 +39,29 @@ ___
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": null,
+        "sumOfCreditLineItems": null,
+        "sumOfInitialDebitAmounts": null,
+        "sumOfInitialCreditAmounts": null,
         "debitTotal": 420000,
         "creditTotal": 18430,
         "debitsMinusCredits": 401570
     },
     {
         "accountSubtypeId": 3,
-        "accountSubtypeName": "Receivables",
+        "accountSubtypeName": "Current receivables",
         "accountTypeId": 1,
         "accountTypeName": "Assets",
         "organizationId": 1,
         "organizationName": "Sample organization",
+        "sumOfDebitLineItems": null,
+        "sumOfCreditLineItems": null,
+        "sumOfInitialDebitAmounts": null,
+        "sumOfInitialCreditAmounts": null,
         "debitTotal": 24000,
         "creditTotal": 20000,
         "debitsMinusCredits": 4000
     },
-    {
-        "accountSubtypeId": 4,
-        "accountSubtypeName": "Inventories",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "debitTotal": 250,
-        "creditTotal": 0,
-        "debitsMinusCredits": 250
-    },
-    {
-        "accountSubtypeId": 7,
-        "accountSubtypeName": "Plant and equipment",
-        "accountTypeId": 1,
-        "accountTypeName": "Assets",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "debitTotal": 29500,
-        "creditTotal": 0,
-        "debitsMinusCredits": 29500
-    },
-    {
-        "accountSubtypeId": 10,
-        "accountSubtypeName": "Payables",
-        "accountTypeId": 2,
-        "accountTypeName": "Liabilities",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "debitTotal": 0,
-        "creditTotal": 22500,
-        "debitsMinusCredits": -22500
-    },
-    {
-        "accountSubtypeId": 18,
-        "accountSubtypeName": "Paid-in capital",
-        "accountTypeId": 3,
-        "accountTypeName": "Owner's Equity",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "debitTotal": 0,
-        "creditTotal": 400000,
-        "debitsMinusCredits": -400000
-    },
-    {
-        "accountSubtypeId": 19,
-        "accountSubtypeName": "Dividends and equivalents",
-        "accountTypeId": 3,
-        "accountTypeName": "Owner's Equity",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "debitTotal": 3000,
-        "creditTotal": 0,
-        "debitsMinusCredits": 3000
-    },
-    {
-        "accountSubtypeId": 21,
-        "accountSubtypeName": "Revenue",
-        "accountTypeId": 4,
-        "accountTypeName": "Income",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "debitTotal": 0,
-        "creditTotal": 24000,
-        "debitsMinusCredits": -24000
-    },
-    {
-        "accountSubtypeId": 25,
-        "accountSubtypeName": "Selling, general, and administration",
-        "accountTypeId": 5,
-        "accountTypeName": "Expenses",
-        "organizationId": 1,
-        "organizationName": "Sample organization",
-        "debitTotal": 8180,
-        "creditTotal": 0,
-        "debitsMinusCredits": 8180
-    }
+	...
 ]
 ```

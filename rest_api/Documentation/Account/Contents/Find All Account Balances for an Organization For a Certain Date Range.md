@@ -17,6 +17,8 @@ Account's debitTotal/creditTotal field is a memoized total that is updated with 
 Date parameters should be provided in `yyyy-mm-dd` format. If no date parameters are given, the resulting creditTotal and debitTotal fields in the returned objects will encompass all undeleted LineItems. If one date parameter is given, the resulting totals will encompass all LineItems dated up to and including the given date. If two date parameters are given, the resulting totals will encompass the date range between the given start date and end date, inclusive.
 
 If start date and end date are the same date, the resulting totals will only encompass LineItems dated for that day. If the given end date is earlier than the given start date, all resulting totals will be 0.
+
+When requesting a date range, the debitTotal and creditTotal for parent accounts will be 0; only child accounts will carry debitTotal and creditTotals.
 ___
 #### Request Body Parameters
 None
