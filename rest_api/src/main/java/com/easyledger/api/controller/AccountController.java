@@ -142,14 +142,7 @@ public class AccountController {
         	throw new ConflictException("Cannot delete an account that contains child accounts.");
         }
         account.setDeleted(true);
-        Account oldParentAccount = account.getParentAccount();
         accountRepo.save(account);
-        if (oldParentAccount != null) {
-        	if (!accountRepo.accountContainsChildAccounts(oldParentAccount.getId())) {
-        		oldParentAccount.setHasChildren(false);
-        		accountRepo.save(oldParentAccount);
-        	}
-        }
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;

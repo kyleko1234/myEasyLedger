@@ -15,6 +15,7 @@ import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
+import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.security.AuthorizationService;
 
@@ -33,13 +34,17 @@ public class AccountService {
 	@Autowired
 	private AuthorizationService authorizationService;
 	
-	public AccountService(AccountRepository accountRepo, OrganizationRepository organizationRepo,
+	@Autowired
+	private LineItemRepository lineItemRepo;
+	
+	public AccountService(AccountRepository accountRepo, OrganizationRepository organizationRepo, LineItemRepository lineItemRepo,
 				AccountSubtypeRepository accountSubtypeRepo, AuthorizationService authorizationService) {
 		super();
 		this.accountRepo = accountRepo;
 		this.organizationRepo = organizationRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.authorizationService = authorizationService;
+		this.lineItemRepo = lineItemRepo;
 	}
 	
 	//sets debitTotal and creditTotal to initialDebitAmount and initialCreditAmount
@@ -70,6 +75,12 @@ public class AccountService {
 		    		.orElseThrow(() -> new ResourceNotFoundException("Parent account not found for this id :: " + dto.getParentAccountId()));
 			if (parentAccount.getParentAccount() != null) {
 				throw new ConflictException("Child accounts may not contain child accounts of their own.");
+			}
+			if (!parentAccount.isHasChildren() && !(parentAccount.getInitialDebitAmount().longValueExact() == 0 && parentAccount.getInitialCreditAmount().longValueExact() == 0)) {
+				throw new ConflictException("Accounts with initial debit and credit values may not contain children.");
+			}
+			if (lineItemRepo.accountContainsLineItems(parentAccount.getId())) {
+				throw new ConflictException("Accounts with LineItems written to them may not contain children.");
 			}
 			product.setParentAccount(parentAccount);
 		} else {
@@ -110,6 +121,12 @@ public class AccountService {
 		    		.orElseThrow(() -> new ResourceNotFoundException("Parent account not found for this id :: " + dto.getParentAccountId()));
 			if (parentAccount.getParentAccount() != null) {
 				throw new ConflictException("Child accounts may not contain child accounts of their own.");
+			}
+			if (!parentAccount.isHasChildren() && !(parentAccount.getInitialDebitAmount().longValueExact() == 0 && parentAccount.getInitialCreditAmount().longValueExact() == 0)) {
+				throw new ConflictException("Accounts with initial debit and credit values may not contain children.");
+			}
+			if (lineItemRepo.accountContainsLineItems(parentAccount.getId())) {
+				throw new ConflictException("Accounts with LineItems written to them may not contain children.");
 			}
 			updatedAccount.setParentAccount(parentAccount);
 		} else {
