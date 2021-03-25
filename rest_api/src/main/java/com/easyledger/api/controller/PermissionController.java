@@ -31,7 +31,7 @@ import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.security.AuthorizationService;
 
 @RestController
-@RequestMapping("/v0.2")
+@RequestMapping("/v0.3")
 public class PermissionController {
 	private PermissionRepository permissionRepo;
 	private PermissionTypeRepository permissionTypeRepo;
