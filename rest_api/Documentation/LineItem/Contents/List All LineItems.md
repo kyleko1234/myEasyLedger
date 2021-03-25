@@ -22,14 +22,8 @@ ___
 ```json 
 [
 	{
-		"accountId": 1,
+		"accountId": 10,
 		"accountName": "Cash",
-		"accountGroupId": 1,
-		"accountGroupName": "Cash",
-		"accountSubtypeId": 1,
-		"accountSubtypeName": "Cash and cash equivalents",
-		"accountTypeId": 1,
-		"accountTypeName": "Assets",
 		"amount": 400000,
 		"description": "Cash influx from initial offering",
 		"journalEntryId": 1,

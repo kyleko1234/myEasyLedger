@@ -32,7 +32,6 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[List All LineItems| GET /lineItem]]
 - [[Retrieve a LineItem|GET /lineItem/{id}]]
 - [[Retrieve All LineItems for an Account|GET /account/{id}/lineItem]]**
-- [[Retrieve All LineItems for an Account Group|GET /accountGroup/{id}/lineItem]]**
 <br/><br/>
 - [[List All Organizations|GET /organization]]
 - [[Retrieve an Organization|GET /organization/{id}]]
