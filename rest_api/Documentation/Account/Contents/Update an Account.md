@@ -14,8 +14,11 @@ The id of the account that is to be updated.
 - **accountName (`String` 40)**<br/>
 The name of this account.
 
-- **accountGroupId ( `Long`)**<br/>
-The id of the account group for this account.
+- **parentAccountId ( `Optional Long`)**<br/>
+The id of the parent account for this account, if it has one.
+
+- **accountSubtypeId (`Optional Long`)**<br/>
+The id of the subtype that this account belongs to, if it has no parent account. An account **must** have either an accountSubtypeId OR a parentAccountId, not both nor neither.
 
 - **initialDebitAmount ( `BigDecimal`)**<br/>
 The debit value that this account is initialized at. 

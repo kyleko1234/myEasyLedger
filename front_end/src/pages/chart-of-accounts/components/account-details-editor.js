@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 
 
 function AccountDetailsEditor(props) {
-    //required props: isOpen, toggle, selectedAccountId, fetchData, elementCount
+    //required props: isOpen, toggle, selectedAccountId, fetchData
     const appContext = React.useContext(PageSettings);
     const history = useHistory();
 
@@ -82,19 +82,17 @@ function AccountDetailsEditor(props) {
         props.toggle();
     }
     const handleConfirmDeleteAccountButton = () => {
-        if (props.elementCount != 0) {
+        axios.delete(`${API_BASE_URL}/account/${props.selectedAccountId}`).then(response => {
+            console.log(response);
+            if (appContext.isEnterprise) {
+                history.push("/chart-of-accounts");
+            } else {
+                history.push("/accounts");
+            }
+        }).catch(() => {
             toggleDeleteAccountAlert();
             toggleCannotDeleteAccountAlert();
-        } else {
-            axios.delete(`${API_BASE_URL}/account/${props.selectedAccountId}`).then(response => {
-                console.log(response);
-                if (appContext.isEnterprise) {
-                    history.push("/chart-of-accounts");
-                } else {
-                    history.push("/accounts");
-                }
-            }).catch(console.log);
-        }
+        });
     }
     const handleChangeAccountGroupOption = selectedOption => {
         setSelectedAccountGroupId(selectedOption.object.accountGroupId);

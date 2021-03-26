@@ -466,7 +466,7 @@ function TableOfTransactions({
                     }
                 </ModalFooter>
             </Modal>
-            {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} elementCount={elementCount}/> : null}
+            {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)}/> : null}
         </>
     )
 }
