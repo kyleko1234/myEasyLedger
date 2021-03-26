@@ -66,7 +66,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    organization.id = :organizationId AND " + 
 				"    account.organization_id = organization.id AND  " + 
 				"    account.deleted = false " + 
-				"ORDER BY account.name",
+				"ORDER BY account_type.id, account.name",
 		resultSetMapping = "accountDTOMapping"
 )
 
