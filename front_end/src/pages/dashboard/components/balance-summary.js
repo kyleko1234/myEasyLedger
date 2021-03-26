@@ -21,7 +21,7 @@ function BalanceSummary(props) {
     React.useEffect(() => {
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
             if (response.data) {
-                let filteredAccounts = response.data.filter(account => account.accountTypeId == 1 || account.accountTypeId == 2);
+                let filteredAccounts = response.data.filter(account => (account.accountTypeId == 1 || account.accountTypeId == 2) && account.hasChildren === false);
                 setAssetAndLiabilityAccounts(filteredAccounts);
             }
             setLoading(false);
