@@ -6,6 +6,7 @@ Authorization: Requesting user must belong to the organization with the specifie
 
 Returns a list of all undeleted accounts belonging to an organization with the specified id, sorted by accountTypeId ascending and then by accountName alphabetic.
 
+For accounts that are not direct descendants of Account Subtype and are child accounts of a parent account, the parent's accountSubtype and accountType will be used for the respective fields on the child account object. **Note that when you [[Find All Account Balances for an Organization For a Certain Date Range|provide date ranges for account values]], these fields on a child account will return null instead.**
 ___
 #### Request Body Parameters
 None

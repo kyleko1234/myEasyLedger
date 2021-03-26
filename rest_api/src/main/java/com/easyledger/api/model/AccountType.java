@@ -36,25 +36,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )	
 @NamedNativeQuery( //retrieves all undeleted entries for the given organization and maps them into EntryViewModels
 		name = "AccountType.getMonthlyAccountTypeSummaries",
-		query = "SELECT  " + 
-				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
-				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitAmount, " + 
-				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditAmount, " + 
-				"    journal_entry.year_month AS yearMonth " + 
+		query = "SELECT " + 
+				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName,    " + 
+				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false THEN line_item.amount END) AS debitAmount,    " + 
+				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false THEN line_item.amount END) AS creditAmount,    " + 
+				"    journal_entry.year_month AS yearMonth    " + 
 				"FROM " + 
-				"    account_type, line_item, journal_entry, account_subtype, account_group, account, organization " + 
+				"    account_type, line_item, journal_entry, account_subtype, organization, " + 
+				"    account AS parent_account " + 
+				"        LEFT JOIN account AS child_account ON child_account.parent_account_id = parent_account.id AND child_account.deleted = false " + 
 				"WHERE  " + 
 				"    organization.id = :organizationId AND " + 
-				"    account_subtype.account_type_id = account_type.id AND  " + 
-				"    account_group.account_subtype_id = account_subtype.id AND  " + 
-				"    account_group.organization_id = organization.id AND  " + 
-				"    account.account_group_id = account_group.id AND  " + 
-				"    line_item.account_id = account.id AND  " + 
+				"    account_subtype.account_type_id = account_type.id AND " + 
+				"    parent_account.account_subtype_id = account_subtype.id AND  " + 
+				"    parent_account.organization_id = organization.id AND " + 
+				"    parent_account.deleted = false AND  " + 
+				"    (line_item.account_id = parent_account.id OR line_item.account_id = child_account.id) AND " + 
 				"    line_item.journal_entry_id = journal_entry.id AND  " + 
 				"    journal_entry.year_month >= :yearMonth " + 
-				"GROUP BY " + 
+				"GROUP BY  " + 
 				"    account_type.id, journal_entry.year_month " + 
-				"ORDER BY journal_entry.year_month ASC, account_type.id DESC",
+				"ORDER BY journal_entry.year_month ASC, account_type.id DESC ",
 		resultSetMapping = "accountTypeSummaryViewModelMapping"
 )
 

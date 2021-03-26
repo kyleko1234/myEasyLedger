@@ -59,7 +59,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    account.has_children AS hasChildren " + 
 				"FROM account AS account  " + 
 				"		LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id  " + 
-				"		LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id " + 
+				"		LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id OR parent_account.account_subtype_id = account_subtype.id " + 
 				"		LEFT JOIN account_type ON account_subtype.account_type_id = account_type.id,  " + 
 				"	organization " + 
 				"WHERE  " + 

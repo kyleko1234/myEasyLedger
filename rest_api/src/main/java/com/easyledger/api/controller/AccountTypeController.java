@@ -35,7 +35,7 @@ public class AccountTypeController {
 	}
 
 	@GetMapping("/accountType")
-    public List<AccountType> getAllCategories() {
+    public List<AccountType> getAllAccountTypes() {
         return accountTypeRepo.findAll();
     }
 
