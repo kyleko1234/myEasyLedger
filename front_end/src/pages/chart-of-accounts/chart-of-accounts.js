@@ -8,6 +8,7 @@ import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
+import AccountDetailsEditor from './components/account-details-editor.js';
 
 
 
@@ -32,8 +33,10 @@ class ChartOfAccounts extends React.Component {
             selectedAccountSubtypeOption: null,
             selectedAccountTypeOption: null,
 
+            selectedAccountId: null,
+            selectedParentAccount: null,
             editAccountModal: false,
-            editAccount: false,
+            createMode: true,
             accountNameAlert: false,
 
 
@@ -43,8 +46,6 @@ class ChartOfAccounts extends React.Component {
             initialCreditValueInput: 0,
         };
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
-        this.handleSaveAnAccountButton = this.handleSaveAnAccountButton.bind(this);
-        this.modalOnClosed = this.modalOnClosed.bind(this);
 
         this.handleChangeAccountSubtypeOption = this.handleChangeAccountSubtypeOption.bind(this);
         this.handleChangeAccountTypeOption = this.handleChangeAccountTypeOption.bind(this);
@@ -82,28 +83,33 @@ class ChartOfAccounts extends React.Component {
     }
 
     /** Utility functions for adding/editing account */
-    handleAddAnAccountButton() {
-        //TODO
+    toggleEditAccountModal() {
+        this.setState(state => ({editAccountModal: !state.editAccountModal}));
     }
 
-    toggleEditAccountModal() {
-        //TODO
+    handleAddAnAccountButton() {
+        this.setState(state => ({createMode: true, selectedAccountId: null, selectedParentAccount: null}), () => {
+            this.setState({editAccountModal: true});
+        });
     }
 
     handleAddAChildAccountButton(parentAccount) {
-        //TODO
+        this.setState(state => ({
+            createMode: true, 
+            selectedAccountId: null,
+            selectedParentAccount: parentAccount
+        }), () => {
+             this.setState({editAccountModal: true});
+        })
     }
 
-    handleEditAccountButton(parentAccount) {
-        //TODO
-    }
-
-    handleDeleteAccountButton(parentAccount) {
-        //TODO
-    }
-
-    handleSaveAnAccountButton() {
-        //TODO
+    handleEditAccountButton(account) {
+        this.setState(state => ({
+            createMode: false,
+            selectedAccountId: account.accountId
+        }), () => {
+            this.setState({editAccountModal: true});
+        })
     }
 
     handleChangeAccountSubtypeOption(selectedAccountSubtypeOption) {
@@ -114,9 +120,6 @@ class ChartOfAccounts extends React.Component {
         this.setState({ selectedAccountTypeOption: selectedAccountTypeOption, selectedAccountSubtypeOption: null });
     }
 
-    modalOnClosed() {
-        //TODO
-    }
     /**End utility functions for adding/editing account */
 
     /** api calls for posting/putting/deleting objects to server */
@@ -187,9 +190,6 @@ class ChartOfAccounts extends React.Component {
                                                             <Link replace className="icon-link-text-muted m-l-15" to="#" onClick={() => this.handleEditAccountButton(account)}>
                                                                 <i className="fa fa-edit"></i>
                                                             </Link>
-                                                            <Link replace className="icon-link-text-muted m-l-15" to="#" onClick={() => this.handleDeleteAccountButton(account)}>
-                                                                <i className="fa fa-trash-alt"></i>
-                                                            </Link>
                                                         </div>
 
 
@@ -215,191 +215,9 @@ class ChartOfAccounts extends React.Component {
                         })
                     }
                 </TabContent>
-                    <Modal isOpen={this.state.editAccountModal} toggle = {this.toggleEditAccountModal} centered={true} onClosed={this.modalOnClosed}>
-                        <ModalHeader>{this.state.editAccount? chartOfAccountsText[this.context.locale]["Edit Account Details"]: chartOfAccountsText[this.context.locale]["Create a New Account"]}</ModalHeader>
-                        <ModalBody>
+                
+                <AccountDetailsEditor isOpen={this.state.editAccountModal} toggle={this.toggleEditAccountModal} selectedAccountId={this.state.selectedAccountId} fetchData={this.fetchData} createMode={this.state.createMode} accountTypeId={this.props.match.params.activeTabId} selectedParentAccount={this.state.selectedParentAccount}/>
 
-                        </ModalBody>
-                        <ModalFooter>
-                            <button className="btn btn-primary width-10ch" onClick={this.handleSaveAnAccountButton}>
-                                {chartOfAccountsText[this.context.locale]["Save"]}
-                            </button>
-                            <button className="btn btn-white width-10ch" onClick={this.toggleEditAccountModal}>
-                                {chartOfAccountsText[this.context.locale]["Cancel"]}
-                            </button>
-                        </ModalFooter>
-                    </Modal>
-
-
-
-
-
-
-
-
-                <Modal isOpen={this.state.editAccountModal} toggle={() => this.toggleEditAccountModal()} centered={true} onClosed={(state) => this.setState({editAccount: false})}>
-                    <ModalHeader> {this.state.editAccount? chartOfAccountsText[this.context.locale]["Edit Account Details"]: chartOfAccountsText[this.context.locale]["Create a New Account"]} </ModalHeader>
-                    <ModalBody>
-                        {this.state.accountNameAlert ? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide a name for your account."]}</Alert> : null}
-                        {this.state.accountSubtypeRequiredAlert ? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide an account subtype for your account."]}</Alert> : null}
-                        <form onSubmit={event => { event.preventDefault(); this.handleSaveAnAccountButton() }}>
-                            <div className="form-group row">
-                                <label className="col-md-4 col-form-label">
-                                    {chartOfAccountsText[this.context.locale]["Account Group Name"]}
-                                </label>
-                                <div className="col-md-8">
-                                    <input type="text" className="form-control"
-                                        value={this.state.accountGroupNameInput}
-                                        onChange={event => this.setState({ accountGroupNameInput: event.target.value })}
-                                    />
-                                </div>
-                            </div>
-                        </form>
-                        <div className="form-group row">
-                            <label className="col-md-4 col-form-label">
-                                {chartOfAccountsText[this.context.locale]["Account Type"]}
-                            </label>
-                            {!this.state.selectedAccountTypeOption ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                                <div className="col-md-8">
-                                    <Select
-                                        options={this.state.accountTypeOptions}
-                                        value={this.state.selectedAccountTypeOption}
-                                        isSearchable={true}
-                                        isDisabled={this.state.disableChangeAccountType}
-                                        onChange={this.handleChangeAccountTypeOption}
-                                    />
-                                    {/**TODO: style the SELECT components to match form-control */}
-                                </div>
-                            }
-                        </div>
-                        <div className="form-group row">
-                            <label className="col-md-4 col-form-label">
-                                {chartOfAccountsText[this.context.locale]["Account Subtype"]}
-                            </label>
-                            {!this.state.selectedAccountTypeOption ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                                <div className="col-md-8">
-                                    <Select
-                                        options={this.state.accountSubtypeOptions.filter(accountSubtypeOption => accountSubtypeOption.object.accountType.id == this.state.selectedAccountTypeOption.object.id)}
-                                        value={this.state.selectedAccountSubtypeOption}
-                                        isSearchable={true}
-                                        onChange={this.handleChangeAccountSubtypeOption}
-                                    />
-                                    {/**TODO: style the SELECT components to match form-control */}
-                                </div>
-                            }
-                        </div>
-
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className="btn btn-primary width-10ch" onClick={() => this.handleSaveAnAccountGroupButton()}>
-                            {chartOfAccountsText[this.context.locale]["Save"]}
-                        </button>
-                        <button className="btn btn-white width-10ch" onClick={() => this.toggleEditAccountGroupModal()}>
-                            {chartOfAccountsText[this.context.locale]["Cancel"]}
-                        </button>
-                    </ModalFooter>
-                </Modal>
-
-                {this.state.deleteAccountGroupAlert ?
-                    <SweetAlert primary showCancel
-                        confirmBtnText={chartOfAccountsText[this.context.locale]["Yes, delete it!"]}
-                        confirmBtnBsStyle="primary"
-                        cancelBtnText={chartOfAccountsText[this.context.locale]["Cancel"]}
-                        cancelBtnBsStyle="default"
-                        title={chartOfAccountsText[this.context.locale]["Are you sure?"]}
-                        onConfirm={this.handleConfirmDeleteAccountGroupButton}
-                        onCancel={this.toggleDeleteAccountGroupAlert}
-                    >
-                        {chartOfAccountsText[this.context.locale]["Are you sure you want to delete this account group?"]}
-                    </SweetAlert>
-                    : null}
-                {this.state.cannotDeleteAccountGroupAlert ?
-                    <SweetAlert danger showConfirm={false} showCancel={true}
-                        cancelBtnBsStyle="default"
-                        cancelBtnText={chartOfAccountsText[this.context.locale]["Cancel"]}
-                        title={chartOfAccountsText[this.context.locale]["Cannot delete this account group."]}
-                        onConfirm={this.toggleCannotDeleteAccountGroupAlert}
-                        onCancel={this.toggleCannotDeleteAccountGroupAlert}
-                    >
-                        {chartOfAccountsText[this.context.locale]["Cannot delete this account group. Please delete all accounts in this account group and try again."]}
-                    </SweetAlert>
-                    : null}
-
-                <Modal isOpen={this.state.addAnAccountModal} toggle={() => this.toggleAddAnAccountModal()} centered={true}>
-                    <ModalHeader> {chartOfAccountsText[this.context.locale]["Add an Account"]} </ModalHeader>
-                    <ModalBody>
-                        {
-                            this.state.accountNameAlert ?
-                                <Alert color="danger">
-                                    {chartOfAccountsText[this.context.locale]["Please provide a name for your account."]}
-                                </Alert>
-                                : null
-                        }
-                        <form onSubmit={event => { event.preventDefault(); this.handleSaveNewAccount() }}>
-                            <div className="form-group row">
-                                <label className="col-form-label col-md-3">
-                                    {chartOfAccountsText[this.context.locale]["Account Name"]}
-                                </label>
-                                <div className="col-md-9">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={this.state.accountNameInput}
-                                        onChange={event => {
-                                            this.setState({ accountNameInput: event.target.value });
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label className="col-form-label col-md-3">
-                                    {chartOfAccountsText[this.context.locale]["Initial Debit Value"]}
-                                </label>
-                                <div className="col-md-9">
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        value={this.state.initialDebitValueInput}
-                                        onChange={event => {
-                                            this.setState({ initialDebitValueInput: event.target.value });
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label className="col-form-label col-md-3">
-                                    {chartOfAccountsText[this.context.locale]["Initial Credit Value"]}
-                                </label>
-                                <div className="col-md-9">
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        value={this.state.initialCreditValueInput}
-                                        onChange={event => {
-                                            this.setState({ initialCreditValueInput: event.target.value });
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </form>
-                    </ModalBody>
-                    <ModalFooter>
-                        <button
-                            className="btn btn-primary width-10ch"
-                            onClick={() => this.handleSaveNewAccount()}
-                        >
-                            {chartOfAccountsText[this.context.locale]["Save"]}
-                        </button>
-                        <button
-                            className="btn btn-white width-10ch"
-                            onClick={() => {
-                                this.toggleAddAnAccountModal();
-                            }}
-                        >
-                            {chartOfAccountsText[this.context.locale]["Cancel"]}
-                        </button>
-                    </ModalFooter>
-                </Modal>
             </div>
 
         )

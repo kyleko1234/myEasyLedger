@@ -66,7 +66,7 @@ INSERT INTO account_subtype(name, account_type_id)
        ('Other income', 4),
        ('Cost of sales', 5),
        ('Research and development', 5),
-       ('Sales, general, and administration', 5),
+       ('Selling, general, and administration', 5),
        ('Depreciation and amortization', 5),
        ('Other expense', 5),
        ('Interest expense', 5),

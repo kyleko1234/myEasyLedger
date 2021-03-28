@@ -11,8 +11,8 @@ import { useHistory } from 'react-router-dom';
 
 
 function AccountDetailsEditor(props) {
-    //required props: isOpen, toggle, selectedAccountId, fetchData, createMode,
-    //optional props: accountTypeId
+    //required props: isOpen, toggle, fetchData, createMode,
+    //optional props: accountTypeId, selectedAccountId, selectedParentAccount
     const appContext = React.useContext(PageSettings);
     const history = useHistory();
 
@@ -37,7 +37,7 @@ function AccountDetailsEditor(props) {
 
     React.useEffect(() => {
         async function fetchAccountData() {
-            if (!props.createMode) {
+            if (props.selectedAccountId) {
                 await axios.get(`${API_BASE_URL}/account/${props.selectedAccountId}`).then(response => {
                     if (response.data) {
                         setAccountNameInput(response.data.accountName);
@@ -48,6 +48,10 @@ function AccountDetailsEditor(props) {
                         setInitialCreditValueInput(response.data.initialCreditAmount);
                     }
                 }).catch(console.log);    
+            } else if (props.selectedParentAccount) {
+                setAccountTypeId(props.selectedParentAccount.accountTypeId);
+                setSelectedParentAccountId(props.selectedParentAccount.accountId);
+                setSelectedAccountSubtypeId(props.selectedParentAccount.accountSubtypeId);
             } else if (props.accountTypeId) {
                 setAccountTypeId(props.accountTypeId);
             }
@@ -77,11 +81,16 @@ function AccountDetailsEditor(props) {
             }).catch(console.log);
         }
         fetchAccountData();
-    }, [props.selectedAccountId, props.isOpen, props.createMode])
+    }, [props.selectedAccountId, props.selectedParentAccount, props.isOpen, props.createMode])
 
     const modalOnClose = () => {
         setNoAccountNameAlert(false);
         setNoParentOrSubtypeAlert(false);
+        setAccountNameInput('');
+        setSelectedParentAccountId(null);
+        setSelectedAccountSubtypeId(null);
+        setInitialDebitValueInput('0');
+        setInitialCreditValueInput('0');
     }
     const handleSaveButton = () => {
         
