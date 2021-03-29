@@ -21,11 +21,15 @@ function AccountSwitcher(props) {
 
     const [loading, setLoading] = React.useState(true);
     const [forceExpandToken, setForceExpandToken] = React.useState(null);
+    const [forceCollapseToken, setForceCollapseToken] = React.useState(null);
     const [accounts, setAccounts] = React.useState([]);
     const [selectedAccountTypeOptionId, setSelectedAccountTypeOptionId] = React.useState(null);
 
     const handleExpandAll = () => {
         setForceExpandToken(Math.random());
+    }
+    const handleCollapseAll = () => {
+        setForceCollapseToken(Math.random());
     }
 
 
@@ -58,7 +62,11 @@ function AccountSwitcher(props) {
         <WidgetList>
             <WidgetHeader className="bg-light">
                 <div>{balanceSummaryText[appContext.locale][props.widgetTitle]}</div>
-                <Link replace to="#" onClick={handleExpandAll} className="font-weight-normal">{balanceSummaryText[appContext.locale]["(Expand All)"]}</Link>
+                <div className="font-weight-normal">
+                    <Link replace to="#" onClick={handleExpandAll}>{balanceSummaryText[appContext.locale]["(Expand All)"]}</Link>
+                    <span> / </span>
+                    <Link replace to="#" onClick={handleCollapseAll}>{balanceSummaryText[appContext.locale]["(Collapse All)"]}</Link>
+                </div>
             </WidgetHeader>
             <div className="row px-3 py-2">
                 <label className="col-form-label col-md-6">
@@ -84,7 +92,7 @@ function AccountSwitcher(props) {
                     accounts.filter(account => account.accountTypeId == selectedAccountTypeOptionId && account.parentAccountId == null).map(account => {
                         return (
                             account.hasChildren?
-                            <ExpandableWidgetListItem key={account.accountId} parentText={account.accountName} parentClassName="bg-light nohover rounded-0" forceExpandToken={forceExpandToken}>
+                            <ExpandableWidgetListItem key={account.accountId} parentText={account.accountName} parentClassName="bg-light nohover rounded-0" forceExpandToken={forceExpandToken} forceCollapseToken={forceCollapseToken}>
                                 {accounts ?
                                     accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
                                         return (
