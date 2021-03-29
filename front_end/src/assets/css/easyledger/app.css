@@ -71,6 +71,9 @@ a.icon-link-text-muted:hover {
     background-color: #f3f3f3 !important;
 }
 
+.bg-light-hover {
+    background-color: #e0e0e0 !important;
+}
 
 .rotating-caret {
     display: block;

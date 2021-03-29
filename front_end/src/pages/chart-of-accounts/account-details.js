@@ -55,15 +55,6 @@ function AccountDetails(props) {
             let selectedAccount = response.data
             setSelectedAccount(selectedAccount);
         }).catch(console.log);
-
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountGroup`).then(response => {
-            let formattedAccountGroupOptions = response.data.map(accountGroup => ({
-                value: accountGroup.accountGroupId,
-                label: accountGroup.accountGroupName,
-                object: accountGroup
-            }))
-            setAccountGroupOptions(formattedAccountGroupOptions);
-        }).catch(console.log);
     }, [])
 
     const fetchData = React.useCallback(async ({ pageSize, pageIndex }) => {
@@ -93,16 +84,7 @@ function AccountDetails(props) {
             await axios.get(`${API_BASE_URL}/account/${selectedAccountId}`).then(response => {
                 let account = response.data;
                 setSelectedAccount(account);
-            }).catch(console.log)
-            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountGroup`).then(response => {
-                let formattedAccountGroupOptions = response.data.map(accountGroup => ({
-                    value: accountGroup.accountGroupId,
-                    label: accountGroup.accountGroupName,
-                    object: accountGroup
-                }))
-                setAccountGroupOptions(formattedAccountGroupOptions);
-            }).catch(console.log);
-    
+            }).catch(console.log)    
         }
         await fetchTableData();
         setLoading(false);
@@ -132,7 +114,7 @@ function AccountDetails(props) {
                             pageCount={pageCount}
                             elementCount={elementCount}
                             tableTitle={selectedAccount.accountName}
-                            hasAddEntryButton={false}
+                            hasAddEntryButton={true}
                             parentComponentAccountId={selectedAccountId}
                         /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
                         /* we reuse TableOfJournalEntries component, even though it's more like a TableOfLineItems here */}
