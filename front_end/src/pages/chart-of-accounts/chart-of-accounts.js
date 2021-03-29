@@ -46,7 +46,7 @@ class ChartOfAccounts extends React.Component {
             initialCreditValueInput: 0,
         };
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
-
+        this.fetchData = this.fetchData.bind(this);
         this.handleChangeAccountSubtypeOption = this.handleChangeAccountSubtypeOption.bind(this);
         this.handleChangeAccountTypeOption = this.handleChangeAccountTypeOption.bind(this);
 
@@ -121,7 +121,18 @@ class ChartOfAccounts extends React.Component {
     }
 
     /**End utility functions for adding/editing account */
-
+    canAddChildren(account) {
+        if (account.parentAccountId != null) {
+            return false;
+        } else if (account.debitTotal != 0 || account.creditTotal != 0) {
+            if (account.hasChildren) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
     /** api calls for posting/putting/deleting objects to server */
 
     async postAccount(account) {
@@ -180,21 +191,31 @@ class ChartOfAccounts extends React.Component {
                                     {this.state.accounts.filter(account => account.accountTypeId == accountType.id && !account.parentAccountId).map(account => { // render a bg-light accountgroup widget list item for each accountGroup in this accountType, then render all of the accounts for at accountGroup
                                         return (
                                             <React.Fragment key={account.accountId}>
-                                                <div className="widget-list-item bg-light">
+                                                {account.hasChildren ?
+                                                    <div className="widget-list-item bg-light">
+                                                        <div className="widget-list-content d-flex justify-content-between align-items-center">
+                                                            <h4 className="widget-list-title">{account.accountName}</h4>
+                                                            <div className="d-flex align-items-center">
+                                                                <button className="m-l-5 btn btn-sm btn-icon text-muted" onClick={() => this.handleEditAccountButton(account)}>
+                                                                    <i className="fa fa-edit"></i>
+                                                                </button>
+                                                                <i className="m-l-10 fa fa-angle-right fa-lg text-muted invisible"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                :
+                                                <Link className="widget-list-item bg-light" to={`/account-details/${account.accountId}`}>
                                                     <div className="widget-list-content d-flex justify-content-between align-items-center">
                                                         <h4 className="widget-list-title">{account.accountName}</h4>
-                                                        <div>
-                                                            <Link replace className="icon-link-text-muted m-l-15" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
-                                                                <i className="fa fa-plus"></i>
-                                                            </Link>
-                                                            <Link replace className="icon-link-text-muted m-l-15" to="#" onClick={() => this.handleEditAccountButton(account)}>
+                                                        <div className="d-flex align-items-center">
+                                                            <button className="m-l-5 btn btn-sm btn-icon text-muted invisible">
                                                                 <i className="fa fa-edit"></i>
-                                                            </Link>
+                                                            </button>
+                                                            <i className="m-l-10 fa fa-angle-right fa-lg text-muted"></i>
                                                         </div>
-
-
                                                     </div>
-                                                </div>
+                                                </Link>
+                                                }
                                                 {!this.state.accounts ? null : this.state.accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
                                                     return (
                                                         <Link className="widget-list-item bg-white" to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId.toString()}>
@@ -207,6 +228,13 @@ class ChartOfAccounts extends React.Component {
                                                         </Link>
                                                     );
                                                 })}
+                                                {this.canAddChildren(account) ? 
+                                                    <Link className="widget-list-item bg-white" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
+                                                        <div className="widget-list-content p-l-30">
+                                                            <i className="widget-list-title">Add a new child account...</i>
+                                                        </div>
+                                                    </Link>
+                                                : null}
                                             </React.Fragment>
                                         );
                                     })}
