@@ -79,7 +79,8 @@ export const chartOfAccountsText = {
         "Category Name": "Category Name",
 
         "Initial Debit Value": "Initial Debit Value",
-        "Initial Credit Value": "Initial Credit Value"
+        "Initial Credit Value": "Initial Credit Value",
+        "Add a new child account...": "Add a new child account..."
         
 
 
@@ -164,7 +165,9 @@ export const chartOfAccountsText = {
         "Category Name": "類別名稱",
 
         "Initial Debit Value": "TRANSLATION",
-        "Initial Credit Value": "TRANSLATION"
+        "Initial Credit Value": "TRANSLATION",
+        "Add a new child account...": "TRANSLATION"
+
 
     }
 }

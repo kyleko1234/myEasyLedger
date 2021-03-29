@@ -24,6 +24,7 @@ function AccountDetailsEditor(props) {
     const [accountTypeId, setAccountTypeId] = React.useState(null);
     const [initialDebitValueInput, setInitialDebitValueInput] = React.useState('0');
     const [initialCreditValueInput, setInitialCreditValueInput] = React.useState('0');
+    const [currentAccountHasChildren, setCurrentAccountHasChildren] = React.useState(false);
     const [noAccountNameAlert, setNoAccountNameAlert] = React.useState(false);
     const [noParentOrSubtypeAlert, setNoParentOrSubtypeAlert] = React.useState(false);
     const [deleteAccountAlert, setDeleteAccountAlert] = React.useState(false);
@@ -46,6 +47,7 @@ function AccountDetailsEditor(props) {
                         setSelectedAccountSubtypeId(response.data.accountSubtypeId);
                         setInitialDebitValueInput(response.data.initialDebitAmount);
                         setInitialCreditValueInput(response.data.initialCreditAmount);
+                        setCurrentAccountHasChildren(response.data.hasChildren);
                     }
                 }).catch(console.log);    
             } else if (props.selectedParentAccount) {
@@ -91,6 +93,7 @@ function AccountDetailsEditor(props) {
         setSelectedAccountSubtypeId(null);
         setInitialDebitValueInput('0');
         setInitialCreditValueInput('0');
+        setCurrentAccountHasChildren(false);
     }
     const handleSaveButton = () => {
         
@@ -221,6 +224,7 @@ function AccountDetailsEditor(props) {
                                 value={parentAccountOptions.find(option => option.object.accountId == selectedParentAccountId)}
                                 isSearchable={true}
                                 onChange={handleChangeParentAccountOption}
+                                isDisabled={currentAccountHasChildren}
                             />
                         </div>
                     </div>
@@ -253,6 +257,8 @@ function AccountDetailsEditor(props) {
                                     onChange={event => {
                                         setInitialDebitValueInput(event.target.value);
                                     }}
+                                    disabled={currentAccountHasChildren}
+
                                 />
                             </div>
                         </div>
@@ -268,6 +274,7 @@ function AccountDetailsEditor(props) {
                                     onChange={event => {
                                         setInitialCreditValueInput(event.target.value);
                                     }}
+                                    disabled={currentAccountHasChildren}
                                 />
                             </div>
                         </div>
@@ -275,7 +282,7 @@ function AccountDetailsEditor(props) {
                 </ModalBody>
                 <ModalFooter className="bg-light justify-content-between">
                     <div>
-                        <button className="btn btn-danger width-10ch" onClick={handleDeleteButton}>{accountDetailsEditorText[appContext.locale]["Delete"]}</button>
+                        {currentAccountHasChildren? null : <button className="btn btn-danger width-10ch" onClick={handleDeleteButton}>{accountDetailsEditorText[appContext.locale]["Delete"]}</button>}
                     </div>
                     <div>
                         <button className="btn btn-primary width-10ch" onClick={handleSaveButton}>{accountDetailsEditorText[appContext.locale]["Save"]}</button>

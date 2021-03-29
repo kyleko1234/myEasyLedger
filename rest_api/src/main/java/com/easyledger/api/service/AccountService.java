@@ -103,6 +103,9 @@ public class AccountService {
 		Account oldAccount = accountRepo.findById(dto.getAccountId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + dto.getAccountId()));
 		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, oldAccount.getOrganization().getId());
+		if (oldAccount.isHasChildren() && dto.getParentAccountId() != null) {
+			throw new ConflictException("An account with children may not have a parent account.");
+		}
 		Account updatedAccount = new Account();
 		updatedAccount.setId(dto.getAccountId());
 		updatedAccount.setName(dto.getAccountName());

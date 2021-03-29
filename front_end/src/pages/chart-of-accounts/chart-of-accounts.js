@@ -231,7 +231,7 @@ class ChartOfAccounts extends React.Component {
                                                 {this.canAddChildren(account) ? 
                                                     <Link className="widget-list-item bg-white" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
                                                         <div className="widget-list-content p-l-30">
-                                                            <i className="widget-list-title">Add a new child account...</i>
+                                                            <i className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</i>
                                                         </div>
                                                     </Link>
                                                 : null}
