@@ -88,7 +88,7 @@ function TableOfTransactions({
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
     const refreshAccounts = () => {
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
-            const formattedAccounts = response.data.map(account => {
+            const formattedAccounts = response.data.filter(account => !account.hasChildren).map(account => {
                 return ({
                     value: account.accountId,
                     label: account.accountName,
