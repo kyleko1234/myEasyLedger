@@ -29,11 +29,8 @@ class ChartOfAccounts extends React.Component {
             editAccountModal: false,
             createMode: true,
 
-
             addAnAccountModal: false,
-            accountNameInput: '',
-            initialDebitValueInput: 0,
-            initialCreditValueInput: 0,
+            accountNameInput: ''
         };
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
         this.fetchData = this.fetchData.bind(this);
@@ -96,17 +93,6 @@ class ChartOfAccounts extends React.Component {
         }
         return true;
     }
-    /** api calls for posting/putting/deleting objects to server */
-
-    async postAccount(account) {
-        axios.post(`${API_BASE_URL}/account`, account).then(response => {
-            console.log(response);
-            this.fetchData();
-        }).catch(error => {
-            console.log(error);
-        });
-    }
-    /** End api calls */
 
     render() {
         return (
@@ -170,17 +156,17 @@ class ChartOfAccounts extends React.Component {
                                                         </div>
                                                     </div>
                                                 :
-                                                <Link className="widget-list-item bg-light" to={`/account-details/${account.accountId}`}>
-                                                    <div className="widget-list-content d-flex justify-content-between align-items-center">
-                                                        <h4 className="widget-list-title">{account.accountName}</h4>
-                                                        <div className="d-flex align-items-center">
-                                                            <button className="m-l-5 btn btn-sm btn-icon text-muted invisible">
-                                                                <i className="fa fa-edit"></i>
-                                                            </button>
-                                                            <i className="m-l-10 fa fa-angle-right fa-lg text-muted"></i>
+                                                    <Link className="widget-list-item bg-light" to={`/account-details/${account.accountId}`}>
+                                                        <div className="widget-list-content d-flex justify-content-between align-items-center">
+                                                            <h4 className="widget-list-title">{account.accountName}</h4>
+                                                            <div className="d-flex align-items-center">
+                                                                <button className="m-l-5 btn btn-sm btn-icon text-muted invisible">
+                                                                    <i className="fa fa-edit"></i>
+                                                                </button>
+                                                                <i className="m-l-10 fa fa-angle-right fa-lg text-muted"></i>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </Link>
+                                                    </Link>
                                                 }
                                                 {!this.state.accounts ? null : this.state.accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
                                                     return (
@@ -195,7 +181,7 @@ class ChartOfAccounts extends React.Component {
                                                     );
                                                 })}
                                                 {this.canAddChildren(account) ? 
-                                                    <Link className="widget-list-item bg-white" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
+                                                    <Link replace className="widget-list-item bg-white" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
                                                         <div className="widget-list-content p-l-30">
                                                             <i className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</i>
                                                         </div>

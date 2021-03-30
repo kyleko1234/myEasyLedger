@@ -8,6 +8,7 @@ import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
+import AccountDetailsEditor from '../chart-of-accounts/components/account-details-editor.js';
 
 
 
@@ -21,34 +22,19 @@ class Accounts extends React.Component {
         super(props);
         this.state = {
             accounts: [],
-            accountGroups: [],
             accountTypes: [],
 
-            editAccountGroupModal: false,
-            accountGroupNameAlert: false,
-            selectedAccountGroupId: null,
-            accountGroupNameInput: '',
-            editAccountGroup: false, //when true, editAccountGroupModal will have 'edit' in title instead of 'create new'
-
-            accountTypeOptions: [], //for react-select; accountTypes are formatted as {value: accountType.id, label: accountType.name, object: accountType}
-            disableChangeAccountType: false, // disables the react-select field for changing an account group's account type
-
-            selectedAccountTypeOption: null,
-
-            deleteAccountGroupAlert: false,
-            cannotDeleteAccountGroupAlert: false,
-
+            selectedAccountId: null,
+            selectedParentAccount: null,
+            editAccountModal: false,
+            createMode: true,
+            
             addAnAccountModal: false,
-            accountNameAlert: false,
             accountNameInput: ''
         };
 
-        this.handleChangeAccountTypeOption = this.handleChangeAccountTypeOption.bind(this);
-
-        this.handleConfirmDeleteAccountGroupButton = this.handleConfirmDeleteAccountGroupButton.bind(this);
-        this.toggleDeleteAccountGroupAlert = this.toggleDeleteAccountGroupAlert.bind(this);
-        this.toggleCannotDeleteAccountGroupAlert = this.toggleCannotDeleteAccountGroupAlert.bind(this);
-        this.setEditAccountGroupFalse = this.setEditAccountGroupFalse.bind(this);
+        this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
+        this.fetchData = this.fetchData.bind(this);
 
     }
 
@@ -56,187 +42,60 @@ class Accounts extends React.Component {
         this.fetchData();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.match.params.activeTabId !== prevProps.match.params.activeTabId) {
-            this.setState({ selectedAccountTypeOption: this.state.accountTypeOptions.find(accountTypeOption => accountTypeOption.value == this.props.match.params.activeTabId) })
-        }
-    }
-
     fetchData() {
         axios.get(`${API_BASE_URL}/accountType`).then(response => {
             let assetsAndLiabilitiesAccountTypeIds = [1, 2];
             let assetsAndLiabilitiesAccountTypes = response.data.filter(accountType => assetsAndLiabilitiesAccountTypeIds.includes(accountType.id));
             this.setState({ accountTypes: assetsAndLiabilitiesAccountTypes });
-            if (response.data) {
-                let formattedAccountTypes = assetsAndLiabilitiesAccountTypes.map(accountType => ({ value: accountType.id, label: chartOfAccountsText[this.context.locale][accountType.name], object: accountType }))
-                this.setState({ accountTypeOptions: formattedAccountTypes, selectedAccountTypeOption: formattedAccountTypes.find(formattedAccountType => formattedAccountType.object.id == this.props.match.params.activeTabId) })
-            }
-        })
-        axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/accountGroup`).then(response => {
-            this.setState({ accountGroups: response.data });
         })
         axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/account`).then(response => {
             this.setState({ accounts: response.data });
         }).catch(console.log);
     }
 
-    /** Utility functions for adding/editing account group */
-    handleAddAnAccountGroupButton() { //adding a fresh account group uses the default empty fields for all inputs
-        this.toggleEditAccountGroupModal();
+    /** Utility functions for adding/editing account */
+    toggleEditAccountModal() {
+        this.setState(state => ({editAccountModal: !state.editAccountModal}));
     }
 
-    handleEditAccountGroupButton(accountGroup) {
-        //editing an account group prepopulates form fields with data for the selected account group, and disables the field for editing account type.
-        //this function should only be called when opening the modal form for editing an account group. the modal should be closed by resetting all fields using toggleEditAccountGroupModal()
-        this.setState(state => (
-            {
-                selectedAccountGroupId: accountGroup.accountGroupId,
-                accountGroupNameInput: accountGroup.accountGroupName,
-                selectedAccountTypeOption: state.accountTypeOptions.find(accountTypeOption => accountTypeOption.object.id == accountGroup.accountTypeId),
-                disableChangeAccountType: true,
-                accountGroupNameAlert: false,
-                editAccountGroupModal: true,
-                editAccountGroup: true
-            }
-        ))
+    handleAddAnAccountButton() {
+        this.setState(state => ({createMode: true, selectedAccountId: null, selectedParentAccount: null}), () => {
+            this.setState({editAccountModal: true});
+        })
     }
 
-    toggleEditAccountGroupModal() { //toggling the modal for adding/editing account groups resets all input fields for the form.
-        this.setState(state => (
-            {
-                selectedAccountGroupId: null, //this field is used in more than one operation so it is imperative to nullify selectedAccountGroupId on toggle
-                accountGroupNameInput: "",
-                selectedAccountTypeOption: state.accountTypeOptions.find(accountTypeOption => accountTypeOption.object.id == this.props.match.params.activeTabId),
-                disableChangeAccountType: false,
-                accountGroupNameAlert: false,
-                editAccountGroupModal: !state.editAccountGroupModal,
-            }));
+    handleAddAChildAccountButton(parentAccount) {
+        this.setState(state => ({
+            createMode: true,
+            selectedAccountId: null,
+            selectedParentAccount: parentAccount
+        }), () => {
+            this.setState({editAccountModal: true});
+        })
     }
 
-    setEditAccountGroupFalse() { //called after modal transitions out. ensures that title does not change until modal is done transitioning.
-        this.setState(state => (
-            {editAccountGroup: false}
-        ))
-    }
-
-    handleChangeAccountTypeOption(selectedAccountTypeOption) {
-        this.setState({ selectedAccountTypeOption: selectedAccountTypeOption });
-    }
-
-    async handleSaveAnAccountGroupButton() {
-        if (!this.state.accountGroupNameInput) {
-            this.setState({ accountGroupNameAlert: true });
-        }
-
-        if (this.state.accountGroupNameInput) {
-            if (!this.state.selectedAccountGroupId) {
-                let postedObject = {
-                    accountGroupName: this.state.accountGroupNameInput,
-                    accountSubtypeId: this.state.selectedAccountTypeOption.value == 1 ? 5 : 15, //hardcode; for single-entry (personal) organizations, we shove all asset account groups into 'other current assets' and all liabilities into 'other current liabilities'
-                    organizationId: this.context.currentOrganizationId
-                };
-                await this.postAccountGroup(postedObject);
-                this.toggleEditAccountGroupModal();
-            } else {
-                let putObject = {
-                    accountGroupId: this.state.selectedAccountGroupId,
-                    accountGroupName: this.state.accountGroupNameInput,
-                    accountSubtypeId: this.state.selectedAccountTypeOption.value == 1 ? 5 : 15,
-                    organizationId: this.context.currentOrganizationId
-                };
-                await this.putAccountGroup(this.state.selectedAccountGroupId, putObject);
-                this.toggleEditAccountGroupModal();
-            }
-        }
+    handleEditAccountButton(account) {
+        this.setState(state => ({
+            createMode: false,
+            selectedAccountId: account.accountId
+        }), () => {
+            this.setState({editAccountModal: true});
+        })
     }
     /** End utility functions for adding/editing account group */
 
-    /** Utility functions for deleting account group */
-    toggleDeleteAccountGroupAlert() {
-        this.setState(state => ({ deleteAccountGroupAlert: !state.deleteAccountGroupAlert }));
-    }
-
-    toggleCannotDeleteAccountGroupAlert() {
-        this.setState(state => ({ cannotDeleteAccountGroupAlert: !state.cannotDeleteAccountGroupAlert }))
-    }
-
-    handleDeleteAccountGroupButton(accountGroup) {
-        this.setState(state => ({ selectedAccountGroupId: accountGroup.accountGroupId }));
-        this.toggleDeleteAccountGroupAlert();
-    }
-
-    async handleConfirmDeleteAccountGroupButton() {
-        if (this.state.accounts.filter(account => account.accountGroupId == this.state.selectedAccountGroupId).length !== 0) {
-            this.toggleDeleteAccountGroupAlert();
-            this.toggleCannotDeleteAccountGroupAlert();
-        } else {
-            await this.deleteAccountGroup(this.state.selectedAccountGroupId);
-            this.toggleDeleteAccountGroupAlert();
+    canAddChildren(account) {
+        if (account.parentAccountId != null) {
+            return false;
+        } else if (account.debitTotal != 0 || account.creditTotal != 0) {
+            if (account.hasChildren) {
+                return true;
+            } else {
+                return false;
+            }
         }
+        return true;
     }
-    /** End utility functions for deleting account group */
-
-    /** Utility functions for adding account to account group */
-    toggleAddAnAccountModal() {
-        this.setState(state => ({ addAnAccountModal: !state.addAnAccountModal, accountNameInput: '', accountNameAlert: false }))
-    }
-
-    handleAddAnAccountToAccountGroupButton(accountGroup) {
-        this.setState(state => ({ selectedAccountGroupId: accountGroup.accountGroupId }));
-        this.toggleAddAnAccountModal();
-    }
-
-    async handleSaveNewAccount() {
-        let postedObject = {
-            accountName: this.state.accountNameInput,
-            accountGroupId: this.state.selectedAccountGroupId,
-            initialDebitAmount: 0,
-            initialCreditAmount: 0
-        }
-        await this.postAccount(postedObject);
-        this.toggleAddAnAccountModal();
-    }
-
-    /** End utility functions for adding account to account group */
-
-
-    /** api calls for posting/putting/deleting objects to server */
-    async postAccountGroup(accountGroup) {
-        axios.post(`${API_BASE_URL}/accountGroup`, accountGroup).then(response => {
-            console.log(response);
-            this.fetchData();
-        }).catch(error => {
-            console.log(error);
-        });
-    }
-
-    async putAccountGroup(accountGroupId, accountGroup) {
-        axios.put(`${API_BASE_URL}/accountGroup/${accountGroupId}`, accountGroup).then(response => {
-            console.log(response);
-            this.fetchData();
-        }).catch(error => {
-            console.log(error);
-        });
-    }
-
-    async deleteAccountGroup(accountGroupId) {
-        axios.delete(`${API_BASE_URL}/accountGroup/${accountGroupId}`).then(response => {
-            console.log(response);
-            this.fetchData();
-        }).catch(error => {
-            console.log(error);
-        });
-    }
-
-    async postAccount(account) {
-        axios.post(`${API_BASE_URL}/account`, account).then(response => {
-            console.log(response);
-            this.fetchData();
-        }).catch(error => {
-            console.log(error);
-        });
-    }
-    /** End api calls */
 
     render() {
         return (
@@ -270,9 +129,9 @@ class Accounts extends React.Component {
                             <button
                                 className="btn btn-primary my-1 ml-3"
                                 onClick={() => {
-                                    this.handleAddAnAccountGroupButton();
+                                    this.handleAddAnAccountButton();
                                 }}
-                            > {chartOfAccountsText[this.context.locale]["Create an account group"]} </button>
+                            > {chartOfAccountsText[this.context.locale]["Create an account"]} </button>
                         </div>
                     }
                 </Nav>
@@ -281,32 +140,44 @@ class Accounts extends React.Component {
                         this.state.accountTypes.map(accountType => {
                             return (
                                 <TabPane tabId={accountType.id.toString()} key={accountType.id.toString()}>
-                                    {this.state.accountGroups.filter(accountGroup => accountGroup.accountTypeId == accountType.id).map(accountGroup => { // render a bg-light accountgroup widget list item for each accountGroup in this accountType, then render all of the accounts for at accountGroup
+                                    {this.state.accounts.filter(account => account.accountTypeId == accountType.id && !account.parentAccountId).map(account => { // render a bg-light accountgroup widget list item for each accountGroup in this accountType, then render all of the accounts for at accountGroup
                                         return (
-                                            <React.Fragment key={accountGroup.accountGroupId}>
-                                                <div className="widget-list-item bg-light">
-                                                    <div className="widget-list-content d-flex justify-content-between align-items-center">
-                                                        <h4 className="widget-list-title">{accountGroup.accountGroupName}</h4>
-                                                        <div>
-                                                            <Link replace className="icon-link-text-muted m-l-15" to="#" onClick={() => this.handleAddAnAccountToAccountGroupButton(accountGroup)}>
-                                                                <i className="fa fa-plus"></i>
-                                                            </Link>
-                                                            <Link replace className="icon-link-text-muted m-l-15" to="#" onClick={() => this.handleEditAccountGroupButton(accountGroup)}>
-                                                                <i className="fa fa-edit"></i>
-                                                            </Link>
-                                                            <Link replace className="icon-link-text-muted m-l-15" to="#" onClick={() => this.handleDeleteAccountGroupButton(accountGroup)}>
-                                                                <i className="fa fa-trash-alt"></i>
-                                                            </Link>
+                                            <React.Fragment key={account.accountId}>
+                                                {account.hasChildren ?
+                                                    <div className="widget-list-item bg-light">
+                                                        <div className="widget-list-content d-flex justify-content-between align-items-center">
+                                                            <h4 className="widget-list-title">
+                                                                <i className="m-r-10 fa fa-angle-down fa-lg text-muted "></i>
+                                                                {account.accountName}
+                                                            </h4>
+                                                            <div className="d-flex align-items-center">
+                                                                <button className="m-l-5 btn btn-sm btn-icon text-muted" onClick={() => this.handleEditAccountButton(account)}>
+                                                                    <i className="fa fa-edit"></i>
+                                                                </button>
+                                                                <i className="m-l-10 fa fa-angle-right fa-lg text-muted invisible"></i>
+                                                            </div>
                                                         </div>
-
-
                                                     </div>
-                                                </div>
-                                                {!this.state.accounts ? null : this.state.accounts.filter(account => account.accountGroupId == accountGroup.accountGroupId).map(account => {
+                                                :
+                                                    <Link className="widget-list-item bg-light" to={`/account-details/${account.accountId}`}>
+                                                        <div className="widget-list-content d-flex justify-content-between align-items-center">
+                                                            <h4 className="widget-list-title">
+                                                                {account.accountName}
+                                                            </h4>
+                                                            <div className="d-flex align-items-center">
+                                                                <button className="m-l-5 btn btn-sm btn-icon text-muted invisible">
+                                                                    <i className="fa fa-edit"></i>
+                                                                </button>
+                                                                <i className="m-l-10 fa fa-angle-right fa-lg text-muted"></i>
+                                                            </div>
+                                                        </div>
+                                                    </Link>
+                                                }
+                                                {!this.state.accounts ? null : this.state.accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
                                                     return (
-                                                        <Link className="widget-list-item bg-white" to={`/account-details/${account.accountId}`} key={account.accountId.toString()}>
+                                                        <Link className="widget-list-item bg-white" to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId.toString()}>
                                                             <div className="widget-list-content p-l-30">
-                                                                <div className="widget-list-title">{account.accountName}</div>
+                                                                <div className="widget-list-title">{childAccount.accountName}</div>
                                                             </div>
                                                             <div className="m-r-10 widget-list-action text-right">
                                                                 <i className="fa fa-angle-right fa-lg text-muted"></i>
@@ -314,6 +185,13 @@ class Accounts extends React.Component {
                                                         </Link>
                                                     );
                                                 })}
+                                                {this.canAddChildren(account) ? 
+                                                    <Link replace className="widget-list-item bg-white" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
+                                                        <div className="widget-list-content p-l-30">
+                                                            <i className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</i>
+                                                        </div>
+                                                    </Link>
+                                                : null}
                                             </React.Fragment>
                                         );
                                     })}
@@ -323,120 +201,7 @@ class Accounts extends React.Component {
                     }
                 </TabContent>
 
-                <Modal isOpen={this.state.editAccountGroupModal} toggle={() => this.toggleEditAccountGroupModal()} centered={true} onClosed={this.setEditAccountGroupFalse}>
-                    <ModalHeader> {this.state.editAccountGroup? chartOfAccountsText[this.context.locale]["Edit Account Group Details"] : chartOfAccountsText[this.context.locale]["Create a New Account Group"]} </ModalHeader>
-                    <ModalBody>
-                        {this.state.accountGroupNameAlert ? <Alert color="danger">{chartOfAccountsText[this.context.locale]["Please provide a name for your account group."]}</Alert> : null}
-                        <form onSubmit={event => { event.preventDefault(); this.handleSaveAnAccountGroupButton() }}>
-                            <div className="form-group row">
-                                <label className="col-md-4 col-form-label">
-                                    {chartOfAccountsText[this.context.locale]["Account Group Name"]}
-                                </label>
-                                <div className="col-md-8">
-                                    <input type="text" className="form-control"
-                                        value={this.state.accountGroupNameInput}
-                                        onChange={event => this.setState({ accountGroupNameInput: event.target.value })}
-                                    />
-                                </div>
-                            </div>
-                        </form>
-                        <div className="form-group row">
-                            <label className="col-md-4 col-form-label">
-                                {chartOfAccountsText[this.context.locale]["Account Type"]}
-                            </label>
-                            {!this.state.selectedAccountTypeOption ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                                <div className="col-md-8">
-                                    <Select
-                                        options={this.state.accountTypeOptions}
-                                        value={this.state.selectedAccountTypeOption}
-                                        isSearchable={true}
-                                        isDisabled={this.state.disableChangeAccountType}
-                                        onChange={this.handleChangeAccountTypeOption}
-                                    />
-                                    {/**TODO: style the SELECT components to match form-control */}
-                                </div>
-                            }
-                        </div>
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className="btn btn-primary width-10ch" onClick={() => this.handleSaveAnAccountGroupButton()}>
-                            {chartOfAccountsText[this.context.locale]["Save"]}
-                        </button>
-                        <button className="btn btn-white width-10ch" onClick={() => this.toggleEditAccountGroupModal()}>
-                            {chartOfAccountsText[this.context.locale]["Cancel"]}
-                        </button>
-                    </ModalFooter>
-                </Modal>
-
-                {this.state.deleteAccountGroupAlert ?
-                    <SweetAlert primary showCancel
-                        confirmBtnText={chartOfAccountsText[this.context.locale]["Yes, delete it!"]}
-                        confirmBtnBsStyle="primary"
-                        cancelBtnText={chartOfAccountsText[this.context.locale]["Cancel"]}
-                        cancelBtnBsStyle="default"
-                        title={chartOfAccountsText[this.context.locale]["Are you sure?"]}
-                        onConfirm={this.handleConfirmDeleteAccountGroupButton}
-                        onCancel={this.toggleDeleteAccountGroupAlert}
-                    >
-                        {chartOfAccountsText[this.context.locale]["Are you sure you want to delete this account group?"]}
-                    </SweetAlert>
-                    : null}
-                {this.state.cannotDeleteAccountGroupAlert ?
-                    <SweetAlert danger showConfirm={false} showCancel={true}
-                        cancelBtnBsStyle="default"
-                        cancelBtnText={chartOfAccountsText[this.context.locale]["Cancel"]}
-                        title={chartOfAccountsText[this.context.locale]["Cannot delete this account group."]}
-                        onConfirm={this.toggleCannotDeleteAccountGroupAlert}
-                        onCancel={this.toggleCannotDeleteAccountGroupAlert}
-                    >
-                        {chartOfAccountsText[this.context.locale]["Cannot delete this account group. Please delete all accounts in this account group and try again."]}
-                    </SweetAlert>
-                    : null}
-
-                <Modal isOpen={this.state.addAnAccountModal} toggle={() => this.toggleAddAnAccountModal()} centered={true}>
-                    <ModalHeader> {chartOfAccountsText[this.context.locale]["Add an Account"]} </ModalHeader>
-                    <ModalBody>
-                        {
-                            this.state.accountNameAlert ?
-                                <Alert color="danger">
-                                    {chartOfAccountsText[this.context.locale]["Please provide a name for your account."]}
-                                </Alert>
-                                : null
-                        }
-                        <form onSubmit={event => { event.preventDefault(); this.handleSaveNewAccount() }}>
-                            <div className="form-group row">
-                                <label className="col-form-label col-md-3">
-                                    {chartOfAccountsText[this.context.locale]["Account Name"]}
-                                </label>
-                                <div className="col-md-9">
-                                    <input
-                                        className="form-control"
-                                        value={this.state.accountNameInput}
-                                        onChange={event => {
-                                            this.setState({ accountNameInput: event.target.value });
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </form>
-                    </ModalBody>
-                    <ModalFooter>
-                        <button
-                            className="btn btn-primary width-10ch"
-                            onClick={() => this.handleSaveNewAccount()}
-                        >
-                            {chartOfAccountsText[this.context.locale]["Save"]}
-                        </button>
-                        <button
-                            className="btn btn-white width-10ch"
-                            onClick={() => {
-                                this.toggleAddAnAccountModal();
-                            }}
-                        >
-                            {chartOfAccountsText[this.context.locale]["Cancel"]}
-                        </button>
-                    </ModalFooter>
-                </Modal>
+                <AccountDetailsEditor isOpen={this.state.editAccountModal} toggle={this.toggleEditAccountModal} selectedAccountId={this.state.selectedAccountId} fetchData={this.fetchData} createMode={this.state.createMode} accountTypeId={this.props.match.params.activeTabId} selectedParentAccount={this.state.selectedParentAccount}/>
             </div>
 
         )

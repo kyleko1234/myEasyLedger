@@ -187,7 +187,7 @@ public class Account {
 	
 	@OneToMany(mappedBy = "parentAccount")
 	@JsonIgnore
-	private Set<Account> childAccounts;
+	private Set<Account> childAccounts = new HashSet<Account>();
 	
 	@OneToMany(mappedBy = "account")
 	@JsonIgnore

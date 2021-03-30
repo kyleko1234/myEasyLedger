@@ -57,6 +57,19 @@ function AccountDetailsEditor(props) {
             } else if (props.accountTypeId) {
                 setAccountTypeId(props.accountTypeId);
             }
+            if (!appContext.isEnterprise) {
+                let defaultSubtypeId;
+                if (accountTypeId == 1) {
+                    defaultSubtypeId = 5;
+                } else if (accountTypeId == 2) {
+                    defaultSubtypeId = 15;
+                } else if (accountTypeId == 4) {
+                    defaultSubtypeId = 26;
+                } else if (accountTypeId == 5) {
+                    defaultSubtypeId = 31;
+                }
+                setSelectedAccountSubtypeId(defaultSubtypeId);
+            }
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
                 if (response.data) {
                     let validParentAccountOptions = response.data.filter(account => (account.parentAccountId == null && account.debitTotal == 0 && account.creditTotal == 0) || account.hasChildren).map(account => {
@@ -83,7 +96,7 @@ function AccountDetailsEditor(props) {
             }).catch(console.log);
         }
         fetchAccountData();
-    }, [props.selectedAccountId, props.selectedParentAccount, props.isOpen, props.createMode])
+    }, [props.selectedAccountId, props.selectedParentAccount, props.isOpen, props.createMode, accountTypeId])
 
     const modalOnClose = () => {
         setNoAccountNameAlert(false);
