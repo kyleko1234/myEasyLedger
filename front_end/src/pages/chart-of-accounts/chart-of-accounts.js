@@ -194,7 +194,10 @@ class ChartOfAccounts extends React.Component {
                                                 {account.hasChildren ?
                                                     <div className="widget-list-item bg-light">
                                                         <div className="widget-list-content d-flex justify-content-between align-items-center">
-                                                            <h4 className="widget-list-title">{account.accountName}</h4>
+                                                            <h4 className="widget-list-title">
+                                                                <i className="m-r-10 fa fa-angle-down fa-lg text-muted "></i>
+                                                                {account.accountName}
+                                                            </h4>
                                                             <div className="d-flex align-items-center">
                                                                 <button className="m-l-5 btn btn-sm btn-icon text-muted" onClick={() => this.handleEditAccountButton(account)}>
                                                                     <i className="fa fa-edit"></i>

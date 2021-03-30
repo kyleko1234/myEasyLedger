@@ -66,7 +66,7 @@ function AccountDetailsEditor(props) {
                             object: account
                         });
                     });
-                    validParentAccountOptions.unshift({value: 0, label: "None", object: {}});
+                    validParentAccountOptions.unshift({value: 0, label: "None", object: {accountTypeId: accountTypeId}});
                     setParentAccountOptions(validParentAccountOptions);
                 }
             }).catch(console.log);
@@ -100,6 +100,7 @@ function AccountDetailsEditor(props) {
         let requestBody;
         if (!selectedParentAccountId) {
             requestBody = {
+                accountId: props.selectedAccountId,
                 accountName: accountNameInput,
                 accountSubtypeId: selectedAccountSubtypeId,
                 organizationId: appContext.currentOrganizationId,
