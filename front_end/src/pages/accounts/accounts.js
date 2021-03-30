@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Alert, Modal, ModalHeader, ModalBody, ModalFooter, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import { API_BASE_URL } from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
-import Select from 'react-select';
-import SweetAlert from 'react-bootstrap-sweetalert';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 import AccountDetailsEditor from '../chart-of-accounts/components/account-details-editor.js';
@@ -30,7 +28,6 @@ class Accounts extends React.Component {
             createMode: true,
             
             addAnAccountModal: false,
-            accountNameInput: ''
         };
 
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);

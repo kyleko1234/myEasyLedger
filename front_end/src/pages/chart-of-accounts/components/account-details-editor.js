@@ -11,8 +11,8 @@ import { useHistory } from 'react-router-dom';
 
 
 function AccountDetailsEditor(props) {
-    //required props: isOpen, toggle, fetchData, createMode,
-    //optional props: accountTypeId, selectedAccountId, selectedParentAccount
+    //required props: isOpen, toggle, fetchData, createMode
+    //optional props: accountTypeId, selectedAccountId, selectedParentAccount, category
     const appContext = React.useContext(PageSettings);
     const history = useHistory();
 
@@ -159,7 +159,11 @@ function AccountDetailsEditor(props) {
             if (appContext.isEnterprise) {
                 history.push("/chart-of-accounts");
             } else {
-                history.push("/accounts");
+                if (props.category) {
+                    history.push("/categories");
+                } else {
+                    history.push("/accounts");
+                }
             }
         }).catch(() => {
             toggleDeleteAccountAlert();
@@ -199,23 +203,26 @@ function AccountDetailsEditor(props) {
         <>
             <Modal isOpen={props.isOpen} toggle={props.toggle} onClosed={modalOnClose} centered={true} >
                 <ModalHeader className="bg-light">
-                    {props.createMode? accountDetailsEditorText[appContext.locale]["Create a New Account"] : accountDetailsEditorText[appContext.locale]["Edit Account Details"]}
+                    {props.createMode
+                        ? (props.category? accountDetailsEditorText[appContext.locale]["Create a New Category"] : accountDetailsEditorText[appContext.locale]["Create a New Account"])
+                        : (props.category? accountDetailsEditorText[appContext.locale]["Edit Category Details"] : accountDetailsEditorText[appContext.locale]["Edit Account Details"])
+                    }
                 </ModalHeader>
                 <ModalBody>
                     {noAccountNameAlert ?
                         <Alert color="danger">
-                            {accountDetailsEditorText[appContext.locale]["Please provide a name for your account."]}
+                            {props.category? accountDetailsEditorText[appContext.locale]["Please provide a name for your category."] : accountDetailsEditorText[appContext.locale]["Please provide a name for your account."]}
                         </Alert>
                         : null}
                     {noParentOrSubtypeAlert ?
                         <Alert color="danger">
-                            {accountDetailsEditorText[appContext.locale]["Account must belong to either a subtype or a parent account."]}
+                            {accountDetailsEditorText[appContext.locale]["Account must belong to either a subtype or a parent account."] /* conditional rendering not required; this alert should never appear when isEnterprise is false; i.e. when 'category' exists as a classification */} 
                         </Alert>
                         : null}
                     <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
                         <div className="form-group row">
                             <label className="col-form-label col-md-4">
-                                {accountDetailsEditorText[appContext.locale]["Account Name"]}
+                                {props.category? accountDetailsEditorText[appContext.locale]["Category Name"] : accountDetailsEditorText[appContext.locale]["Account Name"]}
                             </label>
                             <div className="col-md-8">
                                 <input
@@ -230,7 +237,7 @@ function AccountDetailsEditor(props) {
                     </form>
                     <div className="form-group row">
                         <label className="col-form-label col-md-4">
-                            {accountDetailsEditorText[appContext.locale]["Parent Account"]}
+                            {props.category? accountDetailsEditorText[appContext.locale]["Parent Category"] : accountDetailsEditorText[appContext.locale]["Parent Account"]}
                         </label>
                         <div className="col-md-8">
                             <Select
@@ -315,18 +322,20 @@ function AccountDetailsEditor(props) {
                     onConfirm={handleConfirmDeleteAccountButton}
                     onCancel={toggleDeleteAccountAlert}
                 >
-                    {accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this account?"]}
+                    {props.category? accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this category?"] : accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this account?"]}
                 </SweetAlert>
                 : null}
             {cannotDeleteAccountAlert ?
                 <SweetAlert danger showConfirm={false} showCancel={true}
                     cancelBtnBsStyle="default"
                     cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title={accountDetailsEditorText[appContext.locale]["Cannot delete this account."]}
+                    title={props.category? accountDetailsEditorText[appContext.locale]["Cannot delete this category."] : accountDetailsEditorText[appContext.locale]["Cannot delete this account."]}
                     onConfirm={toggleCannotDeleteAccountAlert}
                     onCancel={toggleCannotDeleteAccountAlert}
                 >
-                    {accountDetailsEditorText[appContext.locale]["Please remove all line items and child accounts from this account and try again."]}
+                    {props.category
+                        ? accountDetailsEditorText[appContext.locale]["Please remove all line items and child categories from this category and try again."]
+                        : accountDetailsEditorText[appContext.locale]["Please remove all line items and child accounts from this account and try again."]}
                 </SweetAlert>
                 : null}
 
@@ -335,7 +344,8 @@ function AccountDetailsEditor(props) {
 }
 
 AccountDetailsEditor.defaultProps = {
-    createMode: false
+    createMode: false,
+    category: false
 };
 
 export default AccountDetailsEditor;

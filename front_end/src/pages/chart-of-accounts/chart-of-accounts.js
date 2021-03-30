@@ -30,7 +30,6 @@ class ChartOfAccounts extends React.Component {
             createMode: true,
 
             addAnAccountModal: false,
-            accountNameInput: ''
         };
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
         this.fetchData = this.fetchData.bind(this);

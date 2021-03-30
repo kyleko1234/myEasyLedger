@@ -45,11 +45,10 @@ function AccountDetails(props) {
 
     //
     const [selectedAccount, setSelectedAccount] = React.useState(null);
-    const [accountGroupOptions, setAccountGroupOptions] = React.useState(null);
     const [refreshToken, setRefreshToken] = React.useState(0); //set this to a random number when a child component updates to force all child components to update together. Theoretically children components might fail to update if you get two identical random numbers in a row but lmao you're never gonna be able to reproduce this, just refresh
     const [loading, setLoading] = React.useState(true);
     
-    //initially fetch account data and list of accountgroups from API
+    //initially fetch account data from API
     React.useEffect(() => {
         axios.get(`${API_BASE_URL}/account/${selectedAccountId}`).then(response => {
             let selectedAccount = response.data

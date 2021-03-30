@@ -64,7 +64,7 @@ export const chartOfAccountsText = {
         "Account Name": "Account Name",
         "Accounts": "Accounts",
         "Categories": "Categories",
-        "Create a category group": "Create a category group",
+        "Create a category": "Create a category",
         "Create a New Category Group": "Create a New Category Group",
         "Please provide a name for your category group.": "Please provide a name for your category group.",
         "Category Group Name": "Category Group Name",
@@ -80,7 +80,8 @@ export const chartOfAccountsText = {
 
         "Initial Debit Value": "Initial Debit Value",
         "Initial Credit Value": "Initial Credit Value",
-        "Add a new child account...": "Add a new child account..."
+        "Add a new child account...": "Add a new child account...",
+        "Add a new child category...": "Add a new child category..."
         
 
 
@@ -150,7 +151,7 @@ export const chartOfAccountsText = {
         "Account Name": "科目名稱",
         "Accounts": "科目",
         "Categories": "類別",
-        "Create a category group": "建立一個類別群",
+        "Create a category": "TRANSLATION",
         "Create a New Category Group": "建立一個新的類別群",
         "Please provide a name for your category group.": "請給類別群取個名稱",
         "Category Group Name": "科目群名稱",
@@ -166,7 +167,8 @@ export const chartOfAccountsText = {
 
         "Initial Debit Value": "TRANSLATION",
         "Initial Credit Value": "TRANSLATION",
-        "Add a new child account...": "TRANSLATION"
+        "Add a new child account...": "TRANSLATION",
+        "Add a new child category...": "TRANSLATION"
 
 
     }

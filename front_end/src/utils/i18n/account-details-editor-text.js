@@ -6,27 +6,31 @@ export const accountDetailsEditorText = {
         "Account Subtype": "Account Subtype",
         "Total Debit Amount:": "Total Debit Amount:",
         "Total Credit Amount:": "Total Credit Amount:",
-
         "Edit Account Details": "Edit Account Details",
         "Account Name": "Account Name",
         "Please provide a name for your account.": "Please provide a name for your account.",
         "Account Group": "Account Group",
-
         "Save": "Save",
         "Cancel": "Cancel",
         "Delete": "Delete",
         "Yes, delete it!": "Yes, delete it!",
         "Are you sure?": "Are you sure?",
         "Cannot delete this account.": "Cannot delete this account.",
-
         "Are you sure you want to delete this account?": "Are you sure you want to delete this account?",
         "Please remove all line items and child accounts from this account and try again.": "Please remove all line items and child accounts from this account and try again.",
-
         "Initial Debit Value": "Initial Debit Value",
         "Initial Credit Value": "Initial Credit Value",
-
         "Create a New Account": "Create a New Account",
         "Account must belong to either a subtype or a parent account.": "Account must belong to either a subtype or a parent account.",
+
+        "Create a New Category": "Create a New Category",
+        "Edit Category Details": "Edit Category Details",
+        "Please provide a name for your category.": "Please provide a name for your category.",
+        "Category Name": "Category Name",
+        "Parent Category": "Parent Category",
+        "Are you sure you want to delete this category?": "Are you sure you want to delete this category?",
+        "Cannot delete this category.": "Cannot delete this category.",
+        "Please remove all line items and child categories from this category and try again." : "Please remove all line items and child categories from this category and try again.",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "Cash and cash equivalents", 
@@ -72,27 +76,32 @@ export const accountDetailsEditorText = {
         "Account Subtype": "TRANSLATION",
         "Total Debit Amount:": "借方加總:",
         "Total Credit Amount:": "貸方加總:",
-
         "Edit Account Details": "修改科目說明",
         "Account Name": "科目名稱",
         "Please provide a name for your account.": "請填寫會計科目名稱。",
         "Account Group": "科目群",
-
         "Save": "儲存",
         "Cancel": "取消",
         "Delete": "TRANSLATION",
         "Yes, delete it!": "是的，删除它！",
         "Are you sure?": "你真的確定嗎？",
         "Cannot delete this account.": "無法删除本科目。",
-
         "Are you sure you want to delete this account?": "你真的確定要删除這個科目嗎？",
         "Please remove all line items and child accounts from this account and try again.": "TRANSLATION",
-
         "Initial Debit Value": "TRANSLATION",
         "Initial Credit Value": "TRANSLATION",
-
         "Create a New Account": "TRANSLATION",
         "Account must belong to either a subtype or a parent account.": "TRANSLATION",
+
+        "Create a New Category": "TRANSLATION",
+        "Edit Category Details": "TRANSLATION",
+        "Please provide a name for your category.": "TRANSLATION",
+        "Category Name": "TRANSLATION",
+        "Parent Category": "TRANSLATION",
+        "Are you sure you want to delete this category?": "TRANSLATION",
+        "Cannot delete this category.": "TRANSLATION",
+        "Please remove all line items and child categories from this category and try again." : "TRANSLATION",
+
 
         //Account Subtype Names.
         "Cash and cash equivalents": "現金及約當現金", 

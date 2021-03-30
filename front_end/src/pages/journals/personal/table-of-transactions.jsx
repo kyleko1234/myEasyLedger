@@ -25,7 +25,8 @@ function TableOfTransactions({
     tableTitle,
     hasAddEntryButton,
     parentComponentAccountId,
-    loading
+    loading, 
+    category
 }) {
     const {
         getTableProps,
@@ -466,7 +467,7 @@ function TableOfTransactions({
                     }
                 </ModalFooter>
             </Modal>
-            {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)}/> : null}
+            {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} category={category}/> : null}
         </>
     )
 }
