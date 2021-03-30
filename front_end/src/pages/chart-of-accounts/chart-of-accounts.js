@@ -24,20 +24,10 @@ class ChartOfAccounts extends React.Component {
             accounts: [],
             accountTypes: [],
 
-            accountSubtypeRequiredAlert: false,
-
-            accountTypeOptions: [], //for react-select; accountTypes are formatted as {value: accountType.id, label: accountType.name, object: accountType}
-            accountSubtypeOptions: [], //for react-select; accountSubtypes are formatted as {value: accountSubtypeId, label: accountSubtypeName, object: accountSubtype}
-            disableChangeAccountType: false, // disables the react-select field for changing an account group's account type
-
-            selectedAccountSubtypeOption: null,
-            selectedAccountTypeOption: null,
-
             selectedAccountId: null,
             selectedParentAccount: null,
             editAccountModal: false,
             createMode: true,
-            accountNameAlert: false,
 
 
             addAnAccountModal: false,
@@ -47,8 +37,6 @@ class ChartOfAccounts extends React.Component {
         };
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
         this.fetchData = this.fetchData.bind(this);
-        this.handleChangeAccountSubtypeOption = this.handleChangeAccountSubtypeOption.bind(this);
-        this.handleChangeAccountTypeOption = this.handleChangeAccountTypeOption.bind(this);
 
     }
 
@@ -56,30 +44,13 @@ class ChartOfAccounts extends React.Component {
         this.fetchData();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.match.params.activeTabId !== prevProps.match.params.activeTabId) {
-            this.setState({ selectedAccountTypeOption: this.state.accountTypeOptions.find(accountTypeOption => accountTypeOption.value == this.props.match.params.activeTabId) })
-        }
-    }
-
     fetchData() {
         axios.get(`${API_BASE_URL}/accountType`).then(response => {
             this.setState({ accountTypes: response.data });
-            if (response.data) {
-                let formattedAccountTypes = response.data.map(accountType => ({ value: accountType.id, label: chartOfAccountsText[this.context.locale][accountType.name], object: accountType }))
-                this.setState({ accountTypeOptions: formattedAccountTypes, selectedAccountTypeOption: formattedAccountTypes.find(formattedAccountType => formattedAccountType.object.id == this.props.match.params.activeTabId) })
-            }
         })
         axios.get(`${API_BASE_URL}/organization/${this.context.currentOrganizationId}/account`).then(response => {
             this.setState({ accounts: response.data });
         }).catch(console.log);
-        axios.get(`${API_BASE_URL}/accountSubtype`).then(response => {
-            if (response.data) {
-                let formattedAccountSubtypes = response.data.map(accountSubtype => ({ value: accountSubtype.id, label: chartOfAccountsText[this.context.locale][accountSubtype.name], object: accountSubtype }));
-                this.setState({ accountSubtypeOptions: formattedAccountSubtypes });
-            }
-        }).catch(console.log);
-
     }
 
     /** Utility functions for adding/editing account */
@@ -110,14 +81,6 @@ class ChartOfAccounts extends React.Component {
         }), () => {
             this.setState({editAccountModal: true});
         })
-    }
-
-    handleChangeAccountSubtypeOption(selectedAccountSubtypeOption) {
-        this.setState({ selectedAccountSubtypeOption: selectedAccountSubtypeOption });
-    }
-
-    handleChangeAccountTypeOption(selectedAccountTypeOption) {
-        this.setState({ selectedAccountTypeOption: selectedAccountTypeOption, selectedAccountSubtypeOption: null });
     }
 
     /**End utility functions for adding/editing account */
