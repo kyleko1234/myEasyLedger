@@ -131,12 +131,14 @@ function AccountSwitcher(props) {
                                     <div className="widget-list-item border-top-d5d5d5 bg-light-hover">
                                         <div className="widget-list-content">
                                             <div className="font-weight-600">{account.accountName}</div>
+                                        </div>
                                             {props.category || props.isEnterprise ? null :
-                                                <div className=" text-right">
-                                                    {formatBalance(account.accountTypeId, account.debitsMinusCredits)}
+                                                <div className="widget-list-content">
+                                                    <div className=" text-right">
+                                                        {formatBalance(account.accountTypeId, account.debitsMinusCredits)}
+                                                    </div>
                                                 </div>
                                             }
-                                        </div>
                                         <div className="m-r-10 widget-list-action text-right">
                                             <i className="fa fa-angle-right fa-lg text-muted invisible"></i>
                                         </div>
@@ -149,12 +151,14 @@ function AccountSwitcher(props) {
                                     <Link replace className="widget-list-item border-top-d5d5d5 bg-light" to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`}>
                                         <div className="widget-list-content">
                                             <div className="font-weight-600">{account.accountName}</div>
+                                        </div>
                                             {props.category || props.isEnterprise ? null :
-                                                <div className=" text-right">
-                                                    {formatBalance(account.accountTypeId, account.debitsMinusCredits)}
+                                                <div className="widget-list-content">
+                                                    <div className=" text-right">
+                                                        {formatBalance(account.accountTypeId, account.debitsMinusCredits)}
+                                                    </div>
                                                 </div>
                                             }
-                                        </div>
                                         <div className="m-r-10 widget-list-action text-right">
                                             <i className="fa fa-angle-right fa-lg text-muted "></i>
                                         </div>
