@@ -174,7 +174,7 @@ class Accounts extends React.Component {
                                                 {!this.state.accounts ? null : this.state.accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
                                                     return (
                                                         <Link className="widget-list-item bg-white" to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId.toString()}>
-                                                            <div className="widget-list-content p-l-45">
+                                                            <div className="widget-list-content p-l-60">
                                                                 <div className="widget-list-title">{childAccount.accountName}</div>
                                                             </div>
                                                             <div className="m-r-10 widget-list-action text-right">
@@ -185,7 +185,7 @@ class Accounts extends React.Component {
                                                 })}
                                                 {this.canAddChildren(account) ? 
                                                     <Link replace className="widget-list-item bg-white" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
-                                                        <div className="widget-list-content p-l-45">
+                                                        <div className="widget-list-content p-l-60">
                                                             <i className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</i>
                                                         </div>
                                                     </Link>

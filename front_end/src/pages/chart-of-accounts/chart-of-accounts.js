@@ -157,7 +157,10 @@ class ChartOfAccounts extends React.Component {
                                                 :
                                                     <Link className="widget-list-item bg-light" to={`/account-details/${account.accountId}`}>
                                                         <div className="widget-list-content d-flex justify-content-between align-items-center">
-                                                            <h4 className="widget-list-title">{account.accountName}</h4>
+                                                            <h4 className="widget-list-title">
+                                                                <i className={"m-r-10 fa fa-angle-down fa-lg text-muted " + (this.canAddChildren(account) ? "" : "invisible")}></i>
+                                                                {account.accountName}
+                                                            </h4>
                                                             <div className="d-flex align-items-center">
                                                                 <button className="m-l-5 btn btn-sm btn-icon text-muted invisible">
                                                                     <i className="fa fa-edit"></i>
@@ -170,7 +173,7 @@ class ChartOfAccounts extends React.Component {
                                                 {!this.state.accounts ? null : this.state.accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
                                                     return (
                                                         <Link className="widget-list-item bg-white" to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId.toString()}>
-                                                            <div className="widget-list-content p-l-30">
+                                                            <div className="widget-list-content p-l-60">
                                                                 <div className="widget-list-title">{childAccount.accountName}</div>
                                                             </div>
                                                             <div className="m-r-10 widget-list-action text-right">
@@ -181,7 +184,7 @@ class ChartOfAccounts extends React.Component {
                                                 })}
                                                 {this.canAddChildren(account) ? 
                                                     <Link replace className="widget-list-item bg-white" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
-                                                        <div className="widget-list-content p-l-30">
+                                                        <div className="widget-list-content p-l-60">
                                                             <i className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</i>
                                                         </div>
                                                     </Link>
