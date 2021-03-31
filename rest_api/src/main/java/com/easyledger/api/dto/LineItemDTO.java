@@ -18,6 +18,8 @@ public class LineItemDTO {
 	private LocalDate journalEntryDate;
 	private boolean isCredit;
 	private Long lineItemId;
+	private Long accountSubtypeId;
+	private Long accountTypeId;
 
 	
 
@@ -32,13 +34,21 @@ public class LineItemDTO {
     	this.description = lineItem.getDescription();
     	this.accountId = lineItem.getAccount().getId();
     	this.accountName = lineItem.getAccount().getName();
+    	if (lineItem.getAccount().getAccountSubtype() != null) {
+    		this.accountSubtypeId = lineItem.getAccount().getAccountSubtype().getId();
+    		this.accountTypeId = lineItem.getAccount().getAccountSubtype().getAccountType().getId();
+    	} else {
+    		this.accountSubtypeId = lineItem.getAccount().getParentAccount().getAccountSubtype().getId();
+    		this.accountTypeId = lineItem.getAccount().getParentAccount().getAccountSubtype().getAccountType().getId();
+    	}
 	}
 
 	public LineItemDTO() {
 	}
 
 	public LineItemDTO(BigInteger accountId, String accountName, BigDecimal amount, String description, 
-			BigInteger journalEntryId, Date journalEntryDate, boolean isCredit, BigInteger lineItemId) {
+			BigInteger journalEntryId, Date journalEntryDate, boolean isCredit, BigInteger lineItemId,
+			BigInteger accountSubtypeId, BigInteger accountTypeId) {
 		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
 		this.amount = amount;
@@ -47,6 +57,8 @@ public class LineItemDTO {
 		this.journalEntryDate = LocalDate.parse(journalEntryDate.toString());
 		this.isCredit = isCredit;
 		this.lineItemId = lineItemId.longValueExact();
+		this.accountSubtypeId = accountSubtypeId.longValueExact();
+		this.accountTypeId = accountTypeId.longValueExact();
 	}
 
 	public Long getAccountId() {
@@ -113,13 +125,29 @@ public class LineItemDTO {
 		this.lineItemId = lineItemId;
 	}
 
+	public Long getAccountSubtypeId() {
+		return accountSubtypeId;
+	}
+
+	public void setAccountSubtypeId(Long accountSubtypeId) {
+		this.accountSubtypeId = accountSubtypeId;
+	}
+
+	public Long getAccountTypeId() {
+		return accountTypeId;
+	}
+
+	public void setAccountTypeId(Long accountTypeId) {
+		this.accountTypeId = accountTypeId;
+	}
+
 	@Override
 	public String toString() {
 		return "LineItemDTO [accountId=" + accountId + ", accountName=" + accountName + ", amount=" + amount
 				+ ", description=" + description + ", journalEntryId=" + journalEntryId + ", journalEntryDate="
-				+ journalEntryDate + ", isCredit=" + isCredit + ", lineItemId=" + lineItemId + "]";
-	}	
-
+				+ journalEntryDate + ", isCredit=" + isCredit + ", lineItemId=" + lineItemId + ", accountSubtypeId="
+				+ accountSubtypeId + ", accountTypeId=" + accountTypeId + "]";
+	}
 
 
 

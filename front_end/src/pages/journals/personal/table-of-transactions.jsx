@@ -290,7 +290,9 @@ function TableOfTransactions({
             setFromAccountId(firstLineItem.accountId);
             setFromAccountName(firstLineItem.accountName);
             //format line items for display
+            console.log(transactionTypeOptions);
             let formattedLineItems = lineItems.map(lineItem => {
+                console.log(lineItem);
                 let transactionType = transactionTypeOptions.find(transactionType => transactionType.accountTypeIds.includes(lineItem.accountTypeId));
                 return ({
                     lineItemId: lineItem.lineItemId,

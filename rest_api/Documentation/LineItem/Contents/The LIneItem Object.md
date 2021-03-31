@@ -24,6 +24,12 @@ A boolean that marks whether this is a debit (false) item or a credit (true) ite
 
 - **lineItemId (`Long`)**<br/>
 A unique identifier for this object.
+
+- **accountSubtypeId (`Long`)**<br/>
+The id of the accountSubtype to which this lineItem can ultimately be classified.
+- **accountTypeId (`Long`)**<br/>
+The id of the accountType to which this lineItem can ultimately be classified.
+
 ___
 #### Sample Object
 ``` json 
@@ -35,6 +41,8 @@ ___
     "journalEntryId": 1,
     "journalEntryDate": "2020-11-01",
     "isCredit": false,
-    "lineItemId": 1
+    "lineItemId": 1,
+	"accountSubtypeId": 1,
+	"accountTypeId": 1
 }
 ```

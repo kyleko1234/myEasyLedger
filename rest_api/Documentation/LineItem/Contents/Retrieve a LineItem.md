@@ -27,6 +27,8 @@ ____
     "journalEntryId": 1,
     "journalEntryDate": "2020-11-01",
     "isCredit": false,
-    "lineItemId": 1
+    "lineItemId": 1,
+	"accountSubtypeId": 1,
+	"accountTypeId": 1
 }
 ```

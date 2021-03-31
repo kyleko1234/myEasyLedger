@@ -33,27 +33,49 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 								@ColumnResult(name = "journalEntryId"),
 								@ColumnResult(name = "journalEntryDate"),
 								@ColumnResult(name = "isCredit"),
-								@ColumnResult(name = "lineItemId")
+								@ColumnResult(name = "lineItemId"),
+								@ColumnResult(name = "accountSubtypeId"),
+								@ColumnResult(name = "accountTypeId")
 						}
 				)
 		}
 )	
 @NamedNativeQuery( //retrieves all undeleted LineItems in undeleted entries for an account when given an accountId
 		name = "LineItem.getAllLineItemsForAccount",
-		query = "SELECT    " + 
-				"    account.id AS accountId, account.name AS accountName,    " + 
-				"    line_item.amount AS amount,    " + 
-				"    journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate,    " + 
-				"    line_item.is_credit AS isCredit, line_item.id AS lineItemId    " + 
-				"FROM    " + 
-				"    account, line_item, journal_entry    " + 
-				"WHERE    " + 
-				"    account.id = ? AND     " + 
-				"    line_item.account_id = account.id AND    " + 
-				"    line_item.journal_entry_id = journal_entry.id AND    " + 
-				"    journal_entry.deleted = false    " + 
-				"ORDER BY    " + 
-				"    journal_entry.journal_entry_date DESC, line_item.id DESC ",
+		query = "(SELECT       " + 
+				"        account.id AS accountId, account.name AS accountName,       " + 
+				"        line_item.amount AS amount,       " + 
+				"        journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate,       " + 
+				"        line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId " + 
+				"    FROM       " + 
+				"        line_item, journal_entry, account, account_subtype, account_type " + 
+				"    WHERE       " + 
+				"        account.id = :accountId AND        " + 
+				"        line_item.account_id = account.id AND       " + 
+				"        line_item.journal_entry_id = journal_entry.id AND       " + 
+				"        journal_entry.deleted = false AND  " + 
+				"        account_subtype.id = account.account_subtype_id AND " + 
+				"        account_type.id = account_subtype.account_type_id " + 
+				"    ORDER BY       " + 
+				"        journal_entry.journal_entry_date DESC, line_item.id DESC)     " + 
+				"UNION " + 
+				"(SELECT       " + 
+				"    child_account.id AS accountId, child_account.name AS accountName,       " + 
+				"    line_item.amount AS amount,       " + 
+				"    journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate,       " + 
+				"    line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId " + 
+				"FROM       " + 
+				"    line_item, journal_entry, account AS child_account, account AS parent_account, account_subtype, account_type " + 
+				"WHERE       " + 
+				"    child_account.id = :accountId AND        " + 
+				"    line_item.account_id = child_account.id AND       " + 
+				"    line_item.journal_entry_id = journal_entry.id AND       " + 
+				"    journal_entry.deleted = false AND  " + 
+				"    parent_account.id = child_account.parent_account_id AND  " + 
+				"    account_subtype.id = parent_account.account_subtype_id AND " + 
+				"    account_type.id = account_subtype.account_type_id " + 
+				"ORDER BY       " + 
+				"    journal_entry.journal_entry_date DESC, line_item.id DESC ) ",
 		resultSetMapping = "lineItemDTOMapping"
 )
 @SqlResultSetMapping(//sqlresultsetmapping for counting query

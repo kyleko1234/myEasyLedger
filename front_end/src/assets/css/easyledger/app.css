@@ -4,6 +4,11 @@
 .width-half {
     width: 50% !important;
 }
+
+.p-l-45 {
+    padding-left: 45px !important;
+}
+
 .p-l-60 {
     padding-left: 60px !important;
 }

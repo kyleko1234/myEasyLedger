@@ -129,8 +129,9 @@ function AccountSwitcher(props) {
                                 <React.Fragment key={account.accountId}>
                                     <div>{/*Empty div to force css to play nicely*/}</div>
                                     <div className="widget-list-item border-top-d5d5d5 bg-light-hover">
-                                        <div className="widget-list-content">
-                                            <div className="font-weight-600">{account.accountName}</div>
+                                        <div className="widget-list-content d-flex">
+                                            <b className={"rotating-caret expand align-self-center invisible"} ></b>
+                                            <div className="align-self-center m-l-5 font-weight-600">{account.accountName}</div>
                                         </div>
                                             {props.category || props.isEnterprise ? null :
                                                 <div className="widget-list-content">
@@ -149,8 +150,9 @@ function AccountSwitcher(props) {
                                 <React.Fragment key={account.accountId}>
                                     <div>{/*Empty div to force css to play nicely*/}</div>
                                     <Link replace className="widget-list-item border-top-d5d5d5 bg-light" to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`}>
-                                        <div className="widget-list-content">
-                                            <div className="font-weight-600">{account.accountName}</div>
+                                        <div className="widget-list-content d-flex">
+                                            <b className={"rotating-caret expand align-self-center invisible"} ></b>
+                                            <div className="align-self-center m-l-5 font-weight-600">{account.accountName}</div>
                                         </div>
                                             {props.category || props.isEnterprise ? null :
                                                 <div className="widget-list-content">

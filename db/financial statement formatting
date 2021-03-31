@@ -47,10 +47,10 @@ Current Assets:
     Inventories (subtype)
     Other Current Assets (subtype)
 Non-current Assets:
+    Non-current marketable securities (subtype)
+    Non-current receivables (subtype)
     Property, Plant, and Equipment (subtype)
     Intangible assets and goodwill (subtype)
-    Non-current receivables (subtype)
-    Non-current marketable securities (subtype)
     Other non-current assets (subtype)
 
 LIABILITIES
@@ -66,7 +66,8 @@ Non-current Liabilities
     Other non-current liabilities (subtype)
 
 EQUITY
-Paid-In Capital (subtype) (share-based compensation?)
+Paid-In Capital (subtype)
+Share-based Compensation (subtype)
 Other Equity Items (subtype)
 Retained Earnings 
     Beginning balances
@@ -101,7 +102,7 @@ CASH FLOW FROM INVESTING
 FINANCING ACTIVITIES:
     Add increase in paid-in capital (subtype) (we separate out share-based compensation and therefore we do not subtract share-based compensation from   
         paid-in capital) 
-    Subtract payments for dividends and equivalents (subtype)
+    Subtract payments for dividends and equivalents (increase in dividends declared - increase in dividends payable)
     Subtract repurchase of common stock (subtype?)
     Add income from financing activities (subtype)
     Subtract decrease in debt? (subtype)
@@ -122,13 +123,14 @@ ASSETS
    3 Current receivables 
    4 Inventory 
    5 Other current assets
+   9 Non-current marketable securities
+   8 Non-current receivables 
    6 PP&E 
    7 Intangible assets and goodwill
-   8 Non-current receivables 
-   9 Non-current marketable securities
    10 Other non-current assets
 LIABILITIES
    11 Current payables 
+      Dividends and equivalents payable 
    12 Deferred revenue 
    13 Short-term debt 
    14 Deferred tax 
