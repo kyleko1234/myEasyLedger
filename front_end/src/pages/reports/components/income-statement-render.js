@@ -71,7 +71,6 @@ function IncomeStatementRender() {
     const [taxExpenseSubtypeId, setTaxExpenseSubtypeId] = React.useState(null);
     const [nonRecurringSubtypeId, setNonRecurringSubtypeId] = React.useState(null);
 
-    const [accountGroupBalances, setAccountGroupBalances] = React.useState(null);
     const [accountBalances, setAccountBalances] = React.useState(null);
 
 
@@ -99,8 +98,6 @@ function IncomeStatementRender() {
                     setTaxExpense(response.data.taxExpense);
                     setNonRecurringAndExtraordinaryItems(response.data.nonRecurringAndExtraordinaryItems);
                     setNetIncome(response.data.netIncome);
-                    setAccountGroupBalances(response.data.accountGroupBalances);
-                    setAccountBalances(response.data.accountBalances);
                     setRevenueSubtypeId(response.data.revenueSubtypeId);
                     setIncomeFromInvestingSubtypeId(response.data.incomeFromInvestingSubtypeId);
                     setIncomeFromFinancingSubtypeId(response.data.incomeFromFinancingSubtypeId);
@@ -113,6 +110,21 @@ function IncomeStatementRender() {
                     setInterestExpenseSubtypeId(response.data.interestExpenseSubtypeId);
                     setTaxExpenseSubtypeId(response.data.setTaxExpenseSubtypeId);
                     setNonRecurringSubtypeId(response.data.nonRecurringSubtypeId);
+                    let rawAccountBalances = response.data.accountBalances;
+                    rawAccountBalances.forEach(account => {
+                        if (account.hasChildren) {
+                            let totalDebits = 0;
+                            let totalCredits = 0;    
+                            rawAccountBalances.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
+                                totalDebits = totalDebits + childAccount.debitTotal;
+                                totalCredits = totalCredits + childAccount.creditTotal;
+                            })    
+                            account.debitTotal = totalDebits;
+                            account.creditTotal = totalCredits;
+                            account.debitsMinusCredits = totalDebits - totalCredits;    
+                        }
+                    })
+                    setAccountBalances(rawAccountBalances);
                 }
             }).catch(error => {
                 console.log(error);
@@ -157,24 +169,24 @@ function IncomeStatementRender() {
                 <div>
                     <table className="table table-striped m-b-0">
                         <tbody>
-                            {!accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == revenueSubtypeId).length? null : 
+                            {!accountBalances.filter(account => account.accountSubtypeId == revenueSubtypeId).length? null : 
                                 <>
                                 <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Revenue"]}</td></tr>
-                                    {accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == revenueSubtypeId).map(accountGroup => {
+                                    {accountBalances.filter(account => account.accountSubtypeId == revenueSubtypeId).map(account => {
                                         return(
-                                            <tr key={accountGroup.accountGroupId}><td className="d-flex justify-content-between p-l-30"><div>{accountGroup.accountGroupName}</div><div>{numberAsCurrency(accountGroup.debitsMinusCredits * -1)}</div></td></tr>
+                                            <tr key={account.accountId}><td className="d-flex justify-content-between p-l-30"><div>{account.accountName}</div><div>{numberAsCurrency(account.debitsMinusCredits * -1)}</div></td></tr>
                                         )
                                     })}
                                     <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total revenue"]}</div><div>{numberAsCurrency(totalRevenue)}</div></td></tr>
                                     <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                                 </>
                             }
-                            {!accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == costOfSalesSubtypeId).length? null : 
+                            {!accountBalances.filter(account => account.accountSubtypeId == costOfSalesSubtypeId).length? null : 
                                 <>
                                     <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Cost of sales"]}</td></tr>
-                                    {accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == costOfSalesSubtypeId).map(accountGroup => {
+                                    {accountBalances.filter(account => account.accountSubtypeId == costOfSalesSubtypeId).map(account => {
                                         return(
-                                            <tr key={accountGroup.accountGroupId}><td className="d-flex justify-content-between p-l-30"><div>{accountGroup.accountGroupName}</div><div>{numberAsCurrency(accountGroup.debitsMinusCredits)}</div></td></tr>
+                                            <tr key={account.accountId}><td className="d-flex justify-content-between p-l-30"><div>{account.accountName}</div><div>{numberAsCurrency(account.debitsMinusCredits)}</div></td></tr>
                                         )
                                     })}
                                     <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div><div>{numberAsCurrency(totalCostOfSales)}</div></td></tr>

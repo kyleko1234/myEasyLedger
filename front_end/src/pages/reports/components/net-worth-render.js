@@ -10,7 +10,6 @@ function NetWorthRender() {
     const today = new Date();
 
     const [endDate, setEndDate] = React.useState(today.toISOString().split('T')[0]);
-    const [accountGroups, setAccountGroups] = React.useState([]);
     const [accounts, setAccounts] = React.useState([]);
     const [balanceSheetAssets, setBalanceSheetAssets] = React.useState(null);
     const [balanceSheetLiabilities, setBalanceSheetLiabilities] = React.useState(null);
@@ -21,8 +20,21 @@ function NetWorthRender() {
         async function fetchData() {
             setLoading(true);
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDate}`).then(response => {
-                setAccountGroups(response.data.accountGroupBalances);
-                setAccounts(response.data.accountBalances);
+                let formattedAccounts = response.data.accountBalances;
+                formattedAccounts.forEach(account => {
+                    if (account.hasChildren) {
+                        let totalDebits = 0;
+                        let totalCredits = 0;    
+                        formattedAccounts.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
+                            totalDebits = totalDebits + childAccount.debitTotal;
+                            totalCredits = totalCredits + childAccount.creditTotal;
+                        })
+                        account.debitTotal = totalDebits;
+                        account.creditTotal = totalCredits;
+                        account.debitsMinusCredits = totalDebits - totalCredits;    
+                    }
+                })
+                setAccounts(formattedAccounts);
                 setBalanceSheetAssets(response.data.balanceSheetAssets);
                 setBalanceSheetLiabilities(response.data.balanceSheetLiabilities);
             }).catch(console.log);  
@@ -58,24 +70,21 @@ function NetWorthRender() {
                             <tr><th>{netWorthReportText[appContext.locale]["Assets"]}</th></tr>
                         </thead>
                         <tbody>
-                            {accountGroups.filter(accountGroup => accountGroup.accountTypeId == 1).map(accountGroup => {
+                            {accounts.filter(account => account.accountTypeId == 1).map(account => {
                                 return(
-                                    <React.Fragment key={accountGroup.accountGroupId}>
+                                    <React.Fragment key={account.accountId}>
                                         <tr><td className="p-l-30 d-flex justify-content-between font-weight-600 bg-light">
-                                            <div>{accountGroup.accountGroupName}</div>
+                                            <div>{account.accountName}</div>
+                                            <div className={account.debitsMinusCredits >= 0? "" : "text-red"}>{formatNumber(account.debitsMinusCredits)}</div>
                                         </td></tr>
-                                        {accounts.filter(account => account.accountGroupId == accountGroup.accountGroupId).map(account => {
+                                        {accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
                                             return(
-                                                <tr key={account.accountId}><td className="p-l-60 d-flex justify-content-between">
-                                                    <div>{account.accountName}</div>
-                                                    <div className={account.debitsMinusCredits >= 0? "" : "text-red"}>{formatNumber(account.debitsMinusCredits)}</div>
+                                                <tr key={childAccount.accountId}><td className="p-l-60 d-flex justify-content-between">
+                                                    <div>{childAccount.accountName}</div>
+                                                    <div className={childAccount.debitsMinusCredits >= 0? "" : "text-red"}>{formatNumber(childAccount.debitsMinusCredits)}</div>
                                                 </td></tr> 
                                             )
                                         })}
-                                        <tr><td className="p-l-60 d-flex justify-content-between font-weight-600">
-                                            <div>{netWorthReportText[appContext.locale]["Total accountGroupName"](accountGroup.accountGroupName)}</div>
-                                            <div className={accountGroup.debitsMinusCredits >= 0? "" : "text-red"}>{formatNumber(accountGroup.debitsMinusCredits)}</div>
-                                        </td></tr>
                                     </React.Fragment>
                                 )
                             })}
@@ -92,24 +101,21 @@ function NetWorthRender() {
                             <tr><th>{netWorthReportText[appContext.locale]["Liabilities"]}</th></tr>
                         </thead>
                         <tbody>
-                            {accountGroups.filter(accountGroup => accountGroup.accountTypeId == 2).map(accountGroup => {
+                            {accounts.filter(account => account.accountTypeId == 2).map(account => {
                                 return(
-                                    <React.Fragment key={accountGroup.accountGroupId}>
+                                    <React.Fragment key={account.accountId}>
                                         <tr><td className="p-l-30 d-flex justify-content-between font-weight-600 bg-light">
-                                            <div>{accountGroup.accountGroupName}</div>
+                                            <div>{account.accountName}</div>
+                                            <div className={account.debitsMinusCredits > 0? "" : "text-red"}>{formatNumber(account.debitsMinusCredits * -1)}</div>
                                         </td></tr>
-                                        {accounts.filter(account => account.accountGroupId == accountGroup.accountGroupId).map(account => {
+                                        {accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
                                             return(
-                                                <tr key={account.accountId}><td className="p-l-60 d-flex justify-content-between">
-                                                    <div>{account.accountName}</div>
-                                                    <div className={account.debitsMinusCredits > 0? "" : "text-red"}>{formatNumber(account.debitsMinusCredits * -1)}</div>
+                                                <tr key={childAccount.accountId}><td className="p-l-60 d-flex justify-content-between">
+                                                    <div>{childAccount.accountName}</div>
+                                                    <div className={childAccount.debitsMinusCredits > 0? "" : "text-red"}>{formatNumber(childAccount.debitsMinusCredits * -1)}</div>
                                                 </td></tr> 
                                             )
                                         })}
-                                        <tr><td className="p-l-60 d-flex justify-content-between font-weight-600 bg-light">
-                                            <div>{netWorthReportText[appContext.locale]["Total accountGroupName"](accountGroup.accountGroupName)}</div>
-                                            <div className={accountGroup.debitsMinusCredits > 0? "" : "text-red"}>{formatNumber(accountGroup.debitsMinusCredits * -1)}</div>
-                                        </td></tr>
                                     </React.Fragment>
                                 )
                             })}

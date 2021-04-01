@@ -34,7 +34,6 @@ export const incomeStatementRenderText = {
         "Expenses": "Expenses",
         "Total Expenses": "Total Expenses",
         "Total Income less Expenses": "Total Income less Expenses",
-        "Total accountGroupName": accountGroupName => "Total " + accountGroupName,
 
         
     },
@@ -73,7 +72,6 @@ export const incomeStatementRenderText = {
         "Expenses": "費用",
         "Total Expenses": "合計費用",
         "Total Income less Expenses": "總收益 減 總費用",
-        "Total accountGroupName": accountGroupName => accountGroupName + "合計"
 
 
     }
