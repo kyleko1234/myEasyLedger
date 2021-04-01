@@ -62,11 +62,11 @@ function AccountDetailsEditor(props) {
                 if (accountTypeId == 1) {
                     defaultSubtypeId = 5;
                 } else if (accountTypeId == 2) {
-                    defaultSubtypeId = 15;
+                    defaultSubtypeId = 16;
                 } else if (accountTypeId == 4) {
-                    defaultSubtypeId = 26;
+                    defaultSubtypeId = 24;
                 } else if (accountTypeId == 5) {
-                    defaultSubtypeId = 31;
+                    defaultSubtypeId = 27;
                 }
                 setSelectedAccountSubtypeId(defaultSubtypeId);
             }

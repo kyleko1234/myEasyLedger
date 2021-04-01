@@ -64,12 +64,12 @@ INSERT INTO account_subtype(name, account_type_id)
         ('Revenue', 4),
         ('Income from investing activities', 4),
         ('Income from financing activities', 4),
-        ('Other income', 4),
         ('Cost of sales', 5),
         ('Research and development', 5),
         ('Selling, general, and administration', 5),
         ('Depreciation and amortization', 5),
-        ('Other expense', 5),
+        ('Expense from investing activities', 5),
+        ('Expense from financing activities', 5),
         ('Interest expense', 5),
         ('Tax expense', 5),
         ('Non-recurring and extraordinary items', 5);
@@ -105,13 +105,13 @@ INCOME
    24 Revenue
    25 Income from investing activities
    26 Income from financing activities
-   27 Other income
 EXPENSES
-   28 Cost of sales
-   29 R&D
-   30 SG&A
-   31 Depreciation and Amortization 
-   32 Other expense
+   27 Cost of sales
+   28 R&D
+   29 SG&A
+   30 Depreciation and Amortization 
+   31 Expense from investing activities
+   32 Expense from financing activities
    33 Interest expense 
    34 Tax expense 
    35 Non-recurring and extraordinary items
@@ -158,7 +158,7 @@ INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amo
         ('Paid-in Capital', 20, 1, 0, 0, 0, 0, true),
         ('Dividends and equivalents', 22, 1, 0, 0, 0, 0, true),
         ('Revenue', 24, 1, 0, 0, 0, 0, true),
-        ('Selling, general, and administration', 30, 1, 0, 0, 0, 0, true);
+        ('Selling, general, and administration', 29, 1, 0, 0, 0, 0, true);
 
 /** 1    ('Cash', 1, 1),
     2    ('Accounts Receivable', 3, 1),

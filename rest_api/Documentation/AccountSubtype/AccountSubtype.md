@@ -1,7 +1,9 @@
 ## AccountSubtype
 
 
-AccountSubtypes represent subgroups of each AccountType. These are hardcoded into the server for the purposes of generating accurate reports. Each AccountGroup must belong to exactly one AccountSubtype. The account subtypes are provided as follows:
+AccountSubtypes represent subgroups of each AccountType. These are hardcoded into the server for the purposes of generating accurate reports. Each AccountGroup must belong to exactly one AccountSubtype. **Other Income and Other Expense subtypes are considered operating cash income and cash expense on the cash flow statement, but considered non-operating income and expense on the income statement. For this reason, Enterprise users should 
+
+The account subtypes are provided as follows:
 
 ```
 ASSETS
@@ -34,13 +36,13 @@ INCOME
    24 Revenue
    25 Income from investing activities
    26 Income from financing activities
-   27 Other income
 EXPENSES
-   28 Cost of sales
-   29 R&D
-   30 SG&A
-   31 Depreciation and Amortization 
-   32 Other expense
+   27 Cost of sales
+   28 R&D
+   29 SG&A
+   30 Depreciation and Amortization 
+   31 Expense from investing activities
+   32 Expense from financing activities
    33 Interest expense 
    34 Tax expense 
    35 Non-recurring and extraordinary items

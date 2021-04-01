@@ -184,21 +184,21 @@ public class PersonService {
 					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
 			AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 16)
 					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 16"));
-			AccountSubtype otherIncome = accountSubtypeRepo.findById((long) 26)
+			AccountSubtype revenue = accountSubtypeRepo.findById((long) 24)
+					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 24"));
+			AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
 					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
-			AccountSubtype otherExpenses = accountSubtypeRepo.findById((long) 31)
-					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 32"));
 			
 			Account cash = new Account("Cash", otherCurrentAssets);
 			Account bankAccounts = new Account("Bank Accounts", otherCurrentAssets);
 			Account creditCards = new Account("Credit Cards", otherCurrentLiabilities);
-			Account jobs = new Account("Jobs", otherIncome);
-			Account projects = new Account("Projects", otherIncome);
-			Account food = new Account("Food", otherExpenses);
-			Account living = new Account("Living", otherExpenses);
-			Account transportation = new Account("Transportation", otherExpenses);
-			Account education = new Account("Education", otherExpenses);
-			Account discretionary = new Account("Discretionary", otherExpenses);
+			Account jobs = new Account("Jobs", revenue);
+			Account projects = new Account("Projects", revenue);
+			Account food = new Account("Food", costOfSales);
+			Account living = new Account("Living", costOfSales);
+			Account transportation = new Account("Transportation", costOfSales);
+			Account education = new Account("Education", costOfSales);
+			Account discretionary = new Account("Discretionary", costOfSales);
 			
 			List<Account> parentAccounts = Arrays.asList(cash, bankAccounts, creditCards, jobs, projects, food, living, transportation, education, discretionary);
 			for (Account account : parentAccounts) {

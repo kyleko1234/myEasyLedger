@@ -21,8 +21,8 @@ ___
     "operatingIncome": BigDecimal,
     "incomeFromInvesting": BigDecimal,
     "incomeFromFinancing": BigDecimal,
-    "otherIncome": BigDecimal,
-    "otherExpenses": BigDecimal,
+    "expenseFromInvesting": BigDecimal,
+    "expenseFromFinancing": BigDecimal,
     "totalOtherIncomeExpense": BigDecimal,
     "ebit": BigDecimal,
     "interestExpense": BigDecimal,
@@ -32,18 +32,18 @@ ___
     "netIncome": BigDecimal,
     "accountGroupBalances": List<AccountGroupBalanceDTO>,
     "accountBalances": List<AccountDTO>
-    "revenueSubtypeId": 23,
-    "incomeFromInvestingSubtypeId": 24,
-    "incomeFromFinancingSubtypeId": 25,
-    "otherIncomeSubtypeId": 26,
+    "revenueSubtypeId": 24,
+    "incomeFromInvestingSubtypeId": 25,
+    "incomeFromFinancingSubtypeId": 26,
     "costOfSalesSubtypeId": 27,
     "researchAndDevelopmentSubtypeId": 28,
     "sgaSubtypeId": 29,
     "depreciationAmortizationSubtypeId": 30,
-    "otherExpensesSubtypeId": 31,
-    "interestExpenseSubtypeId": 32,
-    "taxExpenseSubtypeId": 33,
-    "nonRecurringSubtypeId": 34
+    "expenseFromInvestingSubtypeId": 31,
+	"expenseFromFinancingSubtypeId": 32,
+    "interestExpenseSubtypeId": 33,
+    "taxExpenseSubtypeId": 34,
+    "nonRecurringSubtypeId": 35
 }
 ```
 ___

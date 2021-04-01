@@ -48,8 +48,8 @@ function IncomeStatementRender() {
     const [operatingIncome, setOperatingIncome] = React.useState(null);
     const [incomeFromInvesting, setIncomeFromInvesting] = React.useState(null);
     const [incomeFromFinancing, setIncomeFromFinancing] = React.useState(null);
-    const [otherIncome, setOtherIncome] = React.useState(null);
-    const [otherExpenses, setOtherExpenses] = React.useState(null);
+    const [expenseFromInvesting, setExpenseFromInvesting] = React.useState(null);
+    const [expenseFromFinancing, setExpenseFromFinancing] = React.useState(null);
     const [totalOtherIncomeExpense, setTotalOtherIncomeExpense] = React.useState(null);
     const [ebit, setEbit] = React.useState(null);
     const [interestExpense, setInterestExpense] = React.useState(null);
@@ -89,8 +89,8 @@ function IncomeStatementRender() {
                     setOperatingIncome(response.data.operatingIncome);
                     setIncomeFromInvesting(response.data.incomeFromInvesting);
                     setIncomeFromFinancing(response.data.incomeFromFinancing);
-                    setOtherIncome(response.data.otherIncome);
-                    setOtherExpenses(response.data.otherExpenses);
+                    setExpenseFromInvesting(response.data.expenseFromInvesting);
+                    setExpenseFromFinancing(response.data.expenseFromFinancing);
                     setTotalOtherIncomeExpense(response.data.totalOtherIncomeExpense);
                     setEbit(response.data.ebit);
                     setInterestExpense(response.data.interestExpense);
@@ -204,10 +204,8 @@ function IncomeStatementRender() {
                             <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Operating income"]}</div><div>{numberAsCurrency(operatingIncome)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                             <tr><td className="font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Other income/expense"]}</div></td></tr>
-                            {!incomeFromInvesting? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Income from investing activities"]}</div><div>{numberAsCurrency(incomeFromInvesting)}</div></td></tr>}
-                            {!incomeFromFinancing? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Income from financing activities"]}</div><div>{numberAsCurrency(incomeFromFinancing)}</div></td></tr>}
-                            {!otherIncome? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Other income"]}</div><div>{numberAsCurrency(otherIncome)}</div></td></tr>}
-                            {!otherExpenses? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Other expenses"]}</div><div>{numberAsCurrency(otherExpenses)}</div></td></tr>}
+                            {!incomeFromInvesting? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Net income/expense from investing activities"]}</div><div>{numberAsCurrency(incomeFromInvesting - expenseFromInvesting)}</div></td></tr>}
+                            {!incomeFromFinancing? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Net income/expense from financing activities"]}</div><div>{numberAsCurrency(incomeFromFinancing - expenseFromFinancing)}</div></td></tr>}
                             <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total other income/expense, net"]}</div><div>{numberAsCurrency(totalOtherIncomeExpense)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                             <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Earnings before interest and tax"]}</div><div>{numberAsCurrency(ebit)}</div></td></tr>
