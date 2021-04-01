@@ -94,7 +94,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"        account_subtype.id AS account_subtype_id, SUM(account.initial_debit_amount) AS sum_of_initial_debit_amounts, SUM(account.initial_credit_amount) AS sum_of_initial_credit_amounts  " + 
 				"    FROM   " + 
 				"        account, organization, account_subtype " + 
-				"    WHERE organization.id = 1 AND  " + 
+				"    WHERE organization.id = :organizationId AND  " + 
 				"        account.organization_id = organization.id AND  " + 
 				"        account.account_subtype_id = account_subtype.id " + 
 				"    GROUP BY account_subtype.id, organization.id " + 

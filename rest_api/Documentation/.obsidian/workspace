@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+            "file": "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md",
             "mode": "source"
           }
         }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+                "file": "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -86,15 +86,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
+    "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md",
+    "Reports/Contents/Generate a Balance Sheet.md",
+    "Reports/Reports.md",
     "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
     "Account/Contents/List All Accounts.md",
     "Account/Contents/List All Accounts Belonging to an Organization.md",
     "AccountSubtype/AccountSubtype.md",
     "LineItem/Contents/Retrieve a LineItem.md",
     "LineItem/Contents/List All LineItems.md",
-    "LineItem/Contents/Retrieve All LineItems for an Account.md",
-    "LineItem/Contents/The LineItem Object.md",
-    "LineItem/LineItem.md",
-    "Account/Contents/Update an Account.md"
+    "LineItem/Contents/Retrieve All LineItems for an Account.md"
   ]
 }
