@@ -38,81 +38,83 @@ INSERT INTO account_type(name)
 
 INSERT INTO account_subtype(name, account_type_id)
     VALUES
-       ('Cash and cash equivalents', 1),
-       ('Current marketable securities', 1),
-       ('Current receivables', 1),
-       ('Inventory', 1),
-       ('Other current assets', 1),
-       ('Property, plant, and equipment', 1),
-       ('Intangible assets and goodwill', 1),
-       ('Non-current receivables', 1),
-       ('Non-current marketable securities', 1),
-       ('Other non-current assets', 1),
-       ('Current payables', 2),
-       ('Deferred revenue', 2),
-       ('Short-term debt', 2),
-       ('Deferred tax', 2),
-       ('Other current liabilities', 2),
-       ('Long-term debt', 2),
-       ('Non-current payables', 2),
-       ('Other non-current liabilities', 2),
-       ('Paid-in capital', 3),
-       ('Share-based compensation', 3),
-       ('Dividends and equivalents', 3),
-       ('Other equity items', 3),
-       ('Revenue', 4),
-       ('Income from investing activities', 4),
-       ('Income from financing activities', 4),
-       ('Other income', 4),
-       ('Cost of sales', 5),
-       ('Research and development', 5),
-       ('Selling, general, and administration', 5),
-       ('Depreciation and amortization', 5),
-       ('Other expense', 5),
-       ('Interest expense', 5),
-       ('Tax expense', 5),
-       ('Non-recurring and extraordinary items', 5);
+        ('Cash and cash equivalents', 1),
+        ('Current marketable securities', 1),
+        ('Current receivables', 1),
+        ('Inventory', 1),
+        ('Other current assets', 1),
+        ('Non-current marketable securities', 1),
+        ('Non-current receivables', 1),
+        ('Property, plant, and equipment', 1),
+        ('Intangible assets and goodwill', 1),
+        ('Other non-current assets', 1),
+        ('Current payables', 2),
+        ('Dividends and equivalents payable', 2),
+        ('Deferred revenue', 2),
+        ('Short-term debt', 2),
+        ('Deferred tax', 2),
+        ('Other current liabilities', 2),
+        ('Long-term debt', 2),
+        ('Non-current payables', 2),
+        ('Other non-current liabilities', 2),
+        ('Paid-in capital', 3),
+        ('Share-based compensation', 3),
+        ('Dividends and equivalents', 3),
+        ('Other equity items', 3),
+        ('Revenue', 4),
+        ('Income from investing activities', 4),
+        ('Income from financing activities', 4),
+        ('Other income', 4),
+        ('Cost of sales', 5),
+        ('Research and development', 5),
+        ('Selling, general, and administration', 5),
+        ('Depreciation and amortization', 5),
+        ('Other expense', 5),
+        ('Interest expense', 5),
+        ('Tax expense', 5),
+        ('Non-recurring and extraordinary items', 5);
 
         /*
-        ASSETS
-           1 Cash and cash equivalents
-           2 Current marketable securities 
-           3 Current receivables 
-           4 Inventory 
-           5 Other current assets
-           6 PP&E 
-           7 Intangible assets and goodwill
-           8 Non-current receivables 
-           9 Non-current marketable securities
-           10 Other non-current assets
-        LIABILITIES
-           11 Current payables 
-           12 Deferred revenue 
-           13 Short-term debt 
-           14 Deferred tax 
-           15 Other current liabilities
-           16 Long-term debt 
-           17 Non-current payables 
-           18 Other non-current liabilities
-        EQUITY
-           19 Paid-in capital 
-           20 Share-based compensation
-           21 Dividends and equivalents 
-           22 Other equity items
-        INCOME
-           23 Revenue
-           24 Income from investing activities
-           25 Income from financing activities
-           26 Other income
-        EXPENSES
-           27 Cost of sales
-           28 R&D
-           29 SG&A
-           30 Depreciation and Amortization 
-           31 Other expense
-           32 Interest expense 
-           33 Tax expense 
-           34 Non-recurring and extraordinary items
+ASSETS
+   1 Cash and cash equivalents
+   2 Current marketable securities 
+   3 Current receivables 
+   4 Inventory 
+   5 Other current assets
+   6 Non-current marketable securities
+   7 Non-current receivables 
+   8 PP&E 
+   9 Intangible assets and goodwill
+   10 Other non-current assets
+LIABILITIES
+   11 Current payables 
+   12 Dividends and equivalents payable 
+   13 Deferred revenue 
+   14 Short-term debt 
+   15 Deferred tax 
+   16 Other current liabilities
+   17 Long-term debt 
+   18 Non-current payables 
+   19 Other non-current liabilities
+EQUITY
+   20 Paid-in capital 
+   21 Share-based compensation
+   22 Dividends and equivalents 
+   23 Other equity items
+INCOME
+   24 Revenue
+   25 Income from investing activities
+   26 Income from financing activities
+   27 Other income
+EXPENSES
+   28 Cost of sales
+   29 R&D
+   30 SG&A
+   31 Depreciation and Amortization 
+   32 Other expense
+   33 Interest expense 
+   34 Tax expense 
+   35 Non-recurring and extraordinary items
         */
 
 
@@ -151,12 +153,12 @@ INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amo
         ('Cash', 1, 1, 0, 0, 0, 0, true),
         ('Accounts Receivable', 3, 1, 0, 0, 0, 0, true),
         ('Inventories', 4, 1, 0, 0, 0, 0, true),
-        ('Equipment', 6, 1, 0, 0, 0, 0, true),
+        ('Equipment', 8, 1, 0, 0, 0, 0, true),
         ('Payables', 11, 1, 0, 0, 0, 0, true),
-        ('Paid-in Capital', 19, 1, 0, 0, 0, 0, true),
-        ('Dividends and equivalents', 21, 1, 0, 0, 0, 0, true),
-        ('Revenue', 23, 1, 0, 0, 0, 0, true),
-        ('Selling, general, and administration', 29, 1, 0, 0, 0, 0, true);
+        ('Paid-in Capital', 20, 1, 0, 0, 0, 0, true),
+        ('Dividends and equivalents', 22, 1, 0, 0, 0, 0, true),
+        ('Revenue', 24, 1, 0, 0, 0, 0, true),
+        ('Selling, general, and administration', 30, 1, 0, 0, 0, 0, true);
 
 /** 1    ('Cash', 1, 1),
     2    ('Accounts Receivable', 3, 1),

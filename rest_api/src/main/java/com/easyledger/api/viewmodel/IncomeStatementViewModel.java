@@ -11,18 +11,18 @@ import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 
 public class IncomeStatementViewModel {
 	
-	static final Long REVENUE_SUBTYPE_ID = (long) 23;
-	static final Long INCOME_FROM_INVESTING_SUBTYPE_ID = (long) 24;
-	static final Long INCOME_FROM_FINANCING_SUBTYPE_ID = (long) 25;
-	static final Long OTHER_INCOME_SUBTYPE_ID = (long) 26;
-	static final Long COST_OF_SALES_SUBTYPE_ID = (long) 27;
-	static final Long RESEARCH_AND_DEVELOPMENT_SUBTYPE_ID = (long) 28;
-	static final Long SGA_SUBTYPE_ID = (long) 29;
-	static final Long DEPRECIATION_AMORTIZATION_SUBTYPE_ID = (long) 30;
-	static final Long OTHER_EXPENSES_SUBTYPE_ID = (long) 31;
-	static final Long INTEREST_EXPENSE_SUBTYPE_ID = (long) 32;
-	static final Long TAX_EXPENSE_SUBTYPE_ID = (long) 33;
-	static final Long NON_RECURRING_SUBTYPE_ID = (long) 34;
+	static final Long REVENUE_SUBTYPE_ID = (long) 24;
+	static final Long INCOME_FROM_INVESTING_SUBTYPE_ID = (long) 25;
+	static final Long INCOME_FROM_FINANCING_SUBTYPE_ID = (long) 26;
+	static final Long OTHER_INCOME_SUBTYPE_ID = (long) 27;
+	static final Long COST_OF_SALES_SUBTYPE_ID = (long) 28;
+	static final Long RESEARCH_AND_DEVELOPMENT_SUBTYPE_ID = (long) 29;
+	static final Long SGA_SUBTYPE_ID = (long) 30;
+	static final Long DEPRECIATION_AMORTIZATION_SUBTYPE_ID = (long) 31;
+	static final Long OTHER_EXPENSES_SUBTYPE_ID = (long) 32;
+	static final Long INTEREST_EXPENSE_SUBTYPE_ID = (long) 33;
+	static final Long TAX_EXPENSE_SUBTYPE_ID = (long) 34;
+	static final Long NON_RECURRING_SUBTYPE_ID = (long) 35;
 	
 	private LocalDate startDate;
 	private LocalDate endDate;
