@@ -1,7 +1,7 @@
 ## AccountSubtype
 
 
-AccountSubtypes represent subgroups of each AccountType. These are hardcoded into the server for the purposes of generating accurate reports. Each AccountGroup must belong to exactly one AccountSubtype. **Other Income and Other Expense subtypes are considered operating cash income and cash expense on the cash flow statement, but considered non-operating income and expense on the income statement. For this reason, Enterprise users should 
+AccountSubtypes represent subgroups of each AccountType. These are hardcoded into the server for the purposes of generating accurate reports. Each AccountGroup must belong to exactly one AccountSubtype. **For the purposes of generating cash flow statements,  "Other current/noncurrent assets/liabilities" are treated as operating assets and liabilities. "Other equity" is treated as a cash adjustment when calculating cash flows.**
 
 The account subtypes are provided as follows:
 
@@ -14,7 +14,7 @@ ASSETS
    5 Other current assets
    6 Non-current marketable securities
    7 Non-current receivables 
-   8 PP&E 
+   8 Property, plant, and equipment 
    9 Intangible assets and goodwill
    10 Other non-current assets
 LIABILITIES
@@ -38,8 +38,8 @@ INCOME
    26 Income from financing activities
 EXPENSES
    27 Cost of sales
-   28 R&D
-   29 SG&A
+   28 Research and development
+   29 Selling, general, and administration
    30 Depreciation and Amortization 
    31 Expense from investing activities
    32 Expense from financing activities

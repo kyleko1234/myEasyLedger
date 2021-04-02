@@ -85,10 +85,12 @@ OPERATING ACTIVITIES:
         Add [increase in] share-based compensation? (subtype)
         Subtract non-operating income (income/expense net from investing, financing)
     Changes in operating assets and liabilities: 
-        Add decrease in receivables (subtypes)
+        Subtract increase in receivables (subtypes)
         Add increase in payables (subtypes)
         Subtract increase in inventory (subtype)
         Add increase in deferred revenue? (subtype)
+        Subtract increase in other assets
+        Add increase in other liabilities
 CASH FLOW FROM OPERATIONS 
 
 INVESTING ACTIVITIES: 
@@ -101,7 +103,6 @@ FINANCING ACTIVITIES:
     Add increase in paid-in capital (subtype) (we separate out share-based compensation and therefore we do not subtract share-based compensation from   
         paid-in capital) 
     Subtract payments for dividends and equivalents (increase in dividends declared - increase in dividends payable)
-    Subtract repurchase of common stock (subtype?)
     Add income/expense net from financing activities (subtype)
     Add increase in debt? (subtype)
 CASH FLOW FROM FINANCING
@@ -145,15 +146,13 @@ INCOME
    24 Revenue
    25 Income from investing activities
    26 Income from financing activities
--   27 Other income
 EXPENSES
-   28 Cost of sales
-   29 R&D
-   30 SG&A
-   31 Depreciation and Amortization 
--   32 Other expense
-    Expense from investing activities
-    Expense from financing activities
+   27 Cost of sales
+   28 R&D
+   29 SG&A
+   30 Depreciation and Amortization 
+   31 Expense from investing activities
+   32 Expense from financing activities
    33 Interest expense 
    34 Tax expense 
    35 Non-recurring and extraordinary items

@@ -97,51 +97,51 @@ public class IncomeStatementViewModel {
 		netIncome = earningsBeforeTax.subtract(taxExpense.subtract(nonRecurringAndExtraordinaryItems));
 	}
 
-	public static Long getRevenueSubtypeId() {
+	public Long getRevenueSubtypeId() {
 		return REVENUE_SUBTYPE_ID;
 	}
 
-	public static Long getIncomeFromInvestingSubtypeId() {
+	public Long getIncomeFromInvestingSubtypeId() {
 		return INCOME_FROM_INVESTING_SUBTYPE_ID;
 	}
 
-	public static Long getIncomeFromFinancingSubtypeId() {
+	public Long getIncomeFromFinancingSubtypeId() {
 		return INCOME_FROM_FINANCING_SUBTYPE_ID;
 	}
 
-	public static Long getCostOfSalesSubtypeId() {
+	public Long getCostOfSalesSubtypeId() {
 		return COST_OF_SALES_SUBTYPE_ID;
 	}
 
-	public static Long getResearchAndDevelopmentSubtypeId() {
+	public Long getResearchAndDevelopmentSubtypeId() {
 		return RESEARCH_AND_DEVELOPMENT_SUBTYPE_ID;
 	}
 
-	public static Long getSgaSubtypeId() {
+	public Long getSgaSubtypeId() {
 		return SGA_SUBTYPE_ID;
 	}
 
-	public static Long getDepreciationAmortizationSubtypeId() {
+	public Long getDepreciationAmortizationSubtypeId() {
 		return DEPRECIATION_AMORTIZATION_SUBTYPE_ID;
 	}
 
-	public static Long getExpenseFromInvestingSubtypeId() {
+	public Long getExpenseFromInvestingSubtypeId() {
 		return EXPENSE_FROM_INVESTING_SUBTYPE_ID;
 	}
 
-	public static Long getExpenseFromFinancingSubtypeId() {
+	public Long getExpenseFromFinancingSubtypeId() {
 		return EXPENSE_FROM_FINANCING_SUBTYPE_ID;
 	}
 
-	public static Long getInterestExpenseSubtypeId() {
+	public Long getInterestExpenseSubtypeId() {
 		return INTEREST_EXPENSE_SUBTYPE_ID;
 	}
 
-	public static Long getTaxExpenseSubtypeId() {
+	public Long getTaxExpenseSubtypeId() {
 		return TAX_EXPENSE_SUBTYPE_ID;
 	}
 
-	public static Long getNonRecurringSubtypeId() {
+	public Long getNonRecurringSubtypeId() {
 		return NON_RECURRING_SUBTYPE_ID;
 	}
 
