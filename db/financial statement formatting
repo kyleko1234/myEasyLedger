@@ -102,6 +102,7 @@ CASH FLOW FROM INVESTING
 FINANCING ACTIVITIES:
     Add increase in paid-in capital (subtype) (we separate out share-based compensation and therefore we do not subtract share-based compensation from   
         paid-in capital) 
+    Add increase in other equity
     Subtract payments for dividends and equivalents (increase in dividends declared - increase in dividends payable)
     Add income/expense net from financing activities (subtype)
     Add increase in debt? (subtype)

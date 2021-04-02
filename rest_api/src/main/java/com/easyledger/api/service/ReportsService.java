@@ -15,6 +15,7 @@ import com.easyledger.api.viewmodel.BalanceSheetAssetsViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetEquityViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetLiabilitiesViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetViewModel;
+import com.easyledger.api.viewmodel.CashFlowStatementViewModel;
 import com.easyledger.api.viewmodel.IncomeStatementViewModel;
 
 @Service
@@ -61,6 +62,11 @@ public class ReportsService {
 		List<AccountDTO> accountBalances = accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
 		
 		return new IncomeStatementViewModel(accountSubtypeBalances, accountBalances, startDate, endDate);
+	}
+	
+	public CashFlowStatementViewModel getCashFlowStatementViewModelForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate) {
+		List<AccountSubtypeBalanceDTO> currPeriodAccountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
+		return new CashFlowStatementViewModel(currPeriodAccountSubtypeBalances);
 	}
 	
 
