@@ -89,12 +89,17 @@ public class IncomeStatementViewModel {
 		grossProfit = totalRevenue.subtract(totalCostOfSales);
 		totalOperatingExpenses = totalResearchAndDevelopment.add(totalSalesGeneralAndAdministration.add(totalDepreciationAndAmortization));
 		operatingIncome = grossProfit.subtract(totalOperatingExpenses);
-		totalOtherIncomeExpense = incomeFromInvesting.add(incomeFromFinancing.subtract(expenseFromInvesting.subtract(expenseFromFinancing)));
+		totalOtherIncomeExpense = incomeFromInvesting
+				.add(incomeFromFinancing
+				.add(expenseFromInvesting.negate()
+				.add(expenseFromFinancing.negate())));
 		
 		ebit = operatingIncome.add(totalOtherIncomeExpense);
 		earningsBeforeTax = ebit.subtract(interestExpense);
 	
-		netIncome = earningsBeforeTax.subtract(taxExpense.subtract(nonRecurringAndExtraordinaryItems));
+		netIncome = earningsBeforeTax
+				.add(taxExpense.negate()
+				.add(nonRecurringAndExtraordinaryItems.negate()));
 	}
 
 	public Long getRevenueSubtypeId() {

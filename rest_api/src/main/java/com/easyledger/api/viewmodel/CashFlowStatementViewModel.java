@@ -114,7 +114,7 @@ public class CashFlowStatementViewModel {
 				dividendPayments = dividendPayments.add(amount);
 			}
 			if (DIVIDENDS_DECLARED_SUBTYPE_ID == id) {
-				dividendPayments = dividendPayments.subtract(amount);
+				dividendPayments = dividendPayments.add(amount);
 			}
 			if (OTHER_EQUITY_SUBTYPE_ID == id) {
 				otherEquity = otherEquity.subtract(amount);
@@ -130,21 +130,21 @@ public class CashFlowStatementViewModel {
 				.add(depreciationAndAmortization
 				.add(deferredTax
 				.add(shareBasedCompensation
-				.subtract(nonOperatingIncome
-				.subtract(receivables
+				.add(nonOperatingIncome.negate()
+				.add(receivables.negate()
 				.add(payables
-				.subtract(inventory
+				.add(inventory.negate()
 				.add(deferredRevenue
-				.subtract(otherAssets
+				.add(otherAssets.negate()
 				.add(otherLiabilities))))))))));
 		
 		cashFlowFromInvesting = netIncomeFromInvesting
-				.subtract(marketableSecurities
-				.subtract(propertyPlantAndEquipment));
+				.add(marketableSecurities.negate()
+				.add(propertyPlantAndEquipment.negate()));
 		
 		cashFlowFromFinancing = paidInCapital
 				.add(otherEquity
-				.subtract(dividendPayments
+				.add(dividendPayments.negate()
 				.add(netIncomeFromFinancing
 				.add(debt))));
 		cashFlow = cashFlowFromOperations.add(cashFlowFromInvesting.add(cashFlowFromFinancing));
