@@ -38,81 +38,83 @@ INSERT INTO account_type(name)
 
 INSERT INTO account_subtype(name, account_type_id)
     VALUES
-       ('Cash and cash equivalents', 1),
-       ('Current marketable securities', 1),
-       ('Current receivables', 1),
-       ('Inventory', 1),
-       ('Other current assets', 1),
-       ('Property, plant, and equipment', 1),
-       ('Intangible assets and goodwill', 1),
-       ('Non-current receivables', 1),
-       ('Non-current marketable securities', 1),
-       ('Other non-current assets', 1),
-       ('Current payables', 2),
-       ('Deferred revenue', 2),
-       ('Short-term debt', 2),
-       ('Deferred tax', 2),
-       ('Other current liabilities', 2),
-       ('Long-term debt', 2),
-       ('Non-current payables', 2),
-       ('Other non-current liabilities', 2),
-       ('Paid-in capital', 3),
-       ('Share-based compensation', 3),
-       ('Dividends and equivalents', 3),
-       ('Other equity items', 3),
-       ('Revenue', 4),
-       ('Income from investing activities', 4),
-       ('Income from financing activities', 4),
-       ('Other income', 4),
-       ('Cost of sales', 5),
-       ('Research and development', 5),
-       ('Sales, general, and administration', 5),
-       ('Depreciation and amortization', 5),
-       ('Other expense', 5),
-       ('Interest expense', 5),
-       ('Tax expense', 5),
-       ('Non-recurring and extraordinary items', 5);
+        ('Cash and cash equivalents', 1),
+        ('Current marketable securities', 1),
+        ('Current receivables', 1),
+        ('Inventory', 1),
+        ('Other current assets', 1),
+        ('Non-current marketable securities', 1),
+        ('Non-current receivables', 1),
+        ('Property, plant, and equipment', 1),
+        ('Intangible assets and goodwill', 1),
+        ('Other non-current assets', 1),
+        ('Current payables', 2),
+        ('Dividends and equivalents payable', 2),
+        ('Deferred revenue', 2),
+        ('Short-term debt', 2),
+        ('Deferred tax', 2),
+        ('Other current liabilities', 2),
+        ('Long-term debt', 2),
+        ('Non-current payables', 2),
+        ('Other non-current liabilities', 2),
+        ('Paid-in capital', 3),
+        ('Share-based compensation', 3),
+        ('Dividends and equivalents', 3),
+        ('Other equity items', 3),
+        ('Revenue', 4),
+        ('Income from investing activities', 4),
+        ('Income from financing activities', 4),
+        ('Cost of sales', 5),
+        ('Research and development', 5),
+        ('Selling, general, and administration', 5),
+        ('Depreciation and amortization', 5),
+        ('Expense from investing activities', 5),
+        ('Expense from financing activities', 5),
+        ('Interest expense', 5),
+        ('Tax expense', 5),
+        ('Non-recurring and extraordinary items', 5);
 
         /*
-        ASSETS
-           1 Cash and cash equivalents
-           2 Current marketable securities 
-           3 Current receivables 
-           4 Inventory 
-           5 Other current assets
-           6 PP&E 
-           7 Intangible assets and goodwill
-           8 Non-current receivables 
-           9 Non-current marketable securities
-           10 Other non-current assets
-        LIABILITIES
-           11 Current payables 
-           12 Deferred revenue 
-           13 Short-term debt 
-           14 Deferred tax 
-           15 Other current liabilities
-           16 Long-term debt 
-           17 Non-current payables 
-           18 Other non-current liabilities
-        EQUITY
-           19 Paid-in capital 
-           20 Share-based compensation
-           21 Dividends and equivalents 
-           22 Other equity items
-        INCOME
-           23 Revenue
-           24 Income from investing activities
-           25 Income from financing activities
-           26 Other income
-        EXPENSES
-           27 Cost of sales
-           28 R&D
-           29 SG&A
-           30 Depreciation and Amortization 
-           31 Other expense
-           32 Interest expense 
-           33 Tax expense 
-           34 Non-recurring and extraordinary items
+ASSETS
+   1 Cash and cash equivalents
+   2 Current marketable securities 
+   3 Current receivables 
+   4 Inventory 
+   5 Other current assets
+   6 Non-current marketable securities
+   7 Non-current receivables 
+   8 PP&E 
+   9 Intangible assets and goodwill
+   10 Other non-current assets
+LIABILITIES
+   11 Current payables 
+   12 Dividends and equivalents payable 
+   13 Deferred revenue 
+   14 Short-term debt 
+   15 Deferred tax 
+   16 Other current liabilities
+   17 Long-term debt 
+   18 Non-current payables 
+   19 Other non-current liabilities
+EQUITY
+   20 Paid-in capital 
+   21 Share-based compensation
+   22 Dividends and equivalents 
+   23 Other equity items
+INCOME
+   24 Revenue
+   25 Income from investing activities
+   26 Income from financing activities
+EXPENSES
+   27 Cost of sales
+   28 R&D
+   29 SG&A
+   30 Depreciation and Amortization 
+   31 Expense from investing activities
+   32 Expense from financing activities
+   33 Interest expense 
+   34 Tax expense 
+   35 Non-recurring and extraordinary items
         */
 
 
@@ -146,60 +148,54 @@ INSERT INTO permission(person_id, organization_id, permission_type_id)
      1 |         1 | 1               | 4    **/
 
 
-INSERT INTO account_group(name, account_subtype_id, organization_id)
+INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total, has_children)
     VALUES
-        ('Cash', 1, 1),
-        ('Accounts Receivable', 3, 1),
-        ('Inventories', 4, 1),
-        ('Equipment', 6, 1),
-        ('Payables', 11, 1),
-        ('Paid-in Capital', 19, 1),
-        ('Dividends and equivalents', 21, 1),
-        ('Revenue', 23, 1),
-        ('Selling, general, and administration', 29, 1);
+        ('Cash', 1, 1, 0, 0, 0, 0, false),
+        ('Accounts Receivable', 3, 1, 0, 0, 0, 0, false),
+        ('Inventories', 4, 1, 0, 0, 0, 0, false),
+        ('Property, plant, and equipment', 8, 1, 0, 0, 0, 0, true),
+        ('Accounts Payable', 11, 1, 0, 0, 0, 0, false),
+        ('Paid-in Capital', 20, 1, 0, 0, 0, 0, false),
+        ('Dividends and equivalents declared', 22, 1, 0, 0, 0, 0, false),
+        ('Revenue', 24, 1, 0, 0, 0, 0, true),
+        ('Selling, general, and administration', 29, 1, 0, 0, 0, 0, true),
+        ('Dividends payable', 12, 1, 0, 0, 0, 0, false),
+        ('Short-term debt', 14, 1, 0, 0, 0, 0, true);
 
 /** 1    ('Cash', 1, 1),
     2    ('Accounts Receivable', 3, 1),
     3    ('Inventories', 4, 1),
-    4    ('Equipment', 6, 1),
-    5    ('Payables', 11, 1),
+    4    ('Property, plant, and equipment', 6, 1),
+    5    ('Accounts Payable', 11, 1),
     6    ('Paid-in Capital', 19, 1),
-    7    ('Dividends and equivalents', 21, 1),
+    7    ('Dividends and equivalents declared', 21, 1),
     8    ('Revenue', 23, 1),
-    9    ('Selling, general, and administration', 29, 1);
+    9    ('Selling, general, and administration', 29, 1),
+    10   ('Dividends payable', 12, 1, 0, 0, 0, 0, false),
+    11   ('Short-term debt', 14, 1, 0, 0, 0, 0, true);
+
  */
 
-INSERT INTO account(name, account_group_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total)
+INSERT INTO account(name, organization_id, parent_account_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total, has_children)
     VALUES 
-        ('Cash', 1, 0, 0, 420000, 18430),
-        ('Accounts receivable', 2, 0, 0, 24000, 20000),
-        ('Office supplies', 3, 0, 0, 250, 0),
-        ('Office equipment', 4, 0, 0, 4500, 0),
-        ('Vehicles', 4, 0, 0, 25000, 0),
-        ('Notes payable', 5, 0, 0, 0, 15000),
-        ('Accounts payable', 5, 0, 0, 0, 4500),
-        ('Dividends payable', 5, 0, 0, 0, 3000),
-        ('Capital stock', 6, 0, 0, 0, 400000),
-        ('Dividends', 7, 0, 0, 3000, 0),
-        ('Service revenue', 8, 0, 0, 0, 24000),
-        ('Office Rent', 9, 0, 500, 0, 0),
-        ('Payroll', 9, 0, 0, 7500, 0),
-        ('Utilities', 9, 0, 0, 180, 0);
+        ('Office supplies', 1, 9, 0, 0, 0, 0, false),
+        ('Office equipment', 1, 4, 0, 0, 0, 0, false),
+        ('Vehicles', 1, 4, 0, 0, 0, 0, false),
+        ('Notes payable', 1, 11, 0, 0, 0, 0, false),
+        ('Service revenue', 1, 8, 0, 0, 0, 0, false),
+        ('Office Rent', 1, 9, 0, 0, 0, 0, false),
+        ('Payroll', 1, 9, 0, 0, 0, 0, false),
+        ('Utilities', 1, 9, 0, 0, 0, 0, false);
 
-/*      1     ('Cash', 1),
-        2     ('Accounts receivable', 2),
-        3     ('Office supplies', 3),
-        4     ('Office equipment', 4),
-        5     ('Vehicles', 4),
-        6     ('Notes payable', 5),
-        7     ('Accounts payable', 5),
-        8     ('Dividends payable', 5),
-        9     ('Capital stock', 6),
-        10    ('Dividends', 7),
-        11    ('Service revenue', 8),
-        12    ('Office Rent', 9),
-        13    ('Payroll', 9),
-        14    ('Utilities', 9); */
+/*  
+        12     ('Office supplies', 3),
+        13     ('Office equipment', 4),
+        14     ('Vehicles', 4),
+        15     ('Notes payable', 5),
+        16    ('Service revenue', 8),
+        17    ('Office Rent', 9),
+        18    ('Payroll', 9),
+        19    ('Utilities', 9); */
 
     -----------------END SETUP DATA-------------------
     -----------------BEGIN ENTRY DATA-----------------
@@ -234,34 +230,34 @@ INSERT INTO journal_entry(journal_entry_date, organization_id, person_id, descri
 INSERT INTO line_item(journal_entry_id, account_id, is_credit, amount, description)
     VALUES
         (1, 1, FALSE, 400000, 'Cash influx from initial offering'),
-        (1, 9, TRUE, 400000, 'Issued 20000 shares of common at 20 per'),
+        (1, 6, TRUE, 400000, 'Issued 20000 shares of common at 20 per'),
 
-        (2, 12, FALSE, 500, 'Office rent expense, November'),
+        (2, 17, FALSE, 500, 'Office rent expense, November'),
         (2, 1, TRUE, 500, 'Paid office rent november in cash'),
 
-        (3, 3, FALSE, 250, 'Purchase of office supplies'),
+        (3, 12, FALSE, 250, 'Purchase of office supplies'),
         (3, 1, TRUE, 250, 'Purchase of office supplies'),
 
-        (4, 4, FALSE, 4500, 'Purchased office equipment on account'),
-        (4, 7, TRUE, 4500, 'Purchased office equipment on account'),
+        (4, 13, FALSE, 4500, 'Purchased office equipment on account'),
+        (4, 5, TRUE, 4500, 'Purchased office equipment on account'),
 
-        (5, 5, FALSE, 25000, 'Purchased company vehicle'),
+        (5, 14, FALSE, 25000, 'Purchased company vehicle'),
         (5, 1, TRUE, 10000, 'Paid 10000 down for vehicle'),
-        (5, 6, TRUE, 15000, 'Issued 15000 note payable for vehicle'),
+        (5, 15, TRUE, 15000, 'Issued 15000 note payable for vehicle'),
 
         (6, 2, FALSE, 24000, 'Billed clients on account'),
-        (6, 11, TRUE, 24000, 'Billed clients on account'),
+        (6, 16, TRUE, 24000, 'Billed clients on account'),
 
-        (7, 10, FALSE, 3000, 'Dividends declared to be distributed in december'),
-        (7, 8, TRUE, 3000, 'Dividends declared to be distributed in december'),
+        (7, 7, FALSE, 3000, 'Dividends declared to be distributed in december'),
+        (7, 10, TRUE, 3000, 'Dividends declared to be distributed in december'),
 
-        (8, 14, FALSE, 180, 'November utilities paid in cash'),
+        (8, 19, FALSE, 180, 'November utilities paid in cash'),
         (8, 1, TRUE, 180, 'November utilities paid in cash'),
 
         (9, 1, FALSE, 20000, 'Collected cash from clients billed on November 21'),
         (9, 2, TRUE, 20000, 'Collected cash from clients billed on November 21'),
 
-        (10, 13, FALSE, 7500, 'Paid salary expense for November'),
+        (10, 18, FALSE, 7500, 'Paid salary expense for November'),
         (10, 1, TRUE, 7500, 'Paid salary expense for November');
 
 -------------------------------

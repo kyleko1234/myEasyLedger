@@ -15,7 +15,7 @@ Returns a page of LineItems based on the query parameters provided, sorted by de
 ___
 
 #### Sample Request
-`GET /account/2/lineItem?page=0&size=2`
+`GET /account/11/lineItem?page=0&size=2`
 <br />
 
 #### Sample Response
@@ -23,36 +23,24 @@ ___
 {
     "content": [
         {
-            "accountId": 1,
-            "accountName": "Cash",
-            "accountGroupId": 1,
-            "accountGroupName": "Cash",
-            "accountSubtypeId": 1,
-            "accountSubtypeName": "Cash and cash equivalents",
-            "accountTypeId": 1,
-            "accountTypeName": "Assets",
-            "amount": 7500,
-            "description": "Paid salary expense for November",
-            "journalEntryId": 10,
-            "journalEntryDate": "2020-11-30",
-            "isCredit": true,
-            "lineItemId": 21
-        },
-        {
-            "accountId": 1,
-            "accountName": "Cash",
-            "accountGroupId": 1,
-            "accountGroupName": "Cash",
-            "accountSubtypeId": 1,
-            "accountSubtypeName": "Cash and cash equivalents",
-            "accountTypeId": 1,
-            "accountTypeName": "Assets",
+            "accountId": 11,
+            "accountName": "Accounts receivable",
             "amount": 20000,
-            "description": "Collected cash from clients billed on November 21",
+            "description": "Received $20,000 cash from clients billed on November 21.",
             "journalEntryId": 9,
             "journalEntryDate": "2020-11-29",
+            "isCredit": true,
+            "lineItemId": 19
+        },
+        {
+            "accountId": 11,
+            "accountName": "Accounts receivable",
+            "amount": 24000,
+            "description": "Billed clients $24,000 on account.",
+            "journalEntryId": 6,
+            "journalEntryDate": "2020-11-21",
             "isCredit": false,
-            "lineItemId": 18
+            "lineItemId": 12
         }
     ],
     "pageable": {
@@ -64,12 +52,12 @@ ___
         "offset": 0,
         "pageNumber": 0,
         "pageSize": 2,
-        "paged": true,
-        "unpaged": false
+        "unpaged": false,
+        "paged": true
     },
-    "last": false,
-    "totalPages": 4,
-    "totalElements": 7,
+    "totalPages": 1,
+    "totalElements": 2,
+    "last": true,
     "size": 2,
     "sort": {
         "sorted": false,

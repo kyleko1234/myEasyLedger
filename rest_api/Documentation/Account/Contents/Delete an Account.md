@@ -3,7 +3,7 @@ Endpoint: `DELETE /account/{id}`
 
 Authorization: User must have EDIT permissinos for the associated Organization.
 
-Soft-deletes the account with the specified id. Accounts can only be deleted if there are no LineItems associated with them. Any LineItems will need to be removed or updated to modify a different account before deletion of the account.
+Soft-deletes the account with the specified id. Accounts can only be deleted if there are no LineItems or child accounts associated with them. Any LineItems and child accounts will need to be removed or updated to modify a different account before deletion of the account.
 ___
 
 #### Request Body Parameters

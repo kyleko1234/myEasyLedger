@@ -48,8 +48,8 @@ function IncomeStatementRender() {
     const [operatingIncome, setOperatingIncome] = React.useState(null);
     const [incomeFromInvesting, setIncomeFromInvesting] = React.useState(null);
     const [incomeFromFinancing, setIncomeFromFinancing] = React.useState(null);
-    const [otherIncome, setOtherIncome] = React.useState(null);
-    const [otherExpenses, setOtherExpenses] = React.useState(null);
+    const [expenseFromInvesting, setExpenseFromInvesting] = React.useState(null);
+    const [expenseFromFinancing, setExpenseFromFinancing] = React.useState(null);
     const [totalOtherIncomeExpense, setTotalOtherIncomeExpense] = React.useState(null);
     const [ebit, setEbit] = React.useState(null);
     const [interestExpense, setInterestExpense] = React.useState(null);
@@ -71,7 +71,6 @@ function IncomeStatementRender() {
     const [taxExpenseSubtypeId, setTaxExpenseSubtypeId] = React.useState(null);
     const [nonRecurringSubtypeId, setNonRecurringSubtypeId] = React.useState(null);
 
-    const [accountGroupBalances, setAccountGroupBalances] = React.useState(null);
     const [accountBalances, setAccountBalances] = React.useState(null);
 
 
@@ -90,8 +89,8 @@ function IncomeStatementRender() {
                     setOperatingIncome(response.data.operatingIncome);
                     setIncomeFromInvesting(response.data.incomeFromInvesting);
                     setIncomeFromFinancing(response.data.incomeFromFinancing);
-                    setOtherIncome(response.data.otherIncome);
-                    setOtherExpenses(response.data.otherExpenses);
+                    setExpenseFromInvesting(response.data.expenseFromInvesting);
+                    setExpenseFromFinancing(response.data.expenseFromFinancing);
                     setTotalOtherIncomeExpense(response.data.totalOtherIncomeExpense);
                     setEbit(response.data.ebit);
                     setInterestExpense(response.data.interestExpense);
@@ -99,8 +98,6 @@ function IncomeStatementRender() {
                     setTaxExpense(response.data.taxExpense);
                     setNonRecurringAndExtraordinaryItems(response.data.nonRecurringAndExtraordinaryItems);
                     setNetIncome(response.data.netIncome);
-                    setAccountGroupBalances(response.data.accountGroupBalances);
-                    setAccountBalances(response.data.accountBalances);
                     setRevenueSubtypeId(response.data.revenueSubtypeId);
                     setIncomeFromInvestingSubtypeId(response.data.incomeFromInvestingSubtypeId);
                     setIncomeFromFinancingSubtypeId(response.data.incomeFromFinancingSubtypeId);
@@ -113,6 +110,21 @@ function IncomeStatementRender() {
                     setInterestExpenseSubtypeId(response.data.interestExpenseSubtypeId);
                     setTaxExpenseSubtypeId(response.data.setTaxExpenseSubtypeId);
                     setNonRecurringSubtypeId(response.data.nonRecurringSubtypeId);
+                    let rawAccountBalances = response.data.accountBalances;
+                    rawAccountBalances.forEach(account => {
+                        if (account.hasChildren) {
+                            let totalDebits = 0;
+                            let totalCredits = 0;    
+                            rawAccountBalances.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
+                                totalDebits = totalDebits + childAccount.debitTotal;
+                                totalCredits = totalCredits + childAccount.creditTotal;
+                            })    
+                            account.debitTotal = totalDebits;
+                            account.creditTotal = totalCredits;
+                            account.debitsMinusCredits = totalDebits - totalCredits;    
+                        }
+                    })
+                    setAccountBalances(rawAccountBalances);
                 }
             }).catch(error => {
                 console.log(error);
@@ -157,24 +169,24 @@ function IncomeStatementRender() {
                 <div>
                     <table className="table table-striped m-b-0">
                         <tbody>
-                            {!accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == revenueSubtypeId).length? null : 
+                            {!accountBalances.filter(account => account.accountSubtypeId == revenueSubtypeId).length? null : 
                                 <>
                                 <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Revenue"]}</td></tr>
-                                    {accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == revenueSubtypeId).map(accountGroup => {
+                                    {accountBalances.filter(account => account.accountSubtypeId == revenueSubtypeId).map(account => {
                                         return(
-                                            <tr key={accountGroup.accountGroupId}><td className="d-flex justify-content-between p-l-30"><div>{accountGroup.accountGroupName}</div><div>{numberAsCurrency(accountGroup.debitsMinusCredits * -1)}</div></td></tr>
+                                            <tr key={account.accountId}><td className="d-flex justify-content-between p-l-30"><div>{account.accountName}</div><div>{numberAsCurrency(account.debitsMinusCredits * -1)}</div></td></tr>
                                         )
                                     })}
                                     <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total revenue"]}</div><div>{numberAsCurrency(totalRevenue)}</div></td></tr>
                                     <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                                 </>
                             }
-                            {!accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == costOfSalesSubtypeId).length? null : 
+                            {!accountBalances.filter(account => account.accountSubtypeId == costOfSalesSubtypeId).length? null : 
                                 <>
                                     <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Cost of sales"]}</td></tr>
-                                    {accountGroupBalances.filter(accountGroup => accountGroup.accountSubtypeId == costOfSalesSubtypeId).map(accountGroup => {
+                                    {accountBalances.filter(account => account.accountSubtypeId == costOfSalesSubtypeId).map(account => {
                                         return(
-                                            <tr key={accountGroup.accountGroupId}><td className="d-flex justify-content-between p-l-30"><div>{accountGroup.accountGroupName}</div><div>{numberAsCurrency(accountGroup.debitsMinusCredits)}</div></td></tr>
+                                            <tr key={account.accountId}><td className="d-flex justify-content-between p-l-30"><div>{account.accountName}</div><div>{numberAsCurrency(account.debitsMinusCredits)}</div></td></tr>
                                         )
                                     })}
                                     <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div><div>{numberAsCurrency(totalCostOfSales)}</div></td></tr>
@@ -192,10 +204,8 @@ function IncomeStatementRender() {
                             <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Operating income"]}</div><div>{numberAsCurrency(operatingIncome)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                             <tr><td className="font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Other income/expense"]}</div></td></tr>
-                            {!incomeFromInvesting? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Income from investing activities"]}</div><div>{numberAsCurrency(incomeFromInvesting)}</div></td></tr>}
-                            {!incomeFromFinancing? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Income from financing activities"]}</div><div>{numberAsCurrency(incomeFromFinancing)}</div></td></tr>}
-                            {!otherIncome? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Other income"]}</div><div>{numberAsCurrency(otherIncome)}</div></td></tr>}
-                            {!otherExpenses? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Other expenses"]}</div><div>{numberAsCurrency(otherExpenses)}</div></td></tr>}
+                            {!incomeFromInvesting? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Net income/expense from investing activities"]}</div><div>{numberAsCurrency(incomeFromInvesting - expenseFromInvesting)}</div></td></tr>}
+                            {!incomeFromFinancing? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Net income/expense from financing activities"]}</div><div>{numberAsCurrency(incomeFromFinancing - expenseFromFinancing)}</div></td></tr>}
                             <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total other income/expense, net"]}</div><div>{numberAsCurrency(totalOtherIncomeExpense)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                             <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Earnings before interest and tax"]}</div><div>{numberAsCurrency(ebit)}</div></td></tr>

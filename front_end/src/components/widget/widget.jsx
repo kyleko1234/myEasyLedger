@@ -110,6 +110,7 @@ WidgetListItem.defaultProps = {
  * parentClassName (string), default=""
  * bold (boolean), default=true
  * forceExpandToken optional(number)
+ * forceCollapseToken optional(number)
  * defaultIsOpen (boolean), default=false
  */
 export function ExpandableWidgetListItem(props) {
@@ -124,6 +125,14 @@ export function ExpandableWidgetListItem(props) {
         }
         refreshRef.current++;
     }, [props.forceExpandToken])
+
+    React.useEffect(() => {
+        if (refreshRef.current > 0) {
+            setIsOpen(false);
+        }
+        refreshRef.current++;
+    }, [props.forceCollapseToken])
+
 
     return(
         <>

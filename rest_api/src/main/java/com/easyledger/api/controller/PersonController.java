@@ -29,7 +29,7 @@ import com.easyledger.api.security.UserPrincipal;
 import com.easyledger.api.service.PersonService;
 
 @RestController
-@RequestMapping("/v0.2")
+@RequestMapping("/v0.3")
 public class PersonController {
 	private PersonRepository personRepo;
 	private PersonService personService;

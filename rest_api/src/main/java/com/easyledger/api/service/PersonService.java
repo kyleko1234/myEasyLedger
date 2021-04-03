@@ -16,7 +16,6 @@ import com.easyledger.api.exception.AppException;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
-import com.easyledger.api.model.AccountGroup;
 import com.easyledger.api.model.AccountSubtype;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Permission;
@@ -25,10 +24,8 @@ import com.easyledger.api.model.Person;
 import com.easyledger.api.model.Role;
 import com.easyledger.api.model.VerificationToken;
 import com.easyledger.api.payload.SignUpRequest;
-import com.easyledger.api.repository.AccountGroupRepository;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
-import com.easyledger.api.repository.AccountTypeRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.PermissionRepository;
 import com.easyledger.api.repository.PermissionTypeRepository;
@@ -51,9 +48,6 @@ public class PersonService {
 	private VerificationService verificationService;
 	
 	@Autowired
-	private AccountGroupRepository accountGroupRepo;
-	
-	@Autowired
 	private AccountSubtypeRepository accountSubtypeRepo;
 	
 	@Autowired
@@ -71,8 +65,7 @@ public class PersonService {
 
 	public PersonService(OrganizationRepository organizationRepo, PersonRepository personRepo, PasswordEncoder passwordEncoder, RoleRepository roleRepo,
 			VerificationService verificationService, AccountSubtypeRepository accountSubtypeRepo, 
-			PermissionRepository permissionRepo, PermissionTypeRepository permissionTypeRepo,
-			AccountGroupRepository accountGroupRepo, AccountRepository accountRepo) {
+			PermissionRepository permissionRepo, PermissionTypeRepository permissionTypeRepo, AccountRepository accountRepo) {
 		super();
 		this.organizationRepo = organizationRepo;
 		this.personRepo = personRepo;
@@ -82,7 +75,6 @@ public class PersonService {
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.permissionRepo = permissionRepo;
 		this.permissionTypeRepo = permissionTypeRepo;
-		this.accountGroupRepo = accountGroupRepo;
 		this.accountRepo = accountRepo;
 	}
 	
@@ -178,40 +170,40 @@ public class PersonService {
 	public void autoPopulateOrganization(Organization organization) throws ResourceNotFoundException {
 		if (organization.isIsEnterprise()) {
 			List<AccountSubtype> accountSubtypes = accountSubtypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
-			ArrayList<AccountGroup> defaultAccountGroups = new ArrayList<AccountGroup>();
+			ArrayList<Account> defaultAccounts = new ArrayList<Account>();
 			for (AccountSubtype accountSubtype : accountSubtypes) {
-				AccountGroup group = new AccountGroup(accountSubtype.getName(), accountSubtype);
-				defaultAccountGroups.add(group);
+				Account account = new Account(accountSubtype.getName(), accountSubtype);
+				defaultAccounts.add(account);
 			}
-			for (AccountGroup accountGroup : defaultAccountGroups) {
-				accountGroup.setOrganization(organization);
+			for (Account account : defaultAccounts) {
+				account.setOrganization(organization);
 			}
-			accountGroupRepo.saveAll(defaultAccountGroups);
+			accountRepo.saveAll(defaultAccounts);
 		} else {
 			AccountSubtype otherCurrentAssets = accountSubtypeRepo.findById((long) 5)
 					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
-			AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 15)
-					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 15"));
-			AccountSubtype otherIncome = accountSubtypeRepo.findById((long) 26)
-					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 26"));
-			AccountSubtype otherExpenses = accountSubtypeRepo.findById((long) 31)
-					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 31"));
+			AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 16)
+					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 16"));
+			AccountSubtype revenue = accountSubtypeRepo.findById((long) 24)
+					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 24"));
+			AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
+					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
 			
-			AccountGroup cash = new AccountGroup("Cash", otherCurrentAssets);
-			AccountGroup bankAccounts = new AccountGroup("Bank Accounts", otherCurrentAssets);
-			AccountGroup creditCards = new AccountGroup("Credit Cards", otherCurrentLiabilities);
-			AccountGroup jobs = new AccountGroup("Jobs", otherIncome);
-			AccountGroup projects = new AccountGroup("Projects", otherIncome);
-			AccountGroup food = new AccountGroup("Food", otherExpenses);
-			AccountGroup living = new AccountGroup("Living", otherExpenses);
-			AccountGroup transportation = new AccountGroup("Transportation", otherExpenses);
-			AccountGroup education = new AccountGroup("Education", otherExpenses);
-			AccountGroup discretionary = new AccountGroup("Discretionary", otherExpenses);
+			Account cash = new Account("Cash", otherCurrentAssets);
+			Account bankAccounts = new Account("Bank Accounts", otherCurrentAssets);
+			Account creditCards = new Account("Credit Cards", otherCurrentLiabilities);
+			Account jobs = new Account("Jobs", revenue);
+			Account projects = new Account("Projects", revenue);
+			Account food = new Account("Food", costOfSales);
+			Account living = new Account("Living", costOfSales);
+			Account transportation = new Account("Transportation", costOfSales);
+			Account education = new Account("Education", costOfSales);
+			Account discretionary = new Account("Discretionary", costOfSales);
 			
-			List<AccountGroup> accountGroups = Arrays.asList(cash, bankAccounts, creditCards, jobs, projects, food, living, transportation, education, discretionary);
-			for (AccountGroup accountGroup : accountGroups) {
-				accountGroup.setOrganization(organization);
-				accountGroupRepo.save(accountGroup);
+			List<Account> parentAccounts = Arrays.asList(cash, bankAccounts, creditCards, jobs, projects, food, living, transportation, education, discretionary);
+			for (Account account : parentAccounts) {
+				account.setOrganization(organization);
+				accountRepo.save(account);
 			}
 			
 			Account cashAccount = new Account("Cash", cash);
@@ -229,8 +221,12 @@ public class PersonService {
 			Account apparel = new Account("Apparel", discretionary);
 			Account entertainment = new Account("Entertainment", discretionary);
 			
-			accountRepo.saveAll(Arrays.asList(cashAccount, savingsAccount, checkingAccount, investmentAccount, creditCard,
-					job, project, groceries, dining, rent, transportationAccount, tuition, apparel, entertainment));
+			List<Account> childAccounts = Arrays.asList(cashAccount, savingsAccount, checkingAccount, investmentAccount, creditCard,
+					job, project, groceries, dining, rent, transportationAccount, tuition, apparel, entertainment);
+			for (Account account : childAccounts) {
+				account.setOrganization(organization);;
+				accountRepo.save(account);
+			}
 		}
 		
 	}

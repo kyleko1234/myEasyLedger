@@ -8,10 +8,10 @@ import java.util.List;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 
 public class BalanceSheetEquityViewModel {
-	static final ArrayList<Long> EQUITY_ITEMS_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 19, (long) 20, (long) 22));
-	static final ArrayList<Long> DIVIDENDS_AND_EQUIVALENTS_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 21));
-	static final ArrayList<Long> INCOME_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 23, (long) 24, (long) 25, (long) 26));
-	static final ArrayList<Long> EXPENSES_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 27, (long) 28, (long) 29, (long) 30, (long) 31, (long) 32, (long) 33, (long) 34));
+	static final ArrayList<Long> EQUITY_ITEMS_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 20, (long) 21, (long) 23));
+	static final ArrayList<Long> DIVIDENDS_AND_EQUIVALENTS_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 22));
+	static final ArrayList<Long> INCOME_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 24, (long) 25, (long) 26));
+	static final ArrayList<Long> EXPENSES_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 27, (long) 28, (long) 29, (long) 30, (long) 31, (long) 32, (long) 33, (long) 34, (long) 35));
 
 	private BigDecimal totalEquityItems = new BigDecimal(0);
 	private BigDecimal prevPeriodRetainedEarnings = new BigDecimal(0);

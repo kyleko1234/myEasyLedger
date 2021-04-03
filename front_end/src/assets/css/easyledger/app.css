@@ -4,6 +4,11 @@
 .width-half {
     width: 50% !important;
 }
+
+.p-l-45 {
+    padding-left: 45px !important;
+}
+
 .p-l-60 {
     padding-left: 60px !important;
 }
@@ -71,6 +76,9 @@ a.icon-link-text-muted:hover {
     background-color: #f3f3f3 !important;
 }
 
+.bg-light-hover {
+    background-color: #e0e0e0 !important;
+}
 
 .rotating-caret {
     display: block;

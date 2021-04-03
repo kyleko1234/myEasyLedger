@@ -3,36 +3,55 @@ package com.easyledger.api.service;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
-import com.easyledger.api.model.AccountGroup;
-import com.easyledger.api.repository.AccountGroupRepository;
+import com.easyledger.api.model.AccountSubtype;
+import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountRepository;
+import com.easyledger.api.repository.AccountSubtypeRepository;
+import com.easyledger.api.repository.LineItemRepository;
+import com.easyledger.api.repository.OrganizationRepository;
+import com.easyledger.api.security.AuthorizationService;
 
 @Service
 public class AccountService {
 	
 	@Autowired
-	private AccountGroupRepository accountGroupRepo;
+	private OrganizationRepository organizationRepo;
 	
 	@Autowired
 	private AccountRepository accountRepo;
 	
-	public AccountService(AccountGroupRepository accountGroupRepo, AccountRepository accountRepo) {
+	@Autowired
+	private AccountSubtypeRepository accountSubtypeRepo;
+	
+	@Autowired
+	private AuthorizationService authorizationService;
+	
+	@Autowired
+	private LineItemRepository lineItemRepo;
+	
+	public AccountService(AccountRepository accountRepo, OrganizationRepository organizationRepo, LineItemRepository lineItemRepo,
+				AccountSubtypeRepository accountSubtypeRepo, AuthorizationService authorizationService) {
 		super();
-		this.accountGroupRepo = accountGroupRepo;
 		this.accountRepo = accountRepo;
+		this.organizationRepo = organizationRepo;
+		this.accountSubtypeRepo = accountSubtypeRepo;
+		this.authorizationService = authorizationService;
+		this.lineItemRepo = lineItemRepo;
 	}
 	
 	//sets debitTotal and creditTotal to initialDebitAmount and initialCreditAmount
-	public Account createNewAccountFromDTO(AccountDTO dto) 
-			throws ResourceNotFoundException, ConflictException {
+	public Account createNewAccountFromDTO(AccountDTO dto, Authentication authentication) 
+			throws ResourceNotFoundException, ConflictException, UnauthorizedException {
+		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
 		Account product = new Account();
-		product.setId(dto.getAccountId());
 		product.setName(dto.getAccountName());
 		if (dto.getInitialDebitAmount() != null) {
 			product.setInitialDebitAmount(dto.getInitialDebitAmount());
@@ -49,30 +68,82 @@ public class AccountService {
 			product.setCreditTotal(new BigDecimal(0));
 		}
 //		product.setDeleted(dto.isDeleted());
+		product.setHasChildren(false);
 		
-		AccountGroup accountGroup = accountGroupRepo.findById(dto.getAccountGroupId())
-	    		.orElseThrow(() -> new ResourceNotFoundException("AccountGroup not found for this id :: " + dto.getAccountGroupId()));
-		product.setAccountGroup(accountGroup);
+		if (dto.getParentAccountId() != null) {
+			Account parentAccount = accountRepo.findById(dto.getParentAccountId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Parent account not found for this id :: " + dto.getParentAccountId()));
+			if (parentAccount.getParentAccount() != null) {
+				throw new ConflictException("Child accounts may not contain child accounts of their own.");
+			}
+			if (!parentAccount.isHasChildren() && !(parentAccount.getInitialDebitAmount().longValueExact() == 0 && parentAccount.getInitialCreditAmount().longValueExact() == 0)) {
+				throw new ConflictException("Accounts with initial debit and credit values may not contain children.");
+			}
+			if (lineItemRepo.accountContainsLineItems(parentAccount.getId())) {
+				throw new ConflictException("Accounts with LineItems written to them may not contain children.");
+			}
+			product.setParentAccount(parentAccount);
+		} else {
+			AccountSubtype accountSubtype = accountSubtypeRepo.findById(dto.getAccountSubtypeId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + dto.getAccountSubtypeId()));
+			product.setAccountSubtype(accountSubtype);
+		}
 		
-		return product;
+		Organization organization = organizationRepo.findById(dto.getOrganizationId())
+	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId()));
+		product.setOrganization(organization);
+		
+		return accountRepo.save(product);
 	}
 	
-	public Account updateAccountFromDTO(AccountDTO dto) throws ResourceNotFoundException {
-		Account account = accountRepo.findById(dto.getAccountId())
+	//There's probably a more elegant way to do this but alas
+	public Account updateAccountFromDTO(AccountDTO dto, Authentication authentication) 
+			throws ResourceNotFoundException, UnauthorizedException, ConflictException {
+		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
+		Account oldAccount = accountRepo.findById(dto.getAccountId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + dto.getAccountId()));
-		account.setName(dto.getAccountName());
-		account.setDebitTotal(account.getDebitTotal().subtract(account.getInitialDebitAmount()));
-		account.setInitialDebitAmount(dto.getInitialDebitAmount());
-		account.setDebitTotal(account.getDebitTotal().add(account.getInitialDebitAmount()));
+		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, oldAccount.getOrganization().getId());
+		if (oldAccount.isHasChildren() && dto.getParentAccountId() != null) {
+			throw new ConflictException("An account with children may not have a parent account.");
+		}
+		Account updatedAccount = new Account();
+		updatedAccount.setId(dto.getAccountId());
+		updatedAccount.setName(dto.getAccountName());
 		
-		account.setCreditTotal(account.getCreditTotal().subtract(account.getInitialCreditAmount()));
-		account.setInitialCreditAmount(dto.getInitialCreditAmount());
-		account.setCreditTotal(account.getCreditTotal().add(account.getInitialCreditAmount()));
+		updatedAccount.setDebitTotal(oldAccount.getDebitTotal().subtract(oldAccount.getInitialDebitAmount()));
+		updatedAccount.setInitialDebitAmount(dto.getInitialDebitAmount());
+		updatedAccount.setDebitTotal(updatedAccount.getDebitTotal().add(updatedAccount.getInitialDebitAmount()));
 		
-		AccountGroup accountGroup = accountGroupRepo.findById(dto.getAccountGroupId())
-	    		.orElseThrow(() -> new ResourceNotFoundException("AccountGroup not found for this id :: " + dto.getAccountGroupId()));
-		account.setAccountGroup(accountGroup);
-		return account;
+		updatedAccount.setCreditTotal(oldAccount.getCreditTotal().subtract(oldAccount.getInitialCreditAmount()));
+		updatedAccount.setInitialCreditAmount(dto.getInitialCreditAmount());
+		updatedAccount.setCreditTotal(updatedAccount.getCreditTotal().add(updatedAccount.getInitialCreditAmount()));
+		
+		
+		if (dto.getParentAccountId() != null) {
+			Account parentAccount = accountRepo.findById(dto.getParentAccountId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Parent account not found for this id :: " + dto.getParentAccountId()));
+			if (parentAccount.getParentAccount() != null) {
+				throw new ConflictException("Child accounts may not contain child accounts of their own.");
+			}
+			if (!parentAccount.isHasChildren() && !(parentAccount.getInitialDebitAmount().longValueExact() == 0 && parentAccount.getInitialCreditAmount().longValueExact() == 0)) {
+				throw new ConflictException("Accounts with initial debit and credit values may not contain children.");
+			}
+			if (lineItemRepo.accountContainsLineItems(parentAccount.getId())) {
+				throw new ConflictException("Accounts with LineItems written to them may not contain children.");
+			}
+			updatedAccount.setParentAccount(parentAccount);
+		} else {
+			AccountSubtype accountSubtype = accountSubtypeRepo.findById(dto.getAccountSubtypeId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + dto.getAccountSubtypeId()));
+			updatedAccount.setAccountSubtype(accountSubtype);
+		}
+		Organization organization = organizationRepo.findById(dto.getOrganizationId())
+	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId()));
+		updatedAccount.setOrganization(organization);
+
+		updatedAccount.setHasChildren(oldAccount.isHasChildren());
+		Account returnObject = accountRepo.save(updatedAccount);
+		return returnObject;
 	}
 	
 	

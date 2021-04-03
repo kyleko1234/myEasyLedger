@@ -24,7 +24,6 @@ function CategoryDetails(props) {
     const [elementCount, setElementCount] = React.useState(0)
 
     const [selectedAccount, setSelectedAccount] = React.useState(null);
-    const [accountGroupOptions, setAccountGroupOptions] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
 
     const selectedAccountId = useParams().id;
@@ -56,16 +55,7 @@ function CategoryDetails(props) {
             await axios.get(`${API_BASE_URL}/account/${selectedAccountId}/account`).then(response => {
                 let account = response.data;
                 setSelectedAccount(account);
-            }).catch(console.log)
-            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountGroup`).then(response => {
-                let formattedAccountGroupOptions = response.data.map(accountGroup => ({
-                    value: accountGroup.accountGroupId,
-                    label: accountGroup.accountGroupName,
-                    object: accountGroup
-                }))
-                setAccountGroupOptions(formattedAccountGroupOptions);
-            }).catch(console.log);
-    
+            }).catch(console.log)    
         }
         await fetchTableData();
         setLoading(false);
@@ -75,15 +65,6 @@ function CategoryDetails(props) {
         axios.get(`${API_BASE_URL}/account/${selectedAccountId}`).then(response => {
             let account = response.data;
             setSelectedAccount(account);
-        }).catch(console.log)
-
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountGroup`).then(response => {
-            let formattedAccountGroupOptions = response.data.map(accountGroup => ({
-                value: accountGroup.accountGroupId,
-                label: accountGroup.accountGroupName,
-                object: accountGroup
-            }))
-            setAccountGroupOptions(formattedAccountGroupOptions);
         }).catch(console.log)
     }
 
@@ -112,8 +93,9 @@ function CategoryDetails(props) {
                         elementCount={elementCount}
                         tableTitle={selectedAccount.accountName}
                         parentComponentAccountId={selectedAccountId}
-                        hasAddEntryButton={true}
+                        hasAddEntryButton={false}
                         loading={loading}
+                        category
                     /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
                 </div>
                 <div className="col-lg-4">

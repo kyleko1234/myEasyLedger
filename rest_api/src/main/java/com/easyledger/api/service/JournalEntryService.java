@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.dto.LineItemDTO;
+import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
@@ -49,7 +50,7 @@ public class JournalEntryService {
 	// Creates new Entry entity object from EntryDTO. Does not save the entity to the database.
 	// Will ignore any lineItemId in the EntryDTO that is passed in. LineItemIds will be automatically generated when objects are saved to database.
 	public JournalEntry createJournalEntryFromDTO (JournalEntryDTO dto) 
-		throws ResourceNotFoundException {
+		throws ResourceNotFoundException, ConflictException {
 		JournalEntry product = new JournalEntry();
 		product.setJournalEntryDate(dto.getJournalEntryDate());
 		product.setDescription(dto.getDescription());

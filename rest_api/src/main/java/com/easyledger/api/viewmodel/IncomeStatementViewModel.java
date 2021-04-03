@@ -6,24 +6,23 @@ import java.util.List;
 
 import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
-import com.easyledger.api.dto.AccountGroupBalanceDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 
 
 public class IncomeStatementViewModel {
 	
-	static final Long REVENUE_SUBTYPE_ID = (long) 23;
-	static final Long INCOME_FROM_INVESTING_SUBTYPE_ID = (long) 24;
-	static final Long INCOME_FROM_FINANCING_SUBTYPE_ID = (long) 25;
-	static final Long OTHER_INCOME_SUBTYPE_ID = (long) 26;
+	static final Long REVENUE_SUBTYPE_ID = (long) 24;
+	static final Long INCOME_FROM_INVESTING_SUBTYPE_ID = (long) 25;
+	static final Long INCOME_FROM_FINANCING_SUBTYPE_ID = (long) 26;
 	static final Long COST_OF_SALES_SUBTYPE_ID = (long) 27;
 	static final Long RESEARCH_AND_DEVELOPMENT_SUBTYPE_ID = (long) 28;
 	static final Long SGA_SUBTYPE_ID = (long) 29;
 	static final Long DEPRECIATION_AMORTIZATION_SUBTYPE_ID = (long) 30;
-	static final Long OTHER_EXPENSES_SUBTYPE_ID = (long) 31;
-	static final Long INTEREST_EXPENSE_SUBTYPE_ID = (long) 32;
-	static final Long TAX_EXPENSE_SUBTYPE_ID = (long) 33;
-	static final Long NON_RECURRING_SUBTYPE_ID = (long) 34;
+	static final Long EXPENSE_FROM_INVESTING_SUBTYPE_ID = (long) 31;
+	static final Long EXPENSE_FROM_FINANCING_SUBTYPE_ID = (long) 32;
+	static final Long INTEREST_EXPENSE_SUBTYPE_ID = (long) 33;
+	static final Long TAX_EXPENSE_SUBTYPE_ID = (long) 34;
+	static final Long NON_RECURRING_SUBTYPE_ID = (long) 35;
 	
 	private LocalDate startDate;
 	private LocalDate endDate;
@@ -41,8 +40,8 @@ public class IncomeStatementViewModel {
 	
 	private BigDecimal incomeFromInvesting = new BigDecimal(0);
 	private BigDecimal incomeFromFinancing = new BigDecimal(0);
-	private BigDecimal otherIncome = new BigDecimal(0);
-	private BigDecimal otherExpenses = new BigDecimal(0);
+	private BigDecimal expenseFromInvesting = new BigDecimal(0);
+	private BigDecimal expenseFromFinancing = new BigDecimal(0);
 	private BigDecimal totalOtherIncomeExpense = new BigDecimal(0); //income from investing + income from financing + other income - other expenses
 	
 	private BigDecimal ebit = new BigDecimal(0); //operating income + total other income/expense
@@ -53,14 +52,12 @@ public class IncomeStatementViewModel {
 	
 	private BigDecimal netIncome = new BigDecimal(0); // earningsBeforeTax - tax expense - nonRecurringAndExtraordinaryItems
 	
-	private List<AccountGroupBalanceDTO> accountGroupBalances;
 	private List<AccountDTO> accountBalances;
 	
-	public IncomeStatementViewModel(List<AccountSubtypeBalanceDTO> accountSubtypeBalances, List<AccountGroupBalanceDTO> accountGroupBalances,
+	public IncomeStatementViewModel(List<AccountSubtypeBalanceDTO> accountSubtypeBalances,
 			List<AccountDTO> accountBalances, LocalDate startDate, LocalDate endDate) {
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.accountGroupBalances = accountGroupBalances;
 		this.accountBalances = accountBalances;
 		for (AccountSubtypeBalanceDTO subtypeBalance : accountSubtypeBalances) {
 			if (subtypeBalance.getAccountSubtypeId() == REVENUE_SUBTYPE_ID) {
@@ -69,8 +66,6 @@ public class IncomeStatementViewModel {
 				incomeFromInvesting = incomeFromInvesting.subtract(subtypeBalance.getDebitsMinusCredits());
 			} else if (subtypeBalance.getAccountSubtypeId() == INCOME_FROM_FINANCING_SUBTYPE_ID) {
 				incomeFromFinancing = incomeFromFinancing.subtract(subtypeBalance.getDebitsMinusCredits());
-			} else if (subtypeBalance.getAccountSubtypeId() == OTHER_INCOME_SUBTYPE_ID) {
-				otherIncome = otherIncome.subtract(subtypeBalance.getDebitsMinusCredits());
 			} else if (subtypeBalance.getAccountSubtypeId() == COST_OF_SALES_SUBTYPE_ID) {
 				totalCostOfSales = totalCostOfSales.add(subtypeBalance.getDebitsMinusCredits());
 			} else if (subtypeBalance.getAccountSubtypeId() == RESEARCH_AND_DEVELOPMENT_SUBTYPE_ID) {
@@ -79,10 +74,12 @@ public class IncomeStatementViewModel {
 				totalSalesGeneralAndAdministration = totalSalesGeneralAndAdministration.add(subtypeBalance.getDebitsMinusCredits());
 			} else if (subtypeBalance.getAccountSubtypeId() == DEPRECIATION_AMORTIZATION_SUBTYPE_ID) {
 				totalDepreciationAndAmortization = totalDepreciationAndAmortization.add(subtypeBalance.getDebitsMinusCredits());
-			} else if (subtypeBalance.getAccountSubtypeId() == OTHER_EXPENSES_SUBTYPE_ID) {
-				otherExpenses = otherExpenses.subtract(subtypeBalance.getDebitsMinusCredits());
+			} else if (subtypeBalance.getAccountSubtypeId() == EXPENSE_FROM_INVESTING_SUBTYPE_ID) {
+				expenseFromInvesting = expenseFromInvesting.add(subtypeBalance.getDebitsMinusCredits());
+			} else if (subtypeBalance.getAccountSubtypeId() == EXPENSE_FROM_FINANCING_SUBTYPE_ID) {
+				expenseFromFinancing = expenseFromFinancing.add(subtypeBalance.getDebitsMinusCredits());
 			} else if (subtypeBalance.getAccountSubtypeId() == INTEREST_EXPENSE_SUBTYPE_ID) {
-				interestExpense = interestExpense.subtract(subtypeBalance.getDebitsMinusCredits());
+				interestExpense = interestExpense.add(subtypeBalance.getDebitsMinusCredits());
 			} else if (subtypeBalance.getAccountSubtypeId() == TAX_EXPENSE_SUBTYPE_ID) {
 				taxExpense = taxExpense.add(subtypeBalance.getDebitsMinusCredits());
 			} else if (subtypeBalance.getAccountSubtypeId() == NON_RECURRING_SUBTYPE_ID) {
@@ -92,12 +89,17 @@ public class IncomeStatementViewModel {
 		grossProfit = totalRevenue.subtract(totalCostOfSales);
 		totalOperatingExpenses = totalResearchAndDevelopment.add(totalSalesGeneralAndAdministration.add(totalDepreciationAndAmortization));
 		operatingIncome = grossProfit.subtract(totalOperatingExpenses);
-		totalOtherIncomeExpense = incomeFromInvesting.add(incomeFromFinancing.add(otherIncome.subtract(otherExpenses)));
+		totalOtherIncomeExpense = incomeFromInvesting
+				.add(incomeFromFinancing
+				.add(expenseFromInvesting.negate()
+				.add(expenseFromFinancing.negate())));
 		
 		ebit = operatingIncome.add(totalOtherIncomeExpense);
 		earningsBeforeTax = ebit.subtract(interestExpense);
 	
-		netIncome = earningsBeforeTax.subtract(taxExpense.subtract(nonRecurringAndExtraordinaryItems));
+		netIncome = earningsBeforeTax
+				.add(taxExpense.negate()
+				.add(nonRecurringAndExtraordinaryItems.negate()));
 	}
 
 	public Long getRevenueSubtypeId() {
@@ -110,10 +112,6 @@ public class IncomeStatementViewModel {
 
 	public Long getIncomeFromFinancingSubtypeId() {
 		return INCOME_FROM_FINANCING_SUBTYPE_ID;
-	}
-
-	public Long getOtherIncomeSubtypeId() {
-		return OTHER_INCOME_SUBTYPE_ID;
 	}
 
 	public Long getCostOfSalesSubtypeId() {
@@ -132,8 +130,12 @@ public class IncomeStatementViewModel {
 		return DEPRECIATION_AMORTIZATION_SUBTYPE_ID;
 	}
 
-	public Long getOtherExpensesSubtypeId() {
-		return OTHER_EXPENSES_SUBTYPE_ID;
+	public Long getExpenseFromInvestingSubtypeId() {
+		return EXPENSE_FROM_INVESTING_SUBTYPE_ID;
+	}
+
+	public Long getExpenseFromFinancingSubtypeId() {
+		return EXPENSE_FROM_FINANCING_SUBTYPE_ID;
 	}
 
 	public Long getInterestExpenseSubtypeId() {
@@ -196,12 +198,12 @@ public class IncomeStatementViewModel {
 		return incomeFromFinancing;
 	}
 
-	public BigDecimal getOtherIncome() {
-		return otherIncome;
+	public BigDecimal getExpenseFromInvesting() {
+		return expenseFromInvesting;
 	}
 
-	public BigDecimal getOtherExpenses() {
-		return otherExpenses;
+	public BigDecimal getExpenseFromFinancing() {
+		return expenseFromFinancing;
 	}
 
 	public BigDecimal getTotalOtherIncomeExpense() {
@@ -232,10 +234,6 @@ public class IncomeStatementViewModel {
 		return netIncome;
 	}
 
-	public List<AccountGroupBalanceDTO> getAccountGroupBalances() {
-		return accountGroupBalances;
-	}
-
 	public List<AccountDTO> getAccountBalances() {
 		return accountBalances;
 	}
@@ -248,12 +246,12 @@ public class IncomeStatementViewModel {
 				+ ", totalSalesGeneralAndAdministration=" + totalSalesGeneralAndAdministration
 				+ ", totalDepreciationAndAmortization=" + totalDepreciationAndAmortization + ", totalOperatingExpenses="
 				+ totalOperatingExpenses + ", operatingIncome=" + operatingIncome + ", incomeFromInvesting="
-				+ incomeFromInvesting + ", incomeFromFinancing=" + incomeFromFinancing + ", otherIncome=" + otherIncome
-				+ ", otherExpenses=" + otherExpenses + ", totalOtherIncomeExpense=" + totalOtherIncomeExpense
-				+ ", ebit=" + ebit + ", interestExpense=" + interestExpense + ", earningsBeforeTax=" + earningsBeforeTax
-				+ ", taxExpense=" + taxExpense + ", nonRecurringAndExtraordinaryItems="
-				+ nonRecurringAndExtraordinaryItems + ", netIncome=" + netIncome + ", accountGroupBalances="
-				+ accountGroupBalances + ", accountBalances=" + accountBalances + "]";
+				+ incomeFromInvesting + ", incomeFromFinancing=" + incomeFromFinancing + ", expenseFromInvesting="
+				+ expenseFromInvesting + ", expenseFromFinancing=" + expenseFromFinancing + ", totalOtherIncomeExpense="
+				+ totalOtherIncomeExpense + ", ebit=" + ebit + ", interestExpense=" + interestExpense
+				+ ", earningsBeforeTax=" + earningsBeforeTax + ", taxExpense=" + taxExpense
+				+ ", nonRecurringAndExtraordinaryItems=" + nonRecurringAndExtraordinaryItems + ", netIncome="
+				+ netIncome + ", accountBalances=" + accountBalances + "]";
 	}
 
 

@@ -1,12 +1,11 @@
 package com.easyledger.api.service;
 
 
-import java.math.BigDecimal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.easyledger.api.dto.LineItemDTO;
+import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.JournalEntry;
@@ -28,7 +27,7 @@ public class LineItemService {
 	// Ignores the lineItemId field in the input LineItemDTO, and automatically generates a new ID when saved to the database.
 	// Requires that accountId points to valid entities within the database.
 	public LineItem createLineItemFromDTO (LineItemDTO dto, JournalEntry journalEntry) 
-			throws ResourceNotFoundException {
+			throws ResourceNotFoundException, ConflictException {
 		LineItem product = new LineItem();
 		product.setIsCredit(dto.isIsCredit());
 		product.setAmount(dto.getAmount());
@@ -37,6 +36,9 @@ public class LineItemService {
 		//TODO: check if account actually belongs to the person editing this lineItem
 		Account account = accountRepo.findById(dto.getAccountId())
 				.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + dto.getAccountId()));
+		if (account.isHasChildren()) {
+			throw new ConflictException("Cannot insert LineItems into an account with child accounts.");
+		}
 		product.setAccount(account);
 				
 		product.setJournalEntry(journalEntry);

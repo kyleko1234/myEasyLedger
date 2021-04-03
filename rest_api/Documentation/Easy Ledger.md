@@ -9,7 +9,6 @@ ___
 - [[Account]]
 - [[AccountSubtype]]
 - [[AccountType]]
-- [[AccountGroup]]
 ___
 ### List of Endpoints
 
@@ -33,7 +32,6 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[List All LineItems| GET /lineItem]]
 - [[Retrieve a LineItem|GET /lineItem/{id}]]
 - [[Retrieve All LineItems for an Account|GET /account/{id}/lineItem]]**
-- [[Retrieve All LineItems for an Account Group|GET /accountGroup/{id}/lineItem]]**
 <br/><br/>
 - [[List All Organizations|GET /organization]]
 - [[Retrieve an Organization|GET /organization/{id}]]
@@ -43,9 +41,9 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[List All Accounts|GET /account]]
 - [[Retrieve an Account| GET /account/{id}]]
 - [[List All Accounts Belonging to an Organization|GET /organization/{id}/account]]
-- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance]]
-- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance/{endDate}]]
-- [[List All Accounts Belonging to an Organization as AccountBalance Objects|GET /organization/{id}/accountBalance/{startDate}/{endDate}]]
+- [[Find All Account Balances for an Organization For a Certain Date Range|GET /organization/{id}/accountBalance]]
+- [[Find All Account Balances for an Organization For a Certain Date Range|GET /organization/{id}/accountBalance/{endDate}]]
+- [[Find All Account Balances for an Organization For a Certain Date Range|GET /organization/{id}/accountBalance/{startDate}/{endDate}]]
 - [[Update an Account|PUT /account/{id}]]**
 - [[Create an Account|POST /account]]**
 - [[Delete an Account|DELETE /account/{id}]]**
@@ -60,18 +58,9 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[List All AccountSubtype Balances for an Organization|GET /organization/{id}/accountSubtypeBalance/{endDate}]]
 - [[List All AccountSubtype Balances for an Organization|GET /organization/{id}/accountSubtypeBalance/{startDate}/{endDate}]]
 <br/><br/>
-- [[List All AccountGroups|GET /accountGroup]]
-- [[Retrieve an AccountGroup|GET /accountGroup/{id}]]
-- [[List All AccountGroups Belonging to an Organization|GET /organization/{id}/accountGroup]]
-- [[List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects|GET /organization/{id}/accountGroupBalance]]
-- [[List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects|GET /organization/{id}/accountGroupBalance/{endDate}]]
-- [[List All AccountGroups Belonging to an Organization as AccountGroupBalance Objects|GET /organization/{id}/accountGroupBalance/{startDate}/{endDate}]]
-- [[Create an AccountGroup| POST /accountGroup]]
-- [[Update an AccountGroup|PUT /accountGroup/{id}]]
-- [[Delete an AccountGroup| DELETE /accountGroup/{id}]]
-<br/><br/>
 - [[Generate a Balance Sheet|GET /organization/{id}/reports/balanceSheet/{endDate}]]
 - [[Generate an Income Statement|GET /organization/{id}/reports/incomeStatement/{startDate}/{endDate}]]
+- [[Generate a Cash Flow Statement | GET /organization/{id}/reports/cashFlow/{startDate}/{endDate}]]
 <br/><br/>
 - [[Create a Permission for an Organization|POST /organization/{organizationId}/permission]]
 - [[Edit a Permission Object|PATCH /permission/{permissionId}]]

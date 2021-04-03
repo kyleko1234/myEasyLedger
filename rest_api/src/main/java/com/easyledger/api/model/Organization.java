@@ -3,16 +3,11 @@ package com.easyledger.api.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -44,7 +39,7 @@ public class Organization {
 	
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
-	private Set<AccountGroup> accountGroups = new HashSet<AccountGroup>();
+	private Set<Account> accounts = new HashSet<Account>();
 	
 	
 	public Organization(String name, String currency, boolean isEnterprise) {
@@ -107,18 +102,18 @@ public class Organization {
 		this.journalEntries = journalEntries;
 	}
 
-	public Set<AccountGroup> getAccountGroups() {
-		return accountGroups;
+	public Set<Account> getAccounts() {
+		return accounts;
 	}
 
-	public void setAccountGroups(Set<AccountGroup> accountGroups) {
-		this.accountGroups = accountGroups;
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts = accounts;
 	}
 
 	@Override
 	public String toString() {
 		return "Organization [id=" + id + ", name=" + name + ", currency=" + currency + ", isEnterprise=" + isEnterprise
-				+ ", permissions=" + permissions + ", journalEntries=" + journalEntries + ", accountGroups=" + accountGroups
+				+ ", permissions=" + permissions + ", journalEntries=" + journalEntries + ", accounts=" + accounts
 				+ "]";
 	}
 	

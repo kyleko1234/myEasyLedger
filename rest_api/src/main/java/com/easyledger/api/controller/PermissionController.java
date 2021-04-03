@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +20,6 @@ import com.easyledger.api.dto.PersonInRosterDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
-import com.easyledger.api.model.AccountGroup;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Permission;
 import com.easyledger.api.model.PermissionType;
@@ -33,7 +31,7 @@ import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.security.AuthorizationService;
 
 @RestController
-@RequestMapping("/v0.2")
+@RequestMapping("/v0.3")
 public class PermissionController {
 	private PermissionRepository permissionRepo;
 	private PermissionTypeRepository permissionTypeRepo;

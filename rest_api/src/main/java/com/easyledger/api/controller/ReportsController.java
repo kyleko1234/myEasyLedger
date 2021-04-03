@@ -16,11 +16,12 @@ import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.service.ReportsService;
 import com.easyledger.api.viewmodel.BalanceSheetViewModel;
+import com.easyledger.api.viewmodel.CashFlowStatementViewModel;
 import com.easyledger.api.viewmodel.IncomeStatementViewModel;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v0.2")
+@RequestMapping("/v0.3")
 public class ReportsController {
 	private ReportsService reportsService;
 	private AuthorizationService authorizationService;
@@ -45,10 +46,17 @@ public class ReportsController {
 	public IncomeStatementViewModel getIncomeStatementViewModelForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
 			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
-	throws UnauthorizedException {
+			throws UnauthorizedException {
 		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return reportsService.getIncomeStatementViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
 
-	
+	@GetMapping("/organization/{id}/reports/cashFlow/{startDate}/{endDate}")
+	public CashFlowStatementViewModel getCashFlowStatementViewModelForOrganizationBetweenDAtes(@PathVariable(value = "id") Long organizationId,
+			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
+			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
+			throws UnauthorizedException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.getCashFlowStatementViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
+	}
 }

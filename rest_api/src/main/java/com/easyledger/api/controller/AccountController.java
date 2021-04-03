@@ -37,7 +37,7 @@ import com.easyledger.api.service.AccountService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v0.2")
+@RequestMapping("/v0.3")
 public class AccountController {
 
 	private AccountRepository accountRepo;
@@ -102,7 +102,6 @@ public class AccountController {
     	return accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, endDate);
     }
 
-    
     @PostMapping("/account")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountDTO createAccount(@Valid @RequestBody AccountDTO dto, Authentication authentication) 
@@ -110,9 +109,7 @@ public class AccountController {
     	if (dto.getAccountId() != null) {
     		throw new ConflictException("Please do not attempt to manually create an account id.");
     	}
-    	Account account = accountService.createNewAccountFromDTO(dto);
-    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
-    	final Account updatedAccount = accountRepo.save(account);
+    	Account updatedAccount = accountService.createNewAccountFromDTO(dto, authentication);
     	return new AccountDTO(updatedAccount);
     	}
 
@@ -123,26 +120,26 @@ public class AccountController {
         if (!accountId.equals(dto.getAccountId())) {
         	throw new ConflictException("Account ID in request body does not match URI.");
         }
-    	Account account = accountRepo.findById(accountId)
-        	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
-    	Account updatedAccount = accountService.updateAccountFromDTO(dto);
+    	Account updatedAccount = accountService.updateAccountFromDTO(dto, authentication);
 
-    	updatedAccount = accountRepo.save(updatedAccount);
     	AccountDTO updatedDto = new AccountDTO(updatedAccount);
         return ResponseEntity.ok(updatedDto);
     }
 
+    //TODO: TEST
     @DeleteMapping("/account/{id}")
     public Map<String, Boolean> deleteAccount(@PathVariable(value = "id") Long accountId, Authentication authentication)
         throws ResourceNotFoundException, ConflictException, UnauthorizedException {
         Account account = accountRepo.findById(accountId)
         	.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
-        authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getAccountGroup().getOrganization().getId());
+        authorizationService.authorizeEditPermissionsByOrganizationId(authentication, account.getOrganization().getId());
 
         boolean accountContainsLineItems = lineItemRepo.accountContainsLineItems(accountId);
         if (accountContainsLineItems) {
         	throw new ConflictException("Please remove all line items from this account before deleting the account.");
+        }
+        if (account.isHasChildren()) {
+        	throw new ConflictException("Cannot delete an account that contains child accounts.");
         }
         account.setDeleted(true);
         accountRepo.save(account);

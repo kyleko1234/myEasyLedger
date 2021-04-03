@@ -44,7 +44,7 @@ import com.easyledger.api.viewmodel.JournalEntryViewModel;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v0.2")
+@RequestMapping("/v0.3")
 public class JournalEntryController {
 	private JournalEntryRepository journalEntryRepo;
 	private JournalEntryService journalEntryService;

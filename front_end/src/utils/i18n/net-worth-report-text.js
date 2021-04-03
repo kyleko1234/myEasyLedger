@@ -10,7 +10,6 @@ export const netWorthReportText = {
         "Liabilities": "Liabilities",
         "Total Liabilities": "Total Liabilities",
         "Total Net Worth": "Total Net Worth",
-        "Total accountGroupName": accountGroupName => "Total " + accountGroupName,
 
     },
     "zh-TW": {
@@ -24,6 +23,5 @@ export const netWorthReportText = {
         "Liabilities": "負債",
         "Total Liabilities": "負債總計",
         "Total Net Worth": "TRANSLATION",
-        "Total accountGroupName": accountGroupName => accountGroupName + "合計"
     }
 }

@@ -11,8 +11,8 @@ import com.easyledger.api.model.Account;
 public class AccountDTO {
 	private Long accountId;
 	private String accountName;
-	private Long accountGroupId;
-	private String accountGroupName;
+	private Long parentAccountId;
+	private String parentAccountName;
 	private Long accountSubtypeId;
 	private String accountSubtypeName;
 	private Long accountTypeId;
@@ -24,39 +24,50 @@ public class AccountDTO {
 	private BigDecimal initialDebitAmount;
 	private BigDecimal initialCreditAmount;
 	private BigDecimal debitsMinusCredits;
-	private boolean deleted;
+	private boolean hasChildren;
 	
 	public AccountDTO(Account account) {
 		this.accountId = account.getId();
 		this.accountName = account.getName();
-		this.accountGroupId = account.getAccountGroup().getId();
-		this.accountGroupName = account.getAccountGroup().getName();
-		this.accountSubtypeId = account.getAccountGroup().getAccountSubtype().getId();
-		this.accountSubtypeName = account.getAccountGroup().getAccountSubtype().getName();
-		this.accountTypeId = account.getAccountGroup().getAccountSubtype().getAccountType().getId();
-		this.accountTypeName = account.getAccountGroup().getAccountSubtype().getAccountType().getName();
-		this.organizationId = account.getAccountGroup().getOrganization().getId();
-		this.organizationName = account.getAccountGroup().getOrganization().getName();
+		if (account.getParentAccount() != null) {
+			this.parentAccountId = account.getParentAccount().getId();
+			this.parentAccountName = account.getParentAccount().getName();
+			this.accountSubtypeId = account.getParentAccount().getAccountSubtype().getId();
+			this.accountSubtypeName = account.getParentAccount().getAccountSubtype().getName();
+			this.accountTypeId = account.getParentAccount().getAccountSubtype().getAccountType().getId();
+			this.accountTypeName = account.getParentAccount().getAccountSubtype().getAccountType().getName();
+		} else {
+			this.accountSubtypeId = account.getAccountSubtype().getId();
+			this.accountSubtypeName = account.getAccountSubtype().getName();
+			this.accountTypeId = account.getAccountSubtype().getAccountType().getId();
+			this.accountTypeName = account.getAccountSubtype().getAccountType().getName();
+		}
+		this.organizationId = account.getOrganization().getId();
+		this.organizationName = account.getOrganization().getName();
 		this.debitTotal = account.getDebitTotal();
 		this.creditTotal = account.getCreditTotal();
 		this.initialDebitAmount = account.getInitialDebitAmount();
 		this.initialCreditAmount = account.getInitialCreditAmount();
 		this.debitsMinusCredits = this.getDebitTotal().subtract(this.getCreditTotal());
-		this.deleted = account.isDeleted();
+		this.hasChildren = account.isHasChildren();
 	}
 	
-	public AccountDTO(BigInteger accountId, String accountName, BigInteger accountGroupId, String accountGroupName,
+	public AccountDTO(BigInteger accountId, String accountName, BigInteger parentAccountId, String parentAccountName,
 			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
 			BigInteger organizationId, String organizationName, BigDecimal debitTotal, BigDecimal creditTotal, 
-			BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean deleted) {
+			BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean hasChildren) {
 		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
-		this.accountGroupId = accountGroupId.longValueExact();
-		this.accountGroupName = accountGroupName;
-		this.accountSubtypeId = accountSubtypeId.longValueExact();
-		this.accountSubtypeName = accountSubtypeName;
-		this.accountTypeId = accountTypeId.longValueExact();
-		this.accountTypeName = accountTypeName;
+		if (parentAccountId != null) {
+			this.parentAccountId = parentAccountId.longValueExact();
+			this.parentAccountName = parentAccountName;
+		}
+		if (accountSubtypeId != null) {
+			this.accountSubtypeId = accountSubtypeId.longValueExact();
+			this.accountSubtypeName = accountSubtypeName;
+			this.accountTypeId = accountTypeId.longValueExact();
+			this.accountTypeName = accountTypeName;
+		}
 		this.organizationId = organizationId.longValueExact();
 		this.organizationName = organizationName;
 		if (debitTotal != null) {
@@ -72,7 +83,7 @@ public class AccountDTO {
 		this.initialDebitAmount = initialDebitAmount;
 		this.initialCreditAmount = initialCreditAmount;
 		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
-		this.deleted = deleted;
+		this.hasChildren = hasChildren;
 	}
 
 	public AccountDTO() {
@@ -94,20 +105,20 @@ public class AccountDTO {
 		this.accountName = accountName;
 	}
 
-	public Long getAccountGroupId() {
-		return accountGroupId;
+	public Long getParentAccountId() {
+		return parentAccountId;
 	}
 
-	public void setAccountGroupId(Long accountGroupId) {
-		this.accountGroupId = accountGroupId;
+	public void setParentAccountId(Long parentAccountId) {
+		this.parentAccountId = parentAccountId;
 	}
 
-	public String getAccountGroupName() {
-		return accountGroupName;
+	public String getParentAccountName() {
+		return parentAccountName;
 	}
 
-	public void setAccountGroupName(String accountGroupName) {
-		this.accountGroupName = accountGroupName;
+	public void setParentAccountName(String parentAccountName) {
+		this.parentAccountName = parentAccountName;
 	}
 
 	public Long getAccountSubtypeId() {
@@ -198,23 +209,25 @@ public class AccountDTO {
 		this.debitsMinusCredits = debitsMinusCredits;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
+	public boolean isHasChildren() {
+		return hasChildren;
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setHasChildren(boolean hasChildren) {
+		this.hasChildren = hasChildren;
 	}
 
 	@Override
 	public String toString() {
-		return "AccountDTO [accountId=" + accountId + ", accountName=" + accountName + ", accountGroupId="
-				+ accountGroupId + ", accountGroupName=" + accountGroupName + ", accountSubtypeId=" + accountSubtypeId
-				+ ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
+		return "AccountDTO [accountId=" + accountId + ", accountName=" + accountName + ", parentAccountId="
+				+ parentAccountId + ", parentAccountName=" + parentAccountName + ", accountSubtypeId="
+				+ accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
 				+ ", accountTypeName=" + accountTypeName + ", organizationId=" + organizationId + ", organizationName="
 				+ organizationName + ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal
 				+ ", initialDebitAmount=" + initialDebitAmount + ", initialCreditAmount=" + initialCreditAmount
-				+ ", totalDebitsMinusCredits=" + debitsMinusCredits + ", deleted=" + deleted + "]";
+				+ ", debitsMinusCredits=" + debitsMinusCredits + ", hasChildren=" + hasChildren + "]";
 	}
+
+
 	
 }

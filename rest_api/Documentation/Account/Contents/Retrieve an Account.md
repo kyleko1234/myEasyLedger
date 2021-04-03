@@ -20,8 +20,8 @@ ___
 {
     "accountId": 1,
     "accountName": "Cash",
-    "accountGroupId": 1,
-    "accountGroupName": "Cash",
+    "parentAccountId": null,
+    "parentAccountName": null,
     "accountSubtypeId": 1,
     "accountSubtypeName": "Cash and cash equivalents",
     "accountTypeId": 1,
@@ -29,11 +29,11 @@ ___
     "organizationId": 1,
     "organizationName": "Sample organization",
     "debitTotal": 420000,
-    "creditTotal": 18430,
+    "creditTotal": 18930,
     "initialDebitAmount": 0,
     "initialCreditAmount": 0,
-    "debitsMinusCredits": 401570,
-    "deleted": false
+    "debitsMinusCredits": 401070,
+    "hasChildren": true
 }
 ```
 

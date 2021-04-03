@@ -22,11 +22,10 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 	
 	@Query(nativeQuery = true)
 	public List<AccountBalanceDTO> getAllAccountBalancesForOrganizationUpToDate(Long organizationId, LocalDate endDate);
-		
+			
 	@Query(
-		value = "SELECT CASE EXISTS (SELECT 1 from account WHERE account.account_group_id = ? AND account.deleted = false) "
-				+ "WHEN true THEN true ELSE false END",
-		nativeQuery = true)
-	public boolean accountGroupContainsAccounts(Long accountGroupId);
-	
+			value = "SELECT CASE EXISTS (SELECT 1 FROM account WHERE account.parent_account_id = ? AND account.deleted = false) " +
+				"WHEN true THEN true ELSE false END",
+			nativeQuery = true)
+	public boolean accountContainsChildAccounts(Long accountId);
 }

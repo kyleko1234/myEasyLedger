@@ -37,12 +37,13 @@ export const balanceSheetRenderText = {
         "Current receivables": "Current receivables", 
         "Inventory": "Inventory", 
         "Other current assets": "Other current assets", 
+        "Non-current marketable securities": "Non-current marketable securities", 
+        "Non-current receivables": "Non-current receivables",
         "Property, plant, and equipment": "Property, plant, and equipment", 
         "Intangible assets and goodwill": "Intangible assets and goodwill",
-        "Non-current receivables": "Non-current receivables",
-        "Non-current marketable securities": "Non-current marketable securities", 
         "Other non-current assets": "Other non-current assets", 
         "Current payables": "Current payables", 
+        "Dividends and equivalents payable": "Dividends and equivalents payable",
         "Deferred revenue": "Deferred revenue", 
         "Short-term debt": "Short-term debt", 
         "Deferred tax": "Deferred tax", 
@@ -65,7 +66,7 @@ export const balanceSheetRenderText = {
         "Other expense": "Other expense", 
         "Interest expense": "Interest expense",
         "Tax expense": "Tax expense",
-        "Non-recurring and extraordinary items": "Non-recurring and extraordinary items"
+        "Non-recurring and extraordinary items": "Non-recurring and extraordinary items",
     },
     "zh-TW": {
         "Balance Sheet": "資產負債表",
@@ -105,12 +106,13 @@ export const balanceSheetRenderText = {
         "Current receivables": "TRANSLATION", 
         "Inventory": "存貨", 
         "Other current assets": "其它流動資產", 
+        "Non-current marketable securities": "不具市場性證劵", 
+        "Non-current receivables": "TRANSLATION",
         "Property, plant, and equipment": "TRANSLATION", 
         "Intangible assets and goodwill": "TRANSLATION",
-        "Non-current receivables": "TRANSLATION",
-        "Non-current marketable securities": "不具市場性證劵", 
         "Other non-current assets": "其它非流動性資產", 
         "Current payables": "TRANSLATION", 
+        "Dividends and equivalents payable": "TRANSLATION",
         "Deferred revenue": "遞延收入", 
         "Short-term debt": "短期負債", 
         "Deferred tax": "遞延所得稅", 
@@ -133,7 +135,7 @@ export const balanceSheetRenderText = {
         "Other expense": "其它費用", 
         "Interest expense": "TRANSLATION",
         "Tax expense": "TRANSLATION",
-        "Non-recurring and extraordinary items": "TRANSLATION"
+        "Non-recurring and extraordinary items": "TRANSLATION",
     }
 
 }

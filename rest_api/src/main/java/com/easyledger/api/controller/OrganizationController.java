@@ -1,6 +1,5 @@
 package com.easyledger.api.controller;
 
-import java.util.HashSet;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -34,7 +33,7 @@ import com.easyledger.api.security.UserPrincipal;
 import com.easyledger.api.service.PersonService;
 
 @RestController
-@RequestMapping("/v0.2")
+@RequestMapping("/v0.3")
 public class OrganizationController {
 	
 	private OrganizationRepository organizationRepo;

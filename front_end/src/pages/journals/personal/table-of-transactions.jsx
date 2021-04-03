@@ -25,7 +25,8 @@ function TableOfTransactions({
     tableTitle,
     hasAddEntryButton,
     parentComponentAccountId,
-    loading
+    loading, 
+    category
 }) {
     const {
         getTableProps,
@@ -87,7 +88,7 @@ function TableOfTransactions({
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
     const refreshAccounts = () => {
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
-            const formattedAccounts = response.data.map(account => {
+            const formattedAccounts = response.data.filter(account => !account.hasChildren).map(account => {
                 return ({
                     value: account.accountId,
                     label: account.accountName,
@@ -289,7 +290,9 @@ function TableOfTransactions({
             setFromAccountId(firstLineItem.accountId);
             setFromAccountName(firstLineItem.accountName);
             //format line items for display
+            console.log(transactionTypeOptions);
             let formattedLineItems = lineItems.map(lineItem => {
+                console.log(lineItem);
                 let transactionType = transactionTypeOptions.find(transactionType => transactionType.accountTypeIds.includes(lineItem.accountTypeId));
                 return ({
                     lineItemId: lineItem.lineItemId,
@@ -466,7 +469,7 @@ function TableOfTransactions({
                     }
                 </ModalFooter>
             </Modal>
-            {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} elementCount={elementCount}/> : null}
+            {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} category={category}/> : null}
         </>
     )
 }

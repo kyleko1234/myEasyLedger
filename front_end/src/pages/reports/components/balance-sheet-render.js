@@ -53,7 +53,6 @@ function BalanceSheetRender() {
     const [balanceSheetLiabilities, setBalanceSheetLiabilities] = React.useState(null);
     const [balanceSheetEquity, setBalanceSheetEquity] = React.useState(null);
 
-    const [accountGroupBalances, setAccountGroupBalances] = React.useState([]);
     const [accountBalances, setAccountBalances] = React.useState([]);
     
     const handleChangeDate = date => {
@@ -79,7 +78,6 @@ function BalanceSheetRender() {
                     setBalanceSheetAssets(response.data.balanceSheetAssets);
                     setBalanceSheetLiabilities(response.data.balanceSheetLiabilities);
                     setBalanceSheetEquity(response.data.balanceSheetEquity);
-                    setAccountGroupBalances(response.data.accountGroupBalances);
                     setAccountBalances(response.data.accountBalances);
                 }
             }).catch(error => {
