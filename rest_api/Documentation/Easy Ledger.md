@@ -60,6 +60,7 @@ Prefix all endpoints with `http://{host}/v0.2/`
 <br/><br/>
 - [[Generate a Balance Sheet|GET /organization/{id}/reports/balanceSheet/{endDate}]]
 - [[Generate an Income Statement|GET /organization/{id}/reports/incomeStatement/{startDate}/{endDate}]]
+- [[Generate a Cash Flow Statement | GET /organization/{id}/reports/cashFlow/{startDate}/{endDate}]]
 <br/><br/>
 - [[Create a Permission for an Organization|POST /organization/{organizationId}/permission]]
 - [[Edit a Permission Object|PATCH /permission/{permissionId}]]
