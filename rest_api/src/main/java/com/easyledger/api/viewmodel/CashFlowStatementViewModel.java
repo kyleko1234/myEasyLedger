@@ -9,6 +9,7 @@ import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 
 public class CashFlowStatementViewModel {
 	
+	static final Long CASH_AND_CASH_EQUIVALENTS_SUBTYPE_ID = (long) 1;
 	static final Long DEPRECIATION_AMORTIZATION_SUBTYPE_ID = (long) 31;
 	static final Long DEFERRED_TAX_SUBTYPE_ID = (long) 15;
 	static final Long SHARE_BASED_COMPENSATION_SUBTYPE_ID = (long) 21;
@@ -60,8 +61,14 @@ public class CashFlowStatementViewModel {
 	private BigDecimal cashFlowFromFinancing = new BigDecimal(0);
 	private BigDecimal cashFlow = new BigDecimal(0);
 	
+	private List<AccountSubtypeBalanceDTO> beginningAccountSubtypeBalances = new ArrayList<AccountSubtypeBalanceDTO>();
+	private List<AccountSubtypeBalanceDTO> endingAccountSubtypeBalances = new ArrayList<AccountSubtypeBalanceDTO>();
 	
-	public CashFlowStatementViewModel(List<AccountSubtypeBalanceDTO> currPeriodAccountSubtypeBalances) {
+	
+	public CashFlowStatementViewModel(List<AccountSubtypeBalanceDTO> currPeriodAccountSubtypeBalances, 
+			List<AccountSubtypeBalanceDTO> beginningAccountSubtypeBalances, List<AccountSubtypeBalanceDTO> endingAccountSubtypeBalances) {
+		this.beginningAccountSubtypeBalances = beginningAccountSubtypeBalances;
+		this.endingAccountSubtypeBalances = endingAccountSubtypeBalances;
 		for (AccountSubtypeBalanceDTO accountSubtype : currPeriodAccountSubtypeBalances) {
 			Long id = accountSubtype.getAccountSubtypeId();
 			BigDecimal amount = accountSubtype.getDebitsMinusCredits();
@@ -151,7 +158,10 @@ public class CashFlowStatementViewModel {
 		
 	}
 
-
+	public Long getCashAndCashEquivalentsSubtypeId() {
+		return CASH_AND_CASH_EQUIVALENTS_SUBTYPE_ID;
+	}
+	
 	public Long getDepreciationAmortizationSubtypeId() {
 		return DEPRECIATION_AMORTIZATION_SUBTYPE_ID;
 	}
@@ -380,6 +390,16 @@ public class CashFlowStatementViewModel {
 	public BigDecimal getCashFlow() {
 		return cashFlow;
 	}
+
+
+	public List<AccountSubtypeBalanceDTO> getBeginningAccountSubtypeBalances() {
+		return beginningAccountSubtypeBalances;
+	}
+
+	public List<AccountSubtypeBalanceDTO> getEndingAccountSubtypeBalances() {
+		return endingAccountSubtypeBalances;
+	}
+
 
 
 	@Override
