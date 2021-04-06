@@ -3,7 +3,6 @@ import { PageSettings } from './config/page-settings.js';
 
 import Header from './components/header/header.jsx';
 import Sidebar from './components/sidebar/sidebar.jsx';
-import SidebarRight from './components/sidebar-right/sidebar-right.jsx';
 import TopMenu from './components/top-menu/top-menu.jsx';
 import Content from './components/content/content.jsx';
 import Footer from './components/footer/footer.jsx';
@@ -66,23 +65,6 @@ class App extends React.Component {
 			}));
 		}
 		
-		this.toggleRightSidebar = (e) => {
-			e.preventDefault();
-			this.setState(state => ({
-				pageRightSidebarCollapsed: !this.state.pageRightSidebarCollapsed
-			}));
-		}
-		this.toggleMobileRightSidebar = (e) => {
-			e.preventDefault();
-			this.setState(state => ({
-				pageMobileRightSidebarToggled: !this.state.pageMobileRightSidebarToggled
-			}));
-		}
-		this.handleSetPageRightSidebar = (value) => {
-			this.setState(state => ({
-				pageRightSidebar: value
-			}));
-		}
 		
 		var floatSubMenuRemove;
 		var floatSubMenuCalculate;
@@ -239,22 +221,7 @@ class App extends React.Component {
 				pageFooter: value
 			}));
 		}
-		this.handleSetPageTopMenu = (value) => {
-			this.setState(state => ({
-				pageTopMenu: value
-			}));
-		}
-		this.toggleMobileTopMenu = (e) => {
-			e.preventDefault();
-			this.setState(state => ({
-				pageMobileTopMenu: !this.state.pageMobileTopMenu
-			}));
-		}
-		this.handleSetPageTwoSidebar = (value) => {
-			this.setState(state => ({
-				pageTwoSidebar: value
-			}));
-		}
+
 		this.handleSetPageBoxedLayout = (value) => {
 			if (value === true) {
 				document.body.classList.add('boxed-layout');
@@ -324,12 +291,10 @@ class App extends React.Component {
 		
 		this.state = {
 			pageHeader: false,
-			pageheaderMegaMenu: false,
 			pageHeaderLanguageBar: false,
 			hasScroll: false,
 			handleSetPageHeader: this.handleSetPageHeader,
 			handleSetPageHeaderLanguageBar: this.handleSetPageHeaderLanguageBar,
-			handleSetPageHeaderMegaMenu: this.handleSetPageHeaderMegaMenu,
 			
 			pageSidebar: true,
 			pageSidebarWide: true,
@@ -376,22 +341,7 @@ class App extends React.Component {
 			
 			pageFooter: false,
 			handleSetPageFooter: this.handleSetPageFooter,
-			
-			pageTopMenu: false,
-			pageMobileTopMenu: false,
-			toggleMobileTopMenu: this.toggleMobileTopMenu,
-			handleSetPageTopMenu: this.handleSetPageTopMenu,
-			
-			pageTwoSidebar: false,
-			handleSetPageTwoSidebar: this.handleSetPageTwoSidebar,
-			
-			pageRightSidebar: false,
-			pageRightSidebarToggled: true,
-			pageMobileRightSidebarToggled: false,
-			toggleRightSidebar: this.toggleRightSidebar,
-			toggleMobileRightSidebar: this.toggleMobileRightSidebar,
-			handleSetPageRightSidebar: this.handleSetPageRightSidebar,
-			
+						
 			handleSetBodyWhiteBg: this.handleSetBodyWhiteBg,
 			handleSetPageBoxedLayout: this.handleSetPageBoxedLayout,
 
@@ -450,21 +400,21 @@ class App extends React.Component {
 					'fade page-sidebar-fixed show page-container ' + 
 					(this.state.pageHeader ? 'page-header-fixed ' : '') + 
 					(this.state.pageSidebar ? '' : 'page-without-sidebar ') + 
-					(this.state.pageRightSidebar ? 'page-with-right-sidebar ' : '') +
+					//(this.state.pageRightSidebar ? 'page-with-right-sidebar ' : '') +
 					(this.state.pageSidebarWide ? 'page-with-wide-sidebar ' : '') +
 					(this.state.pageSidebarLight ? 'page-with-light-sidebar ' : '') +
 					(this.state.pageSidebarMinify ? 'page-sidebar-minified ' : '') + 
 					(this.state.pageSidebarToggled ? 'page-sidebar-toggled ' : '') + 
-					(this.state.pageTopMenu ? 'page-with-top-menu ' : '') + 
+					//(this.state.pageTopMenu ? 'page-with-top-menu ' : '') + 
 					(this.state.pageContentFullHeight ? 'page-content-full-height ' : '') + 
-					(this.state.pageTwoSidebar ? 'page-with-two-sidebar ' : '') + 
-					(this.state.pageRightSidebarCollapsed ? 'page-right-sidebar-collapsed ' : '') + 
-					(this.state.pageMobileRightSidebarToggled ? 'page-right-sidebar-toggled ' : '') + 
+					//(this.state.pageTwoSidebar ? 'page-with-two-sidebar ' : '') + 
+					//(this.state.pageRightSidebarCollapsed ? 'page-right-sidebar-collapsed ' : '') + 
+					//(this.state.pageMobileRightSidebarToggled ? 'page-right-sidebar-toggled ' : '') + 
 					(this.state.hasScroll ? 'has-scroll ' : '')
 				}>
 					{this.state.pageHeader && (<Header />)}
 					{this.state.pageSidebar && !this.state.isLoading && this.state.isAuthenticated && (<Sidebar />)}
-					{this.state.pageTwoSidebar && !this.state.isLoading && this.state.isAuthenticated &&(<SidebarRight />)}
+					{/*this.state.pageTwoSidebar && !this.state.isLoading && this.state.isAuthenticated &&(<SidebarRight />)*/}
 					{this.state.pageTopMenu && !this.state.isLoading && this.state.isAuthenticated &&(<TopMenu />)}
 					{this.state.pageContent && !this.state.isLoading && (<Content />)}
 					{this.state.pageFooter && !this.state.isLoading && this.state.isAuthenticated &&(<Footer />)}

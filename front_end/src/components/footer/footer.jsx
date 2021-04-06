@@ -1,18 +1,14 @@
 import React from 'react';
+import { PageSettings } from '../../config/page-settings';
+import {loginV3Text} from '../../utils/i18n/login-v3-text';
 
 class Footer extends React.Component {
-	constructor(props) {
-		super(props);
-		
-		var date = new Date();
-		this.state = {
-			year: date.getFullYear()
-		}
-	}
+	static contextType = PageSettings;
+	
 	render() {
 		return (
 			<div id="footer" className="footer">
-				&copy; { this.state.year } Color Admin Responsive Admin Template - Sean Ngu All Rights Reserved
+				{loginV3Text[this.context.locale]["Copyright text"]}
 			</div>
 		)
 	}

@@ -68,9 +68,9 @@ class SidebarProfile extends React.Component {
 							<li className={"nav-profile " + (this.state.profileActive ? "expand " : "")}>
 								<Link replace to="/" onClick={this.handleProfileExpand}>
 									<div className="cover with-shadow"></div>
-									<div className="image">
+									{/*<div className="image">
 										<img src="/assets/img/user/user-13.jpg" alt="" />
-									</div>
+									</div>*/}
 									<div className="info">
 										<b className="caret pull-right"></b>
 										{FIRSTNAME_LASTNAME_LOCALES.includes(locale)? 

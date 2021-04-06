@@ -10,9 +10,9 @@ class Sidebar extends React.Component {
 	render() {
 		return (
 			<PageSettings.Consumer>
-				{({toggleSidebarMinify, toggleMobileSidebar, pageSidebarTransparent}) => (
+				{({toggleSidebarMinify, toggleMobileSidebar, pageSidebarTransparent, pageHeader}) => (
 					<React.Fragment>
-							<div id="sidebar" className={'sidebar pt-0' + (pageSidebarTransparent ? 'sidebar-transparent' : '')}>
+							<div id="sidebar" className={'sidebar ' + (pageSidebarTransparent ? 'sidebar-transparent' : '') + (pageHeader? '' : ' pt-0')}>
 								<PerfectScrollbar className="height-full" options={{suppressScrollX: true, wheelPropagation: false}}>
 									{!this.context.pageSidebarSearch && (
 									<SidebarProfile />
