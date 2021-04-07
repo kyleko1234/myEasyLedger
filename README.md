@@ -94,7 +94,6 @@ When running for the first time, initialize the frontend in the terminal by issu
 ```
 $ cd {filepath}/Easy_Ledger/front_end
 $ npm install
-$ 
 ```
 
 To start the front end, run the following commands: 
