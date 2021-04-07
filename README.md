@@ -22,8 +22,8 @@ myEasyLedger is a webapp that provides an allows users to keep track of their bo
 ## Dev Setup
 These instructions assume you are using a recent version of MacOS (10.13 or newer) and that you have cloned this repository to your device.
 - [Local DB](#local-db-setup)
-- [Backend Development Environment](backend-development-environment-setup)
-- [Frontend Development Environment](frontend-development-environment-setup)
+- [Backend Development Environment](#backend-development-environment-setup)
+- [Frontend Development Environment](#frontend-development-environment-setup)
 
 ### Local DB Setup
 #### Install a local PostgreSQL Database
