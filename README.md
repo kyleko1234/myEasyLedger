@@ -85,3 +85,22 @@ Alternatively, install Spring Tool Suite 4 on an existing installation of Eclips
 3. If prompted, choose "Run as Spring Boot App".
 
 ### Frontend Development Environment Setup
+The recommended text editor is [Visual Studio Code](https://code.visualstudio.com/).
+
+You will need to have NodeJS 14 installed, which can be found [here](https://nodejs.org/en/
+).
+
+When running for the first time, initialize the frontend in the terminal by issuing the following commands: 
+```
+$ cd {filepath}/Easy_Ledger/front_end
+$ npm install
+$ 
+```
+
+To start the front end, run the following commands: 
+```
+$ cd {filepath}/Easy_Ledger/front_end
+$ npm start 
+```
+
+Please make sure that the backend server is running before starting the frontend.
