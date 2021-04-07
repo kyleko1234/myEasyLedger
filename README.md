@@ -23,6 +23,7 @@ myEasyLedger is a webapp that provides an allows users to keep track of their bo
 These instructions assume you are using a recent version of MacOS (10.13 or newer) and that you have cloned this repository to your device.
 - [Local DB](#local-db-setup)
 - [Backend Development Environment](backend-development-environment-setup)
+- [Frontend Development Environment](frontend-development-environment-setup)
 
 ### Local DB Setup
 #### Install a local PostgreSQL Database
@@ -72,13 +73,15 @@ The recommended IDE for this project is Spring Tool Suite 4 for Eclipse. STS can
 Alternatively, install Spring Tool Suite 4 on an existing installation of Eclipse by clicking Help > Eclipse Marketplace... and searching for STS. Select the version that matches your Eclipse version and hit Install. All features are selected by default. After installing STS4 with all features, you will need to restart Eclipse.
 
 #### Open the project in STS4:
-- File > Open Projects from File System
-- Click the “Directory…” button
-- Select /Easy_Ledger/rest_api, then click open
-- Click Finish
-- STS may take a few moments to update dependencies for the project build.
+1. File > Open Projects from File System
+2. Click the “Directory…” button
+3. Select /Easy_Ledger/rest_api, then click open
+4. Click Finish
+5. STS may take a few moments to update dependencies for the project build.
 
 #### Run the project from STS4:
-- Make sure to click EasyLedgerApplication.java from the Package Explorer sidebar to select it. If this file is not selected, occasionally STS will fail to run the project.
-- Hit the play button in the top toolbar.
-- If prompted, choose "Run as Spring Boot App".
+1. Make sure to click EasyLedgerApplication.java from the Package Explorer sidebar to select it. If this file is not selected, occasionally STS will fail to run the project.
+2. Hit the play button in the top toolbar.
+3. If prompted, choose "Run as Spring Boot App".
+
+### Frontend Development Environment Setup

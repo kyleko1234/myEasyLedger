@@ -1,10 +1,10 @@
 {
-  "name": "color-admin",
-  "version": "0.0.0",
+  "name": "myeasyledger",
+  "version": "0.3.1",
   "private": true,
   "dependencies": {
     "@rowno/sparkline": "^4.0.0",
-    "apexcharts": "^3.23.1",
+    "apexcharts": "^3.26.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "bootstrap-daterangepicker": "^3.0.5",
@@ -20,7 +20,7 @@
     "moment": "^2.29.1",
     "namor": "^2.0.2",
     "node-sass": "^4.13.0",
-    "npm": "^7.4.2",
+    "npm": "^7.8.0",
     "prop-types": "^15.7.2",
     "rc-slider": "^8.7.1",
     "react": "^16.4.0",

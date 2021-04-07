@@ -3,7 +3,6 @@ import { PageSettings } from './config/page-settings.js';
 
 import Header from './components/header/header.jsx';
 import Sidebar from './components/sidebar/sidebar.jsx';
-import TopMenu from './components/top-menu/top-menu.jsx';
 import Content from './components/content/content.jsx';
 import Footer from './components/footer/footer.jsx';
 import FloatSubMenu from './components/float-sub-menu/float-sub-menu.jsx';
@@ -415,7 +414,7 @@ class App extends React.Component {
 					{this.state.pageHeader && (<Header />)}
 					{this.state.pageSidebar && !this.state.isLoading && this.state.isAuthenticated && (<Sidebar />)}
 					{/*this.state.pageTwoSidebar && !this.state.isLoading && this.state.isAuthenticated &&(<SidebarRight />)*/}
-					{this.state.pageTopMenu && !this.state.isLoading && this.state.isAuthenticated &&(<TopMenu />)}
+					{/*this.state.pageTopMenu && !this.state.isLoading && this.state.isAuthenticated &&(<TopMenu />)*/}
 					{this.state.pageContent && !this.state.isLoading && (<Content />)}
 					{this.state.pageFooter && !this.state.isLoading && this.state.isAuthenticated &&(<Footer />)}
 					{this.state.pageSidebarMinify && <FloatSubMenu />}
