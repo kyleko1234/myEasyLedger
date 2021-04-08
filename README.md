@@ -27,7 +27,7 @@ These instructions assume you are using a recent version of MacOS (10.13 or newe
 
 ### Local DB Setup
 #### Install a local PostgreSQL Database
-myEasyLedger uses PostgreSQL 13. It is recommended to use the (EnterpriseDB installer)[https://www.enterprisedb.com/downloads/postgres-postgresql-downloads].
+myEasyLedger uses PostgreSQL 13. It is recommended to use the [EnterpriseDB installer](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads).
 1. Go to https://www.postgresql.org/download/macosx/ and click on 'download the installer'.
 2. Download version 13.x for MacOS
 3. Double-click on the downloaded postgresql-13-osx.dmg then click on postgresql-13-osx to start installing.
