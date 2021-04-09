@@ -5,6 +5,7 @@ import java.math.BigInteger;
 
 public class AccountBalanceDTO {
 	private Long accountId;
+	private String accountCode;
 	private String accountName;
 	private Long parentAccountId;
 	private String parentAccountName;
@@ -23,11 +24,12 @@ public class AccountBalanceDTO {
 	private BigDecimal debitsMinusCredits;
 	private boolean hasChildren;
 	
-	public AccountBalanceDTO(BigInteger accountId, String accountName, BigInteger parentAccountId, String parentAccountName,
+	public AccountBalanceDTO(BigInteger accountId, String accountCode, String accountName, BigInteger parentAccountId, String parentAccountName,
 			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
 			BigInteger organizationId, String organizationName, BigDecimal sumOfDebitLineItems,
 			BigDecimal sumOfCreditLineItems, BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean hasChildren) {
 		this.accountId = accountId.longValueExact();
+		this.accountCode = accountCode;
 		this.accountName = accountName;
 		if (parentAccountId != null) {
 			this.parentAccountId = parentAccountId.longValueExact();
@@ -69,6 +71,14 @@ public class AccountBalanceDTO {
 
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
+	}
+
+	public String getAccountCode() {
+		return accountCode;
+	}
+
+	public void setAccountCode(String accountCode) {
+		this.accountCode = accountCode;
 	}
 
 	public String getAccountName() {
@@ -209,14 +219,15 @@ public class AccountBalanceDTO {
 
 	@Override
 	public String toString() {
-		return "AccountBalanceDTO [accountId=" + accountId + ", accountName=" + accountName + ", parentAccountId="
-				+ parentAccountId + ", parentAccountName=" + parentAccountName + ", accountSubtypeId="
-				+ accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
-				+ ", accountTypeName=" + accountTypeName + ", organizationId=" + organizationId + ", organizationName="
-				+ organizationName + ", sumOfDebitLineItems=" + sumOfDebitLineItems + ", sumOfCreditLineItems="
-				+ sumOfCreditLineItems + ", initialDebitAmount=" + initialDebitAmount + ", initialCreditAmount="
-				+ initialCreditAmount + ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal
-				+ ", debitsMinusCredits=" + debitsMinusCredits + ", hasChildren=" + hasChildren + "]";
+		return "AccountBalanceDTO [accountId=" + accountId + ", accountCode=" + accountCode + ", accountName="
+				+ accountName + ", parentAccountId=" + parentAccountId + ", parentAccountName=" + parentAccountName
+				+ ", accountSubtypeId=" + accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName
+				+ ", accountTypeId=" + accountTypeId + ", accountTypeName=" + accountTypeName + ", organizationId="
+				+ organizationId + ", organizationName=" + organizationName + ", sumOfDebitLineItems="
+				+ sumOfDebitLineItems + ", sumOfCreditLineItems=" + sumOfCreditLineItems + ", initialDebitAmount="
+				+ initialDebitAmount + ", initialCreditAmount=" + initialCreditAmount + ", debitTotal=" + debitTotal
+				+ ", creditTotal=" + creditTotal + ", debitsMinusCredits=" + debitsMinusCredits + ", hasChildren="
+				+ hasChildren + "]";
 	}
 
 	

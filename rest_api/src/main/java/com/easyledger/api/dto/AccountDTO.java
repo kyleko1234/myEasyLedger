@@ -8,6 +8,7 @@ import com.easyledger.api.model.Account;
 
 public class AccountDTO {
 	private Long accountId;
+	private String accountCode;
 	private String accountName;
 	private Long parentAccountId;
 	private String parentAccountName;
@@ -26,6 +27,7 @@ public class AccountDTO {
 	
 	public AccountDTO(Account account) {
 		this.accountId = account.getId();
+		this.accountCode = account.getAccountCode();
 		this.accountName = account.getName();
 		if (account.getParentAccount() != null) {
 			this.parentAccountId = account.getParentAccount().getId();
@@ -50,11 +52,12 @@ public class AccountDTO {
 		this.hasChildren = account.isHasChildren();
 	}
 	
-	public AccountDTO(BigInteger accountId, String accountName, BigInteger parentAccountId, String parentAccountName,
+	public AccountDTO(BigInteger accountId, String accountCode, String accountName, BigInteger parentAccountId, String parentAccountName,
 			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
 			BigInteger organizationId, String organizationName, BigDecimal debitTotal, BigDecimal creditTotal, 
 			BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean hasChildren) {
 		this.accountId = accountId.longValueExact();
+		this.accountCode = accountCode;
 		this.accountName = accountName;
 		if (parentAccountId != null) {
 			this.parentAccountId = parentAccountId.longValueExact();
@@ -93,6 +96,14 @@ public class AccountDTO {
 
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
+	}
+
+	public String getAccountCode() {
+		return accountCode;
+	}
+
+	public void setAccountCode(String accountCode) {
+		this.accountCode = accountCode;
 	}
 
 	public String getAccountName() {
@@ -217,13 +228,14 @@ public class AccountDTO {
 
 	@Override
 	public String toString() {
-		return "AccountDTO [accountId=" + accountId + ", accountName=" + accountName + ", parentAccountId="
-				+ parentAccountId + ", parentAccountName=" + parentAccountName + ", accountSubtypeId="
-				+ accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName + ", accountTypeId=" + accountTypeId
-				+ ", accountTypeName=" + accountTypeName + ", organizationId=" + organizationId + ", organizationName="
-				+ organizationName + ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal
-				+ ", initialDebitAmount=" + initialDebitAmount + ", initialCreditAmount=" + initialCreditAmount
-				+ ", debitsMinusCredits=" + debitsMinusCredits + ", hasChildren=" + hasChildren + "]";
+		return "AccountDTO [accountId=" + accountId + ", accountCode=" + accountCode + ", accountName=" + accountName
+				+ ", parentAccountId=" + parentAccountId + ", parentAccountName=" + parentAccountName
+				+ ", accountSubtypeId=" + accountSubtypeId + ", accountSubtypeName=" + accountSubtypeName
+				+ ", accountTypeId=" + accountTypeId + ", accountTypeName=" + accountTypeName + ", organizationId="
+				+ organizationId + ", organizationName=" + organizationName + ", debitTotal=" + debitTotal
+				+ ", creditTotal=" + creditTotal + ", initialDebitAmount=" + initialDebitAmount
+				+ ", initialCreditAmount=" + initialCreditAmount + ", debitsMinusCredits=" + debitsMinusCredits
+				+ ", hasChildren=" + hasChildren + "]";
 	}
 
 

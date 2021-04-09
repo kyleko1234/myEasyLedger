@@ -9,6 +9,9 @@ ___
 - **accountName (`String` 64)**<br/>
 The name of this account.
 
+- **accountCode (`Optional String` 16)**<br/>
+An account code for this account.
+
 - **parentAccountId (`Optional Long`)**<br/>
 The id of the parent account for this account. This is optional, but an account must have either a parent account or an account subtype.
 
@@ -35,8 +38,10 @@ ___
 Body:
 ```json
 {
-    "accountName": "Cash Equivalents",
-    "accountGroupId": 1,
+    "accountName": "Cash",
+	"accountCode": "110100",
+    "accountSubtypeId": 1,
+	"organizationId": 1,
 	"initialDebitAmount": 0,
 	"initialCreditAmount": 0
 }
@@ -47,21 +52,21 @@ Body:
 #### Sample Response
 ```json
 {
-    "accountId": 15,
-    "accountName": "Cash Equivalents",
-    "accountGroupId": 1,
-    "accountGroupName": "Cash",
+    "accountId": 1,
+    "accountCode": "110100",
+    "accountName": "Cash",
+    "parentAccountId": null,
+    "parentAccountName": null,
     "accountSubtypeId": 1,
     "accountSubtypeName": "Cash and cash equivalents",
     "accountTypeId": 1,
     "accountTypeName": "Assets",
     "organizationId": 1,
     "organizationName": "Sample organization",
-    "debitTotal": 1000,
-    "creditTotal": 0,
-    "initialDebitAmount": 1000,
+    "debitTotal": 420000,
+    "creditTotal": 18430,
+    "initialDebitAmount": 0,
     "initialCreditAmount": 0,
-    "debitsMinusCredits": 1000,
-    "deleted": false
-}
-```
+    "debitsMinusCredits": 401570,
+    "hasChildren": false
+}```

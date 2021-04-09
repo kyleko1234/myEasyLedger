@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 						targetClass = AccountDTO.class,
 						columns = {
 								@ColumnResult(name = "accountId"),
+								@ColumnResult(name = "accountCode"),
 								@ColumnResult(name = "accountName"),
 								@ColumnResult(name = "parentAccountId"),
 								@ColumnResult(name = "parentAccountName"),
@@ -49,7 +50,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )	
 @NamedNativeQuery( //  takes an organization ID as a parameter and returns all undeleted accounts for that organization
 		name = "Account.getAllAccountsForOrganization", 
-		query = "SELECT account.id AS accountId, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName, " + 
+		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName, " + 
 				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
 				"    organization.id AS organizationId, organization.name AS organizationName,  " + 
 				"    account.debit_total AS debitTotal, account.credit_total AS creditTotal, account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount, " + 
@@ -63,14 +64,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    organization.id = :organizationId AND " + 
 				"    account.organization_id = organization.id AND  " + 
 				"    account.deleted = false " + 
-				"ORDER BY account_type.id, account.name",
+				"ORDER BY account_type.id, account.account_code, account.name",
 		resultSetMapping = "accountDTOMapping"
 )
 
 //TODO: TEST
 @NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization for the given time period
 		name = "Account.getAllAccountBalancesForOrganizationBetweenDates",
-		query = "SELECT account.id AS accountId, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName, " + 
+		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName, " + 
 				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
 				"    organization.id AS organizationId, organization.name AS organizationName, " + 
 				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS debitTotal,                " + 
@@ -88,7 +89,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    account.organization_id = organization.id AND  " + 
 				"    account.deleted = false " + 
 				"GROUP BY account.id, parent_account.id, account_subtype.id, account_type.id, organization.id " + 
-				"ORDER BY account_type.id, account.name ",
+				"ORDER BY account_type.id, account.account_code, account.name ",
 		resultSetMapping = "accountDTOMapping"
 )
 
@@ -99,6 +100,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 						targetClass = AccountBalanceDTO.class,
 						columns = {
 								@ColumnResult(name = "accountId"),
+								@ColumnResult(name = "accountCode"),
 								@ColumnResult(name = "accountName"),
 								@ColumnResult(name = "parentAccountId"),
 								@ColumnResult(name = "parentAccountName"),
@@ -120,7 +122,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //TODO: TEST
 @NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization up until the given date
 		name = "Account.getAllAccountBalancesForOrganizationUpToDate",
-		query = "SELECT account.id AS accountId, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName, " + 
+		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName, " + 
 				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
 				"    organization.id AS organizationId, organization.name AS organizationName, " + 
 				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfDebitLineItems,              " + 
@@ -138,7 +140,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    account.organization_id = organization.id AND  " + 
 				"    account.deleted = false " + 
 				"GROUP BY account.id, parent_account.id, account_subtype.id, account_type.id, organization.id " + 
-				"ORDER BY account_type.id, account.name ",
+				"ORDER BY account_type.id, account.account_code, account.name ",
 		resultSetMapping = "accountBalanceDTOMapping"
 )
 
@@ -149,9 +151,12 @@ public class Account {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
+	@Column(name = "account_code")
+	private String accountCode;
+
 	@Column(name = "name")
     private String name;
-	
+		
 	@Column(name = "deleted")
 	private boolean deleted;
 	
@@ -241,6 +246,14 @@ public class Account {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getAccountCode() {
+		return accountCode;
+	}
+
+	public void setAccountCode(String accountCode) {
+		this.accountCode = accountCode;
 	}
 
 	public String getName() {
@@ -341,20 +354,16 @@ public class Account {
 	public void setChildAccounts(Set<Account> childAccounts) {
 		this.childAccounts = childAccounts;
 	}
-	
 
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", name=" + name + ", deleted=" + deleted + ", debitTotal=" + debitTotal
-				+ ", creditTotal=" + creditTotal + ", initialDebitAmount=" + initialDebitAmount
-				+ ", initialCreditAmount=" + initialCreditAmount + ", hasChildren=" + hasChildren + ", accountSubtype="
-				+ accountSubtype + ", organization=" + organization + ", parentAccount=" + parentAccount
-				+ ", childAccounts=" + childAccounts + ", lineItems=" + lineItems + "]";
+		return "Account [id=" + id + ", accountCode=" + accountCode + ", name=" + name + ", deleted=" + deleted
+				+ ", debitTotal=" + debitTotal + ", creditTotal=" + creditTotal + ", initialDebitAmount="
+				+ initialDebitAmount + ", initialCreditAmount=" + initialCreditAmount + ", hasChildren=" + hasChildren
+				+ ", accountSubtype=" + accountSubtype + ", organization=" + organization + ", parentAccount="
+				+ parentAccount + ", childAccounts=" + childAccounts + ", lineItems=" + lineItems + "]";
 	}
-
-
-
-
+	
 	
 	
 }

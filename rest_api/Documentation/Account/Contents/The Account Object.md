@@ -4,6 +4,9 @@ ___
 - **accountId (`Long`)**<br/>
 A unique identifier for this object. 
 
+- **accountCode (`Optional String` 16)**<br/>
+An account code for this account.
+
 - **accountName (`String` 64)**<br/>
 The name of this account.
 
@@ -53,6 +56,7 @@ ___
 ```json
 {
     "accountId": 1,
+    "accountCode": "110100",
     "accountName": "Cash",
     "parentAccountId": null,
     "parentAccountName": null,
@@ -63,10 +67,10 @@ ___
     "organizationId": 1,
     "organizationName": "Sample organization",
     "debitTotal": 420000,
-    "creditTotal": 18930,
+    "creditTotal": 18430,
     "initialDebitAmount": 0,
     "initialCreditAmount": 0,
-    "debitsMinusCredits": 401070,
-    "hasChildren": true
+    "debitsMinusCredits": 401570,
+    "hasChildren": false
 }
 ```

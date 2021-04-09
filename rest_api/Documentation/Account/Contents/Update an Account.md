@@ -11,6 +11,9 @@ ___
 - **accountId (`Long`)**<br/>
 The id of the account that is to be updated.
 
+- **accountCode (`Optional String` 16)**<br/>
+An account code for this account.
+
 - **accountName (`String` 40)**<br/>
 The name of this account.
 
@@ -40,6 +43,7 @@ Body:
 ```json
 {
     "accountId": 1,
+	"accountCode": "110100",
     "accountName": "Cash",
     "accountGroupId": 1,
 	"initialDebitAmount": 0,
@@ -53,9 +57,10 @@ Body:
 ```json
 {
     "accountId": 1,
+    "accountCode": "110100",
     "accountName": "Cash",
-    "accountGroupId": 1,
-    "accountGroupName": "Cash",
+    "parentAccountId": null,
+    "parentAccountName": null,
     "accountSubtypeId": 1,
     "accountSubtypeName": "Cash and cash equivalents",
     "accountTypeId": 1,
@@ -67,6 +72,6 @@ Body:
     "initialDebitAmount": 0,
     "initialCreditAmount": 0,
     "debitsMinusCredits": 401570,
-    "deleted": false
+    "hasChildren": false
 }
 ```
