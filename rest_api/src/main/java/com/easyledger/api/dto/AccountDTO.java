@@ -2,8 +2,6 @@ package com.easyledger.api.dto;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Iterator;
-import java.util.List;
 
 import com.easyledger.api.model.Account;
 

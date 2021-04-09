@@ -13,7 +13,6 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Person;
-import com.easyledger.api.model.VerificationToken;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.repository.VerificationTokenRepository;
 import com.easyledger.api.service.VerificationService;
