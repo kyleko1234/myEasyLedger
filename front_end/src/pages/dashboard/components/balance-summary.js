@@ -49,7 +49,7 @@ function BalanceSummary(props) {
                                 return (
                                     <tr key={account.accountId} className={props.selectedAccountId == account.accountId? "bg-white-hover" : "cursor-pointer"} onClick={props.selectedAccountId == account.accountId? null : () => history.push(`/account-details/${account.accountId}`)}>
                                         <td>
-                                            {account.accountName}
+                                            {account.accountCode? account.accountCode + " - " + account.accountName : account.accountName}
                                         </td>
                                         <td className={"text-right " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
                                             {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(account.accountTypeId == 1? account.debitsMinusCredits : (account.debitsMinusCredits == 0? account.debitsMinusCredits : account.debitsMinusCredits * -1))}

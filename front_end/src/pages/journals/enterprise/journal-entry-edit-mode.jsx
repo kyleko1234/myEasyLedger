@@ -17,8 +17,8 @@ function JournalEntryEditMode({
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
-            { Header: journalEntryEditModeText[appContext.locale]['Memo'], accessor: 'description', width:'50%', minWidth:"9em" },
-            { Header: journalEntryEditModeText[appContext.locale]['Account'], accessor: 'accountName', width:'20%', minWidth:"6em" },
+            { Header: journalEntryEditModeText[appContext.locale]['Memo'], accessor: 'description', width:'40%', minWidth:"9em" },
+            { Header: journalEntryEditModeText[appContext.locale]['Account'], accessor: 'accountName', width:'30%', minWidth:"6em" },
             { Header: journalEntryEditModeText[appContext.locale]['Debit'], accessor: 'debitAmount', width:'13%', minWidth:"6em" },
             { Header: journalEntryEditModeText[appContext.locale]['Credit'], accessor: 'creditAmount', width:'13%', minWidth:"6em" },
         ],
