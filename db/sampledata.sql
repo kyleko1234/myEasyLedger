@@ -148,19 +148,19 @@ INSERT INTO permission(person_id, organization_id, permission_type_id)
      1 |         1 | 1               | 4    **/
 
 
-INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total, has_children)
+INSERT INTO account(name, account_code, account_subtype_id, organization_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total, has_children)
     VALUES
-        ('Cash', 1, 1, 0, 0, 0, 0, false),
-        ('Accounts Receivable', 3, 1, 0, 0, 0, 0, false),
-        ('Inventories', 4, 1, 0, 0, 0, 0, false),
-        ('Property, plant, and equipment', 8, 1, 0, 0, 0, 0, true),
-        ('Accounts Payable', 11, 1, 0, 0, 0, 0, false),
-        ('Paid-in Capital', 20, 1, 0, 0, 0, 0, false),
-        ('Dividends and equivalents declared', 22, 1, 0, 0, 0, 0, false),
-        ('Revenue', 24, 1, 0, 0, 0, 0, true),
-        ('Selling, general, and administration', 29, 1, 0, 0, 0, 0, true),
-        ('Dividends payable', 12, 1, 0, 0, 0, 0, false),
-        ('Short-term debt', 14, 1, 0, 0, 0, 0, true);
+        ('Cash', 110100, 1, 1, 0, 0, 0, 0, false),
+        ('Accounts Receivable', 130100, 3, 1, 0, 0, 0, 0, false),
+        ('Inventories', 140100, 4, 1, 0, 0, 0, 0, false),
+        ('Property, plant, and equipment', 180100, 8, 1, 0, 0, 0, 0, true),
+        ('Accounts Payable', 210100, 11, 1, 0, 0, 0, 0, false),
+        ('Paid-in Capital', 310100, 20, 1, 0, 0, 0, 0, false),
+        ('Dividends and equivalents declared', 320100, 22, 1, 0, 0, 0, 0, false),
+        ('Revenue', 410100, 24, 1, 0, 0, 0, 0, true),
+        ('Selling, general, and administration', 530100, 29, 1, 0, 0, 0, 0, true),
+        ('Dividends payable', 220100, 12, 1, 0, 0, 0, 0, false),
+        ('Short-term debt', 240100, 14, 1, 0, 0, 0, 0, true);
 
 /** 1    ('Cash', 1, 1),
     2    ('Accounts Receivable', 3, 1),
@@ -176,16 +176,16 @@ INSERT INTO account(name, account_subtype_id, organization_id, initial_debit_amo
 
  */
 
-INSERT INTO account(name, organization_id, parent_account_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total, has_children)
+INSERT INTO account(name, account_code, organization_id, parent_account_id, initial_debit_amount, initial_credit_amount, debit_total, credit_total, has_children)
     VALUES 
-        ('Office supplies', 1, 9, 0, 0, 0, 0, false),
-        ('Office equipment', 1, 4, 0, 0, 0, 0, false),
-        ('Vehicles', 1, 4, 0, 0, 0, 0, false),
-        ('Notes payable', 1, 11, 0, 0, 0, 0, false),
-        ('Service revenue', 1, 8, 0, 0, 0, 0, false),
-        ('Office Rent', 1, 9, 0, 0, 0, 0, false),
-        ('Payroll', 1, 9, 0, 0, 0, 0, false),
-        ('Utilities', 1, 9, 0, 0, 0, 0, false);
+        ('Office supplies', 530101, 1, 9, 0, 0, 0, 0, false),
+        ('Office equipment', 180101, 1, 4, 0, 0, 0, 0, false),
+        ('Vehicles', 180102, 1, 4, 0, 0, 0, 0, false),
+        ('Notes payable', 240101, 1, 11, 0, 0, 0, 0, false),
+        ('Service revenue', 410101, 1, 8, 0, 0, 0, 0, false),
+        ('Office Rent', 530102, 1, 9, 0, 0, 0, 0, false),
+        ('Payroll', 530103, 1, 9, 0, 0, 0, 0, false),
+        ('Utilities', 530104, 1, 9, 0, 0, 0, 0, false);
 
 /*  
         12     ('Office supplies', 3),
