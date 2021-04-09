@@ -19,7 +19,7 @@ import com.easyledger.api.viewmodel.IncomeStatementViewModel;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v0.3")
+@RequestMapping("/${app.apiVersion}")
 public class ReportsController {
 	private ReportsService reportsService;
 	private AuthorizationService authorizationService;

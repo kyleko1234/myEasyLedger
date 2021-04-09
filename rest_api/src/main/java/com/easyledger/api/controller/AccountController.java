@@ -37,7 +37,7 @@ import com.easyledger.api.service.AccountService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v0.3")
+@RequestMapping("/${app.apiVersion}")
 public class AccountController {
 
 	private AccountRepository accountRepo;

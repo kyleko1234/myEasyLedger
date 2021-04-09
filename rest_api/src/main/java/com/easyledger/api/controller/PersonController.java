@@ -25,7 +25,7 @@ import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.service.PersonService;
 
 @RestController
-@RequestMapping("/v0.3")
+@RequestMapping("/${app.apiVersion}")
 public class PersonController {
 	private PersonRepository personRepo;
 	private PersonService personService;

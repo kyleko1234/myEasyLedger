@@ -20,7 +20,7 @@ import com.easyledger.api.security.AuthorizationService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v0.3")
+@RequestMapping("/${app.apiVersion}")
 public class AccountSubtypeController {
 	
 	private AccountSubtypeRepository accountSubtypeRepo;

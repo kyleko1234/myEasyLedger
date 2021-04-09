@@ -18,7 +18,7 @@ import com.easyledger.api.repository.VerificationTokenRepository;
 import com.easyledger.api.service.VerificationService;
 
 @RestController
-@RequestMapping("/v0.3")
+@RequestMapping("/${app.apiVersion}")
 public class VerificationController {
 
 	@Autowired

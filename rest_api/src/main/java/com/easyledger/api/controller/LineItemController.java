@@ -25,7 +25,7 @@ import com.easyledger.api.security.AuthorizationService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v0.3")
+@RequestMapping("/${app.apiVersion}")
 public class LineItemController {
 	private LineItemRepository lineItemRepo;
 	private AccountRepository accountRepo;
