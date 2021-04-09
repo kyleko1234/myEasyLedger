@@ -1,6 +1,6 @@
 import React from 'react';
 import TableOfJournalEntries from '../journals/enterprise/table-of-journal-entries';
-import { API_BASE_URL } from '../../utils/constants';
+import { API_BASE_URL, DEBIT_ACCOUNT_TYPES } from '../../utils/constants';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
@@ -48,6 +48,17 @@ function AccountDetails(props) {
     const [refreshToken, setRefreshToken] = React.useState(0); //set this to a random number when a child component updates to force all child components to update together. Theoretically children components might fail to update if you get two identical random numbers in a row but lmao you're never gonna be able to reproduce this, just refresh
     const [loading, setLoading] = React.useState(true);
     
+    const formatBalance = (debitsMinusCredits, accountTypeId) => {
+        if (debitsMinusCredits == 0) {
+            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(0);
+        }
+        if (DEBIT_ACCOUNT_TYPES.includes(accountTypeId)) {
+            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(debitsMinusCredits);
+        } else {
+            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(debitsMinusCredits * -1);
+        }
+    }
+
     //initially fetch account data from API
     React.useEffect(() => {
         axios.get(`${API_BASE_URL}/account/${selectedAccountId}`).then(response => {
@@ -112,7 +123,7 @@ function AccountDetails(props) {
                             fetchData={fetchData}
                             pageCount={pageCount}
                             elementCount={elementCount}
-                            tableTitle={selectedAccount.accountName}
+                            tableTitle={selectedAccount.accountCode? selectedAccount.accountCode + " - " + selectedAccount.accountName + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId) : selectedAccount.accountName + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}
                             hasAddEntryButton={true}
                             parentComponentAccountId={selectedAccountId}
                         /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
@@ -136,7 +147,7 @@ function AccountDetails(props) {
                             fetchData={fetchData}
                             pageCount={pageCount}
                             elementCount={elementCount}
-                            tableTitle={selectedAccount.accountName}
+                            tableTitle={selectedAccount.accountName + ":   " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}
                             parentComponentAccountId={selectedAccountId}
                             hasAddEntryButton={true}
                             loading={loading}
