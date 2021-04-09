@@ -142,7 +142,7 @@ class ChartOfAccounts extends React.Component {
                                                         <div className="widget-list-content d-flex justify-content-between align-items-center">
                                                             <h4 className="widget-list-title">
                                                                 <i className="m-r-10 fa fa-angle-down fa-lg text-muted "></i>
-                                                                {account.accountName}
+                                                                {account.accountCode? account.accountCode + " - " + account.accountName: account.accountName}
                                                             </h4>
                                                             <div className="d-flex align-items-center">
                                                                 <button className="m-l-5 btn btn-sm btn-icon text-muted" onClick={() => this.handleEditAccountButton(account)}>
@@ -157,7 +157,7 @@ class ChartOfAccounts extends React.Component {
                                                         <div className="widget-list-content d-flex justify-content-between align-items-center">
                                                             <h4 className="widget-list-title">
                                                                 <i className={"m-r-10 fa fa-angle-down fa-lg text-muted " + (this.canAddChildren(account) ? "" : "invisible")}></i>
-                                                                {account.accountName}
+                                                                {account.accountCode? account.accountCode + " - " + account.accountName: account.accountName}
                                                             </h4>
                                                             <div className="d-flex align-items-center">
                                                                 <button className="m-l-5 btn btn-sm btn-icon text-muted invisible">
@@ -172,7 +172,7 @@ class ChartOfAccounts extends React.Component {
                                                     return (
                                                         <Link className="widget-list-item bg-white" to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId.toString()}>
                                                             <div className="widget-list-content p-l-60">
-                                                                <div className="widget-list-title">{childAccount.accountName}</div>
+                                                                <div className="widget-list-title">{childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
                                                             </div>
                                                             <div className="m-r-10 widget-list-action text-right">
                                                                 <i className="fa fa-angle-right fa-lg text-muted"></i>
