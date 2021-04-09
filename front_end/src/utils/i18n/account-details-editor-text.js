@@ -22,7 +22,7 @@ export const accountDetailsEditorText = {
         "Initial Credit Value": "Initial Credit Value",
         "Create a New Account": "Create a New Account",
         "Account must belong to either a subtype or a parent account.": "Account must belong to either a subtype or a parent account.",
-
+        "Account Code": "Account Code",
         "Create a New Category": "Create a New Category",
         "Edit Category Details": "Edit Category Details",
         "Please provide a name for your category.": "Please provide a name for your category.",
@@ -93,7 +93,7 @@ export const accountDetailsEditorText = {
         "Initial Credit Value": "TRANSLATION",
         "Create a New Account": "TRANSLATION",
         "Account must belong to either a subtype or a parent account.": "TRANSLATION",
-
+        "Account Code": "TRANSLATION",
         "Create a New Category": "TRANSLATION",
         "Edit Category Details": "TRANSLATION",
         "Please provide a name for your category.": "TRANSLATION",

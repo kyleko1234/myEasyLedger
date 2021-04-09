@@ -17,6 +17,7 @@ function AccountDetailsEditor(props) {
     const history = useHistory();
 
     const [accountNameInput, setAccountNameInput] = React.useState('');
+    const [accountCodeInput, setAccountCodeInput] = React.useState('');
     const [parentAccountOptions, setParentAccountOptions] = React.useState([]);
     const [selectedParentAccountId, setSelectedParentAccountId] = React.useState(null);
     const [accountSubtypeOptions, setAccountSubtypeOptions] = React.useState([]);
@@ -42,6 +43,7 @@ function AccountDetailsEditor(props) {
                 await axios.get(`${API_BASE_URL}/account/${props.selectedAccountId}`).then(response => {
                     if (response.data) {
                         setAccountNameInput(response.data.accountName);
+                        setAccountCodeInput(response.data.accountCode);
                         setAccountTypeId(response.data.accountTypeId);
                         setSelectedParentAccountId(response.data.parentAccountId);
                         setSelectedAccountSubtypeId(response.data.accountSubtypeId);
@@ -75,7 +77,7 @@ function AccountDetailsEditor(props) {
                     let validParentAccountOptions = response.data.filter(account => (account.parentAccountId == null && account.debitTotal == 0 && account.creditTotal == 0) || account.hasChildren).map(account => {
                         return ({
                             value: account.accountId,
-                            label: account.accountName,
+                            label: appContext.isEnterprise? account.accountCode + " - " + account.accountName: account.accountName,
                             object: account
                         });
                     });
@@ -102,6 +104,7 @@ function AccountDetailsEditor(props) {
         setNoAccountNameAlert(false);
         setNoParentOrSubtypeAlert(false);
         setAccountNameInput('');
+        setAccountCodeInput('');
         setSelectedParentAccountId(null);
         setSelectedAccountSubtypeId(null);
         setInitialDebitValueInput('0');
@@ -114,6 +117,7 @@ function AccountDetailsEditor(props) {
         if (!selectedParentAccountId) {
             requestBody = {
                 accountId: props.selectedAccountId,
+                accountCode: accountCodeInput,
                 accountName: accountNameInput,
                 accountSubtypeId: selectedAccountSubtypeId,
                 organizationId: appContext.currentOrganizationId,
@@ -123,6 +127,7 @@ function AccountDetailsEditor(props) {
         } else {
             requestBody = {
                 accountId: props.selectedAccountId,
+                accountCode: accountCodeInput,
                 accountName: accountNameInput,
                 parentAccountId: selectedParentAccountId,
                 organizationId: appContext.currentOrganizationId,
@@ -234,6 +239,22 @@ function AccountDetailsEditor(props) {
                                 />
                             </div>
                         </div>
+                        {appContext.isEnterprise? 
+                            <div className="form-group row">
+                                <label className="col-form-label col-md-4">
+                                    {accountDetailsEditorText[appContext.locale]["Account Code"]}
+                                </label>
+                                <div className="col-md-8">
+                                    <input
+                                        className="form-control"
+                                        value={accountCodeInput}
+                                        onChange={event => {
+                                            setAccountCodeInput(event.target.value);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        : null }
                     </form>
                     <div className="form-group row">
                         <label className="col-form-label col-md-4">

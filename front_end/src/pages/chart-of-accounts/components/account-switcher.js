@@ -92,7 +92,7 @@ function AccountSwitcher(props) {
                     accounts.filter(account => account.accountTypeId == selectedAccountTypeOptionId && account.parentAccountId == null).map(account => {
                         return (
                             account.hasChildren?
-                            <ExpandableWidgetListItem key={account.accountId} parentText={account.accountName} parentClassName="bg-light nohover rounded-0" forceExpandToken={forceExpandToken} forceCollapseToken={forceCollapseToken}>
+                            <ExpandableWidgetListItem key={account.accountId} parentText={props.isEnterprise && account.accountCode? account.accountCode + " - " + account.accountName : account.accountName} parentClassName="bg-light nohover rounded-0" forceExpandToken={forceExpandToken} forceCollapseToken={forceCollapseToken}>
                                 {accounts ?
                                     accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
                                         return (
@@ -100,7 +100,7 @@ function AccountSwitcher(props) {
                                                 {childAccount.accountId == props.selectedAccountId ?
                                                     <WidgetListItem className="widget-list-item bg-white-hover">
                                                         <div className="p-l-30">
-                                                            {childAccount.accountName}
+                                                            {props.isEnterprise && childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}
                                                         </div>
                                                         {props.category || props.isEnterprise ? null :
                                                             <div className=" text-right">
@@ -110,7 +110,7 @@ function AccountSwitcher(props) {
                                                     </WidgetListItem>
                                                     :
                                                     <WidgetListItem link className=" bg-white" to={props.category ? `/category-details/${childAccount.accountId}` : `/account-details/${childAccount.accountId}`}>
-                                                        <div className="p-l-30">{childAccount.accountName}</div>
+                                                        <div className="p-l-30">{props.isEnterprise && childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
                                                         {props.category || props.isEnterprise ? null :
                                                             <div className=" text-right">
                                                                 {formatBalance(childAccount.accountTypeId, childAccount.debitsMinusCredits)}
@@ -131,7 +131,7 @@ function AccountSwitcher(props) {
                                     <div className="widget-list-item border-top-d5d5d5 bg-light-hover">
                                         <div className="widget-list-content d-flex">
                                             <b className={"rotating-caret expand align-self-center invisible"} ></b>
-                                            <div className="align-self-center m-l-5 font-weight-600">{account.accountName}</div>
+                                            <div className="align-self-center m-l-5 font-weight-600">{props.isEnterprise && account.accountCode? account.accountCode + " - " + account.accountName : account.accountName}</div>
                                         </div>
                                             {props.category || props.isEnterprise ? null :
                                                 <div className="widget-list-content">
@@ -152,7 +152,7 @@ function AccountSwitcher(props) {
                                     <Link replace className="widget-list-item border-top-d5d5d5 bg-light" to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`}>
                                         <div className="widget-list-content d-flex">
                                             <b className={"rotating-caret expand align-self-center invisible"} ></b>
-                                            <div className="align-self-center m-l-5 font-weight-600">{account.accountName}</div>
+                                            <div className="align-self-center m-l-5 font-weight-600">{props.isEnterprise && account.accountCode? account.accountCode + " - " + account.accountName : account.accountName}</div>
                                         </div>
                                             {props.category || props.isEnterprise ? null :
                                                 <div className="widget-list-content">
