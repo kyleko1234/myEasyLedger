@@ -7,10 +7,10 @@ function setTitle(path, routeArray) {
 	var pageTitle;
 	for (var i=0; i < routeArray.length; i++) {
 		if (routeArray[i].path === path) {
-			pageTitle = 'Easy Ledger | ' + routeArray[i].title;
+			pageTitle = 'myEasyLedger | ' + routeArray[i].title;
 		}
 	}
-	document.title = (pageTitle) ? pageTitle : 'Easy Ledger';
+	document.title = (pageTitle) ? pageTitle : 'myEasyLedger';
 }
 
 function handleRedirectToLogin(isAuthenticated, isLoading) {
