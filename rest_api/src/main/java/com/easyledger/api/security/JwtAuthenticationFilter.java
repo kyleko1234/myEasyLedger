@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			
 			if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
 				Long userId = tokenProvider.getUserIdFromJWT(jwt);
-				
+				String passwordHash = tokenProvider.getUserPasswordHashFromJWT(jwt);
 				UserDetails userDetails = customUserDetailsService.loadUserById(userId); //gets user details from database. To avoid the database hit, we can also populate a UserDetails object by parsing the claims from the JWT.
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
