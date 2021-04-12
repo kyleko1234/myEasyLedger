@@ -9,9 +9,13 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.easyledger.api.dto.PasswordChangeFormDTO;
 import com.easyledger.api.exception.AppException;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -31,6 +35,7 @@ import com.easyledger.api.repository.PermissionRepository;
 import com.easyledger.api.repository.PermissionTypeRepository;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.repository.RoleRepository;
+import com.easyledger.api.security.UserPrincipal;
 
 @Service
 public class PersonService {
@@ -61,11 +66,15 @@ public class PersonService {
 	
     @Autowired
     PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    AuthenticationManager authenticationManager;
 
 
 	public PersonService(OrganizationRepository organizationRepo, PersonRepository personRepo, PasswordEncoder passwordEncoder, RoleRepository roleRepo,
 			VerificationService verificationService, AccountSubtypeRepository accountSubtypeRepo, 
-			PermissionRepository permissionRepo, PermissionTypeRepository permissionTypeRepo, AccountRepository accountRepo) {
+			PermissionRepository permissionRepo, PermissionTypeRepository permissionTypeRepo, AccountRepository accountRepo, 
+			AuthenticationManager authenticationManager) {
 		super();
 		this.organizationRepo = organizationRepo;
 		this.personRepo = personRepo;
@@ -76,6 +85,7 @@ public class PersonService {
 		this.permissionRepo = permissionRepo;
 		this.permissionTypeRepo = permissionTypeRepo;
 		this.accountRepo = accountRepo;
+		this.authenticationManager = authenticationManager;
 	}
 	
 	public void updatePerson(Person person, Map<Object, Object> fields) 
@@ -106,13 +116,6 @@ public class PersonService {
         			person.setEmail(v.toString());
         			break;
         			
-        		case "password": //TODO: password update should be a different endpoint than the other update functions
-        			if (v == null) {
-        				throw new ConflictException("Person must have a password.");
-        			}
-        			person.setPassword(passwordEncoder.encode(v.toString()));
-        			break;
-        			
         		case "locale":
         			assertValidLocale(v.toString());
         			person.setLocale(v.toString());
@@ -123,6 +126,22 @@ public class PersonService {
         			break;
         	}  	
         }
+	}
+	
+	public void updatePassword(PasswordChangeFormDTO dto, UserPrincipal userPrincipal) throws ConflictException, ResourceNotFoundException {
+    	authenticationManager.authenticate(
+    			new UsernamePasswordAuthenticationToken(
+    					userPrincipal.getEmail(),
+    					dto.getCurrentPassword()
+    					)
+    	);
+		if (!dto.getNewPassword().equals(dto.getConfirmNewPassword())) {
+			throw new ConflictException("Passwords do not match.");
+		}
+		Person person = personRepo.findById(userPrincipal.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + userPrincipal.getId()));
+		person.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+		personRepo.save(person);
 	}
 	
 	@Transactional

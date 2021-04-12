@@ -1,5 +1,6 @@
 package com.easyledger.api.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.PasswordChangeFormDTO;
 import com.easyledger.api.dto.PersonInRosterDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -22,6 +24,7 @@ import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.security.AuthorizationService;
+import com.easyledger.api.security.UserPrincipal;
 import com.easyledger.api.service.PersonService;
 
 @RestController
@@ -68,6 +71,14 @@ public class PersonController {
         
     	final Person updatedPerson = personRepo.save(person);
     	return ResponseEntity.ok(updatedPerson);
+    }
+    
+    @PatchMapping("/person/password")
+    public Map<String, Boolean> updatePassword(@RequestBody PasswordChangeFormDTO dto, Authentication authentication) throws ConflictException, ResourceNotFoundException {
+    	personService.updatePassword(dto, (UserPrincipal) authentication.getPrincipal());
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("updated", Boolean.TRUE);
+        return response;
     }
     
     @GetMapping("/organization/{organizationId}/person")
