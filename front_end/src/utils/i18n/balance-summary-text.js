@@ -19,8 +19,6 @@ export const balanceSummaryText = {
         "Select a category type:": "選擇一個主類別",
         "Select an account type:": "選擇一個科目類別",
         "(Expand All)": "(展開所有選項)",
-        "(Collapse All)": "TRANSLATION"
-
-
+        "(Collapse All)": "(關閉所有選項)"
     }
 }
