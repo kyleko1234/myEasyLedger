@@ -7,12 +7,17 @@ import { settingsText } from '../../utils/i18n/settings-text';
 import axios from 'axios';
 import { API_BASE_URL, LOCALE_OPTIONS } from '../../utils/constants'
 import LanguageSettingsModal from './language-settings-modal';
+import ChangePasswordModal from './change-password-modal';
 function Settings() {
     const appContext = React.useContext(PageSettings);
 
     const [languageSettingsModal, setLanguageSettingsModal] = React.useState(false);
     const toggleLanguageSettingsModal = () => {
         setLanguageSettingsModal(!languageSettingsModal);
+    }
+    const [changePasswordModal, setChangePasswordModal] = React.useState(false);
+    const toggleChangePasswordModal = () => {
+        setChangePasswordModal(!changePasswordModal);
     }
 
     return (
@@ -32,6 +37,14 @@ function Settings() {
                 <Link replace to="#" className="widget-list-item bg-white" onClick={toggleLanguageSettingsModal}>
                     <div className="widget-list-content px-3">
                         <div className="widget-list-title">{settingsText[appContext.locale]["Language Settings"]}</div>
+                    </div>
+                    <div className="m-r-10 widget-list-action text-right">
+                        <i className="fa fa-angle-right fa-lg text-muted"></i>
+                    </div>
+                </Link>
+                <Link replace to="#" className="widget-list-item bg-white" onClick={toggleChangePasswordModal}>
+                    <div className="widget-list-content px-3">
+                        <div className="widget-list-title">{settingsText[appContext.locale]["Change Password"]}</div>
                     </div>
                     <div className="m-r-10 widget-list-action text-right">
                         <i className="fa fa-angle-right fa-lg text-muted"></i>
@@ -58,6 +71,7 @@ function Settings() {
                 </div>
             }
             <LanguageSettingsModal isOpen={languageSettingsModal} toggle={toggleLanguageSettingsModal}/>
+            <ChangePasswordModal isOpen={changePasswordModal} toggle={toggleChangePasswordModal} />
         </div>
 
     )

@@ -9,6 +9,7 @@ import Select from 'react-select';
 
 function RegisterV3Render(props) {
     //required props: history
+    const appContext = React.useContext(PageSettings);
 
     const [firstNameInput, setFirstNameInput] = React.useState('');
     const [lastNameInput, setLastNameInput] = React.useState('');
@@ -18,15 +19,13 @@ function RegisterV3Render(props) {
     const [passwordInput, setPasswordInput] = React.useState('');
     const [reEnterPasswordInput, setReEnterPasswordInput] = React.useState('');
     const [agreeInput, setAgreeInput] = React.useState(false);
-    const [selectedCurrency, setSelectedCurrency] = React.useState(CURRENCY_OPTIONS.find(option => option.value == "USD"));
+    const [selectedCurrency, setSelectedCurrency] = React.useState(CURRENCY_OPTIONS(appContext.locale).find(option => option.value == "USD"));
     const [isEnterprise, setIsEnterprise] = React.useState(true);
 
     const [emailMatchAlert, setEmailMatchAlert] = React.useState(false);
     const [emailTakenAlert, setEmailTakenAlert] = React.useState(false);
     const [passwordMatchAlert, setPasswordMatchAlert] = React.useState(false);
     const [agreeAlert, setAgreeAlert] = React.useState(false);
-
-    const appContext = React.useContext(PageSettings);
 
     const handleSubmit = event => {
         event.preventDefault();

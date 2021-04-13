@@ -49,8 +49,8 @@ function LanguageSettingsModal(props) {
                     </div>
                 </ModalBody>
                 <ModalFooter className="bg-light">
-                    <button className="btn btn-primary width-125" onClick={handleSaveButton}>{settingsText[appContext.locale]["Save"]}</button>
-                    <button className="btn btn-white width-125" onClick={props.toggle}>{settingsText[appContext.locale]["Cancel"]}</button>
+                    <button className="btn btn-primary width-10ch" onClick={handleSaveButton}>{settingsText[appContext.locale]["Save"]}</button>
+                    <button className="btn btn-white width-10ch" onClick={props.toggle}>{settingsText[appContext.locale]["Cancel"]}</button>
                 </ModalFooter>
             </Modal>
         </>

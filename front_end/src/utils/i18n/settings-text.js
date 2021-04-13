@@ -20,7 +20,17 @@ export const settingsText = {
 
         "Edit User Privileges": "Edit User Privileges",
         "Remove": "Remove",
-        "Are you sure you want to remove this user?": "Are you sure you want to remove this user?"
+        "Are you sure you want to remove this user?": "Are you sure you want to remove this user?",
+
+        "Change Password": "Change Password",
+        "Passwords do not match.": "Passwords do not match.",
+        "Current password is incorrect.": "Current password is incorrect.",
+        "Current Password": "Current Password",
+        "New Password": "New Password",
+        "Confirm New Password": "Confirm New Password",
+        "Take me to the login page!": "Take me to the login page!",
+        "Password successfully changed.": "Password successfully changed.",
+        "Please log in again.": "Please log in again.",
     },
     "zh-TW": {
         "Home": "首頁",
@@ -43,7 +53,17 @@ export const settingsText = {
 
         "Edit User Privileges": "TRANSLATION",
         "Remove": "TRANSLATION",
-        "Are you sure you want to remove this user?": "TRANSLATION"
+        "Are you sure you want to remove this user?": "TRANSLATION",
+
+        "Change Password": "TRANSLATION",
+        "Passwords do not match.": "TRANSLATION",
+        "Current password is incorrect.": "TRANSLATION",
+        "Current Password": "TRANSLATION",
+        "New Password": "TRANSLATION",
+        "Confirm New Password": "TRANSLATION",
+        "Take me to the login page!": "TRANSLATION",
+        "Password successfully changed.": "TRANSLATION",
+        "Please log in again.": "TRANSLATION",
 
     }
 }
