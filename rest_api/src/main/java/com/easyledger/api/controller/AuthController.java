@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.easyledger.api.dto.ForgotPasswordDTO;
 import com.easyledger.api.exception.AppException;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -114,6 +115,17 @@ public class AuthController {
     	return ResponseEntity.ok(new JwtAuthenticationResponse(accessToken, refreshToken));
     }
     
+    @PostMapping("/auth/forgotPassword")
+    public Map<String, Boolean> generateTokenForEmail(@RequestBody ForgotPasswordDTO dto) throws ResourceNotFoundException {
+    	Person person = personRepository.findByEmail(dto.getEmail())
+    			.orElseThrow(() -> new ResourceNotFoundException("Person cannot be found for this email:: " + dto.getEmail()));
+    	verificationService.createTwoFactorCodeForPerson(person);
+    	//TODO send email
+    	Map<String, Boolean> returnObject = new HashMap<>();
+    	returnObject.put("Code generated", true);
+    	return returnObject;
+    }
+    
     @GetMapping("/auth/testEmail")
     public String testEmail() throws MessagingException{
     	String to = "kyleko1234@gmail.com";
@@ -124,7 +136,6 @@ public class AuthController {
     	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel);
     	return "sent = true!";
     }
-    
     
 
 }
