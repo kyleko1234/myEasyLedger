@@ -160,6 +160,13 @@ public class PersonService {
     	Person person = new Person(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPassword(), false, signUpRequest.getLocale());
     	person.setPassword(passwordEncoder.encode(person.getPassword()));
     	
+    	Role userRole = roleRepo.findByName("ROLE_USER")
+    			.orElseThrow(() -> new AppException("ROLE_USER does not exist."));
+    	person.setRoles(Collections.singleton(userRole));
+    	
+    	//persist person
+    	person = personRepo.save(person);
+    	
     	Permission permission = new Permission();
     	PermissionType own = permissionTypeRepo.findByName("OWN")
     			.orElseThrow(() -> new AppException("OWN is not a valid permission type."));
@@ -169,13 +176,6 @@ public class PersonService {
     	permission.setOrganization(organization);
     	
     	permissionRepo.save(permission);
-    	
-    	Role userRole = roleRepo.findByName("ROLE_USER")
-    			.orElseThrow(() -> new AppException("ROLE_USER does not exist."));
-    	person.setRoles(Collections.singleton(userRole));
-    	
-    	//persist person
-    	person = personRepo.save(person);
     	
     	autoPopulateOrganization(organization);
     	//create and persist VerificationToken for person

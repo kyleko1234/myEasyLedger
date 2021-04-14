@@ -148,8 +148,8 @@ function RegisterV3Render(props) {
                         </div>
                         <div className="checkbox checkbox-css m-b-30">
                             <div className="checkbox checkbox-css m-b-30">
-                                <input type="checkbox" id="agreement_checkbox" value={isEnterprise} onChange={() => setIsEnterprise(!isEnterprise)} />
-                                <label htmlFor="agreement_checkbox">
+                                <input type="checkbox" id="is_enterprise_checkbox" value={isEnterprise} onChange={() => setIsEnterprise(!isEnterprise)} />
+                                <label htmlFor="is_enterprise_checkbox">
                                     isEnterprise
                                     {/** TODO: make this look good */}
                                 </label> 

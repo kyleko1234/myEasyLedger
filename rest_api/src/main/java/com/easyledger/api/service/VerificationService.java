@@ -3,6 +3,7 @@ package com.easyledger.api.service;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -42,6 +43,19 @@ public class VerificationService {
 	public VerificationToken createVerificationTokenForPerson(Person person) {
 		String token = UUID.randomUUID().toString();
 		VerificationToken verificationToken = new VerificationToken(token);
+		verificationToken.setPerson(person);
+		return verificationTokenRepo.save(verificationToken);
+	}
+	
+	public VerificationToken createTwoFactorCodeForPerson(Person person) {
+		VerificationToken oldToken = verificationTokenRepo.findByPersonId(person.getId());
+		if (oldToken != null) {
+			verificationTokenRepo.delete(oldToken);
+		}
+	    Random rnd = new Random();
+	    int number = rnd.nextInt(999999);
+	    String twoFactorCode = String.format("%06d", number);
+		VerificationToken verificationToken = new VerificationToken(twoFactorCode, 15);
 		verificationToken.setPerson(person);
 		return verificationTokenRepo.save(verificationToken);
 	}

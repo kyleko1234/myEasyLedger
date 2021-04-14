@@ -13,6 +13,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Person;
+import com.easyledger.api.model.VerificationToken;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.repository.VerificationTokenRepository;
 import com.easyledger.api.service.VerificationService;
@@ -53,5 +54,10 @@ public class VerificationController {
 		verificationService.renewVerificationToken(person);
 	}
 	
-	
+	@GetMapping(value="/verification/getToken/{email}")
+	public VerificationToken getVerificationTokenByEmail(@PathVariable(value = "email") String email) throws ResourceNotFoundException {
+		Person person = personRepo.findByEmail(email)
+	    		.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + email)); 
+		return person.getVerificationToken();
+	}
 }
