@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Update a Person's Password.md",
+            "file": "Easy Ledger.md",
             "mode": "source"
           }
         }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Person/Contents/Update a Person's Password.md",
+                "file": "Easy Ledger.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -86,15 +86,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "Person/Contents/Update a Person's Password.md",
-    "Person/Contents/Update a Person.md",
-    "Person/Contents/Untitled.md",
-    "Account/Account.md",
-    "Account/Contents/Create an Account.md",
-    "Account/Contents/Delete an Account.md",
+    "Easy Ledger.md",
+    "Authentication/Authentication.md",
+    "Authentication/Contents/Forgot Password.md",
+    "Authentication/Contents/Change Password.md",
+    "Authentication/Contents/Untitled.md",
+    "Authentication/Contents/Sign Up.md",
+    "AccountType/Contents/List All AccountTypes.md",
+    "AccountType/AccountType.md",
     "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
-    "Account/Contents/List All Accounts.md",
-    "Account/Contents/List All Accounts Belonging to an Organization.md",
-    "Account/Contents/Retrieve an Account.md"
+    "Account/Contents/List All Accounts Belonging to an Organization.md"
   ]
 }

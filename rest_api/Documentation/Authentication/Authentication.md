@@ -18,8 +18,13 @@ JWT claims for this application are as follows:
 - **sub** <br/>
 The personId for the specific user.
 
+- **auth** <br/>
+Password hash for the user.
 
 ___
 - [[Sign In]]
 - [[Sign Up]]
 - [[Refresh JWT]]
+- [[Renew Verification Token]]
+- [[Change Password]]
+- [[Forgot Password]]
