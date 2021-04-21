@@ -116,11 +116,11 @@ public class AuthController {
     }
     
     @PostMapping("/auth/forgotPassword")
-    public Map<String, Boolean> generateTokenForEmail(@RequestBody ForgotPasswordDTO dto) throws ResourceNotFoundException {
+    public Map<String, Boolean> generateTokenForEmail(@RequestBody ForgotPasswordDTO dto) throws ResourceNotFoundException, MessagingException {
     	Person person = personRepository.findByEmail(dto.getEmail())
     			.orElseThrow(() -> new ResourceNotFoundException("Person cannot be found for this email:: " + dto.getEmail()));
-    	verificationService.createTwoFactorCodeForPerson(person);
-    	//TODO send email
+    	VerificationToken token = verificationService.createTwoFactorCodeForPerson(person);
+    	verificationService.sendPasswordResetEmail(person.getEmail(), person.getFirstName(), token.getToken());
     	Map<String, Boolean> returnObject = new HashMap<>();
     	returnObject.put("Code generated", true);
     	return returnObject;

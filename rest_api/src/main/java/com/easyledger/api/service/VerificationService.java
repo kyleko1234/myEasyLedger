@@ -75,7 +75,6 @@ public class VerificationService {
 			result[1] = "verificationExpired.html";
 			return result;
 		}
-		
 		person.setEnabled(true); //if valid token, enable this Person
 		personRepo.save(person);
 		result[1] = "verificationSuccess.html";
@@ -83,6 +82,17 @@ public class VerificationService {
 		
 	}
 	
+	public String sendPasswordResetEmail(String to, String firstName, String token) throws MessagingException {
+    	//Set variables for Thymeleaf Template
+    	Map<String, Object> templateModel = new HashMap<String, Object>();
+    	templateModel.put("recipientFirstName", firstName);
+    	templateModel.put("twoFactorCode", token);
+    	//Set email recipient and subject fields
+    	String subject = "Your myEasyLedger password reset code is " + token;
+    	//send verification email to recipient
+    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel);
+    	return "Email sent successfully!";
+	}
 	
 	public void renewVerificationToken(Person person) throws MessagingException {
 		VerificationToken oldToken = verificationTokenRepo.findByPersonId(person.getId());
@@ -103,7 +113,6 @@ public class VerificationService {
     	//send verification email to recipient
     	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel);
     	return "User registered successfully!";
-    	
-
 	}
+	
 }
