@@ -90,7 +90,7 @@ public class VerificationService {
     	//Set email recipient and subject fields
     	String subject = "Your myEasyLedger password reset code is " + token;
     	//send verification email to recipient
-    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel);
+    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel, "password_reset_email.html");
     	return "Email sent successfully!";
 	}
 	
@@ -111,7 +111,7 @@ public class VerificationService {
     	//Set email recipient and subject fields
     	String subject = "Easy Ledger Account Verification";
     	//send verification email to recipient
-    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel);
+    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel, "email_system.html");
     	return "User registered successfully!";
 	}
 	

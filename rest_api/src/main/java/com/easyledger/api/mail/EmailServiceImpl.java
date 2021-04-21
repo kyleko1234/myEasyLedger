@@ -73,10 +73,10 @@ public class EmailServiceImpl {
 		emailSender.send(message);
 	}
 	
-	public void sendMessageUsingThymeleafTemplate(String to, String subject, Map<String, Object> templateModel) throws MessagingException {
+	public void sendMessageUsingThymeleafTemplate(String to, String subject, Map<String, Object> templateModel, String templateName) throws MessagingException {
 		Context thymeleafContext = new Context();
 		thymeleafContext.setVariables(templateModel);
-		String htmlBody = thymeleafTemplateEngine.process("email_system.html", thymeleafContext);
+		String htmlBody = thymeleafTemplateEngine.process(templateName, thymeleafContext);
 		
 		sendHtmlMessage(to, subject, htmlBody);
 	}
