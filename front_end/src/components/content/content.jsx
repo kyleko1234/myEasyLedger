@@ -15,7 +15,7 @@ function setTitle(path, routeArray) {
 
 function handleRedirectToLogin(isAuthenticated, isLoading) {
 	if (!isAuthenticated && !isLoading) {
-		return <Redirect to="/user/login-v3"/>;
+		return <Redirect to="/user/login/form"/>;
 	} else {
 		return null;
 	}
