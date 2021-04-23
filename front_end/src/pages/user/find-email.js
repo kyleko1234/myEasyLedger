@@ -32,10 +32,10 @@ function FindEmail(props) {
 
     return(
         <>
-            <h2>Find Your Account</h2>
-            <p>Please enter your email to search for your account.</p>
+            <h2>{loginV3Text[appContext.locale]["Find Your Account"]}</h2>
+            <p>{loginV3Text[appContext.locale]["Please enter your email to search for your account."]}</p>
             {noUserWithThisEmailAlert
-                ? <Alert color="danger">Could not find an account registered with this email address.</Alert>
+                ? <Alert color="danger">{loginV3Text[appContext.locale]["Could not find an account registered with this email address."]}</Alert>
                 : null}
             <form onSubmit={event => handleSubmit(event)} className="m-b-40 p-b-40">
                 <div className="form-group m-b-15">
@@ -43,10 +43,10 @@ function FindEmail(props) {
                 </div>
                 <div className="d-flex justify-content-between">
                     <button className="btn btn-lg btn-white width-175" type="button" onClick={() => history.push("/user/login/form")}>
-                        Go Back
+                        {loginV3Text[appContext.locale]["Go Back"]}
                     </button>
                     <button className="btn btn-lg btn-primary width-175" type="submit">
-                        Submit
+                        {loginV3Text[appContext.locale]["Submit"]}
                     </button>
                 </div>
             </form>

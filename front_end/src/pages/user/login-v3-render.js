@@ -82,7 +82,7 @@ function LoginV3Render(props) {
                         <input type="password" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Password"]} required value={passwordInput} onChange={event => setPasswordInput(event.target.value)} />
                     </div>
                     <div className="m-b-15">
-                        <Link to="/user/login/forgot/find-email" className="text-primary">Forgot Password?</Link>
+                        <Link to="/user/login/forgot/find-email" className="text-primary">{loginV3Text[appContext.locale]["Forgot Password?"]}</Link>
                     </div>
                     <div className="login-buttons">
                         <button type="submit" className="btn btn-primary btn-block btn-lg">{loginV3Text[appContext.locale]["Sign me in"]}</button>

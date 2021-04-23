@@ -12,7 +12,15 @@ export const loginV3Text = {
         "Password": "Password",
         "Sign me in": "Sign me in",
         "Not a member": <div>Not a member yet? Click <Link to="/user/register-v3" className="text-primary">here</Link> to register.</div>,
-        "Copyright text": `\u00a9 2021 MyEasyLedger.tw All Rights Reserved.`
+        "Copyright text": `\u00a9 2021 MyEasyLedger.tw All Rights Reserved.`,
+
+        "Forgot Password?": "Forgot Password?",
+        "Find Your Account": "Find Your Account",
+        "Please enter your email to search for your account.": "Please enter your email to search for your account.",
+        "Could not find an account registered with this email address.": "Could not find an account registered with this email address.",
+        "Go Back": "Go Back",
+        "Submit": "Submit",
+
     },
     "zh-TW": {
         "App description 1": "APP 描述",
@@ -24,7 +32,15 @@ export const loginV3Text = {
         "Password": "密碼",
         "Sign me in": "登入",
         "Not a member": <div>還没有帳號嗎？點擊 <Link to="/user/register-v3" className="text-primary">這個連結</Link> 建立一個使用帳號。</div>,
-        "Copyright text": `\u00a9 2021 MyEasyLedger.tw 版權所有。`
+        "Copyright text": `\u00a9 2021 MyEasyLedger.tw 版權所有。`,
+
+        "Forgot Password?": "TRANSLATION",
+        "Find Your Account": "TRANSLATION",
+        "Please enter your email to search for your account.": "TRANSLATION",
+        "Could not find an account registered with this email address.": "TRANSLATION",
+        "Go Back": "TRANSLATION",
+        "Submit": "TRANSLATION",
+
     }
 
 }
