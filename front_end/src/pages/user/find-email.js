@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, withRouter } from 'react-router';
+import { useHistory } from 'react-router';
 import { PageSettings } from '../../config/page-settings';
 import {loginV3Text} from '../../utils/i18n/login-v3-text';
 import {API_BASE_URL} from '../../utils/constants.js';
@@ -8,19 +8,22 @@ import {Alert} from 'reactstrap';
 function FindEmail(props) {
     //required props: emailInput, setEmailInput, setUserEmail, axiosInstance;
     const appContext = React.useContext(PageSettings);
-    const history = useHistory();
     const [noUserWithThisEmailAlert, setNoUserWithThisEmailAlert] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
-    const handleSubmit = event => {
+    const history = useHistory();
+
+    const handleSubmit = async event => {
         event.preventDefault();
         setNoUserWithThisEmailAlert(false);
+        setLoading(true);
         props.setUserEmail(props.emailInput);
         let requestBody = {
             email: props.emailInput
         }
-        props.axiosInstance.post(`${API_BASE_URL}/auth/forgotPassword`, requestBody).then(response => {
+        await props.axiosInstance.post(`${API_BASE_URL}/auth/forgotPassword`, requestBody).then(response => {
             console.log(response);
-            history.push("/user/login/forgot/verify");
+            history.push("/user/login/forgot/verify-email");
         }).catch(error => {
             if (error.response) {
                 if (error.response.status === 404) {
@@ -28,6 +31,7 @@ function FindEmail(props) {
                 }
             }
         })
+        setLoading(false);
     };
 
     return(
@@ -39,14 +43,14 @@ function FindEmail(props) {
                 : null}
             <form onSubmit={event => handleSubmit(event)} className="m-b-40 p-b-40">
                 <div className="form-group m-b-15">
-                    <input type="email" required className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Email Address"]} required value={props.emailInput} onChange={event => props.setEmailInput(event.target.value)}/>
+                    <input type="email" required className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Email Address"]} value={props.emailInput} onChange={event => props.setEmailInput(event.target.value)}/>
                 </div>
                 <div className="d-flex justify-content-between">
                     <button className="btn btn-lg btn-white width-175" type="button" onClick={() => history.push("/user/login/form")}>
                         {loginV3Text[appContext.locale]["Go Back"]}
                     </button>
-                    <button className="btn btn-lg btn-primary width-175" type="submit">
-                        {loginV3Text[appContext.locale]["Submit"]}
+                    <button className="btn btn-lg btn-primary width-175" type="submit" onClick={handleSubmit}>
+                        {loading? <i className="fas fa-circle-notch fa-spin"></i> : loginV3Text[appContext.locale]["Submit"]}
                     </button>
                 </div>
             </form>
@@ -54,4 +58,4 @@ function FindEmail(props) {
     )
 }
 
-export default withRouter(FindEmail);
+export default FindEmail;

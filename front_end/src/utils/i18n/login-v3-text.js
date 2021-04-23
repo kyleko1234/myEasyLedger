@@ -21,6 +21,15 @@ export const loginV3Text = {
         "Go Back": "Go Back",
         "Submit": "Submit",
 
+        "Reset Password Code" : "Reset Password Code",
+        "Incorrect password reset code." : "Incorrect password reset code.",
+        "Expired code." : "Expired code",
+        "Verify Your Email": "Verify Your Email",
+        "Please enter the six-digit code we have sent to your email.": "Please enter the six-digit code we have sent to your email.",
+        "Click here to send a new code.": "Click here to send a new code.",
+        "A new code has been sent to your email!": "A new code has been sent to your email!",
+
+
     },
     "zh-TW": {
         "App description 1": "APP 描述",
@@ -40,6 +49,15 @@ export const loginV3Text = {
         "Could not find an account registered with this email address.": "TRANSLATION",
         "Go Back": "TRANSLATION",
         "Submit": "TRANSLATION",
+
+        "Reset Password Code" : "TRANSLATION",
+        "Incorrect password reset code." : "TRANSLATION",
+        "Expired code." : "TRANSLATION",
+        "Verify Your Email": "TRANSLATION",
+        "Please enter the six-digit code we have sent to your email.": "TRANSLATION",
+        "Click here to send a new code.": "TRANSLATION",
+        "A new code has been sent to your email!": "TRANSLATION",
+
 
     }
 
