@@ -50,7 +50,7 @@ class LoginV3 extends React.Component {
 								)
 							})}
 						</div>
-						<hr />
+						<hr width="100%"/>
 						<p className="text-center text-grey-darker">
 							{loginV3Text[this.context.locale]["Copyright text"]}
 						</p>

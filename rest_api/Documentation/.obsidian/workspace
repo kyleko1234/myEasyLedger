@@ -10,7 +10,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Authentication/Contents/Forgot Password.md",
             "mode": "source"
           }
         }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md",
+                "file": "Authentication/Contents/Forgot Password.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -86,10 +86,10 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "Easy Ledger.md",
-    "Authentication/Authentication.md",
     "Authentication/Contents/Forgot Password.md",
+    "Easy Ledger.md",
     "Authentication/Contents/Change Password.md",
+    "Authentication/Authentication.md",
     "Authentication/Contents/Untitled.md",
     "Authentication/Contents/Sign Up.md",
     "AccountType/Contents/List All AccountTypes.md",
