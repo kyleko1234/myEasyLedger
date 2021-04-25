@@ -19,7 +19,8 @@ function RegisterV3Render(props) {
     const [passwordInput, setPasswordInput] = React.useState('');
     const [reEnterPasswordInput, setReEnterPasswordInput] = React.useState('');
     const [agreeInput, setAgreeInput] = React.useState(false);
-    const [selectedCurrency, setSelectedCurrency] = React.useState(CURRENCY_OPTIONS(appContext.locale).find(option => option.value == "USD"));
+    const currencyOptions = CURRENCY_OPTIONS(appContext.locale);
+    const [selectedCurrency, setSelectedCurrency] = React.useState(currencyOptions.find(option => option.value == "USD"));
     const [isEnterprise, setIsEnterprise] = React.useState(true);
 
     const [emailMatchAlert, setEmailMatchAlert] = React.useState(false);
@@ -137,7 +138,7 @@ function RegisterV3Render(props) {
                         <div className="row m-b-15">
                             <div className="col-md-12">
                                 <Select
-                                    options={CURRENCY_OPTIONS}
+                                    options={currencyOptions}
                                     value={selectedCurrency}
                                     isSearchable={true}
                                     onChange={(selectedOption) => {
@@ -175,8 +176,8 @@ function RegisterV3Render(props) {
                             {LOCALE_OPTIONS.map(localeOption => {
                                 return(
                                     appContext.locale == localeOption.value? 
-                                    <b className="mr-3 font-weight-600">{localeOption.label}</b> : 
-                                    <Link replace to="#" onClick={() => appContext.handleSetLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
+                                    <b key={localeOption.value} className="mr-3 font-weight-600">{localeOption.label}</b> : 
+                                    <Link key={localeOption.value} replace to="#" onClick={() => appContext.handleSetLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
                                 )
                             })}
                         </div>
