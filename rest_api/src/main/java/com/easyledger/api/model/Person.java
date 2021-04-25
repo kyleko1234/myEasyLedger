@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
@@ -106,6 +107,9 @@ public class Person {
 			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles;
 
+    @JsonIgnore
+	@OneToOne(mappedBy = "person")
+	private VerificationToken verificationToken;
 
 	public Person() {
 		this.permissions = new HashSet<Permission>();
@@ -228,6 +232,14 @@ public class Person {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public VerificationToken getVerificationToken() {
+		return verificationToken;
+	}
+
+	public void setVerificationToken(VerificationToken verificationToken) {
+		this.verificationToken = verificationToken;
 	}
 
 	@Override

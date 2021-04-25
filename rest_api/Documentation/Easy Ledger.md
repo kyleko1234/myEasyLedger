@@ -16,11 +16,15 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[Sign In | POST /auth/signin]]
 - [[Sign Up| POST /auth/signup]]
 - [[Refresh JWT|GET /auth/refresh]]
+- [[Forgot Password#Requesting a Reset Password Code|POST /auth/forgotPassword]]
+- [[Forgot Password#Verifying a Reset Password Code|POST /auth/verifyResetPasswordCode]]
+- [[Forgot Password#Resetting a user's password|POST /auth/resetPassword]]
 <br/><br/>
 - [[List All Persons|GET /person]]
 - [[Retrieve a Person|GET /person/{id}]]
 - [[Update a Person|PATCH /person/{id}]]
 - [[List All Persons in an Organization|GET /organization/{organizationId}/person]]
+- [[Update a Person's Password|PATCH /person/password]]
 <br/> <br/>
 - [[List All JournalEntries|GET /journalEntry]]
 - [[List All JournalEntries Belonging to an Organization as JournalEntryViewModels|GET /organization/{id}/journalEntryViewModel]]*

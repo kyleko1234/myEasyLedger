@@ -3,6 +3,7 @@ package com.easyledger.api.service;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -46,6 +47,19 @@ public class VerificationService {
 		return verificationTokenRepo.save(verificationToken);
 	}
 	
+	public VerificationToken createTwoFactorCodeForPerson(Person person) {
+		VerificationToken oldToken = verificationTokenRepo.findByPersonId(person.getId());
+		if (oldToken != null) {
+			verificationTokenRepo.delete(oldToken);
+		}
+	    Random rnd = new Random();
+	    int number = rnd.nextInt(999999);
+	    String twoFactorCode = String.format("%06d", number);
+		VerificationToken verificationToken = new VerificationToken(twoFactorCode, 15);
+		verificationToken.setPerson(person);
+		return verificationTokenRepo.save(verificationToken);
+	}
+	
 	public String[] verifyUserByToken(String token) throws MessagingException {
 		String[] result = {"firstName", "filetype.html"}; //result is an array of two strings. result[1] is the firstName of the user being verified. result[2] is the filename+extension of the html document to be served
 		VerificationToken verificationToken = verificationTokenRepo.findByToken(token);
@@ -61,7 +75,6 @@ public class VerificationService {
 			result[1] = "verificationExpired.html";
 			return result;
 		}
-		
 		person.setEnabled(true); //if valid token, enable this Person
 		personRepo.save(person);
 		result[1] = "verificationSuccess.html";
@@ -69,6 +82,17 @@ public class VerificationService {
 		
 	}
 	
+	public String sendPasswordResetEmail(String to, String firstName, String token) throws MessagingException {
+    	//Set variables for Thymeleaf Template
+    	Map<String, Object> templateModel = new HashMap<String, Object>();
+    	templateModel.put("recipientFirstName", firstName);
+    	templateModel.put("twoFactorCode", token);
+    	//Set email recipient and subject fields
+    	String subject = "Your myEasyLedger password reset code is " + token;
+    	//send verification email to recipient
+    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel, "password_reset_email.html");
+    	return "Email sent successfully!";
+	}
 	
 	public void renewVerificationToken(Person person) throws MessagingException {
 		VerificationToken oldToken = verificationTokenRepo.findByPersonId(person.getId());
@@ -87,9 +111,8 @@ public class VerificationService {
     	//Set email recipient and subject fields
     	String subject = "Easy Ledger Account Verification";
     	//send verification email to recipient
-    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel);
+    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel, "email_system.html");
     	return "User registered successfully!";
-    	
-
 	}
+	
 }

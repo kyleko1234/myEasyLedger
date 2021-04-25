@@ -30,9 +30,9 @@ const routes = [
     component: () => <Redirect to='/dashboard'/>
   },
   {
-    path: '/user/login-v3',
-    title: 'Login v3',
-    component: () => <LoginV3 />,
+    path: '/user/login',
+    title: 'Login',
+    component: LoginV3,
   },
   {
     path: '/user/register-v3',

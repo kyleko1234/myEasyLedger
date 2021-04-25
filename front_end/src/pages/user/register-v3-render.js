@@ -9,6 +9,7 @@ import Select from 'react-select';
 
 function RegisterV3Render(props) {
     //required props: history
+    const appContext = React.useContext(PageSettings);
 
     const [firstNameInput, setFirstNameInput] = React.useState('');
     const [lastNameInput, setLastNameInput] = React.useState('');
@@ -18,15 +19,13 @@ function RegisterV3Render(props) {
     const [passwordInput, setPasswordInput] = React.useState('');
     const [reEnterPasswordInput, setReEnterPasswordInput] = React.useState('');
     const [agreeInput, setAgreeInput] = React.useState(false);
-    const [selectedCurrency, setSelectedCurrency] = React.useState(CURRENCY_OPTIONS.find(option => option.value == "USD"));
+    const [selectedCurrency, setSelectedCurrency] = React.useState(CURRENCY_OPTIONS(appContext.locale).find(option => option.value == "USD"));
     const [isEnterprise, setIsEnterprise] = React.useState(true);
 
     const [emailMatchAlert, setEmailMatchAlert] = React.useState(false);
     const [emailTakenAlert, setEmailTakenAlert] = React.useState(false);
     const [passwordMatchAlert, setPasswordMatchAlert] = React.useState(false);
     const [agreeAlert, setAgreeAlert] = React.useState(false);
-
-    const appContext = React.useContext(PageSettings);
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -149,8 +148,8 @@ function RegisterV3Render(props) {
                         </div>
                         <div className="checkbox checkbox-css m-b-30">
                             <div className="checkbox checkbox-css m-b-30">
-                                <input type="checkbox" id="agreement_checkbox" value={isEnterprise} onChange={() => setIsEnterprise(!isEnterprise)} />
-                                <label htmlFor="agreement_checkbox">
+                                <input type="checkbox" id="is_enterprise_checkbox" value={isEnterprise} onChange={() => setIsEnterprise(!isEnterprise)} />
+                                <label htmlFor="is_enterprise_checkbox">
                                     isEnterprise
                                     {/** TODO: make this look good */}
                                 </label> 

@@ -1,7 +1,6 @@
 package com.easyledger.api.controller;
 
-import java.net.URI;
-import java.util.Collections;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,24 +16,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.easyledger.api.exception.AppException;
+import com.easyledger.api.dto.ForgotPasswordDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.mail.EmailServiceImpl;
-import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
-import com.easyledger.api.model.Role;
 import com.easyledger.api.model.VerificationToken;
-import com.easyledger.api.payload.ApiResponse;
 import com.easyledger.api.payload.JwtAuthenticationResponse;
 import com.easyledger.api.payload.LoginRequest;
 import com.easyledger.api.payload.SignUpRequest;
@@ -114,6 +106,53 @@ public class AuthController {
     	return ResponseEntity.ok(new JwtAuthenticationResponse(accessToken, refreshToken));
     }
     
+    @PostMapping("/auth/forgotPassword")
+    public Map<String, Boolean> generateAndSendResetPasswordCode(@RequestBody ForgotPasswordDTO dto) throws ResourceNotFoundException, MessagingException {
+    	Person person = personRepository.findByEmail(dto.getEmail())
+    			.orElseThrow(() -> new ResourceNotFoundException("Person cannot be found for this email:: " + dto.getEmail()));
+    	VerificationToken token = verificationService.createTwoFactorCodeForPerson(person);
+    	verificationService.sendPasswordResetEmail(person.getEmail(), person.getFirstName(), token.getToken());
+    	Map<String, Boolean> returnObject = new HashMap<>();
+    	returnObject.put("Code generated", true);
+    	return returnObject;
+    }
+    
+    @PostMapping("/auth/verifyResetPasswordCode")
+    public Map<String, Boolean> verifyResetPasswordCode(@RequestBody ForgotPasswordDTO dto) throws ResourceNotFoundException, ConflictException {
+    	Person person = personRepository.findByEmail(dto.getEmail())
+    			.orElseThrow(() -> new ResourceNotFoundException("Person cannot be found for this email:: " + dto.getEmail()));
+    	VerificationToken validToken = person.getVerificationToken();
+    	if (!validToken.getToken().equals(dto.getToken())) {
+    		throw new ConflictException("Incorrect password reset code.");
+    	}
+		Calendar cal = Calendar.getInstance();
+		if (validToken.getExpiryDate().getTime() - cal.getTime().getTime() <= 0) { // if expired token
+			throw new ConflictException("Expired code.");
+		}
+       	Map<String, Boolean> returnObject = new HashMap<>();
+    	returnObject.put("verified", true);
+    	return returnObject;
+    }
+    
+    @PostMapping("/auth/resetPassword")
+    public Map<String, Boolean> resetPassword(@RequestBody ForgotPasswordDTO dto) throws ResourceNotFoundException, ConflictException {
+    	Person person = personRepository.findByEmail(dto.getEmail())
+    			.orElseThrow(() -> new ResourceNotFoundException("Person cannot be found for this email:: " + dto.getEmail()));
+    	VerificationToken validToken = person.getVerificationToken();
+    	if (!validToken.getToken().equals(dto.getToken())) {
+    		throw new ConflictException("Incorrect password reset code.");
+    	}
+		Calendar cal = Calendar.getInstance();
+		if (validToken.getExpiryDate().getTime() - cal.getTime().getTime() <= 0) { // if expired token
+			throw new ConflictException("Expired code.");
+		}
+		person.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+		personRepository.save(person);
+       	Map<String, Boolean> returnObject = new HashMap<>();
+    	returnObject.put("password changed", true);
+    	return returnObject;
+    }
+    
     @GetMapping("/auth/testEmail")
     public String testEmail() throws MessagingException{
     	String to = "kyleko1234@gmail.com";
@@ -121,7 +160,7 @@ public class AuthController {
     	Map<String, Object> templateModel = new HashMap<String, Object>();
     	templateModel.put("recipientFirstName", "recipientFirstName");
     	templateModel.put("confirmationUrl", "http://localhost:8080/InsertConfirmationURLHere");
-    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel);
+    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel, "email_system.html");
     	return "sent = true!";
     }
     

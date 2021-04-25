@@ -1,6 +1,8 @@
 package com.easyledger.api.security;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -42,11 +44,13 @@ public class JwtTokenProvider {
 	
 	public String generateAccessToken(Authentication authentication) {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-		
+		Map<String, Object> claims = new HashMap<String, Object>();
+		claims.put("auth", userPrincipal.getPassword());
 		Date now = new Date();
 		Date expiryDate = new Date(now.getTime() + accessTokenExpirationInMs);
 		
 		return Jwts.builder()
+				.setClaims(claims)
 				.setSubject(Long.toString(userPrincipal.getId()))
 				.setIssuedAt(new Date())
 				.setExpiration(expiryDate)
@@ -56,11 +60,13 @@ public class JwtTokenProvider {
 	
 	public String generateRefreshToken(Authentication authentication) {
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-		
+		Map<String, Object> claims = new HashMap<String, Object>();
+		claims.put("auth", userPrincipal.getPassword());
 		Date now = new Date();
 		Date expiryDate = new Date(now.getTime() + refreshTokenExpirationInMs);
 		
 		return Jwts.builder()
+				.setClaims(claims)
 				.setSubject(Long.toString(userPrincipal.getId()))
 				.setIssuedAt(new Date())
 				.setExpiration(expiryDate)
@@ -74,6 +80,14 @@ public class JwtTokenProvider {
 			.parseClaimsJws(token)
 			.getBody();
 		return Long.parseLong(claims.getSubject());
+	}
+	
+	public String getUserPasswordHashFromJWT(String token) {
+		Claims claims = Jwts.parser()
+				.setSigningKey(jwtSecret)
+				.parseClaimsJws(token)
+				.getBody();
+		return claims.get("auth").toString();
 	}
 	
 	public boolean validateToken(String authToken) {

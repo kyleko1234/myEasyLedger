@@ -21,7 +21,7 @@ export const registerV3Text = {
         "Password does not match.": "Password does not match.",
         "Agreement text": <div>By clicking Sign Up, you agree to our <Link to="#">Terms</Link> and that you have read our <Link to="#">Data Policy</Link>, including our <Link to="#">Cookie Use</Link>.</div>,
         "Please agree.": "Please agree.",
-        "Already a member": <div>Already a member? Click <Link to="/user/login-v3">here</Link> to login.</div>,
+        "Already a member": <div>Already a member? Click <Link to="/user/login/form" className="text-primary">here</Link> to login.</div>,
         "Copyright text": "\u00A9 2021 MyEasyLedger.tw All Rights Reserved."
     },
     "zh-TW": {
@@ -43,7 +43,7 @@ export const registerV3Text = {
         "Password does not match.": "輸入的密碼前後不符。",
         "Agreement text": <div>點擊要建立新帳號，即表示您同意了我們的 <Link to="#">使用條款</Link> 也讀了我們的 <Link to="#">資料政策</Link>，包抱 <Link to="#">Cookie 的使用</Link>。</div>,
         "Please agree.": "請同意。",
-        "Already a member": <div>已經有帳號了嗎？點擊 <Link to="/user/login-v3">這裡</Link> 就可以登入。</div>,
+        "Already a member": <div>已經有帳號了嗎？點擊 <Link to="/user/login/form" className="text-primary">這裡</Link> 就可以登入。</div>,
         "Copyright text": "\u00A9 2021 MyEasyLedger.tw 版權所有。"
     }
 }
