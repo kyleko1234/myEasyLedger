@@ -29,6 +29,16 @@ export const loginV3Text = {
         "Click here to send a new code.": "Click here to send a new code.",
         "A new code has been sent to your email!": "A new code has been sent to your email!",
 
+        "Confirm Password": "Confirm Password",
+        "Passwords do not match.": "Passwords do not match.",
+        "Something went wrong. Please try again later.": "Something went wrong. Please try again later.",
+        "Reset Your Password": "Reset Your Password",
+        "Please enter your new password below.": "Please enter your new password below.",
+        "This session has expired.": "This session has expired.",
+        "Please click here to restart this process.": "Please click here to restart this process.",
+        "Password Reset Successful!": "Password Reset Successful!",
+        "Please click here to log in.": "Please click here to log in.",
+
 
     },
     "zh-TW": {
@@ -58,6 +68,7 @@ export const loginV3Text = {
         "Click here to send a new code.": "TRANSLATION",
         "A new code has been sent to your email!": "TRANSLATION",
 
+        "Confirm Password": "Confirm Password",
 
     }
 

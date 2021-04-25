@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
 import {loginV3Text} from '../../utils/i18n/login-v3-text';
 import {API_BASE_URL} from '../../utils/constants.js';
@@ -7,6 +7,7 @@ import {Alert} from 'reactstrap';
 
 function FindEmail(props) {
     //required props: emailInput, setEmailInput, setUserEmail, axiosInstance;
+    //optional props: className
     const appContext = React.useContext(PageSettings);
     const [noUserWithThisEmailAlert, setNoUserWithThisEmailAlert] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
@@ -35,7 +36,7 @@ function FindEmail(props) {
     };
 
     return(
-        <>
+        <React.Fragment className={props.className}>
             <h2>{loginV3Text[appContext.locale]["Find Your Account"]}</h2>
             <p>{loginV3Text[appContext.locale]["Please enter your email to search for your account."]}</p>
             {noUserWithThisEmailAlert
@@ -54,7 +55,7 @@ function FindEmail(props) {
                     </button>
                 </div>
             </form>
-        </>
+        </React.Fragment>
     )
 }
 

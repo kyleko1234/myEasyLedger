@@ -8,6 +8,8 @@ import {Alert} from 'reactstrap';
 
 function VerifyEmail(props) {
     //required props: userEmail, resetPasswordCode, setResetPasswordCode, axiosInstance;
+    //optional props: className
+
     const appContext = React.useContext(PageSettings);
     const [errorAlert, setErrorAlert] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState("");
@@ -28,7 +30,11 @@ function VerifyEmail(props) {
         }).catch(error => {
             if (error.response) {
                 console.log(error.response);
-                setErrorMessage(error.response.data.message);
+                if (error.response.status === 409) {
+                    setErrorMessage(error.response.data.message);
+                } else {
+                    setErrorMessage("Something went wrong. Please try again later.");
+                }
                 setErrorAlert(true);
             }
         })
@@ -46,13 +52,13 @@ function VerifyEmail(props) {
     }
 
     return(
-        <>
+        <React.Fragment className={props.className}>
             <h2>{loginV3Text[appContext.locale]["Verify Your Email"]}</h2>
             <h3>{props.userEmail}</h3>
             <p>
                 {loginV3Text[appContext.locale]["Please enter the six-digit code we have sent to your email."]}
                 <br/>
-                <Link replace className="text-primary" onClick={resendCode}>{loginV3Text[appContext.locale]["Click here to send a new code."]}</Link>
+                <Link replace className="text-primary" to="#" onClick={resendCode}>{loginV3Text[appContext.locale]["Click here to send a new code."]}</Link>
             </p>
             {errorAlert
                 ? <Alert color="danger">{loginV3Text[appContext.locale][errorMessage]}</Alert>
@@ -73,7 +79,7 @@ function VerifyEmail(props) {
                     </button>
                 </div>
             </form>
-        </>
+        </React.Fragment>
     )
 }
 

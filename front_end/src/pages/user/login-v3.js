@@ -36,7 +36,7 @@ class LoginV3 extends React.Component {
 				</div>
 				<div className="right-content">
 						<Route path="/user/login/form">
-							<LoginV3Render history={this.props.history} />
+							<LoginV3Render history={this.props.history}/>
 						</Route>
 						<Route path="/user/login/forgot">
 							<ForgotPassword />

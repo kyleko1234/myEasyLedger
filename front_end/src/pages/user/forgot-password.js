@@ -3,6 +3,8 @@ import React from 'react';
 import { Router, Route, withRouter} from 'react-router';
 import { PageSettings } from '../../config/page-settings';
 import FindEmail from './find-email';
+import ResetPassword from './reset-password';
+import ResetSuccess from './reset-success';
 import VerifyEmail from './verify-email';
 
 
@@ -14,6 +16,7 @@ function ForgotPassword(props) {
     const [resetPasswordCode, setResetPasswordCode] = React.useState("");
     const [newPassword, setNewPassword] = React.useState("");
     const forgotPasswordAxiosInstance = axios.create();
+    const [stepNumber, setStepNumber] = React.useState(1);
 
     return(
         <>
@@ -23,10 +26,12 @@ function ForgotPassword(props) {
             <Route path={props.match.path + "/verify-email"}>
                 <VerifyEmail resetPasswordCode={resetPasswordCode} setResetPasswordCode={setResetPasswordCode} userEmail={userEmail} axiosInstance={forgotPasswordAxiosInstance}/>
             </Route>
-
             <Route path={props.match.path + "/reset-password"}>
+                <ResetPassword  userEmail={userEmail} resetPasswordCode={resetPasswordCode} newPassword={newPassword} setNewPassword={setNewPassword} axiosInstance={forgotPasswordAxiosInstance}/>
             </Route>
-
+            <Route path={props.match.path + "/reset-success"}>
+                <ResetSuccess/>
+            </Route>
         </>
     )
 }
