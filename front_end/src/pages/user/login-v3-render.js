@@ -57,7 +57,7 @@ function LoginV3Render(props) {
 
 
     return (
-        <React.Fragment className={props.className}>
+        <>
             <div className="login-header">
 				<div className="brand">
                 <span className="logo"></span> my<b>Easy</b>Ledger
@@ -93,7 +93,7 @@ function LoginV3Render(props) {
                     </div>
                 </form>
             </div>
-        </React.Fragment>
+        </>
     )
 
 }

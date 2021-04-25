@@ -124,3 +124,17 @@ a.bg-light.nohover:focus {
     background-color: #f9f9f9 !important
 }
 
+@keyframes slide-in {
+    from {
+        left: 100%;
+    }
+    to {
+        left: 0%;
+    }
+}
+.slide-in {
+    animation-name: "slide-in";
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+    position: relative;
+}

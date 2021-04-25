@@ -46,7 +46,7 @@ function ResetPassword(props) {
     }
 
     return(
-        <React.Fragment className={props.className}>
+        <div className="slide-in">
             <h2>{loginV3Text[appContext.locale]["Reset Your Password"]}</h2>
             <h3>{props.userEmail}</h3>
             <p>
@@ -78,7 +78,7 @@ function ResetPassword(props) {
                     </button>
                 </div>
             </form>
-        </React.Fragment>
+        </div>
     )
 }
 

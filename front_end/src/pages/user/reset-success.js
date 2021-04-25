@@ -8,14 +8,14 @@ function ResetSuccess(props) {
 
     const appContext = React.useContext(PageSettings);
     return(
-        <React.Fragment className={props.className}>
+        <div className="slide-in">
             <h2>{loginV3Text[appContext.locale]["Password Reset Successful!"]}</h2>
             <div className="m-b-40 p-b-40">
                 <Link className="text-primary" to="/user/login/form">
                     {loginV3Text[appContext.locale]["Please click here to log in."]}
                 </Link>
             </div>
-        </React.Fragment>
+        </div>
     )
 }
 

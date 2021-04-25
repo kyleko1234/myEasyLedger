@@ -52,7 +52,7 @@ function VerifyEmail(props) {
     }
 
     return(
-        <React.Fragment className={props.className}>
+        <div className="slide-in">
             <h2>{loginV3Text[appContext.locale]["Verify Your Email"]}</h2>
             <h3>{props.userEmail}</h3>
             <p>
@@ -79,7 +79,7 @@ function VerifyEmail(props) {
                     </button>
                 </div>
             </form>
-        </React.Fragment>
+        </div>
     )
 }
 

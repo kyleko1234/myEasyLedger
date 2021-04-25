@@ -36,7 +36,7 @@ function FindEmail(props) {
     };
 
     return(
-        <React.Fragment className={props.className}>
+        <div className="slide-in">
             <h2>{loginV3Text[appContext.locale]["Find Your Account"]}</h2>
             <p>{loginV3Text[appContext.locale]["Please enter your email to search for your account."]}</p>
             {noUserWithThisEmailAlert
@@ -55,7 +55,7 @@ function FindEmail(props) {
                     </button>
                 </div>
             </form>
-        </React.Fragment>
+        </div>
     )
 }
 
