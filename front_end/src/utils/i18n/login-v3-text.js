@@ -68,7 +68,15 @@ export const loginV3Text = {
         "Click here to send a new code.": "TRANSLATION",
         "A new code has been sent to your email!": "TRANSLATION",
 
-        "Confirm Password": "Confirm Password",
+        "Confirm Password": "TRANSLATION",
+        "Passwords do not match.": "TRANSLATION",
+        "Something went wrong. Please try again later.": "TRANSLATION",
+        "Reset Your Password": "TRANSLATION",
+        "Please enter your new password below.": "TRANSLATION",
+        "This session has expired.": "TRANSLATION",
+        "Please click here to restart this process.": "TRANSLATION",
+        "Password Reset Successful!": "TRANSLATION",
+        "Please click here to log in.": "TRANSLATION",
 
     }
 
