@@ -3,6 +3,8 @@ import {PageSettings} from '../../config/page-settings.js';
 import {API_BASE_URL, LOCALE_OPTIONS} from '../../utils/constants.js';
 import {registerV3Text} from '../../utils/i18n/register-v3-text';
 import {Alert} from 'reactstrap';
+import {Link} from 'react-router-dom';
+
 
 function NewAccountForm(props) {
     //required props: firstNameInput, setFirstNameInput, lastNameInput, setLastNameInput, emailInput, setEmailInput,

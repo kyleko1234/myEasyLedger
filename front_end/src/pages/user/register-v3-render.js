@@ -1,13 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import { Alert } from 'reactstrap';
-import {Link} from 'react-router-dom';
 import {PageSettings} from '../../config/page-settings.js';
 import {API_BASE_URL, LOCALE_OPTIONS, CURRENCY_OPTIONS} from '../../utils/constants.js';
-import {registerV3Text} from '../../utils/i18n/register-v3-text';
-import Select from 'react-select';
 import NewAccountForm from './new-account-form.js';
 import FirstOrganizationForm from './first-organization-form.js';
+import RegistrationSuccessful from './registration-successful.js';
 
 function RegisterV3Render(props) {
     //required props: history
@@ -77,6 +74,9 @@ function RegisterV3Render(props) {
                     setStepNumber={setStepNumber} submitForm={submitForm}
                     somethingWentWrongAlert={somethingWentWrongAlert} setSomethingWentWrongAlert={setSomethingWentWrongAlert}
                 />
+            : null}
+            {stepNumber === 3
+            ? <RegistrationSuccessful/>
             : null}
         </>
     )

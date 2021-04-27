@@ -1,12 +1,17 @@
 import React from 'react';
 import { PageSettings } from '../../config/page-settings';
+import { LOCALE_OPTIONS } from '../../utils/constants';
+import { registerV3Text } from '../../utils/i18n/register-v3-text';
+import Select from 'react-select';
+import { Alert } from 'reactstrap';
+import {Link} from 'react-router-dom';
+
 
 function FirstOrganizationForm(props) {
     //required props: organizationNameInput, setOrganizationNameInput, selectedCurrency, setSelectedCurrency, currencyOptions,
     //  isEnterprise, setIsEnterprise, agreeInput, setAgreeInput, setStepNumber, submitForm, somethingWentWrongAlert, setSomethingWentWrongAlert
     const appContext = React.useContext(PageSettings);
     const [agreeAlert, setAgreeAlert] = React.useState(false);
-
     const validateForm = event => {
         event.preventDefault();
         setAgreeAlert(false);
@@ -18,7 +23,7 @@ function FirstOrganizationForm(props) {
     }
 
     return(
-        <div>
+        <div className="slide-in">
             {props.somethingWentWrongAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Something went wrong. Please try again later."]}</Alert> : null}
             <h1 className="register-header">
                 {registerV3Text[appContext.locale]["Sign Up"]}

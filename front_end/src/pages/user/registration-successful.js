@@ -7,7 +7,7 @@ function RegistrationSuccessful (props) {
 	const appContext = React.useContext(PageSettings);
 	  
     return (
-        <div>
+        <div className="slide-in">
             <h1 className="register-header">
                 Registration Successful!
             </h1>
