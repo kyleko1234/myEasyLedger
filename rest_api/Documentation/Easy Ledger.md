@@ -19,6 +19,7 @@ Prefix all endpoints with `http://{host}/v0.2/`
 - [[Forgot Password#Requesting a Reset Password Code|POST /auth/forgotPassword]]
 - [[Forgot Password#Verifying a Reset Password Code|POST /auth/verifyResetPasswordCode]]
 - [[Forgot Password#Resetting a user's password|POST /auth/resetPassword]]
+- [[Check For Available Email|POST /auth/checkForAvailableEmail]]
 <br/><br/>
 - [[List All Persons|GET /person]]
 - [[Retrieve a Person|GET /person/{id}]]

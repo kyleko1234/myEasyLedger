@@ -6,11 +6,10 @@
       {
         "id": "e9ecb484239110b1",
         "type": "leaf",
-        "active": true,
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Authentication/Contents/Forgot Password.md",
+            "file": "Easy Ledger.md",
             "mode": "source"
           }
         }
@@ -69,10 +68,12 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Authentication/Contents/Forgot Password.md",
+                "file": "Easy Ledger.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -85,12 +86,13 @@
     "width": 300,
     "collapsed": true
   },
+  "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "Authentication/Contents/Forgot Password.md",
     "Easy Ledger.md",
-    "Authentication/Contents/Change Password.md",
     "Authentication/Authentication.md",
     "Authentication/Contents/Untitled.md",
+    "Authentication/Contents/Forgot Password.md",
+    "Authentication/Contents/Change Password.md",
     "Authentication/Contents/Sign Up.md",
     "AccountType/Contents/List All AccountTypes.md",
     "AccountType/AccountType.md",

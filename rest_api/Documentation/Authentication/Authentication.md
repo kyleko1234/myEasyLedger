@@ -28,3 +28,4 @@ ___
 - [[Renew Verification Token]]
 - [[Change Password]]
 - [[Forgot Password]]
+- [[Check For Available Email]]

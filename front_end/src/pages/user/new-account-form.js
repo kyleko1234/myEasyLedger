@@ -1,78 +1,21 @@
 import React from 'react';
-import axios from 'axios';
-import { Alert } from 'reactstrap';
-import {Link} from 'react-router-dom';
 import {PageSettings} from '../../config/page-settings.js';
-import {API_BASE_URL, LOCALE_OPTIONS, CURRENCY_OPTIONS} from '../../utils/constants.js';
+import {LOCALE_OPTIONS} from '../../utils/constants.js';
 import {registerV3Text} from '../../utils/i18n/register-v3-text';
-import Select from 'react-select';
 
-function RegisterV3Render(props) {
-    //required props: history
+function NewAccountForm(props) {
+    //required props: firstNameInput, setFirstNameInput, lastNameInput, setLastNameInput, emailInput, setEmailInput,
+    //  reEnterEmailInput, setReEnterEmailInput, passwordInput, setPasswordInput, reEnterPasswordInput, setReEnterPasswordInput,
+    //  agreeInput, setAgreeInput, setStepNumber, axiosInstance
     const appContext = React.useContext(PageSettings);
-
-    const [firstNameInput, setFirstNameInput] = React.useState('');
-    const [lastNameInput, setLastNameInput] = React.useState('');
-    const [emailInput, setEmailInput] = React.useState('');
-    const [reEnterEmailInput, setReEnterEmailInput] = React.useState('');
-    const [organizationNameInput, setOrganizationNameInput] = React.useState('');
-    const [passwordInput, setPasswordInput] = React.useState('');
-    const [reEnterPasswordInput, setReEnterPasswordInput] = React.useState('');
-    const [agreeInput, setAgreeInput] = React.useState(false);
-    const currencyOptions = CURRENCY_OPTIONS(appContext.locale);
-    const [selectedCurrency, setSelectedCurrency] = React.useState(currencyOptions.find(option => option.value == "USD"));
-    const [isEnterprise, setIsEnterprise] = React.useState(true);
-    const [stepNumber, setStepNumber] = React.useState(1);
 
     const [emailMatchAlert, setEmailMatchAlert] = React.useState(false);
     const [emailTakenAlert, setEmailTakenAlert] = React.useState(false);
     const [passwordMatchAlert, setPasswordMatchAlert] = React.useState(false);
     const [agreeAlert, setAgreeAlert] = React.useState(false);
 
-    const handleSubmit = event => {
+    const validateForm = event => {
         event.preventDefault();
-        setEmailMatchAlert(false);
-        setEmailTakenAlert(false);
-        setPasswordMatchAlert(false);
-        setAgreeAlert(false);
-
-        if (emailInput !== reEnterEmailInput) {
-            setEmailMatchAlert(true);
-            return;
-        }
-
-        if (passwordInput !== reEnterPasswordInput) {
-            setPasswordMatchAlert(true);
-            return;
-        }
-
-        if (!agreeInput) {
-            setAgreeAlert(true);
-            return;
-        }
-
-        let requestBody = {
-            firstName: firstNameInput,
-            lastName: lastNameInput,
-            email: emailInput,
-            reEnterEmail: reEnterEmailInput,
-            password: passwordInput,
-            reEnterPassword: reEnterPasswordInput,
-            agree: agreeInput,
-            organizationName: organizationNameInput,
-            locale: appContext.locale,
-            isEnterprise: isEnterprise,
-            currency: selectedCurrency.value
-        }
-
-        axios.post(`${API_BASE_URL}/auth/signup`, requestBody).then(response => {
-             props.history.push('/user/registration-successful')  
-        }).catch(response => {
-            if (response && response.response.data.message == "Email is already taken!") {
-                setEmailTakenAlert(true);
-            }
-        })
-        
     }
 
     return (
@@ -82,7 +25,7 @@ function RegisterV3Render(props) {
                 <small>{registerV3Text[appContext.locale]["Create your myEasyLedger Account."]}</small>
             </h1>
             <div className="register-content">
-                <form className="margin-bottom-0" onSubmit={event => handleSubmit(event)}>
+                <form className="margin-bottom-0" onSubmit={event => validateForm(event)}>
                     <label className="control-label">{registerV3Text[appContext.locale]["Name"]} <span className="text-danger">*</span></label>
                     <div className="row row-space-10">
                         <div className="col-md-6 m-b-15">
@@ -106,12 +49,6 @@ function RegisterV3Render(props) {
                         </div>
                     </div>
                     {emailMatchAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Email does not match."]}</Alert> : null}
-                    <label className="control-label">{registerV3Text[appContext.locale]["Organization Name"]} <span className="text-danger">*</span></label>
-                    <div className="row m-b-15">
-                        <div className="col-md-12">
-                            <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["Organization Name"]} required value={organizationNameInput} onChange={event => setOrganizationNameInput(event.target.value)}/>
-                        </div>
-                    </div>
                     <label className="control-label">{registerV3Text[appContext.locale]["Password"]} <span className="text-danger">*</span></label>
                     <div className="row m-b-15">
                         <div className="col-md-12">
@@ -125,28 +62,6 @@ function RegisterV3Render(props) {
                         </div>
                     </div>
                     {passwordMatchAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Password does not match."]}</Alert> : null}
-                    <label className="control-label">Currency<span className="text-danger">*</span></label>
-                    <div className="row m-b-15">
-                        <div className="col-md-12">
-                            <Select
-                                options={currencyOptions}
-                                value={selectedCurrency}
-                                isSearchable={true}
-                                onChange={(selectedOption) => {
-                                    setSelectedCurrency(selectedOption);
-                                }}
-                            />
-                        </div>
-                    </div>
-                    <div className="checkbox checkbox-css m-b-30">
-                        <div className="checkbox checkbox-css m-b-30">
-                            <input type="checkbox" id="is_enterprise_checkbox" value={isEnterprise} onChange={() => setIsEnterprise(!isEnterprise)} />
-                            <label htmlFor="is_enterprise_checkbox">
-                                isEnterprise
-                                {/** TODO: make this look good */}
-                            </label> 
-                        </div>
-                    </div>
                     <div className="checkbox checkbox-css m-b-30">
                         <div className="checkbox checkbox-css m-b-30">
                             <input type="checkbox" id="agreement_checkbox" value={agreeInput} onChange={() => setAgreeInput(!agreeInput)} />
@@ -179,7 +94,8 @@ function RegisterV3Render(props) {
                 </form>
             </div>
         </div>
+
     )
 }
 
-export default RegisterV3Render;
+export default NewAccountForm;

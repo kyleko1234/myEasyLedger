@@ -153,15 +153,14 @@ public class AuthController {
     	return returnObject;
     }
     
-    @GetMapping("/auth/testEmail")
-    public String testEmail() throws MessagingException{
-    	String to = "kyleko1234@gmail.com";
-    	String subject = "Easy Ledger App";
-    	Map<String, Object> templateModel = new HashMap<String, Object>();
-    	templateModel.put("recipientFirstName", "recipientFirstName");
-    	templateModel.put("confirmationUrl", "http://localhost:8080/InsertConfirmationURLHere");
-    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel, "email_system.html");
-    	return "sent = true!";
+    @PostMapping("/auth/checkForAvailableEmail")
+    public Map<String, Boolean> checkForAvailableEmail(@RequestBody SignUpRequest request) throws MessagingException, ConflictException{
+    	if (personRepository.existsByEmail(request.getEmail().toLowerCase().trim())) {
+        	throw new ConflictException("Person already registered with this email :: " + request.getEmail().trim());
+    	}
+       	Map<String, Boolean> returnObject = new HashMap<>();
+    	returnObject.put("email available", true);
+    	return returnObject;
     }
     
 
