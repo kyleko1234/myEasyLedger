@@ -147,7 +147,7 @@ function TableOfJournalEntries({
       const formattedAccounts = response.data.filter(account => !account.hasChildren).map(account => {
         return({
           value: account.accountId,
-          label: account.accountName,
+          label: account.accountCode? account.accountCode + " - " + account.accountName : account.accountName,
           object: account
         })
       });
