@@ -34,7 +34,7 @@ class RegisterV3 extends React.Component {
                     </p>
                 </div>
             </div>
-            <div className="right-content">
+            <div className="right-content overflow-hidden">
 				<RegisterV3Render history={this.props.history}/>
             </div>
         </div>

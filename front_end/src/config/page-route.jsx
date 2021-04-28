@@ -34,8 +34,8 @@ const routes = [
     component: LoginV3,
   },
   {
-    path: '/user/register-v3',
-    title: 'Register v3',
+    path: '/user/register',
+    title: 'Register',
     component: RegisterV3,
   },
   {

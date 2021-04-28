@@ -27,6 +27,13 @@ export const registerV3Text = {
         "Next": "Next",
         "Create your first EasyLedger.": "Create your first EasyLedger.",
         "Something went wrong. Please try again later.": "Something went wrong. Please try again later.",
+        "Currency": "Currency",
+        "Create an EasyLedger for:": "Create an EasyLedger for:",
+        "Enterprise use": "Enterprise use",
+        "Personal use": "Personal use",
+        "Registration Successful!": "Registration Successful!",
+        "A verification email is on its way to your inbox.": "A verification email is on its way to your inbox.",
+        "Return to login page.": "Return to login page."
     },
     "zh-TW": {
         "App description": "APP 描述",
@@ -48,6 +55,18 @@ export const registerV3Text = {
         "Agreement text": <div>點擊要建立新帳號，即表示您同意了我們的 <Link to="#" className="text-primary">使用條款</Link> 也讀了我們的 <Link to="#" className="text-primary">資料政策</Link>，包抱 <Link to="#" className="text-primary">Cookie 的使用</Link>。</div>,
         "Please agree.": "請同意。",
         "Already a member": <div>已經有帳號了嗎？點擊 <Link to="/user/login/form" className="text-primary">這裡</Link> 就可以登入。</div>,
-        "Copyright text": "\u00A9 2021 MyEasyLedger.tw 版權所有。"
+        "Copyright text": "\u00A9 2021 MyEasyLedger.tw 版權所有。",
+
+        "Next": "TRANSLATION",
+        "Create your first EasyLedger.": "TRANSLATION",
+        "Something went wrong. Please try again later.": "TRANSLATION",
+        "Currency": "TRANSLATION",
+        "Create an EasyLedger for:": "TRANSLATION",
+        "Enterprise use": "TRANSLATION",
+        "Personal use": "TRANSLATION",
+        "Registration Successful!": "TRANSLATION",
+        "A verification email is on its way to your inbox.": "TRANSLATION",
+        "Return to login page.": "TRANSLATION"
+
     }
 }

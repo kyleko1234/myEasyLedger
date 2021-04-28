@@ -9,12 +9,12 @@ function RegistrationSuccessful (props) {
     return (
         <div className="slide-in">
             <h1 className="register-header">
-                Registration Successful!
+                {registerV3Text[appContext.locale]["Registration Successful!"]}
             </h1>
             <div className="register-content">
                     <div className="m-t-20 m-b-40 p-b-40 text-inverse">
-                        <p>A verification email is on its way to your inbox.</p>
-                        <Link to="/user/login/form" className="text-primary">Return to login page.</Link>
+                        <p>{registerV3Text[appContext.locale]["A verification email is on its way to your inbox."]}</p>
+                        <Link to="/user/login/form" className="text-primary">{registerV3Text[appContext.locale]["Return to login page."]}</Link>
                     </div>
                     <hr />
                     <p className="text-center">

@@ -49,7 +49,7 @@ function RegisterV3Render(props) {
             if (response && response.response.data.message == "Email is already taken!") {
                 setSomethingWentWrongAlert(true);
             }
-        })
+        }) 
     }
     return (
         <>

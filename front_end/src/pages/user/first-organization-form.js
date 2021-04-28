@@ -12,6 +12,9 @@ function FirstOrganizationForm(props) {
     //  isEnterprise, setIsEnterprise, agreeInput, setAgreeInput, setStepNumber, submitForm, somethingWentWrongAlert, setSomethingWentWrongAlert
     const appContext = React.useContext(PageSettings);
     const [agreeAlert, setAgreeAlert] = React.useState(false);
+    const handleIsEnterpriseRadioChange = (event) => {
+        props.setIsEnterprise(event.target.value === "true"? true : false);
+    }
     const validateForm = event => {
         event.preventDefault();
         setAgreeAlert(false);
@@ -19,15 +22,15 @@ function FirstOrganizationForm(props) {
             setAgreeAlert(true);
             return;
         }
-        props.submitForm();
+        props.submitForm(event);
     }
 
     return(
         <div className="slide-in">
-            {props.somethingWentWrongAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Something went wrong. Please try again later."]}</Alert> : null}
             <h1 className="register-header">
                 {registerV3Text[appContext.locale]["Sign Up"]}
                 <small>{registerV3Text[appContext.locale]["Create your first EasyLedger."]}</small>
+                {props.somethingWentWrongAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Something went wrong. Please try again later."]}</Alert> : null}
             </h1>
             <div className="register-content">
                 <form className="margin-bottom-0" onSubmit={event => validateForm(event)}>
@@ -37,7 +40,7 @@ function FirstOrganizationForm(props) {
                             <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["EasyLedger Name"]} required value={props.organizationNameInput} onChange={event => props.setOrganizationNameInput(event.target.value)}/>
                         </div>
                     </div>
-                    <label className="control-label">Currency<span className="text-danger">*</span></label>
+                    <label className="control-label">{registerV3Text[appContext.locale]["Currency"]}<span className="text-danger">*</span></label>
                     <div className="row m-b-15">
                         <div className="col-md-12">
                             <Select
@@ -50,14 +53,28 @@ function FirstOrganizationForm(props) {
                             />
                         </div>
                     </div>
-                    <div className="checkbox checkbox-css m-b-30">
+                    {/*<div className="checkbox checkbox-css m-b-30">
                         <div className="checkbox checkbox-css m-b-30">
                             <input type="checkbox" id="is_enterprise_checkbox" value={props.isEnterprise} onChange={() => props.setIsEnterprise(!props.isEnterprise)} />
                             <label htmlFor="is_enterprise_checkbox">
                                 isEnterprise
-                                {/** TODO: make this look good */}
                             </label> 
                         </div>
+                    </div> */}
+                    <label>{registerV3Text[appContext.locale]["Create an EasyLedger for:"]}</label>
+                    <div className="row m-b-15 p-l-25">
+                        <div className="col-md-12 radio radio-css m-b-5">
+                            <input type="radio" id="is-enterprise-true" name="is-enterprise-radio" value={true} checked={props.isEnterprise === true} onChange={handleIsEnterpriseRadioChange}/>
+                            <label htmlFor="is-enterprise-true">
+                                <div className="p-l-5">{registerV3Text[appContext.locale]["Enterprise use"]}</div>
+                            </label>
+                        </div>
+                        <div className="col-md-12 radio radio-css">
+                            <input type="radio" id="is-enterprise-false" name="is-enterprise-radio" value={false} checked={props.isEnterprise === false} onChange={handleIsEnterpriseRadioChange}/>
+                            <label htmlFor="is-enterprise-false">
+                                <div className="p-l-5">{registerV3Text[appContext.locale]["Personal use"]}</div>
+                            </label>
+                        </div>       
                     </div>
                     <div className="checkbox checkbox-css m-b-30">
                         <div className="checkbox checkbox-css m-b-30">
