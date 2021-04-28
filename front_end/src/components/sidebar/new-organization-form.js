@@ -15,12 +15,9 @@ function NewOrganizationForm(props) {
     const [isEnterprise, setIsEnterprise] = React.useState(false);
 
     const handleChangeIsEnterprise = (event) => {
-        if (event.target.value === "false") {
-            setIsEnterprise(false);
-        } else {
-            setIsEnterprise(true);
-        }
+        setIsEnterprise(event.target.value === "true" ? true : false)
     }
+
     const handleSaveButton = async () => {
         let requestBody = {
             name: organizationNameInput,
@@ -31,7 +28,7 @@ function NewOrganizationForm(props) {
             console.log(response);
             await appContext.fetchUserInfo(appContext.personId);
             history.push("/");
-        }).catch(console.log);
+        }).catch(console.log); 
     }
 
 
@@ -71,14 +68,14 @@ function NewOrganizationForm(props) {
                     <label className="col-xl-3 col-form-label">
                         {sidebarText[appContext.locale]["Create an EasyLedger for"] + ":"}
                     </label>
-                    <div className="col-xl-4 p-t-10">
-                        <div className="radio">
-                            <input type="radio" value={false} checked={isEnterprise == false} onChange={handleChangeIsEnterprise} />
-                            <label className="p-l-10">{sidebarText[appContext.locale]["Personal"]}</label>
+                    <div className="col-xl-4 p-t-3">
+                        <div className="radio radio-css">
+                            <input type="radio" value={false} id="is-enterprise-false" name="is-enterprise" checked={!isEnterprise} onChange={handleChangeIsEnterprise} />
+                            <label htmlFor="is-enterprise-false">{sidebarText[appContext.locale]["Personal"]}</label>
                         </div>
-                        <div className="radio">
-                            <input type="radio" value={true} checked={isEnterprise == true} onChange={handleChangeIsEnterprise} />
-                            <label className="p-l-10">{sidebarText[appContext.locale]["Enterprise"]}</label>
+                        <div className="radio radio-css">
+                            <input type="radio" value={true} id="is-enterprise-true" name="is-enterprise" checked={isEnterprise} onChange={handleChangeIsEnterprise} />
+                            <label htmlFor="is-enterprise-true">{sidebarText[appContext.locale]["Enterprise"]}</label>
                         </div>
                     </div>
                 </div>
