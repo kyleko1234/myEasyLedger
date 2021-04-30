@@ -1,4 +1,4 @@
-# Easy Ledger API v0.2 Documentation
+# Easy Ledger API v0.4 Documentation
 ___
 
 ### Objects
@@ -12,7 +12,7 @@ ___
 ___
 ### List of Endpoints
 
-Prefix all endpoints with `http://{host}/v0.2/`
+Prefix all endpoints with `http://{host}/v0.4/`
 - [[Sign In | POST /auth/signin]]
 - [[Sign Up| POST /auth/signup]]
 - [[Refresh JWT|GET /auth/refresh]]

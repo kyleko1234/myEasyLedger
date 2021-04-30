@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/The Account Object.md",
+            "file": "Easy Ledger.md",
             "mode": "source"
           }
         }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/The Account Object.md",
+                "file": "Easy Ledger.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,9 +88,9 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Easy Ledger.md",
     "Account/Contents/The Account Object.md",
     "Account/Account.md",
-    "Easy Ledger.md",
     "Authentication/Authentication.md",
     "Authentication/Contents/Untitled.md",
     "Authentication/Contents/Forgot Password.md",

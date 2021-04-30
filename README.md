@@ -61,8 +61,9 @@ Now use pgAdmin4 (or some other method) to...
 
 ##### Import the myEasyLedger database
 1. If you are not beginning from an empty schema, drop-cascade your 'public' schema and create a new one.
-2. Right click on the 'public' schema and click "Restore..."
-3. Change "Format" to "All Files", and restore from the Easy_Ledger/db/db_schema_and_metadata file for an clean db, or Easy_Ledger/db/db_full for sample data.
+2. You may need to configure PgAdmin's binary paths if this is a fresh installation of PostgreSQL. Click "Dashboard" on the toolbar at the top of the page, and click "Configure PgAdmin" on the dashboard. From the sidebar, choose Paths -> Binary Paths, and in the "PostgreSQL Binary Path" field, enter the path to your pg_dump and pg_restore utilities. By default on MacOS this is `/Library/PostgreSQL/13/bin`. Click save.
+3. Right click on the 'public' schema and click "Restore..."
+4. Change "Format" to "All Files", and restore from the Easy_Ledger/db/db_schema_and_metadata file for an clean db, or Easy_Ledger/db/db_full for sample data.
 
 ##### ER diagram for DB
 An ER diagram for this db can be found in Easy_Ledger/db and will be named "ER vX.X.xml". This file can be opened at https://online.visual-paradigm.com/ - requires a free account.
