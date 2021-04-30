@@ -5,7 +5,7 @@ import LoginV3Render from './login-v3-render.js';
 import { loginV3Text } from '../../utils/i18n/login-v3-text';
 import ForgotPassword from './forgot-password.js';
 import {LOCALE_OPTIONS} from '../../utils/constants.js';
-
+//Login page
 class LoginV3 extends React.Component {
 	static contextType = PageSettings;
 
