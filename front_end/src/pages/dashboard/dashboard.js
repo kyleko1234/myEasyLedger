@@ -4,6 +4,7 @@ import IncomeAndExpenseSummary from './components/income-and-expense-summary';
 import { PageSettings } from '../../config/page-settings';
 import {dashboardText} from '../../utils/i18n/dashboard-text';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
+import {populateSampleUserWithSampleData} from '../../utils/dev-utils'
 
 function Dashboard() {
     const appContext = React.useContext(PageSettings);
@@ -16,6 +17,7 @@ function Dashboard() {
                 {appContext.currentOrganizationName + " - " + dashboardText[appContext.locale]["Dashboard"]}
                 <ToggleMobileSidebarButton className="d-md-none float-right "/>
             </h1>
+            {/*<button type="button" onClick={populateSampleUserWithSampleData}>POPULATE SAMPLE DATA</button> */}
             <div className="row">
                 <div className="col-xl-8 col-lg-6">
                     {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :

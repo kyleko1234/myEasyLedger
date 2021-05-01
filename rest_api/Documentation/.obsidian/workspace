@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Account/Contents/Create an Account.md",
             "mode": "source"
           }
         }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md",
+                "file": "Account/Contents/Create an Account.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,6 +88,8 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Account/Contents/Create an Account.md",
+    "JournalEntry/Contents/Create a JournalEntry.md",
     "Easy Ledger.md",
     "Account/Contents/The Account Object.md",
     "Account/Account.md",
@@ -95,8 +97,6 @@
     "Authentication/Contents/Untitled.md",
     "Authentication/Contents/Forgot Password.md",
     "Authentication/Contents/Change Password.md",
-    "Authentication/Contents/Sign Up.md",
-    "AccountType/Contents/List All AccountTypes.md",
-    "AccountType/AccountType.md"
+    "Authentication/Contents/Sign Up.md"
   ]
 }
