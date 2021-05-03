@@ -246,7 +246,6 @@ function TableOfJournalEntries({
       journalEntryId : journalEntryId,
       journalEntryDate: journalEntryDate,
       description: journalEntryDescription,
-      personId: appContext.personId,
       organizationId: appContext.currentOrganizationId,
       lineItems: lineItems
     }

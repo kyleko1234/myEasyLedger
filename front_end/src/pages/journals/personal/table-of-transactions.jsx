@@ -249,7 +249,6 @@ function TableOfTransactions({
         return({
             journalEntryId: journalEntryId,
             journalEntryDate: journalEntryDate,
-            personId: appContext.personId,
             description: journalEntryDescription,
             organizationId: appContext.currentOrganizationId,
             lineItems: formattedLineItems
