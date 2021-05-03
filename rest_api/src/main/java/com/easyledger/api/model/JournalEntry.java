@@ -100,6 +100,10 @@ public class JournalEntry {
 				orphanRemoval = true) //IMPORTANT: do not eagerly fetch lineitems. Due to weird quirk of jpa, attempting eager fetching here will result in duplicate line items - specifically, one set of lineitems for each organization in db.
 	private List<LineItem> lineItems;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "journalEntry")
+	private List<JournalEntryLog> journalEntryLogs;
+
 	@ManyToOne
 	@JoinColumn(name = "person_id")
 	private Person person;
@@ -110,12 +114,14 @@ public class JournalEntry {
 	
 	public JournalEntry() {
 		this.lineItems = new ArrayList<LineItem>();
+		this.journalEntryLogs = new ArrayList<JournalEntryLog>();
 	}
 
 	public JournalEntry(LocalDate journalEntryDate) {
 		this.journalEntryDate = journalEntryDate;
 		this.yearMonth = (journalEntryDate.getYear() * 100) + journalEntryDate.getMonthValue();
 		this.lineItems = new ArrayList<LineItem>();
+		this.journalEntryLogs = new ArrayList<JournalEntryLog>();
 	}
 
 	public Long getId() {
@@ -160,6 +166,22 @@ public class JournalEntry {
 		this.lineItems = lineItems;
 	}
 
+	public Integer getYearMonth() {
+		return yearMonth;
+	}
+
+	public void setYearMonth(Integer yearMonth) {
+		this.yearMonth = yearMonth;
+	}
+
+	public List<JournalEntryLog> getJournalEntryLogs() {
+		return journalEntryLogs;
+	}
+
+	public void setJournalEntryLogs(List<JournalEntryLog> journalEntryLogs) {
+		this.journalEntryLogs = journalEntryLogs;
+	}
+
 	public Person getPerson() {
 		return person;
 	}
@@ -168,7 +190,6 @@ public class JournalEntry {
 		this.person = person;
 		person.getJournalEntries().add(this);
 	}
-
 	
 	public Organization getOrganization() {
 		return organization;
@@ -181,9 +202,10 @@ public class JournalEntry {
 
 	@Override
 	public String toString() {
-		return "JournalEntry [id=" + id + ", journalEntryDate=" + journalEntryDate + ", description=" + description
-				+ ", deleted=" + deleted + ", lineItems=" + lineItems + ", person=" + person + ", organization="
-				+ organization + "]";
+		return "JournalEntry [id=" + id + ", journalEntryDate=" + journalEntryDate + ", yearMonth=" + yearMonth
+				+ ", description=" + description + ", deleted=" + deleted + ", lineItems=" + lineItems
+				+ ", journalEntryLogs=" + journalEntryLogs + ", person=" + person + ", organization=" + organization
+				+ "]";
 	}
 	
 	

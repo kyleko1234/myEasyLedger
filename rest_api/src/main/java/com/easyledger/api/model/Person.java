@@ -1,6 +1,8 @@
 package com.easyledger.api.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -99,6 +101,10 @@ public class Person {
 	@OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
 	private Set<Permission> permissions;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "person")
+	private List<JournalEntryLog> journalEntryLogs;
+	
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST },
     			fetch = FetchType.EAGER)
     @JoinTable(
@@ -114,6 +120,7 @@ public class Person {
 	public Person() {
 		this.permissions = new HashSet<Permission>();
 		this.roles = new HashSet<Role>();
+		this.journalEntryLogs = new ArrayList<JournalEntryLog>();
 	}
 	
 	public Person(String firstName, String lastName, String email, String password, boolean enabled, String locale) {
@@ -122,6 +129,7 @@ public class Person {
 		this.email = email.toLowerCase().trim();
 		this.password = password;
 		this.permissions = new HashSet<Permission>();
+		this.journalEntryLogs = new ArrayList<JournalEntryLog>();
 		this.enabled = enabled;
 		this.locale = locale;
 	}
