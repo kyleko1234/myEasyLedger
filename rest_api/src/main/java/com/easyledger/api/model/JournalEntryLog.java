@@ -1,6 +1,7 @@
 package com.easyledger.api.model;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.easyledger.api.dto.JournalEntryDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
+import com.easyledger.api.dto.JournalEntryDTO;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+
+@TypeDefs({
+	@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+})
 @Entity
 @Table(name = "journal_entry_log")
 public class JournalEntryLog {
@@ -23,10 +30,11 @@ public class JournalEntryLog {
 	private Long id;
 
 	@Column(name = "datetime_of_edit")
-	private OffsetDateTime datetimeOfEdit;
+	private OffsetDateTime datetimeOfEdit = OffsetDateTime.now(ZoneId.of("UTC"));
 	
-	@Column(name = "snapshot")
-	private String snapshot;
+	@Type(type = "jsonb")
+	@Column(name = "snapshot", columnDefinition = "jsonb")
+	private JournalEntryDTO snapshot;
 	
 	@ManyToOne
 	@JoinColumn(name = "person_id")
@@ -36,18 +44,16 @@ public class JournalEntryLog {
 	@JoinColumn(name = "journal_entry_id")
 	private JournalEntry journalEntry;
 
-	public JournalEntryLog(JournalEntry journalEntry) throws JsonProcessingException {
+	public JournalEntryLog(JournalEntry journalEntry) {
 		this.journalEntry = journalEntry;
 		this.person = journalEntry.getPerson();
-		ObjectMapper mapper = new ObjectMapper();
-		this.snapshot = mapper.writeValueAsString(new JournalEntryDTO(journalEntry));
+		this.snapshot = new JournalEntryDTO(journalEntry);
 	}
 	
-	public JournalEntryLog(JournalEntry journalEntry, JournalEntryDTO dto, Person person) throws JsonProcessingException {
+	public JournalEntryLog(JournalEntry journalEntry, JournalEntryDTO dto, Person person) {
 		this.journalEntry = journalEntry;
 		this.person = person;
-		ObjectMapper mapper = new ObjectMapper();
-		this.snapshot = mapper.writeValueAsString(dto);
+		this.snapshot = dto;
 	}
 	
 	public JournalEntryLog() {
@@ -69,11 +75,11 @@ public class JournalEntryLog {
 		this.datetimeOfEdit = datetimeOfEdit;
 	}
 
-	public String getSnapshot() {
+	public JournalEntryDTO getSnapshot() {
 		return snapshot;
 	}
 
-	public void setSnapshot(String snapshot) {
+	public void setSnapshot(JournalEntryDTO snapshot) {
 		this.snapshot = snapshot;
 	}
 

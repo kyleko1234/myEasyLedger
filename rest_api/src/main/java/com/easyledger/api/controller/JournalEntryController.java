@@ -32,8 +32,10 @@ import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.JournalEntry;
+import com.easyledger.api.model.JournalEntryLog;
 import com.easyledger.api.model.LineItem;
 import com.easyledger.api.repository.AccountRepository;
+import com.easyledger.api.repository.JournalEntryLogRepository;
 import com.easyledger.api.repository.JournalEntryRepository;
 import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;
@@ -41,6 +43,7 @@ import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.service.JournalEntryService;
 import com.easyledger.api.service.LineItemService;
 import com.easyledger.api.viewmodel.JournalEntryViewModel;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 @RestController
 @CrossOrigin("*")
@@ -51,15 +54,18 @@ public class JournalEntryController {
 	private LineItemRepository lineItemRepo;
 	private AccountRepository accountRepo;
 	private AuthorizationService authorizationService;
+	private JournalEntryLogRepository journalEntryLogRepo;
 
 	public JournalEntryController(JournalEntryRepository journalEntryRepo, JournalEntryService journalEntryService, 
-			LineItemRepository lineItemRepo, AccountRepository accountRepo, AuthorizationService authorizationService) {
+			LineItemRepository lineItemRepo, AccountRepository accountRepo, AuthorizationService authorizationService, 
+			JournalEntryLogRepository journalEntryLogRepo) {
 		super();
 		this.journalEntryRepo = journalEntryRepo;
 		this.journalEntryService = journalEntryService;
 		this.lineItemRepo = lineItemRepo;
 		this.accountRepo = accountRepo;
 		this.authorizationService = authorizationService;
+		this.journalEntryLogRepo = journalEntryLogRepo;
 	}
 
 	@Secured("ROLE_ADMIN")
@@ -95,7 +101,7 @@ public class JournalEntryController {
         
     @DeleteMapping("/journalEntry/{id}")
     public Map<String, Boolean> deleteJournalEntry(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
-         throws ResourceNotFoundException, UnauthorizedException {
+         throws ResourceNotFoundException, UnauthorizedException, JsonProcessingException {
         JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
        .orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
 
@@ -111,7 +117,12 @@ public class JournalEntryController {
         	accountRepo.save(account);
         }
         journalEntry.setDeleted(true);
-        journalEntryRepo.save(journalEntry);
+        JournalEntry deletedJournalEntry = journalEntryRepo.save(journalEntry);
+        
+        //log the delete
+    	journalEntryLogRepo.save(new JournalEntryLog(deletedJournalEntry));
+        
+    	//return {deleted: true}
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
@@ -123,11 +134,12 @@ public class JournalEntryController {
       * Full Entry information must be sent with each PUT request, including all LineItems. A PUT Entry with a request body that contains no LineItems
       * will result in an Entry that has no associated LineItems in the DB.
       * ID of Entry will be preserved, but all lineItemIds will be newly generated, regardless what the lineItemId field in the RequestBody says.
-     * @throws UnauthorizedException **/ 		
+     * @throws UnauthorizedException 
+     * @throws JsonProcessingException **/ 		
     @Transactional(rollbackFor=Exception.class)
     @PutMapping("/journalEntry/{id}")
     public ResponseEntity<JournalEntryDTO> updateJournalEntryById(@PathVariable(value = "id") Long id, @RequestBody JournalEntryDTO dto, Authentication authentication) 
-    	throws ConflictException, ResourceNotFoundException, UnauthorizedException {
+    	throws ConflictException, ResourceNotFoundException, UnauthorizedException, JsonProcessingException {
     	// Assert URI id is the same as id in the request body.
     	if (dto.getJournalEntryId() == null || !dto.getJournalEntryId().equals(id)) {
     		throw new ConflictException("Entry ID in request body does not match URI.");
@@ -181,6 +193,10 @@ public class JournalEntryController {
     		    
     	//Return updated entry.
     	JournalEntryDTO newEntryDTO = new JournalEntryDTO(updatedJournalEntry);
+    	
+    	//Log the update of this entry
+    	journalEntryLogRepo.save(new JournalEntryLog(updatedJournalEntry, newEntryDTO, updatedJournalEntry.getPerson()));
+
     	return ResponseEntity.ok().body(newEntryDTO);
 
     }
@@ -189,7 +205,7 @@ public class JournalEntryController {
     @PostMapping("/journalEntry")
     @ResponseStatus(HttpStatus.CREATED)
     public JournalEntryDTO createJournalEntryById(@RequestBody JournalEntryDTO dto, Authentication authentication) 
-    	throws ConflictException, ResourceNotFoundException, UnauthorizedException {
+    	throws ConflictException, ResourceNotFoundException, UnauthorizedException, JsonProcessingException {
     
     	if (dto.getJournalEntryId() != null) {
     		throw new ConflictException("Please do not attempt to manually create an EntryId.");
@@ -222,6 +238,9 @@ public class JournalEntryController {
     		    
     	//Return updated entry.
     	JournalEntryDTO newEntryDTO = new JournalEntryDTO(updatedJournalEntry);
+    	
+    	//Log the creation of this entry
+    	journalEntryLogRepo.save(new JournalEntryLog(updatedJournalEntry, newEntryDTO, updatedJournalEntry.getPerson()));
     	return newEntryDTO;
 
     }
