@@ -53,6 +53,11 @@ public class AccountService {
 		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
 		Account product = new Account();
 		product.setName(dto.getAccountName());
+		
+		if (dto.getAccountCode() != null) {
+			product.setAccountCode(dto.getAccountCode());
+		}
+		
 		if (dto.getInitialDebitAmount() != null) {
 			product.setInitialDebitAmount(dto.getInitialDebitAmount());
 			product.setDebitTotal(dto.getInitialDebitAmount());
@@ -67,7 +72,6 @@ public class AccountService {
 			product.setInitialCreditAmount(new BigDecimal(0));
 			product.setCreditTotal(new BigDecimal(0));
 		}
-//		product.setDeleted(dto.isDeleted());
 		product.setHasChildren(false);
 		
 		if (dto.getParentAccountId() != null) {
@@ -109,6 +113,9 @@ public class AccountService {
 		Account updatedAccount = new Account();
 		updatedAccount.setId(dto.getAccountId());
 		updatedAccount.setName(dto.getAccountName());
+		if (dto.getAccountCode() != null) {
+			updatedAccount.setAccountCode(dto.getAccountCode());
+		}
 		
 		updatedAccount.setDebitTotal(oldAccount.getDebitTotal().subtract(oldAccount.getInitialDebitAmount()));
 		updatedAccount.setInitialDebitAmount(dto.getInitialDebitAmount());

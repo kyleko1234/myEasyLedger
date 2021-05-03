@@ -40,6 +40,7 @@ import com.easyledger.api.repository.JournalEntryRepository;
 import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.security.AuthorizationService;
+import com.easyledger.api.security.UserPrincipal;
 import com.easyledger.api.service.JournalEntryService;
 import com.easyledger.api.service.LineItemService;
 import com.easyledger.api.viewmodel.JournalEntryViewModel;
@@ -106,16 +107,7 @@ public class JournalEntryController {
        .orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
 
         authorizationService.authorizeEditPermissionsByOrganizationId(authentication, journalEntry.getOrganization().getId());
-        //update account debitTotal and creditTotal for each line item
-        for (LineItem lineItem : journalEntry.getLineItems()) { 
-        	Account account = lineItem.getAccount();
-        	if (lineItem.isIsCredit()) {
-        		account.setCreditTotal(account.getCreditTotal().subtract(lineItem.getAmount()));
-        	} else {
-        		account.setDebitTotal(account.getDebitTotal().subtract(lineItem.getAmount()));
-        	}
-        	accountRepo.save(account);
-        }
+        
         journalEntry.setDeleted(true);
         JournalEntry deletedJournalEntry = journalEntryRepo.save(journalEntry);
         
@@ -156,20 +148,13 @@ public class JournalEntryController {
     	Iterator<LineItem> oldLineItemIterator = oldJournalEntry.getLineItems().iterator();
     	while (oldLineItemIterator.hasNext()) {
     		LineItem nextItem = oldLineItemIterator.next();
-    		Account account = nextItem.getAccount(); //update account totals when deleting line items
-        	if (nextItem.isIsCredit()) {
-        		account.setCreditTotal(account.getCreditTotal().subtract(nextItem.getAmount()));
-        	} else {
-        		account.setDebitTotal(account.getDebitTotal().subtract(nextItem.getAmount()));
-        	}
-        	accountRepo.save(account);
     		lineItemRepo.deleteById(nextItem.getId());
     	}
     	
     	//Replace entry with data from the request body. Will create new LineItems to replace old ones.
     	//Must create a new Entry entity object even if updating an existing entry, otherwise
     	//Spring will attempt to map the deleted old LineItems to the updated Entry.
-    	JournalEntry updatedJournalEntry = journalEntryService.createJournalEntryFromDTO(dto);
+    	JournalEntry updatedJournalEntry = journalEntryService.createJournalEntryFromDTO(dto, (UserPrincipal) authentication.getPrincipal());
     	
     	//Assert credits and debits are equal in updatedEntry
     	if (!journalEntryService.assertAccountingBalance(updatedJournalEntry)) {
@@ -181,13 +166,6 @@ public class JournalEntryController {
     	journalEntryRepo.save(updatedJournalEntry);
     	while (newLineItemIterator.hasNext()) {
     		LineItem nextItem = newLineItemIterator.next();
-    		Account account = nextItem.getAccount(); //update account totals when creating line items
-        	if (nextItem.isIsCredit()) {
-        		account.setCreditTotal(account.getCreditTotal().add(nextItem.getAmount()));
-        	} else {
-        		account.setDebitTotal(account.getDebitTotal().add(nextItem.getAmount()));
-        	}
-        	accountRepo.save(account);    		
     		lineItemRepo.save(nextItem);
     	}
     		    
@@ -214,7 +192,7 @@ public class JournalEntryController {
     	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
     	
     	//Create Entry entity object from DTO
-    	JournalEntry updatedJournalEntry = journalEntryService.createJournalEntryFromDTO(dto);
+    	JournalEntry updatedJournalEntry = journalEntryService.createJournalEntryFromDTO(dto, (UserPrincipal) authentication.getPrincipal());
     	
     	//Assert credits and debits are equal in updatedEntry
     	if (!journalEntryService.assertAccountingBalance(updatedJournalEntry)) {
@@ -226,13 +204,6 @@ public class JournalEntryController {
     	journalEntryRepo.save(updatedJournalEntry);
     	while (newLineItemIterator.hasNext()) {
     		LineItem nextItem = newLineItemIterator.next();
-    		Account account = nextItem.getAccount(); //update account totals when creating line items
-        	if (nextItem.isIsCredit()) {
-        		account.setCreditTotal(account.getCreditTotal().add(nextItem.getAmount()));
-        	} else {
-        		account.setDebitTotal(account.getDebitTotal().add(nextItem.getAmount()));
-        	}
-        	accountRepo.save(account);    		
     		lineItemRepo.save(nextItem);
     	}
     		    
@@ -244,6 +215,8 @@ public class JournalEntryController {
     	return newEntryDTO;
 
     }
+    
+
 
 
 }

@@ -181,7 +181,6 @@ export async function populateSampleUserWithSampleData() {
         {
             "journalEntryDate": "2020-11-01",
             "description": "Issued 20,000 shares of common stock at $20 per share",
-            "personId": 1,
             "organizationId": 1,
             "lineItems": [
                 {
@@ -201,7 +200,6 @@ export async function populateSampleUserWithSampleData() {
         {
             "journalEntryDate": "2020-11-03",
             "description": "Paid office rent for the month of November $500",
-            "personId": 1,
             "organizationId": 1,
             "lineItems": [
                 {
@@ -221,7 +219,6 @@ export async function populateSampleUserWithSampleData() {
         {
             "journalEntryDate": "2020-11-06",
             "description": "Purchased office supplies $250",
-            "personId": 1,
             "organizationId": 1,
             "lineItems": [
                 {
@@ -241,7 +238,6 @@ export async function populateSampleUserWithSampleData() {
         {
             "journalEntryDate": "2020-11-12",
             "description": "Purchased office equipment on account $4,500",
-            "personId": 1,
             "organizationId": 1,
             "lineItems": [
                 {
@@ -261,7 +257,6 @@ export async function populateSampleUserWithSampleData() {
         {
             "journalEntryDate": "2020-11-16",
             "description": "Purchased business car for $25,000. Paid $10,000 cash and issued a note for the balance.",
-            "personId": 1,
             "organizationId": 1,
             "lineItems": [
                 {
@@ -287,7 +282,6 @@ export async function populateSampleUserWithSampleData() {
         {
             "journalEntryDate": "2020-11-21",
             "description": "Billed clients $24,000 on account.",
-            "personId": 1,
             "organizationId": 1,
             "lineItems": [
                 {
@@ -307,7 +301,6 @@ export async function populateSampleUserWithSampleData() {
         {
             "journalEntryDate": "2020-11-25",
             "description": "Declared dividends $3,000. The amount of dividends will be distributed in December",
-            "personId": 1,
             "organizationId": 1,
             "lineItems": [
                 {
@@ -327,7 +320,6 @@ export async function populateSampleUserWithSampleData() {
         {
             "journalEntryDate": "2020-11-28",
             "description": "Paid utility bills for the month of November $180.",
-            "personId": 1,
             "organizationId": 1,
             "lineItems": [
                 {
@@ -347,7 +339,6 @@ export async function populateSampleUserWithSampleData() {
         {
             "journalEntryDate": "2020-11-29",
             "description": "Received $20,000 cash from clients billed on November 21.",
-            "personId": 1,
             "organizationId": 1,
             "lineItems": [
                 {
@@ -367,7 +358,6 @@ export async function populateSampleUserWithSampleData() {
         {
             "journalEntryDate": "2020-11-30",
             "description": "Paid salary for the month of November $7,500",
-            "personId": 1,
             "organizationId": 1,
             "lineItems": [
                 {

@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Create an Account.md",
+            "file": "Person/Contents/The Person Object.md",
             "mode": "source"
           }
         }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/Create an Account.md",
+                "file": "Person/Contents/The Person Object.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,6 +88,8 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Person/Contents/The Person Object.md",
+    "Person/Person.md",
     "Account/Contents/Create an Account.md",
     "JournalEntry/Contents/Create a JournalEntry.md",
     "Easy Ledger.md",
@@ -95,8 +97,6 @@
     "Account/Account.md",
     "Authentication/Authentication.md",
     "Authentication/Contents/Untitled.md",
-    "Authentication/Contents/Forgot Password.md",
-    "Authentication/Contents/Change Password.md",
-    "Authentication/Contents/Sign Up.md"
+    "Authentication/Contents/Forgot Password.md"
   ]
 }

@@ -1,22 +1,12 @@
 package com.easyledger.api.service;
 
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.dto.LineItemDTO;
@@ -28,6 +18,7 @@ import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.PersonRepository;
+import com.easyledger.api.security.UserPrincipal;
 
 @Service
 public class JournalEntryService {
@@ -49,17 +40,15 @@ public class JournalEntryService {
 
 	// Creates new Entry entity object from EntryDTO. Does not save the entity to the database.
 	// Will ignore any lineItemId in the EntryDTO that is passed in. LineItemIds will be automatically generated when objects are saved to database.
-	public JournalEntry createJournalEntryFromDTO (JournalEntryDTO dto) 
+	public JournalEntry createJournalEntryFromDTO (JournalEntryDTO dto, UserPrincipal userPrincipal) 
 		throws ResourceNotFoundException, ConflictException {
 		JournalEntry product = new JournalEntry();
 		product.setJournalEntryDate(dto.getJournalEntryDate());
 		product.setDescription(dto.getDescription());
 		product.setId(dto.getJournalEntryId());
-		if (dto.getPersonId() != null) {
-			Person person = personRepo.findById(dto.getPersonId())
-		    		.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + dto.getPersonId())); 
-			product.setPerson(person);
-		}
+		Person person = personRepo.findById(userPrincipal.getId())
+	    		.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + dto.getPersonId())); 
+		product.setPerson(person);
 		if (dto.getOrganizationId() != null) {
 			Organization organization = organizationRepo.findById(dto.getOrganizationId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId())); 
