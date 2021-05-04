@@ -4,12 +4,16 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -17,7 +21,42 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import com.easyledger.api.dto.JournalEntryDTO;
+import com.easyledger.api.dto.JournalEntryLogDTO;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+
+@SqlResultSetMapping( //maps native SQL query to EntryViewModel class
+		name = "journalEntryLogDTOMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = JournalEntryLogDTO.class,
+						columns = {
+								@ColumnResult(name = "id"),
+								@ColumnResult(name = "datetimeOfEdit"),
+								@ColumnResult(name = "personId"),
+								@ColumnResult(name = "personFirstName"),
+								@ColumnResult(name = "personLastName"),
+								@ColumnResult(name = "journalEntryId"),
+								@ColumnResult(name = "snapshot")
+
+						}
+				)
+		}
+)	
+@NamedNativeQuery( //retrieves all undeleted entries for the given organization and maps them into EntryViewModels
+		name = "JournalEntryLog.getAllJournalEntryLogsForJournalEntryId",
+		query = "SELECT "
+				+ "    journal_entry_log.id AS id, journal_entry_log.datetime_of_edit AS datetimeOfEdit, "
+				+ "    journal_entry_log.person_id AS personId, person.first_name AS personFirstName, person.last_name AS personLastName, "
+				+ "    journal_entry_log.journal_entry_id AS journalEntryId, journal_entry_log.snapshot AS shapshot "
+				+ "FROM "
+				+ "    journal_entry_log, person "
+				+ "WHERE "
+				+ "    journal_entry_log.person_id = person.id "
+				+ "ORDER BY journal_entry_log.datetime_of_edit",
+		resultSetMapping = "journalEntryLogDTOMapping"
+)
+
+
 
 @TypeDefs({
 	@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
