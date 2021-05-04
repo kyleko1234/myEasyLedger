@@ -9,10 +9,23 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "JournalEntry/Contents/Update a JournalEntry.md",
+            "file": "Easy Ledger.md",
             "mode": "source"
           }
-        }
+        },
+        "group": "ac08efec71731141"
+      },
+      {
+        "id": "e48223cc93a66da0",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Easy Ledger.md",
+            "mode": "preview"
+          }
+        },
+        "group": "ac08efec71731141"
       }
     ],
     "direction": "vertical"
@@ -68,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JournalEntry/Contents/Update a JournalEntry.md",
+                "file": "Easy Ledger.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,15 +101,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Easy Ledger.md",
+    "JournalEntry/Contents/Access Edit History of a Journal Entry.md",
+    "JournalEntry/JournalEntry.md",
     "JournalEntry/Contents/Update a JournalEntry.md",
+    "JournalEntry/Contents/Access Edit History of Journal Entries for an Organization.md",
+    "JournalEntry/Contents/Untitled.md",
     "JournalEntry/Contents/Delete a JournalEntry.md",
     "JournalEntry/Contents/Create a JournalEntry.md",
-    "JournalEntry/JournalEntry.md",
     "Person/Contents/The Person Object.md",
-    "Person/Person.md",
-    "Account/Contents/Create an Account.md",
-    "Easy Ledger.md",
-    "Account/Contents/The Account Object.md",
-    "Account/Account.md"
+    "Person/Person.md"
   ]
 }

@@ -9,3 +9,5 @@ ___
 - [[Delete a JournalEntry]]
 - [[List All JournalEntries]]
 - [[List All JournalEntries Belonging to an Organization as JournalEntryViewModels]]
+- [[Access Edit History of a Journal Entry]]
+- [[Access Edit History of Journal Entries for an Organization]]

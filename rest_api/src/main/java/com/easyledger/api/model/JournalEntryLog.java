@@ -43,18 +43,32 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 				)
 		}
 )	
-@NamedNativeQuery( //retrieves all undeleted entries for the given organization and maps them into EntryViewModels
+@NamedNativeQuery(
 		name = "JournalEntryLog.getAllJournalEntryLogsForJournalEntryId",
 		query = "SELECT "
 				+ "    journal_entry_log.id AS id, journal_entry_log.datetime_of_edit AS datetimeOfEdit, journal_entry_log.organization_id AS organizationId, "
 				+ "    journal_entry_log.person_id AS personId, person.first_name AS personFirstName, person.last_name AS personLastName, "
-				+ "    journal_entry_log.journal_entry_id AS journalEntryId, journal_entry_log.snapshot AS shapshot "
+				+ "    journal_entry_log.journal_entry_id AS journalEntryId, CAST(journal_entry_log.snapshot AS text) AS snapshot "
 				+ "FROM "
 				+ "    journal_entry_log, person "
 				+ "WHERE "
 				+ "    journal_entry_log.journal_entry_id = ? AND "
 				+ "    journal_entry_log.person_id = person.id "
-				+ "ORDER BY journal_entry_log.datetime_of_edit",
+				+ "ORDER BY journal_entry_log.datetime_of_edit DESC",
+		resultSetMapping = "journalEntryLogDTOMapping"
+)
+@NamedNativeQuery(
+		name = "JournalEntryLog.getAllJournalEntryLogsForOrganizationId",
+		query = "SELECT "
+				+ "    journal_entry_log.id AS id, journal_entry_log.datetime_of_edit AS datetimeOfEdit, journal_entry_log.organization_id AS organizationId, "
+				+ "    journal_entry_log.person_id AS personId, person.first_name AS personFirstName, person.last_name AS personLastName, "
+				+ "    journal_entry_log.journal_entry_id AS journalEntryId, CAST(journal_entry_log.snapshot AS text) AS snapshot "
+				+ "FROM "
+				+ "    journal_entry_log, person "
+				+ "WHERE "
+				+ "    journal_entry_log.organization_id = ? AND "
+				+ "    journal_entry_log.person_id = person.id "
+				+ "ORDER BY journal_entry_log.datetime_of_edit DESC",
 		resultSetMapping = "journalEntryLogDTOMapping"
 )
 

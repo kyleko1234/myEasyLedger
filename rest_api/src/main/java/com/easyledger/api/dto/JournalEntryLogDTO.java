@@ -1,20 +1,21 @@
 package com.easyledger.api.dto;
 
 import java.math.BigInteger;
-import java.time.OffsetDateTime;
+import java.util.Date;
+
 
 public class JournalEntryLogDTO {
 	private Long id;
-	private OffsetDateTime datetimeOfEdit;
+	private Date datetimeOfEdit;
 	private Long organizationId;
 	private Long personId;
 	private String personFirstName;
 	private String personLastName;
 	private Long journalEntryId;
-	private JournalEntryDTO snapshot;
+	private String snapshot;
 	
-	public JournalEntryLogDTO(BigInteger id, OffsetDateTime datetimeOfEdit, BigInteger organizationId, BigInteger personId, String personFirstName,
-			String personLastName, BigInteger journalEntryId, JournalEntryDTO snapshot) {
+	public JournalEntryLogDTO(BigInteger id, Date datetimeOfEdit, BigInteger organizationId, BigInteger personId, String personFirstName,
+			String personLastName, BigInteger journalEntryId, String snapshot) {
 		super();
 		this.id = id.longValueExact();
 		this.datetimeOfEdit = datetimeOfEdit;
@@ -38,12 +39,20 @@ public class JournalEntryLogDTO {
 		this.id = id;
 	}
 
-	public OffsetDateTime getDatetimeOfEdit() {
+	public Date getDatetimeOfEdit() {
 		return datetimeOfEdit;
 	}
 
-	public void setDatetimeOfEdit(OffsetDateTime datetimeOfEdit) {
+	public void setDatetimeOfEdit(Date datetimeOfEdit) {
 		this.datetimeOfEdit = datetimeOfEdit;
+	}
+
+	public Long getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
 	}
 
 	public Long getPersonId() {
@@ -78,19 +87,20 @@ public class JournalEntryLogDTO {
 		this.journalEntryId = journalEntryId;
 	}
 
-	public JournalEntryDTO getSnapshot() {
+	public String getSnapshot() {
 		return snapshot;
 	}
 
-	public void setSnapshot(JournalEntryDTO snapshot) {
+	public void setSnapshot(String snapshot) {
 		this.snapshot = snapshot;
 	}
 
 	@Override
 	public String toString() {
-		return "JournalEntryLogDTO [id=" + id + ", datetimeOfEdit=" + datetimeOfEdit + ", personId=" + personId
-				+ ", personFirstName=" + personFirstName + ", personLastName=" + personLastName + ", journalEntryId="
-				+ journalEntryId + ", snapshot=" + snapshot + "]";
+		return "JournalEntryLogDTO [id=" + id + ", datetimeOfEdit=" + datetimeOfEdit + ", organizationId="
+				+ organizationId + ", personId=" + personId + ", personFirstName=" + personFirstName
+				+ ", personLastName=" + personLastName + ", journalEntryId=" + journalEntryId + ", snapshot=" + snapshot
+				+ "]";
 	}
 	
 	

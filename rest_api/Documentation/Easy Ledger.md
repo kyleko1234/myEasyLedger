@@ -33,6 +33,8 @@ Prefix all endpoints with `http://{host}/v0.4/`
 - [[Update a JournalEntry|PUT /journalEntry/{id}]]**
 - [[Create a JournalEntry|POST /journalEntry]]**
 - [[Delete a JournalEntry| DELETE /journalEntry/{id}]]**
+- [[Access Edit History of a Journal Entry|GET /journalEntry/{id}/log]]
+- [[Access Edit History of Journal Entries for an Organization|GET /journalEntry/organization/{organizationId}/log]]
 <br/><br/>
 - [[List All LineItems| GET /lineItem]]
 - [[Retrieve a LineItem|GET /lineItem/{id}]]

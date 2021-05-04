@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.dto.JournalEntryDTO;
+import com.easyledger.api.dto.JournalEntryLogDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
@@ -99,12 +100,20 @@ public class JournalEntryController {
     }
     
     @GetMapping("/journalEntry/{id}/log")
-    public List<JournalEntryLog> getAllJournalEntryLogsForJournalEntryId(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
+    public List<JournalEntryLogDTO> getAllJournalEntryLogsForJournalEntryId(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
     	throws UnauthorizedException, ResourceNotFoundException {
     	JournalEntry entry = journalEntryRepo.findById(journalEntryId)
         		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
     	authorizationService.authorizeAdminPermissionsByOrganizationId(authentication, entry.getOrganization().getId());
-    	List<JournalEntryLog> logs = journalEntryLogRepo.getAllJournalEntryLogsForJournalEntryId(journalEntryId);
+    	List<JournalEntryLogDTO> logs = journalEntryLogRepo.getAllJournalEntryLogsForJournalEntryId(journalEntryId);
+    	return logs;
+    }
+    
+    @GetMapping("/journalEntry/organization/{id}/log") //TODO: paginate
+    public List<JournalEntryLogDTO> getAllJournalEntryLogsForOrganizationId(@PathVariable(value = "id") Long organizationId, Authentication authentication)
+    	throws UnauthorizedException, ResourceNotFoundException {
+    	authorizationService.authorizeAdminPermissionsByOrganizationId(authentication, organizationId);
+    	List<JournalEntryLogDTO> logs = journalEntryLogRepo.getAllJournalEntryLogsForOrganizationId(organizationId);
     	return logs;
     }
         
