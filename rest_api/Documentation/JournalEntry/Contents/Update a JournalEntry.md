@@ -15,9 +15,6 @@ User-supplied date of this entry.
 - **description (`String` 255)**<br/>
 User-supplied description of this entry, up to 255 characters.
 
-- **personId (`Long`)**<br/>
-Id of the person who last modified this entry.
-
 - **organizationId (`Long`)**<br/>
 Id of the organization that this entry belongs to.
 
@@ -43,7 +40,6 @@ Body:
     "journalEntryId": 11,
     "journalEntryDate": "2020-11-01",
     "description": "Issued a whole bunch of shares of common stock at $20 per share",
-    "personId": 1,
     "organizationId": 1,
     "lineItems": [
         {

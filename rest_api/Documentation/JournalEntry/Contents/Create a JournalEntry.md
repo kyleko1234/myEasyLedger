@@ -9,9 +9,6 @@ ___
 - **journalEntryDate (`LocalDate`)**<br/>
 User-supplied date of this entry.
 
-- **personId (`Long`)**<br/>
-Id of the person who last modified this entry.
-
 - **description (`String` 255)**<br/>
 A description for this entry, up to 255 characters.
 
@@ -43,7 +40,6 @@ Body:
 {
     "journalEntryDate": "2020-11-01",
     "description": "Issued 20,000 shares of common stock at $20 per share",
-    "personId": 1,
     "organizationId": 1,
     "lineItems": [
         {
