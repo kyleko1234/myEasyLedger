@@ -6,17 +6,19 @@ import java.time.OffsetDateTime;
 public class JournalEntryLogDTO {
 	private Long id;
 	private OffsetDateTime datetimeOfEdit;
+	private Long organizationId;
 	private Long personId;
 	private String personFirstName;
 	private String personLastName;
 	private Long journalEntryId;
 	private JournalEntryDTO snapshot;
 	
-	public JournalEntryLogDTO(BigInteger id, OffsetDateTime datetimeOfEdit, BigInteger personId, String personFirstName,
+	public JournalEntryLogDTO(BigInteger id, OffsetDateTime datetimeOfEdit, BigInteger organizationId, BigInteger personId, String personFirstName,
 			String personLastName, BigInteger journalEntryId, JournalEntryDTO snapshot) {
 		super();
 		this.id = id.longValueExact();
 		this.datetimeOfEdit = datetimeOfEdit;
+		this.organizationId = organizationId.longValueExact();
 		this.personId = personId.longValueExact();
 		this.personFirstName = personFirstName;
 		this.personLastName = personLastName;

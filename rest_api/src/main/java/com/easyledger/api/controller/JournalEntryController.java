@@ -53,18 +53,16 @@ public class JournalEntryController {
 	private JournalEntryRepository journalEntryRepo;
 	private JournalEntryService journalEntryService;
 	private LineItemRepository lineItemRepo;
-	private AccountRepository accountRepo;
 	private AuthorizationService authorizationService;
 	private JournalEntryLogRepository journalEntryLogRepo;
 
 	public JournalEntryController(JournalEntryRepository journalEntryRepo, JournalEntryService journalEntryService, 
-			LineItemRepository lineItemRepo, AccountRepository accountRepo, AuthorizationService authorizationService, 
+			LineItemRepository lineItemRepo, AuthorizationService authorizationService, 
 			JournalEntryLogRepository journalEntryLogRepo) {
 		super();
 		this.journalEntryRepo = journalEntryRepo;
 		this.journalEntryService = journalEntryService;
 		this.lineItemRepo = lineItemRepo;
-		this.accountRepo = accountRepo;
 		this.authorizationService = authorizationService;
 		this.journalEntryLogRepo = journalEntryLogRepo;
 	}
@@ -98,6 +96,16 @@ public class JournalEntryController {
     	JournalEntryDTO journalEntryDTO = new JournalEntryDTO(journalEntry);
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, journalEntryDTO.getOrganizationId());
         return ResponseEntity.ok().body(journalEntryDTO);
+    }
+    
+    @GetMapping("/journalEntry/{id}/log")
+    public List<JournalEntryLog> getAllJournalEntryLogsForJournalEntryId(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
+    	throws UnauthorizedException, ResourceNotFoundException {
+    	JournalEntry entry = journalEntryRepo.findById(journalEntryId)
+        		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
+    	authorizationService.authorizeAdminPermissionsByOrganizationId(authentication, entry.getOrganization().getId());
+    	List<JournalEntryLog> logs = journalEntryLogRepo.getAllJournalEntryLogsForJournalEntryId(journalEntryId);
+    	return logs;
     }
         
     @DeleteMapping("/journalEntry/{id}")
@@ -173,7 +181,7 @@ public class JournalEntryController {
     	JournalEntryDTO newEntryDTO = new JournalEntryDTO(updatedJournalEntry);
     	
     	//Log the update of this entry
-    	journalEntryLogRepo.save(new JournalEntryLog(updatedJournalEntry, newEntryDTO, updatedJournalEntry.getPerson()));
+    	journalEntryLogRepo.save(new JournalEntryLog(updatedJournalEntry, newEntryDTO));
 
     	return ResponseEntity.ok().body(newEntryDTO);
 
@@ -211,7 +219,7 @@ public class JournalEntryController {
     	JournalEntryDTO newEntryDTO = new JournalEntryDTO(updatedJournalEntry);
     	
     	//Log the creation of this entry
-    	journalEntryLogRepo.save(new JournalEntryLog(updatedJournalEntry, newEntryDTO, updatedJournalEntry.getPerson()));
+    	journalEntryLogRepo.save(new JournalEntryLog(updatedJournalEntry, newEntryDTO));
     	return newEntryDTO;
 
     }

@@ -32,6 +32,7 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 						columns = {
 								@ColumnResult(name = "id"),
 								@ColumnResult(name = "datetimeOfEdit"),
+								@ColumnResult(name = "organizationId"),
 								@ColumnResult(name = "personId"),
 								@ColumnResult(name = "personFirstName"),
 								@ColumnResult(name = "personLastName"),
@@ -45,12 +46,13 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 @NamedNativeQuery( //retrieves all undeleted entries for the given organization and maps them into EntryViewModels
 		name = "JournalEntryLog.getAllJournalEntryLogsForJournalEntryId",
 		query = "SELECT "
-				+ "    journal_entry_log.id AS id, journal_entry_log.datetime_of_edit AS datetimeOfEdit, "
+				+ "    journal_entry_log.id AS id, journal_entry_log.datetime_of_edit AS datetimeOfEdit, journal_entry_log.organization_id AS organizationId, "
 				+ "    journal_entry_log.person_id AS personId, person.first_name AS personFirstName, person.last_name AS personLastName, "
 				+ "    journal_entry_log.journal_entry_id AS journalEntryId, journal_entry_log.snapshot AS shapshot "
 				+ "FROM "
 				+ "    journal_entry_log, person "
 				+ "WHERE "
+				+ "    journal_entry_log.journal_entry_id = ? AND "
 				+ "    journal_entry_log.person_id = person.id "
 				+ "ORDER BY journal_entry_log.datetime_of_edit",
 		resultSetMapping = "journalEntryLogDTOMapping"
@@ -78,7 +80,11 @@ public class JournalEntryLog {
 	@ManyToOne
 	@JoinColumn(name = "person_id")
 	private Person person;
-
+	
+	@ManyToOne
+	@JoinColumn(name = "organization_id")
+	private Organization organization;
+	
 	@ManyToOne
 	@JoinColumn(name = "journal_entry_id")
 	private JournalEntry journalEntry;
@@ -86,12 +92,14 @@ public class JournalEntryLog {
 	public JournalEntryLog(JournalEntry journalEntry) {
 		this.journalEntry = journalEntry;
 		this.person = journalEntry.getPerson();
+		this.organization = journalEntry.getOrganization();
 		this.snapshot = new JournalEntryDTO(journalEntry);
 	}
 	
-	public JournalEntryLog(JournalEntry journalEntry, JournalEntryDTO dto, Person person) {
+	public JournalEntryLog(JournalEntry journalEntry, JournalEntryDTO dto) {
 		this.journalEntry = journalEntry;
-		this.person = person;
+		this.person = journalEntry.getPerson();
+		this.organization = journalEntry.getOrganization();
 		this.snapshot = dto;
 	}
 	
@@ -130,6 +138,14 @@ public class JournalEntryLog {
 		this.person = person;
 	}
 
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
 	public JournalEntry getJournalEntry() {
 		return journalEntry;
 	}
@@ -141,7 +157,7 @@ public class JournalEntryLog {
 	@Override
 	public String toString() {
 		return "JournalEntryLog [id=" + id + ", datetimeOfEdit=" + datetimeOfEdit + ", snapshot=" + snapshot
-				+ ", person=" + person + ", journalEntry=" + journalEntry + "]";
+				+ ", person=" + person + ", organization=" + organization + ", journalEntry=" + journalEntry + "]";
 	}
 
 }

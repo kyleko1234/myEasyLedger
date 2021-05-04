@@ -1,6 +1,8 @@
 package com.easyledger.api.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -41,6 +43,9 @@ public class Organization {
 	@JsonIgnore
 	private Set<Account> accounts = new HashSet<Account>();
 	
+	@OneToMany(mappedBy = "organization")
+	@JsonIgnore
+	private List<JournalEntryLog> journalEntryLogs = new ArrayList<JournalEntryLog>();
 	
 	public Organization(String name, String currency, boolean isEnterprise) {
 		this.name = name;
@@ -110,11 +115,19 @@ public class Organization {
 		this.accounts = accounts;
 	}
 
+	public List<JournalEntryLog> getJournalEntryLogs() {
+		return journalEntryLogs;
+	}
+
+	public void setJournalEntryLogs(List<JournalEntryLog> journalEntryLogs) {
+		this.journalEntryLogs = journalEntryLogs;
+	}
+
 	@Override
 	public String toString() {
 		return "Organization [id=" + id + ", name=" + name + ", currency=" + currency + ", isEnterprise=" + isEnterprise
 				+ ", permissions=" + permissions + ", journalEntries=" + journalEntries + ", accounts=" + accounts
-				+ "]";
+				+ ", journalEntryLogs=" + journalEntryLogs + "]";
 	}
 	
 
