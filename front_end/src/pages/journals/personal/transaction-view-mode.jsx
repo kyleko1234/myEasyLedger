@@ -3,7 +3,7 @@ import { useTable } from 'react-table';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js'
 
-function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate, fromAccountName }) {
+function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, fromAccountName }) {
     const appContext = React.useContext(PageSettings);
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
@@ -116,4 +116,4 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
     )
 }
 
-export default JournalEntryViewMode
+export default TransactionViewMode;

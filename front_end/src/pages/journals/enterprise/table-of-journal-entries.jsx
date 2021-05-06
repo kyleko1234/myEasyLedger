@@ -9,6 +9,7 @@ import JournalEntryEditMode from './journal-entry-edit-mode';
 import { PageSettings } from '../../../config/page-settings.js';
 import {tableOfJournalEntriesText} from '../../../utils/i18n/table-of-journal-entries-text.js';
 import AccountDetailsEditor from '../../chart-of-accounts/components/account-details-editor';
+import JournalEntryEditHistory from './journal-entry-edit-history.js';
 
 //Generates a table with react-table 7 using pagination
 
@@ -75,6 +76,8 @@ function TableOfJournalEntries({
   const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
   const [accountOptions, setAccountOptions] = React.useState([]);
   const [alertMessages, setAlertMessages] = React.useState([]);
+  const [journalEntryHistoryModal, setJournalEntryHistoryModal] = React.useState(false);
+  const toggleJournalEntryHistoryModal = () => setJournalEntryHistoryModal(!journalEntryHistoryModal);
 
   const [accountDetailsEditorModal, setAccountDetailsEditorModal] = React.useState(false);
   const toggleAccountDetailsEditorModal = () => setAccountDetailsEditorModal(!accountDetailsEditorModal);
@@ -434,9 +437,12 @@ function TableOfJournalEntries({
                   }}>
                   {tableOfJournalEntriesText[appContext.locale]["Cancel"]}</button>
               </div>
-            </> :
+            </> 
+          :
             <>
-              <div>{/*empty div to push the other two buttons to the right*/}</div>
+              <div>
+                <button className="btn btn-white width-175" onClick={toggleJournalEntryHistoryModal}>View edit history</button>
+              </div>
               <div>
                 <button className="btn btn-info width-10ch" onClick={() => {handleCopyJournalEntryButton()}}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
                 <button className="btn btn-primary m-l-10 width-10ch" onClick={() => {toggleEditMode(); refreshAccounts()}}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
@@ -447,6 +453,7 @@ function TableOfJournalEntries({
         </ModalFooter>
       </Modal>
       {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} /> : null}
+      {journalEntryId? <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} />: null}
     </>
   )
 }

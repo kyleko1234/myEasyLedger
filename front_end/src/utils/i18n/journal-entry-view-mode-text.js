@@ -7,12 +7,15 @@ export const journalEntryViewModeText = {
         "Date": "Date",
         "Description": "Description",
         "Total": "Total",
-
         "Transaction Type": "Transaction Type",
         "Category or Account": "Category or Account",
         "Amount": "Amount",
-        "From Account": "From Account"
-
+        "From Account": "From Account",
+    
+        "Close": "Close",
+        "TIMESTAMP OF EDIT:": "TIMESTAMP OF EDIT:",
+        "AUTHOR OF EDIT:": "AUTHOR OF EDIT:",
+        
         
     },
     "zh-TW": {
@@ -27,7 +30,9 @@ export const journalEntryViewModeText = {
         "Transaction Type": "交易類別",
         "Category or Account": "類別或帳戶",
         "Amount": "金額",
-        "From Account": "從哪個帳戶"
+        "From Account": "從哪個帳戶",
+
+        "Close": "關閉",
 
 
     }
