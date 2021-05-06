@@ -167,7 +167,7 @@ function JournalEntryEditMode({
                     </Alert>
                 </div> : null
             }
-            <div className="row m-b-10">
+            <div className="row m-b-10 align-items-center">
                 <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Date"]}</strong></div> 
                 <div className="col-xl-2">
                     <input 
@@ -177,7 +177,7 @@ function JournalEntryEditMode({
                         onChange={event => setJournalEntryDate(event.target.value)}/>
                     </div>
             </div>
-            <div className="row m-b-10">
+            <div className="row m-b-10 align-items-center">
                 <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Description"]}</strong></div> 
                 <div className="col-xl-8">
                     <input 
