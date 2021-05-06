@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "JournalEntry/Contents/Access Edit History of a Journal Entry.md",
             "mode": "source"
           }
         },
@@ -21,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "JournalEntry/Contents/Access Edit History of a Journal Entry.md",
             "mode": "preview"
           }
         },
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md",
+                "file": "JournalEntry/Contents/Access Edit History of a Journal Entry.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,8 +101,8 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "Easy Ledger.md",
     "JournalEntry/Contents/Access Edit History of a Journal Entry.md",
+    "Easy Ledger.md",
     "JournalEntry/JournalEntry.md",
     "JournalEntry/Contents/Update a JournalEntry.md",
     "JournalEntry/Contents/Access Edit History of Journal Entries for an Organization.md",

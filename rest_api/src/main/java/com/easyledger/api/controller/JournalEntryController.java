@@ -104,7 +104,7 @@ public class JournalEntryController {
     	throws UnauthorizedException, ResourceNotFoundException {
     	JournalEntry entry = journalEntryRepo.findById(journalEntryId)
         		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
-    	authorizationService.authorizeAdminPermissionsByOrganizationId(authentication, entry.getOrganization().getId());
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, entry.getOrganization().getId());
     	List<JournalEntryLogDTO> logs = journalEntryLogRepo.getAllJournalEntryLogsForJournalEntryId(journalEntryId);
     	return logs;
     }

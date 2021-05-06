@@ -1,7 +1,7 @@
 ### Access Edit History of a Journal Entry
 Endpoint: `GET /journalEntry/{id}/log`
 
-Authorization: Requester must be an admin of the organization that the entry belongs to.
+Authorization: Requester must have view privileges for the organization that this entry belongs to. 
 
 Returns a list of JournalEntryLog objects, representing snapshots of a journal entry at each point that it is created, updated, or deleted, ordered by most recent.
 
