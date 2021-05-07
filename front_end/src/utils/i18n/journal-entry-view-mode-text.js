@@ -38,6 +38,5 @@ export const journalEntryViewModeText = {
         "TIMESTAMP OF EDIT:": "TRANSLATION",
         "AUTHOR OF EDIT:": "TRANSLATION",
 
-
     }
 }

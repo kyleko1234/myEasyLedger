@@ -26,7 +26,7 @@ export const tableOfJournalEntriesText = {
         "Add a new transaction": "Add a new transaction",
         "Transaction must have at least one item.": "Transaction must have at least one item.",
         "Entry must have line-items.": "Entry must have line-items.",
-        
+
         "View edit history": "View edit history"
     },
     "zh-TW": {
@@ -55,6 +55,9 @@ export const tableOfJournalEntriesText = {
         "Please specify a transaction type for each item.": "請為每個單行項目指定其交易類別。",
         "Add a new transaction": "記錄一個新的交易",
         "Transaction must have at least one item.": "一筆交易記錄至少要有一個單行項目",
-        "Entry must have line-items.": "一筆分錄至少要有一個單行項目"
+        "Entry must have line-items.": "一筆分錄至少要有一個單行項目",
+
+        "View edit history": "TRANSLATION"
+
     }
 }
