@@ -25,7 +25,9 @@ export const tableOfJournalEntriesText = {
         "Please specify a transaction type for each item.": "Please specify a transaction type for each item.",
         "Add a new transaction": "Add a new transaction",
         "Transaction must have at least one item.": "Transaction must have at least one item.",
-        "Entry must have line-items.": "Entry must have line-items."
+        "Entry must have line-items.": "Entry must have line-items.",
+        
+        "View edit history": "View edit history"
     },
     "zh-TW": {
         "Please choose a date for this entry.": "請為分錄選一個日期。",

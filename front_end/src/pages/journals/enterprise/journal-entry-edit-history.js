@@ -21,7 +21,6 @@ function JournalEntryEditHistory(props) {
                 response.data.forEach(journalEntryLog => {
                     journalEntryLog.snapshot = JSON.parse(journalEntryLog.snapshot);
                 });
-                console.log(response.data);
                 setJournalEntryLogs(response.data);
                 setLoading(false);
             }).catch(error => {
@@ -43,7 +42,7 @@ function JournalEntryEditHistory(props) {
             centered={true}
         >
             <ModalHeader style={{backgroundColor: "#e4e4e4"}}>
-                Edit History
+                {journalEntryViewModeText[appContext.locale]["Edit History"]}
             </ModalHeader>
             <ModalBody className="bg-light">
                 {loading

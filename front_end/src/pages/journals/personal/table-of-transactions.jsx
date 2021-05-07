@@ -9,6 +9,7 @@ import axios from 'axios';
 import TransactionViewMode from './transaction-view-mode.jsx';
 import TransactionEditMode from './transaction-edit-mode.jsx';
 import AccountDetailsEditor from '../../chart-of-accounts/components/account-details-editor.js';
+import TransactionEditHistory from './transaction-edit-history.js';
 
 
 // Let's add a fetchData method to our Table component that will be used to fetch
@@ -78,6 +79,9 @@ function TableOfTransactions({
     const [lineItemData, setLineItemData] = React.useState([]); //Data to be passed in to lineItemTable
     const [accountOptions, setAccountOptions] = React.useState([]);
     const [alertMessages, setAlertMessages] = React.useState([]);
+
+    const [transactionEditHistoryModal, setTransactionEditHistoryModal] = React.useState(false);
+    const toggleTransactionEditHistoryModal = () => setTransactionEditHistoryModal(!transactionEditHistoryModal);
 
     const [accountDetailsEditorModal, setAccountDetailsEditorModal] = React.useState(false);
     const toggleAccountDetailsEditorModal = () => {
@@ -289,9 +293,7 @@ function TableOfTransactions({
             setFromAccountId(firstLineItem.accountId);
             setFromAccountName(firstLineItem.accountName);
             //format line items for display
-            console.log(transactionTypeOptions);
             let formattedLineItems = lineItems.map(lineItem => {
-                console.log(lineItem);
                 let transactionType = transactionTypeOptions.find(transactionType => transactionType.accountTypeIds.includes(lineItem.accountTypeId));
                 return ({
                     lineItemId: lineItem.lineItemId,
@@ -458,7 +460,9 @@ function TableOfTransactions({
                             </div>
                         </> :
                         <>
-                            <div>{/*empty div to push the other two buttons to the right*/}</div>
+                            <div>
+                                <button className="btn btn-white width-175" onClick={toggleTransactionEditHistoryModal}>{tableOfJournalEntriesText[appContext.locale]["View edit history"]}</button>
+                            </div>
                             <div>
                                 <button className="btn btn-info width-10ch" onClick={handleCopyTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
                                 <button className="btn btn-primary m-l-10 width-10ch" onClick={handleEditTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
@@ -468,6 +472,7 @@ function TableOfTransactions({
                     }
                 </ModalFooter>
             </Modal>
+            {journalEntryId ? <TransactionEditHistory journalEntryId={journalEntryId} isOpen={transactionEditHistoryModal} toggle={toggleTransactionEditHistoryModal}/> : null}
             {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} category={category}/> : null}
         </>
     )

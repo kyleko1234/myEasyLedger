@@ -441,7 +441,7 @@ function TableOfJournalEntries({
           :
             <>
               <div>
-                <button className="btn btn-white width-175" onClick={toggleJournalEntryHistoryModal}>View edit history</button>
+                <button className="btn btn-white width-175" onClick={toggleJournalEntryHistoryModal}>{tableOfJournalEntriesText[appContext.locale]["View edit history"]}</button>
               </div>
               <div>
                 <button className="btn btn-info width-10ch" onClick={() => {handleCopyJournalEntryButton()}}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
