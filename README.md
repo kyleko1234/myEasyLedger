@@ -80,6 +80,14 @@ Alternatively, install Spring Tool Suite 4 on an existing installation of Eclips
 4. Click Finish
 5. STS may take a few moments to update dependencies for the project build.
 
+#### Setting up application properties
+You will need to configure the application properties of the backend before launching the app. The application properties file is found in the following directory: `Easy_Ledger/rest_api/src/main/resources/application.properties`.
+- `spring.datasource.url` should be set to `jdbc:postgresql://[YOUR DATABASE URL HERE]`. If you are running PostgreSQL on a local machine and have set it up according to the previous instructions, this should be set to `jdbc:postgresql://localhost:5432/easyledger`.
+- `spring.datasource.password` should be set to the password that you set up for the the 'easyledger' database.
+- `app.jwtSecret` should be set to your API signing key.
+- `spring.mail.host` and `spring.mail.port` should be the URL and port of your smtp service. The committed application.properties file uses Gmail.
+- `spring.mail.username` and `spring.mail.password` are the username and password for your smtp service. The app will work without spring.mail properties set up, but you will be unable to use endpoints that require mail such as registration, forgot password, and verification.
+
 #### Run the project from STS4:
 1. Make sure to click EasyLedgerApplication.java from the Package Explorer sidebar to select it. If this file is not selected, occasionally STS will fail to run the project.
 2. Hit the play button in the top toolbar.
