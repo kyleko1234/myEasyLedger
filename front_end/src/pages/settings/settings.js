@@ -35,7 +35,7 @@ function Settings() {
                     <h4 className="widget-header-title">{settingsText[appContext.locale]["Personal Settings"]}</h4>
                 </div>
                 <Link replace to="#" className="widget-list-item bg-white" onClick={toggleLanguageSettingsModal}>
-                    <div className="widget-list-content px-3">
+                    <div className="widget-list-content p-l-30">
                         <div className="widget-list-title">{settingsText[appContext.locale]["Language Settings"]}</div>
                     </div>
                     <div className="m-r-10 widget-list-action text-right">
@@ -43,7 +43,7 @@ function Settings() {
                     </div>
                 </Link>
                 <Link replace to="#" className="widget-list-item bg-white" onClick={toggleChangePasswordModal}>
-                    <div className="widget-list-content px-3">
+                    <div className="widget-list-content p-l-30">
                         <div className="widget-list-title">{settingsText[appContext.locale]["Change Password"]}</div>
                     </div>
                     <div className="m-r-10 widget-list-action text-right">
@@ -59,7 +59,7 @@ function Settings() {
                     {appContext.permissions.map(permission => {
                         return (
                             <Link key={permission.id} to={`/manage-easyledger/${permission.organization.id}`} className="widget-list-item bg-white">
-                                <div className="widget-list-content px-3">
+                                <div className="widget-list-content p-l-30">
                                     <div className="widget-list-title">{permission.organization.name}</div>
                                 </div>
                                 <div className="m-r-10 widget-list-action text-right">
