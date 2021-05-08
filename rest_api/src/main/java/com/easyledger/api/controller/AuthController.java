@@ -1,7 +1,5 @@
 package com.easyledger.api.controller;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +66,7 @@ public class AuthController {
     EmailServiceImpl emailService;
     
     @Autowired
-    VerificationService verificationService;
+    VerificationService verificationService;	
     
     
     @PostMapping("/auth/signin")

@@ -88,6 +88,20 @@ You will need to configure the application properties of the backend before laun
 - `spring.mail.host` and `spring.mail.port` should be the URL and port of your smtp service. The committed application.properties file uses Gmail.
 - `spring.mail.username` and `spring.mail.password` are the username and password for your smtp service. The app will work without spring.mail properties set up, but you will be unable to use endpoints that require mail such as registration, forgot password, and verification.
 
+#### Setting up application properties using command-line arguments
+Instead of directly editing application.properties, you can use command line arguments to set application properties.  This is useful for sensitive information you would prefer not to hardcode. Command-line arguments override the properties hardcoded into application.properties.
+##### Using Eclipse/STS4
+1. Go to Run > Run Configurations... and click on the 'Arguments' tab.
+2. In the 'Program arguments' textarea, enter your properties in the format `--{PROPERTYNAME}={PROPERTYVALUE}`, separated by spaces. For example: 
+```
+--spring.mail.username=example@example.com --spring.mail.password=VerySecurePassword
+```
+##### Using the command line
+If you use Maven to run your program, prefix your arguments with `-Dspring-boot.run.arguments=` and separate your arguments with commas instead of spaces. For example: 
+```
+mvn spring-boot:run -Dspring-boot.run.arguments=--spring.mail.username=example@example.com,spring.mail.password=VerySecurePassword
+```
+
 #### Run the project from STS4:
 1. Make sure to click EasyLedgerApplication.java from the Package Explorer sidebar to select it. If this file is not selected, occasionally STS will fail to run the project.
 2. Hit the play button in the top toolbar.
