@@ -60,7 +60,7 @@ function NetWorthRender() {
                 <div className="align-self-center">{netWorthReportText[appContext.locale]["Net Worth Report"]}</div>
                 <div className="d-flex">
                     <label className="m-b-0 px-2 align-self-center">{netWorthReportText[appContext.locale]["As of:"]}</label>
-                    <input type="date" className="form-control form-control-sm width-125 align-self-center" value={endDate} onChange={handleChangeDate}/>
+                    <input type="date" className="form-control form-control-sm width-150 align-self-center" value={endDate} onChange={handleChangeDate}/>
                 </div>
             </WidgetHeader>
             {loading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>:

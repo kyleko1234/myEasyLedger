@@ -94,7 +94,7 @@ function BalanceSheetRender() {
                 <h4 className="widget-header-title width-half">{balanceSheetRenderText[appContext.locale]["Balance Sheet"]}</h4>
                 <span className="widget-header-title d-flex flex-row justify-content-end">
                          <label className="col-form-label px-2 width-125 text-right">{balanceSheetRenderText[appContext.locale]["As of:"]} </label>
-                         <input type="date" className="form-control form-control-sm align-self-center width-125" value={endDate} onChange={event => handleChangeDate(event.target.value)}/>
+                         <input type="date" className="form-control form-control-sm align-self-center width-150" value={endDate} onChange={event => handleChangeDate(event.target.value)}/>
                 </span>
             </div>
             <div className="px-2">

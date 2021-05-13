@@ -157,9 +157,9 @@ function IncomeStatementRender() {
                         <div className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Income Statement"]}</div>    
                         <div className="form-group">
                             <label className="ml-sm-5 px-1">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
-                            <input type="date" className="form-control form-control-sm width-125" value={startDate} onChange={event => handleChangeStartDate(event.target.value)} />
+                            <input type="date" className="form-control form-control-sm width-150" value={startDate} onChange={event => handleChangeStartDate(event.target.value)} />
                             <label className="ml-sm-5 px-1">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
-                            <input type="date" className="form-control form-control-sm width-125" value={endDate} onChange={event => handleChangeEndDate(event.target.value)} />
+                            <input type="date" className="form-control form-control-sm width-150" value={endDate} onChange={event => handleChangeEndDate(event.target.value)} />
                         </div> 
                     </div>
                 </div>

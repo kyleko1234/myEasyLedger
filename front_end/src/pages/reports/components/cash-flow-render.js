@@ -75,9 +75,9 @@ function CashFlowRender() {
                 <div className="align-self-center">{cashFlowReportText[appContext.locale]["Cash Flow Report"]}</div>
                 <div className="d-flex align-items-center">
                     <label className="ml-sm-5 px-1 m-b-0">{cashFlowReportText[appContext.locale]["From:"]}  </label>
-                    <input type="date" className="form-control form-control-sm width-125" value={startDate} onChange={event => handleChangeStartDate(event.target.value)} />
+                    <input type="date" className="form-control form-control-sm width-150" value={startDate} onChange={event => handleChangeStartDate(event.target.value)} />
                     <label className="ml-sm-5 px-1 m-b-0">{cashFlowReportText[appContext.locale]["To:"]}</label>
-                    <input type="date" className="form-control form-control-sm width-125" value={endDate} onChange={event => handleChangeEndDate(event.target.value)} />
+                    <input type="date" className="form-control form-control-sm width-150" value={endDate} onChange={event => handleChangeEndDate(event.target.value)} />
                 </div> 
             </WidgetHeader>
                 <div>

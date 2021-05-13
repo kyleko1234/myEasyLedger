@@ -76,9 +76,9 @@ function IncomeExpenseRender() {
                 <div className="align-self-center">{incomeStatementRenderText[appContext.locale]["Income and Expense Report"]}</div>
                 <div className="d-flex">
                     <label className="m-b-0 px-2 align-self-center">{incomeStatementRenderText[appContext.locale]["From:"]}</label>
-                    <input type="date" className="form-control form-control-sm width-125 align-self-center" value={startDate} onChange={handleChangeStartDate}/>
+                    <input type="date" className="form-control form-control-sm width-150 align-self-center" value={startDate} onChange={handleChangeStartDate}/>
                     <label className="m-b-0 pl-3 px-2 align-self-center">{incomeStatementRenderText[appContext.locale]["To:"]}</label>
-                    <input type="date" className="form-control form-control-sm width-125 align-self-center" value={endDate} onChange={handleChangeEndDate}/>
+                    <input type="date" className="form-control form-control-sm width-150 align-self-center" value={endDate} onChange={handleChangeEndDate}/>
                 </div>
             </WidgetHeader>
             {loading? <div className="d-flex justify-content-center fa-3x py-3 "><i className="fas fa-circle-notch fa-spin"></i></div>:
