@@ -63,7 +63,7 @@ function BalanceSheetRender() {
                 <div className="font-weight-600">{balanceSheetRenderText[appContext.locale]["Balance Sheet"]}</div>
                 <div className="custom-control custom-switch">
                     <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView}/>
-                    <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">Detailed View</label>
+                    <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{balanceSheetRenderText[appContext.locale]["Detailed View"]}</label>
                 </div>
                 <div className="d-flex">
                          <label className="col-form-label px-2 width-125 text-right">{balanceSheetRenderText[appContext.locale]["As of:"]} </label>

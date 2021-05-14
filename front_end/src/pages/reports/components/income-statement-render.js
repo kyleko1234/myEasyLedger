@@ -36,6 +36,8 @@ function IncomeStatementRender() {
     const today = new Date();
     const [startDate, setStartDate] = React.useState(today.getFullYear() + "-01-01");
     const [endDate, setEndDate] = React.useState(today.toISOString().split('T')[0]);
+    const [detailedView, setDetailedView] = React.useState(false);
+    const toggleDetailedView = () => setDetailedView(!detailedView);
     const [loading, setLoading] = React.useState(true);
 
     const [totalRevenue, setTotalRevenue] = React.useState(null);
@@ -61,6 +63,8 @@ function IncomeStatementRender() {
     const [revenueSubtypeId, setRevenueSubtypeId] = React.useState(null);
     const [incomeFromInvestingSubtypeId, setIncomeFromInvestingSubtypeId] = React.useState(null);
     const [incomeFromFinancingSubtypeId, setIncomeFromFinancingSubtypeId] = React.useState(null);
+    const [expenseFromInvestingSubtypeId, setExpenseFromInvestingSubtypeId] = React.useState(null);
+    const [expenseFromFinancingSubtypeId, setExpenseFromFinancingSubtypeId] = React.useState(null);
     const [otherIncomeSubtypeId, setOtherIncomeSubtypeId] = React.useState(null);
     const [costOfSalesSubtypeId, setCostOfSalesSubtypeId] = React.useState(null);
     const [researchAndDevelopmentSubtypeId, setResearchAndDevelopmentSubtypeId] = React.useState(null);
@@ -73,7 +77,38 @@ function IncomeStatementRender() {
 
     const [accountBalances, setAccountBalances] = React.useState(null);
 
-
+    const renderDetails = (subtypeId, typeId) => {
+        if (detailedView) {
+            return(
+                accountBalances
+                    .filter(account => account.accountSubtypeId === subtypeId)
+                    .map(account => {
+                        return(
+                            <>
+                                <tr key={account.accountId}>
+                                    <td className="d-flex justify-content-between p-l-30">
+                                        <div className="p-l-30">{account.accountName}</div><div>{numberAsCurrency(typeId === 5 ? account.debitsMinusCredits : account.debitsMinusCredits * -1)}</div>
+                                    </td>
+                                </tr>
+                                {accountBalances
+                                    .filter(childAccount => childAccount.parentAccountId === account.accountId)
+                                    .map(childAccount => {
+                                        return (
+                                            <tr key={childAccount.accountId}>
+                                                <td className="d-flex justify-content-between p-l-30">
+                                                    <div className="p-l-60">{childAccount.accountName}</div><div>{numberAsCurrency(typeId === 5 ? childAccount.debitsMinusCredits : childAccount.debitsMinusCredits * -1)}</div>
+                                                </td>
+                                            </tr>
+                                        )
+                                })}
+                            </>
+                        )
+                })
+            )
+        } else {
+            return null;
+        }
+    }
     React.useEffect(() => {
         async function fetchData() {
             setLoading(true);
@@ -101,6 +136,8 @@ function IncomeStatementRender() {
                     setRevenueSubtypeId(response.data.revenueSubtypeId);
                     setIncomeFromInvestingSubtypeId(response.data.incomeFromInvestingSubtypeId);
                     setIncomeFromFinancingSubtypeId(response.data.incomeFromFinancingSubtypeId);
+                    setExpenseFromInvestingSubtypeId(response.data.expenseFromInvestingSubtypeId);
+                    setExpenseFromFinancingSubtypeId(response.data.expenseFromFinancingSubtypeId);
                     setOtherIncomeSubtypeId(response.data.otherIncomeSubtypeId);
                     setCostOfSalesSubtypeId(response.data.costOfSalesSubtypeId);
                     setResearchAndDevelopmentSubtypeId(response.data.researchAndDevelopmentSubtypeId);
@@ -152,16 +189,18 @@ function IncomeStatementRender() {
     return (
         <div className="widget widget-rounded m-b-30">
             <div className="widget-header bg-light border-bottom">
-                <div className="widget-header-title">
-                    <div className="form-inline justify-content-between">
-                        <div className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Income Statement"]}</div>    
-                        <div className="form-group">
-                            <label className="ml-sm-5 px-1">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
-                            <input type="date" className="form-control form-control-sm width-150" value={startDate} onChange={event => handleChangeStartDate(event.target.value)} />
-                            <label className="ml-sm-5 px-1">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
-                            <input type="date" className="form-control form-control-sm width-150" value={endDate} onChange={event => handleChangeEndDate(event.target.value)} />
-                        </div> 
+                <div className="d-flex justify-content-between align-items-center px-3 py-1">
+                    <div className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Income Statement"]}</div>    
+                    <div className="custom-control custom-switch">
+                        <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView}/>
+                        <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
                     </div>
+                    <div className="d-flex align-items-center">
+                        <label className="ml-sm-5 px-1 my-0">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
+                        <input type="date" className="form-control form-control-sm width-150" value={startDate} onChange={event => handleChangeStartDate(event.target.value)} />
+                        <label className="ml-sm-5 px-1 my-0">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
+                        <input type="date" className="form-control form-control-sm width-150" value={endDate} onChange={event => handleChangeEndDate(event.target.value)} />
+                    </div> 
                 </div>
             </div>
             <div>
@@ -174,7 +213,26 @@ function IncomeStatementRender() {
                                 <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Revenue"]}</td></tr>
                                     {accountBalances.filter(account => account.accountSubtypeId == revenueSubtypeId).map(account => {
                                         return(
-                                            <tr key={account.accountId}><td className="d-flex justify-content-between p-l-30"><div>{account.accountName}</div><div>{numberAsCurrency(account.debitsMinusCredits * -1)}</div></td></tr>
+                                            <>
+                                                <tr key={account.accountId}>
+                                                    <td className="d-flex justify-content-between p-l-30">
+                                                        <div>{account.accountName}</div><div>{numberAsCurrency(account.debitsMinusCredits * -1)}</div>
+                                                    </td>
+                                                </tr>
+                                                {detailedView?
+                                                    accountBalances
+                                                        .filter(childAccount => childAccount.parentAccountId === account.accountId)
+                                                        .map(childAccount => {
+                                                            return(
+                                                                <tr key={childAccount.accountId}>
+                                                                    <td className="d-flex justify-content-between p-l-30">
+                                                                        <div className="p-l-30">{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits * -1)}</div>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                : null}
+                                            </>
                                         )
                                     })}
                                     <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total revenue"]}</div><div>{numberAsCurrency(totalRevenue)}</div></td></tr>
@@ -195,18 +253,28 @@ function IncomeStatementRender() {
                             }
                             <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Gross profit"]}</div><div>{numberAsCurrency(grossProfit)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
+
                             <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Operating expenses"]}</td></tr>
                             {!rd? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Research and development"]}</div><div>{numberAsCurrency(rd)}</div></td></tr>}
+                            {renderDetails(researchAndDevelopmentSubtypeId, 5)}
                             {!sga? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Sales, general, and administration"]}</div><div>{numberAsCurrency(sga)}</div></td></tr>}
+                            {renderDetails(sgaSubtypeId, 5)}
                             {!da? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Depreciation and amortization"]}</div><div>{numberAsCurrency(da)}</div></td></tr>}
+                            {renderDetails(depreciationAmortizationSubtypeId, 5)}
                             <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total operating expenses"]}</div><div>{numberAsCurrency(totalOperatingExpenses)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                             <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Operating income"]}</div><div>{numberAsCurrency(operatingIncome)}</div></td></tr>
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                             <tr><td className="font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Other income/expense"]}</div></td></tr>
                             {!incomeFromInvesting? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Net income/expense from investing activities"]}</div><div>{numberAsCurrency(incomeFromInvesting - expenseFromInvesting)}</div></td></tr>}
+                            {renderDetails(incomeFromInvestingSubtypeId, 4)}
+                            {renderDetails(expenseFromInvestingSubtypeId, 4) /** Use a negative number for expenses here since it is a component of other income/expense net*/}
                             {!incomeFromFinancing? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Net income/expense from financing activities"]}</div><div>{numberAsCurrency(incomeFromFinancing - expenseFromFinancing)}</div></td></tr>}
+                            {renderDetails(incomeFromFinancingSubtypeId, 4)}
+                            {renderDetails(expenseFromFinancingSubtypeId, 4)}
                             <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total other income/expense, net"]}</div><div>{numberAsCurrency(totalOtherIncomeExpense)}</div></td></tr>
+                            {renderDetails(otherIncomeSubtypeId, 4)}
+                            {renderDetails(otherExpensesSubtypeId, 4)}
                             <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
                             <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Earnings before interest and tax"]}</div><div>{numberAsCurrency(ebit)}</div></td></tr>
                             <tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Interest expense"]}</div><div>{numberAsCurrency(interestExpense)}</div></td></tr>

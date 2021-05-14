@@ -32,6 +32,7 @@ export const incomeStatementRenderText = {
         "Expenses": "Expenses",
         "Total Expenses": "Total Expenses",
         "Total Income less Expenses": "Total Income less Expenses",
+        "Detailed View": "Detailed View"
 
         
     },
@@ -68,7 +69,7 @@ export const incomeStatementRenderText = {
         "Expenses": "費用",
         "Total Expenses": "合計費用",
         "Total Income less Expenses": "總收益 減 總費用",
-
+        "Detailed View": "TRANSLATION"
 
     }
 }
