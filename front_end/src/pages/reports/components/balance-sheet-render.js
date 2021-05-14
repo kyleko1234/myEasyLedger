@@ -79,9 +79,40 @@ function BalanceSheetRender() {
                             <tr><td className="p-l-30 font-weight-600">{balanceSheetRenderText[appContext.locale]["Current assets"]}</td></tr>
                             {balanceSheetAssets.currentAssetsSubtypeBalances.map(subtypeBalance => {
                                 return(
-                                    <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
-                                        <div className="p-l-30">{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits)}</div>
-                                    </td></tr>
+                                    <>
+                                        <tr key={subtypeBalance.accountSubtypeId}>
+                                            <td className="d-flex justify-content-between p-l-30">
+                                                <div className="p-l-30">{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits)}</div>
+                                            </td>
+                                        </tr>
+                                        {detailedView?
+                                        accountBalances
+                                            .filter(account => account.accountSubtypeId === subtypeBalance.accountSubtypeId)
+                                            .map(account => {
+                                                return (
+                                                    <>
+                                                        <tr key={account.accountId}>
+                                                            <td className="d-flex justify-content-between p-l-30">
+                                                                <div className="p-l-60">{account.accountName}</div><div>{account.hasChildren? null : numberAsCurrency(account.debitsMinusCredits)}</div>
+                                                            </td>
+                                                        </tr>
+                                                        {accountBalances
+                                                            .filter(childAccount => childAccount.parentAccountId === account.accountId)
+                                                            .map(childAccount => {
+                                                                return(
+                                                                    <tr key={childAccount.accountId}>
+                                                                        <td className="d-flex justify-content-between p-l-60">
+                                                                            <div className="p-l-60">{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits)}</div>
+                                                                        </td>
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
+                                                    </>
+                                                )
+                                            })
+                                        : null}
+                                    </>
                                 )
                             })}
                             <tr><td className="d-flex justify-content-between font-weight-600 p-l-30">
@@ -90,9 +121,40 @@ function BalanceSheetRender() {
                             <tr><td className="p-l-30 font-weight-600">{balanceSheetRenderText[appContext.locale]["Non-current assets"]}</td></tr>
                             {balanceSheetAssets.nonCurrentAssetsSubtypeBalances.map(subtypeBalance => {
                                 return(
-                                    <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
-                                        <div className="p-l-30">{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits)}</div>
-                                    </td></tr>
+                                    <>
+                                        <tr key={subtypeBalance.accountSubtypeId}>
+                                            <td className="d-flex justify-content-between p-l-30">
+                                                <div className="p-l-30">{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits)}</div>
+                                            </td>
+                                        </tr>
+                                        {detailedView?
+                                        accountBalances
+                                            .filter(account => account.accountSubtypeId === subtypeBalance.accountSubtypeId)
+                                            .map(account => {
+                                                return (
+                                                    <>
+                                                        <tr key={account.accountId}>
+                                                            <td className="d-flex justify-content-between p-l-30">
+                                                                <div className="p-l-60">{account.accountName}</div><div>{account.hasChildren? null : numberAsCurrency(account.debitsMinusCredits)}</div>
+                                                            </td>
+                                                        </tr>
+                                                        {accountBalances
+                                                            .filter(childAccount => childAccount.parentAccountId === account.accountId)
+                                                            .map(childAccount => {
+                                                                return(
+                                                                    <tr key={childAccount.accountId}>
+                                                                        <td className="d-flex justify-content-between p-l-60">
+                                                                            <div className="p-l-60">{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits)}</div>
+                                                                        </td>
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
+                                                    </>
+                                                )
+                                            })
+                                        : null}
+                                    </>
                                 )
                             })}
                             <tr><td className="d-flex justify-content-between font-weight-600 p-l-30">
@@ -112,9 +174,41 @@ function BalanceSheetRender() {
                             <tr><td className="p-l-30 font-weight-600">{balanceSheetRenderText[appContext.locale]["Current liabilities"]}</td></tr>
                             {balanceSheetLiabilities.currentLiabilitiesSubtypeBalances.map(subtypeBalance => {
                                 return(
-                                    <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
-                                        <div className="p-l-30">{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
-                                    </td></tr>
+                                    <>
+                                        <tr key={subtypeBalance.accountSubtypeId}>
+                                            <td className="d-flex justify-content-between p-l-30">
+                                                <div className="p-l-30">{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
+                                            </td>
+                                        </tr>
+                                        {detailedView?
+                                        accountBalances
+                                            .filter(account => account.accountSubtypeId === subtypeBalance.accountSubtypeId)
+                                            .map(account => {
+                                                return (
+                                                    <>
+                                                        <tr key={account.accountId}>
+                                                            <td className="d-flex justify-content-between p-l-30">
+                                                                <div className="p-l-60">{account.accountName}</div><div>{account.hasChildren? null : numberAsCurrency(account.debitsMinusCredits * -1)}</div>
+                                                            </td>
+                                                        </tr>
+                                                        {accountBalances
+                                                            .filter(childAccount => childAccount.parentAccountId === account.accountId)
+                                                            .map(childAccount => {
+                                                                return(
+                                                                    <tr key={childAccount.accountId}>
+                                                                        <td className="d-flex justify-content-between p-l-60">
+                                                                            <div className="p-l-60">{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits * -1)}</div>
+                                                                        </td>
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
+                                                    </>
+                                                )
+                                            })
+                                        : null}
+
+                                    </>
                                 )
                             })}
                             <tr><td className="d-flex justify-content-between p-l-30 font-weight-600">
@@ -144,9 +238,40 @@ function BalanceSheetRender() {
                         <tbody>
                             {balanceSheetEquity.equityItemsSubtypeBalances.map(subtypeBalance => {
                                 return(
-                                    <tr key={subtypeBalance.accountSubtypeId}><td className="d-flex justify-content-between p-l-30">
-                                        <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
-                                    </td></tr>
+                                    <>
+                                        <tr key={subtypeBalance.accountSubtypeId}>
+                                            <td className="d-flex justify-content-between p-l-30">
+                                                <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
+                                            </td>
+                                        </tr>
+                                        {detailedView?
+                                        accountBalances
+                                            .filter(account => account.accountSubtypeId === subtypeBalance.accountSubtypeId)
+                                            .map(account => {
+                                                return (
+                                                    <>
+                                                        <tr key={account.accountId}>
+                                                            <td className="d-flex justify-content-between p-l-30">
+                                                                <div className="p-l-30">{account.accountName}</div><div>{account.hasChildren? null : numberAsCurrency(account.debitsMinusCredits * -1)}</div>
+                                                            </td>
+                                                        </tr>
+                                                        {accountBalances
+                                                            .filter(childAccount => childAccount.parentAccountId === account.accountId)
+                                                            .map(childAccount => {
+                                                                return(
+                                                                    <tr key={childAccount.accountId}>
+                                                                        <td className="d-flex justify-content-between p-l-30">
+                                                                            <div className="p-l-60">{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits * -1)}</div>
+                                                                        </td>
+                                                                    </tr>
+                                                                )
+                                                            })
+                                                        }
+                                                    </>
+                                                )
+                                            })
+                                        : null}
+                                    </>
                                 )
                             })}
                             <tr><td className="p-l-30 font-weight-600"> {balanceSheetRenderText[appContext.locale]["Retained Earnings"]}</td></tr>
