@@ -2,42 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { API_BASE_URL} from '../../../utils/constants';
 import { PageSettings } from '../../../config/page-settings';
-import {balanceSheetRenderText} from '../../../utils/i18n/balance-sheet-render-text.js';
-
-/**
- * BALANCE SHEET FORMAT
- *  ASSETS
- *      Current Assets
- *          1: Cash and cash equivalents
- *          2: Current marketable securities
- *          3: Receivables
- *          4: Inventories 
- *          5: Other current assets
- *      Non Current Assets
- *          6: Property
- *          7: Plant and equipment
- *          8: Non-current marketable securities
- *          9: Other non-current assets
- *  LIABILITIES
- *      Current Liabilities
- *          10: Payables
- *          11: Deferred revenue
- *          12: Commercial paper
- *          13: Short-term debt
- *          14: Deferred tax
- *          15: Other current liabilities
- *      Non Current Liabilities
- *          16: Long-term debt
- *          17: Other non-current liabilities
- *  SHAREHOLDER'S EQUITY
- *      18: Paid-in Capital
- *      20: Other equity items
- *      Retained Earnings
- *          Beginning Balances (21 + 22 - (23, 24, 25, 26, 27, 28, 29) - 19 up to end of previous period)
- *              Add Net Income for current period (21 + 22 - (23, 24, 25, 26, 27, 28, 29))
- *              Less 19: Dividends and equivalents for current period
- *          Ending Balances (as of specified date)
- */     
+import {balanceSheetRenderText} from '../../../utils/i18n/balance-sheet-render-text.js'; 
 
 function BalanceSheetRender() {
     const appContext = React.useContext(PageSettings);
@@ -46,12 +11,16 @@ function BalanceSheetRender() {
     const [endDate, setEndDate] = React.useState(today.toISOString().split('T')[0]);
     const [loading, setLoading] = React.useState(true);
 
+    const [detailedView, setDetailedView] = React.useState(false);
+    const toggleDetailedView = () => setDetailedView(!detailedView);
+
     const [asOfDate, setAsOfDate] = React.useState("");
     const [prevPeriodEndDate, setPrevPeriodEndDate] = React.useState("");
     const [currPeriodStartDate, setCurrPeriodStartDate] = React.useState("");
     const [balanceSheetAssets, setBalanceSheetAssets] = React.useState(null);
     const [balanceSheetLiabilities, setBalanceSheetLiabilities] = React.useState(null);
     const [balanceSheetEquity, setBalanceSheetEquity] = React.useState(null);
+    
 
     const [accountBalances, setAccountBalances] = React.useState([]);
     
@@ -90,12 +59,16 @@ function BalanceSheetRender() {
 
     return (
         <div className="widget widget-rounded m-b-30">
-            <div className="widget-header bg-light border-bottom">
-                <h4 className="widget-header-title width-half">{balanceSheetRenderText[appContext.locale]["Balance Sheet"]}</h4>
-                <span className="widget-header-title d-flex flex-row justify-content-end">
+            <div className="widget-header bg-light border-bottom d-flex justify-content-between align-items-center px-3 py-1">
+                <div className="font-weight-600">{balanceSheetRenderText[appContext.locale]["Balance Sheet"]}</div>
+                <div className="custom-control custom-switch">
+                    <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView}/>
+                    <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">Detailed View</label>
+                </div>
+                <div className="d-flex">
                          <label className="col-form-label px-2 width-125 text-right">{balanceSheetRenderText[appContext.locale]["As of:"]} </label>
                          <input type="date" className="form-control form-control-sm align-self-center width-150" value={endDate} onChange={event => handleChangeDate(event.target.value)}/>
-                </span>
+                </div>
             </div>
             <div className="px-2">
                 {loading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
