@@ -18,7 +18,7 @@ class RegisterV3 extends React.Component {
 
 	componentWillUnmount() {
 		this.context.handleSetPageSidebar(true);
-		//this.context.handleSetPageHeader(true);
+		this.context.handleSetPageHeader(true);
 		this.context.handleSetBodyWhiteBg(false);
 	}
 

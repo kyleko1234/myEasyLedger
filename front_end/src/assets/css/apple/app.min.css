@@ -9267,7 +9267,7 @@ body {
     line-height: 1.5;
     color: #333;
     text-align: left;
-    background-color: #e4e7e8;
+    background-color: white;
 }
 [tabindex="-1"]:focus:not(:focus-visible) {
     outline: 0 !important;
@@ -13194,7 +13194,7 @@ input[type="submit"].btn-block {
     width: 100%;
 }
 .fade {
-    transition: opacity 0.15s linear;
+    transition: opacity 5.15s linear;
 }
 @media (prefers-reduced-motion: reduce) {
     .fade {
