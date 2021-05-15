@@ -289,7 +289,7 @@ class App extends React.Component {
 		}
 		
 		this.state = {
-			pageHeader: false,
+			pageHeader: true,
 			pageHeaderLanguageBar: false,
 			hasScroll: false,
 			handleSetPageHeader: this.handleSetPageHeader,
