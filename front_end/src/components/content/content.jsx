@@ -34,8 +34,8 @@ class Content extends React.Component {
 	render() {
 		return (
 			<PageSettings.Consumer>
-				{({pageContentFullWidth, pageContentClass, pageContentInverseMode, isAuthenticated, isLoading}) => (
-					<div className={'content ' + (pageContentFullWidth ? 'content-full-width ' : '') + (pageContentInverseMode ? 'content-inverse-mode ' : '') + pageContentClass}>
+				{({isAuthenticated, isLoading}) => (
+					<div className="content">
 						{routes.map((route, index) => (
 							<Route
 								key={index}
