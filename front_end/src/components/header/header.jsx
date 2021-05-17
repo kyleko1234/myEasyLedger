@@ -21,12 +21,12 @@ class Header extends React.Component {
 	render() {
 		return (
 			<PageSettings.Consumer>
-				{({toggleMobileSidebar, pageSidebar}) => (
+				{({toggleHiddenSidebar, pageSidebar}) => (
 					<div id="header" className="header">
 						<div className="d-flex align-items-center">
 							<Link to="/" className="header-logo">my<b>Easy</b>Ledger</Link>
 							{pageSidebar && (
-									<button type="button" className="btn btn-white mx-3" onClick={toggleMobileSidebar}>
+									<button type="button" className="btn btn-white mx-1" onClick={toggleHiddenSidebar}>
 										<i className="fas fa-bars"></i>
 									</button>
 								)}

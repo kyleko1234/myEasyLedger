@@ -8,13 +8,19 @@
     width: var(--sidebar-width);
     position: fixed;
     left: 0;
-    top: var(--header-height);
     bottom: 0;
     border-right: 1px solid lightgray;
     background: #ececec;
     z-index: 1010;
+    transition: 0.5s;
 }
-
+.page-header-fixed .sidebar {
+    top: var(--header-height);
+}
+.page-sidebar-hidden .sidebar {
+    left: calc(var(--sidebar-width) * -1);
+    transition: .5s;
+}
 /* HEADER CLASSES */
 .header {
     position: relative;
@@ -52,9 +58,21 @@
 /* CONTENT CLASSES */
 .content {
     position: relative;
-    top: var(--header-height);
     left: var(--sidebar-width);
+    max-width: calc(100vw - var(--sidebar-width));
     padding: 20px 30px;
+    transition: 0.5s;
+}
+.page-header-fixed .content {
+    top: var(--header-height);
+}
+.page-without-sidebar .content {
+    left: 0;
+}
+.page-sidebar-hidden .content {
+    left: 0;
+    max-width: 100vw;
+    transition: 0.5s;
 }
 
 /* BUTTONS */

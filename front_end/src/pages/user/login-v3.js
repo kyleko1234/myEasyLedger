@@ -12,13 +12,11 @@ class LoginV3 extends React.Component {
 	componentDidMount() {
 		this.context.handleSetPageSidebar(false);
 		this.context.handleSetPageHeader(false);
-		this.context.handleSetBodyWhiteBg(true);
 	}
 
 	componentWillUnmount() {
 		this.context.handleSetPageSidebar(true);
 		this.context.handleSetPageHeader(true);
-		this.context.handleSetBodyWhiteBg(false);
 	}
 
 

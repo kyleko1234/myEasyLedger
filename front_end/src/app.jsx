@@ -17,10 +17,10 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.toggleMobileSidebar = (e) => {
-			this.setState(state => ({
-				pageSidebarToggled: !this.state.pageSidebarToggled
-			}));
+		this.toggleHiddenSidebar = () => {
+			this.setState({
+				pageSidebarHidden: !this.state.pageSidebarHidden
+			})
 		}
 		this.handleSetPageSidebar = (value) => {
 			this.setState(state => ({
@@ -91,10 +91,10 @@ class App extends React.Component {
 			handleSetPageHeader: this.handleSetPageHeader,
 			
 			pageSidebar: true,
-			pageSidebarWide: true,
-			pageSidebarToggled: false,
+			pageSidebarHidden: false,
 			handleSetPageSidebar: this.handleSetPageSidebar,
 			toggleMobileSidebar: this.toggleMobileSidebar,
+			toggleHiddenSidebar: this.toggleHiddenSidebar,
 						
 			pageContent: true,
 									
@@ -129,11 +129,12 @@ class App extends React.Component {
 		return (
 			<PageSettings.Provider value={this.state}>
 				<div className={
-					'page-sidebar-fixed page-container ' + 
+					'page-sidebar-fixed ' + 
 					(this.state.pageHeader ? 'page-header-fixed ' : '') + 
 					(this.state.pageSidebar ? '' : 'page-without-sidebar ') + 
-					(this.state.pageSidebarWide ? 'page-with-wide-sidebar ' : '') +
-					(this.state.pageSidebarToggled ? 'page-sidebar-toggled ' : '') 
+					(this.state.pageSidebarWide ? 'page-with-wide-sidebar ' : '') + //can be removed after finished with redesign
+					(this.state.pageSidebarToggled ? 'page-sidebar-toggled ' : '') +
+					(this.state.pageSidebarHidden? 'page-sidebar-hidden ' : '')
 				}>
 					{this.state.pageHeader && (<Header />)}
 					{this.state.pageSidebar && !this.state.isLoading && this.state.isAuthenticated && (<Sidebar />)}
