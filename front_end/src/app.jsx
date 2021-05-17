@@ -34,6 +34,12 @@ class App extends React.Component {
 			}));
 		}
 
+		this.handleWindowResize = () => {
+			this.setState({
+				pageSidebarHidden: window.innerWidth > 768? false : true
+			})
+		}
+
 		this.checkForAuthentication = () => { //TODO refactor to ensure that setstate works correctly
 			this.setState({isLoading: true}, async () => {
 				let jwtToken = localStorage.getItem(ACCESS_TOKEN);
@@ -54,6 +60,7 @@ class App extends React.Component {
 			})
 		}
 
+	
 		this.fetchUserInfo = async (id) => {
 			await axios.get(`${API_BASE_URL}/person/${id}`).then(response => { //it is very important to await the completion of this function otherwise you will make many http requests with null organizationId or personIds
 				this.setState({
@@ -91,7 +98,7 @@ class App extends React.Component {
 			handleSetPageHeader: this.handleSetPageHeader,
 			
 			pageSidebar: true,
-			pageSidebarHidden: false,
+			pageSidebarHidden: window.innerWidth > 768? false : true,
 			handleSetPageSidebar: this.handleSetPageSidebar,
 			toggleMobileSidebar: this.toggleMobileSidebar,
 			toggleHiddenSidebar: this.toggleHiddenSidebar,
@@ -123,6 +130,11 @@ class App extends React.Component {
 	
 	componentDidMount() {
 		this.checkForAuthentication();
+		window.addEventListener('resize', this.handleWindowResize);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleWindowResize);
 	}
 	
 	render() {
