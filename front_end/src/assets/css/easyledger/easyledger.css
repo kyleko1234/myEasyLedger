@@ -3,6 +3,7 @@
     --header-height: 50px;
 }
 
+/* SIDEBAR CLASSES */
 .sidebar {
     width: var(--sidebar-width);
     position: fixed;
@@ -13,6 +14,8 @@
     background: #ececec;
     z-index: 1010;
 }
+
+/* HEADER CLASSES */
 .header {
     position: relative;
     top: 0;
@@ -26,8 +29,27 @@
     height: var(--header-height);
     position: fixed;
     display: flex;
-    flex: 1;
 }
+
+.header-logo {
+    padding: 10px 20px;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 30px;
+    color: #555;
+}
+
+.header-logo b {
+    font-weight: 700;
+}
+
+.header-logo:focus,
+.header-logo:hover {
+    text-decoration: none;
+    color: #555;
+}
+
+/* CONTENT CLASSES */
 .content {
     position: relative;
     top: var(--header-height);
@@ -35,8 +57,17 @@
     padding: 20px 30px;
 }
 
+/* BUTTONS */
+.btn-white {
+    background-color: white;
+}
+.btn-white:hover {
+    background-color: #e1e1e1;
+    border-color: #c8c8c8;
+}
 
-/* Utility classes, left from adjusting color admin */
+
+/* Utility classes, mostly left from adjusting color admin */
 .cursor-pointer {
     cursor: pointer;
 }

@@ -22,16 +22,14 @@ class Header extends React.Component {
 		return (
 			<PageSettings.Consumer>
 				{({toggleMobileSidebar, pageSidebar}) => (
-					<div id="header" className="header navbar-default">
-						<div className="navbar-header d-flex align-items-center">
-							<Link to="/" className="navbar-brand"><span className="navbar-logo"></span> <b>Easy</b> Ledger</Link>
+					<div id="header" className="header">
+						<div className="d-flex align-items-center">
+							<Link to="/" className="header-logo">my<b>Easy</b>Ledger</Link>
 							{pageSidebar && (
-								<button type="button" className="navbar-toggle" onClick={toggleMobileSidebar}>
-									<span className="icon-bar"></span>
-									<span className="icon-bar"></span>
-									<span className="icon-bar"></span>
-								</button>
-							)}
+									<button type="button" className="btn btn-white mx-3" onClick={toggleMobileSidebar}>
+										<i className="fas fa-bars"></i>
+									</button>
+								)}
 						</div>
 												
 						{/*<ul className="navbar-nav navbar-right">
