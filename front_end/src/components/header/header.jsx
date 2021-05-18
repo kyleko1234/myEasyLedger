@@ -7,6 +7,7 @@ import SearchForm from './search/form.jsx';
 import DropdownMegaMenu from './dropdown/mega.jsx';
 
 import { PageSettings } from './../../config/page-settings.js';
+import PersonDropdown from './person-dropdown.js';
 
 class Header extends React.Component {
 	constructor(props) {
@@ -22,7 +23,7 @@ class Header extends React.Component {
 		return (
 			<PageSettings.Consumer>
 				{({toggleHiddenSidebar, pageSidebar}) => (
-					<div id="header" className="header">
+					<div id="header" className="header d-flex justify-content-between">
 						<div className="d-flex align-items-center">
 							<Link to="/" className="header-logo">my<b>Easy</b>Ledger</Link>
 							{pageSidebar && (
@@ -30,6 +31,9 @@ class Header extends React.Component {
 										<i className="fas fa-bars"></i>
 									</button>
 								)}
+						</div>
+						<div className="d-flex align-items-center px-3">
+							<PersonDropdown/>
 						</div>
 												
 						{/*<ul className="navbar-nav navbar-right">
