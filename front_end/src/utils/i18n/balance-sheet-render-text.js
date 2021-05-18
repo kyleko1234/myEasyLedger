@@ -139,7 +139,7 @@ export const balanceSheetRenderText = {
         "Tax expense": "賦稅費用",
         "Non-recurring and extraordinary items": "非經常性項目",
 
-        "Detailed View": "TRANSLATION"
+        "Detailed View": "細項檢視"
     }
 
 }

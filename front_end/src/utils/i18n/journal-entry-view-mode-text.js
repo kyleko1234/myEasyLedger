@@ -34,9 +34,9 @@ export const journalEntryViewModeText = {
         "From Account": "從哪個帳戶",
 
         "Close": "關閉",
-        "Edit History": "TRANSLATION",
-        "TIMESTAMP OF EDIT:": "TRANSLATION",
-        "AUTHOR OF EDIT:": "TRANSLATION",
+        "Edit History": "變更史",
+        "TIMESTAMP OF EDIT:": "更動時間點",
+        "AUTHOR OF EDIT:": "更動者",
 
     }
 }
