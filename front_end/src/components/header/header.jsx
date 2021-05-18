@@ -4,7 +4,6 @@ import DropdownNotification from './dropdown/notification.jsx';
 import DropdownLanguage from './dropdown/language.jsx';
 import DropdownProfile from './dropdown/profile.jsx';
 import SearchForm from './search/form.jsx';
-import DropdownMegaMenu from './dropdown/mega.jsx';
 
 import { PageSettings } from './../../config/page-settings.js';
 import PersonDropdown from './person-dropdown.js';
