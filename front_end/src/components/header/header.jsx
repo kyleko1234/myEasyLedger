@@ -31,17 +31,6 @@ class Header extends React.Component {
 							<PersonDropdown className="mr-2"/>
 							<EasyledgersDropdown/>
 						</div>
-						{/*<ul className="navbar-nav navbar-right">
-							<SearchForm />
-							<DropdownNotification />
-							
-							{pageHeaderLanguageBar && (
-								<DropdownLanguage />
-							)}
-							
-							<DropdownProfile />
-							
-							</ul> */}
 					</div>
 				)}
 			</PageSettings.Consumer>

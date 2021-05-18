@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { PageSettings } from './../../config/page-settings.js';
-import SidebarProfile from './sidebar-profile.jsx';
 import SidebarNav from './sidebar-nav.jsx';
 class Sidebar extends React.Component {
 	static contextType = PageSettings;
@@ -14,9 +13,6 @@ class Sidebar extends React.Component {
 					<React.Fragment>
 							<div id="sidebar" className={'sidebar ' + (pageSidebarTransparent ? 'sidebar-transparent' : '') + (pageHeader? '' : ' pt-0')}>
 								<PerfectScrollbar className="height-full" options={{suppressScrollX: true, wheelPropagation: false}}>
-									{!this.context.pageSidebarSearch && (
-									<SidebarProfile />
-									)}
 									<SidebarNav />
 									<Link to="/" className="sidebar-minify-btn" onClick={toggleSidebarMinify}>
 										<i className="fa fa-angle-double-left"></i>

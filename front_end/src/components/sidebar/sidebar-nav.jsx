@@ -15,8 +15,6 @@ class SidebarNav extends React.Component {
 			clicked: -1,
 			menus: []
 		};
-		
-		//this.handleSidebarSearch = this.handleSidebarSearch.bind(this);
 	}
 
 	handleExpand(e, i, match) {
@@ -34,56 +32,10 @@ class SidebarNav extends React.Component {
 			}));
 		}
 	}
-	
-	/* handleSidebarSearch(e) {
-		let searchValue = e.target.value;
-				searchValue = searchValue.toLowerCase();
-				
-		this.setState(state => {
-			let newMenus = [];
-			if (searchValue !== '') {
-				newMenus = menus.filter(item => {
-					let title = item.title;
-							title = title.toLowerCase();
-					if (title.search(searchValue) > -1) {
-						item.search = true;
-						return true;
-					} else {
-						if (item.children) {
-							for (var i = 0; i < item.children.length; i++) {
-								let title2 = item.children[i]['title'];
-										title2 = title2.toLowerCase();
-										
-								if (title2.search(searchValue) > -1) {
-									item.search = true;
-									return true;
-								}
-							}
-						}
-						return false;
-					}
-				});
-			} else {
-				newMenus = menus.filter(item => {
-					item.search = false;
-					return true;
-				});
-			}
-			return {
-				menus: newMenus
-			};
-		});
-	}
-	*/
   
 	render() {
 		return (
 			<ul className="nav">
-				{/* this.context.pageSidebarSearch && (
-					<li className="nav-search">
-						<input type="text" className="form-control" placeholder="Sidebar menu filter..." onKeyUp={this.handleSidebarSearch} />
-					</li>
-				) */}
 				<li className="nav-header">{sidebarText[this.context.locale]["Navigation"]}</li>
 				{this.context.isEnterprise? 
 					enterpriseMenu.map((menu, i) => (
