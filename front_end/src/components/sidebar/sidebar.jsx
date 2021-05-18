@@ -1,32 +1,41 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { PageSettings } from './../../config/page-settings.js';
-import SidebarNav from './sidebar-nav.jsx';
+import { sidebarText } from '../../utils/i18n/sidebar-text.js';
+import { enterpriseMenu, personalMenu } from './menu.jsx';
 class Sidebar extends React.Component {
 	static contextType = PageSettings;
 	
 	render() {
 		return (
-			<PageSettings.Consumer>
-				{({toggleSidebarMinify, toggleMobileSidebar, pageSidebarTransparent, pageHeader}) => (
-					<React.Fragment>
-							<div id="sidebar" className={'sidebar ' + (pageSidebarTransparent ? 'sidebar-transparent' : '') + (pageHeader? '' : ' pt-0')}>
-								<PerfectScrollbar className="height-full" options={{suppressScrollX: true, wheelPropagation: false}}>
-									<SidebarNav />
-									<Link to="/" className="sidebar-minify-btn" onClick={toggleSidebarMinify}>
-										<i className="fa fa-angle-double-left"></i>
-									</Link>
-								</PerfectScrollbar>
-							</div>
-
-						<div className="sidebar-bg"></div>
-						<div className="sidebar-mobile-dismiss" onClick={toggleMobileSidebar}></div>
-					</React.Fragment>
-				)}
-			</PageSettings.Consumer>
+			<div id="sidebar" className="sidebar">
+				<PerfectScrollbar className="height-full" options={{suppressScrollX: true, wheelPropagation: false}}>
+					<div className="sidebar-header">
+						{sidebarText[this.context.locale]["Navigation"]}
+					</div>
+					{this.context.isEnterprise
+					? enterpriseMenu.map(menuItem => {
+						return (
+							<Link to={menuItem.path} className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}>
+								<i className={menuItem.icon}></i>
+								{sidebarText[this.context.locale][menuItem.title]}
+							</Link>
+						)
+					})
+					: personalMenu.map(menuItem => {
+						return (
+							<Link to={menuItem.path} className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}>
+								<i className={menuItem.icon}></i>
+								{sidebarText[this.context.locale][menuItem.title]}
+							</Link>
+						)
+					})
+					}
+				</PerfectScrollbar>
+			</div>
 		)
 	}
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);
