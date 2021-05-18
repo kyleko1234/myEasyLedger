@@ -100,8 +100,11 @@ body {
     font-size: var(--base-font-size);
 }
 
-
 /* Utility classes, mostly left from adjusting color admin */
+.font-size-standard {
+    font-size: var(--base-font-size);
+}
+
 .cursor-pointer {
     cursor: pointer;
 }

@@ -65,20 +65,7 @@ class SidebarProfile extends React.Component {
 						</ul>
 						:
 						<ul className="nav">
-							<li className={"nav-profile " + (this.state.profileActive ? "expand " : "")}>
-								<Link replace to="/" onClick={this.handleProfileExpand}>
-									<div className="cover with-shadow"></div>
-									{/*<div className="image">
-										<img src="/assets/img/user/user-13.jpg" alt="" />
-									</div>*/}
-									<div className="info">
-										<b className="caret pull-right"></b>
-										{FIRSTNAME_LASTNAME_LOCALES.includes(locale)? 
-											firstName + " " + lastName : lastName + " " + firstName} 
-										<small>{currentOrganizationName}</small>
-									</div>
-								</Link>
-							</li>
+
 							<li>
 								<ul className={"nav nav-profile " + (this.state.profileActive && !pageSidebarMinify ? "d-block " : "")}>
 									<li className={"has-sub " + (this.state.organizationsExpanded? "expand" : "closed")}>
@@ -96,8 +83,6 @@ class SidebarProfile extends React.Component {
 												</li>
 											</ul>
 									</li>
-									<li><Link to="/settings"><i className="fa fa-cog"></i> {sidebarText[locale]["Settings"]}</Link></li>
-									<li><Link to="#" onClick={logout}><i className="fa fa-sign-out-alt"></i> {sidebarText[locale]["Sign Out"]}</Link></li>
 								</ul>
 							</li>
 						</ul>

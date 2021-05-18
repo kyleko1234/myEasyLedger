@@ -1,11 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DropdownNotification from './dropdown/notification.jsx';
-import DropdownLanguage from './dropdown/language.jsx';
-import DropdownProfile from './dropdown/profile.jsx';
-import SearchForm from './search/form.jsx';
-
 import { PageSettings } from './../../config/page-settings.js';
+import EasyledgersDropdown from './easyledgers-dropdown.js';
 import PersonDropdown from './person-dropdown.js';
 
 class Header extends React.Component {
@@ -31,10 +27,10 @@ class Header extends React.Component {
 									</button>
 								)}
 						</div>
-						<div className="d-flex align-items-center px-3">
-							<PersonDropdown/>
+						<div className="d-flex align-items-center mr-3">
+							<PersonDropdown className="mr-2"/>
+							<EasyledgersDropdown/>
 						</div>
-												
 						{/*<ul className="navbar-nav navbar-right">
 							<SearchForm />
 							<DropdownNotification />

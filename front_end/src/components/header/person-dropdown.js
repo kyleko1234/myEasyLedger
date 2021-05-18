@@ -10,6 +10,7 @@ function PersonDropdown(props) {
 
     const [isOpen, setIsOpen] = React.useState(false);
     const toggle = () => setIsOpen(!isOpen);
+
     return(
         <div className={props.className}>
             <Dropdown isOpen={isOpen} toggle={toggle}>
@@ -26,7 +27,7 @@ function PersonDropdown(props) {
                         <i className="fas fa-cog mr-2"></i>{sidebarText[appContext.locale]["Settings"]}
                     </DropdownItem>
                     <DropdownItem onClick={appContext.logout}>
-                        <i class="fas fa-sign-out-alt mr-2"></i>{sidebarText[appContext.locale]["Sign Out"]}
+                        <i className="fas fa-sign-out-alt mr-2"></i>{sidebarText[appContext.locale]["Sign Out"]}
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
@@ -34,8 +35,8 @@ function PersonDropdown(props) {
     )
 }
 
-export default PersonDropdown;
-
 PersonDropdown.defaultProps = {
     className: ""
 }
+
+export default PersonDropdown;
