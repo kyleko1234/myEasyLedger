@@ -137,13 +137,23 @@ body {
     font-size: var(--base-font-size);
 }
 
-/* Utility classes, mostly left from adjusting color admin */
-.font-size-standard {
-    font-size: var(--base-font-size);
+/* MODIFICATIONS TO BOOTSTRAP MODAL */
+.modal-content {
+    border-radius: 10px;
 }
 
-.rounded {
-    border-radius: 10px !important;
+/* MODIFICATIONS TO BOOTSTRAP TABLE */
+.table {
+    margin-bottom: 0;
+}
+
+/* Utility classes, mostly left from adjusting color admin */
+.very-rounded {
+    border-radius: 10px;
+}
+
+.font-size-standard {
+    font-size: var(--base-font-size);
 }
 
 .cursor-pointer {

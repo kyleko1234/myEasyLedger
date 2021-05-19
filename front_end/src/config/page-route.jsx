@@ -4,7 +4,6 @@ import { Redirect } from 'react-router';
 import LoginV3 from './../pages/user/login-v3.js';
 import RegisterV3 from './../pages/user/register-v3.js';
 
-import Journals from '../pages/journals/journals.js';
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
 import Logout from './../pages/user/logout.js';
 import Dashboard from './../pages/dashboard/dashboard.js';
@@ -21,6 +20,7 @@ import CategoryDetails from '../pages/categories/category-details.js';
 import NetWorthReport from '../pages/reports/net-worth-report.js';
 import IncomeExpenseReport from '../pages/reports/income-expense-report.js';
 import CashFlowReport from '../pages/reports/cash-flow-report.js';
+import GeneralJournal from '../pages/journals/enterprise/general-journal.jsx';
 
 const routes = [
   {
@@ -41,7 +41,7 @@ const routes = [
   {
     path: '/journals',
     title: 'Journals',
-    component: Journals,
+    component: GeneralJournal,
   },
   {
     path: '/chart-of-accounts',

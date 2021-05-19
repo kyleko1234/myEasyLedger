@@ -313,9 +313,7 @@ function TableOfJournalEntries({
   // Render the UI for your table
   return (
     <>
-      <div className="widget widget-rounded m-b-30">
-        <div className="widget-header bg-light">
-          <h4 className="widget-header-title d-flex justify-content-between ">
+          <h4 className="d-flex justify-content-between ">
             <div className="align-self-center">
               {tableTitle}
               {parentComponentAccountId? 
@@ -330,10 +328,7 @@ function TableOfJournalEntries({
                   <i className="ion ion-md-add fa-fw fa-lg"></i>{tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                 </button> : null}
             </div>
-
           </h4>
-     
-        </div>
         <div className="table-responsive bg-white border-top">
           <table className="table table-hover m-b-0 text-inverse" {...getTableProps()}>
             <thead>
@@ -369,27 +364,18 @@ function TableOfJournalEntries({
             </tbody>
           </table>
         </div>
-        <div className="d-flex justify-content-between px-1 py-2 border-top bg-light" >
-          <span style={{ width: "25ch" }}>
-            <ul className="pager align-self-center m-t-0 m-b-0">
-              <li className={canPreviousPage ? "previous" : "previous disabled"}>
-                {canPreviousPage ? <Link onClick={() => previousPage()} to="/journals">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link> : null}
-              </li>
-            </ul>
-          </span>
-          <span className="align-self-center">
+        <div className="d-flex justify-content-between px-1 py-2 border-top " >
+          <div className={canPreviousPage? "" : " invisible"}>
+              <Link onClick={() => previousPage()} to="/journals">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>
+          </div>
+          <div className="align-self-center">
             Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + page.length)} of {elementCount}{' '}
                       results
-          </span>{/**TODO replace with page selector */}
-          <span>
-            <ul className="pager align-self-center m-t-0 m-b-0" style={{ width: "25ch" }}>
-              <li className={canNextPage ? "next" : "next disabled"}>
-                {canNextPage ? <Link onClick={() => nextPage()} to="/journals">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link> : null}
-              </li> 
-            </ul>
-          </span>
+          </div>{/**TODO replace with page selector */}
+          <div className={canNextPage? "" : " invisible"}>
+            <Link onClick={() => nextPage()} to="/journals">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link>
+          </div>
         </div>
-      </div>
       {/* Modal that opens when a row in the table is clicked */}
       <Modal
         isOpen={journalEntryExpanded}
@@ -397,8 +383,8 @@ function TableOfJournalEntries({
         size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
         centered={true}
       >
-        <ModalHeader style={{backgroundColor: "#e4e4e4"}}>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
-        <ModalBody className="bg-light">
+        <ModalHeader>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
+        <ModalBody>
           {editMode ?
             <JournalEntryEditMode
               data={lineItemData} setLineItemData={setLineItemData}
@@ -416,7 +402,7 @@ function TableOfJournalEntries({
             </JournalEntryViewMode>
           }
         </ModalBody>
-        <ModalFooter className="justify-content-between" style={{ backgroundColor: "#e4e4e4" }}>
+        <ModalFooter className="justify-content-between">
           {editMode ?
             <>
               <div>
