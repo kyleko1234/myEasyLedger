@@ -11,13 +11,6 @@ function Dashboard() {
     const appContext = React.useContext(PageSettings);
     return (
         <div>
-            <ol className="breadcrumb float-xl-right">
-                <li className="breadcrumb-item active">{dashboardText[appContext.locale]["Home"]}</li>
-            </ol>
-            <h1 className="page-header">
-                {appContext.currentOrganizationName + " - " + dashboardText[appContext.locale]["Dashboard"]}
-                <ToggleMobileSidebarButton className="d-md-none float-right "/>
-            </h1>
             {/*<button type="button" onClick={populateSampleUserWithSampleData}>POPULATE SAMPLE DATA</button> */}
             <div className="row">
                 <div className="col-xl-8 col-lg-6">

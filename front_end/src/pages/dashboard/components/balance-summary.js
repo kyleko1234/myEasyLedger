@@ -5,6 +5,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { useHistory } from "react-router-dom";
 import {balanceSummaryText} from "../../../utils/i18n/balance-summary-text.js";
 import {Widget, WidgetHeader} from "../../../components/widget/widget.jsx";
+import { Card, CardTitle, CardBody } from 'reactstrap';
 
 
 function BalanceSummary(props) {
@@ -31,17 +32,17 @@ function BalanceSummary(props) {
 
 
     return (
-        <Widget rounded>
-            <WidgetHeader className="bg-light">
+        <Card className="shadow-sm">
+            {/*<CardTitle className="font-weight-600">
                 {balanceSummaryText[appContext.locale][props.widgetTitle]}
-            </WidgetHeader>
-            <div className="overflow-auto px-2" style={{ height: '500px' }}>
+            </CardTitle> */}
+            <CardBody className="overflow-auto py-0" style={{ height: '500px' }}>
                 {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                     <table className='table table-hover'>
                         <thead>
                             <tr>
-                                <th>{balanceSummaryText[appContext.locale]["Account"]}</th>
-                                <th className="text-right">{balanceSummaryText[appContext.locale]["Balance"]}</th>
+                                <th className="border-top-0">{balanceSummaryText[appContext.locale]["Account"]}</th>
+                                <th className="text-right border-top-0">{balanceSummaryText[appContext.locale]["Balance"]}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,8 +61,8 @@ function BalanceSummary(props) {
                         </tbody>
                     </table>
                 }
-            </div>
-        </Widget>
+            </CardBody>
+        </Card>
     )
 }
 
