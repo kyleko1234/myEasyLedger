@@ -5,7 +5,6 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import { API_BASE_URL } from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
-import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 import AccountDetailsEditor from './components/account-details-editor.js';
 
 
@@ -94,13 +93,8 @@ class ChartOfAccounts extends React.Component {
     render() {
         return (
             <div>
-                <ol className="breadcrumb float-xl-right">
-                    <li className="breadcrumb-item"><Link to="/">{chartOfAccountsText[this.context.locale]["Home"]}</Link></li>
-                    <li className="breadcrumb-item active">{chartOfAccountsText[this.context.locale]["Chart of Accounts"]}</li>
-                </ol>
-                <h1 className="page-header">
+                <h1 className="">
                     {chartOfAccountsText[this.context.locale]["Chart of Accounts"]}
-                    <ToggleMobileSidebarButton className="d-md-none float-right " />
                 </h1>
                 <Nav pills justified className="d-block">
                     {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :

@@ -1,21 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
 import ReportTypeList from './components/report-type-list.js';
 import {reportsText} from '../../utils/i18n/reports-text.js';
-import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 function Reports() {
     const appContext = React.useContext(PageSettings);
 
     return (
         <div>
-            <ol className="breadcrumb float-xl-right">
-                <li className="breadcrumb-item"><Link to="/">{reportsText[appContext.locale]["Home"]}</Link></li>
-                <li className="breadcrumb-item active">{reportsText[appContext.locale]["Reports"]}</li>
-            </ol>
+
             <h1 className="page-header">
                 {reportsText[appContext.locale]["Reports"]}
-                <ToggleMobileSidebarButton className="d-md-none float-right "/>
             </h1>
             <div>
                 {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : <ReportTypeList />}

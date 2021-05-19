@@ -4,8 +4,6 @@ import { PageSettings } from './config/page-settings.js';
 import Header from './components/header/header.jsx';
 import Sidebar from './components/sidebar/sidebar.jsx';
 import Content from './components/content/content.jsx';
-import Footer from './components/footer/footer.jsx';
-import FloatSubMenu from './components/float-sub-menu/float-sub-menu.jsx';
 import { ACCESS_TOKEN, API_BASE_URL} from './utils/constants.js';
 import jwt_decode from 'jwt-decode';
 import interceptors from "./utils/interceptors"; //interceptors for API requests, used for auth purposes. keep this as an unused import.
