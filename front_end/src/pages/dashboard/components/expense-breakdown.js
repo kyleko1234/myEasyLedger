@@ -1,10 +1,10 @@
 import React from 'react';
-import { Widget, WidgetHeader } from '../../../components/widget/widget';
 import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
 import { Doughnut } from 'react-chartjs-2';
 import { dashboardText } from '../../../utils/i18n/dashboard-text';
+import { Card, CardBody, CardTitle } from 'reactstrap';
 
 function ExpenseBreakdown(props) {
     const appContext = React.useContext(PageSettings);
@@ -60,17 +60,19 @@ function ExpenseBreakdown(props) {
         });
     }, [])
     return(
-        <Widget rounded>
-            <WidgetHeader className="bg-light">
-                {dashboardText[appContext.locale]["Expense Breakdown"]}
-            </WidgetHeader>
-            {appContext.isLoading
-            ?   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> 
-            :   <div className="py-3">
-                    <Doughnut data={doughnutChart.data} options={doughnutChart.options}/>
-                </div>
-            } 
-        </Widget>
+        <Card className="shadow-sm ">
+            <CardBody >
+                <CardTitle>
+                    {dashboardText[appContext.locale]["Expense Breakdown"]}
+                </CardTitle>
+                {appContext.isLoading
+                ?   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> 
+                :   <div className="py-3">
+                        <Doughnut data={doughnutChart.data} options={doughnutChart.options} />
+                    </div>
+                } 
+            </CardBody>
+        </Card>
     )
 }
 

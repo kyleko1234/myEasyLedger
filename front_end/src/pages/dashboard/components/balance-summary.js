@@ -4,13 +4,10 @@ import { API_BASE_URL } from '../../../utils/constants.js';
 import { PageSettings } from '../../../config/page-settings';
 import { useHistory } from "react-router-dom";
 import {balanceSummaryText} from "../../../utils/i18n/balance-summary-text.js";
-import {Widget, WidgetHeader} from "../../../components/widget/widget.jsx";
-import { Card, CardTitle, CardBody } from 'reactstrap';
+import { Card, CardBody } from 'reactstrap';
 
 
 function BalanceSummary(props) {
-    //required props: widgetTitle
-    //valid widgetTitles: "Balance Summary", "Account Switcher"
     //optional props: selectedAccountId, externalRefreshToken
     //externalRefreshToken can be any data. This prop should be changed when you want to force this component to refresh data. This prop should not be used for anything else. 
     const appContext = React.useContext(PageSettings);
@@ -32,10 +29,7 @@ function BalanceSummary(props) {
 
 
     return (
-        <Card className="shadow-sm">
-            {/*<CardTitle className="font-weight-600">
-                {balanceSummaryText[appContext.locale][props.widgetTitle]}
-            </CardTitle> */}
+        <Card className="shadow-sm ">
             <CardBody className="overflow-auto py-0" style={{ height: '500px' }}>
                 {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                     <table className='table table-hover'>
