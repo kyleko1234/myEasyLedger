@@ -48,7 +48,7 @@ export const registerV3Text = {
         "Re-enter Email": "再次輸入電郵址",
         "Re-enter email address": "再一次輸入你的電郵址",
         "Email does not match.": "輸入的電郵址前後不符。",
-        "EasyLedger Name": "TRANSLATION",
+        "EasyLedger Name": "帳本名稱",
         "Password": "密碼",
         "Re-enter Password": "再一次輸入你的密碼",
         "Password does not match.": "輸入的密碼前後不符。",
@@ -57,16 +57,16 @@ export const registerV3Text = {
         "Already a member": <div>已經有帳號了嗎？點擊 <Link to="/user/login/form" className="text-primary">這裡</Link> 就可以登入。</div>,
         "Copyright text": "\u00A9 2021 MyEasyLedger.tw 版權所有。",
 
-        "Next": "TRANSLATION",
-        "Create your first EasyLedger.": "TRANSLATION",
-        "Something went wrong. Please try again later.": "TRANSLATION",
-        "Currency": "TRANSLATION",
-        "Create an EasyLedger for:": "TRANSLATION",
-        "Enterprise use": "TRANSLATION",
-        "Personal use": "TRANSLATION",
-        "Registration Successful!": "TRANSLATION",
-        "A verification email is on its way to your inbox.": "TRANSLATION",
-        "Return to login page.": "TRANSLATION"
+        "Next": "下一步",
+        "Create your first EasyLedger.": "新建立你的第一本帳本。",
+        "Something went wrong. Please try again later.": "出了點問題。請稍後再試一次。",
+        "Currency": "幣別",
+        "Create an EasyLedger for:": "創建帳本給：",
+        "Enterprise use": "企業用",
+        "Personal use": "個人用",
+        "Registration Successful!": "註册成功！",
+        "A verification email is on its way to your inbox.": "一封確認電郵正在給寄你的路上。",
+        "Return to login page.": "回到登入頁。"
 
     }
 }

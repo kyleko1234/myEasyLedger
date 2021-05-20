@@ -57,7 +57,7 @@ export const tableOfJournalEntriesText = {
         "Transaction must have at least one item.": "一筆交易記錄至少要有一個單行項目",
         "Entry must have line-items.": "一筆分錄至少要有一個單行項目",
 
-        "View edit history": "TRANSLATION"
+        "View edit history": "檢視變更史"
 
     }
 }
