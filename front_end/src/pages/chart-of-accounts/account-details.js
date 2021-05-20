@@ -103,16 +103,8 @@ function AccountDetails(props) {
 
     return (
         <>
-            <ol className="breadcrumb float-xl-right">
-                <li className="breadcrumb-item"><Link to="/">{accountDetailsText[appContext.locale]["Home"]}</Link></li>
-                {appContext.isEnterprise ? <li className="breadcrumb-item"><Link to="/chart-of-accounts">{accountDetailsText[appContext.locale]["Chart of Accounts"]}</Link></li>
-                    : <li className="breadcrumb-item"><Link to="/accounts">{accountDetailsText[appContext.locale]["Accounts"]}</Link></li>}
-                <li className="breadcrumb-item active">{accountDetailsText[appContext.locale]["Account Details"]}</li>
-            </ol>
-
             <h1 className="page-header">
                 {accountDetailsText[appContext.locale]["Account Details"]}
-                <ToggleMobileSidebarButton className="d-md-none float-right " />
             </h1>
             {appContext.isEnterprise ?
                 <div className="row">

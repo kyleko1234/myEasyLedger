@@ -112,7 +112,6 @@ class ChartOfAccounts extends React.Component {
                                         </NavItem>
                                     );
                                 })}
-
                             </div>
                             <button
                                 className="btn btn-primary my-1 ml-3"
