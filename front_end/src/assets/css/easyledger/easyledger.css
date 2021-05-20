@@ -106,7 +106,7 @@ body {
 .content {
     position: relative;
     left: var(--sidebar-width);
-    max-width: calc(100vw - var(--sidebar-width));
+    max-width: calc(99vw - var(--sidebar-width));
     padding: 20px 30px;
     transition: var(--sidebar-hidden-transition-time);
 }

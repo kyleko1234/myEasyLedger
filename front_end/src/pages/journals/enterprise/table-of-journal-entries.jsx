@@ -329,8 +329,7 @@ function TableOfJournalEntries({
                 </button> : null}
             </div>
           </h4>
-        <div className="table-responsive bg-white border-top">
-          <table className="table table-hover m-b-0 text-inverse" {...getTableProps()}>
+          <table className="table table-hover " {...getTableProps()}>
             <thead>
               {headerGroups.map(headerGroup => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
@@ -356,14 +355,17 @@ function TableOfJournalEntries({
                 return (
                   <tr className="cursor-pointer" onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
                     {row.cells.map(cell => {
-                      return <td className={cell.column.id == "debitAmount" || cell.column.id == "creditAmount" ? "text-right" : ""} {...cell.getCellProps()}> {formatCellValue(cell)} </td>
+                      return (
+                        <td {...cell.getCellProps() } style={{minWidth: "100px", maxWidth: "50vw"}} className={(cell.column.id === "debitAmount" || cell.column.id === "creditAmount" ? "text-right " : "") + (cell.column.id === "description" ? " text-truncate ": "")} > 
+                          {formatCellValue(cell) /** The style of this <td> must include a maxwidth declared in px, otherwise .text-truncate will break the table's formatting and width will exceed parent width. Don't know why. */}
+                        </td>
+                      )
                     })}
                   </tr>
                 )
               })}
             </tbody>
           </table>
-        </div>
         <div className="d-flex justify-content-between px-1 py-2 border-top " >
           <div className={canPreviousPage? "" : " invisible"}>
               <Link onClick={() => previousPage()} to="/journals">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>

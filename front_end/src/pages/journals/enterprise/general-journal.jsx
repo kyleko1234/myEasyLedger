@@ -4,6 +4,7 @@ import axios from 'axios';
 import { PageSettings } from '../../../config/page-settings';
 import TableOfJournalEntries from './table-of-journal-entries';
 import {generalJournalText} from '../../../utils/i18n/general-journal-text.js';
+import { Card, CardBody } from 'reactstrap';
 
 
 function GeneralJournal() {
@@ -40,17 +41,15 @@ function GeneralJournal() {
   }, [API_BASE_URL, appContext.currentOrganizationId])
   
   return (
-    <div >
-      <TableOfJournalEntries
-        columns={columns}
-        data={data}
-        fetchData={fetchData}
-        pageCount={pageCount}
-        elementCount={elementCount}
-        tableTitle={generalJournalText[appContext.locale]["Accounting Entries"]}
-        hasAddEntryButton={true}
-      />
-    </div>
+        <TableOfJournalEntries
+          columns={columns}
+          data={data}
+          fetchData={fetchData}
+          pageCount={pageCount}
+          elementCount={elementCount}
+          tableTitle={generalJournalText[appContext.locale]["Accounting Entries"]}
+          hasAddEntryButton={true}
+        />
   )
 }
 
