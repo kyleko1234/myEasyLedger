@@ -329,43 +329,35 @@ function TableOfJournalEntries({
                 </button> : null}
             </div>
           </h4>
-          <table className="table table-hover " {...getTableProps()}>
-            <thead>
+          <div className="table table-hover " {...getTableProps()}>
+            <div className="thead">
               {headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
+                <div className="row tr" {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
-                    <th style={{width: column.width}} className={column.id == "debitAmount" || column.id == "creditAmount" ? "text-right" : ""} {...column.getHeaderProps()}>
+                    <div className={"th " + (column.id == "debitAmount" || column.id == "creditAmount" ? "text-right" : "") + (column.id == "description"? " col-6" : " col-2")} {...column.getHeaderProps()}>
                       {column.render('Header')}
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? ' 🔽'
-                            : ' 🔼'
-                          : ''}
-                      </span>
-                    </th>
-
+                    </div>
                   ))}
-                </tr>
+                </div>
               ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
+            </div>
+            <div className="tbody" {...getTableBodyProps()}>
               {page.map((row, i) => {
                 prepareRow(row)
                 return (
-                  <tr className="cursor-pointer" onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
+                  <div className="row tr cursor-pointer" onClick={() => expandJournalEntry(data[i].journalEntryId)} {...row.getRowProps()}>{/* entry is represented as a clickable row that opens a modal when clicked*/}
                     {row.cells.map(cell => {
                       return (
-                        <td {...cell.getCellProps() } style={{minWidth: "100px", maxWidth: "50vw"}} className={(cell.column.id === "debitAmount" || cell.column.id === "creditAmount" ? "text-right " : "") + (cell.column.id === "description" ? " text-truncate ": "")} > 
+                        <div {...cell.getCellProps() } className={"td " + (cell.column.id === "debitAmount" || cell.column.id === "creditAmount" ? "text-right " : "") + (cell.column.id === "description" ? " text-truncate col-6 ": " col-2")} > 
                           {formatCellValue(cell) /** The style of this <td> must include a maxwidth declared in px, otherwise .text-truncate will break the table's formatting and width will exceed parent width. Don't know why. */}
-                        </td>
+                        </div>
                       )
                     })}
-                  </tr>
+                  </div>
                 )
               })}
-            </tbody>
-          </table>
+            </div>
+          </div>
         <div className="d-flex justify-content-between px-1 py-2 border-top " >
           <div className={canPreviousPage? "" : " invisible"}>
               <Link onClick={() => previousPage()} to="/journals">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>
