@@ -147,6 +147,34 @@ body {
     margin-bottom: 0;
 }
 
+/* PSEUDO-TABLE UTILITIES */
+.table {
+    border-collapse: collapse !important;
+}
+
+.th {
+    font-weight: 600;
+    padding: .75rem;
+}
+.td {
+    border-top: #dadada 1px solid;
+    padding: .75rem;
+}
+.tr:first-of-type .td {
+    border-top: none;
+}
+
+a.tr {
+    color: var(--base-text-color);
+}
+a.tr:hover {
+    text-decoration: none;
+    color: var(--base-text-color);
+    background-color: #e1e1e1;
+}
+
+
+
 /* Utility classes, mostly left from adjusting color admin */
 .very-rounded {
     border-radius: 10px;

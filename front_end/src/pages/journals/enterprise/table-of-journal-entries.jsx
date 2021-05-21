@@ -59,6 +59,8 @@ function TableOfJournalEntries(props) {
                 setTotalPages(response.data.totalPages);
                 setTotalElements(response.data.totalElements);
                 setPageLength(response.data.size);
+                setFirst(response.data.first);
+                setLast(response.data.last);
             })
             .catch(console.log);
 
@@ -302,9 +304,9 @@ function TableOfJournalEntries(props) {
                     </button>
                     : null}
             </div>
-            <div className="table">
+            <div className="table my-2">
                 <div className="thead">
-                    <div className="row tr">
+                    <div className="row tr bg-light border rounded mx-0">
                         <div className="th col-2">{tableOfJournalEntriesText[appContext.locale]["Date"]}</div>
                         <div className="th col-6">{tableOfJournalEntriesText[appContext.locale]["Description"]}</div>
                         <div className="th text-right col-2">{tableOfJournalEntriesText[appContext.locale]["Debit"]}</div>
@@ -314,12 +316,12 @@ function TableOfJournalEntries(props) {
                 <div className="tbody">
                     {journalEntryViewModels.map(journalEntryViewModel => {
                         return (
-                            <div className="row tr" key={journalEntryViewModel.journalEntryId} onClick={() => expandJournalEntry(journalEntryViewModel.journalEntryId)}>
+                            <Link replace to="#" className="row tr mx-0" key={journalEntryViewModel.journalEntryId} onClick={() => expandJournalEntry(journalEntryViewModel.journalEntryId)}>
                                 <div className="td col-sm-2">{journalEntryViewModel.journalEntryDate}</div>
                                 <div className="td text-truncate col-sm-6">{journalEntryViewModel.description}</div>
                                 <div className="td text-right col-2">{formatCurrency(journalEntryViewModel.debitAmount)}</div>
                                 <div className="td text-right col-2">{formatCurrency(journalEntryViewModel.creditAmount)}</div>
-                            </div>
+                            </Link>
                         )
                     })}
                 </div>

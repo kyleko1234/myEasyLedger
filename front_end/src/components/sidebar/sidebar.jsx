@@ -17,7 +17,7 @@ class Sidebar extends React.Component {
 					{this.context.isEnterprise
 					? enterpriseMenu.map(menuItem => {
 						return (
-							<Link to={menuItem.path} className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}>
+							<Link key={menuItem.path} to={menuItem.path} className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}>
 								<i className={menuItem.icon}></i>
 								{sidebarText[this.context.locale][menuItem.title]}
 							</Link>
@@ -25,7 +25,7 @@ class Sidebar extends React.Component {
 					})
 					: personalMenu.map(menuItem => {
 						return (
-							<Link to={menuItem.path} className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}>
+							<Link key={menuItem.path} to={menuItem.path} className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}>
 								<i className={menuItem.icon}></i>
 								{sidebarText[this.context.locale][menuItem.title]}
 							</Link>
