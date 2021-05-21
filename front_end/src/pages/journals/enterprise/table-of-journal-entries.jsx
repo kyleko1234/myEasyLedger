@@ -288,118 +288,116 @@ function TableOfJournalEntries(props) {
     }, [pageIndex, pageSize]);
 
     return (
-        <Card className="very-rounded shadow-sm">
-            <CardBody>
-                <div className="d-flex justify-content-between align-items-center">
-                    <h4 >
-                        {props.tableTitle}
-                        {props.parentComponentAccountId ?
-                            <Link replace className="icon-link-text-muted m-l-10" to="#" onClick={toggleAccountDetailsEditorModal}>
-                                <i className="fa fa-edit"></i>
-                            </Link>
-                            : null}
-                    </h4>
-                    {props.hasAddEntryButton ?
-                        <button className="btn font-size-standard btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
-                            <i className="ion ion-md-add fa-fw fa-lg"></i>{tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
-                        </button>
+        <>
+            <div className="d-flex justify-content-between align-items-center">
+                <h4 >
+                    {props.tableTitle}
+                    {props.parentComponentAccountId ?
+                        <Link replace className="icon-link-text-muted m-l-10" to="#" onClick={toggleAccountDetailsEditorModal}>
+                            <i className="fa fa-edit"></i>
+                        </Link>
                         : null}
-                </div>
-                <div className="my-2">
-                    <div className="thead ">
-                        <div className="d-flex tr bg-light border rounded">
-                            <div className="th col-2">{tableOfJournalEntriesText[appContext.locale]["Date"]}</div>
-                            <div className="th col-6">{tableOfJournalEntriesText[appContext.locale]["Description"]}</div>
-                            <div className="th text-right col-2">{tableOfJournalEntriesText[appContext.locale]["Debit"]}</div>
-                            <div className="th text-right col-2">{tableOfJournalEntriesText[appContext.locale]["Credit"]}</div>
-                        </div>
-                    </div>
-                    <div className="tbody">
-                        {journalEntryViewModels.map(journalEntryViewModel => {
-                            return (
-                                <Link replace to="#" className="tr d-flex" key={journalEntryViewModel.journalEntryId} onClick={() => expandJournalEntry(journalEntryViewModel.journalEntryId)}>
-                                    <div className="td col-sm-2">{journalEntryViewModel.journalEntryDate}</div>
-                                    <div className="td text-truncate col-sm-6">{journalEntryViewModel.description}</div>
-                                    <div className="td text-right col-2">{formatCurrency(journalEntryViewModel.debitAmount)}</div>
-                                    <div className="td text-right col-2">{formatCurrency(journalEntryViewModel.creditAmount)}</div>
-                                </Link>
-                            )
-                        })}
-                    </div>
-                    <div className="d-flex justify-content-between px-1 py-2 border-top " >
-                        <div className={first ? "invisible" : " "}>
-                            <Link replace onClick={previousPage} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>
-                        </div>
-                        <div className="align-self-center">
-                            Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength)} of {totalElements}{' '}
-                        results
-                        </div>{/**TODO replace with page selector */}
-                        <div className={last ? "invisible" : ""}>
-                            <Link replace onClick={nextPage} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link>
-                        </div>
+                </h4>
+                {props.hasAddEntryButton ?
+                    <button className="btn font-size-standard btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
+                        <i className="ion ion-md-add fa-fw fa-lg"></i>{tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
+                    </button>
+                    : null}
+            </div>
+            <div className="my-2">
+                <div className="thead ">
+                    <div className="d-flex tr bg-light border rounded">
+                        <div className="th col-2">{tableOfJournalEntriesText[appContext.locale]["Date"]}</div>
+                        <div className="th col-6">{tableOfJournalEntriesText[appContext.locale]["Description"]}</div>
+                        <div className="th text-right col-2">{tableOfJournalEntriesText[appContext.locale]["Debit"]}</div>
+                        <div className="th text-right col-2">{tableOfJournalEntriesText[appContext.locale]["Credit"]}</div>
                     </div>
                 </div>
-                <Modal
-                    isOpen={journalEntryModal}
-                    toggle={handleExitJournalEntryModal}
-                    size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
-                    centered={true}
-                >
-                    <ModalHeader>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
-                    <ModalBody>
-                        {editMode ?
-                            <JournalEntryEditMode
-                                data={lineItemData} setLineItemData={setLineItemData}
-                                journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
-                                journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
-                                accountOptions={accountOptions}
-                                alertMessages={alertMessages}
-                                handleSaveJournalEntryButton={handleSaveJournalEntryButton}>
-                            </JournalEntryEditMode> :
-                            <JournalEntryViewMode
-                                data={lineItemData}
-                                journalEntryDate={journalEntryDate}
-                                journalEntryDescription={journalEntryDescription}
-                            >
-                            </JournalEntryViewMode>
-                        }
-                    </ModalBody>
-                    <ModalFooter className="justify-content-between">
-                        {editMode ?
-                            <>
-                                <div>
-                                    {createMode ? null :
-                                        <button className="btn btn-danger width-10ch" onClick={() => handleDeleteJournalEntryButton(journalEntryId)}>
-                                            {tableOfJournalEntriesText[appContext.locale]["Delete"]}
-                                        </button>}
-                                </div>
-                                <div>
-                                    <button className="btn btn-primary width-10ch"onClick={() => handleSaveJournalEntryButton()}>
-                                        {tableOfJournalEntriesText[appContext.locale]["Save"]}
-                                    </button>
-                                    <button className="btn btn-white m-l-10 width-10ch" onClick={createMode ? cancelCreateMode : cancelEditMode}>
-                                        {tableOfJournalEntriesText[appContext.locale]["Cancel"]}
-                                    </button>
-                                </div>
-                            </>
-                            :
-                            <>
-                                <div>
-                                    <button className="btn btn-white width-175" onClick={toggleJournalEntryHistoryModal}>{tableOfJournalEntriesText[appContext.locale]["View edit history"]}</button>
-                                </div>
-                                <div>
-                                    <button className="btn btn-info width-10ch" onClick={handleCopyJournalEntryButton}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
-                                    <button className="btn btn-primary m-l-10 width-10ch" onClick={handleEditButton}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
-                                    <button className="btn btn-white m-l-10 width-10ch" onClick={handleExitJournalEntryModal}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
-                                </div>
-                            </>
-                        }
-                    </ModalFooter>
-                </Modal>
-                {props.parentComponentAccountId ? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={props.parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} /> : null}
-                {journalEntryId ? <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} /> : null}
-        </CardBody>
-        </Card>
+                <div className="tbody">
+                    {journalEntryViewModels.map(journalEntryViewModel => {
+                        return (
+                            <Link replace to="#" className="tr d-flex" key={journalEntryViewModel.journalEntryId} onClick={() => expandJournalEntry(journalEntryViewModel.journalEntryId)}>
+                                <div className="td col-sm-2">{journalEntryViewModel.journalEntryDate}</div>
+                                <div className="td text-truncate col-sm-6">{journalEntryViewModel.description}</div>
+                                <div className="td text-right col-2">{formatCurrency(journalEntryViewModel.debitAmount)}</div>
+                                <div className="td text-right col-2">{formatCurrency(journalEntryViewModel.creditAmount)}</div>
+                            </Link>
+                        )
+                    })}
+                </div>
+                <div className="d-flex justify-content-between px-1 py-2 border-top " >
+                    <div className={first ? "invisible" : " "}>
+                        <Link replace onClick={previousPage} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>
+                    </div>
+                    <div className="align-self-center">
+                        Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength)} of {totalElements}{' '}
+                    results
+                    </div>{/**TODO replace with page selector */}
+                    <div className={last ? "invisible" : ""}>
+                        <Link replace onClick={nextPage} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link>
+                    </div>
+                </div>
+            </div>
+            <Modal
+                isOpen={journalEntryModal}
+                toggle={handleExitJournalEntryModal}
+                size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
+                centered={true}
+            >
+                <ModalHeader>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
+                <ModalBody>
+                    {editMode ?
+                        <JournalEntryEditMode
+                            data={lineItemData} setLineItemData={setLineItemData}
+                            journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
+                            journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
+                            accountOptions={accountOptions}
+                            alertMessages={alertMessages}
+                            handleSaveJournalEntryButton={handleSaveJournalEntryButton}>
+                        </JournalEntryEditMode> :
+                        <JournalEntryViewMode
+                            data={lineItemData}
+                            journalEntryDate={journalEntryDate}
+                            journalEntryDescription={journalEntryDescription}
+                        >
+                        </JournalEntryViewMode>
+                    }
+                </ModalBody>
+                <ModalFooter className="justify-content-between">
+                    {editMode ?
+                        <>
+                            <div>
+                                {createMode ? null :
+                                    <button className="btn btn-danger width-10ch" onClick={() => handleDeleteJournalEntryButton(journalEntryId)}>
+                                        {tableOfJournalEntriesText[appContext.locale]["Delete"]}
+                                    </button>}
+                            </div>
+                            <div>
+                                <button className="btn btn-primary width-10ch"onClick={() => handleSaveJournalEntryButton()}>
+                                    {tableOfJournalEntriesText[appContext.locale]["Save"]}
+                                </button>
+                                <button className="btn btn-white m-l-10 width-10ch" onClick={createMode ? cancelCreateMode : cancelEditMode}>
+                                    {tableOfJournalEntriesText[appContext.locale]["Cancel"]}
+                                </button>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div>
+                                <button className="btn btn-white width-175" onClick={toggleJournalEntryHistoryModal}>{tableOfJournalEntriesText[appContext.locale]["View edit history"]}</button>
+                            </div>
+                            <div>
+                                <button className="btn btn-info width-10ch" onClick={handleCopyJournalEntryButton}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
+                                <button className="btn btn-primary m-l-10 width-10ch" onClick={handleEditButton}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
+                                <button className="btn btn-white m-l-10 width-10ch" onClick={handleExitJournalEntryModal}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
+                            </div>
+                        </>
+                    }
+                </ModalFooter>
+            </Modal>
+            {props.parentComponentAccountId ? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={props.parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} /> : null}
+            {journalEntryId ? <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} /> : null}
+        </>
     )
 
 }
