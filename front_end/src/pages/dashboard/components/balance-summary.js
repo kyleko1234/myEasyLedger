@@ -29,7 +29,7 @@ function BalanceSummary(props) {
 
 
     return (
-        <Card className="shadow-sm ">
+        <Card className="shadow-sm very-rounded">
             <CardBody className="overflow-auto py-0" style={{ height: '500px' }}>
                 {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                     <table className='table table-hover'>

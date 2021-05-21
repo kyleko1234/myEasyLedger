@@ -60,7 +60,7 @@ function ExpenseBreakdown(props) {
         });
     }, [])
     return(
-        <Card className="shadow-sm ">
+        <Card className="shadow-sm very-rounded">
             <CardBody >
                 <CardTitle>
                     {dashboardText[appContext.locale]["Expense Breakdown"]}

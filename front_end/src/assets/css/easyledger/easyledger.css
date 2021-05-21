@@ -179,10 +179,12 @@ a.nav-link:hover {
     padding: .75rem;
 }
 .td {
-    border-top: #dadada 1px solid;
     padding: .75rem;
 }
-.tr:first-of-type .td {
+.tr {
+    border-top: #dadada 1px solid;
+}
+.tr:first-child {
     border-top: none;
 }
 
@@ -202,12 +204,20 @@ a.tr:hover {
     border-radius: 10px;
 }
 
+.border-inherit {
+    border: inherit;
+}
+
 .font-size-standard {
     font-size: var(--base-font-size);
 }
 
 .font-size-compact {
     font-size: var(--compact-font-size);
+}
+
+.indent {
+    padding-left: 3em;
 }
 
 .cursor-pointer {
