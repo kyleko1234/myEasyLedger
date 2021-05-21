@@ -96,10 +96,10 @@ class ChartOfAccounts extends React.Component {
                 <h1 className="">
                     {chartOfAccountsText[this.context.locale]["Chart of Accounts"]}
                 </h1>
-                <Nav pills justified className="d-block">
+                <Nav pills justified className="d-block bg-light px-3 py-1 border rounded ">
                     {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                        <div className="d-flex justify-content-between align-items-center px-3 mb-3">
-                            <div className="row ">
+                        <div className="d-flex justify-content-between align-items-center mx-0 my-2">
+                            <div className="row mx-0">
                                 {this.state.accountTypes.map(accountType => { //render a pills navlink for each accountType returned by the server, with the active accountType being the one that has an id that matches the url param.
                                     return (
                                         <NavItem key={accountType.id}>
@@ -114,7 +114,7 @@ class ChartOfAccounts extends React.Component {
                                 })}
                             </div>
                             <button
-                                className="btn btn-primary ml-3"
+                                className="btn font-size-standard btn-primary ml-3 "
                                 onClick={() => {
                                     this.handleAddAnAccountButton();
                                 }}
