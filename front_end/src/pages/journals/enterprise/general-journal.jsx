@@ -30,7 +30,7 @@ function GeneralJournal() {
     // This will get called when the table needs new data
         
     //fetch data from Easy Ledger API
-    const url = `${API_BASE_URL}/organization/${appContext.currentOrganizationId}/journalEntryViewModel/?page=${pageIndex}&size=${pageSize}`;
+    const url = `${API_BASE_URL}/organization/${appContext.currentOrganizationId}/journalEntryViewModel?page=${pageIndex}&size=${pageSize}`;
     axios.get(url).then(response => {
         var dataContent = response.data.content;
         setData(dataContent);
@@ -42,11 +42,6 @@ function GeneralJournal() {
   
   return (
         <TableOfJournalEntries
-          columns={columns}
-          data={data}
-          fetchData={fetchData}
-          pageCount={pageCount}
-          elementCount={elementCount}
           tableTitle={generalJournalText[appContext.locale]["Accounting Entries"]}
           hasAddEntryButton={true}
         />

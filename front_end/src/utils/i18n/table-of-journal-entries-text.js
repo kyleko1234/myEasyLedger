@@ -1,5 +1,12 @@
 export const tableOfJournalEntriesText = {
     "en-US": {
+        "Date": "Date",
+        "Description": "Description",
+        "Debit": "Debit",
+        "Credit": "Credit",
+        
+        "Accounting Entries": "Accounting Entries",
+
         "Please choose a date for this entry.": "Please choose a date for this entry.",
         "Please provide a description for this entry.": "Please provide a description for this entry.",
         "Line-items must have a description.": "Line-items must have a description.",
@@ -30,6 +37,13 @@ export const tableOfJournalEntriesText = {
         "View edit history": "View edit history"
     },
     "zh-TW": {
+        "Date": "日期",
+        "Description": "描述",
+        "Debit": "借方",
+        "Credit": "貸方",
+
+        "Accounting Entries": "記帳分錄",
+
         "Please choose a date for this entry.": "請為分錄選一個日期。",
         "Please provide a description for this entry.": "請簡單描述一下這個分錄。",
         "Line-items must have a description.": "單行項目要有描述。",

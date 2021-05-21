@@ -11,9 +11,12 @@ import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-
 import AccountDetailsEditor from '../../chart-of-accounts/components/account-details-editor';
 import JournalEntryEditHistory from './journal-entry-edit-history.js';
 import { setConstantValue } from 'typescript';
-//required props: tableTitle(string), hasAddEntryButton(boolean)
 
-//optional props: parentComponentAccountId
+//Generates a table with react-table 7 using pagination
+
+// Let's add a fetchData method to our Table component that will be used to fetch
+// new data when pagination state changes
+// We can also add a loading state to let our table know it's loading new data
 function TableOfJournalEntries(props) {
     const appContext = React.useContext(PageSettings);
     const [pageSize, setPageSize] = React.useState(10);
@@ -68,7 +71,7 @@ function TableOfJournalEntries(props) {
     const fetchJournalEntry = journalEntryId => {
         axios.get(`${API_BASE_URL}/journalEntry/${journalEntryId}`)
             .then(response => {
-                let formattedLineItems = []
+                var formattedLineItems = []
                 let journalEntry = response.data;
                 journalEntry.lineItems.forEach(lineItem => {
                     var formattedLineItem = {
@@ -130,7 +133,7 @@ function TableOfJournalEntries(props) {
 
     const handleEditButton = () => {
         toggleEditMode();
-        fetchAccounts();
+        refreshAccounts();
     }
 
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
@@ -153,7 +156,7 @@ function TableOfJournalEntries(props) {
         if (number == 0) { //falsey items qualify as zero
             return '';
         }
-        return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number));
+        return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cell.value));
     }
 
     const checkEntryForValidationErrors = () => {
@@ -289,14 +292,14 @@ function TableOfJournalEntries(props) {
         <>
             <div className="d-flex justify-content-between align-items-center">
                 <h4 >
-                    {props.tableTitle}
-                    {props.parentComponentAccountId ?
+                    {tableTitle}
+                    {parentComponentAccountId ?
                         <Link replace className="icon-link-text-muted m-l-10" to="#" onClick={toggleAccountDetailsEditorModal}>
                             <i className="fa fa-edit"></i>
                         </Link>
                         : null}
                 </h4>
-                {props.hasAddEntryButton ?
+                {hasAddEntryButton ?
                     <button className="btn btn-sm btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
                         <i className="ion ion-md-add fa-fw fa-lg"></i>{tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                     </button>
@@ -315,8 +318,8 @@ function TableOfJournalEntries(props) {
                     {journalEntryViewModels.map(journalEntryViewModel => {
                         return (
                             <div className="row tr" key={journalEntryViewModel.journalEntryId} onClick={() => expandJournalEntry(journalEntryViewModel.journalEntryId)}>
-                                <div className="td col-sm-2">{journalEntryViewModel.journalEntryDate}</div>
-                                <div className="td text-truncate col-sm-6">{journalEntryViewModel.description}</div>
+                                <div className="td col-2">{journalEntryViewModel.journalEntryDate}</div>
+                                <div className="td text-truncate col-6">{journalEntryViewModel.description}</div>
                                 <div className="td text-right col-2">{formatCurrency(journalEntryViewModel.debitAmount)}</div>
                                 <div className="td text-right col-2">{formatCurrency(journalEntryViewModel.creditAmount)}</div>
                             </div>
@@ -337,7 +340,7 @@ function TableOfJournalEntries(props) {
                 </div>
             </div>
             <Modal
-                isOpen={journalEntryModal}
+                isOpen={journalEntryExpanded}
                 toggle={handleExitJournalEntryModal}
                 size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
                 centered={true}
@@ -393,7 +396,7 @@ function TableOfJournalEntries(props) {
                     }
                 </ModalFooter>
             </Modal>
-            {props.parentComponentAccountId ? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={props.parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} /> : null}
+            {parentComponentAccountId ? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} /> : null}
             {journalEntryId ? <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} /> : null}
         </>
     )
