@@ -3,6 +3,7 @@
     --header-height: 50px;
     --sidebar-hidden-transition-time: 0.4s;
     --base-font-size: 0.875rem;
+    --compact-font-size: 0.75rem;
     --base-text-color: #000;
     --sidebar-text-color: #555;
 }
@@ -124,12 +125,22 @@ body {
 
 /* BUTTONS */
 .btn-white {
-    background-color: white;
+    background-color: #fff;
+    border-color: #c8c8c8;
 }
 .btn-white:hover {
     background-color: #e1e1e1;
     border-color: #c8c8c8;
 }
+.btn-default {
+    background-color: #fff;
+    border-color: #d5d5d5;
+}
+.btn-default:hover {
+    background-color: #eee;
+    border-color: #d5d5d5;
+}
+
 
 /* MODIFICATIONS TO BOOTSTRAP DROPDOWN*/
 .dropdown-item,
@@ -140,6 +151,17 @@ body {
 /* MODIFICATIONS TO BOOTSTRAP MODAL */
 .modal-content {
     border-radius: 10px;
+}
+
+/* MODIFICATIONS TO BOOTSTRAP PILLS */
+a.nav-link {
+    color: #6f6f6f;
+    font-weight: 500;
+    font-size: var(--base-font-size);
+}
+a.nav-link:hover {
+    text-decoration: none;
+    color: var(--base-text-color);
 }
 
 /* MODIFICATIONS TO BOOTSTRAP TABLE */
@@ -182,6 +204,10 @@ a.tr:hover {
 
 .font-size-standard {
     font-size: var(--base-font-size);
+}
+
+.font-size-compact {
+    font-size: var(--compact-font-size);
 }
 
 .cursor-pointer {

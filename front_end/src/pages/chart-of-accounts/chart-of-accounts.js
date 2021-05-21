@@ -98,7 +98,7 @@ class ChartOfAccounts extends React.Component {
                 </h1>
                 <Nav pills justified className="d-block">
                     {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                        <div className="d-flex justify-content-between px-3 mb-3">
+                        <div className="d-flex justify-content-between align-items-center px-3 mb-3">
                             <div className="row ">
                                 {this.state.accountTypes.map(accountType => { //render a pills navlink for each accountType returned by the server, with the active accountType being the one that has an id that matches the url param.
                                     return (
@@ -114,7 +114,7 @@ class ChartOfAccounts extends React.Component {
                                 })}
                             </div>
                             <button
-                                className="btn btn-primary my-1 ml-3"
+                                className="btn btn-primary ml-3"
                                 onClick={() => {
                                     this.handleAddAnAccountButton();
                                 }}

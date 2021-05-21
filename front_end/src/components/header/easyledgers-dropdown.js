@@ -28,7 +28,7 @@ function EasyledgersDropdown(props) {
     return(
         <div className={props.className}>
             <Dropdown isOpen={isOpen} toggle={toggle}>
-                <DropdownToggle caret color="white" className="font-size-standard text-nowrap">
+                <DropdownToggle caret color="white" className="font-size-standard text-nowrap border-0">
                     {appContext.currentOrganizationName}
                 </DropdownToggle>
                 <DropdownMenu className="shadow" right>
