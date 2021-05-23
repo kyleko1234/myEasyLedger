@@ -11,24 +11,27 @@ import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-
 import AccountDetailsEditor from '../../chart-of-accounts/components/account-details-editor';
 import JournalEntryEditHistory from './journal-entry-edit-history.js';
 import { setConstantValue } from 'typescript';
-//required props: tableTitle(string), hasAddEntryButton(boolean), fetchData, journalEntryViewModels, 
-
 
 //optional props: parentComponentAccountId
-function TableOfJournalEntries(props) {
+function TableOfJournalEntries({
+    tableTitle, 
+    hasAddEntryButton,
+    parentComponentAccountId,
+    fetchData,
+    pageSize,
+    pageIndex,
+    columns,
+    data,
+    totalPages,
+    totalElements,
+    pageLength,
+    first,
+    last,
+    loading,
+    previousPage,
+    nextPage
+}) {
     const appContext = React.useContext(PageSettings);
-    const [pageSize, setPageSize] = React.useState(10);
-    const [pageIndex, setPageIndex] = React.useState(0);
-    const [journalEntryViewModels, setJournalEntryViewModels] = React.useState([]);
-    const [totalPages, setTotalPages] = React.useState(0);
-    const [totalElements, setTotalElements] = React.useState(0);
-    const [pageLength, setPageLength] = React.useState(0);
-    const [first, setFirst] = React.useState(true);
-    const [last, setLast] = React.useState(true);
-    const [loading, setLoading] = React.useState(true);
-
-    const previousPage = () => setPageIndex(pageIndex - 1);
-    const nextPage = () => setPageIndex(pageIndex + 1);
 
     const [journalEntryModal, setJournalEntryModal] = React.useState(false);
     const toggleJournalEntryModal = () => setJournalEntryModal(!journalEntryModal);
@@ -53,20 +56,6 @@ function TableOfJournalEntries(props) {
     const [accountDetailsEditorModal, setAccountDetailsEditorModal] = React.useState(false);
     const toggleAccountDetailsEditorModal = () => setAccountDetailsEditorModal(!accountDetailsEditorModal);
     
-    async function fetchData(pageIndex, pageSize) {
-        await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/journalEntryViewModel?page=${pageIndex}&size=${pageSize}`)
-            .then(response => {
-                setJournalEntryViewModels(response.data.content);
-                setTotalPages(response.data.totalPages);
-                setTotalElements(response.data.totalElements);
-                setPageLength(response.data.size);
-                setFirst(response.data.first);
-                setLast(response.data.last);
-            })
-            .catch(console.log);
-
-        setLoading(false);
-    }
 
     const fetchJournalEntry = journalEntryId => {
         axios.get(`${API_BASE_URL}/journalEntry/${journalEntryId}`)
@@ -152,11 +141,15 @@ function TableOfJournalEntries(props) {
             .catch(console.log);
     }
 
-    const formatCurrency = number => {
-        if (number == 0) { //falsey items qualify as zero
-            return '';
+    //if column accessor is debitAmount or creditAmount, format the value of this table cell as a currency, else return the value of this table cell
+    const formatCell = (cellValue, columnAccessor) => {
+        if (columnAccessor === "debitAmount" || columnAccessor === "creditAmount") {
+            if (cellValue == 0) { //falsey items qualify as zero
+                return '';
+            }
+            return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cellValue));    
         }
-        return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number));
+        return cellValue;
     }
 
     const checkEntryForValidationErrors = () => {
@@ -292,14 +285,14 @@ function TableOfJournalEntries(props) {
         <>
             <div className="d-flex justify-content-between align-items-center">
                 <h4 >
-                    {props.tableTitle}
-                    {props.parentComponentAccountId ?
+                    {tableTitle}
+                    {parentComponentAccountId ?
                         <Link replace className="icon-link-text-muted m-l-10" to="#" onClick={toggleAccountDetailsEditorModal}>
                             <i className="fa fa-edit"></i>
                         </Link>
                         : null}
                 </h4>
-                {props.hasAddEntryButton ?
+                {hasAddEntryButton ?
                     <button className="btn font-size-standard btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
                         <i className="ion ion-md-add fa-fw fa-lg"></i>{tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                     </button>
@@ -308,20 +301,26 @@ function TableOfJournalEntries(props) {
             <div className="my-2">
                 <div className="thead ">
                     <div className="d-flex tr bg-light border rounded">
-                        <div className="th col-2">{tableOfJournalEntriesText[appContext.locale]["Date"]}</div>
-                        <div className="th col-6">{tableOfJournalEntriesText[appContext.locale]["Description"]}</div>
-                        <div className="th text-right col-2">{tableOfJournalEntriesText[appContext.locale]["Debit"]}</div>
-                        <div className="th text-right col-2">{tableOfJournalEntriesText[appContext.locale]["Credit"]}</div>
+                        {columns.map(column => {
+                            return(
+                                <div key={column.accessor} className={"th " + column.className}>
+                                    {column.header}
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
                 <div className="tbody">
-                    {journalEntryViewModels.map(journalEntryViewModel => {
+                    {data.map((row, i) => {
                         return (
-                            <Link replace to="#" className="tr d-flex" key={journalEntryViewModel.journalEntryId} onClick={() => expandJournalEntry(journalEntryViewModel.journalEntryId)}>
-                                <div className="td col-sm-2">{journalEntryViewModel.journalEntryDate}</div>
-                                <div className="td text-truncate col-sm-6">{journalEntryViewModel.description}</div>
-                                <div className="td text-right col-2">{formatCurrency(journalEntryViewModel.debitAmount)}</div>
-                                <div className="td text-right col-2">{formatCurrency(journalEntryViewModel.creditAmount)}</div>
+                            <Link replace to="#" className="tr d-flex" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
+                                {columns.map(column => {
+                                    return(
+                                        <div key={column.accessor} className={"td " + column.className}>
+                                            {formatCell(row[column.accessor], column.accessor)}
+                                        </div>
+                                    )
+                                })}
                             </Link>
                         )
                     })}
@@ -396,7 +395,7 @@ function TableOfJournalEntries(props) {
                     }
                 </ModalFooter>
             </Modal>
-            {props.parentComponentAccountId ? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={props.parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} /> : null}
+            {parentComponentAccountId ? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} /> : null}
             {journalEntryId ? <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} /> : null}
         </>
     )
