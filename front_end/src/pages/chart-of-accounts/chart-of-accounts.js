@@ -98,10 +98,10 @@ class ChartOfAccounts extends React.Component {
                 </h1>
                 <Card className="very-rounded my-4 shadow-sm bg-light">
                     <CardBody>
-                        <Nav pills justified className="d-block">
+                        <Nav pills justified className="">
                             {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                                <div className="d-flex justify-content-between align-items-center mx-0 my-2">
-                                    <div className="d-flex">
+                                <div className="d-flex w-100 justify-content-between align-items-center">
+                                    <div className="d-lg-flex">
                                         {this.state.accountTypes.map(accountType => { //render a pills navlink for each accountType returned by the server, with the active accountType being the one that has an id that matches the url param.
                                             return (
                                                 <NavItem key={accountType.id}>

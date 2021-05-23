@@ -11,7 +11,8 @@ import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-
 import AccountDetailsEditor from '../../chart-of-accounts/components/account-details-editor';
 import JournalEntryEditHistory from './journal-entry-edit-history.js';
 import { setConstantValue } from 'typescript';
-//required props: tableTitle(string), hasAddEntryButton(boolean)
+//required props: tableTitle(string), hasAddEntryButton(boolean), fetchData, journalEntryViewModels, 
+
 
 //optional props: parentComponentAccountId
 function TableOfJournalEntries(props) {

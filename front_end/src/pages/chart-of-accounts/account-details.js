@@ -8,6 +8,7 @@ import { accountDetailsText } from '../../utils/i18n/account-details-text.js';
 import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 import TableOfTransactions from '../journals/personal/table-of-transactions';
 import AccountSwitcher from './components/account-switcher';
+import { Card, CardBody } from 'reactstrap';
 
 function AccountDetails(props) {
 
@@ -109,17 +110,23 @@ function AccountDetails(props) {
             {appContext.isEnterprise ?
                 <div className="row">
                     <div className="col-lg-8">
-                        {selectedAccount ? <TableOfJournalEntries
-                            columns={columns}
-                            data={data}
-                            fetchData={fetchData}
-                            pageCount={pageCount}
-                            elementCount={elementCount}
-                            tableTitle={selectedAccount.accountCode? selectedAccount.accountCode + " - " + selectedAccount.accountName + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId) : selectedAccount.accountName + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}
-                            hasAddEntryButton={true}
-                            parentComponentAccountId={selectedAccountId}
-                        /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
-                        /* we reuse TableOfJournalEntries component, even though it's more like a TableOfLineItems here */}
+                        <Card className="shadow-sm very-rounded">
+                            <CardBody>
+                                {selectedAccount 
+                                ?   <TableOfJournalEntries
+                                        columns={columns}
+                                        data={data}
+                                        fetchData={fetchData}
+                                        pageCount={pageCount}
+                                        elementCount={elementCount}
+                                        tableTitle={selectedAccount.accountCode? selectedAccount.accountCode + " - " + selectedAccount.accountName + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId) : selectedAccount.accountName + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}
+                                        hasAddEntryButton={true}
+                                        parentComponentAccountId={selectedAccountId}
+                                    /> 
+                                :   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
+
+                            </CardBody>
+                        </Card>
                     </div>
                     <div className="col-lg-4">
                         <div>
