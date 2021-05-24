@@ -37,7 +37,7 @@ function GeneralJournal() {
                 setData(response.data.content);
                 setTotalPages(response.data.totalPages);
                 setTotalElements(response.data.totalElements);
-                setPageLength(response.data.size);
+                setPageLength(response.data.numberOfElements);
                 setFirst(response.data.first);
                 setLast(response.data.last);
             })

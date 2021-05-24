@@ -73,7 +73,6 @@ function AccountDetails(props) {
 
     const fetchData = React.useCallback(async ( pageIndex, pageSize ) => {
         // This will get called when the table needs new data
-        console.log(pageIndex, pageSize);
         //fetch data from Easy Ledger API
         setLoading(true);
         async function fetchTableData () {
@@ -92,7 +91,7 @@ function AccountDetails(props) {
                 setData(dataContent);
                 setTotalPages(response.data.totalPages);
                 setTotalElements(response.data.totalElements);
-                setPageLength(response.data.size);
+                setPageLength(response.data.numberOfElements);
                 setFirst(response.data.first);
                 setLast(response.data.last);
             })
@@ -117,11 +116,11 @@ function AccountDetails(props) {
                             <CardBody>
                                 {selectedAccount 
                                 ?   <>
-                                        <h1 className="h3">
+                                        <h1 className="h3 d-flex">
                                             {selectedAccount.accountCode
                                                 ? selectedAccount.accountCode + " - " + selectedAccount.accountName
                                                 : selectedAccount.accountName}
-                                            <Link replace className="icon-link-text-muted ml-3" to="#" onClick={toggleAccountDetailsEditorModal}>
+                                            <Link replace className="icon-link-text-muted ml-3 font-size-larger align-self-center" to="#" onClick={toggleAccountDetailsEditorModal}>
                                                 <i className="fa fa-edit"></i>
                                             </Link>
                                         </h1>
