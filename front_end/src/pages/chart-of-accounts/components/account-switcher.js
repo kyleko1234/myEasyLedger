@@ -6,15 +6,17 @@ import { useHistory } from "react-router-dom";
 import { balanceSummaryText } from "../../../utils/i18n/balance-summary-text.js";
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import { WidgetHeader, WidgetList, ExpandableWidgetListItem, WidgetListItem } from '../../../components/widget/widget.jsx';
+import { Card, CardBody, CardHeader, Collapse } from 'reactstrap';
 
 
 function AccountSwitcher(props) {
-    //required props: widgetTitle (string) selectedAccountId (number), isEnterprise (boolean)
+    //required props: widgetTitle (string) selectedAccountId (number), isEnterprise (boolean), 
     //valid widgetTitles: "Switch Accounts", "Switch Categories"
     //if category is true there will be balances for each account shown in the list, otherwise not. Obviously if category is true this is a list of categories, otherwise it is a list of accounts. This is relevant for personal ui only; for enterprise category should always be false
-    //optional props: externalRefreshToken, category(boolean)
-    //externalRefreshToken can be any data. This prop should be changed when you want to force this component to refresh data. This prop should not be used for anything else. 
+    //optional props: category(boolean), externalRefreshToken
+    //externalRefreshToken can be any data, but this component will be refreshed when the value of externalRefreshToken changes
     const appContext = React.useContext(PageSettings);
     const history = useHistory();
     const accountTypeOptions = ACCOUNT_TYPE_OPTIONS(appContext.locale);
@@ -26,10 +28,14 @@ function AccountSwitcher(props) {
     const [selectedAccountTypeOptionId, setSelectedAccountTypeOptionId] = React.useState(null);
 
     const handleExpandAll = () => {
-        setForceExpandToken(Math.random());
+        accounts
+            .filter(account => account.hasChildren === true)
+            .forEach(account => account.expanded = true);
     }
     const handleCollapseAll = () => {
-        setForceCollapseToken(Math.random());
+        accounts
+            .filter(account => account.hasChildren === true)
+            .forEach(account => account.expanded = false);
     }
 
 
@@ -43,7 +49,7 @@ function AccountSwitcher(props) {
             }
             setLoading(false);
         }).catch(console.log);
-    }, [appContext.currentOrganizationId, props.externalRefreshToken])
+    }, [appContext.currentOrganizationId, props.externalRefreshToken]) //load fresh data when props.externalRefreshToken changes
 
     const formatBalance = (accountTypeId, amount) => {
         let formattedNumber = new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(amount)
@@ -59,120 +65,99 @@ function AccountSwitcher(props) {
         )
     }
     return (
-        <WidgetList>
-            <WidgetHeader className="bg-light">
-                <div>{balanceSummaryText[appContext.locale][props.widgetTitle]}</div>
+        <Card className="very-rounded shadow-sm">
+            <CardBody>
+                <h4>{balanceSummaryText[appContext.locale][props.widgetTitle]}</h4>
                 <div className="font-weight-normal">
                     <Link replace to="#" onClick={handleExpandAll}>{balanceSummaryText[appContext.locale]["(Expand All)"]}</Link>
                     <span> / </span>
                     <Link replace to="#" onClick={handleCollapseAll}>{balanceSummaryText[appContext.locale]["(Collapse All)"]}</Link>
                 </div>
-            </WidgetHeader>
-            <div className="row px-3 py-2">
-                <label className="col-form-label col-md-6">
-                    {props.category? balanceSummaryText[appContext.locale]["Select a category type:"]: balanceSummaryText[appContext.locale]["Select an account type:"]}
-                </label>
-                <div className="col-md-6">
-                    <Select
-                        options={props.isEnterprise? accountTypeOptions : 
-                            (props.category? accountTypeOptions.filter(accountTypeOption => CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value)) : accountTypeOptions.filter(accountTypeOption => NON_CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value)))}
-                        value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == selectedAccountTypeOptionId)}
-                        onChange={selectedOption => setSelectedAccountTypeOptionId(selectedOption.value)}
-                        menuPortalTarget={document.body}
-                        menuShouldScrollIntoView={false}
-                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                        menuPlacement={'auto'}
+                <div className="d-flex align-items-center border-top border-bottom py-3 mt-3">
+                    <label className="px-0 my-0 py-2 col-md-6">
+                        {props.category? balanceSummaryText[appContext.locale]["Select a category type:"]: balanceSummaryText[appContext.locale]["Select an account type:"]}
+                    </label>
+                    <div className="col-md-6">
+                        <Select
+                            options={props.isEnterprise? accountTypeOptions : 
+                                (props.category? accountTypeOptions.filter(accountTypeOption => CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value)) : accountTypeOptions.filter(accountTypeOption => NON_CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value)))}
+                            value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == selectedAccountTypeOptionId)}
+                            onChange={selectedOption => setSelectedAccountTypeOptionId(selectedOption.value)}
+                            menuPortalTarget={document.body}
+                            menuShouldScrollIntoView={false}
+                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                            menuPlacement={'auto'}
 
-                    />
+                        />
+                    </div>
                 </div>
-            </div>
-            <div className="overflow-auto" style={{ maxHeight: '750px' }}>
-                {//loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :     --add this line in case you need a loading spinner. currently it is removed because it is annoying to see a spinner every click.
-                    
-                    accounts.filter(account => account.accountTypeId == selectedAccountTypeOptionId && account.parentAccountId == null).map(account => {
-                        return (
-                            account.hasChildren?
-                            <ExpandableWidgetListItem key={account.accountId} parentText={props.isEnterprise && account.accountCode? account.accountCode + " - " + account.accountName : account.accountName} parentClassName="bg-light nohover rounded-0" forceExpandToken={forceExpandToken} forceCollapseToken={forceCollapseToken}>
-                                {accounts ?
-                                    accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
-                                        return (
-                                            <React.Fragment key={childAccount.accountId}>
-                                                {childAccount.accountId == props.selectedAccountId ?
-                                                    <WidgetListItem className="widget-list-item bg-white-hover">
-                                                        <div className="p-l-30">
-                                                            {props.isEnterprise && childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}
+				<PerfectScrollbar style={{maxHeight: "51.5vh", marginLeft: "-1.25rem", marginRight: "-1.25rem"}} options={{suppressScrollX: true, wheelPropagation: false}}>
+                    <div style={{paddingLeft: "1.25rem", paddingRight: "1.25rem"}}>
+                        {// loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :     --add this line in case you need a loading spinner. currently it is removed because it is annoying to see a spinner every click. */
+                            accounts
+                                .filter(account => account.accountTypeId === selectedAccountTypeOptionId && account.parentAccountId === null)
+                                .map(account => {
+                                    return (
+                                        account.hasChildren
+                                            ?   <React.Fragment key={account.accountId}>
+                                                    <Link to="#" className="tr d-flex align-items-center" onClick={() => account.expanded = !account.expanded}>
+                                                        <div className="col-1 pl-2">
+                                                            <i className={"fas fa-angle-right rotating-caret" + (account.expanded? " expand" : "")}></i>
                                                         </div>
-                                                        {props.category || props.isEnterprise ? null :
-                                                            <div className=" text-right">
-                                                                {formatBalance(childAccount.accountTypeId, childAccount.debitsMinusCredits)}
+                                                        <div className= "col-10 td px-0">
+                                                            <div className={"font-weight-600 font-size-compact" + (account.accountCode ? "" : "d-none")}>
+                                                                {account.accountCode}
                                                             </div>
-                                                        }
-                                                    </WidgetListItem>
-                                                    :
-                                                    <WidgetListItem link className=" bg-white" to={props.category ? `/category-details/${childAccount.accountId}` : `/account-details/${childAccount.accountId}`}>
-                                                        <div className="p-l-30">{props.isEnterprise && childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
-                                                        {props.category || props.isEnterprise ? null :
-                                                            <div className=" text-right">
-                                                                {formatBalance(childAccount.accountTypeId, childAccount.debitsMinusCredits)}
+                                                            <div className="text-truncate">
+                                                                {account.accountName}
                                                             </div>
+                                                        </div>
+                                                        <div className="col-1 pl-0"><i className="fas fa-angle-right invisible"></i></div>
+                                                    </Link>
+                                                    <Collapse isOpen={account.expanded} style={{borderTop: "1px solid #dadada"}}>
+                                                        {accounts
+                                                            .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                                            .map(childAccount => {
+                                                                return(
+                                                                    <Link to={props.category ? `/category-details/${childAccount.accountId}` : `/account-details/${childAccount.accountId}`} key={childAccount.accountId} className="tr d-flex align-items-center">
+                                                                        <div className="col-1 pl-2"></div>
+                                                                        <div className= "col-10 td pl-3 pr-0">
+                                                                            <div className={"font-weight-600 font-size-compact" + (childAccount.accountCode ? "" : "d-none")}>
+                                                                                {childAccount.accountCode}
+                                                                            </div>
+                                                                            <div className="text-truncate">
+                                                                                {childAccount.accountName}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="col-1 pl-0 text-muted"><i className="fas fa-angle-right "></i></div>
+                                                                    </Link>
+                                                                )
+                                                            })
                                                         }
-                                                    </WidgetListItem>
-                                                }
-                                            </React.Fragment>
-                                        )
-                                    })
-                                    : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
-                            </ExpandableWidgetListItem>
-                            :
-                            (account.accountId == props.selectedAccountId
-                            ?   
-                                <React.Fragment key={account.accountId}>
-                                    <div>{/*Empty div to force css to play nicely*/}</div>
-                                    <div className="widget-list-item border-top-d5d5d5 bg-light-hover">
-                                        <div className="widget-list-content d-flex">
-                                            <b className={"rotating-caret expand align-self-center invisible"} ></b>
-                                            <div className="align-self-center m-l-5 font-weight-600">{props.isEnterprise && account.accountCode? account.accountCode + " - " + account.accountName : account.accountName}</div>
-                                        </div>
-                                            {props.category || props.isEnterprise ? null :
-                                                <div className="widget-list-content">
-                                                    <div className=" text-right">
-                                                        {formatBalance(account.accountTypeId, account.debitsMinusCredits)}
+                                                    </Collapse>
+                                                    {/**children go here */}
+                                                </React.Fragment>
+                                            :   <Link key={account.accountId} to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`} className="tr d-flex align-items-center">
+                                                    <div className="col-1 pl-2">
+                                                        <i className="fas fa-angle-right rotating-caret px-2 invisible"></i>
                                                     </div>
-                                                </div>
-                                            }
-                                        <div className="m-r-10 widget-list-action text-right">
-                                            <i className="fa fa-angle-right fa-lg text-muted invisible"></i>
-                                        </div>
-                                    </div>
-                                    <div>{/*Empty div to force css to play nicely*/}</div>
-                                </React.Fragment>
-                            :   
-                                <React.Fragment key={account.accountId}>
-                                    <div>{/*Empty div to force css to play nicely*/}</div>
-                                    <Link replace className="widget-list-item border-top-d5d5d5 bg-light" to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`}>
-                                        <div className="widget-list-content d-flex">
-                                            <b className={"rotating-caret expand align-self-center invisible"} ></b>
-                                            <div className="align-self-center m-l-5 font-weight-600">{props.isEnterprise && account.accountCode? account.accountCode + " - " + account.accountName : account.accountName}</div>
-                                        </div>
-                                            {props.category || props.isEnterprise ? null :
-                                                <div className="widget-list-content">
-                                                    <div className=" text-right">
-                                                        {formatBalance(account.accountTypeId, account.debitsMinusCredits)}
+                                                    <div className= "col-10 td px-0">
+                                                        <div className={"font-weight-600 font-size-compact" + (account.accountCode ? "" : "d-none")}>
+                                                            {account.accountCode}
+                                                        </div>
+                                                        <div className="text-truncate">
+                                                            {account.accountName}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            }
-                                        <div className="m-r-10 widget-list-action text-right">
-                                            <i className="fa fa-angle-right fa-lg text-muted "></i>
-                                        </div>
-                                    </Link>
-                                    <div>{/*Empty div to force css to play nicely*/}</div>
-                                </React.Fragment>
-                            )
-                        )
-                    })
-                }
-            </div>
-        </WidgetList>
+                                                    <div className="col-1 pl-0 text-muted"><i className="fas fa-angle-right "></i></div>
+                                                </Link>
+                                    )
+                                })
+                        }
+                    </div>
+                </PerfectScrollbar>
+            </CardBody>
+        </Card>
     )
 }
 AccountSwitcher.defaultProps = {

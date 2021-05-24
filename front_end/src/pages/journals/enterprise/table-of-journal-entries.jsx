@@ -107,6 +107,7 @@ function TableOfJournalEntries({
 
     const cancelCreateMode = () => {
         setCreateMode(false);
+        setEditMode(false);
         setAlertMessages([]);
         toggleJournalEntryModal();
     }

@@ -46,11 +46,12 @@ function AccountDetails(props) {
 
     const [accountDetailsEditorModal, setAccountDetailsEditorModal] = React.useState(false);
     const toggleAccountDetailsEditorModal = () => setAccountDetailsEditorModal(!accountDetailsEditorModal);
+
+    const [refreshToken, setRefreshToken] = React.useState(0);
     
 
     //
     const [selectedAccount, setSelectedAccount] = React.useState(null);
-    const [refreshToken, setRefreshToken] = React.useState(0); //set this to a random number when a child component updates to force all child components to update together. Theoretically children components might fail to update if you get two identical random numbers in a row but lmao you're never gonna be able to reproduce this, just refresh
     
     const formatBalance = (debitsMinusCredits, accountTypeId) => {
         if (debitsMinusCredits == 0) {
@@ -103,8 +104,8 @@ function AccountDetails(props) {
             }).catch(console.log)    
         }
         await fetchTableData();
-        setLoading(false);
         setRefreshToken(Math.random());
+        setLoading(false);
     }, [selectedAccountId])
 
     return (
@@ -112,11 +113,11 @@ function AccountDetails(props) {
             {appContext.isEnterprise ?
                 <div className="row">
                     <div className="col-lg-8">
-                        <Card className="shadow-sm very-rounded">
+                        <Card className="shadow-sm very-rounded my-3">
                             <CardBody>
                                 {selectedAccount 
                                 ?   <>
-                                        <h1 className="h3 d-flex">
+                                        <h1 className="h2 d-flex">
                                             {selectedAccount.accountCode
                                                 ? selectedAccount.accountCode + " - " + selectedAccount.accountName
                                                 : selectedAccount.accountName}
@@ -148,7 +149,7 @@ function AccountDetails(props) {
                             </CardBody>
                         </Card>
                     </div>
-                    <div className="col-lg-4">
+                    <div className="col-lg-4 my-3">
                         <div>
                             {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                             <AccountSwitcher widgetTitle="Switch Accounts" isEnterprise={appContext.isEnterprise} category={false} selectedAccountId={selectedAccountId} externalRefreshToken={refreshToken}/>
@@ -159,7 +160,7 @@ function AccountDetails(props) {
                 </div>
                 :
                 <div className="row">
-                    <div className="col-lg-8">
+                    <div className="col-lg-8 my-3">
                         {selectedAccount ? <TableOfTransactions
                             columns={columns}
                             data={data}
@@ -170,10 +171,10 @@ function AccountDetails(props) {
                             loading={loading}
                         /> : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
                     </div>
-                    <div className="col-lg-4">
+                    <div className="col-lg-4 my-3">
                         <div>
                             {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                            <AccountSwitcher widgetTitle="Switch Accounts" isEnterprise={appContext.isEnterprise} category={false} selectedAccountId={selectedAccountId} externalRefreshToken={refreshToken}/>
+                            <AccountSwitcher widgetTitle="Switch Accounts" isEnterprise={appContext.isEnterprise} category={false} selectedAccountId={selectedAccountId}/>
                             }
                         </div>
                     </div>

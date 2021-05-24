@@ -148,7 +148,7 @@ class ChartOfAccounts extends React.Component {
                                                                     <button className="btn btn-sm btn-white border-0 text-muted" onClick={() => this.handleEditAccountButton(account)}>
                                                                         <i className="fas fa-edit font-size-compact"></i>
                                                                     </button>
-                                                                    <i className="fas fa-angle-right fa-lg text-muted invisible"></i>
+                                                                    <i className="fas fa-angle-right text-muted invisible"></i>
                                                                 </div>
                                                         </div>
                                                     :
@@ -160,7 +160,7 @@ class ChartOfAccounts extends React.Component {
                                                                 <button className=" btn btn-sm text-muted invisible">
                                                                     <i className="fas fa-edit"></i>
                                                                 </button>
-                                                                <i className=" fas fa-angle-right fa-lg text-muted"></i>
+                                                                <i className=" fas fa-angle-right text-muted"></i>
                                                             </div>
                                                         </Link>
                                                     }
@@ -173,7 +173,7 @@ class ChartOfAccounts extends React.Component {
                                                                     <Link key={childAccount.accountId} className="tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`}>
                                                                         <div className="td indent">{childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
                                                                         <div className="td">
-                                                                            <i className="fas fa-angle-right fa-lg text-muted"></i>
+                                                                            <i className="fas fa-angle-right text-muted"></i>
                                                                         </div>
                                                                     </Link>
                                                                 );

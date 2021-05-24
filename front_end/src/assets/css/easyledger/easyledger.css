@@ -325,28 +325,10 @@ a.icon-link-text-muted:hover {
 }
 
 .rotating-caret {
-    display: block;
-    float: left;
-    width: 12px;
-    height: 12px;
-    line-height: 12px;
-    text-align: center;
-    font-size: 11px;
-    border: none;
-    font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro", "FontAwesome" !important;
-    font-weight: 900;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-}
-.rotating-caret:before {
-    content: "\f054";
-    display: block;
-    text-align: center;
     opacity: 0.5;
     transition: all 0.2s linear;
 }
-.expand.rotating-caret:before{
+.expand.rotating-caret{
     opacity: 1;
     transform: rotate(90deg);
 }

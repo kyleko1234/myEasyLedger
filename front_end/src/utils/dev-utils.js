@@ -113,7 +113,7 @@ export async function populateSampleUserWithSampleData() {
     const childAccounts = [
         {
             accountName: "Office supplies",
-            accountCode: "430101",
+            accountCode: "530101",
             parentAccountId: 9,
             organizationId: 1,
             initialDebitAmount: 0,
