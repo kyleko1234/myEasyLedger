@@ -206,8 +206,8 @@ function AccountDetailsEditor(props) {
 
     return (
         <>
-            <Modal isOpen={props.isOpen} toggle={props.toggle} onClosed={modalOnClose} centered={true} >
-                <ModalHeader className="bg-light">
+            <Modal isOpen={props.isOpen} toggle={props.toggle} onClosed={modalOnClose} centered={true} className="very-rounded">
+                <ModalHeader >
                     {props.createMode
                         ? (props.category? accountDetailsEditorText[appContext.locale]["Create a New Category"] : accountDetailsEditorText[appContext.locale]["Create a New Account"])
                         : (props.category? accountDetailsEditorText[appContext.locale]["Edit Category Details"] : accountDetailsEditorText[appContext.locale]["Edit Account Details"])
@@ -322,7 +322,7 @@ function AccountDetailsEditor(props) {
                         </div>
                     </form> : null}
                 </ModalBody>
-                <ModalFooter className="bg-light justify-content-between">
+                <ModalFooter className="justify-content-between">
                     <div>
                         {currentAccountHasChildren? null : <button className="btn btn-danger width-10ch" onClick={handleDeleteButton}>{accountDetailsEditorText[appContext.locale]["Delete"]}</button>}
                     </div>

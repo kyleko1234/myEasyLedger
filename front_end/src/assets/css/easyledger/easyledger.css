@@ -2,6 +2,7 @@
     --sidebar-width: 250px;
     --header-height: 50px;
     --sidebar-hidden-transition-time: 0.4s;
+    --larger-font-size: 1rem;
     --base-font-size: 0.875rem;
     --compact-font-size: 0.75rem;
     --base-text-color: #000;
@@ -123,7 +124,11 @@ body {
     transition: var(--sidebar-hidden-transition-time);
 }
 
-/* BUTTONS */
+/* MODIFICATIONS AND ADDITIONS TO BOOTSTRAP BUTTONS */
+.btn {
+    font-size: var(--base-font-size);
+    font-weight: 500;
+}
 .btn-white {
     background-color: #fff;
     border-color: #c8c8c8;
@@ -139,6 +144,11 @@ body {
 .btn-default:hover {
     background-color: #eee;
     border-color: #d5d5d5;
+}
+
+/* MODIFICATIONS TO BOOTSTRAPFORMS */
+.form-control {
+    font-size: var(--base-font-size);
 }
 
 
@@ -206,6 +216,10 @@ a.tr:hover {
 
 .border-inherit {
     border: inherit;
+}
+
+.font-size-larger {
+    font-size: var(--larger-font-size);
 }
 
 .font-size-standard {

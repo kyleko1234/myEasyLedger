@@ -22,7 +22,7 @@ class Header extends React.Component {
 						<div className="d-flex align-items-center">
 							<Link to="/" className="header-logo">my<b>Easy</b>Ledger</Link>
 							{pageSidebar && (
-									<button type="button" className="btn btn-white border-0 mx-1" onClick={toggleHiddenSidebar}>
+									<button type="button" className="btn btn-white border-0 mx-1 font-size-larger" onClick={toggleHiddenSidebar}>
 										<i className="fas fa-bars"></i>
 									</button>
 								)}

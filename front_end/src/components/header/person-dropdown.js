@@ -14,7 +14,7 @@ function PersonDropdown(props) {
     return(
         <div className={props.className}>
             <Dropdown isOpen={isOpen} toggle={toggle}>
-                <DropdownToggle caret color="white" className="border-0">
+                <DropdownToggle caret color="white" className="border-0 header-icon font-size-larger">
                     <i className="far fa-user-circle"></i>
                 </DropdownToggle>
                 <DropdownMenu className="shadow" right>
