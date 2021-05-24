@@ -9,45 +9,48 @@ import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-si
 import TableOfTransactions from '../journals/personal/table-of-transactions';
 import AccountSwitcher from './components/account-switcher';
 import { Card, CardBody } from 'reactstrap';
+import AccountDetailsEditor from './components/account-details-editor';
 
 function AccountDetails(props) {
 
     const appContext = React.useContext(PageSettings);
 
-    const columns = React.useMemo(
-        () => {
-            if (appContext.isEnterprise) {
-                return [ // accessor is the "key" in the data},
-                    { Header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', width: "20%" },
-                    { Header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', width: "60%" },
-                    { Header: accountDetailsText[appContext.locale]['Debit'], accessor: 'debitAmount', width: "10%" },
-                    { Header: accountDetailsText[appContext.locale]['Credit'], accessor: 'creditAmount', width: "10%" },
-                ]
-            } else {
-                return [ // accessor is the "key" in the data},
-                    { Header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', width: "20%" },
-                    { Header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', width: "60%" },
-                    { Header: accountDetailsText[appContext.locale]['Inflow'], accessor: 'debitAmount', width: "10%" },
-                    { Header: accountDetailsText[appContext.locale]['Outflow'], accessor: 'creditAmount', width: "10%" },
-                ]
-            }
-
-        }
-        , []
-    )
+    const columns = appContext.isEnterprise
+        ?   [ // accessor is the "key" in the data},
+                { header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-sm-2" },
+                { header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', className: " text-truncate col-sm-6" },
+                { header: accountDetailsText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-right col-2" },
+                { header: accountDetailsText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-right col-2" },
+            ]
+        :   [ // accessor is the "key" in the data},
+                { header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', width: "20%" },
+                { header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', width: "60%" },
+                { header: accountDetailsText[appContext.locale]['Inflow'], accessor: 'debitAmount', width: "10%" },
+                { header: accountDetailsText[appContext.locale]['Outflow'], accessor: 'creditAmount', width: "10%" },
+            ];
 
     //get the selected account ID from URL parameters
     const selectedAccountId = useParams().id;
 
-    // We'll start our table without any data
-    const [data, setData] = React.useState([])
-    const [pageCount, setPageCount] = React.useState(0)
-    const [elementCount, setElementCount] = React.useState(0)
+    const [pageSize, setPageSize] = React.useState(10);
+    const [pageIndex, setPageIndex] = React.useState(0);
+    const [data, setData] = React.useState([]);
+    const [totalPages, setTotalPages] = React.useState(0);
+    const [totalElements, setTotalElements] = React.useState(0);
+    const [pageLength, setPageLength] = React.useState(0);
+    const [first, setFirst] = React.useState(true);
+    const [last, setLast] = React.useState(true);
+    const [loading, setLoading] = React.useState(true);
+    const previousPage = () => setPageIndex(pageIndex - 1);
+    const nextPage = () => setPageIndex(pageIndex + 1);
+
+    const [accountDetailsEditorModal, setAccountDetailsEditorModal] = React.useState(false);
+    const toggleAccountDetailsEditorModal = () => setAccountDetailsEditorModal(!accountDetailsEditorModal);
+    
 
     //
     const [selectedAccount, setSelectedAccount] = React.useState(null);
     const [refreshToken, setRefreshToken] = React.useState(0); //set this to a random number when a child component updates to force all child components to update together. Theoretically children components might fail to update if you get two identical random numbers in a row but lmao you're never gonna be able to reproduce this, just refresh
-    const [loading, setLoading] = React.useState(true);
     
     const formatBalance = (debitsMinusCredits, accountTypeId) => {
         if (debitsMinusCredits == 0) {
@@ -68,13 +71,13 @@ function AccountDetails(props) {
         }).catch(console.log);
     }, [])
 
-    const fetchData = React.useCallback(async ({ pageSize, pageIndex }) => {
+    const fetchData = React.useCallback(async ( pageIndex, pageSize ) => {
         // This will get called when the table needs new data
-
+        console.log(pageIndex, pageSize);
         //fetch data from Easy Ledger API
-        const url = `${API_BASE_URL}/account/${selectedAccountId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
         setLoading(true);
         async function fetchTableData () {
+            const url = `${API_BASE_URL}/account/${selectedAccountId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
             await axios.get(url).then(response => {
                 var dataContent = response.data.content;
                 dataContent.forEach(lineItem => {
@@ -87,8 +90,11 @@ function AccountDetails(props) {
                     }
                 })
                 setData(dataContent);
-                setPageCount(response.data.totalPages);
-                setElementCount(response.data.totalElements);
+                setTotalPages(response.data.totalPages);
+                setTotalElements(response.data.totalElements);
+                setPageLength(response.data.size);
+                setFirst(response.data.first);
+                setLast(response.data.last);
             })
                 .catch(console.log);
             //also refresh account data    
@@ -104,25 +110,40 @@ function AccountDetails(props) {
 
     return (
         <>
-            <h1 className="page-header">
-                {accountDetailsText[appContext.locale]["Account Details"]}
-            </h1>
             {appContext.isEnterprise ?
                 <div className="row">
                     <div className="col-lg-8">
                         <Card className="shadow-sm very-rounded">
                             <CardBody>
                                 {selectedAccount 
-                                ?   <TableOfJournalEntries
-                                        columns={columns}
-                                        data={data}
-                                        fetchData={fetchData}
-                                        pageCount={pageCount}
-                                        elementCount={elementCount}
-                                        tableTitle={selectedAccount.accountCode? selectedAccount.accountCode + " - " + selectedAccount.accountName + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId) : selectedAccount.accountName + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}
-                                        hasAddEntryButton={true}
-                                        parentComponentAccountId={selectedAccountId}
-                                    /> 
+                                ?   <>
+                                        <h1 className="h3">
+                                            {selectedAccount.accountCode
+                                                ? selectedAccount.accountCode + " - " + selectedAccount.accountName
+                                                : selectedAccount.accountName}
+                                            <Link replace className="icon-link-text-muted ml-3" to="#" onClick={toggleAccountDetailsEditorModal}>
+                                                <i className="fa fa-edit"></i>
+                                            </Link>
+                                        </h1>
+                                        <TableOfJournalEntries
+                                            tableTitle={ accountDetailsText[appContext.locale]["Balance"] +  ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}
+                                            hasAddEntryButton={true}
+                                            parentComponentAccountId={selectedAccountId}
+                                            fetchData={fetchData}
+                                            pageSize={pageSize}
+                                            pageIndex={pageIndex}
+                                            columns={columns}
+                                            data={data}
+                                            totalPages={totalPages}
+                                            totalElements={totalElements}
+                                            pageLength={pageLength}
+                                            first={first}
+                                            last={last}
+                                            loading={loading}
+                                            previousPage={previousPage}
+                                            nextPage={nextPage}                            
+                                        /> 
+                                    </>
                                 :   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
 
                             </CardBody>
@@ -144,9 +165,7 @@ function AccountDetails(props) {
                             columns={columns}
                             data={data}
                             fetchData={fetchData}
-                            pageCount={pageCount}
-                            elementCount={elementCount}
-                            tableTitle={selectedAccount.accountName + ":   " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}
+                            tableTitle={accountDetailsText[appContext.locale]["Balance"] + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}
                             parentComponentAccountId={selectedAccountId}
                             hasAddEntryButton={true}
                             loading={loading}
@@ -162,6 +181,7 @@ function AccountDetails(props) {
 
                 </div>
             }
+            <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={selectedAccountId} fetchData={() => fetchData(pageIndex, pageSize)} />
 
         </>
     )

@@ -51,11 +51,7 @@ function TableOfJournalEntries({
     const [accountOptions, setAccountOptions] = React.useState([]);
 
     const [journalEntryHistoryModal, setJournalEntryHistoryModal] = React.useState(false);
-    const toggleJournalEntryHistoryModal = () => setJournalEntryHistoryModal(!journalEntryHistoryModal);
-  
-    const [accountDetailsEditorModal, setAccountDetailsEditorModal] = React.useState(false);
-    const toggleAccountDetailsEditorModal = () => setAccountDetailsEditorModal(!accountDetailsEditorModal);
-    
+    const toggleJournalEntryHistoryModal = () => setJournalEntryHistoryModal(!journalEntryHistoryModal);    
 
     const fetchJournalEntry = journalEntryId => {
         axios.get(`${API_BASE_URL}/journalEntry/${journalEntryId}`)
@@ -279,18 +275,13 @@ function TableOfJournalEntries({
     React.useEffect(() => {
         fetchData(pageIndex, pageSize);
         fetchAccounts();
-    }, [pageIndex, pageSize]);
+    }, [pageIndex, pageSize, parentComponentAccountId]);
 
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
-                <h4 >
+                <h4 className="my-0">
                     {tableTitle}
-                    {parentComponentAccountId ?
-                        <Link replace className="icon-link-text-muted m-l-10" to="#" onClick={toggleAccountDetailsEditorModal}>
-                            <i className="fa fa-edit"></i>
-                        </Link>
-                        : null}
                 </h4>
                 {hasAddEntryButton ?
                     <button className="btn font-size-standard btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
@@ -395,7 +386,6 @@ function TableOfJournalEntries({
                     }
                 </ModalFooter>
             </Modal>
-            {parentComponentAccountId ? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} /> : null}
             {journalEntryId ? <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} /> : null}
         </>
     )

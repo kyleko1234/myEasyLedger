@@ -10,6 +10,7 @@ export const accountDetailsText = {
         "Chart of Accounts": "Chart of Accounts",
         "Accounts": "Accounts",
         "Account Details": "Account Details",
+        "Balance": "Balance",
         
         "Categories": "Categories",
         "Category Details": "Category Details",
@@ -28,6 +29,7 @@ export const accountDetailsText = {
         "Chart of Accounts": "會計科目表",
         "Accounts": "科目",
         "Account Details": "科目說明",
+        "Balance": "TRANSLATION",
 
         "Categories": "類別",
         "Category Details": "類別說明",
