@@ -4,7 +4,7 @@ import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
 import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expense-summary-text.js';
-import { Card, CardBody } from 'reactstrap';
+import { Card, CardBody, CardTitle } from 'reactstrap';
 
 function IncomeAndExpenseSummary() {
     const appContext = React.useContext(PageSettings);
@@ -66,7 +66,7 @@ function IncomeAndExpenseSummary() {
 
     }, [appContext.currentOrganizationId])
 
-    defaults.global.defaultFontColor = "#000"; //chartJS font color
+    defaults.global.defaultFontColor = getComputedStyle(document.documentElement).getPropertyValue('--base-font-color'); //chartJS font color
 
 
     //takes integer representing a year and month in format yyyymm and returns a string "yyyy MonthName"
@@ -148,14 +148,16 @@ function IncomeAndExpenseSummary() {
 
     return (
         <Card className="shadow-sm very-rounded">
-            {/* <WidgetHeader className="bg-light">
-                {incomeAndExpenseSummaryText[appContext.locale]["Income and Expenses"]}
-                </WidgetHeader> */}
-            {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                <CardBody style={{ height: '500px' }}>
-                    <Bar className="text-white" data={barChart.data} options={barChart.options} />
-                </CardBody>
-            }
+            <CardBody style={{ height: '500px' }}>
+                <CardTitle className="font-weight-600">
+                    {incomeAndExpenseSummaryText[appContext.locale]["Income and Expenses"]}
+                </CardTitle>
+                <div style={{height: "90%"}}>
+                    {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                        <Bar data={barChart.data} options={barChart.options} />
+                    }
+                </div>
+            </CardBody>
         </Card>
     )
 }

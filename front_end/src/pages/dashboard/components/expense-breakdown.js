@@ -62,9 +62,7 @@ function ExpenseBreakdown(props) {
     return(
         <Card className="shadow-sm very-rounded">
             <CardBody >
-                <CardTitle>
-                    {dashboardText[appContext.locale]["Expense Breakdown"]}
-                </CardTitle>
+                <CardTitle className="font-weight-600">{dashboardText[appContext.locale]["Expense Breakdown"]}</CardTitle>
                 {appContext.isLoading
                 ?   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> 
                 :   <div className="py-3">
