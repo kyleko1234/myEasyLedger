@@ -147,8 +147,8 @@ function IncomeAndExpenseSummary() {
 
 
     return (
-        <Card className="shadow-sm very-rounded">
-            <CardBody style={{ height: '500px' }}>
+        <Card style={{ height: '500px' }} className="shadow-sm very-rounded">
+            <CardBody >
                 <CardTitle className="font-weight-600">
                     {incomeAndExpenseSummaryText[appContext.locale]["Income and Expenses"]}
                 </CardTitle>

@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants.js';
 import { PageSettings } from '../../../config/page-settings';
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {balanceSummaryText} from "../../../utils/i18n/balance-summary-text.js";
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -30,36 +30,38 @@ function BalanceSummary(props) {
 
 
     return (
-        <Card className="shadow-sm very-rounded">
-            <CardBody className="overflow-hidden" style={{ height: '500px' }}>
+        <Card className="shadow-sm very-rounded" style={{ height: '500px' }}>
+            <CardBody>
                 <CardTitle className="font-weight-600">
                     {balanceSummaryText[appContext.locale]["Balance Summary"]}
                 </CardTitle>
-				<PerfectScrollbar style={{marginLeft: "-1.25rem", marginRight: "-1.25rem"}} options={{suppressScrollX: true, wheelPropagation: false}}>
+				<PerfectScrollbar style={{maxHeight: "427px", marginLeft: "-1.25rem", marginRight: "-1.25rem"}} options={{suppressScrollX: true, wheelPropagation: false}}>
                     <div style={{paddingLeft: "1.25rem", paddingRight: "1.25rem"}}>
-                        {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                        <table className='table table-hover'>
-                            <thead>
-                                <tr>
-                                    <th className="border-top-0">{balanceSummaryText[appContext.locale]["Account"]}</th>
-                                    <th className="text-right border-top-0">{balanceSummaryText[appContext.locale]["Balance"]}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {assetAndLiabilityAccounts.map(account => {
-                                    return (
-                                        <tr key={account.accountId} className={props.selectedAccountId == account.accountId? "bg-white-hover" : "cursor-pointer"} onClick={props.selectedAccountId == account.accountId? null : () => history.push(`/account-details/${account.accountId}`)}>
-                                            <td>
-                                                {account.accountCode? account.accountCode + " - " + account.accountName : account.accountName}
-                                            </td>
-                                            <td className={"text-right " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
-                                                {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(account.accountTypeId == 1? account.debitsMinusCredits : (account.debitsMinusCredits == 0? account.debitsMinusCredits : account.debitsMinusCredits * -1))}
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
+                        {loading 
+                            ?   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> 
+                            :   
+                                <div>
+                                    {assetAndLiabilityAccounts.map(account => {
+                                        return(
+                                            <Link key={account.accountId} to={`/account-details/${account.accountId}`} className="tr d-flex align-items-center">
+                                                <div className="td d-flex col-11 justify-content-between align-items-center">
+                                                    <div className="col-8">
+                                                        <div className="font-size-compact font-weight-600">
+                                                            {account.accountCode}
+                                                        </div>
+                                                        <div className="text-truncate">
+                                                            {account.accountName}
+                                                        </div>
+                                                    </div>
+                                                    <div className={" text-right " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
+                                                        {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(account.accountTypeId === 1? account.debitsMinusCredits : (account.debitsMinusCredits === 0? account.debitsMinusCredits : account.debitsMinusCredits * -1))}
+                                                    </div>
+                                                </div>
+                                                <div className="col-1 pl-0 text-muted"><i className="fas fa-angle-right "></i></div>
+                                            </Link>
+                                        )
+                                    })}
+                                </div>
                         }
                     </div>
                 </PerfectScrollbar>
