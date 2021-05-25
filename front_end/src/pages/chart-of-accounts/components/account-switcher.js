@@ -91,8 +91,8 @@ function AccountSwitcher(props) {
                         />
                     </div>
                 </div>
-				<PerfectScrollbar style={{maxHeight: "51.5vh", marginLeft: "-1.25rem", marginRight: "-1.25rem"}} options={{suppressScrollX: true, wheelPropagation: false}}>
-                    <div style={{paddingLeft: "1.25rem", paddingRight: "1.25rem"}}>
+				<PerfectScrollbar style={{marginLeft: "-1.25rem", marginRight: "-1.25rem"}} options={{suppressScrollX: true, wheelPropagation: false}}>
+                    <div style={{maxHeight: "420px", paddingLeft: "1.25rem", paddingRight: "1.25rem"}}>
                         {// loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :     --add this line in case you need a loading spinner. currently it is removed because it is annoying to see a spinner every click. */
                             accounts
                                 .filter(account => account.accountTypeId === selectedAccountTypeOptionId && account.parentAccountId === null)
