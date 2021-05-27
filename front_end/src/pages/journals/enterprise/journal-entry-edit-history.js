@@ -14,7 +14,6 @@ function JournalEntryEditHistory(props) {
     const [journalEntryLogs, setJournalEntryLogs] = React.useState([]);
 
     React.useEffect(() => {
-        setLoading(true);
         async function fetchData() {
             await axios.get(`${API_BASE_URL}/journalEntry/${props.journalEntryId}/log`).then(response => {
                 console.log(response);
@@ -30,8 +29,11 @@ function JournalEntryEditHistory(props) {
                 }
             })
         }
-        fetchData();
-    }, [props.journalEntryId])
+        if (props.isOpen) {
+            setLoading(true);
+            fetchData();
+        }
+    }, [props.isOpen]) //fetch data every time props.isOpen changes from false to true, i.e. when modal is opened. Because this component can only be opened in a JournalEntryViewMode window, props.journalEntryId can be assumed to not be undefined.
 
     return(
         <Modal

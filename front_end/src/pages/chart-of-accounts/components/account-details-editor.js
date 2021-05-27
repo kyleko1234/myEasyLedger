@@ -328,7 +328,7 @@ function AccountDetailsEditor(props) {
                     </div>
                     <div>
                         <button className="btn btn-primary width-10ch" onClick={handleSaveButton}>{accountDetailsEditorText[appContext.locale]["Save"]}</button>
-                        <button className="btn btn-white width-10ch m-l-10" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
+                        <button className="btn btn-white width-10ch ml-2" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
                     </div>
                 </ModalFooter>
             </Modal>

@@ -366,7 +366,7 @@ function TableOfJournalEntries({
                                 <button className="btn btn-primary width-10ch"onClick={() => handleSaveJournalEntryButton()}>
                                     {tableOfJournalEntriesText[appContext.locale]["Save"]}
                                 </button>
-                                <button className="btn btn-white m-l-10 width-10ch" onClick={createMode ? cancelCreateMode : cancelEditMode}>
+                                <button className="btn btn-white ml-2 width-10ch" onClick={createMode ? cancelCreateMode : cancelEditMode}>
                                     {tableOfJournalEntriesText[appContext.locale]["Cancel"]}
                                 </button>
                             </div>
@@ -378,14 +378,14 @@ function TableOfJournalEntries({
                             </div>
                             <div>
                                 <button className="btn btn-info width-10ch" onClick={handleCopyJournalEntryButton}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
-                                <button className="btn btn-primary m-l-10 width-10ch" onClick={handleEditButton}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
-                                <button className="btn btn-white m-l-10 width-10ch" onClick={handleExitJournalEntryModal}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
+                                <button className="btn btn-primary ml-2 width-10ch" onClick={handleEditButton}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
+                                <button className="btn btn-white ml-2 width-10ch" onClick={handleExitJournalEntryModal}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
                             </div>
                         </>
                     }
                 </ModalFooter>
             </Modal>
-            {journalEntryHistoryModal ? <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} /> : null}
+            <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} /> 
         </>
     )
 
