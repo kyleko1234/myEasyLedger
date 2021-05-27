@@ -50,7 +50,7 @@ function GeneralJournal() {
 
     return (
         <TableOfJournalEntries
-            tableTitle={generalJournalText[appContext.locale]["Accounting Entries"]}
+            tableTitle={<div className="h1">{generalJournalText[appContext.locale]["Accounting Entries"]}</div>}
             hasAddEntryButton={true}
             fetchData={fetchData}
             pageSize={pageSize}

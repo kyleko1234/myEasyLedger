@@ -281,9 +281,7 @@ function TableOfJournalEntries({
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
-                <h4 className="my-0">
-                    {tableTitle}
-                </h4>
+                {tableTitle}
                 {hasAddEntryButton ?
                     <button className="btn btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
                         <i className="ion ion-md-add fa-fw fa-lg"></i>{tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
@@ -387,7 +385,7 @@ function TableOfJournalEntries({
                     }
                 </ModalFooter>
             </Modal>
-            {journalEntryId ? <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} /> : null}
+            {journalEntryHistoryModal ? <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} /> : null}
         </>
     )
 

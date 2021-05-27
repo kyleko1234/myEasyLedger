@@ -126,7 +126,7 @@ function AccountDetails(props) {
                                             </Link>
                                         </h1>
                                         <TableOfJournalEntries
-                                            tableTitle={ accountDetailsText[appContext.locale]["Balance"] +  ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}
+                                            tableTitle={ <div className="h4">{accountDetailsText[appContext.locale]["Balance"] +  ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}</div>}
                                             hasAddEntryButton={true}
                                             parentComponentAccountId={selectedAccountId}
                                             fetchData={fetchData}
