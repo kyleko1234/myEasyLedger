@@ -331,7 +331,7 @@ function TableOfJournalEntries({
             <Modal
                 isOpen={journalEntryModal}
                 toggle={handleExitJournalEntryModal}
-                size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
+                size="xl"
                 centered={true}
             >
                 <ModalHeader>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>

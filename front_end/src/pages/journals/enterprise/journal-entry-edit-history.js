@@ -40,7 +40,7 @@ function JournalEntryEditHistory(props) {
             scrollable
             isOpen={props.isOpen}
             toggle={props.toggle}
-            size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
+            size="xl"
             centered={true}
         >
             <ModalHeader style={{backgroundColor: "#e4e4e4"}}>
