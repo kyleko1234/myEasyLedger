@@ -59,7 +59,7 @@ function TableOfJournalEntries({
                 let formattedLineItems = []
                 let journalEntry = response.data;
                 journalEntry.lineItems.forEach(lineItem => {
-                    var formattedLineItem = {
+                    let formattedLineItem = {
                         lineItemId: lineItem.lineItemId,
                         accountName: lineItem.accountName,
                         accountId: lineItem.accountId,

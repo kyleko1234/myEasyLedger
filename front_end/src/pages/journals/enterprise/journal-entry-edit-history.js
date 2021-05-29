@@ -19,6 +19,20 @@ function JournalEntryEditHistory(props) {
                 console.log(response);
                 response.data.forEach(journalEntryLog => {
                     journalEntryLog.snapshot = JSON.parse(journalEntryLog.snapshot);
+                    let formattedLineItems = []
+                    journalEntryLog.snapshot.lineItems.forEach(lineItem => {
+                        let formattedLineItem = {
+                            lineItemId: lineItem.lineItemId,
+                            accountName: lineItem.accountName,
+                            accountId: lineItem.accountId,
+                            description: lineItem.description,
+                            debitAmount: (lineItem.isCredit ? null : lineItem.amount),
+                            creditAmount: (lineItem.isCredit ? lineItem.amount : null)
+                        }
+                        formattedLineItems.push(formattedLineItem);
+                    })
+                    formattedLineItems.sort((a, b) => a.lineItemId > b.lineItemId ? 1 : -1) //sort by LineItemId to preserve insertion order
+                    journalEntryLog.snapshot.lineItems = formattedLineItems;
                 });
                 setJournalEntryLogs(response.data);
                 setLoading(false);

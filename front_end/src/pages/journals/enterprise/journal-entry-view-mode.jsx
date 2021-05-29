@@ -58,12 +58,12 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate}
   return (
     <>
       <div className="row m-b-10">
-        <div className="col-md-1"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-md-11">{journalEntryDate}</div>
+        <div className="col-md-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-md-10">{journalEntryDate}</div>
       </div>
       <div className="row m-b-10">
-        <div className="col-md-1"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-md-11">{journalEntryDescription}</div>
+        <div className="col-md-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-md-10">{journalEntryDescription}</div>
       </div>
-      <br></br>
+      <br/>
       
       <div className="table-responsive">
       <table className="table"{...getTableProps()}>
