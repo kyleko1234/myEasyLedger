@@ -207,7 +207,7 @@ function AccountDetailsEditor(props) {
     return (
         <>
             <Modal isOpen={props.isOpen} toggle={props.toggle} onClosed={modalOnClose} centered={true} className="very-rounded">
-                <ModalHeader >
+                <ModalHeader>
                     {props.createMode
                         ? (props.category? accountDetailsEditorText[appContext.locale]["Create a New Category"] : accountDetailsEditorText[appContext.locale]["Create a New Account"])
                         : (props.category? accountDetailsEditorText[appContext.locale]["Edit Category Details"] : accountDetailsEditorText[appContext.locale]["Edit Account Details"])
@@ -324,7 +324,7 @@ function AccountDetailsEditor(props) {
                 </ModalBody>
                 <ModalFooter className="justify-content-between">
                     <div>
-                        {currentAccountHasChildren? null : <button className="btn btn-danger width-10ch" onClick={handleDeleteButton}>{accountDetailsEditorText[appContext.locale]["Delete"]}</button>}
+                        {!props.selectedAccountId? null : <button className="btn btn-danger width-10ch" onClick={handleDeleteButton}>{accountDetailsEditorText[appContext.locale]["Delete"]}</button>}
                     </div>
                     <div>
                         <button className="btn btn-primary width-10ch" onClick={handleSaveButton}>{accountDetailsEditorText[appContext.locale]["Save"]}</button>

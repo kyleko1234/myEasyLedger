@@ -163,16 +163,6 @@ body {
     border-radius: 10px;
 }
 
-.modal.fade .modal-dialog {
-    transform: scale(0.5);
-    transition: all 0.15s;
-}
-    
-.modal.fade.show .modal-dialog {
-    transform: scale(1);
-    opacity: 1;
-}
-
 /* MODIFICATIONS TO BOOTSTRAP PILLS */
 a.nav-link {
     color: #6f6f6f;
@@ -321,10 +311,6 @@ a.icon-link-text-muted:hover {
 
 .font-weight-600 {
     font-weight: 600 !important;
-}
-
-.sidebar .nav .sub-menu > li.expand > a {
-    color: #fff;
 }
 
 .bg-white-hover {

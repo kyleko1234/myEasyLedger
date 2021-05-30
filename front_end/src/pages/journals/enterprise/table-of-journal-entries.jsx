@@ -334,7 +334,7 @@ function TableOfJournalEntries({
                 size="xl"
                 centered={true}
             >
-                <ModalHeader className="border-bottom-0">{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
+                <ModalHeader>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
                 <ModalBody>
                     {editMode 
                         ?   <JournalEntryEditMode
@@ -352,7 +352,7 @@ function TableOfJournalEntries({
                             />
                     }
                 </ModalBody>
-                <ModalFooter className="justify-content-between border-top-0">
+                <ModalFooter className="justify-content-between">
                     {editMode ?
                         <>
                             <div>
