@@ -334,26 +334,25 @@ function TableOfJournalEntries({
                 size="xl"
                 centered={true}
             >
-                <ModalHeader>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
+                <ModalHeader className="border-bottom-0">{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
                 <ModalBody>
-                    {editMode ?
-                        <JournalEntryEditMode
-                            data={lineItemData} setLineItemData={setLineItemData}
-                            journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
-                            journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
-                            accountOptions={accountOptions}
-                            alertMessages={alertMessages}
-                            handleSaveJournalEntryButton={handleSaveJournalEntryButton}>
-                        </JournalEntryEditMode> :
-                        <JournalEntryViewMode
-                            data={lineItemData}
-                            journalEntryDate={journalEntryDate}
-                            journalEntryDescription={journalEntryDescription}
-                        >
-                        </JournalEntryViewMode>
+                    {editMode 
+                        ?   <JournalEntryEditMode
+                                data={lineItemData} setLineItemData={setLineItemData}
+                                journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
+                                journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
+                                accountOptions={accountOptions}
+                                alertMessages={alertMessages}
+                                handleSaveJournalEntryButton={handleSaveJournalEntryButton}
+                            />
+                        :   <JournalEntryViewMode
+                                data={lineItemData}
+                                journalEntryDate={journalEntryDate}
+                                journalEntryDescription={journalEntryDescription}
+                            />
                     }
                 </ModalBody>
-                <ModalFooter className="justify-content-between">
+                <ModalFooter className="justify-content-between border-top-0">
                     {editMode ?
                         <>
                             <div>
