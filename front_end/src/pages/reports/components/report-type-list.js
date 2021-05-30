@@ -9,21 +9,27 @@ function ReportTypeList() {
 
     if (appContext.isEnterprise) {
         return (
-            <WidgetList className="m-b-30">
-                <WidgetHeader className="bg-light">
-                    {reportTypeListText[appContext.locale]["Select a type of report to view..."]}
-                </WidgetHeader>
-                <WidgetListItem link to="/reports/balance-sheet" className="bg-white">
-                        <div className="p-l-30">{reportTypeListText[appContext.locale]["Balance Sheet"]}</div>
-                </WidgetListItem>
-                <WidgetListItem link to="/reports/income-statement" className="bg-white">
-                        <div className="p-l-30">{reportTypeListText[appContext.locale]["Income Statement"]}</div>
-                </WidgetListItem>
-                <WidgetListItem link to="/reports/cash-flow" className="bg-white">
-                        <div className="p-l-30">{reportTypeListText[appContext.locale]["Cash Flow"]}</div>
-                </WidgetListItem>
-    
-            </WidgetList>
+            <div>
+                <div className="thead">
+                    <div className="bg-light border rounded font-weight-600 d-flex">
+                        <div className="td">{reportTypeListText[appContext.locale]["Select a type of report to view..."]}</div>
+                    </div>
+                </div>
+                <div className="tbody">
+                    <Link to="/reports/balance-sheet" className="tr d-flex justify-content-between align-items-center">
+                            <div className="td indent">{reportTypeListText[appContext.locale]["Balance Sheet"]}</div>
+                            <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                    </Link>
+                    <Link to="/reports/income-statement" className="tr d-flex justify-content-between align-items-center">
+                            <div className="td indent">{reportTypeListText[appContext.locale]["Income Statement"]}</div>
+                            <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                    </Link>
+                    <Link to="/reports/cash-flow" className="tr d-flex justify-content-between align-items-center">
+                            <div className="td indent">{reportTypeListText[appContext.locale]["Cash Flow"]}</div>
+                            <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                    </Link>
+                </div>
+            </div>
         )
     
     } else {

@@ -8,7 +8,7 @@ function Reports() {
     return (
         <div>
 
-            <h1 className="page-header">
+            <h1>
                 {reportsText[appContext.locale]["Reports"]}
             </h1>
             <div>
