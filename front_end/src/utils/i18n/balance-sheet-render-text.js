@@ -1,6 +1,6 @@
 export const balanceSheetRenderText = {
     "en-US": {
-        "Balance Sheet": "Balance Sheet",
+        "Options": "Options",
         "As of:": "As of:",
 
         "Assets": "Assets",
@@ -71,7 +71,7 @@ export const balanceSheetRenderText = {
         "Detailed View": "Detailed View"
     },
     "zh-TW": {
-        "Balance Sheet": "資產負債表",
+        "Options": "TRANSLATION",
         "As of:": "截至",
 
         "Assets": "資產",

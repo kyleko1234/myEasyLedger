@@ -206,8 +206,18 @@ a.tr:hover {
     color: var(--base-text-color);
     background-color: #e1e1e1;
 }
+.striped-row {
+    display: flex;
+    padding: .75rem;
+    border-radius: 5px;
+}
+.striped-row:nth-child(odd) {
+    background-color: var(--light);
+}
 
-
+.striped-row:nth-child(even) {
+    background-color: white;
+}
 
 
 /* Utility classes, mostly left from adjusting color admin */
@@ -233,6 +243,15 @@ a.tr:hover {
 
 .indent {
     padding-left: 3em;
+}
+.indent-2 {
+    padding-left: 6em;
+}
+.indent-3 {
+    padding-left: 9em;
+}
+.indent-4 {
+    padding-left: 12em;
 }
 
 .cursor-pointer {
