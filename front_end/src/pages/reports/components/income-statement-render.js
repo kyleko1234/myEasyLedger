@@ -85,24 +85,20 @@ function IncomeStatementRender() {
                     .filter(account => account.accountSubtypeId === subtypeId)
                     .map(account => {
                         return(
-                            <>
-                                <tr key={account.accountId}>
-                                    <td className="d-flex justify-content-between p-l-30">
-                                        <div className="p-l-30">{account.accountName}</div><div>{numberAsCurrency(typeId === 5 ? account.debitsMinusCredits : account.debitsMinusCredits * -1)}</div>
-                                    </td>
-                                </tr>
+                            <React.Fragment key={account.accountId}>
+                                <div className="striped-row justify-content-between indent-2">
+                                    <div>{account.accountName}</div><div>{numberAsCurrency(typeId === 5 ? account.debitsMinusCredits : account.debitsMinusCredits * -1)}</div>
+                                </div>
                                 {accountBalances
                                     .filter(childAccount => childAccount.parentAccountId === account.accountId)
                                     .map(childAccount => {
                                         return (
-                                            <tr key={childAccount.accountId}>
-                                                <td className="d-flex justify-content-between p-l-30">
-                                                    <div className="p-l-60">{childAccount.accountName}</div><div>{numberAsCurrency(typeId === 5 ? childAccount.debitsMinusCredits : childAccount.debitsMinusCredits * -1)}</div>
-                                                </td>
-                                            </tr>
+                                            <div className="striped-row justify-content-between indent-3">
+                                                <div>{childAccount.accountName}</div><div>{numberAsCurrency(typeId === 5 ? childAccount.debitsMinusCredits : childAccount.debitsMinusCredits * -1)}</div>
+                                            </div>
                                         )
                                 })}
-                            </>
+                            </React.Fragment>
                         )
                 })
             )
@@ -189,7 +185,7 @@ function IncomeStatementRender() {
 
     return (
         <>
-            <Card className="very-rounded shadow-sm bg-light ">
+            <Card className="very-rounded shadow-sm bg-light my-4">
                 <CardBody className="">
                     <h1 className="h5">{incomeStatementRenderText[appContext.locale]["Options"]}</h1>    
                     <div className="d-sm-flex align-items-center ">
@@ -209,92 +205,105 @@ function IncomeStatementRender() {
 
                 </CardBody>
             </Card>
-            <div>
-                {loading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
-                <div>
-                    <table className="table table-striped m-b-0">
-                        <tbody>
-                            {!accountBalances.filter(account => account.accountSubtypeId == revenueSubtypeId).length? null : 
+            <Card className="very-rounded shadow-sm">
+                <CardBody>
+                    {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                        <div>
+                            {!(accountBalances.filter(account => account.accountSubtypeId === revenueSubtypeId).length) ? null :
                                 <>
-                                <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Revenue"]}</td></tr>
-                                    {accountBalances.filter(account => account.accountSubtypeId == revenueSubtypeId).map(account => {
-                                        return(
-                                            <>
-                                                <tr key={account.accountId}>
-                                                    <td className="d-flex justify-content-between p-l-30">
+                                    <div className="striped-row font-weight-600">{incomeStatementRenderText[appContext.locale]["Revenue"]}</div>
+                                    {accountBalances
+                                        .filter(account => account.accountSubtypeId === revenueSubtypeId)
+                                        .map(account => {
+                                            return (
+                                                <React.Fragment key={account.accountId}>
+                                                    <div className="striped-row justify-content-between indent">
                                                         <div>{account.accountName}</div><div>{numberAsCurrency(account.debitsMinusCredits * -1)}</div>
-                                                    </td>
-                                                </tr>
-                                                {detailedView?
-                                                    accountBalances
-                                                        .filter(childAccount => childAccount.parentAccountId === account.accountId)
-                                                        .map(childAccount => {
-                                                            return(
-                                                                <tr key={childAccount.accountId}>
-                                                                    <td className="d-flex justify-content-between p-l-30">
-                                                                        <div className="p-l-30">{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits * -1)}</div>
-                                                                    </td>
-                                                                </tr>
-                                                            )
-                                                        })
-                                                : null}
-                                            </>
-                                        )
-                                    })}
-                                    <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total revenue"]}</div><div>{numberAsCurrency(totalRevenue)}</div></td></tr>
-                                    <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
+                                                    </div>
+                                                    {detailedView?
+                                                        accountBalances
+                                                            .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                                            .map(childAccount => {
+                                                                return(
+                                                                    <div className="striped-row justify-content-between indent-2">
+                                                                        <div>{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits * -1)}</div>
+                                                                    </div>
+                                                                )
+                                                            })
+                                                    :null}
+                                                </React.Fragment>
+                                            )
+                                        })
+                                    }
+                                    <div className="striped-row justify-content-between indent-2 font-weight-600">
+                                        <div>{incomeStatementRenderText[appContext.locale]["Total revenue"]}</div><div>{numberAsCurrency(totalRevenue)}</div>
+                                    </div>
+                                    <div className="striped-row">
+                                        <div className="invisible">{/** empty row */} empty row </div>
+                                    </div>
                                 </>
                             }
-                            {!accountBalances.filter(account => account.accountSubtypeId == costOfSalesSubtypeId).length? null : 
+                            {!(accountBalances.filter(account => account.accountSubtypeId === costOfSalesSubtypeId).length) ? null : 
                                 <>
-                                    <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Cost of sales"]}</td></tr>
-                                    {accountBalances.filter(account => account.accountSubtypeId == costOfSalesSubtypeId).map(account => {
-                                        return(
-                                            <tr key={account.accountId}><td className="d-flex justify-content-between p-l-30"><div>{account.accountName}</div><div>{numberAsCurrency(account.debitsMinusCredits)}</div></td></tr>
-                                        )
-                                    })}
-                                    <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div><div>{numberAsCurrency(totalCostOfSales)}</div></td></tr>
-                                    <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
+                                    <div className="striped-row font-weight-600">{incomeStatementRenderText[appContext.locale]["Cost of sales"]}</div>
+                                    {accountBalances
+                                        .filter(account => account.accountSubtypeId === costOfSalesSubtypeId)
+                                        .map(account => {
+                                            return(
+                                                <div key={account.accountId} className="striped-row justify-content-between indent-2">
+                                                    <div>{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div><div>{numberAsCurrency(totalCostOfSales)}</div>
+                                                </div>
+                                            )
+                                            
+                                        })
+                                    }
+                                    <div className="striped-row">
+                                        <div className="invisible">{/** empty row */} empty row </div>
+                                    </div>
                                 </>
                             }
-                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Gross profit"]}</div><div>{numberAsCurrency(grossProfit)}</div></td></tr>
-                            <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
+                            <div className="striped-row justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Gross profit"]}</div><div>{numberAsCurrency(grossProfit)}</div></div>
+                            <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
 
-                            <tr><td className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Operating expenses"]}</td></tr>
-                            {!rd? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Research and development"]}</div><div>{numberAsCurrency(rd)}</div></td></tr>}
+                            <div className="striped-row font-weight-600">{incomeStatementRenderText[appContext.locale]["Operating expenses"]}</div>
+                            {!rd? null : <div className="justify-content-between indent"><div>{incomeStatementRenderText[appContext.locale]["Research and development"]}</div><div>{numberAsCurrency(rd)}</div></div>}
                             {renderDetails(researchAndDevelopmentSubtypeId, 5)}
-                            {!sga? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Sales, general, and administration"]}</div><div>{numberAsCurrency(sga)}</div></td></tr>}
+                            {!sga? null : <div className="striped-row justify-content-between indent"><div>{incomeStatementRenderText[appContext.locale]["Sales, general, and administration"]}</div><div>{numberAsCurrency(sga)}</div></div>}
                             {renderDetails(sgaSubtypeId, 5)}
-                            {!da? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Depreciation and amortization"]}</div><div>{numberAsCurrency(da)}</div></td></tr>}
+                            {!da? null : <div className="striped-row justify-content-between indent"><div>{incomeStatementRenderText[appContext.locale]["Depreciation and amortization"]}</div><div>{numberAsCurrency(da)}</div></div>}
                             {renderDetails(depreciationAmortizationSubtypeId, 5)}
-                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total operating expenses"]}</div><div>{numberAsCurrency(totalOperatingExpenses)}</div></td></tr>
-                            <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
-                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Operating income"]}</div><div>{numberAsCurrency(operatingIncome)}</div></td></tr>
-                            <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
-                            <tr><td className="font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Other income/expense"]}</div></td></tr>
-                            {!incomeFromInvesting? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Net income/expense from investing activities"]}</div><div>{numberAsCurrency(incomeFromInvesting - expenseFromInvesting)}</div></td></tr>}
+                            <div className="striped-row justify-content-between indent-2 font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Total operating expenses"]}</div><div>{numberAsCurrency(totalOperatingExpenses)}</div></div>
+                            <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
+                            <div className="striped-row justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Operating income"]}</div><div>{numberAsCurrency(operatingIncome)}</div></div>
+                            <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
+                            <div className="striped-row font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Other income/expense"]}</div></div>
+                            {!incomeFromInvesting? null : <div className="striped-row justify-content-between indent"><div>{incomeStatementRenderText[appContext.locale]["Net income/expense from investing activities"]}</div><div>{numberAsCurrency(incomeFromInvesting - expenseFromInvesting)}</div></div>}
                             {renderDetails(incomeFromInvestingSubtypeId, 4)}
                             {renderDetails(expenseFromInvestingSubtypeId, 4) /** Use a negative number for expenses here since it is a component of other income/expense net*/}
-                            {!incomeFromFinancing? null : <tr><td className="d-flex justify-content-between p-l-30"><div>{incomeStatementRenderText[appContext.locale]["Net income/expense from financing activities"]}</div><div>{numberAsCurrency(incomeFromFinancing - expenseFromFinancing)}</div></td></tr>}
+                            {!incomeFromFinancing? null : <div className="striped-row justify-content-between indent"><div>{incomeStatementRenderText[appContext.locale]["Net income/expense from financing activities"]}</div><div>{numberAsCurrency(incomeFromFinancing - expenseFromFinancing)}</div></div>}
                             {renderDetails(incomeFromFinancingSubtypeId, 4)}
                             {renderDetails(expenseFromFinancingSubtypeId, 4)}
-                            <tr><td className="d-flex justify-content-between p-l-30 font-weight-600"><div className="p-l-30">{incomeStatementRenderText[appContext.locale]["Total other income/expense, net"]}</div><div>{numberAsCurrency(totalOtherIncomeExpense)}</div></td></tr>
+                            <div className="striped-row justify-content-between indent-2 font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Total other income/expense, net"]}</div><div>{numberAsCurrency(totalOtherIncomeExpense)}</div></div>
                             {renderDetails(otherIncomeSubtypeId, 4)}
                             {renderDetails(otherExpensesSubtypeId, 4)}
-                            <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
-                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Earnings before interest and tax"]}</div><div>{numberAsCurrency(ebit)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Interest expense"]}</div><div>{numberAsCurrency(interestExpense)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Earnings before tax"]}</div><div>{numberAsCurrency(earningsBeforeTax)}</div></td></tr>
-                            <tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Tax expense"]}</div><div>{numberAsCurrency(taxExpense)}</div></td></tr>
-                            <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr>
-                            {!nonRecurringAndExtraordinaryItems ? null : <><tr><td className="d-flex justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Non-recurring and extraordinary items"]}</div><div>{numberAsCurrency(nonRecurringAndExtraordinaryItems)}</div></td></tr>
-                            <tr><td>{/* empty row */}<div className="visibility-hidden">spacer row</div></td></tr></>}
-                            <tr><td className="d-flex justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Net income"]}</div><div>{numberAsCurrency(netIncome)}</div></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                }
-            </div>
+                            <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
+                            <div className="striped-row justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Earnings before interest and tax"]}</div><div>{numberAsCurrency(ebit)}</div></div>
+                            <div className="striped-row justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Interest expense"]}</div><div>{numberAsCurrency(interestExpense)}</div></div>
+                            <div className="striped-row justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Earnings before tax"]}</div><div>{numberAsCurrency(earningsBeforeTax)}</div></div>
+                            <div className="striped-row justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Tax expense"]}</div><div>{numberAsCurrency(taxExpense)}</div></div>
+                            <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
+                            {!nonRecurringAndExtraordinaryItems ? null : 
+                                <>
+                                    <div className="striped-row justify-content-between"><div>{incomeStatementRenderText[appContext.locale]["Non-recurring and extraordinary items"]}</div><div>{numberAsCurrency(nonRecurringAndExtraordinaryItems)}</div></div>
+                                    <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
+                                </>
+                            }
+                            <div className="striped-row justify-content-between font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Net income"]}</div><div>{numberAsCurrency(netIncome)}</div></div>
+
+                        </div>
+                    }
+                </CardBody>
+            </Card>
         </>
     )
 }
