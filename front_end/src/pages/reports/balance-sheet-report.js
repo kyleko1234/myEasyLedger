@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
 import BalanceSheetRender from './components/balance-sheet-render';
 import {balanceSheetReportText} from '../../utils/i18n/balance-sheet-report-text.js';
