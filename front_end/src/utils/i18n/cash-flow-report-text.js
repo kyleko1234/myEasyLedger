@@ -3,6 +3,7 @@ export const cashFlowReportText = {
         "Home": "Home",
         "Reports": "Reports",
         "Cash Flow Report": "Cash Flow Report",
+        "Options": "Options",
         
         "From:": "From:",
         "To:" : "To:",
@@ -42,6 +43,7 @@ export const cashFlowReportText = {
         "Home": "首頁",
         "Reports": "報表",
         "Cash Flow Report": "現金流量表",
+        "Options": "TRANSLATION",
 
         "From:": "自:",
         "To:" : "至:",
