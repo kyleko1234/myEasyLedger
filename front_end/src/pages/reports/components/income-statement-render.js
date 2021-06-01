@@ -4,6 +4,7 @@ import { API_BASE_URL} from '../../../utils/constants';
 import axios from 'axios';
 import {incomeStatementRenderText} from '../../../utils/i18n/income-statement-render-text';
 import { Card, CardBody } from 'reactstrap';
+import { createJsxAttribute } from 'typescript';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -93,7 +94,7 @@ function IncomeStatementRender() {
                                     .filter(childAccount => childAccount.parentAccountId === account.accountId)
                                     .map(childAccount => {
                                         return (
-                                            <div className="striped-row justify-content-between indent-3">
+                                            <div key={childAccount.accountId} className="striped-row justify-content-between indent-3">
                                                 <div>{childAccount.accountName}</div><div>{numberAsCurrency(typeId === 5 ? childAccount.debitsMinusCredits : childAccount.debitsMinusCredits * -1)}</div>
                                             </div>
                                         )
@@ -225,7 +226,7 @@ function IncomeStatementRender() {
                                                             .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                             .map(childAccount => {
                                                                 return(
-                                                                    <div className="striped-row justify-content-between indent-2">
+                                                                    <div key={childAccount.accountId} className="striped-row justify-content-between indent-2">
                                                                         <div>{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits * -1)}</div>
                                                                     </div>
                                                                 )
