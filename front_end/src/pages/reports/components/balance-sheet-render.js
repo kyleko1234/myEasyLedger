@@ -63,9 +63,11 @@ function BalanceSheetRender() {
             <Card className="bg-light shadow-sm very-rounded my-4">
                 <CardBody>
                     <h2 className="h5">{balanceSheetRenderText[appContext.locale]["Options"]}</h2>
-                    <div className="d-flex mb-1">
-                        <label className="col-form-label pr-2 ">{balanceSheetRenderText[appContext.locale]["As of:"]} </label>
-                        <input type="date" className="form-control form-control-sm align-self-center width-150" value={endDate} onChange={event => handleChangeDate(event.target.value)} />
+                    <div className="d-flex mb-2 align-items-center">
+                        <div className="d-flex align-items-center">
+                            <label className="col-3 px-0">{balanceSheetRenderText[appContext.locale]["As of:"]} </label>
+                            <input type="date" className="form-control form-control-sm align-self-center width-150" value={endDate} onChange={event => handleChangeDate(event.target.value)} />
+                        </div>
                     </div>
                     <div className="custom-control custom-switch">
                         <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
@@ -245,55 +247,59 @@ function BalanceSheetRender() {
             </Card>
             <Card className="shadow-sm very-rounded my-2">
                 <CardBody>
-                    <div className="striped-row font-weight-600">{balanceSheetRenderText[appContext.locale]["Equity"]}</div>
-                    {balanceSheetEquity.equityItemsSubtypeBalances.map(subtypeBalance => {
-                        return(
-                            <React.Fragment key={subtypeBalance.accountSubtypeId}>
-                                <div className="striped-row justify-content-between indent">
-                                    <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
-                                </div>
-                                {detailedView?
-                                    accountBalances
-                                        .filter(account => account.accountSubtypeId === subtypeBalance.accountSubtypeId)
-                                        .map(account => {
-                                            return (
-                                                <React.Fragment key={account.accountId}>
-                                                    <div className="striped-row justify-content-between indent-2">
-                                                        <div>{account.accountName}</div><div>{account.hasChildren? null : numberAsCurrency(account.debitsMinusCredits * -1)}</div>
-                                                    </div>
-                                                    {accountBalances
-                                                        .filter(childAccount => childAccount.parentAccountId === account.accountId)
-                                                        .map(childAccount => {
-                                                            return(
-                                                                <div key={childAccount.accountId} className="striped-row justify-content-between indent-3">
-                                                                        <div>{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits * -1)}</div>
+                    {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                        <div>
+                            <div className="striped-row font-weight-600">{balanceSheetRenderText[appContext.locale]["Equity"]}</div>
+                            {balanceSheetEquity.equityItemsSubtypeBalances.map(subtypeBalance => {
+                                    return (
+                                        <React.Fragment key={subtypeBalance.accountSubtypeId}>
+                                            <div className="striped-row justify-content-between indent">
+                                                <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
+                                            </div>
+                                            {detailedView ?
+                                                accountBalances
+                                                    .filter(account => account.accountSubtypeId === subtypeBalance.accountSubtypeId)
+                                                    .map(account => {
+                                                        return (
+                                                            <React.Fragment key={account.accountId}>
+                                                                <div className="striped-row justify-content-between indent-2">
+                                                                    <div>{account.accountName}</div><div>{account.hasChildren ? null : numberAsCurrency(account.debitsMinusCredits * -1)}</div>
                                                                 </div>
-                                                            )
-                                                        })
-                                                    }
-                                                </React.Fragment>
-                                            )
-                                    })
-                                : null}
-                                <div className="striped-row indent font-weight-600">{balanceSheetRenderText[appContext.locale]["Retained Earnings"]}</div>
-                                <div className="striped-row justify-content-between indent-2">
-                                    <div>{balanceSheetRenderText[appContext.locale]["Beginning balances"](prevPeriodEndDate)}</div><div>{numberAsCurrency(balanceSheetEquity.prevPeriodRetainedEarnings)}</div>
-                                </div>
-                                <div className="striped-row justify-content-between indent-2">
-                                    <div>{balanceSheetRenderText[appContext.locale]["Net income for current period"](currPeriodStartDate, asOfDate)}</div><div>{numberAsCurrency(balanceSheetEquity.currPeriodNetIncome)}</div>
-                                </div>
-                                <div className="striped-row justify-content-between indent-2">
-                                    <div>{balanceSheetRenderText[appContext.locale]["Dividends for current period"](currPeriodStartDate, asOfDate)}</div><div>{numberAsCurrency(balanceSheetEquity.currPeriodDividendsAndEquivalents)}</div>
-                                </div>
-                                <div className="striped-row justify-content-between indent-3 font-weight-600">
-                                    <div>{balanceSheetRenderText[appContext.locale]["Ending balances of retained earnings"]}</div><div>{numberAsCurrency(balanceSheetEquity.totalRetainedEarnings)}</div>
-                                </div>
-                                <div className="striped-row font-weight-600 justify-content-between">
-                                    <div>{balanceSheetRenderText[appContext.locale]["Total equity"]}</div><div>{numberAsCurrency(balanceSheetEquity.totalEquity)}</div>
-                                </div>
-                        </React.Fragment>
-                        )
-                    })}
+                                                                {accountBalances
+                                                                    .filter(childAccount => childAccount.parentAccountId === account.accountId)
+                                                                    .map(childAccount => {
+                                                                        return (
+                                                                            <div key={childAccount.accountId} className="striped-row justify-content-between indent-3">
+                                                                                <div>{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits * -1)}</div>
+                                                                            </div>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </React.Fragment>
+                                                        )
+                                                    })
+                                                : null}
+                                            <div className="striped-row indent font-weight-600">{balanceSheetRenderText[appContext.locale]["Retained Earnings"]}</div>
+                                            <div className="striped-row justify-content-between indent-2">
+                                                <div>{balanceSheetRenderText[appContext.locale]["Beginning balances"](prevPeriodEndDate)}</div><div>{numberAsCurrency(balanceSheetEquity.prevPeriodRetainedEarnings)}</div>
+                                            </div>
+                                            <div className="striped-row justify-content-between indent-2">
+                                                <div>{balanceSheetRenderText[appContext.locale]["Net income for current period"](currPeriodStartDate, asOfDate)}</div><div>{numberAsCurrency(balanceSheetEquity.currPeriodNetIncome)}</div>
+                                            </div>
+                                            <div className="striped-row justify-content-between indent-2">
+                                                <div>{balanceSheetRenderText[appContext.locale]["Dividends for current period"](currPeriodStartDate, asOfDate)}</div><div>{numberAsCurrency(balanceSheetEquity.currPeriodDividendsAndEquivalents)}</div>
+                                            </div>
+                                            <div className="striped-row justify-content-between indent-3 font-weight-600">
+                                                <div>{balanceSheetRenderText[appContext.locale]["Ending balances of retained earnings"]}</div><div>{numberAsCurrency(balanceSheetEquity.totalRetainedEarnings)}</div>
+                                            </div>
+                                            <div className="striped-row font-weight-600 justify-content-between">
+                                                <div>{balanceSheetRenderText[appContext.locale]["Total equity"]}</div><div>{numberAsCurrency(balanceSheetEquity.totalEquity)}</div>
+                                            </div>
+                                        </React.Fragment>
+                                    )
+                                })}
+                        </div>
+                    }
                 </CardBody>
             </Card>
         </>

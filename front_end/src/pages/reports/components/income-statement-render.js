@@ -3,6 +3,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL} from '../../../utils/constants';
 import axios from 'axios';
 import {incomeStatementRenderText} from '../../../utils/i18n/income-statement-render-text';
+import { Card, CardBody } from 'reactstrap';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -187,22 +188,27 @@ function IncomeStatementRender() {
 
 
     return (
-        <div className="widget widget-rounded m-b-30">
-            <div className="widget-header bg-light border-bottom">
-                <div className="d-flex justify-content-between align-items-center px-3 py-1">
-                    <div className="font-weight-600">{incomeStatementRenderText[appContext.locale]["Income Statement"]}</div>    
+        <>
+            <Card className="very-rounded shadow-sm bg-light ">
+                <CardBody className="">
+                    <h1 className="h5">{incomeStatementRenderText[appContext.locale]["Options"]}</h1>    
+                    <div className="d-sm-flex align-items-center ">
+                        <div className="d-flex align-items-center mr-3 mb-2">
+                            <label className="my-0 col-3 px-0">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
+                            <input type="date" className="form-control form-control-sm width-150" value={startDate} onChange={event => handleChangeStartDate(event.target.value)} />
+                        </div>
+                        <div className="d-flex align-items-center mr-3 mb-2">
+                            <label className="my-0 col-3 px-0">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
+                            <input type="date" className="form-control form-control-sm width-150" value={endDate} onChange={event => handleChangeEndDate(event.target.value)} />
+                        </div>
+                    </div> 
                     <div className="custom-control custom-switch">
                         <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView}/>
                         <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
                     </div>
-                    <div className="d-flex align-items-center">
-                        <label className="ml-sm-5 px-1 my-0">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
-                        <input type="date" className="form-control form-control-sm width-150" value={startDate} onChange={event => handleChangeStartDate(event.target.value)} />
-                        <label className="ml-sm-5 px-1 my-0">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
-                        <input type="date" className="form-control form-control-sm width-150" value={endDate} onChange={event => handleChangeEndDate(event.target.value)} />
-                    </div> 
-                </div>
-            </div>
+
+                </CardBody>
+            </Card>
             <div>
                 {loading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                 <div>
@@ -289,7 +295,7 @@ function IncomeStatementRender() {
                 </div>
                 }
             </div>
-        </div>
+        </>
     )
 }
 
