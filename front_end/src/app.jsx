@@ -146,7 +146,7 @@ class App extends React.Component {
 					(this.state.pageSidebarToggled ? 'page-sidebar-toggled ' : '') +
 					(this.state.pageSidebarHidden? 'page-sidebar-hidden ' : '')
 				}>
-					{this.state.pageHeader && !this.state.isLoading && (<Header />)}
+					{this.state.pageHeader && !this.state.isLoading && this.state.isAuthenticated && (<Header />)}
 					{this.state.pageSidebar && !this.state.isLoading && this.state.isAuthenticated && (<Sidebar />)}
 					{this.state.pageContent && !this.state.isLoading && (<Content />)}
 				</div>
