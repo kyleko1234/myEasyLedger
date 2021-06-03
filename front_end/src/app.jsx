@@ -15,6 +15,12 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 
+        this.setHiddenSidebar = boolean => {
+            this.setState({
+                pageSidebarHidden: boolean
+            })
+        }
+
 		this.toggleHiddenSidebar = () => {
 			this.setState({
 				pageSidebarHidden: !this.state.pageSidebarHidden
@@ -33,9 +39,11 @@ class App extends React.Component {
 		}
 
 		this.handleWindowResize = () => {
-			this.setState({
-				pageSidebarHidden: window.innerWidth > 1200? false : true
-			})
+            if (this.state.isAuthenticated) {
+                this.setState({
+                    pageSidebarHidden: window.innerWidth > 1200? false : true
+                })    
+            }
 		}
 
 		this.checkForAuthentication = () => { //TODO refactor to ensure that setstate works correctly
@@ -100,6 +108,7 @@ class App extends React.Component {
 			handleSetPageSidebar: this.handleSetPageSidebar,
 			toggleMobileSidebar: this.toggleMobileSidebar,
 			toggleHiddenSidebar: this.toggleHiddenSidebar,
+            setHiddenSidebar: this.setHiddenSidebar,
 						
 			pageContent: true,
 									

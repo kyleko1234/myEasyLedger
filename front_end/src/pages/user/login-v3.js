@@ -12,6 +12,7 @@ class LoginV3 extends React.Component {
 	componentDidMount() {
 		this.context.handleSetPageSidebar(false);
 		this.context.handleSetPageHeader(false);
+        this.context.setHiddenSidebar(true); //must set this to true for css to behave correctly, EDIT THIS
 	}
 
 	componentWillUnmount() {
