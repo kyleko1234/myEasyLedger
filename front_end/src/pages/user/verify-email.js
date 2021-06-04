@@ -52,8 +52,8 @@ function VerifyEmail(props) {
     }
 
     return(
-        <div className="slide-in">
-            <h2>{loginV3Text[appContext.locale]["Verify Your Email"]}</h2>
+        <div className="slide-in mb-5 pb-5">
+            <h1>{loginV3Text[appContext.locale]["Verify Your Email"]}</h1>
             <h3>{props.userEmail}</h3>
             <p>
                 {loginV3Text[appContext.locale]["Please enter the six-digit code we have sent to your email."]}
@@ -66,9 +66,9 @@ function VerifyEmail(props) {
             {successAlert
                 ? <Alert color="success">{loginV3Text[appContext.locale]["A new code has been sent to your email!"]}</Alert>
                 : null}
-            <form onSubmit={event => handleSubmit(event)} className="m-b-40 p-b-40">
-                <div className="form-group m-b-15">
-                    <input type="text" required className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Reset Password Code"]} value={props.resetPasswordCode} onChange={event => props.setResetPasswordCode(event.target.value)}/>
+            <form onSubmit={event => handleSubmit(event)} className="mb-5 pb-5">
+                <div className="form-group mb-3">
+                    <input type="text" required className="form-control-lg form-control" placeholder={loginV3Text[appContext.locale]["Reset Password Code"]} value={props.resetPasswordCode} onChange={event => props.setResetPasswordCode(event.target.value)}/>
                 </div>
                 <div className="d-flex justify-content-between">
                     <button className="btn btn-lg btn-white width-175" type="button" onClick={() => history.push("/user/login/form")}>

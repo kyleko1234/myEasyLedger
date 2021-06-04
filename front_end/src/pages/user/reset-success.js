@@ -9,8 +9,8 @@ function ResetSuccess(props) {
     const appContext = React.useContext(PageSettings);
     return(
         <div className="slide-in">
-            <h2>{loginV3Text[appContext.locale]["Password Reset Successful!"]}</h2>
-            <div className="m-b-40 p-b-40">
+            <h1>{loginV3Text[appContext.locale]["Password Reset Successful!"]}</h1>
+            <div className="mb-5 pb-5">
                 <Link className="text-primary" to="/user/login/form">
                     {loginV3Text[appContext.locale]["Please click here to log in."]}
                 </Link>

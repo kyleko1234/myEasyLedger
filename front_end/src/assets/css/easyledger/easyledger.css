@@ -355,17 +355,16 @@ a.icon-link-text-muted:hover {
 }
 .login-right {
     min-width: 500px;
+    width: 500px;
     padding: 60px;
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    height: 100%;
     background-color: white;
     z-index: 1;
 }
 @media (max-width: 1199.98px) {
     .login-right {
         min-width: 400px;
+        width: 400px;
         padding: 45px;
     }
 }

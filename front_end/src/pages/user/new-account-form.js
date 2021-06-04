@@ -48,52 +48,52 @@ function NewAccountForm(props) {
 
     return (
         <div>
-            <h1 className="register-header">
+            <h1>
                 {registerV3Text[appContext.locale]["Sign Up"]}
-                <small>{registerV3Text[appContext.locale]["Create your myEasyLedger Account."]}</small>
             </h1>
-            <div className="register-content">
-                <form className="margin-bottom-0" onSubmit={event => validateForm(event)}>
+            <h2 className="h5 font-weight-normal mb-2">{registerV3Text[appContext.locale]["Create your myEasyLedger Account."]}</h2>
+            <div className="login-content">
+                <form className="mb-0" onSubmit={event => validateForm(event)}>
                     <label className="control-label">{registerV3Text[appContext.locale]["Name"]} <span className="text-danger">*</span></label>
-                    <div className="row row-space-10">
-                        <div className="col-md-6 m-b-15">
+                    <div className="row mb-2">
+                        <div className="col-6 pr-1">
                             <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["First name"]} required value={props.firstNameInput} onChange={event => props.setFirstNameInput(event.target.value)} />
                         </div>
-                        <div className="col-md-6 m-b-15">
+                        <div className="col-6 pl-1">
                             <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["Last name"]} required value={props.lastNameInput} onChange={event => props.setLastNameInput(event.target.value)}/>
                         </div>
                     </div>
                     <label className="control-label">{registerV3Text[appContext.locale]["Email"]} <span className="text-danger">*</span></label>
-                    <div className="row m-b-15">
-                        <div className="col-md-12">
+                    <div className="row mb-2">
+                        <div className="col-12">
                             <input type="email" className="form-control" placeholder={registerV3Text[appContext.locale]["Email address"]} required value={props.emailInput} onChange={event => props.setEmailInput(event.target.value)}/>
                         </div>
                     </div>
                     {emailTakenAlert? <Alert color="danger">{registerV3Text[appContext.locale]["Email is already taken."]}</Alert> : null}
                     <label className="control-label">{registerV3Text[appContext.locale]["Re-enter Email"]} <span className="text-danger">*</span></label>
-                    <div className="row m-b-15">
-                        <div className="col-md-12">
+                    <div className="row mb-2">
+                        <div className="col-12">
                             <input type="email" className="form-control" placeholder={registerV3Text[appContext.locale]["Re-enter email address"]} required value={props.reEnterEmailInput} onChange={event => props.setReEnterEmailInput(event.target.value)}/>
                         </div>
                     </div>
                     {emailMatchAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Email does not match."]}</Alert> : null}
                     <label className="control-label">{registerV3Text[appContext.locale]["Password"]} <span className="text-danger">*</span></label>
-                    <div className="row m-b-15">
-                        <div className="col-md-12">
+                    <div className="row mb-2">
+                        <div className="col-12">
                             <input type="password" className="form-control" placeholder={registerV3Text[appContext.locale]["Password" ]} required value={props.passwordInput} onChange={event => props.setPasswordInput(event.target.value)}/>
                         </div>
                     </div>
                     <label className="control-label">{registerV3Text[appContext.locale]["Re-enter Password"]} <span className="text-danger">*</span></label>
-                    <div className="row m-b-15">
-                        <div className="col-md-12">
+                    <div className="row mb-3">
+                        <div className="col-12">
                             <input type="password" className="form-control" placeholder={registerV3Text[appContext.locale]["Password"]} required value={props.reEnterPasswordInput} onChange={event => props.setReEnterPasswordInput(event.target.value)}/>
                         </div>
                     </div>
                     {passwordMatchAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Password does not match."]}</Alert> : null}
-                    <div className="register-buttons">
+                    <div className="mb-2">
                         <button type="submit" className="btn btn-primary btn-block btn-lg">{registerV3Text[appContext.locale]["Next"]}</button>
                     </div>
-                    <div className="m-t-20 p-b-40 text-inverse">
+                    <div className="mb-3">
                         {registerV3Text[appContext.locale]["Already a member"]}
                     </div>
                     <div>
@@ -106,7 +106,7 @@ function NewAccountForm(props) {
                         })}
                     </div>
                     <hr />
-                    <p className="text-center">
+                    <p className="text-center mb-0">
                         {registerV3Text[appContext.locale]["Copyright text"]}
                     </p>
                 </form>

@@ -31,7 +31,7 @@ class LoginV3 extends React.Component {
 						</p>
 					</div>
 				</div>
-				<div className="login-right overflow-hidden">
+				<div className="login-right overflow-auto">
 						<Route path="/user/login/form">
 							<LoginV3Render history={this.props.history}/>
 						</Route>
