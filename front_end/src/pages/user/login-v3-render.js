@@ -58,13 +58,8 @@ function LoginV3Render(props) {
 
     return (
         <>
-            <div className="login-header">
-				<div className="brand">
-                <span className="logo"></span> my<b>Easy</b>Ledger
-            </div>
-                <div className="icon">
-                    <i className="fa fa-sign-in"></i>
-                </div>
+            <div className="login-header mb-3">
+                my<b>Easy</b>Ledger
             </div>
             <div className="login-content">
                 {loginAlert? <Alert color="danger">{loginV3Text[appContext.locale]["Invalid email or password."]}</Alert> : null}
@@ -75,20 +70,20 @@ function LoginV3Render(props) {
                     </Alert> 
                 : null}
                 {verificationSentAlert? <Alert color="success">{loginV3Text[appContext.locale]["Verification email sent!"]}</Alert> : null}
-                <form className="margin-bottom-0" onSubmit={event => handleSubmit(event)}>
-                    <div className="form-group m-b-15">
+                <form className="mb-0" onSubmit={event => handleSubmit(event)}>
+                    <div className="form-group mb-3">
                         <input type="email" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Email Address"]} required value={emailInput} onChange={event => setEmailInput(event.target.value)}/>
                     </div>
-                    <div className="form-group m-b-15">
+                    <div className="form-group mb-3">
                         <input type="password" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Password"]} required value={passwordInput} onChange={event => setPasswordInput(event.target.value)} />
                     </div>
-                    <div className="m-b-15">
+                    <div className="mb-3">
                         <Link to="/user/login/forgot/find-email" className="text-primary">{loginV3Text[appContext.locale]["Forgot Password?"]}</Link>
                     </div>
-                    <div className="login-buttons">
+                    <div className="mb-3">
                         <button type="submit" className="btn btn-primary btn-block btn-lg">{loginV3Text[appContext.locale]["Sign me in"]}</button>
                     </div>
-                    <div className="m-t-20 m-b-40 p-b-40 text-inverse">
+                    <div className="mb-5 pb-5 text-inverse">
                         {loginV3Text[appContext.locale]["Not a member"]}
                     </div>
                 </form>

@@ -12,7 +12,6 @@ class LoginV3 extends React.Component {
 	componentDidMount() {
 		this.context.handleSetPageSidebar(false);
 		this.context.handleSetPageHeader(false);
-        this.context.setHiddenSidebar(true); //must set this to true for css to behave correctly, EDIT THIS
 	}
 
 	componentWillUnmount() {
@@ -23,17 +22,16 @@ class LoginV3 extends React.Component {
 
 	render() {
 		return (
-			<div className="login login-with-news-feed">
-				<div className="news-feed">
-					<div className="news-image" style={{ backgroundImage: 'url(/assets/img/login-bg/login-bg-11.jpg)' }}></div>
-					<div className="news-caption">
-						<h4 className="caption-title"> my<b>Easy</b>Ledger</h4>
+			<div className="login-page" style={{ backgroundImage: 'url(/assets/img/login-bg/login-bg-11.jpg)' }} >
+				<div className="login-left" >
+					<div className="login-left-caption">
+						<div className="login-left-caption-title"> my<b>Easy</b>Ledger</div>
 						<p>
 							{loginV3Text[this.context.locale]["App description 1"]}
 						</p>
 					</div>
 				</div>
-				<div className="right-content overflow-hidden">
+				<div className="login-right overflow-hidden">
 						<Route path="/user/login/form">
 							<LoginV3Render history={this.props.history}/>
 						</Route>

@@ -15,12 +15,6 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 
-        this.setHiddenSidebar = boolean => {
-            this.setState({
-                pageSidebarHidden: boolean
-            })
-        }
-
 		this.toggleHiddenSidebar = () => {
 			this.setState({
 				pageSidebarHidden: !this.state.pageSidebarHidden
@@ -108,7 +102,6 @@ class App extends React.Component {
 			handleSetPageSidebar: this.handleSetPageSidebar,
 			toggleMobileSidebar: this.toggleMobileSidebar,
 			toggleHiddenSidebar: this.toggleHiddenSidebar,
-            setHiddenSidebar: this.setHiddenSidebar,
 						
 			pageContent: true,
 									
