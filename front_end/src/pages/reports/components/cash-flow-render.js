@@ -86,8 +86,7 @@ function CashFlowRender() {
                     </div> 
                 </CardBody>
             </Card>
-            <Card className="very-rounded shadow-sm">
-                <CardBody>
+            <div >
                     {loading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                     <div>
                         <div>
@@ -128,8 +127,7 @@ function CashFlowRender() {
                         </div>
                     </div>
                     }
-                </CardBody>
-            </Card>
+            </div>
 
         </>
     )
