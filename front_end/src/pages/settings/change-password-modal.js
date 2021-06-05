@@ -60,7 +60,7 @@ function ChangePasswordModal(props) {
     return(
         <>
             <Modal isOpen={props.isOpen} toggle={props.toggle} centered={true} onClosed={onModalClosed}>
-                <ModalHeader className="bg-light">
+                <ModalHeader>
                     {settingsText[appContext.locale]["Change Password"]}
                 </ModalHeader>
                 <ModalBody>
@@ -71,20 +71,20 @@ function ChangePasswordModal(props) {
                         ? <Alert color="danger">{settingsText[appContext.locale]["Current password is incorrect."]}</Alert>
                         : null}
                     <form className="px-3 py-3" onSubmit={event => {event.preventDefault(); handleSaveButton();}}>
-                        <div className="form-group row">
-                            <label className="col-md-4 col-form-label">
+                        <div className="form-group row align-items-center">
+                            <label className="col-md-5 col-form-label">
                                 {settingsText[appContext.locale]["Current Password"]}
                             </label>
                             <input className="form-control col-md-7 m-l-5" type="password" value={currentPasswordInput} onChange={event => setCurrentPasswordInput(event.target.value)}/>
                         </div>
-                        <div className="form-group row">
-                            <label className="col-md-4 col-form-label">
+                        <div className="form-group row align-items-center">
+                            <label className="col-md-5 col-form-label">
                                 {settingsText[appContext.locale]["New Password"]}
                             </label>
                             <input className="form-control col-md-7 m-l-5" type="password" value={newPasswordInput} onChange={event => setNewPasswordInput(event.target.value)}/>
                         </div>
-                        <label className="form-group row">
-                            <div className="col-md-4 col-form-label">
+                        <label className="form-group row align-items-center">
+                            <div className="col-md-5 col-form-label">
                                 {settingsText[appContext.locale]["Confirm New Password"]}
                             </div>
                             <input className="form-control col-md-7 m-l-5" type="password" value={confirmNewPasswordInput} onChange={event => setConfirmNewPasswordInput(event.target.value)}/>
@@ -92,7 +92,7 @@ function ChangePasswordModal(props) {
                         <button style={{display: "none"}}>{/* A hacky solution to force the form to submit when the enter key is pressed. */}</button>
                     </form>
                 </ModalBody>
-                <ModalFooter className="bg-light">
+                <ModalFooter>
                     <button className="btn btn-primary width-10ch" onClick={handleSaveButton}>{settingsText[appContext.locale]["Save"]}</button>
                     <button className="btn btn-white width-10ch" onClick={props.toggle}>{settingsText[appContext.locale]["Cancel"]}</button>
                 </ModalFooter>

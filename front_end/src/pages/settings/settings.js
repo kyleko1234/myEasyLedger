@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
-import Select from 'react-select';
 import { PageSettings } from '../../config/page-settings';
 import { settingsText } from '../../utils/i18n/settings-text';
-import axios from 'axios';
-import { API_BASE_URL, LOCALE_OPTIONS } from '../../utils/constants'
 import LanguageSettingsModal from './language-settings-modal';
 import ChangePasswordModal from './change-password-modal';
+import { Card, CardBody, CardTitle } from 'reactstrap';
 function Settings() {
     const appContext = React.useContext(PageSettings);
 
@@ -22,53 +19,48 @@ function Settings() {
 
     return (
         <div>
-            <ol className="breadcrumb float-xl-right">
-                <li className="breadcrumb-item"><Link to="/">{settingsText[appContext.locale]["Home"]}</Link></li>
-                <li className="breadcrumb-item active">{settingsText[appContext.locale]["Settings"]}</li>
-            </ol>
             <h1 className="page-header">
                 {settingsText[appContext.locale]["Settings"]}
-                <ToggleMobileSidebarButton className="d-md-none float-right " />
             </h1>
-            <div className="widget widget-rounded widget-list widget-list-rounded m-b-15">
-                <div className="widget-header bg-light border-bottom">
-                    <h4 className="widget-header-title">{settingsText[appContext.locale]["Personal Settings"]}</h4>
-                </div>
-                <Link replace to="#" className="widget-list-item bg-white" onClick={toggleLanguageSettingsModal}>
-                    <div className="widget-list-content p-l-30">
-                        <div className="widget-list-title">{settingsText[appContext.locale]["Language Settings"]}</div>
+            <Card className="very-rounded mb-3 shadow-sm">
+                <CardBody>
+                    <CardTitle className="font-weight-600">{settingsText[appContext.locale]["Personal Settings"]}</CardTitle>
+                    <div>
+                        <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleLanguageSettingsModal}>
+                            <div className="indent td">{settingsText[appContext.locale]["Language Settings"]}</div>
+                            <div className="pr-2 text-muted">
+                                <i className="fas fa-angle-right"></i>
+                            </div>
+                        </Link>
+                        <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleChangePasswordModal}>
+                            <div className="indent td">{settingsText[appContext.locale]["Change Password"]}</div>
+                            <div className="text-muted pr-2">
+                                <i className="fas fa-angle-right"></i>
+                            </div>
+                        </Link>
                     </div>
-                    <div className="m-r-10 widget-list-action text-right">
-                        <i className="fa fa-angle-right fa-lg text-muted"></i>
-                    </div>
-                </Link>
-                <Link replace to="#" className="widget-list-item bg-white" onClick={toggleChangePasswordModal}>
-                    <div className="widget-list-content p-l-30">
-                        <div className="widget-list-title">{settingsText[appContext.locale]["Change Password"]}</div>
-                    </div>
-                    <div className="m-r-10 widget-list-action text-right">
-                        <i className="fa fa-angle-right fa-lg text-muted"></i>
-                    </div>
-                </Link>
-            </div>
+                </CardBody>
+            </Card>
             {appContext.permissions.filter(permission => permission.permissionType.id >= 3).length == 0 ? null : //only show this widget if user administrates at least one organization
-                <div className="widget widget-rounded widget-list widget-list-rounded m-b-30">
-                    <div className="widget-header bg-light border-bottom">
-                        <h4 className="widget-header-title">{settingsText[appContext.locale]["Manage my EasyLedgers..."]}</h4>
-                    </div>
-                    {appContext.permissions.map(permission => {
-                        return (
-                            <Link key={permission.id} to={`/manage-easyledger/${permission.organization.id}`} className="widget-list-item bg-white">
-                                <div className="widget-list-content p-l-30">
-                                    <div className="widget-list-title">{permission.organization.name}</div>
-                                </div>
-                                <div className="m-r-10 widget-list-action text-right">
-                                    <i className="fa fa-angle-right fa-lg text-muted"></i>
-                                </div>
-                            </Link>
-                        )
-                    })}
-                </div>
+                <Card className="very-rounded shadow-sm">
+                    <CardBody>
+                        <CardTitle className="font-weight-600">
+                            {settingsText[appContext.locale]["Manage my EasyLedgers..."]}
+                        </CardTitle>
+                        <div>
+                            {appContext.permissions.map(permission => {
+                                return (
+                                    <Link key={permission.id} to={`/manage-easyledger/${permission.organization.id}`} className="tr d-flex justify-content-between align-items-center">
+                                        <div className="indent td">{permission.organization.name}</div>
+                                        <div className="pr-2 text-muted">
+                                            <i className="fas fa-angle-right"></i>
+                                        </div>
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    </CardBody>
+                </Card>
             }
             <LanguageSettingsModal isOpen={languageSettingsModal} toggle={toggleLanguageSettingsModal}/>
             <ChangePasswordModal isOpen={changePasswordModal} toggle={toggleChangePasswordModal} />

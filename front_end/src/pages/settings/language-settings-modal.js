@@ -13,7 +13,8 @@ function LanguageSettingsModal(props) {
     const handleChangeLocaleOption = (selectedOption) => {
         setSelectedLocale(selectedOption.value);
     }
-    const handleSaveButton = async () => {
+    const handleSaveButton = async (event) => {
+        event.preventDefault();
         let requestBody = {
             locale: selectedLocale
         }
@@ -26,12 +27,12 @@ function LanguageSettingsModal(props) {
     return(
         <>
             <Modal isOpen={props.isOpen} toggle={props.toggle} centered={true} >
-                <ModalHeader className="bg-light">
+                <ModalHeader>
                     {settingsText[appContext.locale]["Language Settings"]}
                 </ModalHeader>
                 <ModalBody>
                     <div className="px-3 py-3">
-                            <div className="form-group row">
+                            <form className="form-group row" onSubmit={handleSaveButton}>
                                 <label className="col-sm-3 col-form-label">
                                     {settingsText[appContext.locale]["Language"]}
                                 </label>
@@ -45,12 +46,12 @@ function LanguageSettingsModal(props) {
                                         menuPlacement={'auto'}
                                     />
                                 </div>
-                            </div>
+                            </form>
                     </div>
                 </ModalBody>
-                <ModalFooter className="bg-light">
-                    <button className="btn btn-primary width-10ch" onClick={handleSaveButton}>{settingsText[appContext.locale]["Save"]}</button>
-                    <button className="btn btn-white width-10ch" onClick={props.toggle}>{settingsText[appContext.locale]["Cancel"]}</button>
+                <ModalFooter>
+                    <button type="submit" className="btn btn-primary width-10ch" onClick={handleSaveButton}>{settingsText[appContext.locale]["Save"]}</button>
+                    <button type="button" className="btn btn-white width-10ch" onClick={props.toggle}>{settingsText[appContext.locale]["Cancel"]}</button>
                 </ModalFooter>
             </Modal>
         </>

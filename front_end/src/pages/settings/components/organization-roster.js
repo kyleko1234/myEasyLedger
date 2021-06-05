@@ -3,7 +3,7 @@ import axios from 'axios';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL, FIRSTNAME_LASTNAME_LOCALES, PERMISSION_TYPE_OPTIONS } from '../../../utils/constants.js';
 import { Link } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Card, CardBody, CardTitle } from 'reactstrap';
 import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { settingsText } from '../../../utils/i18n/settings-text';
@@ -79,7 +79,7 @@ function OrganizationRoster(props) {
             toggleRemovePersonAlert();
         })
     }
-    
+
 
     const handleAddAPersonButton = () => {
         let payload = {
@@ -106,130 +106,83 @@ function OrganizationRoster(props) {
     }
 
     return (
-        <div className="widget widget-rounded mb-3">
-            <div className="widget-header bg-light border-bottom">
-                <h4 className="widget-header-title">{"People with access to " + ownPermissionForCurrentOrganization.organization.name}</h4>
-                {ownPermissionForCurrentOrganization.permissionType.id >= 3? 
-                    <div className="px-3">
-                        <Link replace className="icon-link-text-muted" to="#" onClick={toggleAddAPersonModal}>
-                            <i className="fa fa-plus"></i>
-                        </Link>
-                    </div> 
-                : null}
-            </div>
-            <div className="overflow-auto px-2" style={{ height: '300px' }}>
-                {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>{settingsText[appContext.locale]["Name"]}</th>
-                                <th>{settingsText[appContext.locale]["Email"]}</th>
-                                <th>{settingsText[appContext.locale]["Permissions"]}</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {personInRosterDTOs.map(person => {
-                                return (
-                                    <tr key={person.personId}>
-                                        <td>{FIRSTNAME_LASTNAME_LOCALES.includes(person.locale) ? person.firstName + " " + person.lastName : person.lastName + " " + person.firstName}</td>
-                                        <td>{person.email}</td>
-                                        <td>{person.permissionTypeName}</td>
-                                        <td>
-                                            <Link replace 
-                                                className={"icon-link-text-muted" + (person.permissionTypeId < appContext.permissions.find(permission => permission.organization.id == props.organizationId).permissionType.id ? "" : " visibility-hidden")}
-                                                to="#" onClick={() => handleEditAPersonButton(person)}>
-                                                <i className="fa fa-edit"></i>
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                }
-            </div>
-            <Modal isOpen={addAPersonModal} toggle={toggleAddAPersonModal} centered={true} size="lg">
-                <ModalHeader> {settingsText[appContext.locale]["Add user modal header"](ownPermissionForCurrentOrganization.organization.name)} </ModalHeader>
-                <ModalBody>
-                    {emailNotFoundAlert ?
-                        <Alert color="danger">
-                            {settingsText[appContext.locale]["Could not find a user registered to this email."]}
-                        </Alert>
-                        : null}
-                    <form onSubmit={event => {event.preventDefault(); handleAddAPersonButton()}}>
-                        <div className="form-group row justify-content-center">
-                            <label className="col-form-label col-lg-3">
-                                {settingsText[appContext.locale]["Add a user by email:"]}
-                            </label>
-                            <div className="col-lg-7">
-                                <input
-                                    className="form-control"
-                                    value={emailInput}
-                                    onChange={event => {
-                                        setEmailInput(event.target.value);
-                                    }}
-                                />
-                            </div>
+        <Card className="very-rounded shadow-sm">
+            <CardBody>
+                <CardTitle className="font-weight-600">
+                    <div className="tr d-flex align-items-center justify-content-between">
+                        <div className="font-weight-600">
+                            {"People with access to " + ownPermissionForCurrentOrganization.organization.name}
                         </div>
-                    </form>
-                    <div className="form-group row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
-                        <label className="col-form-label col-lg-3">
-                            {settingsText[appContext.locale]["Permissions for this user"] + ":"}
-                            </label>
-                        <div className="col-lg-7">
-                            <Select
-                                options={permissionTypeOptions.filter(option => option.value < ownPermissionForCurrentOrganization.permissionType.id)}
-                                value={selectedPermissionTypeOption}
-                                isSearchable={true}
-                                onChange={handleChangePermissionTypeOption}
-                            />
+                        <div>
+                            {ownPermissionForCurrentOrganization.permissionType.id >= 3 ?
+                                <button className="btn btn-primary" onClick={toggleAddAPersonModal}>
+                                    Add a person
+                                </button>
+                                : null}
                         </div>
                     </div>
-                </ModalBody>
-                <ModalFooter>
-                    <button
-                        className="btn btn-primary width-10ch"
-                        onClick={handleAddAPersonButton}
-                    >
-                        {settingsText[appContext.locale]["Add"]}
-                    </button>
-                    <button
-                        className="btn btn-white width-10ch"
-                        onClick={toggleAddAPersonModal}
-                    >
-                        {settingsText[appContext.locale]["Cancel"]}
-                    </button>
-                </ModalFooter>
-            </Modal>
-
-            
-            <Modal isOpen={editAPersonModal} toggle={toggleEditAPersonModal} centered={true} size="lg">
-                <ModalHeader>{settingsText[appContext.locale]["Edit User Privileges"]} </ModalHeader>
-                <ModalBody>
-                    {selectedPerson?
-                    <div>
-                        <div className="form-group row justify-content-center">
-                            <div className="col-lg-3">
-                                {settingsText[appContext.locale]["Name"] + ":"}
+                </CardTitle>
+                <div className="overflow-auto px-2" style={{ height: '300px' }}>
+                    {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                        <div className="table">
+                            <div className="thead">
+                                <div className="bg-light tr border rounded d-flex">
+                                    <div className="th col-3">{settingsText[appContext.locale]["Name"]}</div>
+                                    <div className="th col-4">{settingsText[appContext.locale]["Email"]}</div>
+                                    <div className="th col-4">{settingsText[appContext.locale]["Permissions"]}</div>
+                                    <div className="th col-1"></div>
+                                </div>
                             </div>
-                            <div className="col-lg-6">
-                                {FIRSTNAME_LASTNAME_LOCALES.includes(selectedPerson.locale)? selectedPerson.firstName + " " + selectedPerson.lastName : selectedPerson.lastName + " " + selectedPerson.firstName}
-                            </div>
-                        </div>
-                        <div className="form-group row justify-content-center">
-                            <div className="col-lg-3">
-                                {settingsText[appContext.locale]["Email"] + ":"}
-                            </div>
-                            <div className="col-lg-6">
-                                {selectedPerson.email}
+                            <div className="tbody">
+                                {personInRosterDTOs.map(person => {
+                                    return (
+                                        <div className="tr d-flex" key={person.personId}>
+                                            <div className="td col-3">{FIRSTNAME_LASTNAME_LOCALES.includes(person.locale) ? person.firstName + " " + person.lastName : person.lastName + " " + person.firstName}</div>
+                                            <div className="td col-4">{person.email}</div>
+                                            <div className="td col-4">{person.permissionTypeName}</div>
+                                            <div className="td col-1">
+                                                <Link replace
+                                                    className={"icon-link-text-muted" + (person.permissionTypeId < appContext.permissions.find(permission => permission.organization.id == props.organizationId).permissionType.id ? "" : " visibility-hidden")}
+                                                    to="#" onClick={() => handleEditAPersonButton(person)}>
+                                                    <i className="fa fa-edit"></i>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
+                    }
+                </div>
+                <Modal isOpen={addAPersonModal} toggle={toggleAddAPersonModal} centered={true} size="lg">
+                    <ModalHeader> {settingsText[appContext.locale]["Add user modal header"](ownPermissionForCurrentOrganization.organization.name)} </ModalHeader>
+                    <ModalBody>
+                        {emailNotFoundAlert ?
+                            <Alert color="danger">
+                                {settingsText[appContext.locale]["Could not find a user registered to this email."]}
+                            </Alert>
+                            : null}
+                        <form onSubmit={event => { event.preventDefault(); handleAddAPersonButton() }}>
+                            <div className="form-group row justify-content-center">
+                                <label className="col-form-label col-lg-3">
+                                    {settingsText[appContext.locale]["Add a user by email:"]}
+                                </label>
+                                <div className="col-lg-7">
+                                    <input
+                                        className="form-control"
+                                        value={emailInput}
+                                        onChange={event => {
+                                            setEmailInput(event.target.value);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </form>
                         <div className="form-group row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
                             <label className="col-form-label col-lg-3">
                                 {settingsText[appContext.locale]["Permissions for this user"] + ":"}
                             </label>
-                            <div className="col-lg-6">
+                            <div className="col-lg-7">
                                 <Select
                                     options={permissionTypeOptions.filter(option => option.value < ownPermissionForCurrentOrganization.permissionType.id)}
                                     value={selectedPermissionTypeOption}
@@ -238,10 +191,62 @@ function OrganizationRoster(props) {
                                 />
                             </div>
                         </div>
-                    </div>
-                    : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
-                </ModalBody>
-                <ModalFooter className="justify-content-between">
+                    </ModalBody>
+                    <ModalFooter>
+                        <button
+                            className="btn btn-primary width-10ch"
+                            onClick={handleAddAPersonButton}
+                        >
+                            {settingsText[appContext.locale]["Add"]}
+                        </button>
+                        <button
+                            className="btn btn-white width-10ch"
+                            onClick={toggleAddAPersonModal}
+                        >
+                            {settingsText[appContext.locale]["Cancel"]}
+                        </button>
+                    </ModalFooter>
+                </Modal>
+
+
+                <Modal isOpen={editAPersonModal} toggle={toggleEditAPersonModal} centered={true} size="lg">
+                    <ModalHeader>{settingsText[appContext.locale]["Edit User Privileges"]} </ModalHeader>
+                    <ModalBody>
+                        {selectedPerson ?
+                            <div>
+                                <div className="form-group row justify-content-center">
+                                    <div className="col-lg-3">
+                                        {settingsText[appContext.locale]["Name"] + ":"}
+                                    </div>
+                                    <div className="col-lg-6">
+                                        {FIRSTNAME_LASTNAME_LOCALES.includes(selectedPerson.locale) ? selectedPerson.firstName + " " + selectedPerson.lastName : selectedPerson.lastName + " " + selectedPerson.firstName}
+                                    </div>
+                                </div>
+                                <div className="form-group row justify-content-center">
+                                    <div className="col-lg-3">
+                                        {settingsText[appContext.locale]["Email"] + ":"}
+                                    </div>
+                                    <div className="col-lg-6">
+                                        {selectedPerson.email}
+                                    </div>
+                                </div>
+                                <div className="form-group row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
+                                    <label className="col-form-label col-lg-3">
+                                        {settingsText[appContext.locale]["Permissions for this user"] + ":"}
+                                    </label>
+                                    <div className="col-lg-6">
+                                        <Select
+                                            options={permissionTypeOptions.filter(option => option.value < ownPermissionForCurrentOrganization.permissionType.id)}
+                                            value={selectedPermissionTypeOption}
+                                            isSearchable={true}
+                                            onChange={handleChangePermissionTypeOption}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
+                    </ModalBody>
+                    <ModalFooter className="justify-content-between">
                         <div>
                             <button className="btn btn-danger width-10ch"
                                 onClick={handleRemoveAPersonButton}
@@ -257,29 +262,30 @@ function OrganizationRoster(props) {
                                 {settingsText[appContext.locale]["Save"]}
                             </button>
                             <button
-                                className="btn btn-white width-10ch m-l-10"
+                                className="btn btn-white width-10ch ml-2"
                                 onClick={toggleEditAPersonModal}
                             >
                                 {settingsText[appContext.locale]["Cancel"]}
                             </button>
                         </div>
-                </ModalFooter>
-            </Modal>
+                    </ModalFooter>
+                </Modal>
 
-            {removePersonAlert ?
-                <SweetAlert danger showCancel
-                    confirmBtnText="Yes, remove this person!"
-                    confirmBtnBsStyle="danger"
-                    cancelBtnBsStyle="default"
-                    cancelBtnText="Cancel"
-                    title="Are you sure?"
-                    onConfirm={handleConfirmRemovePersonButton}
-                    onCancel={toggleRemovePersonAlert}
-                >
-                    {settingsText[appContext.locale]["Are you sure you want to remove this user?"]}
-                </SweetAlert>
-                : null}
-        </div>
+                {removePersonAlert ?
+                    <SweetAlert danger showCancel
+                        confirmBtnText="Yes, remove this person!"
+                        confirmBtnBsStyle="danger"
+                        cancelBtnBsStyle="default"
+                        cancelBtnText="Cancel"
+                        title="Are you sure?"
+                        onConfirm={handleConfirmRemovePersonButton}
+                        onCancel={toggleRemovePersonAlert}
+                    >
+                        {settingsText[appContext.locale]["Are you sure you want to remove this user?"]}
+                    </SweetAlert>
+                    : null}
+            </CardBody>
+        </Card>
 
     )
 }
