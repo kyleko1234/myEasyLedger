@@ -314,7 +314,7 @@ function TableOfJournalEntries({
                             </Link>
                         )
                     })}
-                    { /**This is not really reuseable and should be refactored */}
+                    { /**This is not really reuseable and should be refactored. For small screens */}
                     {data.map((row, i) => {
                         return(
                             <Link replace to="#" className="tr d-flex justify-content-between d-md-none align-items-center td" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
