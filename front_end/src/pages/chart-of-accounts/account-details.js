@@ -17,10 +17,10 @@ function AccountDetails(props) {
 
     const columns = appContext.isEnterprise
         ?   [ // accessor is the "key" in the data},
-                { header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-sm-2 text-nowrap " },
-                { header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', className: " text-truncate col-sm-6" },
-                { header: accountDetailsText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-right col-2 text-nowrap" },
-                { header: accountDetailsText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-right col-2 text-nowrap" },
+                { header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-md-2 text-nowrap " },
+                { header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', className: "col-md-6 text-truncate " },
+                { header: accountDetailsText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-right col-md-2 text-nowrap" },
+                { header: accountDetailsText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-right col-md-2 text-nowrap" },
             ]
         :   [ // accessor is the "key" in the data},
                 { header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', width: "20%" },

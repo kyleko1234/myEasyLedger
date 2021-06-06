@@ -289,8 +289,8 @@ function TableOfJournalEntries({
                     : null}
             </div>
             <div className="my-2">
-                <div className="thead ">
-                    <div className="d-flex tr bg-light border rounded">
+                <div className="thead">
+                    <div className="d-none d-md-flex tr bg-light border rounded">
                         {columns.map(column => {
                             return(
                                 <div key={column.accessor} className={"th " + column.className}>
@@ -303,7 +303,7 @@ function TableOfJournalEntries({
                 <div className="tbody">
                     {data.map((row, i) => {
                         return (
-                            <Link replace to="#" className="tr d-flex" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
+                            <Link replace to="#" className="tr d-none d-md-flex" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
                                 {columns.map(column => {
                                     return(
                                         <div key={column.accessor} className={"td " + column.className}>
@@ -314,6 +314,39 @@ function TableOfJournalEntries({
                             </Link>
                         )
                     })}
+                    { /**This is not really reuseable and should be refactored */}
+                    {data.map((row, i) => {
+                        return(
+                            <Link replace to="#" className="tr d-flex justify-content-between d-md-none align-items-center td" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
+                                <div className="px-0 w-100">
+                                    <div className={"px-0 font-size-compact font-weight-600 " + columns[0].className}>
+                                        {formatCell(row[columns[0].accessor], columns[0].accessor)}
+                                    </div>
+                                    <div className={"px-0 " + columns[1].className}>
+                                        {formatCell(row[columns[1].accessor], columns[1].accessor)}
+                                    </div>
+                                    <div className="d-flex justify-content-between pt-2">
+                                        <div className="font-size-compact">
+                                            <div className="font-weight-600 ">
+                                                    {columns[2].header}
+                                            </div>
+                                            <div className={"px-0 " + columns[2].className}>
+                                                {formatCell(row[columns[2].accessor], columns[2].accessor)}
+                                            </div>
+                                        </div>
+                                        <div className="font-size-compact">
+                                            <div className="font-weight-600 text-right">
+                                                    {columns[3].header}
+                                            </div>
+                                            <div className={"px-0 " + columns[3].className}>
+                                                {formatCell(row[columns[3].accessor], columns[3].accessor)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
+                        )
+                    })} 
                 </div>
                 <div className="d-flex justify-content-between px-1 py-2 border-top " >
                     <div className={first ? "invisible" : " "}>

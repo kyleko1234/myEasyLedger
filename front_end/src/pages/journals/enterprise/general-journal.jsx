@@ -4,7 +4,6 @@ import axios from 'axios';
 import { PageSettings } from '../../../config/page-settings';
 import TableOfJournalEntries from './table-of-journal-entries';
 import { generalJournalText } from '../../../utils/i18n/general-journal-text.js';
-import { Card, CardBody } from 'reactstrap';
 import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-entries-text.js';
 
 
@@ -13,10 +12,10 @@ function GeneralJournal() {
     const appContext = React.useContext(PageSettings);
 
     const columns = [
-        { header: tableOfJournalEntriesText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-sm-2" },
-        { header: tableOfJournalEntriesText[appContext.locale]['Description'], accessor: 'description', className: " text-truncate col-sm-6" },
-        { header: tableOfJournalEntriesText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-right col-2" },
-        { header: tableOfJournalEntriesText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-right col-2" },
+        { header: tableOfJournalEntriesText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-md-2" },
+        { header: tableOfJournalEntriesText[appContext.locale]['Description'], accessor: 'description', className: " text-truncate col-md-6" },
+        { header: tableOfJournalEntriesText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-right col-md-2" },
+        { header: tableOfJournalEntriesText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-right col-md-2" },
     ]
     const [pageSize, setPageSize] = React.useState(10);
     const [pageIndex, setPageIndex] = React.useState(0);
