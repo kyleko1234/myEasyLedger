@@ -117,7 +117,7 @@ function AccountDetails(props) {
                             <CardBody>
                                 {selectedAccount 
                                 ?   <>
-                                        <h1 className="h2 d-flex">
+                                        <h1 className="h2 d-flex ">
                                             {selectedAccount.accountCode
                                                 ? selectedAccount.accountCode + " - " + selectedAccount.accountName
                                                 : selectedAccount.accountName}

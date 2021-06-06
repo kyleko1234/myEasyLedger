@@ -280,13 +280,18 @@ function TableOfJournalEntries({
 
     return (
         <>
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-sm-flex  justify-content-between align-items-center">
                 {tableTitle}
                 {hasAddEntryButton ?
-                    <button className="btn btn-primary align-self-center" onClick={() => openEditorForNewEntry()}>
+                    <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={() => openEditorForNewEntry()}>
                         {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                     </button>
                     : null}
+            </div>
+            <div className="d-sm-none"> {/**On small screens render button-block */}
+                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => openEditorForNewEntry()}>
+                    {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
+                </button>
             </div>
             <div className="my-2">
                 <div className="thead">
