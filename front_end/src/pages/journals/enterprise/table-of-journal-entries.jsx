@@ -372,7 +372,14 @@ function TableOfJournalEntries({
                 size="xl"
                 centered={true}
             >
-                <ModalHeader>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</ModalHeader>
+                <h5 className="px-3 py-3 my-0 border-bottom d-flex justify-content-between align-items-center">
+                    <div>{tableOfJournalEntriesText[appContext.locale]["Journal Entry"]}</div>
+                    {!editMode?
+                        <div>
+                            <button className="btn btn-white width-175" onClick={toggleJournalEntryHistoryModal}>{tableOfJournalEntriesText[appContext.locale]["View edit history"]}</button>
+                        </div>
+                    : null}
+                </h5>
                 <ModalBody>
                     {editMode 
                         ?   <JournalEntryEditMode
@@ -390,7 +397,7 @@ function TableOfJournalEntries({
                             />
                     }
                 </ModalBody>
-                <ModalFooter className="justify-content-between">
+                <ModalFooter className=" justify-content-between">
                     {editMode ?
                         <>
                             <div>
@@ -411,7 +418,7 @@ function TableOfJournalEntries({
                         :
                         <>
                             <div>
-                                <button className="btn btn-white width-175" onClick={toggleJournalEntryHistoryModal}>{tableOfJournalEntriesText[appContext.locale]["View edit history"]}</button>
+                                {/**empty div to push buttons rightwards */}
                             </div>
                             <div>
                                 <button className="btn btn-info width-10ch" onClick={handleCopyJournalEntryButton}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
