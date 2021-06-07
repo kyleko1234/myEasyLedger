@@ -198,6 +198,10 @@ a.nav-link:hover {
     border-top: none;
 }
 
+.tfoot{
+    border-top: silver 1px solid;
+    font-weight: 600;
+}
 a.tr {
     color: var(--base-text-color);
 }

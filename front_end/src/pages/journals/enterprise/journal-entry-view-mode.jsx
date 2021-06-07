@@ -7,10 +7,10 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
     const appContext = React.useContext(PageSettings);
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
-            { Header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', width: '50%' },
-            { Header: journalEntryViewModeText[appContext.locale]['Account'], accessor: 'accountName', width: '24%' },
-            { Header: journalEntryViewModeText[appContext.locale]['Debit'], accessor: 'debitAmount', width: '13%' },
-            { Header: journalEntryViewModeText[appContext.locale]['Credit'], accessor: 'creditAmount', width: '13%' },
+            { header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', className: 'col-6 ' },
+            { header: journalEntryViewModeText[appContext.locale]['Account'], accessor: 'accountName', className: 'col-2 ' },
+            { header: journalEntryViewModeText[appContext.locale]['Debit'], accessor: 'debitAmount', className: 'col-2 text-right ' },
+            { header: journalEntryViewModeText[appContext.locale]['Credit'], accessor: 'creditAmount', className: 'col-2 text-right ' },
         ],
         []
     )
@@ -40,18 +40,17 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
         }
     }
 
-    const formatCell = cell => {
-        let columnId = cell.column.id;
-        switch (columnId) {
+    const formatCell = (cellValue, columnAccessor) => {
+        switch (columnAccessor) {
             case "debitAmount":
             case "creditAmount":
-                if (cell.value) {
-                    return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cell.value));
+                if (cellValue) {
+                    return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cellValue));
                 } else {
                     return null;
                 }
             default:
-                return cell.value;
+                return cellValue;
         }
     }
 
@@ -66,49 +65,46 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
             <br />
 
             <div className="table-responsive">
-                <table className="table"{...getTableProps()}>
-                    <thead>
-                        {headerGroups.map(headerGroup => (
-                            <tr {...headerGroup.getHeaderGroupProps()}>
-                                {headerGroup.headers.map(column => (
-                                    // Add the sorting props to control sorting. For this example
-                                    // we can add them into the header props
-                                    <th {...column.getHeaderProps()} style={{ width: column.width }} className={column.id == "debitAmount" || column.id == "creditAmount" ? "text-right" : ""}>
-                                        {column.render('Header')}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody {...getTableBodyProps()}>
-                        {rows.map(
+                <div className="table">
+                    <div className="thead">
+                        <div className="tr bg-light rounded border d-flex">
+                            {columns.map(column => (
+                                <div className={"th " + column.className}>
+                                    {column.header}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="tbody">
+                        {data.map(
                             (row, i) => {
-                                prepareRow(row);
                                 return (
-                                    <tr {...row.getRowProps()}>
-                                        {row.cells.map(cell => {
+                                    <div className="tr d-flex" key={i}>
+                                        {columns.map(column => {
                                             return (
-                                                <td className={cell.column.id == "debitAmount" || cell.column.id == "creditAmount" ? "text-right" : ""} {...cell.getCellProps()}>{formatCell(cell)}</td>
+                                                <div className={"td " + column.className}>
+                                                    {formatCell(row[column.accessor], column.accessor)}
+                                                </div>
                                             )
                                         })}
-                                    </tr>
+                                    </div>
                                 )
                             }
                         )}
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>{journalEntryViewModeText[appContext.locale]["Total"]}</td>
-                            <td></td>
-                            <td className="text-right">
+                    </div>
+                    <div className="tfoot">
+                        <div className="tr d-flex">
+                            <div className="td col-6">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
+                            <div className="td col-2"></div>
+                            <div className="td col-2 text-right">
                                 {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}
-                            </td>
-                            <td className="text-right">
+                            </div>
+                            <div className="td col-2 text-right">
                                 {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     )
