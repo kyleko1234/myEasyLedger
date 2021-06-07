@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardBody } from 'reactstrap';
-import { API_BASE_URL } from '../../utils/constants.js';
+import { API_BASE_URL, ACCOUNT_TYPE_OPTIONS} from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
 import AccountDetailsEditor from './components/account-details-editor.js';
+import Select from 'react-select';
 
 
 
@@ -28,6 +29,7 @@ class ChartOfAccounts extends React.Component {
 
             addAnAccountModal: false,
         };
+
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
         this.fetchData = this.fetchData.bind(this);
 
@@ -75,8 +77,8 @@ class ChartOfAccounts extends React.Component {
             this.setState({editAccountModal: true});
         })
     }
-
     /**End utility functions for adding/editing account */
+
     canAddChildren(account) {
         if (account.parentAccountId != null) {
             return false;
@@ -90,6 +92,17 @@ class ChartOfAccounts extends React.Component {
         return true;
     }
 
+    renderAccountTypeSelect() {
+        const accountTypeOptions = ACCOUNT_TYPE_OPTIONS(this.context.locale);
+        return(
+            <Select
+                options={accountTypeOptions}
+                value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == this.props.match.params.activeTabId)}
+                onChange={selectedOption => this.props.history.push(`/chart-of-accounts/${selectedOption.value}`)}
+
+            />
+        )
+    }
     render() {
         return (
             <div>
@@ -101,7 +114,7 @@ class ChartOfAccounts extends React.Component {
                         <Nav pills justified className="">
                             {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                                 <div className="d-flex w-100 justify-content-between align-items-center">
-                                    <div className="d-lg-flex">
+                                    <div className="d-none d-lg-flex">
                                         {this.state.accountTypes.map(accountType => { //render a pills navlink for each accountType returned by the server, with the active accountType being the one that has an id that matches the url param.
                                             return (
                                                 <NavItem key={accountType.id}>
@@ -114,6 +127,9 @@ class ChartOfAccounts extends React.Component {
                                                 </NavItem>
                                             );
                                         })}
+                                    </div>
+                                    <div className="d-lg-none w-50">
+                                        {this.renderAccountTypeSelect()}
                                     </div>
                                     <button
                                         className="btn font-size-standard btn-primary ml-3 "
