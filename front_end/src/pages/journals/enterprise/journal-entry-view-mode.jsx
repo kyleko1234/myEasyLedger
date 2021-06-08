@@ -56,16 +56,16 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
 
     return (
         <>
-            <div className="row mb-2">
+            <div className="row mb-2 px-2 px-lg-0">
                 <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-md-9 col-lg-10">{journalEntryDate}</div>
             </div>
-            <div className="row mb-2">
+            <div className="row mb-2 px-2 px-lg-0">
                 <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-md-9 col-lg-10">{journalEntryDescription}</div>
             </div>
             <br />
 
-            <div className="table-responsive">
-                <div className="table">
+            <div>
+                <div className="table d-none d-lg-block">
                     <div className="thead">
                         <div className="tr bg-light rounded border d-flex">
                             {columns.map(column => (
@@ -101,6 +101,65 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
                             </div>
                             <div className="td col-2 text-right">
                                 {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="table d-lg-none">
+                    <div className="tbody border-top">
+                        {data.map((row, i) => { /**Probably refactor this at some point */
+                            return(
+                                <div key={i} className="tr d-flex">
+                                    <div className="td w-100">
+                                        <div className="font-weight-600">
+                                            {row[columns[1].accessor]}
+                                        </div>
+                                        <div className="mb-2">
+                                            {row[columns[0].accessor]? row[columns[0].accessor]: <em className="text-muted font-weight-light">No memo</em> }
+                                        </div>
+                                        <div className="d-flex justify-content-between ">
+                                            <div className="">
+                                                <div className="font-weight-600">
+                                                    {columns[2].header}
+                                                </div>
+                                                <div>
+                                                    {formatCell(row[columns[2].accessor], columns[2].accessor)}
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="font-weight-600">
+                                                    {columns[3].header}
+                                                </div>
+                                                <div>
+                                                    {formatCell(row[columns[3].accessor], columns[3].accessor)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div className="tfoot">
+                        <div className="tr d-flex">
+                            <div className="td w-100 d-flex justify-content-between">
+                                <div>
+                                    <div>
+                                        Total Debit
+                                    </div>
+                                    <div className="font-weight-normal">
+                                        {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <div>
+                                        Total Credit
+                                    </div>
+                                    <div className="font-weight-normal">
+                                        {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
