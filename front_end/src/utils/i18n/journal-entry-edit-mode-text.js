@@ -10,7 +10,10 @@ export const journalEntryEditModeText = {
         
         "Total": "Total",
         "Add a Line Item": "Add a Line Item",
-        "Copy description to line items": "Copy description to line items"
+        "Copy description to line items": "Copy description to line items",
+    
+        "Total Debit": "Total Debit",
+        "Total Credit": "Total Credit"
     },
     "zh-TW" : {
         "Memo": "註記",
@@ -23,6 +26,10 @@ export const journalEntryEditModeText = {
         
         "Total": "合計",
         "Add a Line Item": "加一個單行項目",
-        "Copy description to line items": "複製「描述」到各個單行項目"
+        "Copy description to line items": "複製「描述」到各個單行項目",
+
+        "Total Debit": "TRANSLATION",
+        "Total Credit": "TRANSLATION"
+
     }
 }

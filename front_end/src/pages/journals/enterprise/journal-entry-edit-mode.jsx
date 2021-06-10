@@ -17,10 +17,10 @@ function JournalEntryEditMode({
 
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
-            { Header: journalEntryEditModeText[appContext.locale]['Memo'], accessor: 'description', width:'40%', minWidth:"9em" },
-            { Header: journalEntryEditModeText[appContext.locale]['Account'], accessor: 'accountName', width:'30%', minWidth:"6em" },
-            { Header: journalEntryEditModeText[appContext.locale]['Debit'], accessor: 'debitAmount', width:'13%', minWidth:"6em" },
-            { Header: journalEntryEditModeText[appContext.locale]['Credit'], accessor: 'creditAmount', width:'13%', minWidth:"6em" },
+            { header: journalEntryEditModeText[appContext.locale]['Memo'], accessor: 'description', className: " col-4 " },
+            { header: journalEntryEditModeText[appContext.locale]['Account'], accessor: 'accountName', className: " col-3 "},
+            { header: journalEntryEditModeText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " col-2 " },
+            { header: journalEntryEditModeText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " col-2 "},
         ],
         []
     )
@@ -39,19 +39,18 @@ function JournalEntryEditMode({
         }
     )
     
-    const returnFormByColumnType = cell => {
-        const columnId = cell.column.id;
-        switch (columnId) {
+    const returnFormByColumnType = (row, i, columnAccessor) => { //FIX THIS
+        switch (columnAccessor) {
             case "description":
                 return(
                     <form onSubmit={event => {event.preventDefault(); handleSaveJournalEntryButton()}}> 
                         <input
                             type="text"
                             className="form-control"
-                            value={cell.value ? cell.value : ''}
+                            value={row[columnAccessor] ? row[columnAccessor] : ''}
                             onChange={event => {
                                 let updatedLineItemData = data.slice();
-                                updatedLineItemData[cell.row.index].description = event.target.value;
+                                updatedLineItemData[i].description = event.target.value;
                                 setLineItemData(updatedLineItemData);
                             }}
                         />
@@ -63,12 +62,12 @@ function JournalEntryEditMode({
                         <input
                             type="number"
                             className="form-control"
-                            value={cell.value ? cell.value : ''}
+                            value={row[columnAccessor] ? row[columnAccessor] : ''}
                             step="any"
                             onChange={event => {
                                 let updatedLineItemData = data.slice();
-                                updatedLineItemData[cell.row.index].debitAmount = parseFloat(event.target.value);
-                                updatedLineItemData[cell.row.index].creditAmount = null;
+                                updatedLineItemData[i].debitAmount = parseFloat(event.target.value);
+                                updatedLineItemData[i].creditAmount = null;
                                 setLineItemData(updatedLineItemData);
                             }}
                         />
@@ -80,12 +79,12 @@ function JournalEntryEditMode({
                         <input
                             type="number"
                             className="form-control"
-                            value={cell.value ? cell.value : ''}
+                            value={row[columnAccessor] ? row[columnAccessor] : ''}
                             step="any"
                             onChange={event => {
                                 let updatedLineItemData = data.slice();
-                                updatedLineItemData[cell.row.index].creditAmount = parseFloat(event.target.value);
-                                updatedLineItemData[cell.row.index].debitAmount = null;
+                                updatedLineItemData[i].creditAmount = parseFloat(event.target.value);
+                                updatedLineItemData[i].debitAmount = null;
                                 setLineItemData(updatedLineItemData);
                             }}
                         />
@@ -95,7 +94,7 @@ function JournalEntryEditMode({
                 return( 
                         <Select
                                     options={accountOptions}
-                                    value={accountOptions.find(accountOption => accountOption.object.accountId == data[cell.row.index].accountId)}
+                                    value={accountOptions.find(accountOption => accountOption.object.accountId == data[i].accountId)}
                                     isSearchable={true}
                                     menuPortalTarget={document.body}
                                     menuShouldScrollIntoView={false}
@@ -103,15 +102,15 @@ function JournalEntryEditMode({
                                     menuPlacement={'auto'}
                                     onChange={(selectedOption) => {
                                         let updatedLineItemData = data.slice();
-                                        updatedLineItemData[cell.row.index].accountId = selectedOption.object.accountId;
-                                        updatedLineItemData[cell.row.index].accountName = selectedOption.object.accountName;
+                                        updatedLineItemData[i].accountId = selectedOption.object.accountId;
+                                        updatedLineItemData[i].accountName = selectedOption.object.accountName;
                                         setLineItemData(updatedLineItemData);
                                     }}
                         />
 
                 )
             default:
-                return (cell.value);
+                return (row[columnAccessor]);
         }
     }
 
@@ -167,7 +166,7 @@ function JournalEntryEditMode({
                     </Alert>
                 </div> : null
             }
-            <div className="row m-b-10 align-items-center">
+            <div className="row mb-2 align-items-center">
                 <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Date"]}</strong></div> 
                 <div className="col-xl-2">
                     <input 
@@ -177,7 +176,7 @@ function JournalEntryEditMode({
                         onChange={event => setJournalEntryDate(event.target.value)}/>
                     </div>
             </div>
-            <div className="row m-b-10 align-items-center">
+            <div className="row mb-2 align-items-center">
                 <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Description"]}</strong></div> 
                 <div className="col-xl-8">
                     <input 
@@ -186,64 +185,138 @@ function JournalEntryEditMode({
                         value={journalEntryDescription} 
                         onChange={event => setJournalEntryDescription(event.target.value)}/>
                 </div>
-                <button className="btn btn-light border border-rounded m-x-10 my-3 my-xl-0" onClick={handleCopyDescriptionToLineItemsButton}>
+                <button className="btn btn-white d-none d-xl-inline-block" onClick={handleCopyDescriptionToLineItemsButton}>
                     {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
                 </button>
             </div>
-            <br/>
+            <button className="btn btn-white my-3 btn-block d-xl-none" onClick={handleCopyDescriptionToLineItemsButton}>
+                    {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
+            </button>
 
-            <div className="table-responsive">
-                <table className="table"{...getTableProps()}>
-                    <thead>
-                        {headerGroups.map(headerGroup => (
-                            <tr {...headerGroup.getHeaderGroupProps()}>
-                                {headerGroup.headers.map(column => (
-                                    // Add the sorting props to control sorting. For this example
-                                    // we can add them into the header props
-                                    <th {...column.getHeaderProps()} style={{width: column.width, minWidth: column.minWidth}}>
-                                        {column.render('Header')}
-                                    </th>
-                                ))}
-                                <th style={{width: "4%"}}></th>
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody {...getTableBodyProps()}>
-                        {rows.map(
+            <div>
+                <div className="table d-none d-lg-block">
+                    <div className="thead">
+                        <div className="tr bg-light rounded border d-flex">
+                            {columns.map(column => (
+                                <div className={"th " + column.className}>
+                                    {column.header}
+                                </div>
+                            ))}
+                            <div className="th col-1"></div>
+                        </div>
+                    </div>
+                    <div className="tbody">
+                        {data.map(
                             (row, i) => {
-                                prepareRow(row);
                                 return (
-                                    <tr {...row.getRowProps()}>
-                                        {row.cells.map(cell => {
+                                    <div className="tr d-flex" key={i}>
+                                        {columns.map(column => {
                                             return (
-                                                <td {...cell.getCellProps()}>
-                                                    {returnFormByColumnType(cell)}
-                                                </td>
+                                                <div key={column.accessor} className={"td " + column.className}>
+                                                    {returnFormByColumnType(row, i, column.accessor)}
+                                                </div>
                                             )
                                         })}
-                                        <td>
-                                            <button className="btn btn-lg btn-icon btn-light" onClick={() => removeRow(i)}>
+                                        <div className="td col-1">
+                                            <button className="btn btn-lg btn-icon btn-white border-0" onClick={() => removeRow(i)}>
                                                 <i className="ion ion-md-close fa-fw fa-lg"></i>
                                             </button>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </div>
                                 )
                             }
                         )}
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>{journalEntryEditModeText[appContext.locale]["Total"]}</td>
-                            <td></td>
-                            <td>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</td>
-                            <td>{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <button className="btn btn-light btn-block row" style={{margin:"auto", padding:"1em", borderStyle:"solid", borderColor:"LightGray", borderWidth:"1px"}} onClick={() => addEmptyLineItem()}>
-                    <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
-                </button>
+                    </div>
+                    <div className="tfoot">
+                        <div className="tr d-flex">
+                            <div className="td col-4">{journalEntryEditModeText[appContext.locale]["Total"]}</div>
+                            <div className="td col-3"></div>
+                            <div className="td col-2">{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</div>
+                            <div className="td col-2">{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</div>
+                            <div className="td col-1"></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="table d-lg-none">
+                    <div className="tbody">
+                        {data.map(
+                            (row, i) => {
+                                return(
+                                    <div className="tr d-flex align-items-center" key={i}>
+                                        <div className="td">
+                                            <div className="mb-2">
+                                                <div className="font-weight-600 font-size-compact">
+                                                    {columns[1].header}
+                                                </div>
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="w-100">{returnFormByColumnType(row, i, columns[1].accessor)}</div>
+                                                    <div>
+                                                        <button className="btn btn-lg btn-white border-0 px-1 ml-2" onClick={() => removeRow(i)}>
+                                                            <i className="ion ion-md-close fa-fw fa-lg"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="mb-2">
+                                                <div className="font-weight-600 font-size-compact">
+                                                    {columns[0].header}
+                                                </div>
+                                                <div>
+                                                    {returnFormByColumnType(row, i, columns[0].accessor)}
+                                                </div>
+                                            </div>
+                                            <div className="d-flex justify-content-between">
+                                                <div className="mr-2">
+                                                    <div className="font-weight-600 font-size-compact">
+                                                        {columns[2].header}
+                                                    </div>
+                                                    <div>
+                                                        {returnFormByColumnType(row, i, columns[2].accessor)}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="font-weight-600 font-size-compact">
+                                                        {columns[3].header}
+                                                    </div>
+                                                    <div>
+                                                        {returnFormByColumnType(row, i, columns[3].accessor)}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        )}
+                    </div>
+                    <div className="tfoot">
+                        <div className="tr d-flex">
+                            <div className="td w-100 d-flex justify-content-between">
+                                <div>
+                                    <div>
+                                        {journalEntryEditModeText[appContext.locale]["Total Debit"]}
+                                    </div>
+                                    <div className="font-weight-normal">
+                                        {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <div>
+                                        {journalEntryEditModeText[appContext.locale]["Total Credit"]}
+                                    </div>
+                                    <div className="font-weight-normal">
+                                        {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style={{marginLeft: "0.75rem", marginRight: "0.75rem"}}>
+                    <button className="btn btn-lg btn-white btn-block" onClick={() => addEmptyLineItem()}>
+                        <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
+                    </button>
+                </div>
             </div>
         </>
     )

@@ -69,7 +69,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
                     <div className="thead">
                         <div className="tr bg-light rounded border d-flex">
                             {columns.map(column => (
-                                <div className={"th " + column.className}>
+                                <div key={column.accessor} className={"th " + column.className}>
                                     {column.header}
                                 </div>
                             ))}
@@ -146,7 +146,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
                             <div className="td w-100 d-flex justify-content-between">
                                 <div>
                                     <div>
-                                        Total Debit
+                                        {journalEntryViewModeText[appContext.locale]["Total Debit"]}
                                     </div>
                                     <div className="font-weight-normal">
                                         {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}
@@ -154,7 +154,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
                                 </div>
                                 <div className="text-right">
                                     <div>
-                                        Total Credit
+                                        {journalEntryViewModeText[appContext.locale]["Total Credit"]}
                                     </div>
                                     <div className="font-weight-normal">
                                         {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}

@@ -17,6 +17,8 @@ export const journalEntryViewModeText = {
         "TIMESTAMP OF EDIT:": "TIMESTAMP OF EDIT:",
         "AUTHOR OF EDIT:": "AUTHOR OF EDIT:",
         
+        "Total Debit": "Total Debit",
+        "Total Credit": "Total Credit"
         
     },
     "zh-TW": {
@@ -38,5 +40,7 @@ export const journalEntryViewModeText = {
         "TIMESTAMP OF EDIT:": "更動時間點",
         "AUTHOR OF EDIT:": "更動者",
 
+        "Total Debit": "TRANSLATION",
+        "Total Credit": "TRANSLATION"
     }
 }
