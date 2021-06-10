@@ -113,7 +113,7 @@ function OrganizationRoster(props) {
                         <div className="font-weight-600">
                             {"People with access to " + ownPermissionForCurrentOrganization.organization.name}
                         </div>
-                        <div>
+                        <div className="d-none d-sm-inline-block">
                             {ownPermissionForCurrentOrganization.permissionType.id >= 3 ?
                                 <button className="btn btn-primary" onClick={toggleAddAPersonModal}>
                                     Add a person
@@ -121,26 +121,61 @@ function OrganizationRoster(props) {
                                 : null}
                         </div>
                     </div>
+                    <div className="d-sm-none my-2">
+                            {ownPermissionForCurrentOrganization.permissionType.id >= 3 ?
+                                <button className="btn btn-block btn-primary" onClick={toggleAddAPersonModal}>
+                                    Add a person
+                                </button>
+                                : null}
+                        </div>
                 </CardTitle>
-                <div className="overflow-auto px-2" style={{ height: '300px' }}>
+                <div className="overflow-auto" style={{ height: '300px' }}>
                     {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                        <div className="table">
-                            <div className="thead">
-                                <div className="bg-light tr border rounded d-flex">
-                                    <div className="th col-3">{settingsText[appContext.locale]["Name"]}</div>
-                                    <div className="th col-4">{settingsText[appContext.locale]["Email"]}</div>
-                                    <div className="th col-4">{settingsText[appContext.locale]["Permissions"]}</div>
-                                    <div className="th col-1"></div>
+                        <div>
+                            <div className="table d-none d-md-block">
+                                <div className="thead">
+                                    <div className="bg-light tr border rounded d-flex">
+                                        <div className="th col-3">{settingsText[appContext.locale]["Name"]}</div>
+                                        <div className="th col-4">{settingsText[appContext.locale]["Email"]}</div>
+                                        <div className="th col-4">{settingsText[appContext.locale]["Permissions"]}</div>
+                                        <div className="th col-1"></div>
+                                    </div>
+                                </div>
+                                <div className="tbody">
+                                    {personInRosterDTOs.map(person => {
+                                        return (
+                                            <div className="tr d-flex" key={person.personId}>
+                                                <div className="td col-3">{person.firstName + " " + person.lastName}</div>
+                                                <div className="td col-4">{person.email}</div>
+                                                <div className="td col-4">{person.permissionTypeName}</div>
+                                                <div className="td col-1">
+                                                    <Link replace
+                                                        className={"icon-link-text-muted" + (person.permissionTypeId < appContext.permissions.find(permission => permission.organization.id == props.organizationId).permissionType.id ? "" : " visibility-hidden")}
+                                                        to="#" onClick={() => handleEditAPersonButton(person)}>
+                                                        <i className="fa fa-edit"></i>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             </div>
-                            <div className="tbody">
+                            <div className="table d-md-none border-top">
                                 {personInRosterDTOs.map(person => {
-                                    return (
-                                        <div className="tr d-flex" key={person.personId}>
-                                            <div className="td col-3">{FIRSTNAME_LASTNAME_LOCALES.includes(person.locale) ? person.firstName + " " + person.lastName : person.lastName + " " + person.firstName}</div>
-                                            <div className="td col-4">{person.email}</div>
-                                            <div className="td col-4">{person.permissionTypeName}</div>
-                                            <div className="td col-1">
+                                    return(
+                                        <div className="tr d-flex align-items-center justify-content-between" key={person.personId}>
+                                            <div className="td">
+                                                <div className="font-weight-600">
+                                                    {person.firstName + " " + person.lastName}
+                                                </div>
+                                                <div className="font-size-compact">
+                                                    {person.email}
+                                                </div>
+                                            </div>
+                                            <div className="td">
+                                                {person.permissionTypeName}
+                                            </div>
+                                            <div className="td">
                                                 <Link replace
                                                     className={"icon-link-text-muted" + (person.permissionTypeId < appContext.permissions.find(permission => permission.organization.id == props.organizationId).permissionType.id ? "" : " visibility-hidden")}
                                                     to="#" onClick={() => handleEditAPersonButton(person)}>
