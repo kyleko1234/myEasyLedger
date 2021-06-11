@@ -144,73 +144,73 @@ class ChartOfAccounts extends React.Component {
                 </Card>
 
                 <Card className="very-rounded shadow-sm">
-                    <CardBody className="py-3">
-                <TabContent activeTab={this.props.match.params.activeTabId} className=""> {/** active tab is the tab with an activeTabId that matches the url path parameter*/}
-                    {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                        this.state.accountTypes.map(accountType => {
-                            return (
-                                <TabPane tabId={accountType.id.toString()} key={accountType.id.toString()}>
-                                    {this.state.accounts
-                                        .filter(account => account.accountTypeId == accountType.id && !account.parentAccountId)
-                                        .map(account => { // render a bg-light accountgroup widget list item for each accountGroup in this accountType, then render all of the accounts for at accountGroup
-                                            return (
-                                                <React.Fragment key={account.accountId}>
-                                                    {account.hasChildren ?
-                                                        <div className="tr d-flex justify-content-between align-items-center">
-                                                                <div className="td font-weight-600">
-                                                                    {account.accountCode? account.accountCode + " - " + account.accountName: account.accountName}
+                    <CardBody>
+                        <TabContent activeTab={this.props.match.params.activeTabId} className=""> {/** active tab is the tab with an activeTabId that matches the url path parameter*/}
+                            {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                                this.state.accountTypes.map(accountType => {
+                                    return (
+                                        <TabPane tabId={accountType.id.toString()} key={accountType.id.toString()}>
+                                            {this.state.accounts
+                                                .filter(account => account.accountTypeId == accountType.id && !account.parentAccountId)
+                                                .map(account => { // render a bg-light accountgroup widget list item for each accountGroup in this accountType, then render all of the accounts for at accountGroup
+                                                    return (
+                                                        <React.Fragment key={account.accountId}>
+                                                            {account.hasChildren ?
+                                                                <div className="tr d-flex justify-content-between align-items-center">
+                                                                    <div className="td font-weight-600">
+                                                                        {account.accountCode? account.accountCode + " - " + account.accountName: account.accountName}
+                                                                    </div>
+                                                                    <div className="td py-0 d-flex align-items-center">
+                                                                        <button className="btn btn-sm btn-white border-0 text-muted" onClick={() => this.handleEditAccountButton(account)}>
+                                                                            <i className="fas fa-edit font-size-compact"></i>
+                                                                        </button>
+                                                                        <i className="fas fa-angle-right text-muted invisible"></i>
+                                                                    </div>
                                                                 </div>
-                                                                <div className="td py-0 d-flex align-items-center">
-                                                                    <button className="btn btn-sm btn-white border-0 text-muted" onClick={() => this.handleEditAccountButton(account)}>
-                                                                        <i className="fas fa-edit font-size-compact"></i>
-                                                                    </button>
-                                                                    <i className="fas fa-angle-right text-muted invisible"></i>
-                                                                </div>
-                                                        </div>
-                                                    :
-                                                        <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
-                                                            <div className="td font-weight-600">
-                                                                {account.accountCode? account.accountCode + " - " + account.accountName: account.accountName}
-                                                            </div>
-                                                            <div className="td py-0 d-flex align-items-center">
-                                                                <button className=" btn btn-sm text-muted invisible">
-                                                                    <i className="fas fa-edit"></i>
-                                                                </button>
-                                                                <i className=" fas fa-angle-right text-muted"></i>
-                                                            </div>
-                                                        </Link>
-                                                    }
-                                                    {!this.state.accounts 
-                                                        ? null 
-                                                        : this.state.accounts
-                                                            .filter(childAccount => childAccount.parentAccountId == account.accountId)
-                                                            .map(childAccount => {
-                                                                return (
-                                                                    <Link key={childAccount.accountId} className="tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`}>
-                                                                        <div className="td indent">{childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
-                                                                        <div className="td">
-                                                                            <i className="fas fa-angle-right text-muted"></i>
-                                                                        </div>
-                                                                    </Link>
-                                                                );
-                                                    })}
-                                                    {this.canAddChildren(account) ? 
-                                                        <Link replace className="tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
-                                                            <div className="td indent">
-                                                                <em>{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</em>
-                                                            </div>
-                                                            <div className="td"></div>
-                                                        </Link>
-                                                    : null}
-                                                </React.Fragment>
-                                            );
-                                    })}
-                                </TabPane>
-                            );
-                        })
-                    }
-                </TabContent>
-                </CardBody>          
+                                                            :
+                                                                <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
+                                                                    <div className="td font-weight-600">
+                                                                        {account.accountCode? account.accountCode + " - " + account.accountName: account.accountName}
+                                                                    </div>
+                                                                    <div className="td py-0 d-flex align-items-center">
+                                                                        <button className=" btn btn-sm text-muted invisible">
+                                                                            <i className="fas fa-edit"></i>
+                                                                        </button>
+                                                                        <i className=" fas fa-angle-right text-muted"></i>
+                                                                    </div>
+                                                                </Link>
+                                                            }
+                                                            {!this.state.accounts 
+                                                                ? null 
+                                                                : this.state.accounts
+                                                                    .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                                                    .map(childAccount => {
+                                                                        return (
+                                                                            <Link key={childAccount.accountId} className="tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`}>
+                                                                                <div className="td indent">{childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
+                                                                                <div className="td">
+                                                                                    <i className="fas fa-angle-right text-muted"></i>
+                                                                                </div>
+                                                                            </Link>
+                                                                        );
+                                                            })}
+                                                            {this.canAddChildren(account) ? 
+                                                                <Link replace className="tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
+                                                                    <div className="td indent">
+                                                                        <em>{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</em>
+                                                                    </div>
+                                                                    <div className="td"></div>
+                                                                </Link>
+                                                            : null}
+                                                        </React.Fragment>
+                                                    );
+                                            })}
+                                        </TabPane>
+                                    );
+                                })
+                            }
+                        </TabContent>
+                    </CardBody>          
                 </Card>
 
                 <AccountDetailsEditor isOpen={this.state.editAccountModal} toggle={this.toggleEditAccountModal} selectedAccountId={this.state.selectedAccountId} fetchData={this.fetchData} createMode={this.state.createMode} accountTypeId={this.props.match.params.activeTabId} selectedParentAccount={this.state.selectedParentAccount}/>

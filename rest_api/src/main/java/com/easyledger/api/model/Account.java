@@ -152,7 +152,7 @@ public class Account {
     private Long id;
 	
 	@Column(name = "account_code")
-	private String accountCode;
+	private String accountCode = "";
 
 	@Column(name = "name")
     private String name;
