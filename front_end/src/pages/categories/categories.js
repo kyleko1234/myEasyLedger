@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
-import { API_BASE_URL } from '../../utils/constants.js';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardBody } from 'reactstrap';
+import { API_BASE_URL, ACCOUNT_TYPE_OPTIONS, CATEGORY_ACCOUNT_TYPES} from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
-import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 import AccountDetailsEditor from '../chart-of-accounts/components/account-details-editor.js';
+import Select from 'react-select';
 
 
 
@@ -94,109 +94,127 @@ class Categories extends React.Component {
         return true;
     }
 
+    renderAccountTypeSelect() {
+        const accountTypeOptions = ACCOUNT_TYPE_OPTIONS(this.context.locale).filter(accountTypeOption => CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value))
+        return(
+            <Select
+                options={accountTypeOptions}
+                value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == this.props.match.params.activeTabId)}
+                onChange={selectedOption => this.props.history.push(`/categories/${selectedOption.value}`)}
+            />
+        )
+    }
+
 
     render() {
         return (
             <div>
-                <ol className="breadcrumb float-xl-right">
-                    <li className="breadcrumb-item"><Link to="/">{chartOfAccountsText[this.context.locale]["Home"]}</Link></li>
-                    <li className="breadcrumb-item active">{chartOfAccountsText[this.context.locale]["Categories"]}</li>
-                </ol>
-                <h1 className="page-header">
+                <h1 className="">
                     {chartOfAccountsText[this.context.locale]["Categories"]}
-                    <ToggleMobileSidebarButton className="d-md-none float-right " />
                 </h1>
-                <Nav pills justified className="d-block">
-                    {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                        <div className="d-flex justify-content-between px-3 mb-3">
-                            <div className="row ">
-                                {this.state.accountTypes.map(accountType => { //render a pills navlink for each accountType returned by the server, with the active accountType being the one that has an id that matches the url param.
+                <Card className="very-rounded my-4 shadow-sm bg-light">
+                    <CardBody>
+                        <Nav pills justified className="d-block">
+                            {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                                <div className="d-flex w-100 justify-content-between align-items-center">
+                                    <div className="d-none d-sm-flex ">
+                                        {this.state.accountTypes.map(accountType => { //render a pills navlink for each accountType returned by the server, with the active accountType being the one that has an id that matches the url param.
+                                            return (
+                                                <NavItem key={accountType.id}>
+                                                    <NavLink
+                                                        className={this.props.match.params.activeTabId == accountType.id ? "active" : "cursor-pointer"}
+                                                        onClick={() => this.props.history.push(`/categories/${accountType.id}`)}
+                                                    >
+                                                        <span className="d-sm-block px-3">{chartOfAccountsText[this.context.locale][accountType.name]}</span>
+                                                    </NavLink>
+                                                </NavItem>
+                                            );
+                                        })}
+                                    </div>
+                                    <div className="d-sm-none w-50">
+                                        {this.renderAccountTypeSelect()}
+                                    </div>
+                                    <button
+                                        className="btn btn-primary my-1 ml-3"
+                                        onClick={() => {
+                                            this.handleAddAnAccountButton();
+                                        }}
+                                    > {chartOfAccountsText[this.context.locale]["Create a category"]} </button>
+                                </div>
+                            }
+                        </Nav>
+                    </CardBody>
+                </Card>
+                <Card className="very-rounded shadow-sm">
+                    <CardBody>
+                        <TabContent activeTab={this.props.match.params.activeTabId} className=""> {/** active tab is the tab with an activeTabId that matches the url path parameter*/}
+                            {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                                this.state.accountTypes.map(accountType => {
                                     return (
-                                        <NavItem key={accountType.id}>
-                                            <NavLink
-                                                className={this.props.match.params.activeTabId == accountType.id ? "active" : "cursor-pointer"}
-                                                onClick={() => this.props.history.push(`/categories/${accountType.id}`)}
-                                            >
-                                                <span className="d-sm-block px-3">{chartOfAccountsText[this.context.locale][accountType.name]}</span>
-                                            </NavLink>
-                                        </NavItem>
-                                    );
-                                })}
-
-                            </div>
-                            <button
-                                className="btn btn-primary my-1 ml-3"
-                                onClick={() => {
-                                    this.handleAddAnAccountButton();
-                                }}
-                            > {chartOfAccountsText[this.context.locale]["Create a category"]} </button>
-                        </div>
-                    }
-                </Nav>
-                <TabContent activeTab={this.props.match.params.activeTabId} className="widget widget-rounded widget-list widget-list-rounded m-b-30"> {/** active tab is the tab with an activeTabId that matches the url path parameter*/}
-                    {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                        this.state.accountTypes.map(accountType => {
-                            return (
-                                <TabPane tabId={accountType.id.toString()} key={accountType.id.toString()}>
-                                    {this.state.accounts.filter(account => account.accountTypeId == accountType.id && !account.parentAccountId).map(account => { // render a bg-light accountgroup widget list item for each accountGroup in this accountType, then render all of the accounts for at accountGroup
-                                        return (
-                                            <React.Fragment key={account.accountId}>
-                                                {account.hasChildren?
-                                                    <div className="widget-list-item bg-light">
-                                                        <div className="widget-list-content d-flex justify-content-between align-items-center">
-                                                            <h4 className="widget-list-title">
-                                                                {account.accountName}
-                                                            </h4>
-                                                            <div className="d-flex align-items-center">
-                                                                <button className="m-l-5 btn btn-sm btn-icon text-muted" onClick={() => this.handleEditAccountButton(account)}>
-                                                                    <i className="fa fa-edit"></i>
-                                                                </button>
-                                                                <i className="m-l-10 fa fa-angle-right fa-lg text-muted invisible"></i>
+                                        <TabPane tabId={accountType.id.toString()} key={accountType.id.toString()}>
+                                            {this.state.accounts.filter(account => account.accountTypeId == accountType.id && !account.parentAccountId).map(account => { // render a bg-light accountgroup widget list item for each accountGroup in this accountType, then render all of the accounts for at accountGroup
+                                                return (
+                                                    <React.Fragment key={account.accountId}>
+                                                        {account.hasChildren?
+                                                            <div className="tr d-flex justify-content-between align-items-center">
+                                                                <div className="td font-weight-600">
+                                                                    {account.accountName}
+                                                                </div>
+                                                                <div className="td py-0 d-flex align-items-center">
+                                                                    <button className="btn btn-sm btn-white border-0 text-muted" onClick={() => this.handleEditAccountButton(account)}>
+                                                                        <i className="fas fa-edit font-size-compact"></i>
+                                                                    </button>
+                                                                    <i className="fas fa-angle-right text-muted invisible"></i>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                :
-                                                    <Link className="widget-list-item bg-light" to={`/category-details/${account.accountId}`}>
-                                                        <div className="widget-list-content d-flex justify-content-between align-items-center">
-                                                            <h4 className="widget-list-title">
-                                                                {account.accountName}
-                                                            </h4>
-                                                            <div className="d-flex align-items-center">
-                                                                <button className="m-l-5 btn btn-sm btn-icon text-muted invisible">
-                                                                    <i className="fa fa-edit"></i>
-                                                                </button>
-                                                                <i className="m-l-10 fa fa-angle-right fa-lg text-muted"></i>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                }
-                                                {!this.state.accounts ? null : this.state.accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
-                                                    return (
-                                                        <Link className="widget-list-item bg-white" to={`/category-details/${childAccount.accountId}`} key={childAccount.accountId.toString()}>
-                                                            <div className="widget-list-content p-l-30">
-                                                                <div className="widget-list-title">{childAccount.accountName}</div>
-                                                            </div>
-                                                            <div className="m-r-10 widget-list-action text-right">
-                                                                <i className="fa fa-angle-right fa-lg text-muted"></i>
-                                                            </div>
+                                                        :
+                                                        <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
+                                                                <div className="td font-weight-600">
+                                                                    {account.accountName}
+                                                                </div>
+                                                                <div className="td py-0 d-flex align-items-center">
+                                                                    <button className="btn btn-sm text-muted invisible">
+                                                                        <i className="fas fa-edit"></i>
+                                                                    </button>
+                                                                    <i className="fas fa-angle-right text-muted"></i>
+                                                                </div>
                                                         </Link>
-                                                    );
-                                                })}
-                                                {this.canAddChildren(account) ? 
-                                                    <Link replace className="widget-list-item bg-white" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
-                                                        <div className="widget-list-content p-l-30">
-                                                            <i className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child category..."]}</i>
-                                                        </div>
-                                                    </Link>
-                                                : null}
-                                            </React.Fragment>
-                                        );
-                                    })}
-                                </TabPane>
-                            );
-                        })
-                    }
-                </TabContent>
+                                                    }
+                                                        {!this.state.accounts 
+                                                            ? null 
+                                                            : this.state.accounts
+                                                                .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                                                .map(childAccount => {
+                                                                    return (
+                                                                        <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId}>
+                                                                            <div className="td indent">
+                                                                                <div>{childAccount.accountName}</div>
+                                                                            </div>
+                                                                            <div className="td">
+                                                                                <i className="fas fa-angle-right text-muted"></i>
+                                                                            </div>
+                                                                        </Link>
+                                                                    );
+                                                        })}
+                                                        {this.canAddChildren(account) ? 
+                                                            <Link replace className="tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
+                                                                <div className="td indent">
+                                                                    <em className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child category..."]}</em>
+                                                                </div>
+                                                                <div className="td"></div>
+                                                            </Link>
+                                                        : null}
+                                                    </React.Fragment>
+                                                );
+                                            })}
+                                        </TabPane>
+                                    );
+                                })
+                            }
+                        </TabContent>
+                    </CardBody>
+                </Card>
+
                 <AccountDetailsEditor isOpen={this.state.editAccountModal} toggle={this.toggleEditAccountModal} selectedAccountId={this.state.selectedAccountId} fetchData={this.fetchData} createMode={this.state.createMode} accountTypeId={this.props.match.params.activeTabId} selectedParentAccount={this.state.selectedParentAccount} category/>
 
             </div>

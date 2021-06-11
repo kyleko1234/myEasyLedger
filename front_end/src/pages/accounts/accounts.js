@@ -146,7 +146,7 @@ class Accounts extends React.Component {
                 </Card>
                 <Card className="very-rounded shadow-sm">
                     <CardBody>
-                        <TabContent activeTab={this.props.match.params.activeTabId} className="widget widget-rounded widget-list widget-list-rounded m-b-30"> {/** active tab is the tab with an activeTabId that matches the url path parameter*/}
+                        <TabContent activeTab={this.props.match.params.activeTabId} className=""> {/** active tab is the tab with an activeTabId that matches the url path parameter*/}
                             {!this.state.accountTypes ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                                 this.state.accountTypes.map(accountType => {
                                     return (
