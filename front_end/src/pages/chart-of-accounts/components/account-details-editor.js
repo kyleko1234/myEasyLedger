@@ -37,6 +37,22 @@ function AccountDetailsEditor(props) {
         setCannotDeleteAccountAlert(!cannotDeleteAccountAlert);
     }
 
+    const resetToDefaultSubtypeId = () => {
+        if (!appContext.isEnterprise) {
+            let defaultSubtypeId;
+            if (accountTypeId == 1) {
+                defaultSubtypeId = 5;
+            } else if (accountTypeId == 2) {
+                defaultSubtypeId = 16;
+            } else if (accountTypeId == 4) {
+                defaultSubtypeId = 24;
+            } else if (accountTypeId == 5) {
+                defaultSubtypeId = 27;
+            }
+            setSelectedAccountSubtypeId(defaultSubtypeId);
+        }
+    }
+
     React.useEffect(() => {
         async function fetchAccountData() {
             if (props.selectedAccountId) {
@@ -59,19 +75,7 @@ function AccountDetailsEditor(props) {
             } else if (props.accountTypeId) {
                 setAccountTypeId(props.accountTypeId);
             }
-            if (!appContext.isEnterprise) {
-                let defaultSubtypeId;
-                if (accountTypeId == 1) {
-                    defaultSubtypeId = 5;
-                } else if (accountTypeId == 2) {
-                    defaultSubtypeId = 16;
-                } else if (accountTypeId == 4) {
-                    defaultSubtypeId = 24;
-                } else if (accountTypeId == 5) {
-                    defaultSubtypeId = 27;
-                }
-                setSelectedAccountSubtypeId(defaultSubtypeId);
-            }
+            resetToDefaultSubtypeId();
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
                 if (response.data) {
                     let validParentAccountOptions = response.data.filter(account => (account.parentAccountId == null && account.debitTotal == 0 && account.creditTotal == 0) || account.hasChildren).map(account => {
@@ -178,7 +182,9 @@ function AccountDetailsEditor(props) {
     const handleChangeParentAccountOption = selectedOption => {
         setSelectedParentAccountId(selectedOption.object.accountId);
         setSelectedAccountSubtypeId(selectedOption.object.accountSubtypeId);
+        resetToDefaultSubtypeId(); //prevents personal interface from throwing an error when parent account is changed from something other than 'none' to 'none
     }
+
 
     const handleChangeAccountSubtypeOption = selectedOption => {
         setSelectedAccountSubtypeId(selectedOption.object.id);

@@ -214,7 +214,6 @@ class Accounts extends React.Component {
                     </CardBody>
                 </Card>
 
-                {/**fix this */}
                 <AccountDetailsEditor isOpen={this.state.editAccountModal} toggle={this.toggleEditAccountModal} selectedAccountId={this.state.selectedAccountId} fetchData={this.fetchData} createMode={this.state.createMode} accountTypeId={this.props.match.params.activeTabId} selectedParentAccount={this.state.selectedParentAccount}/>
             </div>
 
