@@ -1,6 +1,5 @@
 import React from 'react'
-import { useTable, usePagination } from 'react-table'
-import { Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants.js';
@@ -8,9 +7,7 @@ import JournalEntryViewMode from './journal-entry-view-mode';
 import JournalEntryEditMode from './journal-entry-edit-mode';
 import { PageSettings } from '../../../config/page-settings.js';
 import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-entries-text.js';
-import AccountDetailsEditor from '../../chart-of-accounts/components/account-details-editor';
 import JournalEntryEditHistory from './journal-entry-edit-history.js';
-import { setConstantValue } from 'typescript';
 
 //optional props: parentComponentAccountId
 function TableOfJournalEntries({
@@ -286,7 +283,7 @@ function TableOfJournalEntries({
                     <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={() => openEditorForNewEntry()}>
                         {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                     </button>
-                    : null}
+                : null}
             </div>
             <div className="d-sm-none"> {/**On small screens render button-block */}
                 <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => openEditorForNewEntry()}>

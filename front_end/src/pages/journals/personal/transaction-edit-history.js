@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody } from "reactstrap";
 import { PageSettings } from "../../../config/page-settings";
 import axios from 'axios';
 import { API_BASE_URL, PERSONAL_TRANSACTION_TYPES } from "../../../utils/constants";
@@ -65,45 +65,46 @@ function TransactionEditHistory(props) {
             size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
             centered={true}
         >
-            <ModalHeader style={{backgroundColor: "#e4e4e4"}}>
+            <ModalHeader>
                 {journalEntryViewModeText[appContext.locale]["Edit History"]}
             </ModalHeader>
-            <ModalBody className="bg-light">
+            <ModalBody>
                 {loading
                 ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
                 :   <>
                         {journalEntryLogs.map(journalEntryLog => {
                             return (
-                                <div className="card px-3 py-3 mb-3" key={journalEntryLog.id}>
-                                    <div className="row">
-                                        <div className="col-sm-6">
-                                            <b>{journalEntryViewModeText[appContext.locale]["TIMESTAMP OF EDIT:"]}</b>
-                                            <p>{journalEntryLog.datetimeOfEdit}</p>
+                                <Card className="very-rounded shadow-sm mb-3" key={journalEntryLog.id}>
+                                    <CardBody>
+                                        <div className="row">
+                                            <div className="col-sm-6">
+                                                <b>{journalEntryViewModeText[appContext.locale]["TIMESTAMP OF EDIT:"]}</b>
+                                                <p>{journalEntryLog.datetimeOfEdit}</p>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <b>{journalEntryViewModeText[appContext.locale]["AUTHOR OF EDIT:"]}</b>
+                                                <p>{journalEntryLog.personFirstName + " " + journalEntryLog.personLastName}</p>
+                                            </div>
                                         </div>
-                                        <div className="col-sm-6">
-                                            <b>{journalEntryViewModeText[appContext.locale]["AUTHOR OF EDIT:"]}</b>
-                                            <p>{journalEntryLog.personFirstName + " " + journalEntryLog.personLastName}</p>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    <TransactionViewMode 
-                                        fromAccountName={journalEntryLog.snapshot.fromAccountName}
-                                        journalEntryDescription={journalEntryLog.snapshot.description}
-                                        journalEntryDate={journalEntryLog.snapshot.journalEntryDate}
-                                        data={journalEntryLog.snapshot.lineItems}
-                                    />
-                                </div>
+                                        <hr/>
+                                        <TransactionViewMode 
+                                            fromAccountName={journalEntryLog.snapshot.fromAccountName}
+                                            journalEntryDescription={journalEntryLog.snapshot.description}
+                                            journalEntryDate={journalEntryLog.snapshot.journalEntryDate}
+                                            data={journalEntryLog.snapshot.lineItems}
+                                        />
+                                    </CardBody>
+                                </Card>
                             )
                         })}
                     </>
                 }
 
             </ModalBody>
-            <ModalFooter style={{backgroundColor: "#e4e4e4"}}>
+            <ModalFooter>
                 <button className="btn btn-white width-10ch" onClick={props.toggle}>
                     {journalEntryViewModeText[appContext.locale]["Close"]}
                 </button>
-                <button onClick={() => console.log(props.isOpen)}>TEST</button>
             </ModalFooter>
         </Modal>
     )

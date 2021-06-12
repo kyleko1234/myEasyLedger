@@ -82,7 +82,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
                                     <div className="tr d-flex" key={i}>
                                         {columns.map(column => {
                                             return (
-                                                <div className={"td " + column.className}>
+                                                <div className={"td " + column.className} key={column.accessor}>
                                                     {formatCell(row[column.accessor], column.accessor)}
                                                 </div>
                                             )

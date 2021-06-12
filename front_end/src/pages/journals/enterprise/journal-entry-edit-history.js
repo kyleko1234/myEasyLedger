@@ -84,7 +84,7 @@ function JournalEntryEditHistory(props) {
                                             journalEntryDate={journalEntryLog.snapshot.journalEntryDate}
                                             data={journalEntryLog.snapshot.lineItems}
                                         />
-                                        </CardBody>
+                                    </CardBody>
                                 </Card>
                             )
                         })}

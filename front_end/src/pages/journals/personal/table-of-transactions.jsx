@@ -8,7 +8,6 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
 import TransactionViewMode from './transaction-view-mode.jsx';
 import TransactionEditMode from './transaction-edit-mode.jsx';
-import AccountDetailsEditor from '../../chart-of-accounts/components/account-details-editor.js';
 import TransactionEditHistory from './transaction-edit-history.js';
 
 
@@ -18,54 +17,26 @@ import TransactionEditHistory from './transaction-edit-history.js';
 
 //Table of Transactions for account detailed view in personal organizations
 function TableOfTransactions({
-    columns,
-    data,
-    fetchData,
-    pageCount: controlledPageCount,
-    elementCount,
     tableTitle,
     hasAddEntryButton,
     parentComponentAccountId,
+    fetchData,
+    pageSize,
+    pageIndex,
+    columns,
+    data,
+    totalPages,
+    totalElements,
+    pageLength,
+    first,
+    last,
+    previousPage,
+    nextPage,
     loading, 
     category
 }) {
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        prepareRow,
-        page,
-        canPreviousPage,
-        canNextPage,
-        pageOptions,
-        pageCount,
-        gotoPage,
-        nextPage,
-        previousPage,
-        setPageSize,
-        // Get the state from the instance
-        state: { pageIndex, pageSize },
-    } = useTable(
-        {
-            columns,
-            data,
-            initialState: { pageIndex: 0, pageSize: 10 }, // Pass our hoisted table state
-            manualPagination: true, // Tell the usePagination
-            // hook that we'll handle our own data fetching
-            // This means we'll also have to provide our own
-            // pageCount.
-            pageCount: controlledPageCount,
-        },
-        usePagination
-    )
-
     const appContext = React.useContext(PageSettings);
     const transactionTypeOptions = PERSONAL_TRANSACTION_TYPES(appContext.locale);
-
-    // Listen for changes in pagination and use the state to fetch our new data
-    React.useEffect(() => {
-        fetchData({ pageIndex, pageSize })
-    }, [fetchData, pageIndex, pageSize, parentComponentAccountId])
 
     const [editMode, setEditMode] = React.useState(false); //Toggle editmode for an expanded entry
     const [createMode, setCreateMode] = React.useState(false);
@@ -83,12 +54,6 @@ function TableOfTransactions({
     const [transactionEditHistoryModal, setTransactionEditHistoryModal] = React.useState(false);
     const toggleTransactionEditHistoryModal = () => setTransactionEditHistoryModal(!transactionEditHistoryModal);
 
-    const [accountDetailsEditorModal, setAccountDetailsEditorModal] = React.useState(false);
-    const toggleAccountDetailsEditorModal = () => {
-        setAccountDetailsEditorModal(!accountDetailsEditorModal)
-    };
-
-
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
     const refreshAccounts = () => {
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
@@ -103,11 +68,6 @@ function TableOfTransactions({
         })
             .catch(console.log);
     }
-    //initially retrieve categories and accounts from API
-    React.useEffect(() => {
-        refreshAccounts();
-    }, [API_BASE_URL, appContext.currentOrganizationId])
-
 
 
     const expandTransaction = (i) => {
@@ -122,7 +82,7 @@ function TableOfTransactions({
         setEditMode(false);
         setCreateMode(false);
         setAlertMessages([]);
-        fetchData({pageIndex, pageSize});
+        fetchData(pageIndex, pageSize);
     }
     const openEditorForNewTransaction = () => {
         setFromAccountId(parentComponentAccountId);
@@ -310,111 +270,134 @@ function TableOfTransactions({
     }
 
 
-    const formatCellValue = cell => {
-        let columnId = cell.column.id;
-        switch (columnId) {
+    const formatCell = (cellValue, columnAccessor) => {
+        switch (columnAccessor) {
             case "creditAmount":
             case "debitAmount":
             case "amount":
-                if (cell.value == 0) {
+                if (cellValue == 0) {
                     return '';
                 }
-                return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cell.value));
+                return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cellValue));
             default:
-                return (cell.value);
+                return (cellValue);
         }
     }
 
+    // Listen for changes in pagination and use the state to fetch our new data
+    React.useEffect(() => {
+        fetchData(pageIndex, pageSize);
+        refreshAccounts();
+    }, [pageIndex, pageSize, parentComponentAccountId])
+
+
     return (
         <>
-            {//*loading? <div className="widget widget-rounded"><div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div></div> :  this line is commented out for now since seeing a loading spinner every time you close a modal is incredibly annoying
-                <div className="widget widget-rounded m-b-30">
-                    <div className="widget-header bg-light">
-                        <h4 className="widget-header-title d-flex justify-content-between">
-                            <div className="align-self-center">
-                                {tableTitle}
-                                {parentComponentAccountId? 
-                                    <Link replace className="icon-link-text-muted m-l-10" to="#" onClick={toggleAccountDetailsEditorModal}>
-                                        <i className="fa fa-edit"></i>
-                                    </Link> 
-                                : null}
-                            </div>
-                            <div>
-                                {hasAddEntryButton ?
-                                    <button className="btn btn-sm btn-primary align-self-center" onClick={openEditorForNewTransaction}>
-                                        <i className="ion ion-md-add fa-fw fa-lg"></i> {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
-                                    </button> : null}
-                            </div>
-                        </h4>
-                    </div>
-                    <div className="table-responsive bg-white border-top">
-                        <table {...getTableProps()} className="table table-hover m-b-0 text-inverse">
-                            <thead>
-                                {headerGroups.map(headerGroup => (
-                                    <tr {...headerGroup.getHeaderGroupProps()}>
-                                        {headerGroup.headers.map(column => (
-                                            <th style={{ width: column.width }} className={column.id == "debitAmount" || column.id == "creditAmount" || column.id == "amount" ? "text-right" : ""} {...column.getHeaderProps()}>
-                                                {column.render('Header')}
-                                                <span>
-                                                    {column.isSorted
-                                                        ? column.isSortedDesc
-                                                            ? ' 🔽'
-                                                            : ' 🔼'
-                                                        : ''}
-                                                </span>
-                                            </th>
-                                        ))}
-                                    </tr>
-                                ))}
-                            </thead>
-                            <tbody {...getTableBodyProps()}>
-                                {page.map((row, i) => {
-                                    prepareRow(row)
-                                    return (
-                                        <tr className="cursor-pointer" onClick={() => expandTransaction(data[i].journalEntryId)} {...row.getRowProps()}>
-                                            {row.cells.map(cell => {
-                                                return <td className={cell.column.id == "debitAmount" || cell.column.id == "creditAmount" || cell.column.id == "amount" ? "text-right" : ""} {...cell.getCellProps()}> {formatCellValue(cell)} </td>
-                                            })}
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="d-flex justify-content-between px-1 py-2 border-top bg-light" >
-                        <span style={{ width: "25ch" }}>
-                            <ul className="pager align-self-center m-t-0 m-b-0">
-                                <li className={canPreviousPage ? "previous" : "previous disabled"}>
-                                    {canPreviousPage ? <Link onClick={() => previousPage()} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link> : null}
-                                </li>
-                            </ul>
-                        </span>
-                        <span className="align-self-center">
-                            Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + page.length)} of {elementCount}{' '}
-                            results
-                        </span>{/**TODO replace with page selector */}
-                        <span>
-                            <ul className="pager align-self-center m-t-0 m-b-0" style={{ width: "25ch" }}>
-                                <li className={canNextPage ? "next" : "next disabled"}>
-                                    {canNextPage ? <Link onClick={() => nextPage()} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link> : null}
-                                </li>
-                            </ul>
-                        </span>
+            {/*loading? <div className="widget widget-rounded"><div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div></div> :  this line is commented out for now since seeing a loading spinner every time you close a modal is incredibly annoying */}
+            <div className="d-sm-flex justify-content-between align-items-center">
+                {tableTitle}
+                {hasAddEntryButton ?
+                    <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={openEditorForNewTransaction}>
+                        {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
+                    </button>
+                : null}
+            </div>
+            <div className="d-sm-none">
+                <button type="button" className="btn btn-primary btn-lg-btn-block" onClick={openEditorForNewTransaction}>
+                    {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
+                </button>
+            </div>
+            <div className="my-2">
+                <div className="thead">
+                    <div className="d-none d-md-flex tr bg-light border rounded">
+                        {columns.map(column => {
+                            return(
+                                <div key={column.accessor} className={"th " + column.className}>
+                                    {column.header}
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
-            }
+                <div className="tbody">
+                    {data.map((row, i) => {
+                        return (
+                            <Link replace to="#" className="tr d-none d-md-flex" key={i} onClick={() => expandTransaction(row.journalEntryId)}>
+                                {columns.map(column => {
+                                    return(
+                                        <div key={column.accessor} className={"td " + column.className}>
+                                            {formatCell(row[column.accessor], column.accessor)}
+                                        </div>
+                                    )
+                                })}
+                            </Link>
+                        )
+                    })}
+                    {/**TODO Alternate tbody for small screens goes here */}
+                    {data.map((row, i) => {
+                        return(
+                            <Link replace to="#" className="tr d-flex justify-content-between d-md-none align-items-center td" key={i} onClick={() => expandTransaction(row.journalEntryId)}>
+                                <div className="px-0 w-100">
+                                    <div className={"px-0 font-size-compact font-weight-600 " + columns[0].className}>
+                                        {formatCell(row[columns[0].accessor], columns[0].accessor)}
+                                    </div>
+                                    <div className={"px-0 " + columns[1].className}>
+                                        {formatCell(row[columns[1].accessor], columns[1].accessor)}
+                                    </div>
+                                    <div className="d-flex justify-content-between pt-2">
+                                        <div className="font-size-compact">
+                                            <div className="font-weight-600 ">
+                                                    {columns[2].header}
+                                            </div>
+                                            <div className={"px-0 " + columns[2].className}>
+                                                {formatCell(row[columns[2].accessor], columns[2].accessor)}
+                                            </div>
+                                        </div>
+                                        <div className="font-size-compact">
+                                            <div className="font-weight-600 text-right">
+                                                    {columns[3].header}
+                                            </div>
+                                            <div className={"px-0 " + columns[3].className}>
+                                                {formatCell(row[columns[3].accessor], columns[3].accessor)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
+                        )
+                    })} 
+                </div>
+            </div>
+            <div className="d-flex justify-content-between px-1 py-2 border-top" >
+                <div className={first ? "invisible" : " "}>
+                    <Link replace onClick={previousPage} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>
+                </div>
+                <div className="align-self-center">
+                    Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength)} of {totalElements}{' '}
+                    results
+                </div>{/**TODO replace with page selector */}
+                <div className={last? " invisible" : " "}>
+                    <Link onClick={nextPage} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link>
+                </div>
+            </div>
+            
 
             <Modal
                 isOpen={transactionExpanded}
                 toggle={toggleTransactionExpanded}
                 onClosed={handleTransactionModalOnClose}
-                size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
+                size="xl"
                 centered={true}
             >
-                <ModalHeader style={{ backgroundColor: "#e4e4e4" }}>
-                    Transaction
-                </ModalHeader>
-                <ModalBody className="bg-light">
+                <h5 className="px-3 py-3 my-0 border-bottom d-flex justify-content-between align-items-center">
+                <div>{tableOfJournalEntriesText[appContext.locale]["Transaction"]}</div>
+                    {!editMode?
+                        <div>
+                            <button className="btn btn-white width-175" onClick={toggleTransactionEditHistoryModal}>{tableOfJournalEntriesText[appContext.locale]["View edit history"]}</button>
+                        </div>
+                    : null}
+                </h5>
+                <ModalBody>
                     {editMode ?
                         <TransactionEditMode
                             data={lineItemData}
@@ -440,7 +423,7 @@ function TableOfTransactions({
                         />
                     }
                 </ModalBody>
-                <ModalFooter style={{ backgroundColor: "#e4e4e4" }} className="justify-content-between">
+                <ModalFooter className="justify-content-between">
                     {editMode ?
                         <>
                             <div>
@@ -454,26 +437,25 @@ function TableOfTransactions({
                                     onClick={handleSaveTransactionButton}>
                                     {tableOfJournalEntriesText[appContext.locale]["Save"]}</button>
                                 <button
-                                    className="btn btn-white m-l-10 width-10ch"
+                                    className="btn btn-white ml-2 width-10ch"
                                     onClick={handleCancelEditTransactionButton}>
                                     {tableOfJournalEntriesText[appContext.locale]["Cancel"]}</button>
                             </div>
                         </> :
                         <>
                             <div>
-                                <button className="btn btn-white width-175" onClick={toggleTransactionEditHistoryModal}>{tableOfJournalEntriesText[appContext.locale]["View edit history"]}</button>
+                                {/** empty div, pushes the other buttons to the right */}
                             </div>
                             <div>
                                 <button className="btn btn-info width-10ch" onClick={handleCopyTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
-                                <button className="btn btn-primary m-l-10 width-10ch" onClick={handleEditTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
-                                <button className="btn btn-white m-l-10 width-10ch" onClick={handleCloseTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
+                                <button className="btn btn-primary ml-2 width-10ch" onClick={handleEditTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
+                                <button className="btn btn-white ml-2 width-10ch" onClick={handleCloseTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
                             </div>
                         </>
                     }
                 </ModalFooter>
             </Modal>
             {journalEntryId ? <TransactionEditHistory journalEntryId={journalEntryId} isOpen={transactionEditHistoryModal} toggle={toggleTransactionEditHistoryModal}/> : null}
-            {parentComponentAccountId? <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={parentComponentAccountId} fetchData={() => fetchData(pageIndex, pageSize)} category={category}/> : null}
         </>
     )
 }

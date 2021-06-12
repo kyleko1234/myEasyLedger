@@ -198,7 +198,7 @@ function JournalEntryEditMode({
                     <div className="thead">
                         <div className="tr bg-light rounded border d-flex">
                             {columns.map(column => (
-                                <div className={"th " + column.className}>
+                                <div className={"th " + column.className} key={column.accessor}>
                                     {column.header}
                                 </div>
                             ))}
