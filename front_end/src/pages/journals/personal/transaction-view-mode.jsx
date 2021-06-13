@@ -9,8 +9,8 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
         () => [ // accessor is the "key" in the data},
             { header: journalEntryViewModeText[appContext.locale]['Transaction Type'], accessor: 'transactionTypeName', className: 'col-3 ' },
             { header: journalEntryViewModeText[appContext.locale]['Category or Account'], accessor: 'accountName', className: 'col-3' },
-            { header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', className: 'col-3 ' },
-            { header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', className: 'col-3 text-right' },
+            { header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', className: 'col-4 ' },
+            { header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', className: 'col-2 text-right' },
         ],
         []
     )
@@ -68,7 +68,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
             </div>
 
             <div className="mt-3"> 
-                <div className="table">
+                <div className="table d-none d-lg-block">
                     <div className="thead">
                         <div className="tr bg-light rounded border d-flex">
                             {columns.map(column => {
@@ -103,6 +103,37 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
                             <div className="td col-3"></div>
                             <div className="td col-3"></div>
                             <div className="td col-3 text-right">
+                                {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmounts())}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="table d-lg-none">
+                    <div className="tbody border-top">
+                        {data.map((row, i) => {
+                            return(
+                                <div key={i} className="tr d-flex">
+                                    <div className="px-2 py-2 w-100">
+                                        <div className="font-weight-600">
+                                            {row[columns[0].accessor] + " - " + row[columns[1].accessor]}
+                                        </div>
+                                        <div className="d-flex">
+                                            <div className="mr-5">
+                                                {row[columns[2].accessor]? row[columns[2].accessor]: <em className="text-muted font-weight-light">{journalEntryViewModeText[appContext.locale]["No memo"]}</em> }
+                                            </div>
+                                            <div className="text-right">
+                                                {formatCell(row[columns[3].accessor], columns[3].accessor)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div className="tfoot">
+                        <div className="tr d-flex justify-content-between">
+                            <div className="px-2 py-2">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
+                            <div className="px-2 py-2 text-right">
                                 {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmounts())}
                             </div>
                         </div>

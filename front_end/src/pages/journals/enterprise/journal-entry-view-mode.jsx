@@ -97,12 +97,12 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
                         {data.map((row, i) => { /**Probably refactor this at some point */
                             return(
                                 <div key={i} className="tr d-flex">
-                                    <div className="td w-100">
+                                    <div className="px-2 py-2 w-100">
                                         <div className="font-weight-600">
                                             {row[columns[1].accessor]}
                                         </div>
                                         <div className="mb-2">
-                                            {row[columns[0].accessor]? row[columns[0].accessor]: <em className="text-muted font-weight-light">No memo</em> }
+                                            {row[columns[0].accessor]? row[columns[0].accessor]: <em className="text-muted font-weight-light">{journalEntryViewModeText[appContext.locale]["No memo"]}</em> }
                                         </div>
                                         <div className="d-flex justify-content-between ">
                                             <div className="">
@@ -130,7 +130,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
                     </div>
                     <div className="tfoot">
                         <div className="tr d-flex">
-                            <div className="td w-100 d-flex justify-content-between">
+                            <div className="px-2 py-2 w-100 d-flex justify-content-between">
                                 <div>
                                     <div>
                                         {journalEntryViewModeText[appContext.locale]["Total Debit"]}
