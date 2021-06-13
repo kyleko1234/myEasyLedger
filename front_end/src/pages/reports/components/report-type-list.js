@@ -34,17 +34,23 @@ function ReportTypeList() {
     
     } else {
         return(
-            <WidgetList className="m-b-30">
-                <WidgetHeader className="bg-light">
-                    {reportTypeListText[appContext.locale]["Select a type of report to view..."]}
-                </WidgetHeader>
-                <WidgetListItem link to="/reports/net-worth" className="bg-white">
-                    <div className="p-l-30">{reportTypeListText[appContext.locale]["Net Worth"]}</div>
-                </WidgetListItem>
-                <WidgetListItem link to="/reports/income-expense" className="bg-white">
-                    <div className="p-l-30">{reportTypeListText[appContext.locale]["Income and Expense Report"]}</div>
-                </WidgetListItem>
-            </WidgetList>
+            <div>
+                <div className="thead my-2">
+                    <div className="bg-light border rounded font-weight-600 d-flex">
+                        <div className="td">{reportTypeListText[appContext.locale]["Select a type of report to view..."]}</div>
+                    </div>
+                </div>
+                <div className="tbody">
+                    <Link to="/reports/net-worth" className="tr d-flex justify-content-between align-items-center">
+                        <div className="td indent">{reportTypeListText[appContext.locale]["Net Worth"]}</div>
+                        <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                    </Link>
+                    <Link to="/reports/income-expense" className="tr d-flex justify-content-between align-items-center">
+                        <div className="td indent">{reportTypeListText[appContext.locale]["Income and Expense Report"]}</div>
+                        <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                    </Link>
+                </div>
+            </div>
         )
     }
 }
