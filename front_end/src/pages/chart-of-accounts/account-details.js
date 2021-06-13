@@ -187,7 +187,8 @@ function AccountDetails(props) {
                                             last={last}
                                             loading={loading}
                                             previousPage={previousPage}
-                                            nextPage={nextPage}                            
+                                            nextPage={nextPage}
+                                            category={false}                            
                                         /> 
                                 </>
                                 : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}

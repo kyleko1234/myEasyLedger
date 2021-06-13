@@ -168,7 +168,7 @@ class Categories extends React.Component {
                                                                 </div>
                                                             </div>
                                                         :
-                                                        <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
+                                                        <Link className="tr d-flex justify-content-between align-items-center " to={`/category-details/${account.accountId}`}>
                                                                 <div className="td font-weight-600">
                                                                     {account.accountName}
                                                                 </div>
@@ -186,7 +186,7 @@ class Categories extends React.Component {
                                                                 .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                                 .map(childAccount => {
                                                                     return (
-                                                                        <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId}>
+                                                                        <Link className="tr d-flex justify-content-between align-items-center " to={`/category-details/${childAccount.accountId}`} key={childAccount.accountId}>
                                                                             <div className="td indent">
                                                                                 <div>{childAccount.accountName}</div>
                                                                             </div>
