@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTable } from 'react-table';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js'
 
@@ -13,19 +12,6 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
             { header: journalEntryViewModeText[appContext.locale]['Credit'], accessor: 'creditAmount', className: 'col-2 text-right ' },
         ],
         []
-    )
-
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-    } = useTable(
-        {
-            columns,
-            data
-        }
     )
 
     const sumAmountsInColumn = columnName => {
@@ -56,15 +42,16 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
 
     return (
         <>
-            <div className="row mb-2 px-2 px-lg-0">
-                <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-md-9 col-lg-10">{journalEntryDate}</div>
-            </div>
-            <div className="row mb-2 px-2 px-lg-0">
-                <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-md-9 col-lg-10">{journalEntryDescription}</div>
-            </div>
-            <br />
-
             <div>
+                <div className="row mb-2 px-2 px-lg-0">
+                    <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-md-9 col-lg-10">{journalEntryDate}</div>
+                </div>
+                <div className="row px-2 px-lg-0">
+                    <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-md-9 col-lg-10">{journalEntryDescription}</div>
+                </div>
+            </div>
+
+            <div className="mt-3">
                 <div className="table d-none d-lg-block">
                     <div className="thead">
                         <div className="tr bg-light rounded border d-flex">

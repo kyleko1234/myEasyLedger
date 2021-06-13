@@ -7,10 +7,10 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
     const appContext = React.useContext(PageSettings);
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
-            { Header: journalEntryViewModeText[appContext.locale]['Transaction Type'], accessor: 'transactionTypeName', width: '25%' },
-            { Header: journalEntryViewModeText[appContext.locale]['Category or Account'], accessor: 'accountName', width: '25%' },
-            { Header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', width: '25%' },
-            { Header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', width: '25%' },
+            { header: journalEntryViewModeText[appContext.locale]['Transaction Type'], accessor: 'transactionTypeName', className: 'col-3 ' },
+            { header: journalEntryViewModeText[appContext.locale]['Category or Account'], accessor: 'accountName', className: 'col-3' },
+            { header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', className: 'col-3 ' },
+            { header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', className: 'col-3 text-right' },
         ],
         []
     )
@@ -45,72 +45,69 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
     }
 
 
-    const formatCell = cell => {
-        let columnId = cell.column.id;
-        switch (columnId) {
+    const formatCell = (cellValue, columnAccessor) => {
+        switch (columnAccessor) {
             case "amount":
-                return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cell.value));
+                return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cellValue));
             default:
-                return cell.value;
+                return cellValue;
         }
     }
 
     return (
         <>
-            <div className="row m-b-10">
-                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["From Account"]}</strong></div> <div className="col-lg-10">{fromAccountName}</div>
+            <div className="row mb-2 px-2 px-lg-0">
+                <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["From Account"]}</strong></div> <div className="col-lg-10">{fromAccountName}</div>
             </div>
 
-            <div className="row m-b-10">
-                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-lg-10">{journalEntryDate}</div>
+            <div className="row mb-2 px-2 px-lg-0">
+                <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-lg-10">{journalEntryDate}</div>
             </div>
-            <div className="row m-b-10">
-                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-lg-10">{journalEntryDescription}</div>
+            <div className="row px-2 px-lg-0">
+                <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-lg-10">{journalEntryDescription}</div>
             </div>
-            <br></br>
 
-            <div className="table-responsive">
-                <table className="table"{...getTableProps()}>
-                    <thead>
-                        {headerGroups.map(headerGroup => (
-                            <tr {...headerGroup.getHeaderGroupProps()}>
-                                {headerGroup.headers.map(column => (
-                                    // Add the sorting props to control sorting. For this example
-                                    // we can add them into the header props
-                                    <th {...column.getHeaderProps()} style={{ width: column.width }} className={column.id == "amount" ? "text-right" : ""}>
-                                        {column.render('Header')}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody {...getTableBodyProps()}>
-                        {rows.map(
+            <div className="mt-3"> 
+                <div className="table">
+                    <div className="thead">
+                        <div className="tr bg-light rounded border d-flex">
+                            {columns.map(column => {
+                                return(
+                                    <div className={"th " + column.className} key={column.accessor}>
+                                        {column.header}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                    <div className="tbody">
+                        {data.map(
                             (row, i) => {
-                                prepareRow(row);
                                 return (
-                                    <tr {...row.getRowProps()}>
-                                        {row.cells.map(cell => {
+                                    <div className="tr d-flex" key={i}>
+                                        {columns.map(column => {
                                             return (
-                                                <td className={cell.column.id == "amount" ? "text-right" : ""} {...cell.getCellProps()}>{formatCell(cell)}</td>
+                                                <div className={"td " + column.className} key={column.accessor}>
+                                                    {formatCell(row[column.accessor], column.accessor)}
+                                                </div>
                                             )
                                         })}
-                                    </tr>
+                                    </div>
                                 )
                             }
                         )}
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>{journalEntryViewModeText[appContext.locale]["Total"]}</td>
-                            <td></td>
-                            <td></td>
-                            <td className="text-right">
+                    </div>
+                    <div className="tfoot">
+                        <div className="tr d-flex">
+                            <div className="td col-3">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
+                            <div className="td col-3"></div>
+                            <div className="td col-3"></div>
+                            <div className="td col-3 text-right">
                                 {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmounts())}
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     )

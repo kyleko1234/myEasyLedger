@@ -193,7 +193,7 @@ function JournalEntryEditMode({
                     {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
             </button>
 
-            <div>
+            <div className="mt-3">
                 <div className="table d-none d-lg-block">
                     <div className="thead">
                         <div className="tr bg-light rounded border d-flex">
