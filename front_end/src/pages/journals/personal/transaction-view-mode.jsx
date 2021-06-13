@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTable } from 'react-table';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js'
 
@@ -13,19 +12,6 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
             { header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', className: 'col-2 text-right' },
         ],
         []
-    )
-
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-    } = useTable(
-        {
-            columns,
-            data
-        }
     )
 
     const sumAmounts = () => {
