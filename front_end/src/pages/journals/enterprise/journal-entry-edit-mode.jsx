@@ -312,7 +312,7 @@ function JournalEntryEditMode({
                         </div>
                     </div>
                 </div>
-                <div style={{marginLeft: "0.75rem", marginRight: "0.75rem"}}>
+                <div>
                     <button className="btn btn-lg btn-white btn-block" onClick={() => addEmptyLineItem()}>
                         <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
                     </button>

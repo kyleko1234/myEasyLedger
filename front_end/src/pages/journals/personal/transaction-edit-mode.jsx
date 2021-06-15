@@ -12,10 +12,10 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
     const appContext = React.useContext(PageSettings);
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
-            { Header: journalEntryViewModeText[appContext.locale]['Transaction Type'], accessor: 'transactionTypeName', width: '25%' },
-            { Header: journalEntryViewModeText[appContext.locale]['Category or Account'], accessor: 'accountName', width: '25%' },
-            { Header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', width: '25%' },
-            { Header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', width: '25%' },
+            { header: journalEntryViewModeText[appContext.locale]['Transaction Type'], accessor: 'transactionTypeName', className: "col-3" },
+            { header: journalEntryViewModeText[appContext.locale]['Category or Account'], accessor: 'accountName', className: "col-3" },
+            { header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', className: "col-3" },
+            { header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', className: "col-2" },
         ],
         []
     )
@@ -48,19 +48,18 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
         }
     }
 
-    const returnFormByColumnType = cell => {
-        const columnId = cell.column.id;
-        switch (columnId) {
+    const returnFormByColumnType = (cellValue, columnAccessor, rowIndex) => {
+        switch (columnAccessor) {
             case "description":
                 return(
                     <form onSubmit={event => {event.preventDefault(); handleSaveTransactionButton()}}> 
                         <input
                             type="text"
                             className="form-control"
-                            value={cell.value ? cell.value : ''}
+                            value={cellValue ? cellValue : ''}
                             onChange={event => {
                                 let updatedLineItemData = data.slice();
-                                updatedLineItemData[cell.row.index].description = event.target.value;
+                                updatedLineItemData[rowIndex].description = event.target.value;
                                 setLineItemData(updatedLineItemData);
                             }}
                         />
@@ -72,11 +71,11 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                         <input
                             type="number"
                             className="form-control"
-                            value={cell.value ? cell.value : ''}
+                            value={cellValue ? cellValue : ''}
                             step="any"
                             onChange={event => {
                                 let updatedLineItemData = data.slice();
-                                updatedLineItemData[cell.row.index].amount = parseFloat(event.target.value);
+                                updatedLineItemData[rowIndex].amount = parseFloat(event.target.value);
                                 setLineItemData(updatedLineItemData);
                             }}
                         />
@@ -85,8 +84,8 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
             case "accountName": //Select component must exist outside of <form>. This way, form can be submitted with enter key. Forms unfortunately cannot be submitted with enter key when Select component is focused.
                 return( 
                     <Select
-                        options={accountOptions.filter(accountOption => data[cell.row.index].transactionType.accountTypeIds.includes(accountOption.object.accountTypeId))}
-                        value={data[cell.row.index].accountId == false ? null : accountOptions.find(accountOption => accountOption.object.accountId == data[cell.row.index].accountId) /**The conditional checking for a false-y accountId is necessary if you want this select dropdown to reset when transactionTypeOption is changed. */}
+                        options={accountOptions.filter(accountOption => data[rowIndex].transactionType.accountTypeIds.includes(accountOption.object.accountTypeId))}
+                        value={data[rowIndex].accountId == false ? null : accountOptions.find(accountOption => accountOption.object.accountId == data[rowIndex].accountId) /**The conditional checking for a false-y accountId is necessary if you want this select dropdown to reset when transactionTypeOption is changed. */}
                         isSearchable={true}
                         menuPortalTarget={document.body}
                         menuShouldScrollIntoView={false}
@@ -94,8 +93,8 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                         menuPlacement={'auto'}
                         onChange={(selectedOption) => {
                             let updatedLineItemData = data.slice();
-                            updatedLineItemData[cell.row.index].accountId = selectedOption.object.accountId;
-                            updatedLineItemData[cell.row.index].accountName = selectedOption.object.accountName;
+                            updatedLineItemData[rowIndex].accountId = selectedOption.object.accountId;
+                            updatedLineItemData[rowIndex].accountName = selectedOption.object.accountName;
                             setLineItemData(updatedLineItemData);
                         }}
                     />
@@ -105,23 +104,23 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                 return(
                     <Select
                         options={transactionTypeOptions}
-                        value={transactionTypeOptions.find(transactionType => transactionType.value == data[cell.row.index].transactionType.value)}
+                        value={transactionTypeOptions.find(transactionType => transactionType.value == data[rowIndex].transactionType.value)}
                         menuPortalTarget={document.body}
                         menuShouldScrollIntoView={false}
                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                         menuPlacement={'auto'}
                         onChange={(selectedOption) => {
                             let updatedLineItemData = data.slice();
-                            updatedLineItemData[cell.row.index].transactionType = selectedOption;
-                            updatedLineItemData[cell.row.index].transactionTypeName = selectedOption.label;
-                            updatedLineItemData[cell.row.index].accountId = '';
-                            updatedLineItemData[cell.row.index].accountName = '';
+                            updatedLineItemData[rowIndex].transactionType = selectedOption;
+                            updatedLineItemData[rowIndex].transactionTypeName = selectedOption.label;
+                            updatedLineItemData[rowIndex].accountId = '';
+                            updatedLineItemData[rowIndex].accountName = '';
                             setLineItemData(updatedLineItemData);
                         }}
                     />
                 )
             default:
-                return (cell.value);
+                return (cellValue);
         }
     }
     const addEmptyLineItem = () => {
@@ -159,9 +158,9 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                     </Alert>
                 </div> : null
             }
-            <div className="row m-b-10 align-items-center">
-                <div className="col-xl-2"><strong>{journalEntryViewModeText[appContext.locale]["From Account"]}</strong></div> 
-                <div className="col-xl-3">
+            <div className="row mb-2 align-items-center">
+                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["From Account"]}</strong></div> 
+                <div className="col-lg-4">
                     <Select
                         options={accountOptions.filter(accountOption => transactionTypeOptions[2].accountTypeIds.includes(accountOption.object.accountTypeId))}
                         value={accountOptions.find(accountOption => accountOption.object.accountId == fromAccountId)}
@@ -178,9 +177,9 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                 </div>
             </div>
 
-            <div className="row m-b-10 align-items-center">
-                <div className="col-xl-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> 
-                <div className="col-xl-3">
+            <div className="row mb-2 align-items-center">
+                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> 
+                <div className="col-lg-4">
                     <input 
                         type="date" 
                         className="form-control"
@@ -188,9 +187,9 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                         onChange={event => setJournalEntryDate(event.target.value)}/>
                 </div>
             </div>
-            <div className="row m-b-10 align-items-center">
-                <div className="col-xl-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> 
-                <div className="col-xl-8">
+            <div className="row mb-2 align-items-center">
+                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> 
+                <div className="col-lg-8">
                     <input 
                             type="text" 
                             className="form-control"
@@ -198,60 +197,119 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                             onChange={event => setJournalEntryDescription(event.target.value)}/>
                 </div>
             </div>
-            <br></br>
-
-            <div className="table-responsive">
-                <table className="table"{...getTableProps()}>
-                    <thead>
-                        {headerGroups.map(headerGroup => (
-                            <tr {...headerGroup.getHeaderGroupProps()}>
-                                {headerGroup.headers.map(column => (
-                                    // Add the sorting props to control sorting. For this example
-                                    // we can add them into the header props
-                                    <th {...column.getHeaderProps()} style={{ width: column.width }}>
-                                        {column.render('Header')}
-                                    </th>
-                                ))}
-                                <th></th>
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody {...getTableBodyProps()}>
-                        {rows.map(
+            <div className="mt-3">
+                <div className="table d-none d-lg-block">
+                    <div className="thead">
+                            <div className="tr bg-light rounded border d-flex">
+                                {columns.map(column => {
+                                    return(
+                                        <div className={"th " + column.className} key={column.accessor}>
+                                            {column.header}
+                                        </div>
+                                    )
+                                })}
+                                <div className="th col-1"></div>
+                            </div>
+                    </div>
+                    <div className="tbody">
+                        {data.map(
                             (row, i) => {
-                                prepareRow(row);
                                 return (
-                                    <tr {...row.getRowProps()}>
-                                        {row.cells.map(cell => {
+                                    <div className="tr d-flex" key={i}>
+                                        {columns.map(column => {
                                             return (
-                                                <td {...cell.getCellProps()}>{returnFormByColumnType(cell)}</td>
+                                                <div className={"td " + column.className} key={column.accessor}>
+                                                    {returnFormByColumnType(row[column.accessor], column.accessor, i)}
+                                                </div>
                                             )
                                         })}
-                                        <td>
-                                            <button className="btn btn-lg btn-icon btn-light" onClick={() => removeLineItem(i)}>
+                                        <div className="td col-1 px-0">
+                                            <button className="btn btn-lg btn-white border-0" onClick={() => removeLineItem(i)}>
                                                 <i className="ion ion-md-close fa-fw fa-lg"></i>
                                             </button>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </div>
                                 )
                             }
                         )}
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>{journalEntryViewModeText[appContext.locale]["Total"]}</td>
-                            <td></td>
-                            <td></td>
-                            <td>
+                    </div>
+                    <div className="tfoot">
+                        <div className="tr d-flex">
+                            <div className="td col-3 ">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
+                            <div className="td col-3 "></div>
+                            <div className="td col-3 "></div>
+                            <div className="td col-2 ">
                                 {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmounts())}
-                            </td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
-                <button className="btn btn-light btn-block row" style={{margin:"auto", padding:"1em", borderStyle:"solid", borderColor:"LightGray", borderWidth:"1px"}} onClick={addEmptyLineItem}>
-                    <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
-                </button>
+                            </div>
+                            <div className="td col-1 "></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="table d-lg-none">
+                    <div className="tbody border-top">
+                        {data.map(
+                            (row, i) => {
+                                return(
+                                    <div className="tr d-flex" key={i}>
+                                        <div className="td w-100">
+                                            <div className="d-flex mb-2 align-items-center">
+                                                <div className="col-5 px-0 mr-2">
+                                                    <div className="font-weight-600 font-size-compact">
+                                                        {columns[0].header}
+                                                    </div>
+                                                    <div>
+                                                        {returnFormByColumnType(row[columns[0].accessor], columns[0].accessor, i)}
+                                                    </div>
+                                                </div>
+                                                <div className="col-5 px-0 mr-2">
+                                                    <div className="font-weight-600 font-size-compact">
+                                                        {columns[1].header}
+                                                    </div>
+                                                    <div>
+                                                        {returnFormByColumnType(row[columns[1].accessor], columns[1].accessor, i)}
+                                                    </div>
+                                                </div>
+                                                <div className="col-1 px-0">
+                                                    <div className="font-weight-600 font-size-compact invisible">
+                                                        space {/**invisible text to align button */}
+                                                    </div> 
+                                                    <div>
+                                                        <button className="btn btn-lg btn-white border-0" onClick={() => removeLineItem(i)}>
+                                                            <i className="ion ion-md-close fa-fw fa-lg"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d-flex mb-2 align-items-center">
+                                                    <div className="col-6 px-0 mr-2">
+                                                        <div className="font-weight-600 font-size-compact">
+                                                            {columns[2].header}
+                                                        </div>
+                                                        <div>
+                                                            {returnFormByColumnType(row[columns[2].accessor], columns[2].accessor, i)}
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-4 px-0 mr-2">
+                                                        <div className="font-weight-600 font-size-compact">
+                                                            {columns[3].header}
+                                                        </div>
+                                                        <div>
+                                                            {returnFormByColumnType(row[columns[3].accessor], columns[3].accessor, i)}
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        )}
+                    </div>
+                </div>
+                <div>
+                    <button className="btn btn-lg btn-white btn-block" onClick={addEmptyLineItem}>
+                        <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
+                    </button>
+                </div>
             </div>
         </>
     )
