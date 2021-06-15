@@ -77,6 +77,12 @@ function AccountDetails(props) {
         //fetch data from Easy Ledger API
         setLoading(true);
         async function fetchTableData () {
+            //also refresh account data    
+            await axios.get(`${API_BASE_URL}/account/${selectedAccountId}`).then(response => {
+                let account = response.data;
+                setSelectedAccount(account);
+            }).catch(console.log)    
+
             const url = `${API_BASE_URL}/account/${selectedAccountId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
             await axios.get(url).then(response => {
                 var dataContent = response.data.content;
@@ -97,11 +103,6 @@ function AccountDetails(props) {
                 setLast(response.data.last);
             })
                 .catch(console.log);
-            //also refresh account data    
-            await axios.get(`${API_BASE_URL}/account/${selectedAccountId}`).then(response => {
-                let account = response.data;
-                setSelectedAccount(account);
-            }).catch(console.log)    
         }
         await fetchTableData();
         setRefreshToken(Math.random());

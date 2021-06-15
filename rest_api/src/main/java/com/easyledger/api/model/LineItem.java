@@ -56,8 +56,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"        journal_entry.deleted = false AND  " + 
 				"        account_subtype.id = account.account_subtype_id AND " + 
 				"        account_type.id = account_subtype.account_type_id " + 
-				"    ORDER BY       " + 
-				"        journal_entry.journal_entry_date DESC, line_item.id DESC)     " + 
+				") " +
 				"UNION " + 
 				"(SELECT       " + 
 				"    child_account.id AS accountId, child_account.name AS accountName,       " + 
@@ -73,9 +72,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"    journal_entry.deleted = false AND  " + 
 				"    parent_account.id = child_account.parent_account_id AND  " + 
 				"    account_subtype.id = parent_account.account_subtype_id AND " + 
-				"    account_type.id = account_subtype.account_type_id " + 
+				"    account_type.id = account_subtype.account_type_id" + 
+				") " +
 				"ORDER BY       " + 
-				"    journal_entry.journal_entry_date DESC, line_item.id DESC ) ",
+				"    journalEntryDate DESC, journalEntryId DESC, lineItemId DESC ",
 		resultSetMapping = "lineItemDTOMapping"
 )
 @SqlResultSetMapping(//sqlresultsetmapping for counting query
