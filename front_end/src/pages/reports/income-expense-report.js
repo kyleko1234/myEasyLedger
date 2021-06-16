@@ -10,14 +10,8 @@ function IncomeExpenseReport() {
 
     return (
         <div>
-            <ol className="breadcrumb float-xl-right">
-                <li className="breadcrumb-item"><Link to="/">{incomeStatementReportText[appContext.locale]["Home"]}</Link></li>
-                <li className="breadcrumb-item"><Link to="/reports">{incomeStatementReportText[appContext.locale]["Reports"]}</Link></li>
-                <li className="breadcrumb-item active">{incomeStatementReportText[appContext.locale]["Income and Expense Report"]}</li>
-            </ol>
-            <h1 className="page-header">
+            <h1>
                 {incomeStatementReportText[appContext.locale]["Income and Expense Report"]} 
-                <ToggleMobileSidebarButton className="d-md-none float-right "/>
             </h1>
             <div>
                 {appContext.isLoading? <div className="d-flex justify-content-center fa-3x"><i className="fas fa-circle-notch fa-spin"></i></div> : 

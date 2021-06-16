@@ -188,7 +188,7 @@ function IncomeStatementRender() {
         <>
             <Card className="very-rounded shadow-sm bg-light my-4">
                 <CardBody className="">
-                    <h1 className="h5">{incomeStatementRenderText[appContext.locale]["Options"]}</h1>
+                    <h2 className="h5">{incomeStatementRenderText[appContext.locale]["Options"]}</h2>
                     <div className="d-sm-flex align-items-center ">
                         <div className="d-flex align-items-center mr-3 mb-2">
                             <label className="my-0 col-3 px-0">{incomeStatementRenderText[appContext.locale]["From:"]} </label>

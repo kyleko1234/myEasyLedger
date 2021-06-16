@@ -1,9 +1,9 @@
 import React from 'react';
-import {Widget, WidgetHeader} from '../../../components/widget/widget.jsx';
 import { PageSettings } from '../../../config/page-settings.js';
 import {API_BASE_URL} from '../../../utils/constants.js';
 import axios from 'axios';
 import {incomeStatementRenderText} from '../../../utils/i18n/income-statement-render-text.js';
+import { Card, CardBody} from 'reactstrap';
 
 function IncomeExpenseRender() {
     const appContext = React.useContext(PageSettings);
@@ -15,6 +15,8 @@ function IncomeExpenseRender() {
     const [totalExpenses, setTotalExpenses] = React.useState(null);
     const [netIncome, setNetIncome] = React.useState();
     const [loading, setLoading] = React.useState(true);
+    const [detailedView, setDetailedView] = React.useState(false);
+    const toggleDetailedView = () => setDetailedView(!detailedView);
 
     const sumCreditsMinusDebits = (objects) => {
         let totalDebitsMinusCredits = 0;
@@ -71,92 +73,95 @@ function IncomeExpenseRender() {
     
 
     return(
-        <Widget>
-            <WidgetHeader className="bg-light">
-                <div className="align-self-center">{incomeStatementRenderText[appContext.locale]["Income and Expense Report"]}</div>
-                <div className="d-flex">
-                    <label className="m-b-0 px-2 align-self-center">{incomeStatementRenderText[appContext.locale]["From:"]}</label>
-                    <input type="date" className="form-control form-control-sm width-150 align-self-center" value={startDate} onChange={handleChangeStartDate}/>
-                    <label className="m-b-0 pl-3 px-2 align-self-center">{incomeStatementRenderText[appContext.locale]["To:"]}</label>
-                    <input type="date" className="form-control form-control-sm width-150 align-self-center" value={endDate} onChange={handleChangeEndDate}/>
-                </div>
-            </WidgetHeader>
+        <>
+            <Card className="very-rounded shadow-sm bg-light my-4">
+                <CardBody>
+                    <h2 className="h5">{incomeStatementRenderText[appContext.locale]["Options"]}</h2>
+                    <div className="d-sm-flex align-items-center">
+                        <div className="d-flex align-items-center mr-3 mb-2">
+                            <label className="my-0 pr-2">{incomeStatementRenderText[appContext.locale]["From:"]}</label>
+                            <input type="date" className="form-control form-control-sm width-150 align-self-center" value={startDate} onChange={handleChangeStartDate}/>
+                        </div>
+                        <div className="d-flex align-items-center mr-3 mb-2">
+                            <label className="my-0 pr-2">{incomeStatementRenderText[appContext.locale]["To:"]}</label>
+                            <input type="date" className="form-control form-control-sm width-150 align-self-center" value={endDate} onChange={handleChangeEndDate}/>
+                        </div>
+                    </div>
+                    <div className="custom-control custom-switch">
+                        <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
+                        <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
+                    </div>
+                </CardBody>
+            </Card>
             {loading? <div className="d-flex justify-content-center fa-3x py-3 "><i className="fas fa-circle-notch fa-spin"></i></div>:
                 <div className="px-2">
-                    <table className="table table-nested m-t-5" style={{borderBottom: "1px solid #aeaeae", marginBottom: "1px"}}>
-                        <thead>
-                            <tr><th>{incomeStatementRenderText[appContext.locale]["Income"]}</th></tr>
-                        </thead>
-                        <tbody>
-                            {accounts.filter(account => account.accountTypeId == 4).map(account => {
-                                return(
-                                    <React.Fragment key={account.accountId}>
-                                        <tr><td className="p-l-30 d-flex justify-content-between font-weight-600 bg-light">
-                                            <div>{account.accountName}</div>
-                                            <div className={account.debitsMinusCredits > 0? "text-red" : ""}>{formatNumber(account.debitsMinusCredits * -1)}</div>
-                                        </td></tr>
-                                        {accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
+                    <div className="striped-row font-weight-600">{incomeStatementRenderText[appContext.locale]["Income"]}</div>
+                        {accounts.filter(account => account.accountTypeId == 4).map(account => {
+                            return(
+                                <React.Fragment key={account.accountId}>
+                                    <div className="indent striped-row justify-content-between font-weight-600">
+                                        <div>{account.accountName}</div>
+                                        <div className={account.debitsMinusCredits > 0? "text-red" : ""}>{formatNumber(account.debitsMinusCredits * -1)}</div>
+                                    </div>
+                                    {detailedView?
+                                        accounts
+                                            .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                            .map(childAccount => {
+                                                return(
+                                                    <div className="striped-row indent-2 justify-content-between" key={childAccount.accountId}>
+                                                        <div>{childAccount.accountName}</div>
+                                                        <div className={childAccount.debitsMinusCredits > 0? "text-red" : ""}>{formatNumber(childAccount.debitsMinusCredits * -1)}</div>
+                                                    </div> 
+                                                )
+                                        })
+                                    : null}
+                                </React.Fragment>
+                            )
+                        })}
+                    <div className="striped-row justify-content-between font-weight-600">
+                        <div>{incomeStatementRenderText[appContext.locale]["Total Income"]}</div>
+                        <div className={totalIncome >= 0? "" : "text-red"}>{formatNumber(totalIncome)}</div>
+                    </div>
+                    <div className="striped-row">
+                        <div className="invisible">{/** empty row */} empty row </div>
+                    </div>
+                    <div className="striped-row font-weight-600">{incomeStatementRenderText[appContext.locale]["Expenses"]}</div>
+                    {accounts.filter(account => account.accountTypeId == 5).map(account => {
+                        return(
+                            <React.Fragment key={account.accountId}>
+                                <div className="indent striped-row justify-content-between font-weight-600">
+                                    <div>{account.accountName}</div>
+                                    <div className={account.debitsMinusCredits >= 0? "text-red" : ""}>{formatNumber(account.debitsMinusCredits)}</div>
+                                </div>
+                                {detailedView? 
+                                    accounts
+                                        .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                        .map(childAccount => {
                                             return(
-                                                <tr key={childAccount.accountId}><td className="p-l-60 d-flex justify-content-between">
-                                                    <div>{childAccount.accountName}</div>
-                                                    <div className={childAccount.debitsMinusCredits > 0? "text-red" : ""}>{formatNumber(childAccount.debitsMinusCredits * -1)}</div>
-                                                </td></tr> 
-                                            )
-                                        })}
-                                    </React.Fragment>
-                                )
-                            })}
-                        </tbody>
-                        <tfoot>
-                            <tr><td className="d-flex justify-content-between">
-                                <div>{incomeStatementRenderText[appContext.locale]["Total Income"]}</div>
-                                <div className={totalIncome >= 0? "" : "text-red"}>{formatNumber(totalIncome)}</div>
-                            </td></tr>
-                        </tfoot>
-                    </table>
-                    <table className="table table-nested" style={{borderBottom: "1px solid #aeaeae", borderTop:"1px solid #aeaeae", marginBottom: "1px"}}>
-                        <thead>
-                            <tr><th>{incomeStatementRenderText[appContext.locale]["Expenses"]}</th></tr>
-                        </thead>
-                        <tbody>
-                            {accounts.filter(account => account.accountTypeId == 5).map(account => {
-                                return(
-                                    <React.Fragment key={account.accountId}>
-                                        <tr><td className="p-l-30 d-flex justify-content-between font-weight-600 bg-light">
-                                            <div>{account.accountName}</div>
-                                            <div className={account.debitsMinusCredits >= 0? "text-red" : ""}>{formatNumber(account.debitsMinusCredits)}</div>
-                                        </td></tr>
-                                        {accounts.filter(childAccount => childAccount.parentAccountId == account.accountId).map(childAccount => {
-                                            return(
-                                                <tr key={childAccount.accountId}><td className="p-l-60 d-flex justify-content-between">
+                                                <div className="indent-2 striped-row justify-content-between"key={childAccount.accountId}>
                                                     <div>{childAccount.accountName}</div>
                                                     <div className={childAccount.debitsMinusCredits >= 0? "text-red" : ""}>{formatNumber(childAccount.debitsMinusCredits)}</div>
-                                                </td></tr> 
+                                                </div> 
                                             )
-                                        })}
-                                    </React.Fragment>
-                                )
-                            })}
-                        </tbody>
-                        <tfoot>
-                            <tr><td className="d-flex justify-content-between">
-                                <div>{incomeStatementRenderText[appContext.locale]["Total Expenses"]}</div>
-                                <div className={totalExpenses > 0? "text-red" : ""}>{formatNumber(totalExpenses)}</div>
-                            </td></tr>
-                        </tfoot>
-                    </table>
-                    <table className="table m-b-0">
-                        <tfoot>
-                            <tr><td className="d-flex justify-content-between py-3">
-                                <div>{incomeStatementRenderText[appContext.locale]["Total Income less Expenses"]}</div>
-                                <div>{formatNumber(netIncome)}</div>
-                            </td></tr>
-                        </tfoot>
-                    </table>
+                                    })
+                                : null}
+                            </React.Fragment>
+                        )
+                    })}
+                    <div className="striped-row font-weight-600 justify-content-between">
+                        <div>{incomeStatementRenderText[appContext.locale]["Total Expenses"]}</div>
+                        <div className={totalExpenses > 0? "text-red" : ""}>{formatNumber(totalExpenses)}</div>
+                    </div>
+                    <div className="striped-row">
+                        <div className="invisible">{/** empty row */} empty row </div>
+                    </div>
+                    <div className="striped-row font-weight-600 justify-content-between">
+                        <div>{incomeStatementRenderText[appContext.locale]["Total Income less Expenses"]}</div>
+                        <div>{formatNumber(netIncome)}</div>
+                    </div>
                 </div>
             }
-
-        </Widget>
+        </>
     )
 }
 
