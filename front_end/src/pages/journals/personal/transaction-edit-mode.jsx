@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTable } from 'react-table';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js';
 import {journalEntryEditModeText} from '../../../utils/i18n/journal-entry-edit-mode-text.js';
@@ -7,8 +6,8 @@ import {Alert} from 'reactstrap';
 import Select from 'react-select';
 
 function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDescription, journalEntryDate, setJournalEntryDate, fromAccountId, setFromAccountId,
-    fromAccountName, setFromAccountName,
-    setLineItemData, transactionTypeOptions, accountOptions, handleSaveTransactionButton, alertMessages }) {
+        fromAccountName, setFromAccountName,
+        setLineItemData, transactionTypeOptions, accountOptions, handleSaveTransactionButton, alertMessages }) {
     const appContext = React.useContext(PageSettings);
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
@@ -18,18 +17,6 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
             { header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', className: "col-2" },
         ],
         []
-    )
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-    } = useTable(
-        {
-            columns,
-            data
-        }
     )
     
     const sumAmounts = () => {
