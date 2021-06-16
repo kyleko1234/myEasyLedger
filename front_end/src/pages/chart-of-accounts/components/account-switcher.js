@@ -7,8 +7,7 @@ import { balanceSummaryText } from "../../../utils/i18n/balance-summary-text.js"
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { WidgetHeader, WidgetList, ExpandableWidgetListItem, WidgetListItem } from '../../../components/widget/widget.jsx';
-import { Card, CardBody, CardHeader, Collapse } from 'reactstrap';
+import { Card, CardBody, Collapse } from 'reactstrap';
 
 
 function AccountSwitcher(props) {

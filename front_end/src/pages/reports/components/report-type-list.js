@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { WidgetList, WidgetHeader, WidgetListItem } from '../../../components/widget/widget';
 import { PageSettings } from '../../../config/page-settings';
 import {reportTypeListText} from '../../../utils/i18n/report-type-list-text';
 

@@ -33,55 +33,53 @@ function NewOrganizationForm(props) {
 
 
     return (
-        <div className="widget widget-rounded m-b-15">
-            <div className="px-3 py-3">
-                <div className="form-group row">
-                    <label className="col-xl-3 col-form-label">
-                        {sidebarText[appContext.locale]["Enter a name for this EasyLedger"] + ":"}
-                    </label>
-                    <div className="col-xl-4">
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={organizationNameInput}
-                            onChange={event => setOrganizationNameInput(event.target.value)}
-                        />
-                    </div>
+        <div className="my-3">
+            <div className="form-group row">
+                <label className="col-xl-3 col-form-label">
+                    {sidebarText[appContext.locale]["Enter a name for this EasyLedger"] + ":"}
+                </label>
+                <div className="col-xl-4">
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={organizationNameInput}
+                        onChange={event => setOrganizationNameInput(event.target.value)}
+                    />
                 </div>
-                <div className="form-group row">
-                    <label className="col-xl-3 col-form-label">
-                        {sidebarText[appContext.locale]["Select a currency for this EasyLedger"] + ":"}
-                    </label>
-                    <div className="col-xl-4">
-                        <Select
-                            options={currencyOptions}
-                            onChange={selectedOption => setSelectedCurrency(selectedOption.value)}
-                            value={currencyOptions.find(currencyOption => currencyOption.value == selectedCurrency)}
-                            menuPortalTarget={document.body}
-                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                            menuPlacement={'auto'}
-
-                        />
-                    </div>
-                </div>
-                <div className="form-group row">
-                    <label className="col-xl-3 col-form-label">
-                        {sidebarText[appContext.locale]["Create an EasyLedger for"] + ":"}
-                    </label>
-                    <div className="col-xl-4 p-t-3">
-                        <div className="radio radio-css">
-                            <input type="radio" value={false} id="is-enterprise-false" name="is-enterprise" checked={!isEnterprise} onChange={handleChangeIsEnterprise} />
-                            <label htmlFor="is-enterprise-false">{sidebarText[appContext.locale]["Personal"]}</label>
-                        </div>
-                        <div className="radio radio-css">
-                            <input type="radio" value={true} id="is-enterprise-true" name="is-enterprise" checked={isEnterprise} onChange={handleChangeIsEnterprise} />
-                            <label htmlFor="is-enterprise-true">{sidebarText[appContext.locale]["Enterprise"]}</label>
-                        </div>
-                    </div>
-                </div>
-                <button className="btn btn-primary" onClick={handleSaveButton}>{sidebarText[appContext.locale]["Create this EasyLedger"]}</button>
-
             </div>
+            <div className="form-group row">
+                <label className="col-xl-3 col-form-label">
+                    {sidebarText[appContext.locale]["Select a currency for this EasyLedger"] + ":"}
+                </label>
+                <div className="col-xl-4">
+                    <Select
+                        options={currencyOptions}
+                        onChange={selectedOption => setSelectedCurrency(selectedOption.value)}
+                        value={currencyOptions.find(currencyOption => currencyOption.value == selectedCurrency)}
+                        menuPortalTarget={document.body}
+                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                        menuPlacement={'auto'}
+
+                    />
+                </div>
+            </div>
+            <div className="form-group row">
+                <div className="col-xl-3">
+                    {sidebarText[appContext.locale]["Create an EasyLedger for"] + ":"}
+                </div>
+                <div className="col-xl-4">
+                    <div className="radio radio-css">
+                        <input type="radio" value={false} id="is-enterprise-false" name="is-enterprise" checked={!isEnterprise} onChange={handleChangeIsEnterprise} />
+                        <label className="mx-2" htmlFor="is-enterprise-false">{sidebarText[appContext.locale]["Personal"]}</label>
+                    </div>
+                    <div className="radio radio-css">
+                        <input type="radio" value={true} id="is-enterprise-true" name="is-enterprise" checked={isEnterprise} onChange={handleChangeIsEnterprise} />
+                        <label className="mx-2" htmlFor="is-enterprise-true">{sidebarText[appContext.locale]["Enterprise"]}</label>
+                    </div>
+                </div>
+            </div>
+            <button className="btn btn-primary" onClick={handleSaveButton}>{sidebarText[appContext.locale]["Create this EasyLedger"]}</button>
+
         </div>
     )
 }

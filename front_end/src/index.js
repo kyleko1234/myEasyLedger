@@ -10,7 +10,6 @@ import 'simple-line-icons/css/simple-line-icons.css';
 import 'flag-icon-css/css/flag-icon.min.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import './index.css';
-//import './scss/react.scss';
 
 // ========================================
 

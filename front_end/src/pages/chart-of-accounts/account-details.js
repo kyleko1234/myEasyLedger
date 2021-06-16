@@ -5,7 +5,6 @@ import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
 import { accountDetailsText } from '../../utils/i18n/account-details-text.js';
-import ToggleMobileSidebarButton from '../../components/sidebar/toggle-mobile-sidebar-button';
 import TableOfTransactions from '../journals/personal/table-of-transactions';
 import AccountSwitcher from './components/account-switcher';
 import { Card, CardBody } from 'reactstrap';

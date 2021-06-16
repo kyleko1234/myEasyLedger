@@ -4,7 +4,6 @@ import { API_BASE_URL } from '../../../utils/constants';
 import axios from 'axios';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { Card, CardBody } from 'reactstrap';
-import { createJsxAttribute } from 'typescript';
 
 /**
  * INCOME STATEMENT FORMAT
