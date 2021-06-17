@@ -35,7 +35,7 @@ class App extends React.Component {
 		this.handleWindowResize = () => {
             if (this.state.isAuthenticated) {
                 this.setState({
-                    pageSidebarHidden: window.innerWidth > 1200? false : true
+                    pageSidebarHidden: window.innerWidth > 1199.98? false : true
                 })    
             }
 		}

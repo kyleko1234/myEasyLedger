@@ -5,9 +5,11 @@ import { PageSettings } from '../../config/page-settings';
 import {dashboardText} from '../../utils/i18n/dashboard-text';
 import {populateSampleUserWithSampleData} from '../../utils/dev-utils'
 import ExpenseBreakdown from './components/expense-breakdown';
+import axios from 'axios';
 
 function Dashboard() {
     const appContext = React.useContext(PageSettings);
+
     return (
         <div>
             {/*<button type="button" onClick={populateSampleUserWithSampleData}>POPULATE SAMPLE DATA</button> */}
