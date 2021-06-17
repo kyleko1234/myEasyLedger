@@ -7,11 +7,12 @@ import {populateSampleUserWithSampleData} from '../../utils/dev-utils'
 import ExpenseBreakdown from './components/expense-breakdown';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/constants';
+import NetAssets from './components/net-assets';
 
 function Dashboard() {
     const appContext = React.useContext(PageSettings);
 
-    const [accountTypeBalances, setAccountTypeBalances] = React.useState([]);
+    const [accountTypeSummaries, setAccountTypeSummaries] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const [numberOfMonths, setNumberOfMonths] = React.useState(12);
 
@@ -19,7 +20,7 @@ function Dashboard() {
         async function fetchData() {
             setLoading(true)
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountTypeSummary/monthly/${numberOfMonths - 1}`).then(response => {
-                setAccountTypeBalances(response.data);
+                setAccountTypeSummaries(response.data);
             })    
             setLoading(false);
         }
@@ -33,7 +34,7 @@ function Dashboard() {
                 <div className="col-xl-8 col-lg-6 mb-3 mb-lg-0">
                     {(appContext.isLoading || loading) ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                     <IncomeAndExpenseSummary
-                        accountTypeBalances={accountTypeBalances}
+                        accountTypeSummaries={accountTypeSummaries}
                         numberOfMonths={numberOfMonths}
                     />}
                 </div>
@@ -43,9 +44,16 @@ function Dashboard() {
                 </div>
             </div>
             <div className="row">
-                <div className="col-xl-6 col-lg-6 mb-3 mb-lg-0">
+                <div className="col-lg-6 mb-3 mb-lg-0">
                     {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                     <ExpenseBreakdown/>}
+                </div>
+                <div className="col-lg-6 mb-3 mb-lg-0">
+                    {(appContext.isLoading || loading) ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                    <NetAssets
+                        accountTypeSummaries={accountTypeSummaries}
+                        numberOfMonths={numberOfMonths}
+                    />}
                 </div>
             </div>
 		</div>
