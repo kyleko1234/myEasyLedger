@@ -6,19 +6,18 @@ import { API_BASE_URL } from '../../../utils/constants';
 import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expense-summary-text.js';
 import { Card, CardBody, CardTitle } from 'reactstrap';
 
-function IncomeAndExpenseSummary() {
+//required props: accountTypeBalances, numberOfMonths
+function IncomeAndExpenseSummary(props) {
     const appContext = React.useContext(PageSettings);
     const [loading, setLoading] = React.useState(true);
     const [labels, setLabels] = React.useState([]);
     const [incomeData, setIncomeData] = React.useState([]);
     const [expenseData, setExpenseData] = React.useState([]);
-    const [numberOfMonths, setNumberOfMonths] = React.useState(12);
 
     //fetch data on component mount
     React.useEffect(() => {
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountTypeSummary/monthly/${numberOfMonths - 1}`).then(response => {
-            if (response.data) { //Warning: proper formatting of data for the bar chart relies on server-side sorting of AccountTypeSummary by yearMonth ascending.
-                let incomeAndExpenseData = response.data.filter(accountTypeSummary => accountTypeSummary.accountTypeId == 4 || accountTypeSummary.accountTypeId == 5);
+            if (props.accountTypeBalances) { //Warning: proper formatting of data for the bar chart relies on server-side sorting of AccountTypeSummary by yearMonth ascending.
+                let incomeAndExpenseData = props.accountTypeBalances.filter(accountTypeSummary => accountTypeSummary.accountTypeId == 4 || accountTypeSummary.accountTypeId == 5);
                 let unparsedLabels = [];
                 let incomeSummaries = [];
                 let expenseSummaries = [];
@@ -26,7 +25,7 @@ function IncomeAndExpenseSummary() {
                 let currentYearMonth = (currentDate.getFullYear() * 100) + (currentDate.getMonth() + 1);
                 if (incomeAndExpenseData.length != 0) {
                     unparsedLabels.push(incomeAndExpenseData[0].yearMonth); //add earliest yearMonth in the returned data set to the array of unparsed date labels
-                    while (unparsedLabels.length < numberOfMonths) { //generate consecutive months from the earliest yearMonth to the present yearMonth
+                    while (unparsedLabels.length < props.numberOfMonths) { //generate consecutive months from the earliest yearMonth to the present yearMonth
                         let nextMonth = unparsedLabels[unparsedLabels.length - 1] % 100;
                         let nextYear = (unparsedLabels[unparsedLabels.length - 1] - nextMonth) / 100;
                         if (nextMonth == 12) {
@@ -59,12 +58,8 @@ function IncomeAndExpenseSummary() {
                     setExpenseData(expenseSummaries);
                     setLabels(unparsedLabels.map(label => parseYearMonth(label)));
                 }
-
             }
-            setLoading(false);
-        }).catch(console.log);
-
-    }, [appContext.currentOrganizationId])
+    }, [props.accountTypeBalances])
 
     defaults.global.defaultFontColor = getComputedStyle(document.documentElement).getPropertyValue('--base-font-color'); //chartJS font color
 
@@ -153,9 +148,7 @@ function IncomeAndExpenseSummary() {
                     {incomeAndExpenseSummaryText[appContext.locale]["Income and Expenses"]}
                 </CardTitle>
                 <div style={{height: "90%"}}>
-                    {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                        <Bar data={barChart.data} options={barChart.options} />
-                    }
+                    <Bar data={barChart.data} options={barChart.options} />
                 </div>
             </CardBody>
         </Card>
