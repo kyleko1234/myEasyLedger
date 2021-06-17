@@ -28,8 +28,8 @@ function EasyledgersDropdown(props) {
     return(
         <div className={props.className}>
             <Dropdown isOpen={isOpen} toggle={toggle}>
-                <DropdownToggle caret color="white" className="font-size-standard text-nowrap border-0">
-                    {appContext.currentOrganizationName}
+                <DropdownToggle caret color="white" className="font-size-standard border-0 d-flex align-items-center">
+                    <span className="easyledgers-dropdown-text text-truncate">{appContext.currentOrganizationName}</span>
                 </DropdownToggle>
                 <DropdownMenu className="shadow" right>
                     <DropdownItem text>

@@ -104,6 +104,13 @@ body {
     color: #000;
 }
 
+@media (max-width: 575.98px) {
+    .easyledgers-dropdown-text{
+        display: inline-block;
+        width: 125px;
+    }
+}
+
 /* CONTENT CLASSES */
 .content {
     position: relative;
