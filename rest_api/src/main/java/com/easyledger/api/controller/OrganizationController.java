@@ -1,5 +1,7 @@
 package com.easyledger.api.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.MonthlyNetAssetsDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
@@ -30,6 +33,7 @@ import com.easyledger.api.repository.PermissionTypeRepository;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.security.UserPrincipal;
+import com.easyledger.api.service.OrganizationService;
 import com.easyledger.api.service.PersonService;
 
 @RestController
@@ -42,10 +46,11 @@ public class OrganizationController {
 	private AuthorizationService authorizationService;
 	private PermissionRepository permissionRepo;
 	private PermissionTypeRepository permissionTypeRepo;
+	private OrganizationService organizationService;
 
 	public OrganizationController(OrganizationRepository organizationRepo, PersonRepository personRepo,
 			PersonService personService, PermissionRepository permissionRepo, PermissionTypeRepository permissionTypeRepo, 
-			AuthorizationService authorizationService) {
+			AuthorizationService authorizationService, OrganizationService organizationService) {
 		super();
 		this.organizationRepo = organizationRepo;
 		this.personRepo = personRepo;
@@ -53,6 +58,7 @@ public class OrganizationController {
 		this.personService = personService;
 		this.permissionRepo = permissionRepo;
 		this.permissionTypeRepo = permissionTypeRepo;
+		this.organizationService = organizationService;
 	}
 	
 	@Secured("ROLE_ADMIN")
@@ -119,6 +125,14 @@ public class OrganizationController {
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
 		oldOrganization.setName(organization.getName()); //only allow users to change the name field
 		return organizationRepo.save(oldOrganization);
+	}
+	
+	@GetMapping("/organization/{organizationId}/monthlyNetAssets/{numberOfMonths}")
+	public List<MonthlyNetAssetsDTO> getMonthlyNetAssetsDTOsForOrganization(@PathVariable(value = "organizationId") Long organizationId, 
+			@PathVariable(value="numberOfMonths") int numberOfMonths, Authentication authentication) throws UnauthorizedException {
+    	//check authorization
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+    	return organizationService.getMonthlyNetAssetsDTOsForOrganization(organizationId, numberOfMonths);
 	}
 	
 /*    @DeleteMapping("/organization/{id}")

@@ -9,6 +9,7 @@ ___
 - [[Retrieve an Organization]]
 - [[Update an Organization]]
 - [[List All Organizations]]
+- [[Retrieve Monthly Net Assets for an Organization]]
 
 
 

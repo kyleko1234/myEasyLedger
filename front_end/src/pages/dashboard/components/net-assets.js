@@ -141,7 +141,7 @@ function NetAssets(props) {
     
 
     return(
-        <Card className="shadow-sm very-rounded">
+        <Card className="shadow-sm very-rounded ">
             <CardBody>
                 <CardTitle className="font-weight-600">
                     Net Worth
