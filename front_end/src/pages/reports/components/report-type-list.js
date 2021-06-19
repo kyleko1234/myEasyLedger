@@ -9,7 +9,7 @@ function ReportTypeList() {
     if (appContext.isEnterprise) {
         return (
             <div>
-                <div className="thead my-2">
+                <div className="thead mt-2">
                     <div className="bg-light border rounded font-weight-600 d-flex">
                         <div className="td">{reportTypeListText[appContext.locale]["Select a type of report to view..."]}</div>
                     </div>
@@ -34,7 +34,7 @@ function ReportTypeList() {
     } else {
         return(
             <div>
-                <div className="thead my-2">
+                <div className="thead mt-2">
                     <div className="bg-light border rounded font-weight-600 d-flex">
                         <div className="td">{reportTypeListText[appContext.locale]["Select a type of report to view..."]}</div>
                     </div>
