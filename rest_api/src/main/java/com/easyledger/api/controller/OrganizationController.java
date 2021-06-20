@@ -123,7 +123,8 @@ public class OrganizationController {
 		authorizationService.authorizeAdminPermissionsByOrganizationId(authentication, organizationId);
 		Organization oldOrganization = organizationRepo.findById(organizationId)
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
-		oldOrganization.setName(organization.getName()); //only allow users to change the name field
+		oldOrganization.setName(organization.getName()); //only allow users to change the name and fiscal year field
+		oldOrganization.setFiscalYearBegin(organization.getFiscalYearBegin());
 		return organizationRepo.save(oldOrganization);
 	}
 	

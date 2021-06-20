@@ -4,6 +4,10 @@ Endpoint: `GET /organization/{id}/reports/balanceSheet/{endDate}`
 
 Generates a balance sheet, dated as of the given `endDate` for the organization with the given id. Date should be given in `yyyy-MM-dd` format.
 
+In order to calculate net income for retained earnings, this endpoint uses the end of the fiscal year as the end of the previous period, and the beginning of the fiscal year as the beginning of the current period.
+
+TODO: add endpoint for quarterly balance sheets
+
 Authorization: The requesting user must belong to the organization for which this report is being generated.
 
 ___
