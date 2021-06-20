@@ -51,7 +51,7 @@ public class ReportsController {
 	}
 
 	@GetMapping("/organization/{id}/reports/cashFlow/{startDate}/{endDate}")
-	public CashFlowStatementViewModel getCashFlowStatementViewModelForOrganizationBetweenDAtes(@PathVariable(value = "id") Long organizationId,
+	public CashFlowStatementViewModel getCashFlowStatementViewModelForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
 			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
 			throws UnauthorizedException {
