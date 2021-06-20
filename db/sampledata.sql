@@ -134,9 +134,9 @@ INSERT INTO person_role(person_id, role_id)
             1 | 1      
             2 | 1      */
 
-INSERT INTO organization(name, currency, is_enterprise)
+INSERT INTO organization(name, currency, is_enterprise, fiscal_year_begin)
     VALUES
-        ('Sample organization', 'USD', TRUE);
+        ('Sample organization', 'USD', TRUE, '2020-01-01');
 /** id | name                   | currency | is_enterprise
      1 | 'Sample organization'  | 'USD'    | TRUE **/
 

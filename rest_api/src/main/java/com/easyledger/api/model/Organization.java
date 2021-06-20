@@ -1,5 +1,6 @@
 package com.easyledger.api.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -77,6 +78,9 @@ public class Organization {
 	
 	@Column(name = "is_enterprise")
 	private boolean isEnterprise;
+	
+	@Column(name = "fiscal_year_begin")
+	private LocalDate fiscalYearBegin = LocalDate.parse("2020-01-01");
 
 	@OneToMany(mappedBy = "organization")
 	@JsonIgnore
@@ -137,6 +141,14 @@ public class Organization {
 		this.isEnterprise = isEnterprise;
 	}
 
+	public LocalDate getFiscalYearBegin() {
+		return fiscalYearBegin;
+	}
+
+	public void setFiscalYearBegin(LocalDate fiscalYearBegin) {
+		this.fiscalYearBegin = fiscalYearBegin;
+	}
+
 	public Set<Permission> getPermissions() {
 		return permissions;
 	}
@@ -173,9 +185,9 @@ public class Organization {
 	@Override
 	public String toString() {
 		return "Organization [id=" + id + ", name=" + name + ", currency=" + currency + ", isEnterprise=" + isEnterprise
-				+ ", permissions=" + permissions + ", journalEntries=" + journalEntries + ", accounts=" + accounts
-				+ ", journalEntryLogs=" + journalEntryLogs + "]";
+				+ ", fiscalYearBegin=" + fiscalYearBegin + ", permissions=" + permissions + ", journalEntries="
+				+ journalEntries + ", accounts=" + accounts + ", journalEntryLogs=" + journalEntryLogs + "]";
 	}
-	
+
 
 }
