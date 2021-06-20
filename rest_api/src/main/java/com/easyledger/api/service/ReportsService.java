@@ -41,7 +41,7 @@ public class ReportsService {
 	}
 
 
-
+//TODO test leap day
 	public BalanceSheetViewModel getBalanceSheetViewModelForOrganizationUpToDate(Long organizationId, LocalDate endDate) 
 			throws ResourceNotFoundException {
 		BalanceSheetViewModel generatedBalanceSheet = new BalanceSheetViewModel();
