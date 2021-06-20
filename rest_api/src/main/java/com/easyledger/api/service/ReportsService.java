@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
+import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
+import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.viewmodel.BalanceSheetAssetsViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetEquityViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetLiabilitiesViewModel;
@@ -25,30 +28,45 @@ public class ReportsService {
 	@Autowired
 	private AccountSubtypeRepository accountSubtypeRepo;
 	
+	@Autowired
+	private OrganizationRepository organizationRepo;
 	
 	
-	public ReportsService(AccountRepository accountRepo, AccountSubtypeRepository accountSubtypeRepo) {
+	
+	public ReportsService(AccountRepository accountRepo, AccountSubtypeRepository accountSubtypeRepo, OrganizationRepository organizationRepo) {
 		super();
 		this.accountRepo = accountRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
+		this.organizationRepo = organizationRepo;
 	}
 
 
 
-	public BalanceSheetViewModel getBalanceSheetViewModelForOrganizationUpToDate(Long organizationId, LocalDate endDate) {
+	public BalanceSheetViewModel getBalanceSheetViewModelForOrganizationUpToDate(Long organizationId, LocalDate endDate) 
+			throws ResourceNotFoundException {
 		BalanceSheetViewModel generatedBalanceSheet = new BalanceSheetViewModel();
 		generatedBalanceSheet.setOrganizationId(organizationId);
 		generatedBalanceSheet.setAsOfDate(endDate);
 		generatedBalanceSheet.setAccountBalances(accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, endDate));
 		
-		LocalDate prevYearEnd = LocalDate.parse((endDate.getYear() - 1) + "-12-31");
-		LocalDate currYearStart = LocalDate.parse(endDate.getYear() + "-01-01");
-		generatedBalanceSheet.setPrevPeriodEndDate(prevYearEnd);
-		generatedBalanceSheet.setCurrPeriodStartDate(currYearStart);
+		Organization organization = organizationRepo.findById(organizationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+		LocalDate fiscalYearEnd = organization.getFiscalYearBegin().minusDays(1);
+		
+		if (fiscalYearEnd.withYear(endDate.getYear()).compareTo(endDate) >= 0) {
+			fiscalYearEnd = fiscalYearEnd.withYear(endDate.getYear() -1);
+		} else {
+			fiscalYearEnd = fiscalYearEnd.withYear(endDate.getYear());
+		}
+		
+		LocalDate fiscalYearBegin = fiscalYearEnd.plusDays(1);
+		
+		generatedBalanceSheet.setPrevPeriodEndDate(fiscalYearEnd);
+		generatedBalanceSheet.setCurrPeriodStartDate(fiscalYearBegin);
 		
 		List<AccountSubtypeBalanceDTO> totalAccountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationUpToDate(organizationId, endDate);
-		List<AccountSubtypeBalanceDTO> prevPeriodAccountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationUpToDate(organizationId, prevYearEnd);
-		List<AccountSubtypeBalanceDTO> currPeriodAccountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationBetweenDates(organizationId, currYearStart, endDate);
+		List<AccountSubtypeBalanceDTO> prevPeriodAccountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationUpToDate(organizationId, fiscalYearEnd);
+		List<AccountSubtypeBalanceDTO> currPeriodAccountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationBetweenDates(organizationId, fiscalYearBegin, endDate);
 		
 		generatedBalanceSheet.setBalanceSheetAssets(new BalanceSheetAssetsViewModel(totalAccountSubtypeBalances));
 		generatedBalanceSheet.setBalanceSheetLiabilities(new BalanceSheetLiabilitiesViewModel(totalAccountSubtypeBalances));

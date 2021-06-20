@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.service.ReportsService;
@@ -35,7 +36,7 @@ public class ReportsController {
 	@GetMapping("/organization/{id}/reports/balanceSheet/{endDate}") 
 	public BalanceSheetViewModel getBalanceSheetViewModelForOrganizationUpToDate(@PathVariable(value = "id") Long organizationId, 
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
-    		throws UnauthorizedException {
+    		throws UnauthorizedException, ResourceNotFoundException {
 		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return reportsService.getBalanceSheetViewModelForOrganizationUpToDate(organizationId, endDate);
 	}
