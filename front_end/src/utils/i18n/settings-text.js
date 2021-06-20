@@ -31,6 +31,8 @@ export const settingsText = {
         "Take me to the login page!": "Take me to the login page!",
         "Password successfully changed.": "Password successfully changed.",
         "Please log in again.": "Please log in again.",
+
+        "EasyLedger Settings": "EasyLedger Settings",
     },
     "zh-TW": {
         "Home": "首頁",
@@ -65,5 +67,6 @@ export const settingsText = {
         "Password successfully changed.": "密碼變更成功。",
         "Please log in again.": "請再次登入。",
 
+        "EasyLedger Settings": "TRANSLATION",
     }
 }
