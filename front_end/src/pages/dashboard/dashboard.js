@@ -29,7 +29,7 @@ function Dashboard() {
 
     return (
         <div>
-            {<button type="button" onClick={populateSampleUserWithSampleData}>POPULATE SAMPLE DATA</button>}
+            {/*<button type="button" onClick={populateSampleUserWithSampleData}>POPULATE SAMPLE DATA</button>*/}
             <div className="row mb-md-3">
                 <div className="col-xl-8 col-lg-6 mb-3 mb-lg-0">
                     {(appContext.isLoading || loading) ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :

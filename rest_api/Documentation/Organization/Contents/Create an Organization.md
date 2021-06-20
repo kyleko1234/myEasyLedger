@@ -4,6 +4,8 @@ Endpoint: `POST /organization`
 Authorization: User must be logged in.
 
 Creates an organization with the values of the parameters passed, automatically populates it with default account groups, adds the requesting user to the organization with OWN permissions, and changes the requesting user's currentOrganizationId to the id of the newly created organization. Returns the newly created organization. Users should request fresh Person data by using GET /person/{personId} after creating an organization in order to assure that their person data is up to date.
+
+By default the fiscal year will be set to begin on Jan 1, 2020.
 ___
 
 #### Request Body Parameters
@@ -41,5 +43,6 @@ Body:
     "name": "Sample organization",
     "currency": "USD",
     "isEnterprise": true
+	"fiscalYearBegin": "2020-01-01"
 }
 ```
