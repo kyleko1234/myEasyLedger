@@ -143,6 +143,8 @@ body {
 .btn {
     font-size: var(--base-font-size);
     font-weight: 500;
+    border-radius: 6px;
+    border: 1px solid rgba(27, 31, 35, 0.15);
 }
 .btn-white {
     background-color: #fff;
@@ -238,6 +240,95 @@ a.tr:hover {
     background-color: white;
 }
 
+/* LOGIN AND REGISTRATION PAGES */
+.login-page {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;   
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.login-left {
+    width: 100%;
+}
+.login-right {
+    min-width: 500px;
+    width: 500px;
+    padding: 60px;
+    height: 100%;
+    background-color: white;
+    z-index: 1;
+}
+@media (max-width: 1199.98px) {
+    .login-right {
+        min-width: 400px;
+        width: 400px;
+        padding: 45px;
+    }
+}
+@media (max-width: 767.98px) {
+    .login-left {
+        display: none;
+    }
+    .login-right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .login-right {
+        padding: 30px;
+    }
+}
+
+.login-left-caption {
+    color: rgba(255, 255, 255, 0.85);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 60px 60px 30px;
+    font-size: 18px;
+    letter-spacing: 0.25px;
+    font-weight: 300;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100%);
+    z-index: 0;
+}
+.login-left-caption-title {
+    font-weight: 300;
+    color: #fff;
+    font-size: 36px;
+}
+.login-left-caption-title b {
+    font-weight: 700;
+}
+@media (max-width: 1199.98px) {
+    .login-left-caption {
+        padding: 45px 45px 30px;
+        font-size: 16px;
+    }
+    .login-left-caption-title {
+        font-size: 28px;
+    }
+}
+
+.login-header {
+    padding-top: 30px;
+    font-size: 28px;
+    color: black;
+    font-weight: 300;
+}
+.login-header b {
+    font-weight: 700;
+}
+@media (max-width: 767.98px) {
+    .login-header {
+        font-size: 20px;
+    }
+}
 
 /* Utility classes, mostly left from adjusting color admin */
 .very-rounded {
@@ -330,94 +421,4 @@ a.tr:hover {
     animation-name: "slide-in";
     animation-duration: 0.15s;
     position: relative;
-}
-
-/* LOGIN AND REGISTRATION PAGES */
-.login-page {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;   
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-.login-left {
-    width: 100%;
-}
-.login-right {
-    min-width: 500px;
-    width: 500px;
-    padding: 60px;
-    height: 100%;
-    background-color: white;
-    z-index: 1;
-}
-@media (max-width: 1199.98px) {
-    .login-right {
-        min-width: 400px;
-        width: 400px;
-        padding: 45px;
-    }
-}
-@media (max-width: 767.98px) {
-    .login-left {
-        display: none;
-    }
-    .login-right {
-        width: 100%;
-    }
-}
-
-@media (max-width: 575.98px) {
-    .login-right {
-        padding: 30px;
-    }
-}
-
-.login-left-caption {
-    color: rgba(255, 255, 255, 0.85);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 60px 60px 30px;
-    font-size: 18px;
-    letter-spacing: 0.25px;
-    font-weight: 300;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100%);
-    z-index: 0;
-}
-.login-left-caption-title {
-    font-weight: 300;
-    color: #fff;
-    font-size: 36px;
-}
-.login-left-caption-title b {
-    font-weight: 700;
-}
-@media (max-width: 1199.98px) {
-    .login-left-caption {
-        padding: 45px 45px 30px;
-        font-size: 16px;
-    }
-    .login-left-caption-title {
-        font-size: 28px;
-    }
-}
-
-.login-header {
-    padding-top: 30px;
-    font-size: 28px;
-    color: black;
-    font-weight: 300;
-}
-.login-header b {
-    font-weight: 700;
-}
-@media (max-width: 767.98px) {
-    .login-header {
-        font-size: 20px;
-    }
 }
