@@ -239,6 +239,52 @@ const ACCOUNT_TYPE_OPTIONS_I18N = {
         "Expenses": "支出"
     }
 }
+
+export const CALENDAR_MONTH_OPTIONS = locale => [
+    {value: "01", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["January"]},
+    {value: "02", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["February"]},
+    {value: "03", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["March"]},
+    {value: "04", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["April"]},
+    {value: "05", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["May"]},
+    {value: "06", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["June"]},
+    {value: "07", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["July"]},
+    {value: "08", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["August"]},
+    {value: "09", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["September"]},
+    {value: "10", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["October"]},
+    {value: "11", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["November"]},
+    {value: "12", label: CALENDAR_MONTH_OPTIONS_I18N[locale]["December"]},
+]
+const CALENDAR_MONTH_OPTIONS_I18N = {
+    "en-US": {
+        "January": "January",
+        "February": "February",
+        "March": "March",
+        "April": "April",
+        "May": "May",
+        "June": "June",
+        "July": "July",
+        "August": "August",
+        "September": "September",
+        "October": "October",
+        "November": "November",
+        "December": "December",
+    },
+    "zh-TW": {
+        "January": "TRANSLATION",
+        "February": "TRANSLATION",
+        "March": "TRANSLATION",
+        "April": "TRANSLATION",
+        "May": "TRANSLATION",
+        "June": "TRANSLATION",
+        "July": "TRANSLATION",
+        "August": "TRANSLATION",
+        "September": "TRANSLATION",
+        "October": "TRANSLATION",
+        "November": "TRANSLATION",
+        "December": "TRANSLATION",
+    },
+}
+
 export const CATEGORY_ACCOUNT_TYPES = [4, 5];
 export const NON_CATEGORY_ACCOUNT_TYPES = [1, 2];
 export const DEBIT_ACCOUNT_TYPES = [1, 5];
