@@ -20,7 +20,7 @@ ___
 Returns HTTP 201 and the updated organization object upon successful update. Returns HTTP 409 and an error if id in request body does not match id in URI. Returns HTTP 404 and an error if the specified id does not exist in the database.
 ___
 #### Sample Request
-`POST /organization`
+`PUT /organization/1`
 
 Body: 
 

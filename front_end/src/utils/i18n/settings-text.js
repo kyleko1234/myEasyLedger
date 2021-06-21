@@ -33,6 +33,13 @@ export const settingsText = {
         "Please log in again.": "Please log in again.",
 
         "EasyLedger Settings": "EasyLedger Settings",
+
+        "Settings saved.": "Settings saved.",
+        "Something went wrong. Please try again later.": "Something went wrong. Please try again later.",
+        "Easyledger Name": "Easyledger Name",
+        "Currency": "Currency",
+        "Fiscal Year Begin Date": "Fiscal Year Begin Date",
+        "Save": "Save"
     },
     "zh-TW": {
         "Home": "首頁",
@@ -68,5 +75,12 @@ export const settingsText = {
         "Please log in again.": "請再次登入。",
 
         "EasyLedger Settings": "TRANSLATION",
+        "Settings saved.": "TRANSLATION",
+        "Something went wrong. Please try again later.": "TRANSLATION",
+        "Easyledger Name": "TRANSLATION",
+        "Currency": "TRANSLATION",
+        "Fiscal Year Begin Date": "TRANSLATION",
+        "Save": "TRANSLATION"
+
     }
 }
