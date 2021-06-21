@@ -8,7 +8,7 @@ myEasyLedger is a webapp that provides an allows users to keep track of their bo
 
 ## Tech Stack
 - Front end
-    - Color Admin 4.6
+    - Certain assets from Color Admin 4.6
     - Bootstrap 4
     - React.js
 - Back end
