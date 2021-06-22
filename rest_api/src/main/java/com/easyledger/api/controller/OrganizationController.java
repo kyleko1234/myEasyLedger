@@ -136,6 +136,12 @@ public class OrganizationController {
     	return organizationService.getMonthlyNetAssetsDTOsForOrganization(organizationId, numberOfMonths);
 	}
 	
+	@GetMapping("/organization/{organizationId}/dateOfFirstJournalEntry")
+	public LocalDate getDateOfFirstJournalEntryForOrganization(@PathVariable(value = "organizationId") Long organizationId, Authentication authentication) throws UnauthorizedException {
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+    	return organizationRepo.getDateOfFirstJournalEntryForOrganization(organizationId);
+	}
+	
 /*    @DeleteMapping("/organization/{id}")
     @Transactional(rollbackFor=Exception.class)
     public Map<String, Boolean> deleteAccountSubtype(@PathVariable(value = "id") Long organizationId)
