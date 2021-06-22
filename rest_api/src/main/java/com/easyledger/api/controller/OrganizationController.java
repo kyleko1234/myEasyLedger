@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.DateRangeDTO;
 import com.easyledger.api.dto.MonthlyNetAssetsDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -135,13 +137,14 @@ public class OrganizationController {
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return organizationService.getMonthlyNetAssetsDTOsForOrganization(organizationId, numberOfMonths);
 	}
-	
-	@GetMapping("/organization/{organizationId}/dateOfFirstJournalEntry")
-	public LocalDate getDateOfFirstJournalEntryForOrganization(@PathVariable(value = "organizationId") Long organizationId, Authentication authentication) throws UnauthorizedException {
-    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
-    	return organizationRepo.getDateOfFirstJournalEntryForOrganization(organizationId);
+		
+	@GetMapping("/organization/{organizationId}/dateRangePresetsUpToDate/{endDate}")
+	public List<DateRangeDTO> getDateRangePresetsForOrganizationUpToDate(@PathVariable(value = "organizationId") Long organizationId, 
+			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
+			throws UnauthorizedException, ResourceNotFoundException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return organizationService.getDateRangePresetsForOrganizationUpToDate(organizationId, endDate);
 	}
-	
 /*    @DeleteMapping("/organization/{id}")
     @Transactional(rollbackFor=Exception.class)
     public Map<String, Boolean> deleteAccountSubtype(@PathVariable(value = "id") Long organizationId)

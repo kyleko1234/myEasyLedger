@@ -45,6 +45,7 @@ Prefix all endpoints with `http://{host}/v0.4/`
 - [[Create an Organization|POST /organization]]
 - [[Update an Organization| PUT /organization/{id}]]
 - [[Retrieve Monthly Net Assets for an Organization | GET /organization/{organizationId}/monthlyNetAssets/{numberOfMonths}]]
+- [[Get Fiscal Year Date Range Presets for Generating Reports for Organization Up To Date | GET /organization/{organizationId}/dateRangePresetsUpToDate/{endDate}]]
 <br/><br/>
 - [[List All Accounts|GET /account]]
 - [[Retrieve an Account| GET /account/{id}]]
