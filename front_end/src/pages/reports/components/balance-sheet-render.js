@@ -65,7 +65,7 @@ function BalanceSheetRender() {
                     <h2 className="h5">{balanceSheetRenderText[appContext.locale]["Options"]}</h2>
                     <div className="d-flex mb-2 align-items-center">
                         <div className="d-flex align-items-center">
-                            <label className="col-3 px-0">{balanceSheetRenderText[appContext.locale]["As of:"]} </label>
+                            <label className="col-3 px-0 my-0">{balanceSheetRenderText[appContext.locale]["As of:"]} </label>
                             <input type="date" className="form-control form-control-sm align-self-center width-150" value={endDate} onChange={event => handleChangeDate(event.target.value)} />
                         </div>
                     </div>
