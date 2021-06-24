@@ -8,8 +8,8 @@ import { Card, CardBody } from 'reactstrap';
 function BalanceSheetRender() {
     const appContext = React.useContext(PageSettings);
 
-    const today = new Date();
-    const [endDate, setEndDate] = React.useState(today.toISOString().split('T')[0]);
+    const today = new Date().toISOString().split('T')[0];
+    const [endDate, setEndDate] = React.useState(today);
     const [loading, setLoading] = React.useState(true);
 
     const [detailedView, setDetailedView] = React.useState(false);
@@ -21,7 +21,10 @@ function BalanceSheetRender() {
     const [balanceSheetAssets, setBalanceSheetAssets] = React.useState(null);
     const [balanceSheetLiabilities, setBalanceSheetLiabilities] = React.useState(null);
     const [balanceSheetEquity, setBalanceSheetEquity] = React.useState(null);
+    const [balanceSheetObjects, setBalanceSheetObjects] = React.useState([]);
 
+    const [endDatesToRequest, setEndDatesToRequest] = React.useState([today]);
+    const [dateRangePresets, setDateRangePresets] = React.useState([]);
 
     const [accountBalances, setAccountBalances] = React.useState([]);
 
@@ -40,6 +43,9 @@ function BalanceSheetRender() {
     React.useEffect(() => {
         async function fetchData() {
             setLoading(true);
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/dateRangePresetsUpToDate/${today}`).then(response => {
+                setDateRangePresets(response.data);
+            })
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDate}`).then(response => {
                 if (response.data) {
                     setAsOfDate(response.data.asOfDate);
