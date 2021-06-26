@@ -4,6 +4,7 @@ import { API_BASE_URL } from '../../../utils/constants';
 import { PageSettings } from '../../../config/page-settings';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text.js';
 import { Card, CardBody } from 'reactstrap';
+import Select from 'react-select';
 
 function BalanceSheetRender() {
     const appContext = React.useContext(PageSettings);
@@ -23,12 +24,17 @@ function BalanceSheetRender() {
     const [balanceSheetEquity, setBalanceSheetEquity] = React.useState(null);
     const [balanceSheetObjects, setBalanceSheetObjects] = React.useState([]);
 
-    const [endDatesToRequest, setEndDatesToRequest] = React.useState([today]);
+    const [endDatesToRequest, setEndDatesToRequest] = React.useState([{label: "FY" + today.split('-')[0], endDate:today}]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
 
     const [accountBalances, setAccountBalances] = React.useState([]);
 
-    const handleChangeDate = date => {
+    const handleChangeDate = (date, i) => {
+        let newEndDatesToRequestArray = endDatesToRequest.slice();
+        newEndDatesToRequestArray[i] = (
+            {label: "Custom", endDate: date}
+        )
+        setEndDatesToRequest(newEndDatesToRequestArray);
         setEndDate(date);
     }
 
@@ -39,13 +45,31 @@ function BalanceSheetRender() {
         return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number)
     }
 
+    const requestBalanceSheetObjects = async arrayToStoreObjects => {
+        setLoading(true);
+        endDatesToRequest.forEach(async (endDateObject, i) => {
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDate}`).then(response => {
+                arrayToStoreObjects[i] = response.data
+            })
+        })
+    }
 
     React.useEffect(() => {
         async function fetchData() {
             setLoading(true);
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/dateRangePresetsUpToDate/${today}`).then(response => {
-                setDateRangePresets(response.data);
+                let formattedPresets = response.data.map(preset => {
+                    return {
+                        value: preset.name,
+                        label: preset.name,
+                        object: preset
+                    }
+                })
+                setDateRangePresets(formattedPresets);
             })
+            let fetchedBalanceSheetObjects = []
+            await requestBalanceSheetObjects(fetchedBalanceSheetObjects);
+            setBalanceSheetObjects(fetchedBalanceSheetObjects);
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDate}`).then(response => {
                 if (response.data) {
                     setAsOfDate(response.data.asOfDate);
@@ -64,16 +88,42 @@ function BalanceSheetRender() {
         fetchData();
     }, [endDate])
 
+    const handleSelectDateRangePreset = (selectedOption, i) => {
+        if (selectedOption) {
+            let endDateToRequestObject = {
+                label: selectedOption.label,
+                endDate: selectedOption.object.endDate
+            };
+            let newEndDatesToRequestArray = endDatesToRequest.slice();
+            newEndDatesToRequestArray[i] = endDateToRequestObject;
+            setEndDatesToRequest(newEndDatesToRequestArray);
+        }
+    }
+
     return (
         <>
             <Card className="bg-light shadow-sm very-rounded my-4">
                 <CardBody>
                     <h2 className="h5">{balanceSheetRenderText[appContext.locale]["Options"]}</h2>
                     <div className="d-flex mb-2 align-items-center">
-                        <div className="d-flex align-items-center">
-                            <label className="col-3 px-0 my-0">{balanceSheetRenderText[appContext.locale]["As of:"]} </label>
-                            <input type="date" className="form-control form-control-sm align-self-center width-150" value={endDate} onChange={event => handleChangeDate(event.target.value)} />
-                        </div>
+                        {endDatesToRequest.map((endDateObject, i) => {
+                            return(
+                                <div className="d-flex w-100 align-items-center" key={i}>
+                                    <Select
+                                        className="col-2"
+                                        options={dateRangePresets}
+                                        menuPortalTarget={document.body}
+                                        menuShouldScrollIntoView={false}
+                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                        onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
+                                        placeholder={"Custom"}
+                                        value={endDatesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == endDatesToRequest[i].label)}
+                                    />
+                                    <label className="col-2 px-0 my-0">{balanceSheetRenderText[appContext.locale]["As of:"]} </label>
+                                    <input type="date" className=" col-3 form-control align-self-center width-150" value={endDatesToRequest[i].endDate} onChange={event => handleChangeDate(event.target.value, i)} />
+                                </div>
+                            )
+                        })}
                     </div>
                     <div className="custom-control custom-switch">
                         <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
@@ -81,6 +131,20 @@ function BalanceSheetRender() {
                     </div>
                 </CardBody>
             </Card>
+            <div className="d-flex justify-content-between font-weight-600 text-right">
+                <div>{/*empty div for spacing*/}</div>
+                {
+                    endDatesToRequest.map((endDateObject, i) => {
+                        return(
+                            <div className="td" key={i}>
+                                {endDateObject.label === "Custom"
+                                ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + endDateObject.endDate
+                                : endDateObject.label}
+                            </div>
+                        )
+                    })
+                }
+            </div>
             <div>
                 {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                     <>
@@ -91,7 +155,11 @@ function BalanceSheetRender() {
                                 <React.Fragment key={subtypeBalance.accountSubtypeId}>
                                     <div className="striped-row justify-content-between indent-2">
                                         <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div>
-                                        <div>{numberAsCurrency(subtypeBalance.debitsMinusCredits)}</div>
+                                        <div>
+                                            <div className="text-right">
+                                                {numberAsCurrency(subtypeBalance.debitsMinusCredits)}
+                                            </div>
+                                        </div>
                                     </div>
                                     {detailedView ?
                                         accountBalances
@@ -100,7 +168,16 @@ function BalanceSheetRender() {
                                                 return (
                                                     <React.Fragment key={account.accountId}>
                                                         <div className="striped-row justify-content-between indent-3">
-                                                            <div>{account.accountName}</div><div>{account.hasChildren ? null : numberAsCurrency(account.debitsMinusCredits)}</div>
+                                                            <div>{account.accountName}</div>
+                                                            <div>
+                                                                {account.hasChildren 
+                                                                ? null 
+                                                                : 
+                                                                    <div className="text-right">
+                                                                        {numberAsCurrency(account.debitsMinusCredits)}
+                                                                    </div>
+                                                                })
+                                                            </div>
                                                         </div>
                                                         {accountBalances
                                                             .filter(childAccount => childAccount.parentAccountId === account.accountId)
