@@ -46,12 +46,11 @@ function BalanceSheetRender() {
     }
 
     const requestBalanceSheetObjects = async arrayToStoreObjects => {
-        setLoading(true);
-        endDatesToRequest.forEach(async (endDateObject, i) => {
-            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDate}`).then(response => {
-                arrayToStoreObjects[i] = response.data
+        for (const endDateObject of endDatesToRequest) {
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDateObject.endDate}`).then(response => {
+                arrayToStoreObjects.push(response.data); //TODO make sure this preserves order correctly
             })
-        })
+        }
     }
 
     React.useEffect(() => {
@@ -146,17 +145,24 @@ function BalanceSheetRender() {
                 }
             </div>
             <div>
-                {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                {(loading || !balanceSheetObjects.length ) ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                     <>
                         <div className="striped-row font-weight-600">{balanceSheetRenderText[appContext.locale]["Assets"]}</div>
                         <div className="striped-row font-weight-600 indent">{balanceSheetRenderText[appContext.locale]["Current assets"]}</div>
-                        {balanceSheetAssets.currentAssetsSubtypeBalances.map(subtypeBalance => {
+                        {balanceSheetObjects[0].balanceSheetAssets.currentAssetsSubtypeBalances.map(subtypeBalance => {
                             return (
                                 <React.Fragment key={subtypeBalance.accountSubtypeId}>
                                     <div className="striped-row justify-content-between indent-2">
                                         <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div>
                                         <div>
                                             <div className="text-right">
+                                                {balanceSheetObjects.map((balanceSheet, i) => {
+                                                    return(
+                                                        <div key={i}>
+                                                            {numberAsCurrency(balanceSheet.balanceSheetAssets.currentAssetsSubtypeBalances.find(specificSubtype => specificSubtype.accountSubtypeId === subtypeBalance.accountSubtypeId).debitsMinusCredits)}
+                                                        </div>
+                                                    )
+                                                })}
                                                 {numberAsCurrency(subtypeBalance.debitsMinusCredits)}
                                             </div>
                                         </div>
