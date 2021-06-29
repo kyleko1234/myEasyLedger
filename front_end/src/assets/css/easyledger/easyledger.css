@@ -384,6 +384,10 @@ a.tr:hover {
     width: 10ch !important;
 }
 
+.min-width-lg{
+    min-width: 992px;
+}
+
 .overflow-visible {
     overflow: visible;
 }

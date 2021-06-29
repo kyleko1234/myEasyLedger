@@ -2,6 +2,8 @@ export const balanceSheetRenderText = {
     "en-US": {
         "Options": "Options",
         "As of:": "As of:",
+        "Date range": "Date range",
+        "Compare": "Compare",
 
         "Assets": "Assets",
         "Current assets": "Current assets",
@@ -19,15 +21,9 @@ export const balanceSheetRenderText = {
 
         "Equity": "Equity",
         "Retained Earnings": "Retained Earnings",
-        "Beginning balances": (prevPeriodEndDate) => {
-            return `Beginning balances (up to ${prevPeriodEndDate})`;
-        },
-        "Net income for current period": (currPeriodStartDate, asOfDate) => {
-            return `Net income for current period (from ${currPeriodStartDate} to ${asOfDate})`;
-        },  
-        "Dividends for current period": (currPeriodStartDate, asOfDate) => {
-            return `Less dividends and equivalents for current period (from ${currPeriodStartDate} to ${asOfDate})`;
-        },
+        "Beginning balances": "Beginning balances",
+        "Net income for current fiscal period": "Net income for current fiscal period",  
+        "Dividends for current fiscal period": "Less dividends and equivalents for current fiscal period",
         "Ending balances of retained earnings": "Ending balances of retained earnings",
         "Total equity": "Total equity",
 
@@ -73,6 +69,8 @@ export const balanceSheetRenderText = {
     "zh-TW": {
         "Options": "TRANSLATION",
         "As of:": "截至",
+        "Date range": "TRANSLATION",
+        "Compare": "TRANSLATION",
 
         "Assets": "資產",
         "Current assets": "流動資產",
@@ -90,15 +88,9 @@ export const balanceSheetRenderText = {
 
         "Equity": "權益",
         "Retained Earnings": "保留盈餘",
-        "Beginning balances": (prevPeriodEndDate) => {
-            return `期初餘額 (截至 ${prevPeriodEndDate})`;
-        },
-        "Net income for current period": (currPeriodStartDate, asOfDate) => {
-            return `本期淨收入 (自 ${currPeriodStartDate} 至 ${asOfDate})`;
-        },  
-        "Dividends for current period": (currPeriodStartDate, asOfDate) => {
-            return `減 本期股利及約當股利 (自 ${currPeriodStartDate} 至 ${asOfDate})`;
-        },
+        "Beginning balances": "TRANSLATION",
+        "Net income for current fiscal period": "TRANSLATION",  
+        "Dividends for current fiscal period": "TRANSLATION",
         "Ending balances of retained earnings": "期末保留營餘",
         "Total equity": "權益總計",
 
