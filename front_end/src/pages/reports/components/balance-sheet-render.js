@@ -154,16 +154,14 @@ function BalanceSheetRender() {
                                 <React.Fragment key={subtypeBalance.accountSubtypeId}>
                                     <div className="striped-row justify-content-between indent-2">
                                         <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div>
-                                        <div>
-                                            <div className="text-right d-flex">
-                                                {balanceSheetObjects.map((balanceSheet, i) => {
-                                                    return(
-                                                        <div key={i}>
-                                                            {numberAsCurrency(balanceSheet.balanceSheetAssets.currentAssetsSubtypeBalances.find(specificSubtype => specificSubtype.accountSubtypeId === subtypeBalance.accountSubtypeId).debitsMinusCredits)}
-                                                        </div>
-                                                    )
-                                                })}
-                                            </div>
+                                        <div className="text-right d-flex">
+                                            {balanceSheetObjects.map((balanceSheet, i) => {
+                                                return(
+                                                    <div key={i}>
+                                                        {numberAsCurrency(balanceSheet.balanceSheetAssets.currentAssetsSubtypeBalances.find(specificSubtype => specificSubtype.accountSubtypeId === subtypeBalance.accountSubtypeId).debitsMinusCredits)}
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
                                     </div>
                                     {detailedView ?
@@ -329,28 +327,60 @@ function BalanceSheetRender() {
                     <>
                         <div className="striped-row font-weight-600">{balanceSheetRenderText[appContext.locale]["Liabilities"]}</div>
                         <div className="striped-row font-weight-600 indent">{balanceSheetRenderText[appContext.locale]["Current liabilities"]}</div>
-                        {balanceSheetLiabilities.currentLiabilitiesSubtypeBalances.map(subtypeBalance => {
+                        {balanceSheetObjects[0].balanceSheetLiabilities.currentLiabilitiesSubtypeBalances.map(subtypeBalance => {
                             return (
                                 <React.Fragment key={subtypeBalance.accountSubtypeId}>
                                     <div className="striped-row justify-content-between indent-2">
                                         <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div>
-                                        <div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
+                                        <div className="text-right d-flex">
+                                            {balanceSheetObjects.map((balanceSheet, i) => {
+                                                return(
+                                                    <div key={i}>
+                                                        {numberAsCurrency(balanceSheet.balanceSheetLiabilities.currentLiabilitiesSubtypeBalances.find(specificSubtype => specificSubtype.accountSubtypeId === subtypeBalance.accountSubtypeId).debitsMinusCredits * -1)}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
                                     </div>
                                     {detailedView ?
-                                        accountBalances
+                                        balanceSheetObjects[0].accountBalances
                                             .filter(account => account.accountSubtypeId === subtypeBalance.accountSubtypeId)
                                             .map(account => {
                                                 return (
                                                     <React.Fragment key={account.accountId}>
                                                         <div className="striped-row justify-content-between indent-3">
-                                                            <div>{account.accountName}</div><div>{account.hasChildren ? null : numberAsCurrency(account.debitsMinusCredits * -1)}</div>
+                                                            <div>
+                                                                {account.accountName}
+                                                            </div>
+                                                            <div className="text-right d-flex">
+                                                                {account.hasChildren 
+                                                                ? null 
+                                                                : balanceSheetObjects.map((balanceSheet, i) => {
+                                                                    return(
+                                                                        <div key={i}>
+                                                                            {numberAsCurrency(balanceSheet.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits * -1)}
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
                                                         </div>
-                                                        {accountBalances
+                                                        {balanceSheetObjects[0].accountBalances
                                                             .filter(childAccount => childAccount.parentAccountId === account.accountId)
                                                             .map(childAccount => {
                                                                 return (
                                                                     <div className="striped-row justify-content-between indent-4" key={childAccount.accountId}>
-                                                                        <div>{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits * -1)}</div>
+                                                                        <div>
+                                                                            {childAccount.accountName}
+                                                                        </div>
+                                                                        <div className="text-right d-flex">
+                                                                            {balanceSheetObjects.map((balanceSheet, i) => {
+                                                                                return(
+                                                                                    <div key={i}>
+                                                                                        {numberAsCurrency(balanceSheet.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits * -1)}
+                                                                                    </div>
+                                                                                )
+                                                                            })}
+                                                                        </div>
                                                                     </div>
                                                                 )
                                                             })
@@ -363,30 +393,74 @@ function BalanceSheetRender() {
                             )
                         })}
                         <div className="striped-row font-weight-600 indent-3 justify-content-between">
-                            <div>{balanceSheetRenderText[appContext.locale]["Total current liabilities"]}</div><div>{numberAsCurrency(balanceSheetLiabilities.totalCurrentLiabilities)}</div>
+                            <div>
+                                {balanceSheetRenderText[appContext.locale]["Total current liabilities"]}
+                            </div>
+                            <div className="text-right d-flex">
+                                {balanceSheetObjects.map((balanceSheet, i) => {
+                                    return(
+                                        <div key={i}>
+                                            {numberAsCurrency(balanceSheet.balanceSheetLiabilities.totalCurrentLiabilities)}
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         </div>
                         <div className="striped-row font-weight-600 indent">{balanceSheetRenderText[appContext.locale]["Non-current liabilities"]}</div>
-                        {balanceSheetLiabilities.nonCurrentLiabilitiesSubtypeBalances.map(subtypeBalance => {
+                        {balanceSheetObjects[0].balanceSheetLiabilities.nonCurrentLiabilitiesSubtypeBalances.map(subtypeBalance => {
                             return (
                                 <React.Fragment key={subtypeBalance.accountSubtypeId}>
                                     <div className="striped-row justify-content-between indent-2">
-                                        <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div><div>{numberAsCurrency(subtypeBalance.debitsMinusCredits * -1)}</div>
+                                        <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div>
+                                        <div className="text-right d-flex">
+                                            {balanceSheetObjects.map((balanceSheet, i) => {
+                                                return(
+                                                    <div key={i}>
+                                                        {numberAsCurrency(balanceSheet.balanceSheetLiabilities.nonCurrentLiabilitiesSubtypeBalances.find(specificSubtype => specificSubtype.accountSubtypeId === subtypeBalance.accountSubtypeId).debitsMinusCredits * -1)}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
                                     </div>
                                     {detailedView ?
-                                        accountBalances
+                                        balanceSheetObjects[0].accountBalances
                                             .filter(account => account.accountSubtypeId === subtypeBalance.accountSubtypeId)
                                             .map(account => {
                                                 return (
                                                     <React.Fragment key={account.accountId}>
                                                         <div className="striped-row justify-content-between indent-3">
-                                                            <div>{account.accountName}</div><div>{account.hasChildren ? null : numberAsCurrency(account.debitsMinusCredits * -1)}</div>
+                                                            <div>
+                                                                {account.accountName}
+                                                            </div>
+                                                            <div className="text-right d-flex">
+                                                                {account.hasChildren 
+                                                                ? null 
+                                                                : balanceSheetObjects.map((balanceSheet, i) => {
+                                                                    return(
+                                                                        <div key={i}>
+                                                                            {numberAsCurrency(balanceSheet.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits * -1)}
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
                                                         </div>
-                                                        {accountBalances
+                                                        {balanceSheetObjects[0].accountBalances
                                                             .filter(childAccount => childAccount.parentAccountId === account.accountId)
                                                             .map(childAccount => {
                                                                 return (
-                                                                    <div key={childAccount.accountId} className="striped-row justify-content-between indent-4">
-                                                                        <div>{childAccount.accountName}</div><div>{numberAsCurrency(childAccount.debitsMinusCredits * -1)}</div>
+                                                                    <div className="striped-row justify-content-between indent-4" key={childAccount.accountId}>
+                                                                        <div>
+                                                                            {childAccount.accountName}
+                                                                        </div>
+                                                                        <div className="text-right d-flex">
+                                                                            {balanceSheetObjects.map((balanceSheet, i) => {
+                                                                                return(
+                                                                                    <div key={i}>
+                                                                                        {numberAsCurrency(balanceSheet.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits * -1)}
+                                                                                    </div>
+                                                                                )
+                                                                            })}
+                                                                        </div>
                                                                     </div>
                                                                 )
                                                             })
@@ -399,10 +473,32 @@ function BalanceSheetRender() {
                             )
                         })}
                         <div className="striped-row justify-content-between font-weight-600 indent">
-                            <div>{balanceSheetRenderText[appContext.locale]["Total non-current liabilities"]}</div><div>{numberAsCurrency(balanceSheetLiabilities.totalNonCurrentLiabilities)}</div>
+                            <div>
+                                {balanceSheetRenderText[appContext.locale]["Total non-current liabilities"]}
+                            </div>
+                            <div className="text-right d-flex">
+                                {balanceSheetObjects.map((balanceSheet, i) => {
+                                    return(
+                                        <div key={i}>
+                                            {numberAsCurrency(balanceSheet.balanceSheetLiabilities.totalNonCurrentLiabilities)}
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         </div>
                         <div className="striped-row justify-content-between font-weight-600">
-                            <div>{balanceSheetRenderText[appContext.locale]["Total liabilities"]}</div><div>{numberAsCurrency(balanceSheetLiabilities.totalLiabilities)}</div>
+                            <div>
+                                {balanceSheetRenderText[appContext.locale]["Total liabilities"]}
+                            </div>
+                            <div className="text-right d-flex">
+                                {balanceSheetObjects.map((balanceSheet, i) => {
+                                    return(
+                                        <div key={i}>
+                                            {numberAsCurrency(balanceSheet.balanceSheetLiabilities.totalLiabilities)}
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </>
                 }
