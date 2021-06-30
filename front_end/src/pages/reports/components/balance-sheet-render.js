@@ -11,24 +11,15 @@ function BalanceSheetRender() {
     const appContext = React.useContext(PageSettings);
 
     const today = new Date().toISOString().split('T')[0];
-    const [endDate, setEndDate] = React.useState(today);
     const [loading, setLoading] = React.useState(true);
 
     const [detailedView, setDetailedView] = React.useState(false);
     const toggleDetailedView = () => setDetailedView(!detailedView);
 
-    const [asOfDate, setAsOfDate] = React.useState("");
-    const [prevPeriodEndDate, setPrevPeriodEndDate] = React.useState("");
-    const [currPeriodStartDate, setCurrPeriodStartDate] = React.useState("");
-    const [balanceSheetAssets, setBalanceSheetAssets] = React.useState(null);
-    const [balanceSheetLiabilities, setBalanceSheetLiabilities] = React.useState(null);
-    const [balanceSheetEquity, setBalanceSheetEquity] = React.useState(null);
     const [balanceSheetObjects, setBalanceSheetObjects] = React.useState([]);
 
     const [endDatesToRequest, setEndDatesToRequest] = React.useState([{label: "FY" + today.split('-')[0], endDate:today}]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
-
-    const [accountBalances, setAccountBalances] = React.useState([]);
 
     const handleChangeDate = (date, i) => {
         let newEndDatesToRequestArray = endDatesToRequest.slice();
@@ -36,7 +27,6 @@ function BalanceSheetRender() {
             {label: "Custom", endDate: date}
         )
         setEndDatesToRequest(newEndDatesToRequestArray);
-        setEndDate(date);
     }
 
     const numberAsCurrency = (number) => {
@@ -50,7 +40,7 @@ function BalanceSheetRender() {
         for (const endDateObject of endDatesToRequest) {
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDateObject.endDate}`).then(response => {
                 arrayToStoreObjects.push(response.data); //TODO make sure this preserves order correctly
-            })
+            }).catch(console.log);
         }
     }
 
@@ -128,7 +118,9 @@ function BalanceSheetRender() {
                                             placeholder={"Custom"}
                                             value={endDatesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == endDatesToRequest[i].label)}
                                         />
-                                        <label className="col-2 px-1 px-sm-2 text-right my-0">{balanceSheetRenderText[appContext.locale]["As of:"]} </label>
+                                        <label className="col-2 px-1 px-sm-2 text-right my-0">
+                                            {balanceSheetRenderText   [appContext.locale]["As of:"]} 
+                                        </label>
                                         <input type="date" className=" col-6 form-control align-self-center" value={endDatesToRequest[i].endDate} onChange={event => handleChangeDate(event.target.value, i)} />
                                     </div>
                                 </div>

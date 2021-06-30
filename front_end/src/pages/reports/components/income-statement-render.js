@@ -4,6 +4,8 @@ import { API_BASE_URL } from '../../../utils/constants';
 import axios from 'axios';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { Card, CardBody } from 'reactstrap';
+import Select from 'react-select';
+import { Link } from 'react-router-dom';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -33,10 +35,18 @@ import { Card, CardBody } from 'reactstrap';
  */
 function IncomeStatementRender() {
     const appContext = React.useContext(PageSettings);
+    const dateToday = new Date();
+    const today = dateToday.toISOString().split(`T`)[0];
 
-    const today = new Date();
-    const [startDate, setStartDate] = React.useState(today.getFullYear() + "-01-01");
-    const [endDate, setEndDate] = React.useState(today.toISOString().split('T')[0]);
+    const getDateInCurrentYear = date => {
+        let dateComponentArray = date.split('-');
+        return (dateToday.getFullYear() + "-" + dateComponentArray[1] + "-" + dateComponentArray[2]);
+    }
+
+    
+    const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
+    const [startDate, setStartDate] = React.useState(dateToday.getFullYear() + "-01-01");
+    const [endDate, setEndDate] = React.useState(dateToday.toISOString().split('T')[0]);
     const [detailedView, setDetailedView] = React.useState(false);
     const toggleDetailedView = () => setDetailedView(!detailedView);
     const [loading, setLoading] = React.useState(true);
@@ -78,6 +88,14 @@ function IncomeStatementRender() {
 
     const [accountBalances, setAccountBalances] = React.useState(null);
 
+    const [incomeStatementObjects, setIncomeStatementObjects] = React.useState([]);
+    const [datesToRequest, setDatesToRequest] = React.useState([{
+        label: "FY" + today.split('-')[0],
+        startDate: beginningOfCurrentFiscalYear,
+        endDate: today
+    }]);
+    const [dateRangePresets, setDateRangePresets] = React.useState([]);
+
     const renderDetails = (subtypeId, typeId) => {
         if (detailedView) {
             return (
@@ -106,9 +124,32 @@ function IncomeStatementRender() {
             return null;
         }
     }
+
+    const requestIncomeStatementObjects = async arrayToStoreObjects => {
+        for (const dateObject of datesToRequest) {
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement/${dateObject.startDate}/${dateObject.endDate}`).then(response => {
+                arrayToStoreObjects.push(response.data);
+            }).catch(console.log);
+        }
+    }
+
     React.useEffect(() => {
         async function fetchData() {
             setLoading(true);
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/dateRangePresetsUpToDate/${today}`).then(response => {
+                let formattedPresets = response.data.map(preset => {
+                    return{
+                        value: preset.name,
+                        label: preset.name,
+                        object: preset
+                    }
+                })
+                setDateRangePresets(formattedPresets);
+            })
+            let fetchedIncomeStatementObjects = [];
+            await requestIncomeStatementObjects(fetchedIncomeStatementObjects);
+            setIncomeStatementObjects(fetchedIncomeStatementObjects);
+
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement/${startDate}/${endDate}`).then(response => {
                 if (response.data) {
                     setTotalRevenue(response.data.totalRevenue);
@@ -168,11 +209,19 @@ function IncomeStatementRender() {
         fetchData();
     }, [startDate, endDate]);
 
-    const handleChangeStartDate = date => {
-        setStartDate(date);
+    const handleChangeStartDate = (date, i) => {
+        let newDatesToRequestArray = datesToRequest.slice();
+        newDatesToRequestArray[i] = {
+            label: "Custom", startDate: date
+        }
+        setDatesToRequest(newDatesToRequestArray)
     }
-    const handleChangeEndDate = date => {
-        setEndDate(date);
+    const handleChangeEndDate = (date, i) => {
+        let newDatesToRequestArray = datesToRequest.slice();
+        newDatesToRequestArray[i] = {
+            label: "Custom", endDate: date
+        }
+        setDatesToRequest(newDatesToRequestArray)
     }
 
     const numberAsCurrency = (number) => {
@@ -182,22 +231,79 @@ function IncomeStatementRender() {
         return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number)
     }
 
+    const handleSelectDateRangePreset = (selectedOption, i) => {
+        if (selectedOption) {
+            let dateToRequestObject = {
+                label: selectedOption.label,
+                startDate: selectedOption.object.startDate,
+                endDate: selectedOption.object.endDate
+            };
+            let newDatesToRequestArray = datesToRequest.slice();
+            newDatesToRequestArray[i] = dateToRequestObject;
+            setDatesToRequest(newDatesToRequestArray);
+        }
+    }
+
+    const handleRemoveDateRangeButton = i => {
+        let datesArray = datesToRequest.slice();
+        datesArray.splice(i, 1);
+        setDatesToRequest(datesArray);
+    }
+
+    const handleCompareButton = () => {
+        let datesArray = datesToRequest.slice();
+        datesArray.push({
+            label: "FY" + today.split('-')[0], 
+            startDate: beginningOfCurrentFiscalYear,
+            endDate:today}
+        )
+        setDatesToRequest(datesArray);
+    }
+    
 
     return (
         <>
             <Card className="very-rounded shadow-sm bg-light my-4">
                 <CardBody className="">
                     <h2 className="h5">{incomeStatementRenderText[appContext.locale]["Options"]}</h2>
-                    <div className="d-sm-flex align-items-center ">
-                        <div className="d-flex align-items-center mr-3 mb-2">
-                            <label className="my-0 col-3 px-0">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
-                            <input type="date" className="form-control form-control-sm width-150" value={startDate} onChange={event => handleChangeStartDate(event.target.value)} />
-                        </div>
-                        <div className="d-flex align-items-center mr-3 mb-2">
-                            <label className="my-0 col-3 px-0">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
-                            <input type="date" className="form-control form-control-sm width-150" value={endDate} onChange={event => handleChangeEndDate(event.target.value)} />
-                        </div>
+                    <div className="d-none d-md-block">
+                        {datesToRequest.map((dateObject, i) => {
+                            return (
+                                <div key={i}>
+                                    {datesToRequest.length > 1
+                                    ?   <div className="font-weight-600 my-1 d-flex align-items-center">
+                                            {incomeStatementRenderText[appContext.locale]["Date range"] + " " + (i + 1)}
+                                            <button className="btn btn-light py-0 px-1 mx-1 border-0" onClick={() => handleRemoveDateRangeButton(i)}>
+                                                <i className="ion ion-md-close fa-fw"></i>
+                                            </button>
+                                        </div>
+                                    : null}
+                                    <div className="d-flex w-100 align-items-center mb-2">
+                                        <Select
+                                            className="col-4 px-0"
+                                            options={dateRangePresets}
+                                            menuPortalTarget={document.body}
+                                            menuShouldScrollIntoView={false}
+                                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                            onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
+                                            placeholder={"Custom"}
+                                            value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
+                                        />
+                                        <label className="my-0 text-right col-1 px-2">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
+                                        <input type="date" className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
+                                        <label className="my-0 text-right col-1 px-2">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
+                                        <input type="date" className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                    </div>
+                                </div>
+                            )
+                        })}
                     </div>
+                    {datesToRequest.length < 3
+                    ?   <div className="mb-2">
+                            <Link replace to="#" onClick={handleCompareButton} className="text-decoration-none">
+                            <i className="ion ion-md-add"></i> {incomeStatementRenderText[appContext.locale]["Compare"]}                            </Link>
+                        </div>
+                    : null}
                     <div className="custom-control custom-switch">
                         <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
                         <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>

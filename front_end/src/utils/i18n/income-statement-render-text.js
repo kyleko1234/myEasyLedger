@@ -3,6 +3,9 @@ export const incomeStatementRenderText = {
         "Options": "Options",
         "From:": "From:",
         "To:": "To:",
+        "Date range": "Date range",
+        "Compare": "Compare",
+
         "Revenue": "Revenue",
         "Total revenue": "Total revenue",
         "Cost of sales": "Cost of sales",
@@ -40,6 +43,9 @@ export const incomeStatementRenderText = {
         "Options": "TRANSLATION",
         "From:": "自:",
         "To:": "至:",
+        "Date range": "TRANSLATION",
+        "Compare": "TRANSLATION",
+
         "Revenue": "收入",
         "Total revenue": "收入合計",
         "Cost of sales": "銷貨成本",
