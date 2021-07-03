@@ -5,6 +5,7 @@ export const incomeStatementRenderText = {
         "To:": "To:",
         "Date range": "Date range",
         "Compare": "Compare",
+        "Update report": "Update report",
 
         "Revenue": "Revenue",
         "Total revenue": "Total revenue",
@@ -45,6 +46,7 @@ export const incomeStatementRenderText = {
         "To:": "至:",
         "Date range": "TRANSLATION",
         "Compare": "TRANSLATION",
+        "Update report": "TRANSLATION",
 
         "Revenue": "收入",
         "Total revenue": "收入合計",

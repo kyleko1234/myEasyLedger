@@ -42,7 +42,7 @@ function BalanceSheetRender() {
         for (const endDateObject of endDatesToRequest) {
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDateObject.endDate}`).then(response => {
                 newColumnLabels.push(endDateObject);     //column labels are not updated until the report is actually updated
-                arrayToStoreObjects.push(response.data); //TODO make sure this preserves order correctly
+                arrayToStoreObjects.push(response.data);
             }).catch(console.log);
         }
         setColumnLabels(newColumnLabels);
