@@ -77,14 +77,10 @@ public class OrganizationService {
 			}
 			
 			for (int yearNumber = lastFiscalYear; yearNumber >= firstFiscalYear; yearNumber--) {
-				String name = "FY" + yearNumber;
+				String name = "Fiscal Year " + yearNumber;
 				LocalDate startDateOfDateRange = fiscalYearBeginDate.withYear(yearNumber);
 				LocalDate endDateOfDateRange;
-				if (yearNumber == lastFiscalYear) {
-					endDateOfDateRange = endDate;
-				} else {
-					endDateOfDateRange = startDateOfDateRange.plusYears(1).minusDays(1);
-				}
+				endDateOfDateRange = startDateOfDateRange.plusYears(1).minusDays(1);
 				returnedList.add(new DateRangeDTO(name, startDateOfDateRange, endDateOfDateRange));
 			}
 		}

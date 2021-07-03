@@ -18,7 +18,7 @@ function BalanceSheetRender() {
 
     const [balanceSheetObjects, setBalanceSheetObjects] = React.useState([]);
 
-    const [endDatesToRequest, setEndDatesToRequest] = React.useState([{label: "FY" + today.split('-')[0], endDate:today}]);
+    const [endDatesToRequest, setEndDatesToRequest] = React.useState([{label: "Custom", endDate:today}]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
 
     const handleChangeDate = (date, i) => {
@@ -115,7 +115,7 @@ function BalanceSheetRender() {
                                             menuShouldScrollIntoView={false}
                                             styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                             onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
-                                            placeholder={"Custom"}
+                                            placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                             value={endDatesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == endDatesToRequest[i].label)}
                                         />
                                         <label className="col-2 px-1 px-sm-2 text-right my-0">

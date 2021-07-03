@@ -4,6 +4,7 @@ export const balanceSheetRenderText = {
         "As of:": "As of:",
         "Date range": "Date range",
         "Compare": "Compare",
+        "Custom": "Custom",
 
         "Assets": "Assets",
         "Current assets": "Current assets",
@@ -71,6 +72,7 @@ export const balanceSheetRenderText = {
         "As of:": "截至",
         "Date range": "TRANSLATION",
         "Compare": "TRANSLATION",
+        "Custom": "TRANSLATION",
 
         "Assets": "資產",
         "Current assets": "流動資產",

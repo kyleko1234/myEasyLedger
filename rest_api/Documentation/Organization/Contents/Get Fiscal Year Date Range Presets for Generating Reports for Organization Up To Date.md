@@ -10,10 +10,10 @@ Returns a list of fiscal year date range presets for the given organization. Eac
 	"name": "FY2021",
 	"prevPeriodEndDate": "2020-12-31",
 	"startDate": "2021-01-01",
-	"endDate": "2021-06-21"
+	"endDate": "2021-12-31"
 }
 ```
 
-Objects are returned in order from most recent to least recent. The most recent 'fiscal year' period will end on the given `endDate` in the url path rather than on the normal end date of the fiscal year. 
+Objects are returned in order from most recent to least recent. The most recent 'fiscal year' period is the one that includes the given `endDate` in the url path, and ends on the fiscal year end date immediately following `endDate`. 
 
 The least recent fiscal year is determined based on the organization's fiscal year settings and on the least recent journal entry that the organization has recorded. If the organization has no journal entries recorded, this endpoint will return an empty list.
