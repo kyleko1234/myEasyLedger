@@ -5,6 +5,7 @@ export const balanceSheetRenderText = {
         "Date range": "Date range",
         "Compare": "Compare",
         "Custom": "Custom",
+        "Update report": "Update report",
 
         "Assets": "Assets",
         "Current assets": "Current assets",
@@ -73,6 +74,7 @@ export const balanceSheetRenderText = {
         "Date range": "TRANSLATION",
         "Compare": "TRANSLATION",
         "Custom": "TRANSLATION",
+        "Update report": "TRANSLATION",
 
         "Assets": "資產",
         "Current assets": "流動資產",

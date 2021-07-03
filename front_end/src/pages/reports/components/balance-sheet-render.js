@@ -19,6 +19,7 @@ function BalanceSheetRender() {
     const [balanceSheetObjects, setBalanceSheetObjects] = React.useState([]);
 
     const [endDatesToRequest, setEndDatesToRequest] = React.useState([{label: "Custom", endDate:today}]);
+    const [columnLabels, setColumnLabels] = React.useState([]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
 
     const handleChangeDate = (date, i) => {
@@ -37,11 +38,22 @@ function BalanceSheetRender() {
     }
 
     const requestBalanceSheetObjects = async arrayToStoreObjects => {
+        let newColumnLabels = [];
         for (const endDateObject of endDatesToRequest) {
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDateObject.endDate}`).then(response => {
+                newColumnLabels.push(endDateObject);     //column labels are not updated until the report is actually updated
                 arrayToStoreObjects.push(response.data); //TODO make sure this preserves order correctly
             }).catch(console.log);
         }
+        setColumnLabels(newColumnLabels);
+    }
+
+    const handleUpdateReportButton = async () => {
+        setLoading(true);
+        let fetchedBalanceSheetObjects = [];
+        await requestBalanceSheetObjects(fetchedBalanceSheetObjects);
+        setBalanceSheetObjects(fetchedBalanceSheetObjects);
+        setLoading(false);
     }
 
     React.useEffect(() => {
@@ -63,7 +75,7 @@ function BalanceSheetRender() {
             setLoading(false);
         }
         fetchData();
-    }, [endDatesToRequest])
+    }, [])
 
     const handleSelectDateRangePreset = (selectedOption, i) => {
         if (selectedOption) {
@@ -80,7 +92,7 @@ function BalanceSheetRender() {
     const handleCompareButton = () => {
         let endDatesArray = endDatesToRequest.slice();
         endDatesArray.push({
-            label: "FY" + today.split('-')[0], 
+            label: "Custom", 
             endDate:today}
         )
         setEndDatesToRequest(endDatesArray);
@@ -96,7 +108,10 @@ function BalanceSheetRender() {
         <>
             <Card className="bg-light shadow-sm very-rounded my-4">
                 <CardBody>
-                    <h2 className="h5">{balanceSheetRenderText[appContext.locale]["Options"]}</h2>
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                        <h2 className="h5 my-0">{balanceSheetRenderText[appContext.locale]["Options"]}</h2>
+                        <button className="btn btn-primary" onClick={handleUpdateReportButton}>{balanceSheetRenderText[appContext.locale]["Update report"]}</button>
+                    </div>
                     <div>
                         {endDatesToRequest.map((endDateObject, i) => {
                             return(
@@ -144,12 +159,12 @@ function BalanceSheetRender() {
                         <div>{/*empty div for spacing*/}</div>
                         <div className="text-right d-flex">
                         {
-                            endDatesToRequest.map((endDateObject, i) => {
+                            columnLabels.map((columnLabel, i) => {
                                 return(
                                     <div className="td width-175" key={i}>
-                                        {endDateObject.label === "Custom"
-                                        ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + endDateObject.endDate
-                                        : endDateObject.label}
+                                        {columnLabel.label === "Custom"
+                                        ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + columnLabel.endDate
+                                        : columnLabel.label}
                                     </div>
                                 )
                             })
