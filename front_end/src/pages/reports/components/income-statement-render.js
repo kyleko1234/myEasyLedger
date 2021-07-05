@@ -272,6 +272,40 @@ function IncomeStatementRender() {
                             )
                         })}
                     </div>
+                    <div className="d-md-none">
+                        {datesToRequest.map((dateObject, i) => {
+                            return (
+                                <div key={i}>
+                                    <div className="d-flex my-1 justify-content-between">
+                                        <div className="font-weight-600 d-flex align-items-center">
+                                            {incomeStatementRenderText[appContext.locale]["Date range"] + (datesToRequest.length > 1? (" " + (i + 1)) : "" )}
+                                            <button className={"btn btn-light py-0 px-1 mx-1 border-0 " + (datesToRequest.length > 1 ? "" : " invisible")} onClick={() => handleRemoveDateRangeButton(i)}>
+                                                <i className="ion ion-md-close fa-fw"></i>
+                                            </button>
+                                        </div>
+                                        <Select
+                                            className="col-6 px-0"
+                                            options={dateRangePresets}
+                                            menuPortalTarget={document.body}
+                                            menuShouldScrollIntoView={false}
+                                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                            onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
+                                            placeholder={"Custom"}
+                                            value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
+                                        />
+                                    </div>
+                                    <div className="d-flex justify-content-between text-left align-items-center my-1">
+                                        <label className="my-0 col-3 px-0">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
+                                        <input type="date" className="form-control" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
+                                    </div>
+                                    <div className="d-flex justify-content-between text-left align-items-center mb-2">
+                                        <label className="my-0 col-3 px-0">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
+                                        <input type="date" className="form-control" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
                     {datesToRequest.length < 3
                     ?   <div className="mb-2">
                             <Link replace to="#" onClick={handleCompareButton} className="text-decoration-none">
