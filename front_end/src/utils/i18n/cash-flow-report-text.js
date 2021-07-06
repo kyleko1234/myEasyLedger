@@ -4,7 +4,10 @@ export const cashFlowReportText = {
         "Reports": "Reports",
         "Cash Flow Report": "Cash Flow Report",
         "Options": "Options",
-        
+        "Update report": "Update report",
+        "Date range": "Date range",
+        "Compare": "Compare",
+
         "From:": "From:",
         "To:" : "To:",
         "Cash and cash equivalents, beginning of period": "Cash and cash equivalents, beginning of period",
@@ -44,6 +47,9 @@ export const cashFlowReportText = {
         "Reports": "報表",
         "Cash Flow Report": "現金流量表",
         "Options": "TRANSLATION",
+        "Update report": "TRANSLATION",
+        "Date range": "TRANSLATION",
+        "Compare": "TRANSLATION",
 
         "From:": "自:",
         "To:" : "至:",
