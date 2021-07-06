@@ -24,7 +24,6 @@ function CashFlowRender() {
     const [loading, setLoading] = React.useState(true);
 
     const [cashFlowJson, setCashFlowJson] = React.useState(null);
-    const [hasAdjustmentsInOperatingIncome, setHasAdjustmentsInOperatingIncome] = React.useState(false);
     const [hasChangesInOperatingAssetsLiabilities, setHasChangesInOperatingAssetsLiabilities] = React.useState(false);
     const [cashBeginningBalances, setCashBeginningBalances] = React.useState(0);
     const [cashEndingBalances, setCashEndingBalances] = React.useState(0);
@@ -111,6 +110,15 @@ function CashFlowRender() {
         setDatesToRequest(datesArray);
     }
 
+    const hasAdjustmentsInOperatingIncome = () => {
+        cashFlowObjects.forEach(cashFlowObject => {
+            if (cashFlowObject.depreciationAndAmortization || cashFlowObject.deferredTax || cashFlowObject.shareBasedCompensation || cashFlowObject.nonOperatingIncome) {
+                return true;
+            }
+            return false;
+        })
+    }
+
     React.useEffect(() => {
         async function fetchData() {
             setLoading(true);
@@ -131,11 +139,7 @@ function CashFlowRender() {
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/cashFlow/${startDate}/${endDate}`).then(response => {
                 if (response.data) {
                     setCashFlowJson(response.data);
-                    if (response.data.depreciationAndAmortization || response.data.deferredTax || response.data.shareBasedCompensation || response.data.nonOperatingIncome) {
-                        setHasAdjustmentsInOperatingIncome(true);
-                    } else {
-                        setHasAdjustmentsInOperatingIncome(false);
-                    }
+          
                     if (response.data.receivables || response.data.payables || response.data.inventory || response.data.deferredRevenue || response.data.otherAssets || response.data.otherLiabilities) {
                         setHasChangesInOperatingAssetsLiabilities(true);
                     } else {
@@ -240,18 +244,48 @@ function CashFlowRender() {
                             <i className="ion ion-md-add"></i> {cashFlowReportText[appContext.locale]["Compare"]}                            </Link>
                         </div>
                     : null}
-
                 </CardBody>
             </Card>
+
             <div >
-                    {loading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
-                    <div>
-                        <div>
-                            <div className="striped-row justify-content-between font-weight-600"><div>{cashFlowReportText[appContext.locale]["Cash and cash equivalents, beginning of period"]}</div><div>{numberAsCurrency(cashBeginningBalances)}</div></div>
+                    {(loading || !cashFlowObjects.length) ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
+                    <div className="overflow-auto">
+                        <div className="min-width-lg">
+                            <div className="striped-row justify-content-between font-weight-600">
+                                <div>{cashFlowReportText[appContext.locale]["Cash and cash equivalents, beginning of period"]}</div>
+                                <div className="text-right d-flex">
+                                    {cashFlowObjects.map((cashFlowObject, i) => {
+                                        let beginningCashSubtype = cashFlowObject.beginningAccountSubtypeBalances.find(accountSubtype => accountSubtype.accountSubtypeId == cashFlowObject.cashAndCashEquivalentsSubtypeId);
+                                        if (beginningCashSubtype) {
+                                            return(
+                                                <div key={i} className="width-175">
+                                                    {numberAsCurrency(beginningCashSubtype.debitsMinusCredits)}
+                                                </div>
+                                            )
+                                        }
+                                    })}
+                                </div>
+                            </div>
                             <div className="striped-row"><div className="invisible">spacer</div> {/*spacer row*/}</div>
+
                             <div className="striped-row font-weight-600">{cashFlowReportText[appContext.locale]["Operating activities"]}</div>
-                            <div className="striped-row justify-content-between indent"><div>{cashFlowReportText[appContext.locale]["Net Income"]}</div><div>{numberAsCurrency(cashFlowJson.netIncome)}</div></div>
-                            {!hasAdjustmentsInOperatingIncome? null : <div className="striped-row indentfont-weight-600">{cashFlowReportText[appContext.locale]["Adjustments to reconcile operating income to cash generated by operating activities"]}</div>}
+                            <div className="striped-row justify-content-between indent">
+                                <div>{cashFlowReportText[appContext.locale]["Net Income"]}</div>
+                                <div className="text-right d-flex">
+                                    {cashFlowObjects.map((cashFlowObject, i) => {
+                                        return(
+                                            <div key={i} className="width-175">
+                                                {numberAsCurrency(cashFlowObject.netIncome)}
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                            {!hasAdjustmentsInOperatingIncome? null : 
+                                <div className="striped-row indent font-weight-600">
+                                    {cashFlowReportText[appContext.locale]["Adjustments to reconcile operating income to cash generated by operating activities"]}
+                                </div>
+                            }
                             {!cashFlowJson.depreciationAndAmortization? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Depreciation and amortization"]}</div><div>{numberAsCurrency(cashFlowJson.depreciationAndAmortization)}</div></div>}
                             {!cashFlowJson.deferredTax? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Increase (decrease) in deferred taxes"]}</div><div>{numberAsCurrency(cashFlowJson.deferredTax)}</div></div>}
                             {!cashFlowJson.shareBasedCompensation? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Share-based compensation"]}</div><div>{numberAsCurrency(cashFlowJson.shareBasedCompensation)}</div></div>}
