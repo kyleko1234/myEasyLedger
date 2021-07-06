@@ -69,12 +69,12 @@ export const balanceSheetRenderText = {
         "Detailed View": "Detailed View"
     },
     "zh-TW": {
-        "Options": "TRANSLATION",
+        "Options": "調整選項",
         "As of:": "截至",
-        "Date range": "TRANSLATION",
-        "Compare": "TRANSLATION",
-        "Custom": "TRANSLATION",
-        "Update report": "TRANSLATION",
+        "Date range": "日期區間",
+        "Compare": "比較對照",
+        "Custom": "自訂日期",
+        "Update report": "更新報表",
 
         "Assets": "資產",
         "Current assets": "流動資產",
@@ -92,9 +92,9 @@ export const balanceSheetRenderText = {
 
         "Equity": "權益",
         "Retained Earnings": "保留盈餘",
-        "Beginning balances": "TRANSLATION",
-        "Net income for current fiscal period": "TRANSLATION",  
-        "Dividends for current fiscal period": "TRANSLATION",
+        "Beginning balances": "初始餘額",
+        "Net income for current fiscal period": "本期淨收入",  
+        "Dividends for current fiscal period": "本期股利",
         "Ending balances of retained earnings": "期末保留營餘",
         "Total equity": "權益總計",
 
