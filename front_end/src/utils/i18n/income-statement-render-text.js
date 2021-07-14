@@ -41,12 +41,12 @@ export const incomeStatementRenderText = {
         
     },
     "zh-TW": {
-        "Options": "TRANSLATION",
+        "Options": "設定選項",
         "From:": "自:",
         "To:": "至:",
-        "Date range": "TRANSLATION",
-        "Compare": "TRANSLATION",
-        "Update report": "TRANSLATION",
+        "Date range": "日期區間",
+        "Compare": "比較對照",
+        "Update report": "更新報表",
 
         "Revenue": "收入",
         "Total revenue": "收入合計",

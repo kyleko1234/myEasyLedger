@@ -28,8 +28,8 @@ export const journalEntryEditModeText = {
         "Add a Line Item": "加一個單行項目",
         "Copy description to line items": "複製「描述」到各個單行項目",
 
-        "Total Debit": "TRANSLATION",
-        "Total Credit": "TRANSLATION"
+        "Total Debit": "借方加總",
+        "Total Credit": "貸方加總"
 
     }
 }

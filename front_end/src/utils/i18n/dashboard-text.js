@@ -10,8 +10,8 @@ export const dashboardText = {
         "Dashboard": "帳目概覽",
         "Home": "首頁",
         "Expense Breakdown": "費用明細",
-        "Net Worth": "TRANSLATION",
-        "Net Assets": "TRANSLATION"
+        "Net Worth": "淨值",
+        "Net Assets": "淨資產"
 
 
     }

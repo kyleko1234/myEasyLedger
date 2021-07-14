@@ -41,8 +41,8 @@ export const journalEntryViewModeText = {
         "TIMESTAMP OF EDIT:": "更動時間點",
         "AUTHOR OF EDIT:": "更動者",
 
-        "Total Debit": "TRANSLATION",
-        "Total Credit": "TRANSLATION",
-        "No memo": "TRANSLATION"
+        "Total Debit": "借方加總",
+        "Total Credit": "貸方加總",
+        "No memo": "無註記"
     }
 }

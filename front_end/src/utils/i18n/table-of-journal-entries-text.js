@@ -55,7 +55,7 @@ export const tableOfJournalEntriesText = {
         "Newer": "上一頁（之後的）",
         "Older": "下一頁（之前的）",
         "Journal Entry": "分錄",
-        "Transaction": "TRANSLATION",
+        "Transaction": "交易",
         "Delete": "删除",
         "Save": "儲存",
         "Cancel": "取消",
