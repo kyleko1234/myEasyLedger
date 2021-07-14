@@ -10,7 +10,7 @@ import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 public class CashFlowStatementViewModel {
 	
 	static final Long CASH_AND_CASH_EQUIVALENTS_SUBTYPE_ID = (long) 1;
-	static final Long DEPRECIATION_AMORTIZATION_SUBTYPE_ID = (long) 31;
+	static final Long DEPRECIATION_AMORTIZATION_SUBTYPE_ID = (long) 30;
 	static final Long DEFERRED_TAX_SUBTYPE_ID = (long) 15;
 	static final Long SHARE_BASED_COMPENSATION_SUBTYPE_ID = (long) 21;
 	static final Long INCOME_FROM_INVESTING_SUBTYPE_ID = (long) 25;
@@ -134,27 +134,30 @@ public class CashFlowStatementViewModel {
 			}
 		}
 		cashFlowFromOperations = netIncome
-				.add(depreciationAndAmortization
-				.add(deferredTax
-				.add(shareBasedCompensation
-				.add(nonOperatingIncome.negate()
-				.add(receivables.negate()
-				.add(payables
-				.add(inventory.negate()
-				.add(deferredRevenue
-				.add(otherAssets.negate()
-				.add(otherLiabilities))))))))));
+				.add(depreciationAndAmortization)
+				.add(deferredTax)
+				.add(shareBasedCompensation)
+				.subtract(nonOperatingIncome)
+				.subtract(receivables)
+				.add(payables)
+				.subtract(inventory)
+				.add(deferredRevenue)
+				.subtract(otherAssets)
+				.add(otherLiabilities);
 		
 		cashFlowFromInvesting = netIncomeFromInvesting
-				.add(marketableSecurities.negate()
-				.add(propertyPlantAndEquipment.negate()));
+				.subtract(marketableSecurities)
+				.subtract(propertyPlantAndEquipment)
+					.subtract(depreciationAndAmortization); //subtract D&A from the decrease in PP&E to offset change in PP&E from depreciating assets
 		
 		cashFlowFromFinancing = paidInCapital
-				.add(otherEquity
-				.add(dividendPayments.negate()
-				.add(netIncomeFromFinancing
-				.add(debt))));
-		cashFlow = cashFlowFromOperations.add(cashFlowFromInvesting.add(cashFlowFromFinancing));
+				.add(otherEquity)
+				.subtract(dividendPayments)
+				.add(netIncomeFromFinancing)
+				.add(debt);
+		cashFlow = cashFlowFromOperations
+				.add(cashFlowFromInvesting)
+				.add(cashFlowFromFinancing);
 		
 	}
 
