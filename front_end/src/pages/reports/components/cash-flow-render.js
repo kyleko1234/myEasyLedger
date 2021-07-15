@@ -138,13 +138,13 @@ function CashFlowRender() {
         return true;
     }
 
-    const renderCellsForField = (fieldName) => {
+    const renderCellsForField = (fieldName, sign) => {
         return(
             <div className="text-right d-flex">
                 {cashFlowObjects.map((cashFlowObject, i) => {
                     return(
                         <div key={i} className="width-175">
-                            {numberAsCurrency(cashFlowObject[fieldName])}
+                            {numberAsCurrency(cashFlowObject[fieldName] * (sign >= 0 ? 1 : -1))}
                         </div>
                     )
                 })}
@@ -323,7 +323,7 @@ function CashFlowRender() {
                                 <div className="striped-row font-weight-600">{cashFlowReportText[appContext.locale]["Operating activities"]}</div>
                                 <div className="striped-row justify-content-between indent">
                                     <div>{cashFlowReportText[appContext.locale]["Net Income"]}</div>
-                                    {renderCellsForField("netIncome")}
+                                    {renderCellsForField("netIncome", 1)}
                                 </div>
                                 {(!hasAdjustmentsInOperatingIncome())? null : 
                                     <div className="striped-row indent font-weight-600">
@@ -333,54 +333,158 @@ function CashFlowRender() {
                                 {hasZeroAmountsForFieldInAllDateRanges("depreciationAndAmortization")? null : 
                                     <div className="striped-row justify-content-between indent-2">
                                         <div>{cashFlowReportText[appContext.locale]["Depreciation and amortization"]}</div>
-                                        {renderCellsForField("depreciationAndAmortization")}
+                                        {renderCellsForField("depreciationAndAmortization", 1)}
                                     </div>
                                 }
                                 {hasZeroAmountsForFieldInAllDateRanges("deferredTax")? null : 
                                     <div className="striped-row justify-content-between indent-2">
                                         <div>{cashFlowReportText[appContext.locale]["Increase (decrease) in deferred taxes"]}</div>
-                                        {renderCellsForField("deferredTax")}
+                                        {renderCellsForField("deferredTax", 1)}
                                     </div>
                                 }
                                 {hasZeroAmountsForFieldInAllDateRanges("shareBasedCompensation")? null : 
                                     <div className="striped-row justify-content-between indent-2">
                                         <div>{cashFlowReportText[appContext.locale]["Share-based compensation"]}</div>
-                                        {renderCellsForField("shareBasedCompensation")}
+                                        {renderCellsForField("shareBasedCompensation", 1)}
                                     </div>
                                 }
                                 {hasZeroAmountsForFieldInAllDateRanges("nonOperatingIncome")? null : 
                                     <div className="striped-row justify-content-between indent-2">
                                         <div>{cashFlowReportText[appContext.locale]["Adjustment for non-operating loss (income)"]}</div>
-                                        {renderCellsForField("nonOperatingIncome")}
+                                        {renderCellsForField("nonOperatingIncome", 1)}
                                     </div>
                                 }
                                 {!hasChangesInOperatingAssetsLiabilities()? null : 
                                     <div className="striped-row font-weight-600 indent">{cashFlowReportText[appContext.locale]["Changes in operating assets and liabilities"]}</div>
                                 }
-                                {!cashFlowJson.receivables? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Decrease (increase) in receivables"]}</div><div>{numberAsCurrency(cashFlowJson.receivables * -1)}</div></div>}
-                                {!cashFlowJson.payables? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Increase (decrease) in payables"]}</div><div>{numberAsCurrency(cashFlowJson.payables)}</div></div>}
-                                {!cashFlowJson.inventory? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Decrease (increase) in inventory"]}</div><div>{numberAsCurrency(cashFlowJson.inventory * -1)}</div></div>}
-                                {!cashFlowJson.deferredRevenue? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Increase (decrease) in deferred revenue"]}</div><div>{numberAsCurrency(cashFlowJson.deferredRevenue)}</div></div>}
-                                {!cashFlowJson.otherAssets? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Decrease (increase) in other assets"]}</div><div>{numberAsCurrency(cashFlowJson.otherAssets * -1)}</div></div>}
-                                {!cashFlowJson.otherLiabilities? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Increase (decrease) in other liabilities"]}</div><div>{numberAsCurrency(cashFlowJson.otherLiabilities)}</div></div>}
-                                <div className="striped-row justify-content-between font-weight-600"><div>{cashFlowReportText[appContext.locale]["Cash flow from operations"]}</div><div>{numberAsCurrency(cashFlowJson.cashFlowFromOperations)}</div></div>
+                                {hasZeroAmountsForFieldInAllDateRanges("receivables")? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Decrease (increase) in receivables"]}</div>
+                                        {renderCellsForField("receivables", -1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("payables")? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Increase (decrease) in payables"]}</div>
+                                        {renderCellsForField("payables", 1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("inventory") ? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Decrease (increase) in inventory"]}</div>
+                                        {renderCellsForField("inventory", -1)}
+                                    </div>}
+                                {hasZeroAmountsForFieldInAllDateRanges("deferredRevenue")? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Increase (decrease) in deferred revenue"]}</div>
+                                        {renderCellsForField("deferredRevenue", 1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("otherAssets")? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Decrease (increase) in other assets"]}</div>
+                                        {renderCellsForField("otherAssets", -1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("otherLiabilities")? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Increase (decrease) in other liabilities"]}</div>
+                                        {renderCellsForField("otherLiabilities", 1)}
+                                    </div>
+                                }
+                                <div className="striped-row justify-content-between font-weight-600">
+                                    <div>{cashFlowReportText[appContext.locale]["Cash flow from operations"]}</div>
+                                    {renderCellsForField("cashFlowFromOperations", 1)}
+                                </div>
                                 <div className="striped-row"><div className="invisible">spacer</div> {/*spacer row*/}</div>
+
                                 <div className="striped-row font-weight-600">{cashFlowReportText[appContext.locale]["Investing activities"]}</div>
-                                {!cashFlowJson.netIncomeFromInvesting? null : <div className="striped-row justify-content-between indent"><div>{cashFlowReportText[appContext.locale]["Income (loss) from investing, net"]}</div><div>{numberAsCurrency(cashFlowJson.netIncomeFromInvesting)}</div></div>}
-                                {!cashFlowJson.marketableSecurities? null : <div className="striped-row justify-content-between indent"><div>{cashFlowReportText[appContext.locale]["Decrease (increase) in marketable securities"]}</div><div>{numberAsCurrency(cashFlowJson.marketableSecurities * -1)}</div></div>}
-                                {!cashFlowJson.propertyPlantAndEquipment? null : <div className="striped-row justify-content-between indent"><div>{cashFlowReportText[appContext.locale]["Decrease (increase) in property, plant, and equipment"]}</div><div>{numberAsCurrency(cashFlowJson.propertyPlantAndEquipment * -1)}</div></div>}
-                                <div className="striped-row justify-content-between font-weight-600"><div>{cashFlowReportText[appContext.locale]["Cash flow from investing"]}</div><div>{numberAsCurrency(cashFlowJson.cashFlowFromInvesting)}</div></div>
+                                {hasZeroAmountsForFieldInAllDateRanges("netIncomeFromInvesting")? null : 
+                                    <div className="striped-row justify-content-between indent">
+                                        <div>{cashFlowReportText[appContext.locale]["Income (loss) from investing, net"]}</div>
+                                        {renderCellsForField("netIncomeFromInvesting", 1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("marketableSecurities")? null : 
+                                    <div className="striped-row justify-content-between indent">
+                                        <div>{cashFlowReportText[appContext.locale]["Decrease (increase) in marketable securities"]}</div>
+                                        {renderCellsForField("marketableSecurities", -1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("propertyPlantAndEquipment")? null : 
+                                    <div className="striped-row justify-content-between indent">
+                                        <div>{cashFlowReportText[appContext.locale]["Decrease (increase) in property, plant, and equipment"]}</div>
+                                        {renderCellsForField("propertyPlantAndEquipment", -1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("depreciationAndAmortization")? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Adjustment for change in book value of property, plant, and equipment due to depreciation and amortization"]}</div>
+                                        {renderCellsForField("depreciationAndAmortization", -1)}
+                                    </div>
+                                }
+                                <div className="striped-row justify-content-between font-weight-600">
+                                    <div>{cashFlowReportText[appContext.locale]["Cash flow from investing"]}</div>
+                                    {renderCellsForField("cashFlowFromInvesting", 1)}
+                                </div>
                                 <div className="striped-row"><div className="invisible">spacer</div> {/*spacer row*/}</div>
+                                
                                 <div className="striped-row font-weight-600">{cashFlowReportText[appContext.locale]["Financing activities"]}</div>
-                                {!cashFlowJson.netIncomeFromFinancing? null : <div className="striped-row justify-content-between indent"><div>{cashFlowReportText[appContext.locale]["Income (loss) from financing activities, net"]}</div><div>{numberAsCurrency(cashFlowJson.netIncomeFromFinancing * -1)}</div></div>}
-                                {!cashFlowJson.paidInCapital? null : <div className="striped-row justify-content-between indent"><div>{cashFlowReportText[appContext.locale]["Increase (decrease) in paid-in capital"]}</div><div>{numberAsCurrency(cashFlowJson.paidInCapital)}</div></div>}
-                                {!cashFlowJson.otherEquity? null : <div className="striped-row justify-content-between indent"><div>{cashFlowReportText[appContext.locale]["Increase (decrease) in other equity"]}</div><div>{numberAsCurrency(cashFlowJson.otherEquity)}</div></div>}
-                                {!cashFlowJson.dividendPayments? null : <div className="striped-row justify-content-between indent"><div>{cashFlowReportText[appContext.locale]["Payments for dividends and equivalents"]}</div><div>{numberAsCurrency(cashFlowJson.dividendPayments * -1)}</div></div>}
-                                {!cashFlowJson.debt? null : <div className="striped-row justify-content-between indent"><div>{cashFlowReportText[appContext.locale]["Increase (decrease) in debt"]}</div><div>{numberAsCurrency(cashFlowJson.debt)}</div></div>}
-                                <div className="striped-row justify-content-between font-weight-600"><div>{cashFlowReportText[appContext.locale]["Cash flow from financing"]}</div><div>{numberAsCurrency(cashFlowJson.cashFlowFromFinancing)}</div></div>
+                                {hasZeroAmountsForFieldInAllDateRanges("netIncomeFromFinancing")? null : 
+                                    <div className="striped-row justify-content-between indent">
+                                        <div>{cashFlowReportText[appContext.locale]["Income (loss) from financing activities, net"]}</div>
+                                        {renderCellsForField("netIncomeFromFinancing", -1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("paidInCapital")? null : 
+                                    <div className="striped-row justify-content-between indent">
+                                        <div>{cashFlowReportText[appContext.locale]["Increase (decrease) in paid-in capital"]}</div>
+                                        {renderCellsForField("paidInCapital", 1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("otherEquity")? null : 
+                                    <div className="striped-row justify-content-between indent">
+                                        <div>{cashFlowReportText[appContext.locale]["Increase (decrease) in other equity"]}</div>
+                                        {renderCellsForField("otherEquity", 1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("dividendPayments")? null : 
+                                    <div className="striped-row justify-content-between indent">
+                                        <div>{cashFlowReportText[appContext.locale]["Payments for dividends and equivalents"]}</div>
+                                        {renderCellsForField("dividendPayments", -1)}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("debt")? null : 
+                                    <div className="striped-row justify-content-between indent">
+                                        <div>{cashFlowReportText[appContext.locale]["Increase (decrease) in debt"]}</div>
+                                        {renderCellsForField("debt", 1)}
+                                    </div>
+                                }
+                                <div className="striped-row justify-content-between font-weight-600">
+                                    <div>{cashFlowReportText[appContext.locale]["Cash flow from financing"]}</div>
+                                    {renderCellsForField("cashFlowFromFinancing", 1)}
+                                </div>
                                 <div className="striped-row"><div className="invisible">spacer</div> {/*spacer row*/}</div>
-                                <div className="striped-row justify-content-between font-weight-600"><div>{cashFlowReportText[appContext.locale]["Increase (decrease) in cash and equivalents"]}</div><div>{numberAsCurrency(cashFlowJson.cashFlow)}</div></div>
-                                <div className="striped-row justify-content-between font-weight-600"><div>{cashFlowReportText[appContext.locale]["Cash and cash equivalents, end of period"]}</div><div>{numberAsCurrency(cashEndingBalances)}</div></div>
+
+                                <div className="striped-row justify-content-between font-weight-600">
+                                    <div>{cashFlowReportText[appContext.locale]["Increase (decrease) in cash and equivalents"]}</div>
+                                    {renderCellsForField("cashFlow", 1)}
+                                </div>
+                                <div className="striped-row justify-content-between font-weight-600">
+                                    <div>{cashFlowReportText[appContext.locale]["Cash and cash equivalents, end of period"]}</div>
+                                    <div className="text-right d-flex">
+                                        {cashFlowObjects.map((cashFlowObject, i) => {
+                                            let endingCashSubtype = cashFlowObject.endingAccountSubtypeBalances.find(accountSubtype => accountSubtype.accountSubtypeId == cashFlowObject.cashAndCashEquivalentsSubtypeId);
+                                            if (endingCashSubtype) {
+                                                return(
+                                                    <div key={i} className="width-175">
+                                                        {numberAsCurrency(endingCashSubtype.debitsMinusCredits)}
+                                                    </div>
+                                                )
+                                            }
+                                        })}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -39,8 +39,8 @@ export const cashFlowReportText = {
         "Increase (decrease) in debt": "Increase (decrease) in debt",
         "Cash flow from financing": "Cash flow from financing",
         "Increase (decrease) in cash and equivalents": "Increase (decrease) in cash and equivalents",
-        "Cash and cash equivalents, end of period": "Cash and cash equivalents, end of period"
-
+        "Cash and cash equivalents, end of period": "Cash and cash equivalents, end of period",
+        "Adjustment for change in book value of property, plant, and equipment due to depreciation and amortization": "Adjustment for change in book value due to depreciation and amortization",
     },
     "zh-TW": {
         "Home": "首頁",
@@ -82,7 +82,8 @@ export const cashFlowReportText = {
         "Increase (decrease) in debt": "債務增加（減少）",
         "Cash flow from financing": "籌資活動之現金流量",
         "Increase (decrease) in cash and equivalents": "現金及約當現金增加（減少）",
-        "Cash and cash equivalents, end of period": "期末 現金及約當現金"
+        "Cash and cash equivalents, end of period": "期末 現金及約當現金",
+        "Adjustment for change in book value of property, plant, and equipment due to depreciation and amortization": "TRANSLATION",
 
     }
 }
