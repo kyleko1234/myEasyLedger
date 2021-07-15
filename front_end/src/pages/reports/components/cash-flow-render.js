@@ -24,7 +24,6 @@ function CashFlowRender() {
     const [loading, setLoading] = React.useState(true);
 
     const [cashFlowJson, setCashFlowJson] = React.useState(null);
-    const [hasChangesInOperatingAssetsLiabilities, setHasChangesInOperatingAssetsLiabilities] = React.useState(false);
     const [cashBeginningBalances, setCashBeginningBalances] = React.useState(0);
     const [cashEndingBalances, setCashEndingBalances] = React.useState(0);
 
@@ -111,12 +110,46 @@ function CashFlowRender() {
     }
 
     const hasAdjustmentsInOperatingIncome = () => {
+        let returnedBoolean = false;
         cashFlowObjects.forEach(cashFlowObject => {
             if (cashFlowObject.depreciationAndAmortization || cashFlowObject.deferredTax || cashFlowObject.shareBasedCompensation || cashFlowObject.nonOperatingIncome) {
-                return true;
+                returnedBoolean = true;
             }
-            return false;
         })
+        return returnedBoolean;
+    }
+
+    const hasChangesInOperatingAssetsLiabilities = () => {
+        let returnedBoolean = false;
+        cashFlowObjects.forEach(cashFlowObject => {
+            if (cashFlowObject.receivables || cashFlowObject.payables || cashFlowObject.inventory || cashFlowObject.deferredRevenue || cashFlowObject.otherAssets || cashFlowObject.otherLiabilities) {
+                returnedBoolean = true;
+            }
+        })
+        return returnedBoolean;
+    }
+
+    const hasZeroAmountsForFieldInAllDateRanges = (fieldName) => {
+        let nonZeroAmount = []
+        nonZeroAmount = cashFlowObjects.filter(cashFlowObject => cashFlowObject[fieldName] != 0);
+        if (nonZeroAmount.length) {
+            return false;
+        } 
+        return true;
+    }
+
+    const renderCellsForField = (fieldName) => {
+        return(
+            <div className="text-right d-flex">
+                {cashFlowObjects.map((cashFlowObject, i) => {
+                    return(
+                        <div key={i} className="width-175">
+                            {numberAsCurrency(cashFlowObject[fieldName])}
+                        </div>
+                    )
+                })}
+            </div>
+        )
     }
 
     React.useEffect(() => {
@@ -140,11 +173,7 @@ function CashFlowRender() {
                 if (response.data) {
                     setCashFlowJson(response.data);
           
-                    if (response.data.receivables || response.data.payables || response.data.inventory || response.data.deferredRevenue || response.data.otherAssets || response.data.otherLiabilities) {
-                        setHasChangesInOperatingAssetsLiabilities(true);
-                    } else {
-                        setHasChangesInOperatingAssetsLiabilities(false);
-                    }
+            
                     let beginningCashSubtype = response.data.beginningAccountSubtypeBalances.find(accountSubtype => accountSubtype.accountSubtypeId == response.data.cashAndCashEquivalentsSubtypeId);
                     if (beginningCashSubtype) {
                         setCashBeginningBalances(beginningCashSubtype.debitsMinusCredits);
@@ -246,7 +275,6 @@ function CashFlowRender() {
                     : null}
                 </CardBody>
             </Card>
-
             <div >
                     {(loading || !cashFlowObjects.length) ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
                     <div className="overflow-auto">
@@ -295,26 +323,40 @@ function CashFlowRender() {
                                 <div className="striped-row font-weight-600">{cashFlowReportText[appContext.locale]["Operating activities"]}</div>
                                 <div className="striped-row justify-content-between indent">
                                     <div>{cashFlowReportText[appContext.locale]["Net Income"]}</div>
-                                    <div className="text-right d-flex">
-                                        {cashFlowObjects.map((cashFlowObject, i) => {
-                                            return(
-                                                <div key={i} className="width-175">
-                                                    {numberAsCurrency(cashFlowObject.netIncome)}
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
+                                    {renderCellsForField("netIncome")}
                                 </div>
-                                {!hasAdjustmentsInOperatingIncome? null : 
+                                {(!hasAdjustmentsInOperatingIncome())? null : 
                                     <div className="striped-row indent font-weight-600">
                                         {cashFlowReportText[appContext.locale]["Adjustments to reconcile operating income to cash generated by operating activities"]}
                                     </div>
                                 }
-                                {!cashFlowJson.depreciationAndAmortization? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Depreciation and amortization"]}</div><div>{numberAsCurrency(cashFlowJson.depreciationAndAmortization)}</div></div>}
-                                {!cashFlowJson.deferredTax? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Increase (decrease) in deferred taxes"]}</div><div>{numberAsCurrency(cashFlowJson.deferredTax)}</div></div>}
-                                {!cashFlowJson.shareBasedCompensation? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Share-based compensation"]}</div><div>{numberAsCurrency(cashFlowJson.shareBasedCompensation)}</div></div>}
-                                {!cashFlowJson.nonOperatingIncome? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Adjustment for non-operating loss (income)"]}</div><div>{numberAsCurrency(cashFlowJson.nonOperatingIncome * -1)}</div></div>}
-                                {!hasChangesInOperatingAssetsLiabilities? null : <div className="striped-row font-weight-600 indent">{cashFlowReportText[appContext.locale]["Changes in operating assets and liabilities"]}</div>}
+                                {hasZeroAmountsForFieldInAllDateRanges("depreciationAndAmortization")? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Depreciation and amortization"]}</div>
+                                        {renderCellsForField("depreciationAndAmortization")}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("deferredTax")? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Increase (decrease) in deferred taxes"]}</div>
+                                        {renderCellsForField("deferredTax")}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("shareBasedCompensation")? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Share-based compensation"]}</div>
+                                        {renderCellsForField("shareBasedCompensation")}
+                                    </div>
+                                }
+                                {hasZeroAmountsForFieldInAllDateRanges("nonOperatingIncome")? null : 
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{cashFlowReportText[appContext.locale]["Adjustment for non-operating loss (income)"]}</div>
+                                        {renderCellsForField("nonOperatingIncome")}
+                                    </div>
+                                }
+                                {!hasChangesInOperatingAssetsLiabilities()? null : 
+                                    <div className="striped-row font-weight-600 indent">{cashFlowReportText[appContext.locale]["Changes in operating assets and liabilities"]}</div>
+                                }
                                 {!cashFlowJson.receivables? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Decrease (increase) in receivables"]}</div><div>{numberAsCurrency(cashFlowJson.receivables * -1)}</div></div>}
                                 {!cashFlowJson.payables? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Increase (decrease) in payables"]}</div><div>{numberAsCurrency(cashFlowJson.payables)}</div></div>}
                                 {!cashFlowJson.inventory? null : <div className="striped-row justify-content-between indent-2"><div>{cashFlowReportText[appContext.locale]["Decrease (increase) in inventory"]}</div><div>{numberAsCurrency(cashFlowJson.inventory * -1)}</div></div>}
