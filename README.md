@@ -126,3 +126,10 @@ $ npm start
 ```
 
 Please make sure that the backend server is running before starting the frontend.
+
+### User setup
+This webapp features full user authentication. In order to demo the app, you will need to create an account and log in. Because this webapp uses an email verification system, you must set up an SMTP service to allow the server to send registration emails before you can create a user account. For easy of demonstration, the `db_full` database backup file includes a user with sample data. The credentials of this sample user are as follows:
+```
+username: kyleko1234@gmail.com
+password: admin
+```
