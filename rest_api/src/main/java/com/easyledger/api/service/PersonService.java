@@ -123,6 +123,10 @@ public class PersonService {
         		case "currentOrganizationId":
         			person.setCurrentOrganizationId(Long.valueOf(((Integer) v).longValue()));
         			break;
+        		
+        		case "darkMode":
+        			person.setDarkMode(v.toString());
+        			break;
         	}  	
         }
 	}

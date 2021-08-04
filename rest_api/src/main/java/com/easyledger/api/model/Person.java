@@ -94,6 +94,9 @@ public class Person {
 	@Column(name = "current_organization_id")
 	private Long currentOrganizationId;
 	
+	@Column(name = "dark_mode")
+	private String darkMode = "system";
+	
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries;
@@ -250,13 +253,24 @@ public class Person {
 		this.verificationToken = verificationToken;
 	}
 
+	public String getDarkMode() {
+		return darkMode;
+	}
+
+	public void setDarkMode(String darkMode) {
+		this.darkMode = darkMode;
+	}
+
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + ", enabled=" + enabled + ", locale=" + locale + ", currentOrganizationId="
-				+ currentOrganizationId + ", journalEntries=" + journalEntries + ", permissions=" + permissions
-				+ ", roles=" + roles + "]";
+				+ currentOrganizationId + ", darkMode=" + darkMode + ", journalEntries=" + journalEntries
+				+ ", permissions=" + permissions + ", roles=" + roles + ", verificationToken=" + verificationToken
+				+ "]";
 	}
+
+
 	
 	
 }

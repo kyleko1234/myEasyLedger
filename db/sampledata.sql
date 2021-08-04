@@ -119,9 +119,9 @@ EXPENSES
 
 
 
-INSERT INTO person(first_name, last_name, email, password, enabled, locale, current_organization_id)
+INSERT INTO person(first_name, last_name, email, password, enabled, locale, current_organization_id, dark_mode)
     VALUES
-        ('Kyle', 'Ko', 'kyleko1234@gmail.com', '$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG', TRUE, 'en-US', 1);
+        ('Kyle', 'Ko', 'kyleko1234@gmail.com', '$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG', TRUE, 'en-US', 1, 'system');
 
 /** id | first_name | last_name | email             | password
      1 | 'Kyle'   | 'Ko'    | kyleko1234@gmail.com  | $2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG (bcrypted 'admin')
