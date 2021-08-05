@@ -41,21 +41,24 @@ function EasyledgersDropdown(props) {
                             {permissionTypes.find(permissionType => permissionType.value === appContext.currentPermissionTypeId).label}
                         </div>
                     </DropdownItem>
-                    <DropdownItem divider />
-                    {appContext.permissions
-                        .filter(permission => permission.organization.id !== appContext.currentOrganizationId)
-                        .map(permission => {
-                            return (
-                                <DropdownItem 
-                                    key={permission.organization.id} 
-                                    onClick={() => handleChangeCurrentOrganization(permission.organization.id)}
-                                    className="text-nowrap"
-                                >
-                                    {permission.organization.name}
-                                </DropdownItem>
-                            )
-                        })
-                    }
+                    {(appContext.permissions.length > 1) ?
+                    <>
+                        <DropdownItem divider />
+                        {appContext.permissions
+                            .filter(permission => permission.organization.id !== appContext.currentOrganizationId)
+                            .map(permission => {
+                                return (
+                                    <DropdownItem 
+                                        key={permission.organization.id} 
+                                        onClick={() => handleChangeCurrentOrganization(permission.organization.id)}
+                                        className="text-nowrap"
+                                    >
+                                        {permission.organization.name}
+                                    </DropdownItem>
+                                )
+                            })}
+                    </>
+                    : null}
                     <DropdownItem divider />
                     <DropdownItem 
                         onClick={() => history.push("/create-a-new-easyledger")}
