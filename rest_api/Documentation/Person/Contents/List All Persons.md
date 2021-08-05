@@ -25,6 +25,7 @@ ___
 		"email": "kyleko1234@gmail.com",
 		"locale": "en-US",
 		"currentOrganizationId": 1,
+		"darkMode": "system",
 		"organizations": [
 			{
 				"id": 1,
