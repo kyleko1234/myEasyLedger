@@ -70,6 +70,7 @@ class App extends React.Component {
 					lastName: response.data.lastName,
 					email: response.data.email,
 					locale: response.data.locale,
+                    darkMode: response.data.darkMode,
 					currentOrganizationId: (response.data.currentOrganizationId? response.data.currentOrganizationId: response.data.permissions[0].organization.id)
 				}, () => {
 					let currentPermission = this.state.permissions.find(permission => permission.organization.id == this.state.currentOrganizationId)
@@ -115,6 +116,7 @@ class App extends React.Component {
 			currentOrganizationId: null,
 			permissions: null,
 			locale: 'en-US',
+            darkMode: 'system',
 			handleSetLocale: this.handleSetLocale, //setting a user's locale should call PATCH /person/{personId} and then fetchUserInfo(personId); however, changing the locale on the registration/login pages should call handleSetLocale()
 
 			currentOrganizationName: '',
