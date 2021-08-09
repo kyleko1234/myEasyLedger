@@ -16,6 +16,10 @@ function Settings() {
     const toggleChangePasswordModal = () => {
         setChangePasswordModal(!changePasswordModal);
     }
+    const [appearanceSettingsModal, setAppearanceSettingsModal] = React.useState(false);
+    const toggleAppearanceSettingsModal = () => {
+        setAppearanceSettingsModal(!appearanceSettingsModal);
+    }
 
     return (
         <div>
@@ -32,12 +36,19 @@ function Settings() {
                                 <i className="fas fa-angle-right"></i>
                             </div>
                         </Link>
+                        <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleAppearanceSettingsModal}>
+                            <div className="indent td">{settingsText[appContext.locale]["Appearance Settings"]}</div>
+                            <div className="text-muted pr-2">
+                                <i className="fas fa-angle-right"></i>
+                            </div>
+                        </Link>
                         <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleChangePasswordModal}>
                             <div className="indent td">{settingsText[appContext.locale]["Change Password"]}</div>
                             <div className="text-muted pr-2">
                                 <i className="fas fa-angle-right"></i>
                             </div>
                         </Link>
+
                     </div>
                 </CardBody>
             </Card>

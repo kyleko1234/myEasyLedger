@@ -4,6 +4,7 @@ export const settingsText = {
         "Settings": "Settings",
         "Personal Settings": "Personal Settings",
         "Language Settings": "Language Settings",
+        "Appearance Settings": "Appearance Settings",
         "Language": "Language",
         "Save": "Save",
         "Manage my EasyLedgers...": "Manage my EasyLedgers...",
@@ -47,6 +48,7 @@ export const settingsText = {
         "Personal Settings": "個人設定",
         "Language": "語言",
         "Language Settings": "語言設定",
+        "Appearance Settings": "TRANSLATION",
         "Save": "儲存",
         "Manage my EasyLedgers...": "管理我所有的帳本...",
 
