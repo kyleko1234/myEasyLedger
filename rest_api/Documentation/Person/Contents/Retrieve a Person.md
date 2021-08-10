@@ -1,4 +1,4 @@
-### Retrieve a person
+``### Retrieve a person
 Endpoint: `GET /person/{id}`
 
 Authorization: Current user can only request the Person object representing themselves.
@@ -25,7 +25,7 @@ ___
     "email": "kyleko1234@gmail.com",
     "locale": "en-US",
     "currentOrganizationId": 1,
-	"darkMode": "system",
+	"appearance": "system",
     "permissions": [
         {
             "id": 1,

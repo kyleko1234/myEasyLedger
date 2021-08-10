@@ -19,8 +19,8 @@ Password of the user.
 - **locale (optional `string` 64)** <br/>
 Locale representing the language settings for the user. A list of valid locales is found [[Easy Ledger#Currently supported locales|here]].
 
-- **darkMode (`String` 16)**<br/>
-The user's preferred color scheme. Three options are valid: `'system'`, `'true', and 'false'`. The `'system'` option changes the color scheme based on the user's system preferences; the other two are self explanatory. If an invalid option is given here, the app should default to system appearance.
+- **appearance (`String` 16)**<br/>
+The user's preferred color scheme. Three options are valid: `'system'`, `'light', and 'dark'`. The `'system'` option changes the color scheme based on the user's system preferences; the other two are self explanatory. If an invalid option is given here, the app should default to system appearance.
 
 - **currentOrganizationId (optional`Long`)**<br/>
 The current organization that the user is viewing information or making edits for. This should be an organization that the user belongs to; otherwise any requests involving organizationId will likely return an unauthorized exception. The API does not validate this field!

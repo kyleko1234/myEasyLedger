@@ -94,8 +94,8 @@ public class Person {
 	@Column(name = "current_organization_id")
 	private Long currentOrganizationId;
 	
-	@Column(name = "dark_mode")
-	private String darkMode = "system";
+	@Column(name = "appearance")
+	private String appearance = "system";
 	
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
@@ -253,19 +253,19 @@ public class Person {
 		this.verificationToken = verificationToken;
 	}
 
-	public String getDarkMode() {
-		return darkMode;
+	public String getAppearance() {
+		return appearance;
 	}
 
-	public void setDarkMode(String darkMode) {
-		this.darkMode = darkMode;
+	public void setAppearance(String appearance) {
+		this.appearance = appearance;
 	}
 
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + ", enabled=" + enabled + ", locale=" + locale + ", currentOrganizationId="
-				+ currentOrganizationId + ", darkMode=" + darkMode + ", journalEntries=" + journalEntries
+				+ currentOrganizationId + ", appearance=" + appearance + ", journalEntries=" + journalEntries
 				+ ", permissions=" + permissions + ", roles=" + roles + ", verificationToken=" + verificationToken
 				+ "]";
 	}

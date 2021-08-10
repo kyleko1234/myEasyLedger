@@ -22,8 +22,8 @@ String representing the locale for the user's language setting. A list of suppor
 - **currentOrganizationId (optional`Long`)**<br/>
 The current organization that the user is viewing information or making edits for. This should be an organization that the user belongs to; otherwise any requests involving organizationId will likely return an unauthorized exception. This field can be null! It is suggested that the default behavior of a client is to treat this field as organizations[0].id if this field is null.
 
-- **darkMode (`String` 16)**<br/>
-The user's preferred color scheme. Three options are valid: `'system'`, `'true', and 'false'`. The `'system'` option changes the color scheme based on the user's system preferences; the other two are self explanatory. If an invalid option is given here, the app should default to system appearance.
+- **appearance (`String` 16)**<br/>
+The user's preferred color scheme. Three options are valid: `'system'`, `'light', and 'dark'`. The `'system'` option changes the color scheme based on the user's system preferences; the other two are self explanatory. If an invalid option is given here, the app should default to system appearance.
 
 - **permissions(`Array<Permission>`)**<br/>
  A list of Permission objects that affect this user. See [[Permission]]. A Person can be expected to have exactly one permission object for each organization they belong to.
@@ -41,7 +41,7 @@ ___
     "email": "kyleko1234@gmail.com",
     "locale": "en-US",
     "currentOrganizationId": 1,
-	"darkMode": "system",
+	"appearance": "system",
     "permissions": [
         {
             "id": 1,

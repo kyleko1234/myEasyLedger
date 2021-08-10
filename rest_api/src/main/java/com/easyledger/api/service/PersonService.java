@@ -124,8 +124,8 @@ public class PersonService {
         			person.setCurrentOrganizationId(Long.valueOf(((Integer) v).longValue()));
         			break;
         		
-        		case "darkMode":
-        			person.setDarkMode(v.toString());
+        		case "appearance":
+        			person.setAppearance(v.toString());
         			break;
         	}  	
         }
