@@ -40,7 +40,12 @@ export const settingsText = {
         "Easyledger Name": "Easyledger Name",
         "Currency": "Currency",
         "Fiscal Year Begin Date": "Fiscal Year Begin Date",
-        "Save": "Save"
+        "Save": "Save", 
+
+        //Appearance settings options
+        "System": "System",
+        "Light": "Light",
+        "Dark": "Dark"
     },
     "zh-TW": {
         "Home": "首頁",
@@ -82,7 +87,13 @@ export const settingsText = {
         "Easyledger Name": "帳簿名稱",
         "Currency": "幣別",
         "Fiscal Year Begin Date": "會計年度起始日",
-        "Save": "儲存"
+        "Save": "儲存",
+
+        //Appearance settings options
+        "System": "TRANSLATION",
+        "Light": "TRANSLATION",
+        "Dark": "TRANSLATION"
+        
 
     }
 }
