@@ -3,20 +3,19 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
 import { PageSettings } from '../../config/page-settings';
 import { settingsText } from '../../utils/i18n/settings-text';
-import { API_BASE_URL, LOCALE_OPTIONS } from '../../utils/constants';
-import Select from 'react-select';
+import { API_BASE_URL } from '../../utils/constants';
 
 function AppearanceSettingsModal(props) {
 //required props: isOpen, toggle
     const appContext = React.useContext(PageSettings);
     const [selectedAppearance, setSelectedAppearance] = React.useState(appContext.appearance);
-    const handleChangeLocaleOption = (selectedOption) => {
-        setSelectedLocale(selectedOption.value);
+    const handleChangeAppearance = event => {
+        setSelectedAppearance(event.target.value);
     }
     const handleSaveButton = async (event) => {
         event.preventDefault();
         let requestBody = {
-            locale: selectedLocale
+            appearance: selectedAppearance
         }
         await axios.patch(`${API_BASE_URL}/person/${appContext.personId}`, requestBody).then(response => {
             console.log(response);
@@ -28,23 +27,24 @@ function AppearanceSettingsModal(props) {
         <>
             <Modal isOpen={props.isOpen} toggle={props.toggle} centered={true} >
                 <ModalHeader>
-                    {settingsText[appContext.locale]["Language Settings"]}
+                    {settingsText[appContext.locale]["Appearance Settings"]}
                 </ModalHeader>
                 <ModalBody>
                     <div className="px-3 py-3">
                             <form className="form-group row" onSubmit={handleSaveButton}>
-                                <label className="col-sm-3 col-form-label">
-                                    {settingsText[appContext.locale]["Language"]}
-                                </label>
-                                <div className="col-sm-9">
-                                    <Select
-                                        options={LOCALE_OPTIONS}
-                                        onChange={handleChangeLocaleOption}
-                                        value={LOCALE_OPTIONS.find(localeOption => localeOption.value == selectedLocale)}
-                                        menuPortalTarget={document.body}
-                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                                        menuPlacement={'auto'}
-                                    />
+                                <div className="col-xl-4">
+                                    <div className="radio radio-css">
+                                        <input type="radio" value={"system"} id="appearance-system" name="is-enterprise" checked={selectedAppearance === "system"} onChange={handleChangeAppearance} />
+                                        <label className="mx-2" htmlFor="appearance-system">System</label>
+                                    </div>
+                                    <div className="radio radio-css">
+                                        <input type="radio" value={"light"} id="appearance-light" name="is-enterprise" checked={selectedAppearance === "light"} onChange={handleChangeAppearance} />
+                                        <label className="mx-2" htmlFor="appearance-light">Light</label>
+                                    </div>
+                                    <div className="radio radio-css">
+                                        <input type="radio" value={"dark"} id="appearance-dark" name="is-enterprise" checked={selectedAppearance === "dark"} onChange={handleChangeAppearance} />
+                                        <label className="mx-2" htmlFor="appearance-dark">Dark</label>
+                                    </div>
                                 </div>
                             </form>
                     </div>

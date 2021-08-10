@@ -5,6 +5,7 @@ import { settingsText } from '../../utils/i18n/settings-text';
 import LanguageSettingsModal from './language-settings-modal';
 import ChangePasswordModal from './change-password-modal';
 import { Card, CardBody, CardTitle } from 'reactstrap';
+import AppearanceSettingsModal from './appearance-settings-modal';
 function Settings() {
     const appContext = React.useContext(PageSettings);
 
@@ -74,6 +75,7 @@ function Settings() {
                 </Card>
             }
             <LanguageSettingsModal isOpen={languageSettingsModal} toggle={toggleLanguageSettingsModal}/>
+            <AppearanceSettingsModal isOpen={appearanceSettingsModal} toggle={toggleAppearanceSettingsModal}/>
             <ChangePasswordModal isOpen={changePasswordModal} toggle={toggleChangePasswordModal} />
         </div>
 
