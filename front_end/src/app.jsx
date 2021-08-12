@@ -157,8 +157,17 @@ class App extends React.Component {
 		window.addEventListener('resize', this.handleWindowResize);
         window.matchMedia('(prefers-color-scheme: dark)')
             .addEventListener('change', this.setColorSchemeToSystemPreference)
-        
 	}
+
+    componentDidUpdate(prevState) {
+        if (this.state.colorScheme != prevState.colorScheme) {
+            if (this.state.colorScheme === 'dark') {
+                document.body.classList.add('dark-mode')
+            } else {
+                document.body.classList.remove('dark-mode')
+            }
+        }
+    }
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleWindowResize);
@@ -174,8 +183,7 @@ class App extends React.Component {
 					(this.state.pageHeader ? 'page-header-fixed ' : '') + 
 					(this.state.pageSidebar ? '' : 'page-without-sidebar ') + 
 					(this.state.pageSidebarToggled ? 'page-sidebar-toggled ' : '') +
-					(this.state.pageSidebarHidden? 'page-sidebar-hidden ' : '') + 
-                    ((this.state.colorScheme === 'dark')? 'dark-mode ' : '')
+					(this.state.pageSidebarHidden? 'page-sidebar-hidden ' : '') 
 				}>
 					{this.state.pageHeader && !this.state.isLoading && this.state.isAuthenticated && (<Header />)}
 					{this.state.pageSidebar && !this.state.isLoading && this.state.isAuthenticated && (<Sidebar />)}

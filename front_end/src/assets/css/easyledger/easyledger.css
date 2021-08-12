@@ -18,6 +18,9 @@ body {
     text-align: left;
     background-color: white;
 }
+body.dark-mode{
+    background-color: #1e1e1e;
+}
 /* SIDEBAR CLASSES */
 .sidebar {
     width: var(--sidebar-width);
