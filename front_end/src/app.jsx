@@ -60,6 +60,19 @@ class App extends React.Component {
 			})
 		}
 
+        this.setColorSchemeToSystemPreference = () => {
+            if (this.state.appearance === 'system') {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    this.setState({
+                        colorScheme: 'dark'
+                    })
+                } else {
+                    this.setState({
+                        colorScheme: 'light'
+                    })
+                }
+            }
+        }
 	
 		this.fetchUserInfo = async (id) => {
 			await axios.get(`${API_BASE_URL}/person/${id}`).then(response => { //it is very important to await the completion of this function otherwise you will make many http requests with null organizationId or personIds
@@ -80,6 +93,13 @@ class App extends React.Component {
 						currency: currentPermission.organization.currency,
 						isEnterprise: currentPermission.organization.isEnterprise
 					})
+                    if (this.state.appearance === 'system') {
+                        this.setColorSchemeToSystemPreference()
+                    } else {
+                        this.setState({
+                            colorScheme: this.state.appearance
+                        })
+                    }
 				})	
 			}).catch(console.log);
 		}
@@ -117,6 +137,7 @@ class App extends React.Component {
 			permissions: null,
 			locale: 'en-US',
             appearance: 'system',
+            colorScheme: 'light',
 			handleSetLocale: this.handleSetLocale, //setting a user's locale should call PATCH /person/{personId} and then fetchUserInfo(personId); however, changing the locale on the registration/login pages should call handleSetLocale()
 
 			currentOrganizationName: '',
@@ -132,11 +153,17 @@ class App extends React.Component {
 	
 	componentDidMount() {
 		this.checkForAuthentication();
+        this.setColorSchemeToSystemPreference();
 		window.addEventListener('resize', this.handleWindowResize);
+        window.matchMedia('(prefers-color-scheme: dark)')
+            .addEventListener('change', this.setColorSchemeToSystemPreference)
+        
 	}
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleWindowResize);
+        window.matchMedia('(prefers-color-scheme: dark)')
+            .removeEventListener('change', this.setColorSchemeToSystemPreference)
 	}
 	
 	render() {
