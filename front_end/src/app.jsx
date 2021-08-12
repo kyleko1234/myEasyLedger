@@ -173,9 +173,9 @@ class App extends React.Component {
 					'page-sidebar-fixed ' + 
 					(this.state.pageHeader ? 'page-header-fixed ' : '') + 
 					(this.state.pageSidebar ? '' : 'page-without-sidebar ') + 
-					(this.state.pageSidebarWide ? 'page-with-wide-sidebar ' : '') + //can be removed after finished with redesign
 					(this.state.pageSidebarToggled ? 'page-sidebar-toggled ' : '') +
-					(this.state.pageSidebarHidden? 'page-sidebar-hidden ' : '')
+					(this.state.pageSidebarHidden? 'page-sidebar-hidden ' : '') + 
+                    ((this.state.colorScheme === 'dark')? 'dark-mode ' : '')
 				}>
 					{this.state.pageHeader && !this.state.isLoading && this.state.isAuthenticated && (<Header />)}
 					{this.state.pageSidebar && !this.state.isLoading && this.state.isAuthenticated && (<Sidebar />)}
