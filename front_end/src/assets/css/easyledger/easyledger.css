@@ -7,6 +7,8 @@
     --compact-font-size: 0.75rem;
     --base-text-color: #000;
     --sidebar-text-color: #555;
+    --dark-mode-text-color: var(--light);
+    --dark-mode-sidebar-text-color: #dddddd;
 }
 body {
     margin: 0;
@@ -19,6 +21,7 @@ body {
     background-color: white;
 }
 body.dark-mode{
+    color: var(--dark-mode-text-color);
     background-color: #1e1e1e;
 }
 /* SIDEBAR CLASSES */
@@ -32,9 +35,11 @@ body.dark-mode{
     z-index: 1010;
     transition: var(--sidebar-hidden-transition-time);
 }
+
 .page-header-fixed .sidebar {
     top: var(--header-height);
 }
+
 .page-sidebar-hidden .sidebar {
     left: calc(var(--sidebar-width) * -1);
     transition: var(--sidebar-hidden-transition-time);
@@ -56,23 +61,48 @@ body.dark-mode{
     color: var(--sidebar-text-color);
     display: block;
 }
+
 .sidebar-item i {
     color: var(--primary);
     display: inline-block;
     width: 25px;
 }
+
 .sidebar-item:hover {
     color: var(--sidebar-text-color);
     background-color: lightgray;
     text-decoration: none;
 }
+
 .sidebar-item.active {
     background-color: var(--primary);
     color: white;
 }
+
 .sidebar-item.active i {
     color: white;
 }
+
+.dark-mode .sidebar {
+    background: #282828;
+    border-color: black;
+}
+
+.dark-mode .sidebar-item {
+    color: var(--dark-mode-sidebar-text-color);
+}
+
+.dark-mode .sidebar-item:hover {
+    color: var(--dark-mode-sidebar-text-color);
+    background-color: #383838;
+}
+
+.dark-mode .sidebar-item.active,
+.dark-mode .sidebar-item.active i {
+    color: white;
+    background-color: var(--primary);
+}
+
 
 /* PAGE HEADER CLASSES */
 .header {
@@ -114,6 +144,20 @@ body.dark-mode{
     }
 }
 
+.dark-mode .header {
+    background-color: #1a1a1a;
+    border-color: #232323;
+}
+
+.dark-mode .header-logo {
+    color: white;
+}
+
+.dark-mode .header-logo:focus,
+.dark-mode .header-logo:hover {
+    color: white;
+}
+
 /* CONTENT CLASSES */
 .content {
     position: relative;
@@ -142,7 +186,7 @@ body.dark-mode{
     transition: var(--sidebar-hidden-transition-time);
 }
 
-/* MODIFICATIONS AND ADDITIONS TO BOOTSTRAP BUTTONS */
+/* MODIFICATIONS AND ADDITIONS TO BOOTSTRAP BUTTONS */ /* TODO: darkmode */
 .btn {
     font-size: var(--base-font-size);
     font-weight: 500;
