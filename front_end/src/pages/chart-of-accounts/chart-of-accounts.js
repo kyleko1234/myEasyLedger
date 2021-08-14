@@ -96,6 +96,7 @@ class ChartOfAccounts extends React.Component {
         const accountTypeOptions = ACCOUNT_TYPE_OPTIONS(this.context.locale);
         return(
             <Select
+                classNamePrefix="form-control"
                 options={accountTypeOptions}
                 value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == this.props.match.params.activeTabId)}
                 onChange={selectedOption => this.props.history.push(`/chart-of-accounts/${selectedOption.value}`)}

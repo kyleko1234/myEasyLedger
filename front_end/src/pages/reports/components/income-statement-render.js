@@ -255,6 +255,7 @@ function IncomeStatementRender() {
                                     <div className="d-flex w-100 align-items-center mb-2">
                                         <Select
                                             className="col-4 px-0"
+                                            classNamePrefix="form-control"
                                             options={dateRangePresets}
                                             menuPortalTarget={document.body}
                                             menuShouldScrollIntoView={false}
@@ -285,6 +286,7 @@ function IncomeStatementRender() {
                                         </div>
                                         <Select
                                             className="col-6 px-0"
+                                            classNamePrefix="form-control"
                                             options={dateRangePresets}
                                             menuPortalTarget={document.body}
                                             menuShouldScrollIntoView={false}

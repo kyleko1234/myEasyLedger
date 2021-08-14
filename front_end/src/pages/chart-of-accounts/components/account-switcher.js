@@ -78,6 +78,7 @@ function AccountSwitcher(props) {
                     </label>
                     <div className="col-md-6">
                         <Select
+                            classNamePrefix="form-control"
                             options={props.isEnterprise? accountTypeOptions : 
                                 (props.category? accountTypeOptions.filter(accountTypeOption => CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value)) : accountTypeOptions.filter(accountTypeOption => NON_CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value)))}
                             value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == selectedAccountTypeOptionId)}

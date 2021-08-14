@@ -219,6 +219,7 @@ function OrganizationRoster(props) {
                             </label>
                             <div className="col-lg-7">
                                 <Select
+                                    classNamePrefix="form-control"
                                     options={permissionTypeOptions.filter(option => option.value < ownPermissionForCurrentOrganization.permissionType.id)}
                                     value={selectedPermissionTypeOption}
                                     isSearchable={true}
@@ -271,6 +272,7 @@ function OrganizationRoster(props) {
                                     </label>
                                     <div className="col-lg-6">
                                         <Select
+                                            classNamePrefix="form-control"
                                             options={permissionTypeOptions.filter(option => option.value < ownPermissionForCurrentOrganization.permissionType.id)}
                                             value={selectedPermissionTypeOption}
                                             isSearchable={true}

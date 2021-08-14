@@ -100,6 +100,7 @@ function OrganizationSettings(props) {
                         <div className="col-md-9 d-flex px-0">
                             <div className="w-50 mr-3">
                                 <Select
+                                    classNamePrefix="form-control"
                                     options={monthOptions}
                                     value={monthOptions.find(option => option.value === fiscalYearBeginMonth)}
                                     onChange={selectedOption => setFiscalYearBeginMonth(selectedOption.value)}
@@ -108,6 +109,7 @@ function OrganizationSettings(props) {
                             </div>
                             <div className="w-25">
                                 <Select
+                                    classNamePrefix="form-control"
                                     options={dateOptions}
                                     value={dateOptions.find(option => option.value === fiscalYearBeginDay)}
                                     onChange={selectedOption => setFiscalYearBeginDay(selectedOption.value)}

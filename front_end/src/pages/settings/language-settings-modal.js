@@ -38,6 +38,7 @@ function LanguageSettingsModal(props) {
                                 </label>
                                 <div className="col-sm-9">
                                     <Select
+                                        classNamePrefix="form-control"
                                         options={LOCALE_OPTIONS}
                                         onChange={handleChangeLocaleOption}
                                         value={LOCALE_OPTIONS.find(localeOption => localeOption.value == selectedLocale)}

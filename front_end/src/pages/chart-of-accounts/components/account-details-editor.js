@@ -268,6 +268,7 @@ function AccountDetailsEditor(props) {
                         </label>
                         <div className="col-md-8">
                             <Select
+                                classNamePrefix="form-control"
                                 options={parentAccountOptions.filter(option => option.object.accountTypeId == accountTypeId)}
                                 value={parentAccountOptions.find(option => option.object.accountId == selectedParentAccountId)}
                                 isSearchable={true}
@@ -283,6 +284,7 @@ function AccountDetailsEditor(props) {
                         </label>
                         <div className="col-md-8">
                             <Select
+                                classNamePrefix="form-control"
                                 options={accountSubtypeOptions.filter(option => option.object.accountType.id == accountTypeId)}
                                 value={accountSubtypeOptions.find(option => option.object.id == selectedAccountSubtypeId)}
                                 isSearchable={true}

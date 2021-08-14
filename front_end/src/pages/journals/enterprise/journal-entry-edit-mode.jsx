@@ -93,19 +93,20 @@ function JournalEntryEditMode({
             case "accountName": //Select component must exist outside of <form>. This way, form can be submitted with enter key. Forms unfortunately cannot be submitted with enter key when Select component is focused.
                 return( 
                         <Select
-                                    options={accountOptions}
-                                    value={accountOptions.find(accountOption => accountOption.object.accountId == data[i].accountId)}
-                                    isSearchable={true}
-                                    menuPortalTarget={document.body}
-                                    menuShouldScrollIntoView={false}
-                                    styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                                    menuPlacement={'auto'}
-                                    onChange={(selectedOption) => {
-                                        let updatedLineItemData = data.slice();
-                                        updatedLineItemData[i].accountId = selectedOption.object.accountId;
-                                        updatedLineItemData[i].accountName = selectedOption.object.accountName;
-                                        setLineItemData(updatedLineItemData);
-                                    }}
+                            classNamePrefix="form-control"
+                            options={accountOptions}
+                            value={accountOptions.find(accountOption => accountOption.object.accountId == data[i].accountId)}
+                            isSearchable={true}
+                            menuPortalTarget={document.body}
+                            menuShouldScrollIntoView={false}
+                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                            menuPlacement={'auto'}
+                            onChange={(selectedOption) => {
+                                let updatedLineItemData = data.slice();
+                                updatedLineItemData[i].accountId = selectedOption.object.accountId;
+                                updatedLineItemData[i].accountName = selectedOption.object.accountName;
+                                setLineItemData(updatedLineItemData);
+                            }}
                         />
 
                 )

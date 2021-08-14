@@ -98,6 +98,7 @@ class Categories extends React.Component {
         const accountTypeOptions = ACCOUNT_TYPE_OPTIONS(this.context.locale).filter(accountTypeOption => CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value))
         return(
             <Select
+                classNamePrefix="form-control"
                 options={accountTypeOptions}
                 value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == this.props.match.params.activeTabId)}
                 onChange={selectedOption => this.props.history.push(`/categories/${selectedOption.value}`)}

@@ -44,6 +44,7 @@ function FirstOrganizationForm(props) {
                     <div className="row mb-3">
                         <div className="col-12">
                             <Select
+                                classNamePrefix="form-control"
                                 options={props.currencyOptions}
                                 value={props.selectedCurrency}
                                 isSearchable={true}

@@ -215,6 +215,7 @@ function CashFlowRender() {
                                     : null}
                                     <div className="d-flex w-100 align-items-center mb-2">
                                         <Select
+                                            classNamePrefix="form-control"
                                             className="col-4 px-0"
                                             options={dateRangePresets}
                                             menuPortalTarget={document.body}
@@ -246,6 +247,7 @@ function CashFlowRender() {
                                         </div>
                                         <Select
                                             className="col-6 px-0"
+                                            classNamePrefix="form-control"
                                             options={dateRangePresets}
                                             menuPortalTarget={document.body}
                                             menuShouldScrollIntoView={false}

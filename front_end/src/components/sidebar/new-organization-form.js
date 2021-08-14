@@ -53,6 +53,7 @@ function NewOrganizationForm(props) {
                 </label>
                 <div className="col-xl-4">
                     <Select
+                        classNamePrefix="form-control"
                         options={currencyOptions}
                         onChange={selectedOption => setSelectedCurrency(selectedOption.value)}
                         value={currencyOptions.find(currencyOption => currencyOption.value == selectedCurrency)}

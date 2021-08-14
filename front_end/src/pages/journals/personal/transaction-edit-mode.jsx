@@ -71,6 +71,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
             case "accountName": //Select component must exist outside of <form>. This way, form can be submitted with enter key. Forms unfortunately cannot be submitted with enter key when Select component is focused.
                 return( 
                     <Select
+                        classNamePrefix="form-control"
                         options={accountOptions.filter(accountOption => data[rowIndex].transactionType.accountTypeIds.includes(accountOption.object.accountTypeId))}
                         value={data[rowIndex].accountId == false ? null : accountOptions.find(accountOption => accountOption.object.accountId == data[rowIndex].accountId) /**The conditional checking for a false-y accountId is necessary if you want this select dropdown to reset when transactionTypeOption is changed. */}
                         isSearchable={true}
@@ -90,6 +91,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
             case "transactionTypeName": 
                 return(
                     <Select
+                        classNamePrefix="form-control"
                         options={transactionTypeOptions}
                         value={transactionTypeOptions.find(transactionType => transactionType.value == data[rowIndex].transactionType.value)}
                         menuPortalTarget={document.body}
@@ -149,6 +151,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                 <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["From Account"]}</strong></div> 
                 <div className="col-lg-4">
                     <Select
+                        classNamePrefix="form-control"
                         options={accountOptions.filter(accountOption => transactionTypeOptions[2].accountTypeIds.includes(accountOption.object.accountTypeId))}
                         value={accountOptions.find(accountOption => accountOption.object.accountId == fromAccountId)}
                         isSearchable={true}
