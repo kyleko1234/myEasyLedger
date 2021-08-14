@@ -233,7 +233,7 @@ body.dark-mode{
     border-color: #d5d5d5;
 }
 
-/* MODIFICATIONS TO BOOTSTRAPFORMS */
+/* MODIFICATIONS TO BOOTSTRAP FORMS */
 .form-control {
     font-size: var(--base-font-size);
 }
@@ -254,6 +254,13 @@ body.dark-mode{
 .modal-content {
     border-radius: 10px;
 }
+.dark-mode .modal-content {
+    background-color: #1e1e1e;
+}
+.dark-mode .modal-footer,
+.dark-mode .modal-header {
+    border-color: #383838;
+}
 
 /* MODIFICATIONS TO BOOTSTRAP PILLS */
 a.nav-link {
@@ -272,6 +279,7 @@ a.nav-link:hover {
 /* MODIFICATIONS TO BOOTSTRAP TABLE */
 .table {
     margin-bottom: 0;
+    color: inherit;
 }
 
 /* MODIFICATIONS TO REACT-SELECT */
