@@ -233,6 +233,17 @@ body.dark-mode{
     border-color: #d5d5d5;
 }
 
+.dark-mode .btn-white {
+    background-color: #181818;
+    border-color: #232323;
+    color: var(--dark-mode-text-color)
+}
+
+.dark-mode .btn-white:hover {
+    background-color: #2a2a2a;
+    border-color: #232323;
+}
+
 /* MODIFICATIONS TO BOOTSTRAP FORMS */
 .form-control {
     font-size: var(--base-font-size);
@@ -249,6 +260,23 @@ body.dark-mode{
 .dropdown-item-text {
     font-size: var(--base-font-size);
 }
+
+.dark-mode .dropdown-menu {
+    background-color: #282828;
+    color: var(--dark-mode-text-color);
+}
+
+.dark-mode .dropdown-item-text,
+.dark-mode .dropdown-item {
+    color: var(--dark-mode-text-color);
+}
+
+.dropdown-item:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+
 
 /* MODIFICATIONS TO BOOTSTRAP MODAL */
 .modal-content {
