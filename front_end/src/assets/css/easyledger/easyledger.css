@@ -238,6 +238,11 @@ body.dark-mode{
     font-size: var(--base-font-size);
 }
 
+.dark-mode .form-control {
+    background-color: #282828;
+    border-color: #373737;
+    color: var(--dark-mode-text-color);
+}
 
 /* MODIFICATIONS TO BOOTSTRAP DROPDOWN*/
 .dropdown-item,
@@ -267,6 +272,29 @@ a.nav-link:hover {
 /* MODIFICATIONS TO BOOTSTRAP TABLE */
 .table {
     margin-bottom: 0;
+}
+
+/* MODIFICATIONS TO REACT-SELECT */
+.dark-mode .form-control__control {
+    background-color: #282828;
+    border-color: #373737;
+}
+
+.dark-mode .form-control__input, 
+.dark-mode .form-control__single-value {
+    color: var(--dark-mode-text-color);
+}
+
+.dark-mode .form-control__menu {
+    background-color: #282828;
+}
+
+.dark-mode .form-control__option--is-focused:not(.form-control__option--is-selected){
+    background-color: #003e9b;
+}
+
+.form-control__option--is-selected {
+    background-color: var(--primary);
 }
 
 /* PSEUDO-TABLE UTILITIES */
