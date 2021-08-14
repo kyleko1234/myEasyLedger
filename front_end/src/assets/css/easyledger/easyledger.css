@@ -145,7 +145,7 @@ body.dark-mode{
 }
 
 .dark-mode .header {
-    background-color: #1a1a1a;
+    background-color: #181818;
     border-color: #232323;
 }
 
@@ -257,6 +257,9 @@ a.nav-link {
 a.nav-link:hover {
     text-decoration: none;
     color: var(--base-text-color);
+}
+.dark-mode a.nav-link:hover {
+    color: var(--dark-mode-text-color);
 }
 
 /* MODIFICATIONS TO BOOTSTRAP TABLE */
