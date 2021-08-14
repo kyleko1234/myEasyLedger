@@ -11,6 +11,16 @@ function ExpenseBreakdown(props) {
     const [loading, setLoading] = React.useState(true);
     const [labels, setLabels] = React.useState([]); 
     const [data, setData] = React.useState([]);
+    const [fontColor, setFontColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-text-color'));
+
+    React.useEffect(() => {
+        setFontColor(
+            appContext.colorScheme === 'dark'
+                ? getComputedStyle(document.documentElement).getPropertyValue('--dark-mode-text-color')
+                : getComputedStyle(document.documentElement).getPropertyValue('--base-text-color')
+        );
+    }, [appContext.colorScheme]) //detects color scheme and changes the color of the chart text accordingly
+
 
     const formatBalance = (debitsMinusCredits) => {
         if (debitsMinusCredits == 0) {
@@ -38,7 +48,12 @@ function ExpenseBreakdown(props) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            legend: {
+                labels: {
+                    fontColor: fontColor
+                }
+            },
         }
     }
     React.useEffect(() => {

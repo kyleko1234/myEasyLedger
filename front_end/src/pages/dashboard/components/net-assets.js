@@ -13,6 +13,22 @@ function NetAssets(props) {
     const [numberOfMonths, setNumberOfMonths] = React.useState(12);
     const [netAssetsData, setNetAssetsData] = React.useState([]);
     const [labels, setLabels] = React.useState([]);
+    const [fontColor, setFontColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-text-color'));
+    const [gridlineColor, setGridlineColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-gridline-color'))
+
+    React.useEffect(() => {
+        setFontColor(
+            appContext.colorScheme === 'dark'
+                ? getComputedStyle(document.documentElement).getPropertyValue('--dark-mode-text-color')
+                : getComputedStyle(document.documentElement).getPropertyValue('--base-text-color')
+        );
+        setGridlineColor(
+            appContext.colorScheme === 'dark'
+                ? getComputedStyle(document.documentElement).getPropertyValue('--dark-mode-gridline-color')
+                : getComputedStyle(document.documentElement).getPropertyValue('--base-gridline-color')
+        );
+
+    }, [appContext.colorScheme]) //detects color scheme and changes the color of the chart text accordingly
 
     const lineChart = {
         data: {
@@ -38,12 +54,26 @@ function NetAssets(props) {
             tooltips: {
                 mode: 'index',
                 intersect: false,
-            }
+            },
+            legend: {
+                labels: {
+                    fontColor: fontColor
+                }
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        color: gridlineColor,
+                    }
+                }],
+              xAxes: [{
+                    gridLines: {
+                        color: gridlineColor
+                    }
+                }]
+            } 
         }
     };
-
-    defaults.global.defaultFontColor = getComputedStyle(document.documentElement).getPropertyValue('--base-font-color'); //chartJS font color
-
 
 
     React.useEffect(() => {
