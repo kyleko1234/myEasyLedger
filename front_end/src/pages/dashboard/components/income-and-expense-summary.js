@@ -12,6 +12,8 @@ function IncomeAndExpenseSummary(props) {
     const [labels, setLabels] = React.useState([]);
     const [incomeData, setIncomeData] = React.useState([]);
     const [expenseData, setExpenseData] = React.useState([]);
+    const [fontColor, setFontColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-text-color'));
+    const [gridlineColor, setGridlineColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-gridline-color'))
 
     //fetch data on component mount
     React.useEffect(() => {
@@ -60,8 +62,20 @@ function IncomeAndExpenseSummary(props) {
         }
     }, [props.accountTypeSummaries])
 
-    defaults.global.defaultFontColor = getComputedStyle(document.documentElement).getPropertyValue('--base-font-color'); //chartJS font color
 
+    React.useEffect(() => {
+        setFontColor(
+            appContext.colorScheme === 'dark'
+                ? getComputedStyle(document.documentElement).getPropertyValue('--dark-mode-text-color')
+                : getComputedStyle(document.documentElement).getPropertyValue('--base-text-color')
+        );
+        setGridlineColor(
+            appContext.colorScheme === 'dark'
+                ? getComputedStyle(document.documentElement).getPropertyValue('--dark-mode-gridline-color')
+                : getComputedStyle(document.documentElement).getPropertyValue('--base-gridline-color')
+        );
+
+    }, [appContext.colorScheme]) //detects color scheme and changes the color of the chart text accordingly
 
     //takes integer representing a year and month in format yyyymm and returns a string "yyyy MonthName"
     const parseYearMonth = yyyymm => {
@@ -131,14 +145,26 @@ function IncomeAndExpenseSummary(props) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
+            legend: {
+                labels: {
+                    fontColor: fontColor
+                }
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        color: gridlineColor,
+                    }
+                }],
+              xAxes: [{
+                    gridLines: {
+                        color: gridlineColor
+                    }
+                }]
+            } 
         }
     };
-
-
-
-
-
 
     return (
         <Card style={{ height: '500px' }} className="shadow-sm very-rounded">

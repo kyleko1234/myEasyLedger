@@ -9,6 +9,8 @@
     --sidebar-text-color: #555;
     --dark-mode-text-color: var(--light);
     --dark-mode-sidebar-text-color: #dddddd;
+    --base-gridline-color: rgba(0, 0, 0, 0.1);
+    --dark-mode-gridline-color: rgba(255, 255, 255, 0.1);
 }
 body {
     margin: 0;
