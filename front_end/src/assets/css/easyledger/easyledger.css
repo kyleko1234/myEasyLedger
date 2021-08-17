@@ -421,6 +421,9 @@ a.tr:hover {
     background-color: white;
     z-index: 1;
 }
+.dark-mode .login-right {
+    background-color: #1e1e1e;
+}
 @media (max-width: 1199.98px) {
     .login-right {
         min-width: 400px;
@@ -480,6 +483,11 @@ a.tr:hover {
     color: black;
     font-weight: 300;
 }
+
+.dark-mode .login-header {
+    color: white;
+}
+
 .login-header b {
     font-weight: 700;
 }
@@ -490,6 +498,11 @@ a.tr:hover {
 }
 
 /* Utility classes, mostly left from adjusting color admin */
+.dark-mode hr {
+    color: var(--dark-mode-text-color);
+    border-color: var(--dark-mode-gridline-color);
+}
+
 .very-rounded {
     border-radius: 10px;
 }
