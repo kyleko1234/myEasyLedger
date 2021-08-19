@@ -119,12 +119,20 @@ public class LineItem {
 	public LineItem(boolean isCredit, BigDecimal amount, String description) {
 		this.isCredit = isCredit;
 		this.amount = amount;
-		this.description = description;
+		this.description = reduceExcessStringSize(description, 255);
 	}
 	
 	public LineItem() {
 	}
 
+	private static String reduceExcessStringSize(String string, int maxLength) {
+		if (string.length() <= maxLength) {
+			return string;
+		} else {
+			return string.substring(0, maxLength);
+		}
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -154,7 +162,7 @@ public class LineItem {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.description = reduceExcessStringSize(description, 255);
 	}
 
 	public Account getAccount() {

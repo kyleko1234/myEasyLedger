@@ -4,7 +4,7 @@ ___
 - **id (`Long`)**
 A unique identifier for this object.
 
-- **name (`String` 50)**
+- **name (`String` 64)**
 The name of this organization.
 
 - **currency (`string` 64)**<br/>
