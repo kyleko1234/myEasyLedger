@@ -80,8 +80,16 @@ public class AccountType {
 	}
 	
 	public AccountType(String name) {
-		this.name = name;
+		this.name = reduceExcessStringSize(name, 20);
 		this.accountSubtypes = new HashSet<AccountSubtype>();
+	}
+	
+	private static String reduceExcessStringSize(String string, int maxLength) {
+		if (string.length() <= maxLength) {
+			return string;
+		} else {
+			return string.substring(0, maxLength);
+		}
 	}
 	
 	public Long getId() {
@@ -97,7 +105,7 @@ public class AccountType {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = reduceExcessStringSize(name, 20);
 	}
 
 	public Set<AccountSubtype> getAccountSubtypes() {

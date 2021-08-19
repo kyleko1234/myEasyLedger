@@ -124,6 +124,14 @@ public class JournalEntry {
 		this.journalEntryLogs = new ArrayList<JournalEntryLog>();
 	}
 
+	private static String reduceExcessStringSize(String string, int maxLength) {
+		if (string.length() <= maxLength) {
+			return string;
+		} else {
+			return string.substring(0, maxLength);
+		}
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -147,7 +155,7 @@ public class JournalEntry {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.description = reduceExcessStringSize(description, 255);
 	}
 
 	public boolean isDeleted() {

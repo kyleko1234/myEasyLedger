@@ -166,15 +166,23 @@ public class AccountSubtype {
 	}
 
 	public AccountSubtype(String name) {
-		this.name = name;
+		this.name = reduceExcessStringSize(name, 64);
 		this.accounts = new HashSet<Account>();
 	}
 	
 	public AccountSubtype(String name, AccountType accountType) {
-		this.name = name;
+		this.name = reduceExcessStringSize(name, 64);
 		this.accountType = accountType;
 		accountType.getAccountSubtypes().add(this);
 		this.accounts = new HashSet<Account>();
+	}
+
+	private static String reduceExcessStringSize(String string, int maxLength) {
+		if (string.length() <= maxLength) {
+			return string;
+		} else {
+			return string.substring(0, maxLength);
+		}
 	}
 
 	public Long getId() {
@@ -190,7 +198,7 @@ public class AccountSubtype {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = reduceExcessStringSize(name, 64);
 	}
 
 	public AccountType getAccountType() {
