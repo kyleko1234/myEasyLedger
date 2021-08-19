@@ -127,16 +127,23 @@ public class Person {
 	}
 	
 	public Person(String firstName, String lastName, String email, String password, boolean enabled, String locale) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email.toLowerCase().trim();
-		this.password = password;
+		this.firstName = reduceExcessStringSize(firstName, 64);
+		this.lastName = reduceExcessStringSize(lastName, 64);
+		this.email = reduceExcessStringSize(email.toLowerCase().trim(), 64);
+		this.password = reduceExcessStringSize(password, 64);
 		this.permissions = new HashSet<Permission>();
 		this.journalEntryLogs = new ArrayList<JournalEntryLog>();
 		this.enabled = enabled;
-		this.locale = locale;
+		this.locale = reduceExcessStringSize(locale, 64);
 	}
 	
+	private static String reduceExcessStringSize(String string, int maxLength) {
+		if (string.length() <= maxLength) {
+			return string;
+		} else {
+			return string.substring(0, maxLength);
+		}
+	}
 	
 	//Add and Remove roles
 	public void addRole(Role role) {
@@ -169,7 +176,7 @@ public class Person {
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		this.firstName = reduceExcessStringSize(firstName, 64);
 	}
 
 	public String getLastName() {
@@ -177,7 +184,7 @@ public class Person {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		this.lastName = reduceExcessStringSize(lastName, 64);
 	}
 
 	public String getEmail() {
@@ -185,7 +192,7 @@ public class Person {
 	}
 
 	public void setEmail(String email) {
-		this.email = email.toLowerCase().trim();
+		this.email = reduceExcessStringSize(email.toLowerCase().trim(), 64);
 	}
 	
 	public String getPassword() {
@@ -193,7 +200,7 @@ public class Person {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = reduceExcessStringSize(password, 64);
 	}
 	
 
@@ -210,7 +217,7 @@ public class Person {
 	}
 
 	public void setLocale(String locale) {
-		this.locale = locale;
+		this.locale = reduceExcessStringSize(locale, 64);
 	}
 
 	public Long getCurrentOrganizationId() {
@@ -258,7 +265,7 @@ public class Person {
 	}
 
 	public void setAppearance(String appearance) {
-		this.appearance = appearance;
+		this.appearance = reduceExcessStringSize(appearance, 16);
 	}
 
 	@Override

@@ -29,12 +29,20 @@ public class Role {
 	private Set<Person> persons;
 
 	public Role(String name) {
-		this.name = name;
+		this.name = reduceExcessStringSize(name, 25);
 		this.persons = new HashSet<Person>();
 	}
 	
 	public Role() {
 		this.persons = new HashSet<Person>();
+	}
+
+	private static String reduceExcessStringSize(String string, int maxLength) {
+		if (string.length() <= maxLength) {
+			return string;
+		} else {
+			return string.substring(0, maxLength);
+		}
 	}
 
 	public Long getId() {
@@ -50,7 +58,7 @@ public class Role {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = reduceExcessStringSize(name, 25);
 	}
 
 	public Set<Person> getPersons() {
