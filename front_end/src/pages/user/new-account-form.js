@@ -14,6 +14,7 @@ function NewAccountForm(props) {
 
     const [emailMatchAlert, setEmailMatchAlert] = React.useState(false);
     const [emailTakenAlert, setEmailTakenAlert] = React.useState(false);
+    const [invalidPasswordAlert, setInvalidPasswordAlert] = React.useState(false);
     const [passwordMatchAlert, setPasswordMatchAlert] = React.useState(false);
 
     const validateForm = event => {
@@ -24,6 +25,11 @@ function NewAccountForm(props) {
 
         if (props.emailInput !== props.reEnterEmailInput) {
             setEmailMatchAlert(true);
+            return;
+        }
+
+        if (props.passwordInput.length < 8 || props.passwordInput.length > 32) {
+            setInvalidPasswordAlert(true);
             return;
         }
 
@@ -83,6 +89,7 @@ function NewAccountForm(props) {
                             <input type="password" className="form-control" placeholder={registerV3Text[appContext.locale]["Password" ]} required value={props.passwordInput} onChange={event => props.setPasswordInput(event.target.value)}/>
                         </div>
                     </div>
+                    {invalidPasswordAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Password must be 8-32 characters long."]}</Alert> : null}
                     <label className="control-label">{registerV3Text[appContext.locale]["Re-enter Password"]} <span className="text-danger">*</span></label>
                     <div className="row mb-3">
                         <div className="col-12">

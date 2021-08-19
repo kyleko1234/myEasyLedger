@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 export const loginV3Text = {
     "en-US": {
-        "App description 1": "Bookkeeping made easy",
+        "App description 1": "Bookkeeping made easy.",
         "Invalid email or password.": "Invalid email or password.",
         "Email not verified": "The email address for this account has not been verified. Please follow the instructions in your verification email to verify this account.",
         "Click here to send a new verification email.": "Click here to send a new verification email.",

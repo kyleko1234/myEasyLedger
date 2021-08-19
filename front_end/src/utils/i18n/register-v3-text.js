@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 export const registerV3Text = {
     "en-US": {
-        "App description": "Bookkeeping made easy",
+        "App description": "Bookkeeping made easy.",
         "Sign Up": "Sign Up",
         "Create your myEasyLedger Account.": "Create your myEasyLedger Account.",
         "Name": "Name",
@@ -33,7 +33,8 @@ export const registerV3Text = {
         "Personal use": "Personal use",
         "Registration Successful!": "Registration Successful!",
         "A verification email is on its way to your inbox.": "A verification email is on its way to your inbox.",
-        "Return to login page.": "Return to login page."
+        "Return to login page.": "Return to login page.",
+        "Password must be 8-32 characters long.": "Password must be 8-32 characters long."
     },
     "zh-TW": {
         "App description": "TRANSLATION - Bookkeeping made easy",
@@ -66,7 +67,8 @@ export const registerV3Text = {
         "Personal use": "個人用",
         "Registration Successful!": "註册成功！",
         "A verification email is on its way to your inbox.": "一封確認電郵正在給寄你的路上。",
-        "Return to login page.": "回到登入頁。"
+        "Return to login page.": "回到登入頁。",
+        "Password must be 8-32 characters long.": "TRANSLATION"
 
     }
 }
