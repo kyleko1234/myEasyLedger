@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Retrieve a Person.md",
+            "file": "Account/Contents/The Account Object.md",
             "mode": "source"
           }
         },
@@ -21,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Retrieve a Person.md",
+            "file": "Account/Contents/The Account Object.md",
             "mode": "preview"
           }
         },
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Person/Contents/Retrieve a Person.md",
+                "file": "Account/Contents/The Account Object.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,6 +101,7 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Account/Contents/The Account Object.md",
     "Person/Contents/Retrieve a Person.md",
     "Person/Contents/Update a Person.md",
     "Person/Contents/The Person Object.md",
@@ -109,7 +110,6 @@
     "Person/Contents/Update a Person's Password.md",
     "Person/Person.md",
     "Reports/Contents/Generate a Cash Flow Statement.md",
-    "Reports/Contents/Generate an Income Statement.md",
-    "Organization/Contents/Get Fiscal Year Date Range Presets for Generating Reports for Organization Up To Date.md"
+    "Reports/Contents/Generate an Income Statement.md"
   ]
 }
