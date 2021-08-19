@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 export const registerV3Text = {
     "en-US": {
-        "App description": "App description",
+        "App description": "Bookkeeping made easy",
         "Sign Up": "Sign Up",
         "Create your myEasyLedger Account.": "Create your myEasyLedger Account.",
         "Name": "Name",
@@ -36,7 +36,7 @@ export const registerV3Text = {
         "Return to login page.": "Return to login page."
     },
     "zh-TW": {
-        "App description": "APP 描述",
+        "App description": "TRANSLATION - Bookkeeping made easy",
         "Sign Up": "建立新使用帳號",
         "Create your myEasyLedger Account.": "建立一個新的 myEasyLedger 帳號。",
         "Name": "您的名字",
