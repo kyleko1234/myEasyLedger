@@ -18,7 +18,7 @@ function RegisterV3Render(props) {
     const [organizationNameInput, setOrganizationNameInput] = React.useState('');
     const [passwordInput, setPasswordInput] = React.useState('');
     const [reEnterPasswordInput, setReEnterPasswordInput] = React.useState('');
-    const [agreeInput, setAgreeInput] = React.useState(false);
+    const [agreeInput, setAgreeInput] = React.useState(true);
     const currencyOptions = CURRENCY_OPTIONS(appContext.locale);
     const [selectedCurrency, setSelectedCurrency] = React.useState(currencyOptions.find(option => option.value == "USD"));
     const [isEnterprise, setIsEnterprise] = React.useState(true);

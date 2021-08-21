@@ -77,15 +77,16 @@ function FirstOrganizationForm(props) {
                             </label>
                         </div>       
                     </div>
+                    {/*
                     <div className="mb-3">
                         <div className="form-check">
                             <input className="form-check-input" type="checkbox" id="agreement_checkbox" value={props.agreeInput} onChange={() => props.setAgreeInput(!props.agreeInput)} />
                             <label className="form-check-label" htmlFor="agreement_checkbox">
                                 {registerV3Text[appContext.locale]["Agreement text"]}
-                                {/** TODO: terms and conditions lol */}
                             </label> 
                         </div>
                     </div>
+                    */}
                     {agreeAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Please agree."]}</Alert> : null}
 
                     <div className="register-buttons mb-3">
