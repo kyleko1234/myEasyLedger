@@ -35,15 +35,15 @@ function AppearanceSettingsModal(props) {
                                 <div className="col-xl-4">
                                     <div className="radio radio-css">
                                         <input type="radio" value={"system"} id="appearance-system" name="is-enterprise" checked={selectedAppearance === "system"} onChange={handleChangeAppearance} />
-                                        <label className="mx-2" htmlFor="appearance-system">System</label>
+                                        <label className="mx-2" htmlFor="appearance-system">{settingsText[appContext.locale]["System"]}</label>
                                     </div>
                                     <div className="radio radio-css">
                                         <input type="radio" value={"light"} id="appearance-light" name="is-enterprise" checked={selectedAppearance === "light"} onChange={handleChangeAppearance} />
-                                        <label className="mx-2" htmlFor="appearance-light">Light</label>
+                                        <label className="mx-2" htmlFor="appearance-light">{settingsText[appContext.locale]["Light"]}</label>
                                     </div>
                                     <div className="radio radio-css">
                                         <input type="radio" value={"dark"} id="appearance-dark" name="is-enterprise" checked={selectedAppearance === "dark"} onChange={handleChangeAppearance} />
-                                        <label className="mx-2" htmlFor="appearance-dark">Dark</label>
+                                        <label className="mx-2" htmlFor="appearance-dark">{settingsText[appContext.locale]["Dark"]}</label>
                                     </div>
                                 </div>
                             </form>
