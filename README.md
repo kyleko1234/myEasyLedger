@@ -1,10 +1,28 @@
 # myEasyLedger
 
-myEasyLedger is a full-stack webapp that allows users to keep track of their bookkeeping. It offers a simple-to-use single-entry interface for personal users, and a double-entry interface for enterprise users that automatically generates financial statements.
+myEasyLedger is a full-stack responsive webapp that allows users to keep track of their bookkeeping. It offers a simple-to-use single-entry interface for personal users, and a double-entry interface for enterprise users that automatically generates financial statements.
 
 ## Contents
+- [Features](#features)
 - [Tech stack](#tech-stack)
 - [Dev setup](#dev-setup)
+
+## Features
+- Full authentication with JWT
+- Single-entry bookkeeping interface for personal use
+- Double-entry interface for enterprise use
+- Chart of Accounts system with support for account codes and two levels of user-customizable accounts
+- Supports initialization of ledger accounts with non-zero debit and credit values for ease of import
+- Customizable fiscal year begin date
+- Generate balance sheets, income statements, and cash flow statements, and compare different time periods on your financial statement in a Enterprise EasyLedger
+- Calculate your net worth and view your income and expense report in a Personal EasyLedger
+- Responsive layout
+- Create multiple EasyLedgers for a single user
+- Invite multiple users to collaborate on a single EasyLedger
+- View the edit history for any journal entry or transaction
+- Supports English and Chinese (Traditional)
+- Supports light and dark appearance themes, and supports automatic switching based on system settings
+
 
 ## Tech Stack
 - Front end
