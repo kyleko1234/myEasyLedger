@@ -2,12 +2,12 @@ import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js'
 
-function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate }) {
+function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate, accountOptions }) {
     const appContext = React.useContext(PageSettings);
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
             { header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', className: 'col-6 ' },
-            { header: journalEntryViewModeText[appContext.locale]['Account'], accessor: 'accountName', className: 'col-2 ' },
+            { header: journalEntryViewModeText[appContext.locale]['Account'], accessor: 'accountId', className: 'col-2 ' },
             { header: journalEntryViewModeText[appContext.locale]['Debit'], accessor: 'debitAmount', className: 'col-2 text-right ' },
             { header: journalEntryViewModeText[appContext.locale]['Credit'], accessor: 'creditAmount', className: 'col-2 text-right ' },
         ],
@@ -35,6 +35,10 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
                 } else {
                     return null;
                 }
+            case "accountId": 
+                /** search through accountOptions for the accountOption that matches the lineItem's accountId, then use the label of that accountOption. This is to include the account code of the specified account in the table. */
+                let accountLabel = accountOptions.find(accountOption => accountOption.value === cellValue).label;
+                return accountLabel;
             default:
                 return cellValue;
         }
@@ -99,7 +103,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate 
                                 <div key={i} className="tr d-flex">
                                     <div className="px-2 py-2 w-100">
                                         <div className="font-weight-600">
-                                            {row[columns[1].accessor]}
+                                            {formatCell(row[columns[1].accessor], columns[1].accessor)}
                                         </div>
                                         <div className="mb-2">
                                             {row[columns[0].accessor]? row[columns[0].accessor]: <em className="text-muted font-weight-light">{journalEntryViewModeText[appContext.locale]["No memo"]}</em> }

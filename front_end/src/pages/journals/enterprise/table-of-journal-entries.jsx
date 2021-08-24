@@ -391,6 +391,7 @@ function TableOfJournalEntries({
                                 data={lineItemData}
                                 journalEntryDate={journalEntryDate}
                                 journalEntryDescription={journalEntryDescription}
+                                accountOptions={accountOptions}
                             />
                     }
                 </ModalBody>
@@ -426,7 +427,7 @@ function TableOfJournalEntries({
                     }
                 </ModalFooter>
             </Modal>
-            <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} /> 
+            <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} accountOptions={accountOptions} /> 
         </>
     )
 

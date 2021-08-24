@@ -83,6 +83,7 @@ function JournalEntryEditHistory(props) {
                                             journalEntryDescription={journalEntryLog.snapshot.description}
                                             journalEntryDate={journalEntryLog.snapshot.journalEntryDate}
                                             data={journalEntryLog.snapshot.lineItems}
+                                            accountOptions={props.accountOptions}
                                         />
                                     </CardBody>
                                 </Card>
