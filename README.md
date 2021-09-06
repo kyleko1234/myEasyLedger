@@ -101,7 +101,7 @@ Alternatively, install Spring Tool Suite 4 on an existing installation of Eclips
 #### Setting up application properties
 You will need to configure the application properties of the backend before launching the app. The application properties file is found in the following directory: `Easy_Ledger/rest_api/src/main/resources/application.properties`.
 - `spring.datasource.url` should be set to `jdbc:postgresql://[YOUR DATABASE URL HERE]`. If you are running PostgreSQL on a local machine and have set it up according to the previous instructions, this should be set to `jdbc:postgresql://localhost:5432/easyledger`.
-- `spring.datasource.password` should be set to the password that you set up for the the 'easyledger' database.
+- `spring.datasource.password` should be set to the password that you set up for the 'easyledger' database.
 - `app.jwtSecret` should be set to your API signing key.
 - `spring.mail.host` and `spring.mail.port` should be the URL and port of your smtp service. The committed application.properties file uses Gmail.
 - `spring.mail.username` and `spring.mail.password` are the username and password for your smtp service. The app will work without spring.mail properties set up, but you will be unable to use endpoints that require mail such as registration, forgot password, and verification.
@@ -115,9 +115,12 @@ Instead of directly editing application.properties, you can use command line arg
 --spring.mail.username=example@example.com --spring.mail.password=VerySecurePassword
 ```
 ##### Using the command line
-If you use Maven to run your program, prefix your arguments with `-Dspring-boot.run.arguments=` and separate your arguments with commas instead of spaces. For example: 
+If you use Maven to run your program, navigate to the `rest_api` folder where `pom.xml` is located. Run the following command using the application properties you wish to set. Prefix your properties with `-Dspring-boot.run.jvmArguments=`, encapsulate your properties in single quots, and separate them with whitespace and -D. For example: 
 ```
-mvn spring-boot:run -Dspring-boot.run.arguments=--spring.mail.username=example@example.com,spring.mail.password=VerySecurePassword
+mvn spring-boot:run -Dspring-boot.run.jvmArguments='
+-Dspring.datasource.password=KoPostgres 
+-Dspring.mail.username=example@example.com 
+-Dspring.mail.password=VerySecurePassword'
 ```
 
 #### Run the project from STS4:
