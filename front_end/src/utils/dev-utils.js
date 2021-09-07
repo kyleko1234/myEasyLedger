@@ -15,7 +15,7 @@ export async function populateSampleUserWithSampleData() {
 
     //************************** DATA ****************************/
     const loginData = {
-        email: "kyleko1234@gmail.com",
+        email: "sampleuser@example.com",
         password: "admin" 
     }
 
