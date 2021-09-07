@@ -12,7 +12,7 @@ export const loginV3Text = {
         "Password": "Password",
         "Sign me in": "Sign me in",
         "Not a member": <div>Not a member yet? Click <Link to="/user/register" className="text-primary">here</Link> to register.</div>,
-        "Copyright text": `\u00a9 2021 MyEasyLedger.tw All Rights Reserved.`,
+        "Copyright text": `\u00a9 2021 myEasyLedger.com All Rights Reserved.`,
 
         "Forgot Password?": "Forgot Password?",
         "Find Your Account": "Find Your Account",
@@ -51,7 +51,7 @@ export const loginV3Text = {
         "Password": "密碼",
         "Sign me in": "登入",
         "Not a member": <div>還没有帳號嗎？點擊 <Link to="/user/register" className="text-primary">這個連結</Link> 建立一個使用帳號。</div>,
-        "Copyright text": `\u00a9 2021 MyEasyLedger.tw 版權所有。`,
+        "Copyright text": `\u00a9 2021 myEasyLedger.com 版權所有。`,
 
         "Forgot Password?": "忘了你的密碼嗎？",
         "Find Your Account": "搜尋你的帳戶",

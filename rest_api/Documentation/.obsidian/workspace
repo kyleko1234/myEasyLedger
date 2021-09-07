@@ -7,11 +7,8 @@
         "id": "e9ecb484239110b1",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Permission/Permission.md",
-            "mode": "source"
-          }
+          "type": "empty",
+          "state": {}
         },
         "group": "ac08efec71731141"
       },
@@ -19,11 +16,8 @@
         "id": "e48223cc93a66da0",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Permission/Permission.md",
-            "mode": "preview"
-          }
+          "type": "empty",
+          "state": {}
         },
         "group": "ac08efec71731141"
       }
@@ -81,7 +75,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Permission/Permission.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,6 +94,7 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Untitled.md",
     "Permission/Permission.md",
     "Permission/Contents/Edit a Permission Object.md",
     "Permission/Contents/Create a Permission for an Organization.md",
@@ -109,7 +103,6 @@
     "JournalEntry/Contents/The JournalEntry Object.md",
     "JournalEntry/Contents/Access Edit History of a Journal Entry.md",
     "LineItem/Contents/Retrieve All LineItems for an Account.md",
-    "LineItem/Contents/Retrieve a LineItem.md",
-    "LineItem/Contents/List All LineItems.md"
+    "LineItem/Contents/Retrieve a LineItem.md"
   ]
 }
