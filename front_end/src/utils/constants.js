@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://localhost:8080/v0.5';
+export const API_BASE_URL = 'http://localhost:8080/v0.6';
 export const ACCESS_TOKEN = 'easyLedgerAccessToken';
 export const REFRESH_TOKEN = 'easyLedgerRefreshToken';
 

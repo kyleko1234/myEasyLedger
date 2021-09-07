@@ -38,7 +38,7 @@ myEasyLedger is a full-stack responsive webapp that allows users to keep track o
     - PostgreSQL 13
 
 ## Dev Setup
-These instructions assume you are using a recent version of MacOS (10.13 or newer) and that you have cloned this repository to your device.
+These instructions assume you are using a recent version of MacOS (10.13 or newer) and that you have cloned this repository to your device. For development and demo purposes please clone the 'master' branch.
 - [Local DB](#local-db-setup)
 - [Backend Development Environment](#backend-development-environment-setup)
 - [Frontend Development Environment](#frontend-development-environment-setup)
@@ -101,10 +101,10 @@ Alternatively, install Spring Tool Suite 4 on an existing installation of Eclips
 #### Setting up application properties
 You will need to configure the application properties of the backend before launching the app. The application properties file is found in the following directory: `Easy_Ledger/rest_api/src/main/resources/application.properties`.
 - `spring.datasource.url` should be set to `jdbc:postgresql://[YOUR DATABASE URL HERE]`. If you are running PostgreSQL on a local machine and have set it up according to the previous instructions, this should be set to `jdbc:postgresql://localhost:5432/easyledger`.
-- `spring.datasource.password` should be set to the password that you set up for the 'easyledger' database.
+- `spring.datasource.password` should be set to the password that you set up for the 'easyledger' database. The default password in the `application.properties` file is `KoPostgres`, but you should change this to your own database password.
 - `app.jwtSecret` should be set to your API signing key.
 - `spring.mail.host` and `spring.mail.port` should be the URL and port of your smtp service. The committed application.properties file uses Gmail.
-- `spring.mail.username` and `spring.mail.password` are the username and password for your smtp service. The app will work without spring.mail properties set up, but you will be unable to use endpoints that require mail such as registration, forgot password, and verification.
+- `spring.mail.username` and `spring.mail.password` are the username and password for your smtp service. The app will work without spring.mail properties set up, but you will be unable to use endpoints that require mail such as registration, "forgot password", and email verification.
 
 #### Setting up application properties using command-line arguments
 Instead of directly editing application.properties, you can use command line arguments to set application properties.  This is useful for sensitive information you would prefer not to hardcode. Command-line arguments override the properties hardcoded into application.properties.
@@ -151,6 +151,6 @@ Please make sure that the backend server is running before starting the frontend
 ### User setup
 This webapp features full user authentication. In order to demo the app, you will need to create an account and log in. Because this webapp uses an email verification system, you must set up an SMTP service to allow the server to send registration emails before you can create a user account. For easy of demonstration, the `db_full` database backup file includes a user with sample data. The credentials of this sample user are as follows:
 ```
-username: kyleko1234@gmail.com
+username: sampleuser@example.com
 password: admin
 ```
