@@ -37,8 +37,8 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                 }
             case "accountId": 
                 /** search through accountOptions for the accountOption that matches the lineItem's accountId, then use the label of that accountOption. This is to include the account code of the specified account in the table. */
-                let accountLabel = accountOptions.find(accountOption => accountOption.value === cellValue).label;
-                return accountLabel;
+                let accountOption = accountOptions.find(accountOption => accountOption.value === cellValue);
+                return (accountOption? accountOption.label : ' ');
             default:
                 return cellValue;
         }
