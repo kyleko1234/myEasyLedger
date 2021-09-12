@@ -14,13 +14,16 @@ function ResetPassword(props) {
     const [alertMessage, setAlertMessage] = React.useState("");
     const [errorAlert, setErrorAlert] = React.useState(false);
     const [expiredAlert, setExpiredAlert] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
     const handleSubmit = event => {
         event.preventDefault();
         setErrorAlert(false);
+        setLoading(true);
         if (props.newPassword !== confirmPassword) {
             setAlertMessage("Passwords do not match.");
             setErrorAlert(true);
+            setLoading(false);
             return;
         }
         let requestBody = {
@@ -30,11 +33,13 @@ function ResetPassword(props) {
         }
         props.axiosInstance.post(`${API_BASE_URL}/auth/resetPassword`, requestBody).then(response => {
             console.log(response);
+            setLoading(false);
             history.push("/user/login/forgot/reset-success");
         }).catch(error => {
             if (error.response) {
                 if (error.response.data.message = "Expired code.") {
                     setExpiredAlert(true);
+                    setLoading(false);
                     return;
                 }
                 else {
@@ -42,6 +47,7 @@ function ResetPassword(props) {
                     setErrorAlert(true);
                 }
             }
+            setLoading(false);
         })
     }
 
@@ -74,7 +80,9 @@ function ResetPassword(props) {
                         {loginV3Text[appContext.locale]["Go Back"]}
                     </button>
                     <button className="btn btn-lg btn-primary width-175" type="submit" onClick={handleSubmit}>
-                        {loginV3Text[appContext.locale]["Submit"]}
+                        {loading
+                        ? <i className="fas fa-circle-notch fa-spin"></i> 
+                        : loginV3Text[appContext.locale]["Submit"]}
                     </button>
                 </div>
             </form>
