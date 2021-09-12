@@ -14,10 +14,12 @@ function VerifyEmail(props) {
     const [errorAlert, setErrorAlert] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState("");
     const [successAlert, setSuccessAlert] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     const history = useHistory();
 
     const handleSubmit = event => {
         event.preventDefault();
+        setLoading(true);
         setErrorAlert(false);
         setSuccessAlert(false);
         let requestBody = {
@@ -26,6 +28,7 @@ function VerifyEmail(props) {
         }
         props.axiosInstance.post(`${API_BASE_URL}/auth/verifyResetPasswordCode`, requestBody).then(response => {
             console.log(response);
+            setLoading(false);
             history.push("/user/login/forgot/reset-password")
         }).catch(error => {
             if (error.response) {
@@ -37,18 +40,24 @@ function VerifyEmail(props) {
                 }
                 setErrorAlert(true);
             }
+            setLoading(false);
         })
     }
 
     const resendCode = () => {
         setSuccessAlert(false);
+        setLoading(true);
         let requestBody = {
             email: props.userEmail
         }
         props.axiosInstance.post(`${API_BASE_URL}/auth/forgotPassword`, requestBody).then(response => {
             console.log(response);
-        }).catch(console.log);
-        setSuccessAlert(true);
+            setSuccessAlert(true);
+            setLoading(false);
+        }).catch(error => {
+            console.log(error);
+            setLoading(false);
+        });
     }
 
     return(
@@ -75,7 +84,9 @@ function VerifyEmail(props) {
                         {loginV3Text[appContext.locale]["Go Back"]}
                     </button>
                     <button className="btn btn-lg btn-primary width-175" type="submit" onClick={handleSubmit}>
-                        {loginV3Text[appContext.locale]["Submit"]}
+                        {loading
+                        ? <i className="fas fa-circle-notch fa-spin"></i> 
+                        : loginV3Text[appContext.locale]["Submit"]}
                     </button>
                 </div>
             </form>
