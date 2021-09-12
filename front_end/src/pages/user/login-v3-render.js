@@ -15,6 +15,7 @@ function LoginV3Render(props) {
     const [accountDisabledAlert, setAccountDisabledAlert] = React.useState(false);
     const [lastAttemptedEmail, setLastAttemptedEmail] = React.useState('');
     const [verificationSentAlert, setVerificationSentAlert] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
     const appContext = React.useContext(PageSettings);
     const axiosLoginInstance = axios.create();
@@ -22,6 +23,7 @@ function LoginV3Render(props) {
 
     const handleSubmit = event => {
         event.preventDefault();
+        setLoading(true);
         setLoginAlert(false);
         setAccountDisabledAlert(false);
         setVerificationSentAlert(false);
@@ -32,26 +34,34 @@ function LoginV3Render(props) {
             password: passwordInput
         }
 
-        axiosLoginInstance.post(`${API_BASE_URL}/auth/signin`, requestBody).then( response => {
+        axiosLoginInstance.post(`${API_BASE_URL}/auth/signin`, requestBody).then(response => {
             localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
             localStorage.setItem(REFRESH_TOKEN, response.data.refreshToken);
             appContext.checkForAuthentication();
+            setLoading(false);
             props.history.push('/');
         }).catch( error => {
             if (error.response.data.message == "User is disabled") {
                 setAccountDisabledAlert(true);
+                setLoading(false);
             } else {
                 setLoginAlert(true);
+                setLoading(false);
             }
         });
 
     }
 
     const handleResendEmail = () => {
+        setLoading(true);
         axiosLoginInstance.get(`${API_BASE_URL}/verification/resend/${lastAttemptedEmail}`).then( response => {
             setAccountDisabledAlert(false);
             setVerificationSentAlert(true);
-        }).catch(console.log);
+            setLoading(false);
+        }).catch(error => {
+            console.log(error);
+            setLoading(false);
+        });
     }
 
 
@@ -81,7 +91,12 @@ function LoginV3Render(props) {
                         <Link to="/user/login/forgot/find-email" className="text-primary">{loginV3Text[appContext.locale]["Forgot Password?"]}</Link>
                     </div>
                     <div className="mb-3">
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">{loginV3Text[appContext.locale]["Sign me in"]}</button>
+                        <button type="submit" className="btn btn-primary btn-block btn-lg">
+                            {loading
+                                ? <i className="fas fa-circle-notch fa-spin"></i> 
+                                : loginV3Text[appContext.locale]["Sign me in"]
+                            }
+                        </button>
                     </div>
                     <div className="mb-5 pb-5 text-inverse">
                         {loginV3Text[appContext.locale]["Not a member"]}

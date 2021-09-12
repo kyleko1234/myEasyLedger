@@ -16,25 +16,30 @@ function NewAccountForm(props) {
     const [emailTakenAlert, setEmailTakenAlert] = React.useState(false);
     const [invalidPasswordAlert, setInvalidPasswordAlert] = React.useState(false);
     const [passwordMatchAlert, setPasswordMatchAlert] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
     const validateForm = event => {
         event.preventDefault();
+        setLoading(true);
         setEmailMatchAlert(false);
         setEmailTakenAlert(false);
         setPasswordMatchAlert(false);
 
         if (props.emailInput !== props.reEnterEmailInput) {
             setEmailMatchAlert(true);
+            setLoading(false);
             return;
         }
 
         if (props.passwordInput.length < 8 || props.passwordInput.length > 32) {
             setInvalidPasswordAlert(true);
+            setLoading(false);
             return;
         }
 
         if (props.passwordInput !== props.reEnterPasswordInput) {
             setPasswordMatchAlert(true);
+            setLoading(false);
             return;
         }
 
@@ -43,10 +48,12 @@ function NewAccountForm(props) {
         }
         props.axiosInstance.post(`${API_BASE_URL}/auth/checkForAvailableEmail`, requestBody).then(response => {
             console.log(response);
+            setLoading(false);
             props.setStepNumber(2);
         }).catch(error => {
             if (error.response) {
                 console.log(error.response);
+                setLoading(false);
                 setEmailTakenAlert(true);
             }
         });
@@ -98,7 +105,12 @@ function NewAccountForm(props) {
                     </div>
                     {passwordMatchAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Password does not match."]}</Alert> : null}
                     <div className="mb-2">
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">{registerV3Text[appContext.locale]["Next"]}</button>
+                        <button type="submit" className="btn btn-primary btn-block btn-lg">
+                            {loading
+                                ? <i className="fas fa-circle-notch fa-spin"></i> 
+                                : registerV3Text[appContext.locale]["Next"]
+                            }
+                        </button>
                     </div>
                     <div className="mb-3">
                         {registerV3Text[appContext.locale]["Already a member"]}
