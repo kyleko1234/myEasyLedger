@@ -12,17 +12,22 @@ function FirstOrganizationForm(props) {
     //  isEnterprise, setIsEnterprise, agreeInput, setAgreeInput, setStepNumber, submitForm, somethingWentWrongAlert, setSomethingWentWrongAlert
     const appContext = React.useContext(PageSettings);
     const [agreeAlert, setAgreeAlert] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+
     const handleIsEnterpriseRadioChange = (event) => {
         props.setIsEnterprise(event.target.value === "true"? true : false);
     }
-    const validateForm = event => {
+    const validateForm = async event => {
         event.preventDefault();
+        setLoading(true);
         setAgreeAlert(false);
         if (!props.agreeInput) {
             setAgreeAlert(true);
+            setLoading(false)
             return;
         }
-        props.submitForm(event);
+        await props.submitForm(event);
+        setLoading(false);
     }
 
     return(
@@ -90,7 +95,12 @@ function FirstOrganizationForm(props) {
                     {agreeAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Please agree."]}</Alert> : null}
 
                     <div className="register-buttons mb-3">
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">{registerV3Text[appContext.locale]["Sign Up"]}</button>
+                        <button type="submit" className="btn btn-primary btn-block btn-lg">
+                            {loading
+                                ? <i className="fas fa-circle-notch fa-spin"></i> 
+                                : registerV3Text[appContext.locale]["Sign Up"]
+                            }
+                        </button>
                     </div>
                     <div className="mb-4">
                         {registerV3Text[appContext.locale]["Already a member"]}

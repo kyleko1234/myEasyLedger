@@ -25,7 +25,7 @@ function RegisterV3Render(props) {
     const [stepNumber, setStepNumber] = React.useState(1);
     const [somethingWentWrongAlert, setSomethingWentWrongAlert] = React.useState(false);
 
-    const submitForm = event => {
+    const submitForm = async event => {
         event.preventDefault();
 
         let requestBody = {
@@ -42,7 +42,7 @@ function RegisterV3Render(props) {
             currency: selectedCurrency.value
         }
 
-        axiosRegistrationInstance.post(`${API_BASE_URL}/auth/signup`, requestBody).then(response => {
+        await axiosRegistrationInstance.post(`${API_BASE_URL}/auth/signup`, requestBody).then(response => {
             console.log(response);
             setStepNumber(3);  
         }).catch(response => {
