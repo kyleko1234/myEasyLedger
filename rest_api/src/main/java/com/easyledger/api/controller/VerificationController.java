@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
+import com.easyledger.api.dto.VerificationDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.model.VerificationToken;
@@ -36,15 +37,11 @@ public class VerificationController {
 
 	
 	@GetMapping(value="/verification/{token}", produces = MediaType.TEXT_HTML_VALUE)
-	public String verifyUser(@PathVariable(value = "token") String token) throws MessagingException {
+	public VerificationDTO verifyUser(@PathVariable(value = "token") String token) throws MessagingException {
 		//verificationService.verifyUserByToken(token) searches the database for existence of the token, checks if the token is expired, enables the verified User if the token is valid, and returns:
 		// [0]: the first name of the user associated with the given token. If the token is expired, a new one is sent to the email of the user. If the token is invalid, this field is "firstName".
 		// [1]: the name+extension of the html file that is to be displayed to the user.
-		String[] thymeleafParameters = verificationService.verifyUserByToken(token);
-		Context thymeleafContext = new Context();
-		thymeleafContext.setVariable("greeting", "Hello " + thymeleafParameters[0] + ".");
-		String htmlBody = thymeleafTemplateEngine.process(thymeleafParameters[1], thymeleafContext);
-		return htmlBody;
+		return verificationService.verifyUserByToken(token);
 	}
 	
 	@GetMapping(value="/verification/resend/{email}")

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.easyledger.api.dto.VerificationDTO;
 import com.easyledger.api.mail.EmailServiceImpl;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.model.VerificationToken;
@@ -60,25 +61,27 @@ public class VerificationService {
 		return verificationTokenRepo.save(verificationToken);
 	}
 	
-	public String[] verifyUserByToken(String token) throws MessagingException {
+	public VerificationDTO verifyUserByToken(String token) throws MessagingException {
+		VerificationDTO returnedDTO = new VerificationDTO();
 		String[] result = {"firstName", "filetype.html"}; //result is an array of two strings. result[1] is the firstName of the user being verified. result[2] is the filename+extension of the html document to be served
 		VerificationToken verificationToken = verificationTokenRepo.findByToken(token);
 		if (verificationToken == null) { //if invalid verification token
-			result[1] = "verificationFailure.html";
-			return result;
+			returnedDTO.setVerificationResult("failure");
+			return returnedDTO;
 		}
 		Person person = verificationToken.getPerson();
-		result[0] = person.getFirstName();
+		returnedDTO.setFirstName(person.getFirstName());
+		returnedDTO.setLastName(person.getLastName());
 		Calendar cal = Calendar.getInstance();
 		if (verificationToken.getExpiryDate().getTime() - cal.getTime().getTime() <= 0) { // if expired token
 			renewVerificationToken(person);
-			result[1] = "verificationExpired.html";
-			return result;
+			returnedDTO.setVerificationResult("expired");
+			return returnedDTO;
 		}
 		person.setEnabled(true); //if valid token, enable this Person
 		personRepo.save(person);
-		result[1] = "verificationSuccess.html";
-		return result;
+		returnedDTO.setVerificationResult("success");
+		return returnedDTO;
 		
 	}
 	
