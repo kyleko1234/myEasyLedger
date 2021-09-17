@@ -163,4 +163,8 @@ public class AuthController {
     	return returnObject;
     }
     
+    @GetMapping("/auth/testConnection")
+    public String checkConnection() {
+    	return "working";
+    }
 }
