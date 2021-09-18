@@ -38,9 +38,12 @@ public class VerificationController {
 	
 	@GetMapping(value="/verification/{token}", produces = MediaType.TEXT_HTML_VALUE)
 	public VerificationDTO verifyUser(@PathVariable(value = "token") String token) throws MessagingException {
-		//verificationService.verifyUserByToken(token) searches the database for existence of the token, checks if the token is expired, enables the verified User if the token is valid, and returns:
-		// [0]: the first name of the user associated with the given token. If the token is expired, a new one is sent to the email of the user. If the token is invalid, this field is "firstName".
-		// [1]: the name+extension of the html file that is to be displayed to the user.
+		/*
+		 * verificationService.verifyUserByToken(token) searches the database for existence of the token, checks if the token is expired, 
+		 * enables the verified User if the token is valid, and returns a VerificationDTO with fields firstName, lastName, and verificationResult.
+		 * firstName and lastName are nullable fields that represent the person that is associated with the 'token' argument to this function.
+		 * verificationResult is a string that can be one of three possibilities: "success", "failure", and "expired"
+		*/
 		return verificationService.verifyUserByToken(token);
 	}
 	
