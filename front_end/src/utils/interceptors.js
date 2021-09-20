@@ -36,12 +36,10 @@ axios.interceptors.response.use((response) => {
   return response;
 }, async function (error) {
   const originalRequest = error.config;
-  console.log(originalRequest.headers["retry"]);
   if (error.response) {
     if (error.response.status === 401) { //if response is 401 unauthorized
       if (!originalRequest.headers["retry"]) { //if we have not retried the request with a refreshed jwt
-        originalRequest.headers["retry"] = true;
-        console.log(originalRequest.headers["retry"]); //flag this upcoming request as a retry attempt
+        originalRequest.headers["retry"] = true; //flag this upcoming request as a retry attempt
         await refreshAccessToken(); //attempt to refresh jwt using refresh token
         let newJwtToken = localStorage.getItem(ACCESS_TOKEN);
         originalRequest.headers["Authorization"] = "Bearer " + newJwtToken;
