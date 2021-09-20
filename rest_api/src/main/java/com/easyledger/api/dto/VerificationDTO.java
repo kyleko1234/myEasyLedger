@@ -1,9 +1,9 @@
 package com.easyledger.api.dto;
 
 public class VerificationDTO {
-	private String firstName = "";
-	private String lastName = "";
-	private String verificationResult = ""; //verificationResult should be one of three: "success" "failure" "expired"
+	private String firstName;
+	private String lastName;
+	private String verificationResult; //verificationResult should be one of three: "success" "failure" "expired"
 	
 	public VerificationDTO() {
 		

@@ -36,7 +36,7 @@ public class VerificationController {
 	private SpringTemplateEngine thymeleafTemplateEngine;
 
 	
-	@GetMapping(value="/verification/{token}", produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value="/verification/{token}")
 	public VerificationDTO verifyUser(@PathVariable(value = "token") String token) throws MessagingException {
 		/*
 		 * verificationService.verifyUserByToken(token) searches the database for existence of the token, checks if the token is expired, 
