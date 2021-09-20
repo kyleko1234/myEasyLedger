@@ -13,14 +13,6 @@ function setTitle(path, routeArray) {
 	document.title = (pageTitle) ? pageTitle : 'myEasyLedger';
 }
 
-function handleRedirectToLogin(isAuthenticated, isLoading) {
-	if (!isAuthenticated && !isLoading) {
-		return <Redirect to="/user/login/form"/>;
-	} else {
-		return null;
-	}
-}
-
 class Content extends React.Component {
 	componentDidMount() {
 		this.props.history.listen(() => {
@@ -44,7 +36,6 @@ class Content extends React.Component {
 								component={route.component}
 							/>
 						))}
-						{handleRedirectToLogin(isAuthenticated, isLoading)}
 					</div>
 				)
 			}

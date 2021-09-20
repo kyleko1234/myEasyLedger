@@ -28,7 +28,7 @@ class Header extends React.Component {
 								)}
 						</div>
 						<div className="d-flex align-items-center mr-3">
-							<PersonDropdown className="mr-2"/>
+							<PersonDropdown className="mr-1"/>
 							<EasyledgersDropdown/>
 						</div>
 					</div>

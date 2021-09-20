@@ -108,7 +108,6 @@ body.dark-mode{
 
 /* PAGE HEADER CLASSES */
 .header {
-    position: relative;
     top: 0;
     left: 0;
     right: 0;
@@ -142,8 +141,12 @@ body.dark-mode{
 @media (max-width: 575.98px) {
     .easyledgers-dropdown-text{
         display: inline-block;
-        width: 125px;
+        max-width: 125px;
     }
+}
+
+.easyledgers-dropdown-toggle {
+    max-width: calc(100vw - 275px)
 }
 
 .dark-mode .header {

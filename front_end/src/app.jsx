@@ -111,7 +111,7 @@ class App extends React.Component {
 		this.logout = () => {
 			localStorage.clear();
 			console.log("logging out");
-			this.checkForAuthentication();
+            window.location.href = window.location.origin + "/user/login/form";
 		}
 		
 		this.state = {
@@ -152,7 +152,7 @@ class App extends React.Component {
 	}
 	
 	componentDidMount() {
-		this.checkForAuthentication();
+        this.checkForAuthentication();
         this.setColorSchemeToSystemPreference();
 		window.addEventListener('resize', this.handleWindowResize);
         window.matchMedia('(prefers-color-scheme: dark)')

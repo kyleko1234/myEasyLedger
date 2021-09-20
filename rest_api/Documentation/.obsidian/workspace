@@ -7,8 +7,11 @@
         "id": "e9ecb484239110b1",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "Verification/Verify an Email Address.md",
+            "mode": "source"
+          }
         },
         "group": "ac08efec71731141"
       },
@@ -16,8 +19,11 @@
         "id": "e48223cc93a66da0",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "Verification/Verify an Email Address.md",
+            "mode": "preview"
+          }
         },
         "group": "ac08efec71731141"
       }
@@ -75,6 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Verification/Verify an Email Address.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,15 +101,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Verification/Untitled.md",
+    "Verification/User Verification Process.md",
+    "Verification/Renew Verification Token.md",
+    "User Verification Process.md",
+    "Easy Ledger.md",
+    "Authentication/Authentication.md",
+    "Authentication/Contents/Sign Up.md",
+    "Authentication/Contents/Sign In.md",
     "Untitled.md",
-    "Permission/Permission.md",
-    "Permission/Contents/Edit a Permission Object.md",
-    "Permission/Contents/Create a Permission for an Organization.md",
-    "Organization/Contents/The Organization Object.md",
-    "JournalEntry/Contents/Create a JournalEntry.md",
-    "JournalEntry/Contents/The JournalEntry Object.md",
-    "JournalEntry/Contents/Access Edit History of a Journal Entry.md",
-    "LineItem/Contents/Retrieve All LineItems for an Account.md",
-    "LineItem/Contents/Retrieve a LineItem.md"
+    "Authentication/Contents/Renew Verification Token.md"
   ]
 }

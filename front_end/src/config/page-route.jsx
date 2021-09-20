@@ -21,6 +21,7 @@ import NetWorthReport from '../pages/reports/net-worth-report.js';
 import IncomeExpenseReport from '../pages/reports/income-expense-report.js';
 import CashFlowReport from '../pages/reports/cash-flow-report.js';
 import GeneralJournal from '../pages/journals/enterprise/general-journal.jsx';
+import Verification from '../pages/verification/verification.js';
 
 const routes = [
   {
@@ -145,7 +146,11 @@ const routes = [
     title: 'Cash Flow Report',
     component: CashFlowReport,
   },
-
+  {
+    path: '/verification/:verificationToken',
+    title: 'Verification',
+    component: Verification,
+  },
 
 ];
 

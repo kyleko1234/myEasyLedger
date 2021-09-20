@@ -12,7 +12,9 @@ class Logout extends React.Component {
   
 	render() {
 		return (
-            <h1>Logging out...</h1>
+            <div className="d-flex justify-content-center py-3">
+                <i className="fas fa-3x fa-circle-notch fa-spin"></i>
+            </div>
         );
 	}
 }
