@@ -145,6 +145,10 @@ body.dark-mode{
     }
 }
 
+.easyledgers-dropdown-toggle {
+    max-width: calc(100vw - 275px)
+}
+
 .dark-mode .header {
     background-color: #181818;
     border-color: #232323;
