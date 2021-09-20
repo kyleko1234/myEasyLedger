@@ -31,8 +31,8 @@ public class VerificationService {
     @Autowired 
     EmailServiceImpl emailService;
 	
-	@Value("${app.apiUrl}")
-	private String apiUrl;
+	@Value("${app.frontendUrl}")
+	private String frontendUrl;
 
 	
 	public VerificationService(VerificationTokenRepository verificationTokenRepo, PersonRepository personRepo, EmailServiceImpl emailService) {
@@ -110,7 +110,7 @@ public class VerificationService {
     	//Set variables for Thymeleaf Template
     	Map<String, Object> templateModel = new HashMap<String, Object>();
     	templateModel.put("recipientFirstName", firstName);
-    	templateModel.put("verificationUrl", apiUrl + "/verification/" + token);
+    	templateModel.put("verificationUrl", frontendUrl + "/verification/" + token);
     	//Set email recipient and subject fields
     	String subject = "Easy Ledger Account Verification";
     	//send verification email to recipient
