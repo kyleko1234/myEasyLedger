@@ -3,20 +3,15 @@ package com.easyledger.api.controller;
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.easyledger.api.dto.VerificationDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Person;
-import com.easyledger.api.model.VerificationToken;
 import com.easyledger.api.repository.PersonRepository;
-import com.easyledger.api.repository.VerificationTokenRepository;
 import com.easyledger.api.service.VerificationService;
 
 @RestController
@@ -25,16 +20,9 @@ public class VerificationController {
 
 	@Autowired
 	VerificationService verificationService;
-	
-	@Autowired
-	VerificationTokenRepository verificationTokenRepo;
-	
+		
 	@Autowired
 	PersonRepository personRepo;
-	
-	@Autowired
-	private SpringTemplateEngine thymeleafTemplateEngine;
-
 	
 	@GetMapping(value="/verification/{token}")
 	public VerificationDTO verifyUser(@PathVariable(value = "token") String token) throws MessagingException {
