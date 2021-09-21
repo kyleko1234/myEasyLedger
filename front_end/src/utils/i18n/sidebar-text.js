@@ -12,9 +12,9 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         //'create a new easyledger' form
         "Enter a name for this EasyLedger": "Enter a name for this EasyLedger",
         "Select a currency for this EasyLedger": "Select a currency for this EasyLedger",
-        "Create an EasyLedger for": "Create an EasyLedger for",
-        "Personal": "Personal",
-        "Enterprise": "Enterprise",
+        "Create an EasyLedger using": "Create an EasyLedger using",
+        "Single-entry accounting": "Single-entry accounting",
+        "Double-entry accounting": "Double-entry accounting",
         "Create this EasyLedger": "Create this EasyLedger",
 
         //menu items
@@ -38,9 +38,9 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         //'create a new easyledger' form
         "Enter a name for this EasyLedger": "請給帳本取個名稱",
         "Select a currency for this EasyLedger": "請為帳本指定幣別",
-        "Create an EasyLedger for": "建立一個帳本給",
-        "Personal": "個人用",
-        "Enterprise": "企業用",
+        "Create an EasyLedger using": "TRANSLATION",
+        "Single-entry accounting": "TRANSLATION",
+        "Double-entry accounting": "TRANSLATION",
         "Create this EasyLedger": "建立帳本",
 
         //menu items
