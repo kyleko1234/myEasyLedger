@@ -67,7 +67,7 @@ function FirstOrganizationForm(props) {
                             </label> 
                         </div>
                     </div> */}
-                    <label>{registerV3Text[appContext.locale]["Create an EasyLedger for:"]}</label>
+                    <label>{registerV3Text[appContext.locale]["Create an EasyLedger using:"]}</label>
                     <div className="row mb-3 pl-3">
                         <div className="col-12 form-check">
                             <input type="radio" id="is-enterprise-true" name="is-enterprise-radio" value={true} checked={props.isEnterprise === true} onChange={handleIsEnterpriseRadioChange} className="form-check-input"/>
