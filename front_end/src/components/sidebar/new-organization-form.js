@@ -66,16 +66,16 @@ function NewOrganizationForm(props) {
             </div>
             <div className="form-group row">
                 <div className="col-xl-3">
-                    {sidebarText[appContext.locale]["Create an EasyLedger for"] + ":"}
+                    {sidebarText[appContext.locale]["Create an EasyLedger using"] + ":"}
                 </div>
                 <div className="col-xl-4">
                     <div className="radio radio-css">
                         <input type="radio" value={false} id="is-enterprise-false" name="is-enterprise" checked={!isEnterprise} onChange={handleChangeIsEnterprise} />
-                        <label className="mx-2" htmlFor="is-enterprise-false">{sidebarText[appContext.locale]["Personal"]}</label>
+                        <label className="mx-2" htmlFor="is-enterprise-false">{sidebarText[appContext.locale]["Single-entry accounting"]}</label>
                     </div>
                     <div className="radio radio-css">
                         <input type="radio" value={true} id="is-enterprise-true" name="is-enterprise" checked={isEnterprise} onChange={handleChangeIsEnterprise} />
-                        <label className="mx-2" htmlFor="is-enterprise-true">{sidebarText[appContext.locale]["Enterprise"]}</label>
+                        <label className="mx-2" htmlFor="is-enterprise-true">{sidebarText[appContext.locale]["Double-entry accounting"]}</label>
                     </div>
                 </div>
             </div>
