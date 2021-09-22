@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://143.198.55.173:8080/v0.6';
+export const API_BASE_URL = 'https://myeasyledger.com:8443/v0.6';
 export const ACCESS_TOKEN = 'easyLedgerAccessToken';
 export const REFRESH_TOKEN = 'easyLedgerRefreshToken';
 
