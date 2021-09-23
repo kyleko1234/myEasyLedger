@@ -22,12 +22,13 @@ import IncomeExpenseReport from '../pages/reports/income-expense-report.js';
 import CashFlowReport from '../pages/reports/cash-flow-report.js';
 import GeneralJournal from '../pages/journals/enterprise/general-journal.jsx';
 import Verification from '../pages/verification/verification.js';
+import DefaultLandingPage from '../pages/default/default-landing-page.js';
 
 const routes = [
   {
     path: '/',
     exact: true,
-    component: () => <Redirect to='/dashboard'/>
+    component: DefaultLandingPage
   },
   {
     path: '/user/login',
