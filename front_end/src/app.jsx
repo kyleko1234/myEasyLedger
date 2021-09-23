@@ -110,7 +110,6 @@ class App extends React.Component {
 
 		this.logout = () => {
 			localStorage.clear();
-			console.log("logging out");
             window.location.href = window.location.origin + "/user/login/form";
 		}
 		
