@@ -5,7 +5,6 @@ import LoginV3 from './../pages/user/login-v3.js';
 import RegisterV3 from './../pages/user/register-v3.js';
 
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
-import Logout from './../pages/user/logout.js';
 import Dashboard from './../pages/dashboard/dashboard.js';
 import Reports from './../pages/reports/reports.js';
 import IncomeStatementReport from '../pages/reports/income-statement-report.js';
@@ -60,11 +59,6 @@ const routes = [
     path: '/account-details/:id',
     title: 'Account Details',
     component: AccountDetails,
-  },
-  {
-    path: '/user/logout',
-    title: 'Log out',
-    component: Logout
   },
   {
     path: '/dashboard',
