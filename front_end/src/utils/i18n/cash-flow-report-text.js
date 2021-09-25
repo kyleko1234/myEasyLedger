@@ -83,7 +83,7 @@ export const cashFlowReportText = {
         "Cash flow from financing": "籌資活動之現金流量",
         "Increase (decrease) in cash and equivalents": "現金及約當現金增加（減少）",
         "Cash and cash equivalents, end of period": "期末 現金及約當現金",
-        "Adjustment for change in book value of property, plant, and equipment due to depreciation and amortization": "TRANSLATION",
+        "Adjustment for change in book value of property, plant, and equipment due to depreciation and amortization": "不動產、廠房及設備帳面價值之調整",
 
     }
 }

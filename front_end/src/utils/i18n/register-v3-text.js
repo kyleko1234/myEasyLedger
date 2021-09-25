@@ -37,9 +37,9 @@ export const registerV3Text = {
         "Password must be 8-32 characters long.": "Password must be 8-32 characters long."
     },
     "zh-TW": {
-        "App description": "TRANSLATION - Bookkeeping made easy",
+        "App description": "簡單來記帳。",
         "Sign Up": "建立新使用帳號",
-        "Create your myEasyLedger Account.": "建立一個新的 myEasyLedger 帳號。",
+        "Create your myEasyLedger Account.": "建立一個新的使用帳號。",
         "Name": "您的名字",
         "First name": "名",
         "Last name": "姓",
@@ -59,16 +59,16 @@ export const registerV3Text = {
         "Copyright text": "\u00A9 2021 myEasyLedger.com 版權所有。",
 
         "Next": "下一步",
-        "Create your first EasyLedger.": "新建立你的第一本帳本。",
-        "Something went wrong. Please try again later.": "出了點問題。請稍後再試一次。",
+        "Create your first EasyLedger.": "創建立你的第一本帳本。",
+        "Something went wrong. Please try again later.": "好像出了點問題，請稍後再試。",
         "Currency": "幣別",
-        "Create an EasyLedger using:": "TRANSLATION",
-        "Double-entry accounting": "TRANSLATION",
-        "Single-entry accounting": "TRANSLATION",
+        "Create an EasyLedger using:": "新帳本的簿記方式：",
+        "Double-entry accounting": "複式簿記（公司行號版）",
+        "Single-entry accounting": "單式簿記（個人／家庭版）",
         "Registration Successful!": "註册成功！",
-        "A verification email is on its way to your inbox.": "一封確認電郵正在給寄你的路上。",
+        "A verification email is on its way to your inbox.": "一封確認電郵正在寄到你電郵箱的路上。",
         "Return to login page.": "回到登入頁。",
-        "Password must be 8-32 characters long.": "TRANSLATION"
+        "Password must be 8-32 characters long.": "密碼必需介於 8-32 字元長度。"
 
     }
 }
