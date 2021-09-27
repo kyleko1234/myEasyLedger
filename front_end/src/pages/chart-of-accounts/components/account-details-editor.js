@@ -208,6 +208,16 @@ function AccountDetailsEditor(props) {
         }).catch(console.log);
     }
 
+    const setInitialAccountValue = initialAccountValue => {
+        if (accountTypeId == 1) {
+            setInitialDebitValueInput(initialAccountValue);
+            setInitialCreditValueInput(0);
+        }
+        if (accountTypeId == 2) { 
+            setInitialCreditValueInput(initialAccountValue);
+            setInitialDebitValueInput(0);
+        }
+    }
 
 
     return (
@@ -293,42 +303,67 @@ function AccountDetailsEditor(props) {
                         </div>
                     </div>
                     : null}
-                    {appContext.isEnterprise? 
                     <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
-                        <div className="form-group row">
-                            <label className="col-form-label col-md-4">
-                                {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
-                            </label>
-                            <div className="col-md-8">
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    value={initialDebitValueInput}
-                                    onChange={event => {
-                                        setInitialDebitValueInput(event.target.value);
-                                    }}
-                                    disabled={currentAccountHasChildren}
+                        {appContext.isEnterprise? 
+                            <>
+                                <div className="form-group row">
+                                    <label className="col-form-label col-md-4">
+                                        {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
+                                    </label>
+                                    <div className="col-md-8">
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            value={initialDebitValueInput}
+                                            onChange={event => {
+                                                setInitialDebitValueInput(event.target.value);
+                                            }}
+                                            disabled={currentAccountHasChildren}
 
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <label className="col-form-label col-md-4">
-                                {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
-                            </label>
-                            <div className="col-md-8">
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    value={initialCreditValueInput}
-                                    onChange={event => {
-                                        setInitialCreditValueInput(event.target.value);
-                                    }}
-                                    disabled={currentAccountHasChildren}
-                                />
-                            </div>
-                        </div>
-                    </form> : null}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-form-label col-md-4">
+                                        {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
+                                    </label>
+                                    <div className="col-md-8">
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            value={initialCreditValueInput}
+                                            onChange={event => {
+                                                setInitialCreditValueInput(event.target.value);
+                                            }}
+                                            disabled={currentAccountHasChildren}
+                                        />
+                                    </div>
+                                </div>
+                            </>
+                            :
+                            <>
+                                {(accountTypeId == 1 || accountTypeId == 2) ?
+                                    <div className="form-group row">
+                                        <label className="col-form-label col-md-4">
+                                            {accountDetailsEditorText[appContext.locale]["Initial Account Value"]}
+                                        </label>
+                                        <div className="col-md-8">
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                value={accountTypeId == 1 ? initialDebitValueInput : initialCreditValueInput}
+                                                onChange={event => {
+                                                    setInitialAccountValue(event.target.value);
+                                                }}
+                                                disabled={currentAccountHasChildren}
+                                            />
+                                        </div>
+                                    </div>
+                                : null}
+                            </>
+                            }
+                    </form> 
+                      
                 </ModalBody>
                 <ModalFooter className="justify-content-between">
                     <div>

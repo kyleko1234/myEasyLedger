@@ -31,6 +31,7 @@ export const accountDetailsEditorText = {
         "Are you sure you want to delete this category?": "Are you sure you want to delete this category?",
         "Cannot delete this category.": "Cannot delete this category.",
         "Please remove all line items and child categories from this category and try again." : "Please remove all line items and child categories from this category and try again.",
+        "Initial Account Value": "Initial Account Value",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "Cash and cash equivalents", 
@@ -104,6 +105,7 @@ export const accountDetailsEditorText = {
         "Are you sure you want to delete this category?": "你確定你要删除這個類別嗎？",
         "Cannot delete this category.": "無法删除本類別。",
         "Please remove all line items and child categories from this category and try again." : "請删先本類別下所有單行項目及其子類別後再試一次。",
+        "Initial Account Value": "TRANSLATION",
 
 
         //Account Subtype Names.
