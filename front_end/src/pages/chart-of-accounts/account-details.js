@@ -110,7 +110,7 @@ function AccountDetails(props) {
 
     return (
         <>
-            {appContext.isEnterprise ?
+            {appContext.isEnterprise ? /**View for Enterprise Edition */
                 <div className="row">
                     <div className="col-lg-8">
                         <Card className="shadow-sm very-rounded my-3">
@@ -158,7 +158,7 @@ function AccountDetails(props) {
                     </div>
 
                 </div>
-                :
+                : /**View for Personal Edition */
                 <div className="row">
                     <div className="col-lg-8">
                         <Card className="shadow-sm very-rounded my-3">
