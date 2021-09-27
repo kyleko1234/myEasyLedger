@@ -53,7 +53,7 @@ export const settingsText = {
         "Personal Settings": "個人設定",
         "Language": "語言",
         "Language Settings": "語言設定",
-        "Appearance Settings": "TRANSLATION",
+        "Appearance Settings": "顯示設定",
         "Save": "儲存",
         "Manage my EasyLedgers...": "管理我所有的帳本...",
 
@@ -90,10 +90,8 @@ export const settingsText = {
         "Save": "儲存",
 
         //Appearance settings options
-        "System": "TRANSLATION",
-        "Light": "TRANSLATION",
-        "Dark": "TRANSLATION"
-        
-
+        "System": "用系統的設定模式",
+        "Light": "用光亮模式",
+        "Dark": "用黑暗模式"
     }
 }

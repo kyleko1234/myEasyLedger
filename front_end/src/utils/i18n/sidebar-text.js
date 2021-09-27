@@ -38,9 +38,9 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         //'create a new easyledger' form
         "Enter a name for this EasyLedger": "請給帳本取個名稱",
         "Select a currency for this EasyLedger": "請為帳本指定幣別",
-        "Create an EasyLedger using": "TRANSLATION",
-        "Single-entry accounting": "TRANSLATION",
-        "Double-entry accounting": "TRANSLATION",
+        "Create an EasyLedger using": "新帳本的簿記方式",
+        "Single-entry accounting": "單式簿記（個人／家庭版）",
+        "Double-entry accounting": "複式簿記（公司行號版）",
         "Create this EasyLedger": "建立帳本",
 
         //menu items

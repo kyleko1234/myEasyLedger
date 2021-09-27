@@ -42,7 +42,7 @@ export const loginV3Text = {
 
     },
     "zh-TW": {
-        "App description 1": "TRANSLATION: Bookkeeping made easy",
+        "App description 1": "簡單來記帳。",
         "Invalid email or password.": "輸入的電郵或密碼有誤。",
         "Email not verified": "您使用的電郵還未經確認，請檢視寄到該電郵的確認指示以完成確認程序。",
         "Click here to send a new verification email.": "點此再次寄出確認電郵指示到你的電郵址。",
@@ -50,7 +50,7 @@ export const loginV3Text = {
         "Email Address": "電郵",
         "Password": "密碼",
         "Sign me in": "登入",
-        "Not a member": <div>還没有帳號嗎？點擊 <Link to="/user/register" className="text-primary">這個連結</Link> 建立一個使用帳號。</div>,
+        "Not a member": <div>還没有帳號嗎？請點擊 <Link to="/user/register" className="text-primary">這個連結</Link> 建立一個使用帳號。</div>,
         "Copyright text": `\u00a9 2021 myEasyLedger.com 版權所有。`,
 
         "Forgot Password?": "忘了你的密碼嗎？",
@@ -64,8 +64,8 @@ export const loginV3Text = {
         "Incorrect password reset code." : "重設碼有誤",
         "Expired code." : "重設碼已過期。",
         "Verify Your Email": "確認你的電郵",
-        "Please enter the six-digit code we have sent to your email.": "請輸入我們寄給你電郵的重設碼（6碼）。",
-        "Click here to send a new code.": "點選這個連結重送重設碼給你。",
+        "Please enter the six-digit code we have sent to your email.": "請輸入我們寄到你電郵箱的重設碼（6碼）。",
+        "Click here to send a new code.": "點選這個連結重寄一個新的重設碼到你的電郵箱。",
         "A new code has been sent to your email!": "一個新的重設碼已經寄出到你的電郵了！",
 
         "Confirm Password": "確認密碼",
