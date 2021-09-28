@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+const today = new Date();
+
 export const registerV3Text = {
     "en-US": {
         "App description": "Bookkeeping made easy.",
@@ -22,7 +24,7 @@ export const registerV3Text = {
         "Agreement text": <div>By clicking Sign Up, you agree to our <Link to="#" className="text-primary">Terms</Link> and that you have read our <Link to="#" className="text-primary">Data Policy</Link>, including our <Link to="#" className="text-primary">Cookie Use</Link>.</div>,
         "Please agree.": "Please agree.",
         "Already a member": <div>Already a member? Click <Link to="/user/login/form" className="text-primary">here</Link> to login.</div>,
-        "Copyright text": "\u00A9 2021 myEasyLedger.com All Rights Reserved.",
+        "Copyright text": `\u00A9 ${today.getFullYear()} myEasyLedger.com All Rights Reserved.`,
 
         "Next": "Next",
         "Create your first EasyLedger.": "Create your first EasyLedger.",
@@ -56,7 +58,7 @@ export const registerV3Text = {
         "Agreement text": <div>點擊要建立新帳號，即表示您同意了我們的 <Link to="#" className="text-primary">使用條款</Link> 也讀了我們的 <Link to="#" className="text-primary">資料政策</Link>，包抱 <Link to="#" className="text-primary">Cookie 的使用</Link>。</div>,
         "Please agree.": "請同意。",
         "Already a member": <div>已經有帳號了嗎？點擊 <Link to="/user/login/form" className="text-primary">這裡</Link> 就可以登入。</div>,
-        "Copyright text": "\u00A9 2021 myEasyLedger.com 版權所有。",
+        "Copyright text": `\u00A9 ${today.getFullYear()} myEasyLedger.com 版權所有。`,
 
         "Next": "下一步",
         "Create your first EasyLedger.": "創建立你的第一本帳本。",
