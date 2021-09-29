@@ -4,8 +4,8 @@ export const REFRESH_TOKEN = 'easyLedgerRefreshToken';
 
 export const FIRSTNAME_LASTNAME_LOCALES = ["en-US"];
 export const LOCALE_OPTIONS = [
-    {value: "en-US", label: "English (US)"},
-    {value: "zh-TW", label: "中文 (繁體)"}
+    {value: "en-US", label: "English (US)", defaultCurrency: "USD"},
+    {value: "zh-TW", label: "中文 (繁體)", defaultCurrency: "TWD"}
 ]
 
 // cny yen usd twd eur
