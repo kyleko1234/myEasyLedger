@@ -45,11 +45,11 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
 
         //menu items
         "Dashboard": "帳目概覽",
-        "Journals": "分類帳",
+        "Journals": "登錄分類帳",
         "Chart of Accounts": "會計科目表",
-        "Reports": "報表",
-        "Accounts": "科目",
-        "Categories": "類別"
+        "Reports": "財務報表",
+        "Accounts": "記錄帳目",
+        "Categories": "收支類別"
 
     }
 }
