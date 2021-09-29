@@ -10,6 +10,7 @@ function RegisterV3Render(props) {
     //required props: history
     const appContext = React.useContext(PageSettings);
     const axiosRegistrationInstance = axios.create();
+    const defaultCurrencyValue = LOCALE_OPTIONS.find(localeOption => localeOption.value === appContext.locale).currency;
 
     const [firstNameInput, setFirstNameInput] = React.useState('');
     const [lastNameInput, setLastNameInput] = React.useState('');
@@ -20,7 +21,7 @@ function RegisterV3Render(props) {
     const [reEnterPasswordInput, setReEnterPasswordInput] = React.useState('');
     const [agreeInput, setAgreeInput] = React.useState(true);
     const currencyOptions = CURRENCY_OPTIONS(appContext.locale);
-    const [selectedCurrency, setSelectedCurrency] = React.useState(currencyOptions.find(option => option.value == "USD"));
+    const [selectedCurrency, setSelectedCurrency] = React.useState(currencyOptions.find(option => option.value == (defaultCurrencyValue ? defaultCurrencyValue : "USD")));
     const [isEnterprise, setIsEnterprise] = React.useState(true);
     const [stepNumber, setStepNumber] = React.useState(1);
     const [somethingWentWrongAlert, setSomethingWentWrongAlert] = React.useState(false);
