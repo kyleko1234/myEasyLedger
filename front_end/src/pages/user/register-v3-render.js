@@ -10,7 +10,7 @@ function RegisterV3Render(props) {
     //required props: history
     const appContext = React.useContext(PageSettings);
     const axiosRegistrationInstance = axios.create();
-    const defaultCurrencyValue = LOCALE_OPTIONS.find(localeOption => localeOption.value === appContext.locale).currency;
+    const defaultCurrencyValue = LOCALE_OPTIONS.find(localeOption => localeOption.value === appContext.locale).defaultCurrency;
 
     const [firstNameInput, setFirstNameInput] = React.useState('');
     const [lastNameInput, setLastNameInput] = React.useState('');
@@ -54,7 +54,6 @@ function RegisterV3Render(props) {
     }
     return (
         <>
-        
             {stepNumber === 1
             ?   <NewAccountForm
                     firstNameInput={firstNameInput} setFirstNameInput={setFirstNameInput}
