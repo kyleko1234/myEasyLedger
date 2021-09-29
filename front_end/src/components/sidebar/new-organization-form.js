@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageSettings } from '../../config/page-settings';
-import { API_BASE_URL, CURRENCY_OPTIONS } from '../../utils/constants';
+import { API_BASE_URL, CURRENCY_OPTIONS, LOCALE_OPTIONS } from '../../utils/constants';
 import { sidebarText } from '../../utils/i18n/sidebar-text';
 import Select from 'react-select';
 import {useHistory} from 'react-router-dom';
@@ -10,8 +10,9 @@ function NewOrganizationForm(props) {
     const appContext = React.useContext(PageSettings);
     const history = useHistory();
     const currencyOptions = CURRENCY_OPTIONS(appContext.locale);
+    const defaultCurrencyValue = LOCALE_OPTIONS.find(localeOption => localeOption.value === appContext.locale).defaultCurrency;
     const [organizationNameInput, setOrganizationNameInput] = React.useState('');
-    const [selectedCurrency, setSelectedCurrency] = React.useState(appContext.currency);
+    const [selectedCurrency, setSelectedCurrency] = React.useState(defaultCurrencyValue ? defaultCurrencyValue : appContext.currency);
     const [isEnterprise, setIsEnterprise] = React.useState(false);
 
     const handleChangeIsEnterprise = (event) => {
@@ -34,6 +35,7 @@ function NewOrganizationForm(props) {
 
     return (
         <div className="my-3">
+            <button onClick={() => console.log(currencyOptions.find(option => option.value == (defaultCurrencyValue)))}>LOG</button>
             <div className="form-group row">
                 <label className="col-xl-3 col-form-label">
                     {sidebarText[appContext.locale]["Enter a name for this EasyLedger"] + ":"}

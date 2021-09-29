@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+const today = new Date();
+
 export const loginV3Text = {
     "en-US": {
         "App description 1": "Bookkeeping made easy.",
@@ -12,7 +14,7 @@ export const loginV3Text = {
         "Password": "Password",
         "Sign me in": "Sign me in",
         "Not a member": <div>Not a member yet? Click <Link to="/user/register" className="text-primary">here</Link> to register.</div>,
-        "Copyright text": `\u00a9 2021 myEasyLedger.com All Rights Reserved.`,
+        "Copyright text": `\u00a9 ${today.getFullYear()} myEasyLedger.com All Rights Reserved.`,
 
         "Forgot Password?": "Forgot Password?",
         "Find Your Account": "Find Your Account",
@@ -44,14 +46,14 @@ export const loginV3Text = {
     "zh-TW": {
         "App description 1": "簡單來記帳。",
         "Invalid email or password.": "輸入的電郵或密碼有誤。",
-        "Email not verified": "您使用的電郵還未經確認，請檢視寄到該電郵的確認指示以完成確認程序。",
-        "Click here to send a new verification email.": "點此再次寄出確認電郵指示到你的電郵址。",
+        "Email not verified": "您使用的電郵還未經確認，請檢視寄到該電郵的確認信，依指示以完成確認程序。",
+        "Click here to send a new verification email.": "點此可再次寄出一封確認電郵指示到你的電郵箱。",
         "Verification email sent!": "確認電郵已寄出！",
         "Email Address": "電郵",
         "Password": "密碼",
         "Sign me in": "登入",
         "Not a member": <div>還没有帳號嗎？請點擊 <Link to="/user/register" className="text-primary">這個連結</Link> 建立一個使用帳號。</div>,
-        "Copyright text": `\u00a9 2021 myEasyLedger.com 版權所有。`,
+        "Copyright text": `\u00a9 ${today.getFullYear()} myEasyLedger.com 版權所有。`,
 
         "Forgot Password?": "忘了你的密碼嗎？",
         "Find Your Account": "搜尋你的帳戶",
