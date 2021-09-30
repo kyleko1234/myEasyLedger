@@ -2,6 +2,7 @@ package com.easyledger.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.easyledger.api.mail.EmailServiceImpl;
 
@@ -20,6 +21,7 @@ public class EmailDispatchService {
 	}
 
 	public void sendVerificationMail(String to, String firstName, String lastName, String token, String locale) {
+		String subject;
 		String message;
 		switch (locale) {
 			case "zh-TW":
@@ -31,6 +33,7 @@ public class EmailDispatchService {
 	}
 	
 	public void sendPasswordResetEmail(String to, String firstName, String lastName, String token, String locale) {
+		String subject;
 		String message;
 		switch (locale) {
 			case "zh-TW":
