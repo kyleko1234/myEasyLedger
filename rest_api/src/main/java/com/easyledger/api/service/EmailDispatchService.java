@@ -76,6 +76,23 @@ public class EmailDispatchService {
 				break;
 			case "en-US":
 			default: 
+				message = 
+						"<!DOCTYPE html> "
+						+ "<html> "
+						+ "  <head> "
+						+ "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> "
+						+ "  </head> "
+						+ "  <body> "
+						+ "    <p>Hello " + firstName + " " + lastName + ",</p> "
+						+ "    <p>We received a request to reset your password to myEasyLedger. Your password reset code is below:</p> "
+						+ "    <h1>" + token + "</h1> "
+						+ "    <p>This code expires in 15 minutes.</p> "
+						+ "    <p> "
+						+ "      <em>This is an automated email, please do not reply directly to this email.</em> <br /> "
+						+ "    </p> "
+						+ "  </body> "
+						+ "</html>";
+				subject = "Your myEasyLedger password reset code is " + token;
 				break;
 		}
 	}
