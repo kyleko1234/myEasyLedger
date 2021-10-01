@@ -25,7 +25,7 @@ export const journalEntryEditModeText = {
         "Description": "描述",
         
         "Total": "合計",
-        "Add a Line Item": "加一個單行項目",
+        "Add a Line Item": "點這裡加一行",
         "Copy description to line items": "複製「描述」到各個單行項目",
 
         "Total Debit": "借方加總",

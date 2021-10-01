@@ -33,7 +33,7 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Create a new EasyLedger...": "建立新帳本...", //sidebar text, may or may not be the same as above, just with ... at the end
         "Settings": "設定",
         "Sign Out": "登出",
-        "Permission level: ": "權限層級",
+        "Permission level: ": "權限等級：",
 
         //'create a new easyledger' form
         "Enter a name for this EasyLedger": "請給帳本取個名稱",
@@ -45,11 +45,11 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
 
         //menu items
         "Dashboard": "帳目概覽",
-        "Journals": "分類帳",
+        "Journals": "登錄分類帳",
         "Chart of Accounts": "會計科目表",
-        "Reports": "報表",
-        "Accounts": "科目",
-        "Categories": "類別"
+        "Reports": "財務報表",
+        "Accounts": "往來帳戶",
+        "Categories": "收支類別"
 
     }
 }
