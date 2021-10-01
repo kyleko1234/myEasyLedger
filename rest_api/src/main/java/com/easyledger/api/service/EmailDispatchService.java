@@ -73,6 +73,23 @@ public class EmailDispatchService {
 		String message;
 		switch (locale) {
 			case "zh-TW":
+				message =
+						"<!DOCTYPE html> "
+						+ "<html> "
+						+ "  <head> "
+						+ "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> "
+						+ "  </head> "
+						+ "  <body> "
+						+ "    <p>你好 " + firstName + lastName + "，</p> "
+						+ "    <p>我們有收到你要重設密碼的請求。你重設密碼時需要打入的「確認碼」是：</p> "
+						+ "    <h1>" + token + "</h1> "
+						+ "    <p>這個確認碼會在本電郵送達的15分鐘後自動失效。</p> "
+						+ "    <p> "
+						+ "      <em>本電郵是來自系統的自動回覆，請不要直接回覆本電郵。</em> <br /> "
+						+ "    </p> "
+						+ "  </body> "
+						+ "</html>";
+				subject = "你的 myEasyLedger 帳戶密碼重設「確認碼」是 " + token;
 				break;
 			case "en-US":
 			default: 
