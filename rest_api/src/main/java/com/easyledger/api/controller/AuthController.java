@@ -93,7 +93,7 @@ public class AuthController {
     	//this method creates and persists a person, an organization for that person, and a verification token for the person, and returns the verification token.
     	VerificationToken verificationToken = personService.createPersonFromSignUpRequest(signUpRequest);
     	
-    	return verificationService.sendVerificationMail(signUpRequest.getEmail(), signUpRequest.getFirstName(), verificationToken.getToken());
+    	return verificationService.sendVerificationMail(signUpRequest.getEmail(), signUpRequest.getFirstName(), signUpRequest.getLastName(), verificationToken.getToken(), signUpRequest.getLocale());
     	
     }
         
@@ -111,7 +111,7 @@ public class AuthController {
     	Person person = personRepository.findByEmail(dto.getEmail())
     			.orElseThrow(() -> new ResourceNotFoundException("Person cannot be found for this email:: " + dto.getEmail()));
     	VerificationToken token = verificationService.createTwoFactorCodeForPerson(person);
-    	verificationService.sendPasswordResetEmail(person.getEmail(), person.getFirstName(), token.getToken());
+    	verificationService.sendPasswordResetEmail(person.getEmail(), person.getFirstName(), person.getLastName(), token.getToken(), person.getLocale());
     	Map<String, Boolean> returnObject = new HashMap<>();
     	returnObject.put("Code generated", true);
     	return returnObject;
