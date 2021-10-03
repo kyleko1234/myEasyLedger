@@ -1,5 +1,7 @@
 package com.easyledger.api.service;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ public class EmailDispatchService {
 		this.emailService = emailService;
 	}
 
-	public void sendVerificationMail(String to, String firstName, String lastName, String token, String locale) {
+	public void sendVerificationMail(String to, String firstName, String lastName, String token, String locale) throws MessagingException {
 		String subject;
 		String message;
 		switch (locale) {
@@ -66,9 +68,10 @@ public class EmailDispatchService {
 				subject = "myEasyLedger Account Verification";
 				break;
 		}
+		emailService.sendHtmlMessage(to, subject, message);
 	}
 	
-	public void sendPasswordResetEmail(String to, String firstName, String lastName, String token, String locale) {
+	public void sendPasswordResetEmail(String to, String firstName, String lastName, String token, String locale) throws MessagingException {
 		String subject;
 		String message;
 		switch (locale) {
@@ -112,6 +115,7 @@ public class EmailDispatchService {
 				subject = "Your myEasyLedger password reset code is " + token;
 				break;
 		}
+		emailService.sendHtmlMessage(to, subject, message);
 	}
 
 }

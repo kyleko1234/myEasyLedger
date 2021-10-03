@@ -64,7 +64,7 @@ public class EmailServiceImpl {
 		}
 	}
 	
-	private void sendHtmlMessage(String to, String subject, String htmlBody) throws MessagingException {
+	public void sendHtmlMessage(String to, String subject, String htmlBody) throws MessagingException {
 		MimeMessage message = emailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 		helper.setTo(to);;
