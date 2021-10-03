@@ -31,14 +31,18 @@ public class VerificationService {
     @Autowired 
     EmailServiceImpl emailService;
 	
+    @Autowired
+    EmailDispatchService emailDispatchService;
+    
 	@Value("${app.frontendUrl}")
 	private String frontendUrl;
 
 	
-	public VerificationService(VerificationTokenRepository verificationTokenRepo, PersonRepository personRepo, EmailServiceImpl emailService) {
+	public VerificationService(VerificationTokenRepository verificationTokenRepo, PersonRepository personRepo, EmailServiceImpl emailService, EmailDispatchService emailDispatchService) {
 		this.verificationTokenRepo = verificationTokenRepo;
 		this.personRepo = personRepo;
 		this.emailService = emailService;
+		this.emailDispatchService = emailDispatchService;
 	}
 	
 	public VerificationToken createVerificationTokenForPerson(Person person) {
@@ -85,15 +89,9 @@ public class VerificationService {
 		
 	}
 	
-	public String sendPasswordResetEmail(String to, String firstName, String token) throws MessagingException {
-    	//Set variables for Thymeleaf Template
-    	Map<String, Object> templateModel = new HashMap<String, Object>();
-    	templateModel.put("recipientFirstName", firstName);
-    	templateModel.put("twoFactorCode", token);
-    	//Set email recipient and subject fields
-    	String subject = "Your myEasyLedger password reset code is " + token;
+	public String sendPasswordResetEmail(String to, String firstName, String lastName, String token, String locale) throws MessagingException {
     	//send verification email to recipient
-    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel, "password_reset_email.html");
+    	emailDispatchService.sendPasswordResetEmail(to, firstName, lastName, token, locale);
     	return "Email sent successfully!";
 	}
 	
@@ -103,19 +101,12 @@ public class VerificationService {
 			verificationTokenRepo.delete(oldToken);
 		}
 		VerificationToken newToken = createVerificationTokenForPerson(person);
-		sendVerificationMail(person.getEmail(), person.getFirstName(), newToken.getToken());
+		sendVerificationMail(person.getEmail(), person.getFirstName(), person.getLastName(), newToken.getToken(), person.getLocale());
 	}
 	
-	public String sendVerificationMail(String to, String firstName, String token) throws MessagingException {
-    	//Set variables for Thymeleaf Template
-    	Map<String, Object> templateModel = new HashMap<String, Object>();
-    	templateModel.put("recipientFirstName", firstName);
-    	templateModel.put("verificationUrl", frontendUrl + "/verification/" + token);
-    	//Set email recipient and subject fields
-    	String subject = "Easy Ledger Account Verification";
+	public String sendVerificationMail(String to, String firstName, String lastName, String token, String locale) throws MessagingException {
     	//send verification email to recipient
-    	emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel, "email_system.html");
+    	emailDispatchService.sendVerificationMail(to, firstName, lastName, token, locale);
     	return "User registered successfully!";
 	}
-	
 }
