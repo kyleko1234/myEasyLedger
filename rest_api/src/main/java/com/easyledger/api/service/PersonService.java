@@ -180,7 +180,7 @@ public class PersonService {
     	
     	permissionRepo.save(permission);
     	
-    	autoPopulateOrganization(organization);
+    	autoPopulateOrganization(organization, signUpRequest.getLocale());
     	//create and persist VerificationToken for person
     	VerificationToken verificationToken = verificationService.createVerificationTokenForPerson(person);
     	
@@ -189,13 +189,18 @@ public class PersonService {
 	}
 	
 	/* Automatically populate a person with default AccountGroups. By default we create a corresponding AccountGroup for every AccountSubtype. */
-	public void autoPopulateOrganization(Organization organization) throws ResourceNotFoundException {
+	public void autoPopulateOrganization(Organization organization, String locale) throws ResourceNotFoundException {
 		if (organization.isIsEnterprise()) {
 			List<AccountSubtype> accountSubtypes = accountSubtypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
 			ArrayList<Account> defaultAccounts = new ArrayList<Account>();
-			for (AccountSubtype accountSubtype : accountSubtypes) {
-				Account account = new Account(accountSubtype.getName(), accountSubtype);
-				defaultAccounts.add(account);
+			switch (locale) {
+				case "en-US":
+				default:
+					for (AccountSubtype accountSubtype : accountSubtypes) {
+						Account account = new Account(accountSubtype.getName(), accountSubtype);
+						defaultAccounts.add(account);
+					}
+					break;
 			}
 			for (Account account : defaultAccounts) {
 				account.setOrganization(organization);
@@ -210,6 +215,7 @@ public class PersonService {
 					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 24"));
 			AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
 					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
+			
 			
 			Account cash = new Account("Cash", otherCurrentAssets);
 			Account bankAccounts = new Account("Bank Accounts", otherCurrentAssets);
