@@ -191,86 +191,108 @@ public class PersonService {
 	/* Automatically populate a person with default AccountGroups. By default we create a corresponding AccountGroup for every AccountSubtype. */
 	public void autoPopulateOrganization(Organization organization, String locale) throws ResourceNotFoundException {
 		if (organization.isIsEnterprise()) {
-			List<AccountSubtype> accountSubtypes = accountSubtypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
-			ArrayList<Account> defaultAccounts = new ArrayList<Account>();
-			switch (locale) {
-				case "zh-TW":
-					String[] translatedSubtypeNames = { //This array should be exactly identical to the list of account subtypes, in order of accountSubtypeId, translated into chinese.
-							"現金及約當現金", "具市場性證劵", "流動應收帳款", "存貨", "其它流動資產", "不具市場性證劵", "非流動應收帳款", "不動產、廠房及設備", "無形資產及商譽", "其它非流動性資產",
-							"流動應付帳款", "應付股利", "遞延收入", "短期負債", "遞延所得稅", "其它流動負債", "長期負債", "非流動應付帳款", "其它流動負債",
-							"投入資本", "股份報酬", "本期股利及約當股利", "其它業主權益",
-							"收入", "投資活動之收入", "融資活動之收入",
-							"銷貨成本", "研究發展費用", "銷售、總務及管理費用", "折舊及攤銷", "投資活動之費用", "融資活動之費用", "利息費用", "賦稅費用", "非經常性項目"
-					};
-					for (int i = 0; i < translatedSubtypeNames.length; i++) {
-						Account account = new Account(translatedSubtypeNames[i], accountSubtypes.get(i));
-						defaultAccounts.add(account);
-					}
-					break;
-				case "en-US":
-				default:
-					for (AccountSubtype accountSubtype : accountSubtypes) {
-						Account account = new Account(accountSubtype.getName(), accountSubtype);
-						defaultAccounts.add(account);
-					}
-					break;
-			}
-			for (Account account : defaultAccounts) {
-				account.setOrganization(organization);
-			}
-			accountRepo.saveAll(defaultAccounts);
+			autoPopulateEnterprise(organization, locale);
 		} else {
-			AccountSubtype otherCurrentAssets = accountSubtypeRepo.findById((long) 5)
-					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
-			AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 16)
-					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 16"));
-			AccountSubtype revenue = accountSubtypeRepo.findById((long) 24)
-					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 24"));
-			AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
-					.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
-			
-			
-			Account cash = new Account("Cash", otherCurrentAssets);
-			Account bankAccounts = new Account("Bank Accounts", otherCurrentAssets);
-			Account creditCards = new Account("Credit Cards", otherCurrentLiabilities);
-			Account jobs = new Account("Jobs", revenue);
-			Account projects = new Account("Projects", revenue);
-			Account food = new Account("Food", costOfSales);
-			Account living = new Account("Living", costOfSales);
-			Account transportation = new Account("Transportation", costOfSales);
-			Account education = new Account("Education", costOfSales);
-			Account discretionary = new Account("Discretionary", costOfSales);
-			
-			List<Account> parentAccounts = Arrays.asList(cash, bankAccounts, creditCards, jobs, projects, food, living, transportation, education, discretionary);
-			for (Account account : parentAccounts) {
-				account.setOrganization(organization);
-				accountRepo.save(account);
-			}
-			
-			Account cashAccount = new Account("Cash", cash);
-			Account savingsAccount = new Account("Savings Account", bankAccounts);
-			Account checkingAccount = new Account("Checking Account", bankAccounts);
-			Account investmentAccount = new Account("Investment Account", bankAccounts);
-			Account creditCard = new Account("Credit Card #1", creditCards);
-			Account job = new Account("Job #1", jobs);
-			Account project = new Account("Project #1", projects);
-			Account groceries = new Account("Groceries", food);
-			Account dining = new Account("Dining", food);
-			Account rent = new Account("Rent", living);
-			Account transportationAccount = new Account("Transportation", transportation);
-			Account tuition = new Account("Tuition", education);
-			Account apparel = new Account("Apparel", discretionary);
-			Account entertainment = new Account("Entertainment", discretionary);
-			
-			List<Account> childAccounts = Arrays.asList(cashAccount, savingsAccount, checkingAccount, investmentAccount, creditCard,
-					job, project, groceries, dining, rent, transportationAccount, tuition, apparel, entertainment);
-			for (Account account : childAccounts) {
-				account.setOrganization(organization);;
-				accountRepo.save(account);
-			}
+			autoPopulatePersonal(organization, locale);
 		}
 		
 	}
+	private void autoPopulateEnterprise(Organization organization, String locale) {
+		List<AccountSubtype> accountSubtypes = accountSubtypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
+		ArrayList<Account> defaultAccounts = new ArrayList<Account>();
+		switch (locale) {
+			case "zh-TW":
+				String[] translatedSubtypeNames = { //This array should be exactly identical to the list of account subtypes, in order of accountSubtypeId, translated into chinese.
+						"現金及約當現金", "具市場性證劵", "流動應收帳款", "存貨", "其它流動資產", "不具市場性證劵", "非流動應收帳款", "不動產、廠房及設備", "無形資產及商譽", "其它非流動性資產",
+						"流動應付帳款", "應付股利", "遞延收入", "短期負債", "遞延所得稅", "其它流動負債", "長期負債", "非流動應付帳款", "其它流動負債",
+						"投入資本", "股份報酬", "本期股利及約當股利", "其它業主權益",
+						"收入", "投資活動之收入", "融資活動之收入",
+						"銷貨成本", "研究發展費用", "銷售、總務及管理費用", "折舊及攤銷", "投資活動之費用", "融資活動之費用", "利息費用", "賦稅費用", "非經常性項目"
+				};
+				for (int i = 0; i < translatedSubtypeNames.length; i++) {
+					Account account = new Account(translatedSubtypeNames[i], accountSubtypes.get(i));
+					defaultAccounts.add(account);
+				}
+				break;
+			case "en-US":
+			default:
+				for (AccountSubtype accountSubtype : accountSubtypes) {
+					Account account = new Account(accountSubtype.getName(), accountSubtype);
+					defaultAccounts.add(account);
+				}
+				break;
+		}
+		for (Account account : defaultAccounts) {
+			account.setOrganization(organization);
+		}
+		accountRepo.saveAll(defaultAccounts);
+	}
+	
+	private void autoPopulatePersonal(Organization organization, String locale) throws ResourceNotFoundException {
+		AccountSubtype otherCurrentAssets = accountSubtypeRepo.findById((long) 5)
+		.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 16)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 16"));
+		AccountSubtype revenue = accountSubtypeRepo.findById((long) 24)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 24"));
+		AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
+		ArrayList<Account> defaultAccounts = new ArrayList<Account>();
+		switch (locale) {
+			case "zh-TW": {
+				String[] assetAccountNames = {"活期存款帳戶", "投資理財帳戶"};
+				String[] liabilityAccountNames = {"信用卡"};
+				String[] incomeAccountNames = {"薪水", "其它"};
+				String[] expenseAccountNames = {"食品", "衣", "住", "行", "育", "外食", "樂", "所得稅", "其它"};
+				for (String accountName : assetAccountNames) {
+					Account account = new Account(accountName, otherCurrentAssets);
+					defaultAccounts.add(account);
+				}
+				for (String accountName : liabilityAccountNames) {
+					Account account = new Account(accountName, otherCurrentLiabilities);
+					defaultAccounts.add(account);
+				}
+				for (String accountName : incomeAccountNames) {
+					Account account = new Account(accountName, revenue);
+					defaultAccounts.add(account);
+				}
+				for (String accountName : expenseAccountNames) {
+					Account account = new Account(accountName, costOfSales);
+					defaultAccounts.add(account);
+				}
+				break;
+			}
+			case "en-US":
+			default: {
+				String[] assetAccountNames = {"Savings Account", "Checking Account", "Investment Account"};
+				String[] liabilityAccountNames = {"Credit Card"};
+				String[] incomeAccountNames = {"Salary", "Other income"};
+				String[] expenseAccountNames = {"Grocery", "Apparel", "Housing", "Transportation", "Learning", "Dining", "Entertainment", "Taxes", "Other Expenses"};
+				for (String accountName : assetAccountNames) {
+					Account account = new Account(accountName, otherCurrentAssets);
+					defaultAccounts.add(account);
+				}
+				for (String accountName : liabilityAccountNames) {
+					Account account = new Account(accountName, otherCurrentLiabilities);
+					defaultAccounts.add(account);
+				}
+				for (String accountName : incomeAccountNames) {
+					Account account = new Account(accountName, revenue);
+					defaultAccounts.add(account);
+				}
+				for (String accountName : expenseAccountNames) {
+					Account account = new Account(accountName, costOfSales);
+					defaultAccounts.add(account);
+				}
+				break;
+			}
+		}
+		for (Account account : defaultAccounts) {
+			account.setOrganization(organization);
+		}
+		accountRepo.saveAll(defaultAccounts);
+	}
+
 	
 	public void assertCompletePerson(Person person) 
 			throws ConflictException {
