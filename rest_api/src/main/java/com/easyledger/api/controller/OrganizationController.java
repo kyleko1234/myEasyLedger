@@ -96,10 +96,10 @@ public class OrganizationController {
 			throw new ConflictException("Please do not attempt to manually create an organization id.");
 		}
 		Organization savedOrganization = organizationRepo.save(organization);
-		personService.autoPopulateOrganization(savedOrganization);
 		
 		Person currentUser = personRepo.findById(((UserPrincipal) authentication.getPrincipal()).getId())
 				.orElseThrow(() -> new ResourceNotFoundException("Person not found for this id :: " + ((UserPrincipal) authentication.getPrincipal()).getId()));
+		personService.autoPopulateOrganization(savedOrganization, currentUser.getLocale());
 		currentUser.setCurrentOrganizationId(savedOrganization.getId());
 		personRepo.save(currentUser);
 		
