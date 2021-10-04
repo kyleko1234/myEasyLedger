@@ -35,7 +35,6 @@ function NewOrganizationForm(props) {
 
     return (
         <div className="my-3">
-            <button onClick={() => console.log(currencyOptions.find(option => option.value == (defaultCurrencyValue)))}>LOG</button>
             <div className="form-group row">
                 <label className="col-xl-3 col-form-label">
                     {sidebarText[appContext.locale]["Enter a name for this EasyLedger"] + ":"}
