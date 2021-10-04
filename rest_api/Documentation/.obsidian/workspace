@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Verification/Verify an Email Address.md",
+            "file": "AccountSubtype/AccountSubtype.md",
             "mode": "source"
           }
         },
@@ -21,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Verification/Verify an Email Address.md",
+            "file": "AccountSubtype/AccountSubtype.md",
             "mode": "preview"
           }
         },
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Verification/Verify an Email Address.md",
+                "file": "AccountSubtype/AccountSubtype.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,6 +101,8 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "AccountSubtype/AccountSubtype.md",
+    "Verification/Verify an Email Address.md",
     "Verification/Untitled.md",
     "Verification/User Verification Process.md",
     "Verification/Renew Verification Token.md",
@@ -108,8 +110,6 @@
     "Easy Ledger.md",
     "Authentication/Authentication.md",
     "Authentication/Contents/Sign Up.md",
-    "Authentication/Contents/Sign In.md",
-    "Untitled.md",
-    "Authentication/Contents/Renew Verification Token.md"
+    "Authentication/Contents/Sign In.md"
   ]
 }

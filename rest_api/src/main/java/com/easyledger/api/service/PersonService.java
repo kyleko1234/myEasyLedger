@@ -194,6 +194,19 @@ public class PersonService {
 			List<AccountSubtype> accountSubtypes = accountSubtypeRepo.findAll(); //List of AccountType objects, ordered by accountTypeId
 			ArrayList<Account> defaultAccounts = new ArrayList<Account>();
 			switch (locale) {
+				case "zh-TW":
+					String[] translatedSubtypeNames = { //This array should be exactly identical to the list of account subtypes, in order of accountSubtypeId, translated into chinese.
+							"現金及約當現金", "具市場性證劵", "流動應收帳款", "存貨", "其它流動資產", "不具市場性證劵", "非流動應收帳款", "不動產、廠房及設備", "無形資產及商譽", "其它非流動性資產",
+							"流動應付帳款", "應付股利", "遞延收入", "短期負債", "遞延所得稅", "其它流動負債", "長期負債", "非流動應付帳款", "其它流動負債",
+							"投入資本", "股份報酬", "本期股利及約當股利", "其它業主權益",
+							"收入", "投資活動之收入", "融資活動之收入",
+							"銷貨成本", "研究發展費用", "銷售、總務及管理費用", "折舊及攤銷", "投資活動之費用", "融資活動之費用", "利息費用", "賦稅費用", "非經常性項目"
+					};
+					for (int i = 0; i < translatedSubtypeNames.length; i++) {
+						Account account = new Account(translatedSubtypeNames[i], accountSubtypes.get(i));
+						defaultAccounts.add(account);
+					}
+					break;
 				case "en-US":
 				default:
 					for (AccountSubtype accountSubtype : accountSubtypes) {
