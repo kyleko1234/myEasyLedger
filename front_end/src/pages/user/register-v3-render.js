@@ -52,6 +52,13 @@ function RegisterV3Render(props) {
             }
         }) 
     }
+
+    const handleChangeLocale = localeOptionValue => {
+        appContext.handleSetLocale(localeOptionValue);
+        let localeCurrency = LOCALE_OPTIONS.find(localeOption => localeOption.value === localeOptionValue).defaultCurrency;
+        setSelectedCurrency(currencyOptions.find(option => option.value == (localeCurrency ? localeCurrency : "USD")));
+    }
+
     return (
         <>
             {stepNumber === 1
@@ -63,6 +70,7 @@ function RegisterV3Render(props) {
                     passwordInput={passwordInput} setPasswordInput={setPasswordInput}
                     reEnterPasswordInput={reEnterPasswordInput} setReEnterPasswordInput={setReEnterPasswordInput}
                     setStepNumber={setStepNumber} axiosInstance={axiosRegistrationInstance}
+                    handleChangeLocale={handleChangeLocale}
                 />
             : null}
             {stepNumber === 2
@@ -73,11 +81,14 @@ function RegisterV3Render(props) {
                     agreeInput={agreeInput} setAgreeInput={setAgreeInput}
                     setStepNumber={setStepNumber} submitForm={submitForm}
                     somethingWentWrongAlert={somethingWentWrongAlert} setSomethingWentWrongAlert={setSomethingWentWrongAlert}
+                    handleChangeLocale={handleChangeLocale}
                 />
             : null}
             {stepNumber === 3
             ? <RegistrationSuccessful/>
             : null}
+         <button onClick={() => console.log(selectedCurrency.value)}>LOG</button>
+
         </>
     )
 }

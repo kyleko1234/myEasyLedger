@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom';
 function NewAccountForm(props) {
     //required props: firstNameInput, setFirstNameInput, lastNameInput, setLastNameInput, emailInput, setEmailInput,
     //  reEnterEmailInput, setReEnterEmailInput, passwordInput, setPasswordInput, reEnterPasswordInput, setReEnterPasswordInput,
-    //  setStepNumber, axiosInstance
+    //  setStepNumber, axiosInstance, handleChangeLocale
     const appContext = React.useContext(PageSettings);
 
     const [emailMatchAlert, setEmailMatchAlert] = React.useState(false);
@@ -58,6 +58,7 @@ function NewAccountForm(props) {
             }
         });
     }
+
 
     return (
         <div>
@@ -120,7 +121,7 @@ function NewAccountForm(props) {
                             return(
                                 appContext.locale == localeOption.value? 
                                 <b key={localeOption.value} className="mr-3 font-weight-600">{localeOption.label}</b> : 
-                                <Link key={localeOption.value} replace to="#" onClick={() => appContext.handleSetLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
+                                <Link key={localeOption.value} replace to="#" onClick={() => props.handleChangeLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
                             )
                         })}
                     </div>

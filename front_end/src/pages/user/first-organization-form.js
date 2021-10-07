@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom';
 
 function FirstOrganizationForm(props) {
     //required props: organizationNameInput, setOrganizationNameInput, selectedCurrency, setSelectedCurrency, currencyOptions,
-    //  isEnterprise, setIsEnterprise, agreeInput, setAgreeInput, setStepNumber, submitForm, somethingWentWrongAlert, setSomethingWentWrongAlert
+    //  isEnterprise, setIsEnterprise, agreeInput, setAgreeInput, setStepNumber, submitForm, somethingWentWrongAlert, setSomethingWentWrongAlert, handleChangeLocale
     const appContext = React.useContext(PageSettings);
     const [agreeAlert, setAgreeAlert] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
@@ -59,14 +59,6 @@ function FirstOrganizationForm(props) {
                             />
                         </div>
                     </div>
-                    {/*<div className="checkbox checkbox-css m-b-30">
-                        <div className="checkbox checkbox-css m-b-30">
-                            <input type="checkbox" id="is_enterprise_checkbox" value={props.isEnterprise} onChange={() => props.setIsEnterprise(!props.isEnterprise)} />
-                            <label htmlFor="is_enterprise_checkbox">
-                                isEnterprise
-                            </label> 
-                        </div>
-                    </div> */}
                     <label>{registerV3Text[appContext.locale]["Create an EasyLedger using:"]}</label>
                     <div className="row mb-3 pl-3">
                         <div className="col-12 form-check">
@@ -110,7 +102,7 @@ function FirstOrganizationForm(props) {
                             return(
                                 appContext.locale == localeOption.value? 
                                 <b key={localeOption.value} className="mr-3 font-weight-600">{localeOption.label}</b> : 
-                                <Link key={localeOption.value} replace to="#" onClick={() => appContext.handleSetLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
+                                <Link key={localeOption.value} replace to="#" onClick={() => props.handleChangeLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
                             )
                         })}
                     </div>
