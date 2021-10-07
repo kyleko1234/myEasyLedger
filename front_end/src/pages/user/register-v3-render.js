@@ -87,8 +87,6 @@ function RegisterV3Render(props) {
             {stepNumber === 3
             ? <RegistrationSuccessful/>
             : null}
-         <button onClick={() => console.log(selectedCurrency.value)}>LOG</button>
-
         </>
     )
 }
