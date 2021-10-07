@@ -53,10 +53,12 @@ function RegisterV3Render(props) {
         }) 
     }
 
-    const handleChangeLocale = localeOptionValue => {
-        appContext.handleSetLocale(localeOptionValue);
-        let localeCurrency = LOCALE_OPTIONS.find(localeOption => localeOption.value === localeOptionValue).defaultCurrency;
-        setSelectedCurrency(currencyOptions.find(option => option.value == (localeCurrency ? localeCurrency : "USD")));
+    const handleChangeLocale = newLocale => {
+        appContext.handleSetLocale(newLocale);
+        let localeCurrency = LOCALE_OPTIONS.find(localeOption => localeOption.value === newLocale).defaultCurrency;
+        let tempCurrencyOptions = CURRENCY_OPTIONS(newLocale);
+        //the previous line is necessary because of React's async setState behavior; React will not update currencyOptions to the new locale before the next line is executed
+        setSelectedCurrency(tempCurrencyOptions.find(option => option.value == (localeCurrency ? localeCurrency : "USD")));
     }
 
     return (
