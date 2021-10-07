@@ -336,6 +336,11 @@ a.nav-link:hover {
     background-color: var(--primary);
 }
 
+/* MODIFICATIONS TO SWEETALERT */
+.dark-mode .sweet-alert {
+    background-color: #1e1e1e !important;
+}
+
 /* PSEUDO-TABLE UTILITIES */
 .table {
     border-collapse: collapse !important;
