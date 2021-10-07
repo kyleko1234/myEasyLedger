@@ -90,8 +90,8 @@ export const settingsText = {
         "Save": "儲存",
 
         //Appearance settings options
-        "System": "用系統的設定模式",
-        "Light": "用光亮模式",
-        "Dark": "用黑暗模式"
+        "System": "系統模式",
+        "Light": "光亮模式",
+        "Dark": "黑暗模式"
     }
 }
