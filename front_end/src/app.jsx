@@ -134,7 +134,13 @@ class App extends React.Component {
 			email: '',
 			currentOrganizationId: null,
 			permissions: null,
-			locale: 'en-US',
+			locale: (navigator.language
+                        ? (navigator.language.includes("zh")
+                                ? "zh-TW"
+                                : "en-US"
+                        )
+                        : "en-US"
+                    ),
             appearance: 'system',
             colorScheme: 'light',
 			handleSetLocale: this.handleSetLocale, //setting a user's locale should call PATCH /person/{personId} and then fetchUserInfo(personId); however, changing the locale on the registration/login pages should call handleSetLocale()
@@ -154,8 +160,10 @@ class App extends React.Component {
         this.checkForAuthentication();
         this.setColorSchemeToSystemPreference();
 		window.addEventListener('resize', this.handleWindowResize);
-        window.matchMedia('(prefers-color-scheme: dark)')
-            .addEventListener('change', this.setColorSchemeToSystemPreference)
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')){ //apparently some people still use safari 12
+            window.matchMedia('(prefers-color-scheme: dark)')
+                .addEventListener('change', this.setColorSchemeToSystemPreference)
+        }
 	}
 
     componentDidUpdate(prevState) {
