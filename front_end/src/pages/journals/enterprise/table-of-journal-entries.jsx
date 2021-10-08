@@ -78,6 +78,7 @@ function TableOfJournalEntries({
 
     const openEditorForNewEntry = () => {
         setJournalEntryId(null);
+        fetchAccounts();
         let today = new Date();
         setJournalEntryDate(today.toISOString().split('T')[0]);
         setJournalEntryDescription('');

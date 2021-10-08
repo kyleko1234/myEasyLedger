@@ -135,12 +135,12 @@ class App extends React.Component {
 			currentOrganizationId: null,
 			permissions: null,
 			locale: (navigator.language
-                        ? (navigator.language.includes("zh")
-                                ? "zh-TW"
-                                : "en-US"
-                        )
-                        : "en-US"
-                    ),
+                    ? (navigator.language.includes("zh")
+                            ? "zh-TW"
+                            : "en-US"
+                    )
+                    : "en-US"
+            ),
             appearance: 'system',
             colorScheme: 'light',
 			handleSetLocale: this.handleSetLocale, //setting a user's locale should call PATCH /person/{personId} and then fetchUserInfo(personId); however, changing the locale on the registration/login pages should call handleSetLocale()
