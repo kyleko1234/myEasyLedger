@@ -160,9 +160,13 @@ class App extends React.Component {
         this.checkForAuthentication();
         this.setColorSchemeToSystemPreference();
 		window.addEventListener('resize', this.handleWindowResize);
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')){ //apparently some people still use safari 12
-            window.matchMedia('(prefers-color-scheme: dark)')
-                .addEventListener('change', this.setColorSchemeToSystemPreference)
+        if (window.matchMedia){ //apparently some people still use safari 12
+            try {
+                window.matchMedia('(prefers-color-scheme: dark)')
+                    .addEventListener('change', this.setColorSchemeToSystemPreference)
+            } catch (error) {
+                console.log(error);
+            }
         }
 	}
 
