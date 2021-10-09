@@ -39,14 +39,18 @@ function CashFlowRender() {
     const handleChangeStartDate = (date, i) => {
         let newDatesToRequestArray = datesToRequest.slice();
         newDatesToRequestArray[i] = {
-            label: "Custom", startDate: date
+            label: "Custom", 
+            startDate: date,
+            endDate: newDatesToRequestArray[i].endDate
         }
         setDatesToRequest(newDatesToRequestArray)
     }
     const handleChangeEndDate = (date, i) => {
         let newDatesToRequestArray = datesToRequest.slice();
         newDatesToRequestArray[i] = {
-            label: "Custom", endDate: date
+            label: "Custom", 
+            startDate: newDatesToRequestArray[i].startDate,
+            endDate: date
         }
         setDatesToRequest(newDatesToRequestArray)
     }
