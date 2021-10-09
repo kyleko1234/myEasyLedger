@@ -160,10 +160,10 @@ class App extends React.Component {
         this.checkForAuthentication();
         this.setColorSchemeToSystemPreference();
 		window.addEventListener('resize', this.handleWindowResize);
-        if (window.matchMedia){ //apparently some people still use safari 12
+        if (window.matchMedia) { //apparently some people still use safari 12
             try {
                 window.matchMedia('(prefers-color-scheme: dark)')
-                    .addEventListener('change', this.setColorSchemeToSystemPreference)
+                        .addEventListener('change', this.setColorSchemeToSystemPreference)
             } catch (error) {
                 console.log(error);
             }
@@ -182,8 +182,14 @@ class App extends React.Component {
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleWindowResize);
-        window.matchMedia('(prefers-color-scheme: dark)')
-            .removeEventListener('change', this.setColorSchemeToSystemPreference)
+        if (window.matchMedia) {
+            try {
+                window.matchMedia('(prefers-color-scheme: dark)')
+                        .removeEventListener('change', this.setColorSchemeToSystemPreference)    
+            } catch (error) {
+                console.log(error);
+            }
+        }
 	}
 	
 	render() {
