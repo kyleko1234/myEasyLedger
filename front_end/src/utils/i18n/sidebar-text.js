@@ -13,8 +13,8 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Enter a name for this EasyLedger": "Enter a name for this EasyLedger",
         "Select a currency for this EasyLedger": "Select a currency for this EasyLedger",
         "Create an EasyLedger using": "Create an EasyLedger using",
-        "Single-entry accounting": "Single-entry accounting",
-        "Double-entry accounting": "Double-entry accounting",
+        "Single-entry accounting": "Single-entry accounting (individual/family version)",
+        "Double-entry accounting": "Double-entry accounting (small business version)",
         "Create this EasyLedger": "Create this EasyLedger",
 
         //menu items
