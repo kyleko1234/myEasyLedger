@@ -78,13 +78,17 @@ function AccountDetailsEditor(props) {
             resetToDefaultSubtypeId();
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
                 if (response.data) {
-                    let validParentAccountOptions = response.data.filter(account => (account.parentAccountId == null && account.debitTotal == 0 && account.creditTotal == 0) || account.hasChildren).map(account => {
-                        return ({
-                            value: account.accountId,
-                            label: appContext.isEnterprise? account.accountCode + " - " + account.accountName: account.accountName,
-                            object: account
-                        });
-                    });
+                    let validParentAccountOptions = response.data
+                            .filter(account => (account.parentAccountId == null && account.debitTotal == 0 && account.creditTotal == 0) || account.hasChildren)
+                            .map(account => {
+                                return ({
+                                    value: account.accountId,
+                                    label: (appContext.isEnterprise && account.accountCode)
+                                            ? account.accountCode + " - " + account.accountName
+                                            : account.accountName,
+                                    object: account
+                                });
+                            });
                     validParentAccountOptions.unshift({value: 0, label: "None", object: {accountTypeId: accountTypeId}});
                     setParentAccountOptions(validParentAccountOptions);
                 }
@@ -115,8 +119,7 @@ function AccountDetailsEditor(props) {
         setInitialCreditValueInput('0');
         setCurrentAccountHasChildren(false);
     }
-    const handleSaveButton = () => {
-        
+    const handleSaveButton = () => { 
         let requestBody;
         if (!selectedParentAccountId) {
             requestBody = {

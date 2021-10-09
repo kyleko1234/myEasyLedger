@@ -87,6 +87,7 @@ function TableOfTransactions({
     const openEditorForNewTransaction = () => {
         setFromAccountId(parentComponentAccountId);
         setJournalEntryId(null);
+        refreshAccounts();
         let today = new Date();
         setJournalEntryDate(today.toISOString().split('T')[0]);
         setJournalEntryDescription('');
