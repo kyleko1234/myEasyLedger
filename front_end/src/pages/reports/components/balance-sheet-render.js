@@ -6,6 +6,7 @@ import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render
 import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
+import { validateDate } from '../../../utils/util-fns';
 
 function BalanceSheetRender() {
     const appContext = React.useContext(PageSettings);
@@ -52,7 +53,7 @@ function BalanceSheetRender() {
     const validateDatesToRequest = endDatesToRequest => {
         let returnedBoolean = true
         endDatesToRequest.forEach(endDateToRequestObject => {
-            if (!endDateToRequestObject.endDate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            if (!validateDate(endDateToRequestObject.endDate)) {
                 returnedBoolean = false;
             }
         })
