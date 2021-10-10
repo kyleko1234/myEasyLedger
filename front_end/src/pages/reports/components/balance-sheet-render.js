@@ -125,7 +125,7 @@ function BalanceSheetRender() {
         <>
             <Card className="bg-light shadow-sm very-rounded my-4">
                 <CardBody>
-                    {invalidDateAlert? <Alert color="danger">Invalid date(s) selected.</Alert> : null}
+                    {invalidDateAlert? <Alert color="danger">{balanceSheetRenderText[appContext.locale]["Invalid date(s) selected."]}</Alert> : null}
                     <form onSubmit={handleUpdateReportButton}>
                         <div className="d-flex align-items-center justify-content-between mb-2">
                             <h2 className="h5 my-0">{balanceSheetRenderText[appContext.locale]["Options"]}</h2>
