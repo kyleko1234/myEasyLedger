@@ -557,11 +557,15 @@ a.tr:hover {
 }
 
 .width-150 {
-    width: 150px;
+    width: 150px !important;
 }
 
 .width-175 {
     width: 175px !important;
+}
+
+.width-200 {
+    width: 200px ;
 }
 
 .width-10ch {
