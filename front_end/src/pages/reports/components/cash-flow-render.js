@@ -1,11 +1,12 @@
 import React from 'react';
-import { Card, CardBody } from 'reactstrap';
+import { Card, CardBody, Alert } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import {API_BASE_URL} from '../../../utils/constants.js';
 import {cashFlowReportText} from '../../../utils/i18n/cash-flow-report-text.js';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
+import { validateDate } from '../../../utils/util-fns';
 
 
 function CashFlowRender() {
@@ -22,6 +23,7 @@ function CashFlowRender() {
     const [startDate, setStartDate] = React.useState(dateToday.getFullYear() + "-01-01");
     const [endDate, setEndDate] = React.useState(dateToday.toISOString().split('T')[0]);
     const [loading, setLoading] = React.useState(true);
+    const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
 
     const [cashFlowJson, setCashFlowJson] = React.useState(null);
     const [cashBeginningBalances, setCashBeginningBalances] = React.useState(0);
@@ -76,11 +78,27 @@ function CashFlowRender() {
         setColumnLabels(newColumnLabels);
     }
 
-    const handleUpdateReportButton = async () => {
+    const validateDatesToRequest = datesToRequest => {
+        let returnedBoolean = true
+        datesToRequest.forEach(dateToRequestObject => {
+            if (!(validateDate(dateToRequestObject.startDate) && validateDate(dateToRequestObject.endDate))) {
+                returnedBoolean = false;
+            }
+        })
+        return returnedBoolean;
+    }
+
+    const handleUpdateReportButton = async (event) => {
+        event.preventDefault();
+        setInvalidDateAlert(false);
         setLoading(true);
-        let fetchedCashFlowObjects = [];
-        await requestCashFlowObjects(fetchedCashFlowObjects);
-        setCashFlowObjects(fetchedCashFlowObjects);
+        if (validateDatesToRequest(datesToRequest)) {
+            let fetchedCashFlowObjects = [];
+            await requestCashFlowObjects(fetchedCashFlowObjects);
+            setCashFlowObjects(fetchedCashFlowObjects);    
+        } else {
+            setInvalidDateAlert(true);
+        }
         setLoading(false);
     }
 
@@ -199,86 +217,89 @@ function CashFlowRender() {
         <>
             <Card className="bg-light very-rounded shadow-sm my-4">
                 <CardBody>
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                        <h2 className="h5">{cashFlowReportText[appContext.locale]["Options"]}</h2>
-                        <button className="btn btn-primary" onClick={handleUpdateReportButton}>
-                            {cashFlowReportText[appContext.locale]["Update report"]}
-                        </button>
-                    </div>
-                    <div className="d-none d-md-block">
-                        {datesToRequest.map((dateObject, i) => {
-                            return (
-                                <div key={i}>
-                                    {datesToRequest.length > 1
-                                    ?   <div className="font-weight-600 my-1 d-flex align-items-center">
-                                            {cashFlowReportText[appContext.locale]["Date range"] + " " + (i + 1)}
-                                            <button className="btn btn-light py-0 px-1 mx-1 border-0" onClick={() => handleRemoveDateRangeButton(i)}>
-                                                <i className="ion ion-md-close fa-fw"></i>
-                                            </button>
-                                        </div>
-                                    : null}
-                                    <div className="d-flex w-100 align-items-center mb-2">
-                                        <Select
-                                            classNamePrefix="form-control"
-                                            className="col-4 px-0"
-                                            options={dateRangePresets}
-                                            menuPortalTarget={document.body}
-                                            menuShouldScrollIntoView={false}
-                                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                                            onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
-                                            placeholder={"Custom"}
-                                            value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
-                                        />
-                                        <label className="my-0 text-right col-1 px-2">{cashFlowReportText[appContext.locale]["From:"]} </label>
-                                        <input type="date" className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
-                                        <label className="my-0 text-right col-1 px-2">{cashFlowReportText[appContext.locale]["To:"]} </label>
-                                        <input type="date" className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
-                    <div className="d-md-none">
-                        {datesToRequest.map((dateObject, i) => {
-                            return (
-                                <div key={i}>
-                                    <div className="d-flex my-1 justify-content-between">
-                                        <div className="font-weight-600 d-flex align-items-center">
-                                            {cashFlowReportText[appContext.locale]["Date range"] + (datesToRequest.length > 1? (" " + (i + 1)) : "" )}
-                                            <button className={"btn btn-light py-0 px-1 mx-1 border-0 " + (datesToRequest.length > 1 ? "" : " invisible")} onClick={() => handleRemoveDateRangeButton(i)}>
-                                                <i className="ion ion-md-close fa-fw"></i>
-                                            </button>
-                                        </div>
-                                        <Select
-                                            className="col-6 px-0"
-                                            classNamePrefix="form-control"
-                                            options={dateRangePresets}
-                                            menuPortalTarget={document.body}
-                                            menuShouldScrollIntoView={false}
-                                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                                            onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
-                                            placeholder={"Custom"}
-                                            value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
-                                        />
-                                    </div>
-                                    <div className="d-flex justify-content-between text-left align-items-center my-1">
-                                        <label className="my-0 col-3 px-0">{cashFlowReportText[appContext.locale]["From:"]} </label>
-                                        <input type="date" className="form-control" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
-                                    </div>
-                                    <div className="d-flex justify-content-between text-left align-items-center mb-2">
-                                        <label className="my-0 col-3 px-0">{cashFlowReportText[appContext.locale]["To:"]} </label>
-                                        <input type="date" className="form-control" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
-                    {datesToRequest.length < 3
-                    ?   <div className="mb-2">
-                            <Link replace to="#" onClick={handleCompareButton} className="text-decoration-none">
-                            <i className="ion ion-md-add"></i> {cashFlowReportText[appContext.locale]["Compare"]}                            </Link>
+                    {invalidDateAlert? <Alert color="danger">{cashFlowReportText[appContext.locale]["Invalid date(s) selected."]}</Alert> : null}
+                    <form onSubmit={handleUpdateReportButton}>
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                            <h2 className="h5">{cashFlowReportText[appContext.locale]["Options"]}</h2>
+                            <button type="submit" className="btn btn-primary" onClick={handleUpdateReportButton}>
+                                {cashFlowReportText[appContext.locale]["Update report"]}
+                            </button>
                         </div>
-                    : null}
+                        <div className="d-none d-md-block">
+                            {datesToRequest.map((dateObject, i) => {
+                                return (
+                                    <div key={i}>
+                                        {datesToRequest.length > 1
+                                        ?   <div className="font-weight-600 my-1 d-flex align-items-center">
+                                                {cashFlowReportText[appContext.locale]["Date range"] + " " + (i + 1)}
+                                                <button className="btn btn-light py-0 px-1 mx-1 border-0" onClick={() => handleRemoveDateRangeButton(i)}>
+                                                    <i className="ion ion-md-close fa-fw"></i>
+                                                </button>
+                                            </div>
+                                        : null}
+                                        <div className="d-flex w-100 align-items-center mb-2">
+                                            <Select
+                                                classNamePrefix="form-control"
+                                                className="col-4 px-0"
+                                                options={dateRangePresets}
+                                                menuPortalTarget={document.body}
+                                                menuShouldScrollIntoView={false}
+                                                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
+                                                placeholder={"Custom"}
+                                                value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
+                                            />
+                                            <label className="my-0 text-right col-1 px-2">{cashFlowReportText[appContext.locale]["From:"]} </label>
+                                            <input type="date" className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
+                                            <label className="my-0 text-right col-1 px-2">{cashFlowReportText[appContext.locale]["To:"]} </label>
+                                            <input type="date" className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div className="d-md-none">
+                            {datesToRequest.map((dateObject, i) => {
+                                return (
+                                    <div key={i}>
+                                        <div className="d-flex my-1 justify-content-between">
+                                            <div className="font-weight-600 d-flex align-items-center">
+                                                {cashFlowReportText[appContext.locale]["Date range"] + (datesToRequest.length > 1? (" " + (i + 1)) : "" )}
+                                                <button className={"btn btn-light py-0 px-1 mx-1 border-0 " + (datesToRequest.length > 1 ? "" : " invisible")} onClick={() => handleRemoveDateRangeButton(i)}>
+                                                    <i className="ion ion-md-close fa-fw"></i>
+                                                </button>
+                                            </div>
+                                            <Select
+                                                className="col-6 px-0"
+                                                classNamePrefix="form-control"
+                                                options={dateRangePresets}
+                                                menuPortalTarget={document.body}
+                                                menuShouldScrollIntoView={false}
+                                                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
+                                                placeholder={"Custom"}
+                                                value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
+                                            />
+                                        </div>
+                                        <div className="d-flex justify-content-between text-left align-items-center my-1">
+                                            <label className="my-0 col-3 px-0">{cashFlowReportText[appContext.locale]["From:"]} </label>
+                                            <input type="date" className="form-control" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
+                                        </div>
+                                        <div className="d-flex justify-content-between text-left align-items-center mb-2">
+                                            <label className="my-0 col-3 px-0">{cashFlowReportText[appContext.locale]["To:"]} </label>
+                                            <input type="date" className="form-control" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        {datesToRequest.length < 3
+                        ?   <div className="mb-2">
+                                <Link replace to="#" onClick={handleCompareButton} className="text-decoration-none">
+                                <i className="ion ion-md-add"></i> {cashFlowReportText[appContext.locale]["Compare"]}                            </Link>
+                            </div>
+                        : null}
+                    </form>
                 </CardBody>
             </Card>
             <div >
