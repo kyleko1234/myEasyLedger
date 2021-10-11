@@ -85,7 +85,7 @@ function NetWorthRender() {
                             <h2 className="h5">{balanceSheetRenderText[appContext.locale]["Options"]}</h2>
                             <button type="submit" className="btn btn-primary" onClick={handleUpdateReportButton}>{balanceSheetRenderText[appContext.locale]["Update report"]}</button>
                         </div>
-                        <div className="d-flex mb-2 align-items-center">
+                        <div className="d-flex mb-2 align-items-center justify-content-between justify-content-sm-start">
                             <label className="mr-5 mb-0">{netWorthReportText[appContext.locale]["As of:"]}</label>
                             <input type="date" className="form-control width-175 align-self-center" value={endDate} onChange={handleChangeDate}/>
                         </div>

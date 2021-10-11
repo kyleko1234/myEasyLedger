@@ -3,7 +3,8 @@ import { PageSettings } from '../../../config/page-settings.js';
 import {API_BASE_URL} from '../../../utils/constants.js';
 import axios from 'axios';
 import {incomeStatementRenderText} from '../../../utils/i18n/income-statement-render-text.js';
-import { Card, CardBody} from 'reactstrap';
+import { Card, CardBody, Alert } from 'reactstrap';
+import { validateDate } from '../../../utils/util-fns.js';
 
 function IncomeExpenseRender() {
     const appContext = React.useContext(PageSettings);
@@ -17,6 +18,8 @@ function IncomeExpenseRender() {
     const [loading, setLoading] = React.useState(true);
     const [detailedView, setDetailedView] = React.useState(false);
     const toggleDetailedView = () => setDetailedView(!detailedView);
+    const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
+
 
     const sumCreditsMinusDebits = (objects) => {
         let totalDebitsMinusCredits = 0;
@@ -26,33 +29,37 @@ function IncomeExpenseRender() {
         return totalDebitsMinusCredits * -1;
     }
 
+    const fetchReport =  async (startDate, endDate) => {
+        await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement/${startDate}/${endDate}`).then(response => {
+            let formattedAccounts = response.data.accountBalances;
+            formattedAccounts.forEach(account => {
+                if (account.hasChildren) {
+                    let totalDebits = 0;
+                    let totalCredits = 0;    
+                    formattedAccounts.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
+                        totalDebits = totalDebits + childAccount.debitTotal;
+                        totalCredits = totalCredits + childAccount.creditTotal;
+                    })
+                    account.debitTotal = totalDebits;
+                    account.creditTotal = totalCredits;
+                    account.debitsMinusCredits = totalDebits - totalCredits;    
+                }
+            })
+            setAccounts(formattedAccounts);
+            setNetIncome(response.data.netIncome);
+            setTotalIncome(sumCreditsMinusDebits(formattedAccounts.filter(account => account.accountTypeId == 4)));
+            setTotalExpenses(sumCreditsMinusDebits(formattedAccounts.filter(account => account.accountTypeId == 5)) * -1);
+        }).catch(console.log);  
+    }
+
     React.useEffect(() => {
-        async function fetchData() {
+        async function fetchInitialReport() {
             setLoading(true);
-            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement/${startDate}/${endDate}`).then(response => {
-                let formattedAccounts = response.data.accountBalances;
-                formattedAccounts.forEach(account => {
-                    if (account.hasChildren) {
-                        let totalDebits = 0;
-                        let totalCredits = 0;    
-                        formattedAccounts.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
-                            totalDebits = totalDebits + childAccount.debitTotal;
-                            totalCredits = totalCredits + childAccount.creditTotal;
-                        })
-                        account.debitTotal = totalDebits;
-                        account.creditTotal = totalCredits;
-                        account.debitsMinusCredits = totalDebits - totalCredits;    
-                    }
-                })
-                setAccounts(formattedAccounts);
-                setNetIncome(response.data.netIncome);
-                setTotalIncome(sumCreditsMinusDebits(formattedAccounts.filter(account => account.accountTypeId == 4)));
-                setTotalExpenses(sumCreditsMinusDebits(formattedAccounts.filter(account => account.accountTypeId == 5)) * -1);
-            }).catch(console.log);  
-            setLoading(false);  
+            await fetchReport(startDate, endDate);
+            setLoading(false);
         }
-        fetchData();
-    }, [startDate, endDate]);
+        fetchInitialReport();
+    }, []);
 
     const formatNumber = (number) => {
         if (number == 0) {
@@ -61,7 +68,17 @@ function IncomeExpenseRender() {
         return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number)
     }
 
-
+    const handleUpdateReportButton = async event => {
+        event.preventDefault();
+        setInvalidDateAlert(false);
+        setLoading(true);
+        if (validateDate(startDate) && validateDate(endDate)) {
+            await fetchReport(startDate, endDate);
+        } else {
+            setInvalidDateAlert(true);
+        }
+        setLoading(false);
+    }
 
     const handleChangeStartDate = (event) => {
         setStartDate(event.target.value);
@@ -76,21 +93,27 @@ function IncomeExpenseRender() {
         <>
             <Card className="very-rounded shadow-sm bg-light my-4">
                 <CardBody>
-                    <h2 className="h5">{incomeStatementRenderText[appContext.locale]["Options"]}</h2>
-                    <div className="d-sm-flex align-items-center">
-                        <div className="d-flex align-items-center mr-3 mb-2">
-                            <label className="my-0 pr-2">{incomeStatementRenderText[appContext.locale]["From:"]}</label>
-                            <input type="date" className="form-control form-control-sm width-150 align-self-center" value={startDate} onChange={handleChangeStartDate}/>
+                    {invalidDateAlert? <Alert color="danger">{incomeStatementRenderText[appContext.locale]["Invalid date(s) selected."]}</Alert> : null}
+                    <form onSubmit={handleUpdateReportButton}>
+                        <div className="d-flex align-items-center justify-content-between mb-2">
+                            <h2 className="h5">{incomeStatementRenderText[appContext.locale]["Options"]}</h2>
+                            <button type="submit" className="btn btn-primary" onClick={handleUpdateReportButton}>{incomeStatementRenderText[appContext.locale]["Update report"]}</button>
                         </div>
-                        <div className="d-flex align-items-center mr-3 mb-2">
-                            <label className="my-0 pr-2">{incomeStatementRenderText[appContext.locale]["To:"]}</label>
-                            <input type="date" className="form-control form-control-sm width-150 align-self-center" value={endDate} onChange={handleChangeEndDate}/>
+                        <div className="d-sm-flex align-items-center">
+                            <div className="d-flex align-items-center justify-content-between mr-3 mb-2">
+                                <label className="my-0 mr-5">{incomeStatementRenderText[appContext.locale]["From:"]}</label>
+                                <input type="date" className="form-control form-control-sm width-175 align-self-center" value={startDate} onChange={handleChangeStartDate}/>
+                            </div>
+                            <div className="d-flex align-items-center justify-content-between mr-3 mb-2">
+                                <label className="my-0 mr-5">{incomeStatementRenderText[appContext.locale]["To:"]}</label>
+                                <input type="date" className="form-control form-control-sm width-175 align-self-center" value={endDate} onChange={handleChangeEndDate}/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="custom-control custom-switch">
-                        <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
-                        <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
-                    </div>
+                        <div className="custom-control custom-switch">
+                            <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
+                            <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
+                        </div>
+                    </form>
                 </CardBody>
             </Card>
             {loading? <div className="d-flex justify-content-center fa-3x py-3 "><i className="fas fa-circle-notch fa-spin"></i></div>:
