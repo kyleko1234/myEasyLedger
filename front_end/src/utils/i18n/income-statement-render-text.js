@@ -6,6 +6,7 @@ export const incomeStatementRenderText = {
         "Date range": "Date range",
         "Compare": "Compare",
         "Update report": "Update report",
+        "Invalid date(s) selected.": "Invalid date(s) selected.",
 
         "Revenue": "Revenue",
         "Total revenue": "Total revenue",
@@ -47,6 +48,7 @@ export const incomeStatementRenderText = {
         "Date range": "日期區間",
         "Compare": "比較對照",
         "Update report": "更新報表",
+        "Invalid date(s) selected.": "TRANSLATION",
 
         "Revenue": "收入",
         "Total revenue": "收入合計",
