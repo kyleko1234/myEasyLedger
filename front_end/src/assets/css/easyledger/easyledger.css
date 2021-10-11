@@ -236,15 +236,19 @@ body.dark-mode{
     border-color: #d5d5d5;
 }
 
-.dark-mode .btn-white {
+.dark-mode .btn-white,
+.dark-mode .btn-light {
     background-color: #181818;
     border-color: #232323;
     color: var(--dark-mode-text-color)
 }
 
-.dark-mode .btn-white:hover {
-    background-color: #2a2a2a;
-    border-color: #232323;
+.dark-mode .btn-white:hover,
+.dark-mode .btn-light:hover,
+.dark-mode .btn-light:active {
+    background-color: #2a2a2a !important;
+    border-color: #232323 !important;
+    color: var(--dark-mode-text-color) !important;
 }
 
 /* MODIFICATIONS TO BOOTSTRAP FORMS */
@@ -553,11 +557,15 @@ a.tr:hover {
 }
 
 .width-150 {
-    width: 150px;
+    width: 150px !important;
 }
 
 .width-175 {
     width: 175px !important;
+}
+
+.width-200 {
+    width: 200px ;
 }
 
 .width-10ch {

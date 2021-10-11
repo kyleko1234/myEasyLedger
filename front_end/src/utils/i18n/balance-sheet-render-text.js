@@ -6,6 +6,8 @@ export const balanceSheetRenderText = {
         "Compare": "Compare",
         "Custom": "Custom",
         "Update report": "Update report",
+        "Invalid date(s) selected.": "Invalid date(s) selected.",
+        "yyyy-mm-dd": "yyyy-mm-dd",
 
         "Assets": "Assets",
         "Current assets": "Current assets",
@@ -75,6 +77,8 @@ export const balanceSheetRenderText = {
         "Compare": "比較對照",
         "Custom": "自訂日期",
         "Update report": "更新報表",
+        "Invalid date(s) selected.": "TRANSLATION",
+        "yyyy-mm-dd": "TRANSLATION", //date string format
 
         "Assets": "資產",
         "Current assets": "流動資產",

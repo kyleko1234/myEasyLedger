@@ -3,9 +3,10 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
 import { PageSettings } from '../../../config/page-settings';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text.js';
-import { Card, CardBody } from 'reactstrap';
+import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
+import { validateDate } from '../../../utils/util-fns';
 
 function BalanceSheetRender() {
     const appContext = React.useContext(PageSettings);
@@ -21,6 +22,7 @@ function BalanceSheetRender() {
     const [endDatesToRequest, setEndDatesToRequest] = React.useState([{label: "Custom", endDate:today}]);
     const [columnLabels, setColumnLabels] = React.useState([]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
+    const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
 
     const handleChangeDate = (date, i) => {
         let newEndDatesToRequestArray = endDatesToRequest.slice();
@@ -48,11 +50,27 @@ function BalanceSheetRender() {
         setColumnLabels(newColumnLabels);
     }
 
-    const handleUpdateReportButton = async () => {
+    const validateDatesToRequest = endDatesToRequest => {
+        let returnedBoolean = true
+        endDatesToRequest.forEach(endDateToRequestObject => {
+            if (!validateDate(endDateToRequestObject.endDate)) {
+                returnedBoolean = false;
+            }
+        })
+        return returnedBoolean;
+    }
+
+    const handleUpdateReportButton = async (event) => {
+        event.preventDefault();
         setLoading(true);
-        let fetchedBalanceSheetObjects = [];
-        await requestBalanceSheetObjects(fetchedBalanceSheetObjects);
-        setBalanceSheetObjects(fetchedBalanceSheetObjects);
+        setInvalidDateAlert(false);
+        if (validateDatesToRequest(endDatesToRequest)) {
+            let fetchedBalanceSheetObjects = [];
+            await requestBalanceSheetObjects(fetchedBalanceSheetObjects);
+            setBalanceSheetObjects(fetchedBalanceSheetObjects);    
+        } else {
+            setInvalidDateAlert(true);
+        }
         setLoading(false);
     }
 
@@ -108,50 +126,53 @@ function BalanceSheetRender() {
         <>
             <Card className="bg-light shadow-sm very-rounded my-4">
                 <CardBody>
-                    <div className="d-flex align-items-center justify-content-between mb-2">
-                        <h2 className="h5 my-0">{balanceSheetRenderText[appContext.locale]["Options"]}</h2>
-                        <button className="btn btn-primary" onClick={handleUpdateReportButton}>{balanceSheetRenderText[appContext.locale]["Update report"]}</button>
-                    </div>
-                    <div>
-                        {endDatesToRequest.map((endDateObject, i) => {
-                            return(
-                                <div className="mb-2" key={i}>
-                                    { endDatesToRequest.length > 1 
-                                    ?   <div className="font-weight-600 my-1 d-flex align-items-center">
-                                            {balanceSheetRenderText[appContext.locale]["Date range"] + " " + (i + 1)}
-                                            <button className="btn btn-light py-0 px-1 mx-1 border-0" onClick={() => handleRemoveDateRangeButton(i)}><i className="ion ion-md-close fa-fw"></i></button>
-                                        </div> 
-                                    : null}
-                                    <div className="d-flex w-100 align-items-center" key={i}>
-                                        <Select
-                                            className="col-4 px-0"
-                                            classNamePrefix="form-control"
-                                            options={dateRangePresets}
-                                            menuPortalTarget={document.body}
-                                            menuShouldScrollIntoView={false}
-                                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                                            onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
-                                            placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
-                                            value={endDatesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == endDatesToRequest[i].label)}
-                                        />
-                                        <label className="col-2 px-1 px-sm-2 text-right my-0">
-                                            {balanceSheetRenderText   [appContext.locale]["As of:"]} 
-                                        </label>
-                                        <input type="date" className=" col-6 form-control align-self-center" value={endDatesToRequest[i].endDate} onChange={event => handleChangeDate(event.target.value, i)} />
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
-                    {endDatesToRequest.length < 3
-                    ?   <div className="mb-2">
-                            <Link replace to="#" onClick={handleCompareButton} className="text-decoration-none"><i className="ion ion-md-add"></i> {balanceSheetRenderText[appContext.locale]["Compare"]}</Link>
+                    {invalidDateAlert? <Alert color="danger">{balanceSheetRenderText[appContext.locale]["Invalid date(s) selected."]}</Alert> : null}
+                    <form onSubmit={handleUpdateReportButton}>
+                        <div className="d-flex align-items-center justify-content-between mb-2">
+                            <h2 className="h5 my-0">{balanceSheetRenderText[appContext.locale]["Options"]}</h2>
+                            <button type="submit" className="btn btn-primary" onClick={handleUpdateReportButton}>{balanceSheetRenderText[appContext.locale]["Update report"]}</button>
                         </div>
-                    : null}
-                    <div className="custom-control custom-switch">
-                        <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
-                        <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{balanceSheetRenderText[appContext.locale]["Detailed View"]}</label>
-                    </div>
+                        <div>
+                            {endDatesToRequest.map((endDateObject, i) => {
+                                return(
+                                    <div className="mb-2" key={i}>
+                                        { endDatesToRequest.length > 1 
+                                        ?   <div className="font-weight-600 my-1 d-flex align-items-center">
+                                                {balanceSheetRenderText[appContext.locale]["Date range"] + " " + (i + 1)}
+                                                <button className="btn btn-light py-0 px-1 mx-1 border-0" onClick={() => handleRemoveDateRangeButton(i)}><i className="ion ion-md-close fa-fw"></i></button>
+                                            </div> 
+                                        : null}
+                                        <div className="d-flex w-100 align-items-center" key={i}>
+                                            <Select
+                                                className="col-4 px-0"
+                                                classNamePrefix="form-control"
+                                                options={dateRangePresets}
+                                                menuPortalTarget={document.body}
+                                                menuShouldScrollIntoView={false}
+                                                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
+                                                placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
+                                                value={endDatesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == endDatesToRequest[i].label)}
+                                            />
+                                            <label className="col-2 px-1 px-sm-2 text-right my-0">
+                                                {balanceSheetRenderText   [appContext.locale]["As of:"]} 
+                                            </label>
+                                            <input type="date" className=" col-6 form-control align-self-center" placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} value={endDatesToRequest[i].endDate} onChange={event => handleChangeDate(event.target.value, i)} />
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        {endDatesToRequest.length < 3
+                        ?   <div className="mb-2">
+                                <Link replace to="#" onClick={handleCompareButton} className="text-decoration-none"><i className="ion ion-md-add"></i> {balanceSheetRenderText[appContext.locale]["Compare"]}</Link>
+                            </div>
+                        : null}
+                        <div className="custom-control custom-switch">
+                            <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
+                            <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{balanceSheetRenderText[appContext.locale]["Detailed View"]}</label>
+                        </div>
+                    </form>
                 </CardBody>
             </Card>
             <div className="overflow-auto">

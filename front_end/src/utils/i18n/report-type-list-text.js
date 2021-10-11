@@ -8,11 +8,11 @@ export const reportTypeListText = {
         "Cash Flow": "Cash Flow"
     },
     "zh-TW": {
-        "Select a type of report to view...": "選擇你要檢視的報表⋯⋯",
+        "Select a type of report to view...": "選擇你要檢視的報表 ...",
         "Balance Sheet": "資產負債表",
         "Income Statement": "損益表",
-        "Net Worth": "淨值",
+        "Net Worth": "淨資產報告",
         "Income and Expense Report": "收入支出報告",
-        "Cash Flow": "現金流向"
+        "Cash Flow": "現金流量表"
     }
 }

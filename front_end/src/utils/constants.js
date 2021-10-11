@@ -234,7 +234,7 @@ const ACCOUNT_TYPE_OPTIONS_I18N = {
     "zh-TW": {
         "Assets": "資產",
         "Liabilities": "負債",
-        "Equity": "業主權益",
+        "Equity": "權益",
         "Income": "收入",
         "Expenses": "支出"
     }
