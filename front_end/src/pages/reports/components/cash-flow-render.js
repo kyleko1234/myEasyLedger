@@ -250,9 +250,9 @@ function CashFlowRender() {
                                                 value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                             />
                                             <label className="my-0 text-right col-1 px-2">{cashFlowReportText[appContext.locale]["From:"]} </label>
-                                            <input type="date" className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
+                                            <input type="date" placeholder={cashFlowReportText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
                                             <label className="my-0 text-right col-1 px-2">{cashFlowReportText[appContext.locale]["To:"]} </label>
-                                            <input type="date" className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                            <input type="date" placeholder={cashFlowReportText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
                                         </div>
                                     </div>
                                 )

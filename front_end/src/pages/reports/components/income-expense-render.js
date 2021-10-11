@@ -102,11 +102,11 @@ function IncomeExpenseRender() {
                         <div className="d-sm-flex align-items-center">
                             <div className="d-flex align-items-center justify-content-between mr-3 mb-2">
                                 <label className="my-0 mr-5">{incomeStatementRenderText[appContext.locale]["From:"]}</label>
-                                <input type="date" className="form-control form-control-sm width-175 align-self-center" value={startDate} onChange={handleChangeStartDate}/>
+                                <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control form-control-sm width-175 align-self-center" value={startDate} onChange={handleChangeStartDate}/>
                             </div>
                             <div className="d-flex align-items-center justify-content-between mr-3 mb-2">
                                 <label className="my-0 mr-5">{incomeStatementRenderText[appContext.locale]["To:"]}</label>
-                                <input type="date" className="form-control form-control-sm width-175 align-self-center" value={endDate} onChange={handleChangeEndDate}/>
+                                <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control form-control-sm width-175 align-self-center" value={endDate} onChange={handleChangeEndDate}/>
                             </div>
                         </div>
                         <div className="custom-control custom-switch">

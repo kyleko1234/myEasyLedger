@@ -157,7 +157,7 @@ function BalanceSheetRender() {
                                             <label className="col-2 px-1 px-sm-2 text-right my-0">
                                                 {balanceSheetRenderText   [appContext.locale]["As of:"]} 
                                             </label>
-                                            <input type="date" className=" col-6 form-control align-self-center" placeholder={"yyyy-mm-dd"} value={endDatesToRequest[i].endDate} onChange={event => handleChangeDate(event.target.value, i)} />
+                                            <input type="date" className=" col-6 form-control align-self-center" placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} value={endDatesToRequest[i].endDate} onChange={event => handleChangeDate(event.target.value, i)} />
                                         </div>
                                     </div>
                                 )

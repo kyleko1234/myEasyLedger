@@ -87,7 +87,7 @@ function NetWorthRender() {
                         </div>
                         <div className="d-flex mb-2 align-items-center justify-content-between justify-content-sm-start">
                             <label className="mr-5 mb-0">{netWorthReportText[appContext.locale]["As of:"]}</label>
-                            <input type="date" className="form-control width-175 align-self-center" value={endDate} onChange={handleChangeDate}/>
+                            <input type="date" placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control width-175 align-self-center" value={endDate} onChange={handleChangeDate}/>
                         </div>
                         <div className="custom-control custom-switch">
                             <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
