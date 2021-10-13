@@ -240,25 +240,39 @@ public class PersonService {
 		ArrayList<Account> defaultAccounts = new ArrayList<Account>();
 		switch (locale) {
 			case "zh-TW": {
+				ArrayList<Account> topLevelAccounts = new ArrayList<Account>();
+				ArrayList<Account> childAccounts = new ArrayList<Account>();
 				String[] assetAccountNames = {"活期存款帳戶", "投資理財帳戶"};
 				String[] liabilityAccountNames = {"信用卡"};
 				String[] incomeAccountNames = {"薪水", "其它"};
 				String[] expenseAccountNames = {"食品", "衣", "住", "行", "育", "外食", "樂", "所得稅", "其它"};
 				for (String accountName : assetAccountNames) {
 					Account account = new Account(accountName, otherCurrentAssets);
-					defaultAccounts.add(account);
+					topLevelAccounts.add(account);
 				}
 				for (String accountName : liabilityAccountNames) {
 					Account account = new Account(accountName, otherCurrentLiabilities);
-					defaultAccounts.add(account);
+					topLevelAccounts.add(account);
 				}
 				for (String accountName : incomeAccountNames) {
 					Account account = new Account(accountName, revenue);
-					defaultAccounts.add(account);
+					topLevelAccounts.add(account);
 				}
 				for (String accountName : expenseAccountNames) {
 					Account account = new Account(accountName, costOfSales);
-					defaultAccounts.add(account);
+					topLevelAccounts.add(account);
+				}
+				Account foodExpensesParentAccount = new Account("食", costOfSales);
+				topLevelAccounts.add(foodExpensesParentAccount);
+				for (Account account : topLevelAccounts) {
+					account.setOrganization(organization);
+				}
+				accountRepo.saveAll(topLevelAccounts);
+				String[] foodExpensesChildAccountNames = {"食品", "外食"};
+				for (String accountName : foodExpensesChildAccountNames) {
+					Account account = new Account(accountName, foodExpensesParentAccount);
+					account.setOrganization(organization);
+					accountRepo.save(account);
 				}
 				break;
 			}
