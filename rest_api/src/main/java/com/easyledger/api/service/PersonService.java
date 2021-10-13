@@ -244,7 +244,7 @@ public class PersonService {
 				String[] assetAccountNames = {"活期存款帳戶", "投資理財帳戶"};
 				String[] liabilityAccountNames = {"信用卡"};
 				String[] incomeAccountNames = {"薪水", "其它"};
-				String[] expenseAccountNames = {"食品", "衣", "住", "行", "育", "外食", "樂", "所得稅", "其它"};
+				String[] expenseAccountNames = {"衣", "住", "行", "育", "樂", "所得稅", "其它"};
 				for (String accountName : assetAccountNames) {
 					Account account = new Account(accountName, otherCurrentAssets);
 					topLevelAccounts.add(account);
