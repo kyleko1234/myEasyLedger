@@ -142,7 +142,7 @@ const routes = [
     component: CashFlowReport,
   },
   {
-    path: '/verification/:verificationToken',
+    path: '/verification/:verificationToken/:locale',
     title: 'Verification',
     component: Verification,
   },

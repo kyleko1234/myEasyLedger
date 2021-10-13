@@ -9,17 +9,24 @@ import { verificationText } from '../../utils/i18n/verification-text';
 function Verification(props) {
     const appContext = React.useContext(PageSettings);
     const verificationToken = useParams().verificationToken;
+    const defaultLocale = useParams().locale;
     const [firstName, setFirstName] = React.useState("Kyle");
     const [lastName, setLastName] = React.useState("Ko");
     const [verificationResult, setVerificationResult] = React.useState("");
     
     React.useEffect(() => {
+        if (defaultLocale) {
+            if (defaultLocale === "en-US" || defaultLocale == "zh-TW") {
+                appContext.handleSetLocale(defaultLocale);
+            }
+        }
         axios.get(`${API_BASE_URL}/verification/${verificationToken}`).then(response => {
             setFirstName(response.data.firstName);
             setLastName(response.data.lastName);
             setVerificationResult(response.data.verificationResult);
         }).catch(console.log);
     }, [verificationToken])
+
 
     return (
         <div className="login-page" style={{ backgroundImage: 'url(/assets/img/login-bg/login-bg-11.jpg)' }} >
