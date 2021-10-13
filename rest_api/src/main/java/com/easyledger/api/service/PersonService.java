@@ -237,7 +237,6 @@ public class PersonService {
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 24"));
 		AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
-		ArrayList<Account> defaultAccounts = new ArrayList<Account>();
 		switch (locale) {
 			case "zh-TW": {
 				ArrayList<Account> topLevelAccounts = new ArrayList<Account>();
@@ -278,33 +277,48 @@ public class PersonService {
 			}
 			case "en-US":
 			default: {
-				String[] assetAccountNames = {"Savings Account", "Checking Account", "Investment Account"};
-				String[] liabilityAccountNames = {"Credit Card"};
-				String[] incomeAccountNames = {"Salary", "Other income"};
-				String[] expenseAccountNames = {"Grocery", "Apparel", "Housing", "Transportation", "Learning", "Dining", "Entertainment", "Taxes", "Other Expenses"};
-				for (String accountName : assetAccountNames) {
-					Account account = new Account(accountName, otherCurrentAssets);
-					defaultAccounts.add(account);
+				Account bankAccounts = new Account("Bank Accounts", otherCurrentAssets);
+				Account cash = new Account("Cash", otherCurrentAssets);
+				Account creditCards = new Account("Credit Cards", otherCurrentLiabilities);
+				Account jobs = new Account("Jobs", revenue);
+				Account projects = new Account("Projects", revenue);
+				Account discretionary = new Account("Discretionary", costOfSales);
+				Account education = new Account("Education", costOfSales);
+				Account food = new Account("Food", costOfSales);
+				Account living = new Account("Living", costOfSales);
+				Account transportation = new Account("Transportation", costOfSales);
+				Account[] topLevelAccounts = {
+						bankAccounts, cash, creditCards, jobs, projects, discretionary, education, food, living, transportation
+				};
+				for (Account account : topLevelAccounts) {
+					account.setOrganization(organization);
 				}
-				for (String accountName : liabilityAccountNames) {
-					Account account = new Account(accountName, otherCurrentLiabilities);
-					defaultAccounts.add(account);
+				accountRepo.saveAll(Arrays.asList(topLevelAccounts));
+				
+				Account savingsAccount = new Account("Savings Account", bankAccounts);
+				Account checkingAccount = new Account("Checking Account", bankAccounts);
+				Account investmentAccount = new Account("Investment Account", bankAccounts);
+				Account creditCardOne = new Account("Credit Card #1", creditCards);
+				Account jobOne = new Account("Job #1", jobs);
+				Account projectOne = new Account("Project #1", projects);
+				Account apparel = new Account("Apparel", discretionary);
+				Account entertainment = new Account("Entertainment", discretionary);
+				Account tuition = new Account("Tuition", education);
+				Account dining = new Account("Dining", food);
+				Account groceries = new Account("Groceries", food);
+				Account rent = new Account("Rent", living);
+				Account gas = new Account("Gas", transportation);
+				Account[] childAccounts = {
+						savingsAccount, checkingAccount, investmentAccount, creditCardOne, jobOne, projectOne, apparel,
+						entertainment, tuition, dining, groceries, rent, gas
+				};
+				for (Account account : childAccounts) {
+					account.setOrganization(organization);
 				}
-				for (String accountName : incomeAccountNames) {
-					Account account = new Account(accountName, revenue);
-					defaultAccounts.add(account);
-				}
-				for (String accountName : expenseAccountNames) {
-					Account account = new Account(accountName, costOfSales);
-					defaultAccounts.add(account);
-				}
+				accountRepo.saveAll(Arrays.asList(childAccounts));
 				break;
 			}
 		}
-		for (Account account : defaultAccounts) {
-			account.setOrganization(organization);
-		}
-		accountRepo.saveAll(defaultAccounts);
 	}
 
 	
