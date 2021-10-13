@@ -68,7 +68,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		resultSetMapping = "accountDTOMapping"
 )
 
-//TODO: TEST
 @NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization for the given time period
 		name = "Account.getAllAccountBalancesForOrganizationBetweenDates",
 		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName, " + 
@@ -119,7 +118,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				)
 		}
 )	
-//TODO: TEST
 @NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization up until the given date
 		name = "Account.getAllAccountBalancesForOrganizationUpToDate",
 		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName, " + 
