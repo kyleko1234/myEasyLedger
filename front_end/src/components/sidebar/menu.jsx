@@ -7,6 +7,7 @@ export const enterpriseMenu = [
 
 export const personalMenu = [
   { path: '/dashboard', icon: 'fas fa-grip-horizontal', title: 'Dashboard', relevantBasePaths: ["dashboard"]},
+  { path: '/transactions', icon: 'fas fa-book', title: 'Transactions', relevantBasePaths: ["transactions"]},
   { path: '/accounts', icon: 'far fa-list-alt', title: 'Accounts', relevantBasePaths: ["accounts", "account-details"]},
   { path: '/categories', icon: 'fas fa-columns', title: 'Categories', relevantBasePaths: ["categories", "category-details"]},
   { path: '/reports', icon: 'fas fa-envelope-open-text', title: 'Reports', relevantBasePaths: ["reports"]}
