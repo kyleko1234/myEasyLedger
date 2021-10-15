@@ -78,6 +78,46 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"    journalEntryDate DESC, journalEntryId DESC, lineItemId DESC ",
 		resultSetMapping = "lineItemDTOMapping"
 )
+@NamedNativeQuery( //retrieves all undeleted LineItems in undeleted entries for an organization when given an organizationId
+		name = "LineItem.getAllAssetAndLiabilityLineItemsForOrganization",
+		query = " (SELECT            "
+				+ "        account.id AS accountId, account.name AS accountName,            "
+				+ "        line_item.amount AS amount,            "
+				+ "        journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate,            "
+				+ "        line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId      "
+				+ "    FROM            "
+				+ "        line_item, journal_entry, account, account_subtype, account_type      "
+				+ "    WHERE            "
+				+ "        journal_entry.organization_id = :organization_id AND             "
+				+ "        line_item.account_id = account.id AND            "
+				+ "        line_item.journal_entry_id = journal_entry.id AND            "
+				+ "        journal_entry.deleted = false AND       "
+				+ "        account_subtype.id = account.account_subtype_id AND      "
+				+ "        account_type.id = account_subtype.account_type_id AND "
+				+ "        account_type.id < 3 "
+				+ ")     "
+				+ "UNION      "
+				+ "(SELECT            "
+				+ "    child_account.id AS accountId, child_account.name AS accountName,            "
+				+ "    line_item.amount AS amount,            "
+				+ "    journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate,            "
+				+ "    line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId      "
+				+ "FROM            "
+				+ "    line_item, journal_entry, account AS child_account, account AS parent_account, account_subtype, account_type      "
+				+ "WHERE            "
+				+ "    journal_entry.organization_id = :organizationId AND             "
+				+ "    line_item.account_id = child_account.id AND            "
+				+ "    line_item.journal_entry_id = journal_entry.id AND            "
+				+ "    journal_entry.deleted = false AND       "
+				+ "    parent_account.id = child_account.parent_account_id AND       "
+				+ "    account_subtype.id = parent_account.account_subtype_id AND      "
+				+ "    account_type.id = account_subtype.account_type_id AND "
+				+ "    account_type.id < 3 "
+				+ ")     "
+				+ "ORDER BY            "
+				+ "    journalEntryDate DESC, journalEntryId DESC, lineItemId DESC  ",
+		resultSetMapping = "lineItemDTOMapping"
+)
 @SqlResultSetMapping(//sqlresultsetmapping for counting query
 		name = "lineItemDTOMapping.count",
 		columns = @ColumnResult(name = "count"))
@@ -85,6 +125,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @NamedNativeQuery( //query to count number of LineItems in order to use Pageable on LineItem.getAllLineItemsForAccount
 		name = "LineItem.getAllLineItemsForAccount.count",
 		query = "SELECT count(*) AS count from line_item, journal_entry WHERE line_item.account_id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false",
+		resultSetMapping = "lineItemDTOMapping.count"
+)
+@NamedNativeQuery( //query to count number of LineItems in order to use Pageable on LineItem.getAllLineItemsForOrganization
+		name = "LineItem.getAllAssetAndLiabilityLineItemsForOrganization.count",
+		query = "SELECT count(*) AS count from line_item, journal_entry WHERE journal_entry.organization_id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false",
 		resultSetMapping = "lineItemDTOMapping.count"
 )
 
