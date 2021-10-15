@@ -129,7 +129,37 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 )
 @NamedNativeQuery( //query to count number of LineItems in order to use Pageable on LineItem.getAllLineItemsForOrganization
 		name = "LineItem.getAllAssetAndLiabilityLineItemsForOrganization.count",
-		query = "SELECT count(*) AS count from line_item, journal_entry WHERE journal_entry.organization_id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false",
+		query = "SELECT SUM(count) FROM ( "
+				+ "    ( "
+				+ "        SELECT  "
+				+ "            count(*) AS count  "
+				+ "        FROM  "
+				+ "            line_item, journal_entry, account, account_subtype "
+				+ "        WHERE  "
+				+ "            journal_entry.organization_id = ? AND  "
+				+ "            line_item.journal_entry_id = journal_entry.id AND  "
+				+ "            journal_entry.deleted = false AND "
+				+ "            line_item.account_id = account.id AND  "
+				+ "            account.account_subtype_id = account_subtype.id AND "
+				+ "            account_subtype.account_type_id < 3 "
+				+ "    )  "
+				+ "    UNION "
+				+ "    ( "
+				+ "        SELECT  "
+				+ "            count(*) AS count  "
+				+ "        FROM  "
+				+ "            line_item, journal_entry, account_subtype, "
+				+ "            account AS parent_account, account AS child_account "
+				+ "        WHERE  "
+				+ "            journal_entry.organization_id = ? AND  "
+				+ "            line_item.journal_entry_id = journal_entry.id AND  "
+				+ "            journal_entry.deleted = false AND "
+				+ "            line_item.account_id = child_account.id AND  "
+				+ "            child_account.parent_account_id = parent_account.id AND "
+				+ "            parent_account.account_subtype_id = account_subtype.id AND "
+				+ "            account_subtype.account_type_id < 3 "
+				+ "    ) "
+				+ ") AS return_table",
 		resultSetMapping = "lineItemDTOMapping.count"
 )
 
