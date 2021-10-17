@@ -340,49 +340,83 @@ function TableOfTransactions({
                     {data.map((row, i) => {
                         return(
                             <Link replace to="#" className="tr d-flex justify-content-between d-md-none align-items-center td" key={i} onClick={() => expandTransaction(row.journalEntryId)}>
-                                <div className={"px-0 w-100 " + (category? "d-flex align-items-center justify-content-between" : "")}>
-                                    <div className={category? "w-75" : ""}>
-                                        <div className={"px-0 font-size-compact font-weight-600 "}>
-                                            {formatCell(row[columns[0].accessor], columns[0].accessor)}
-                                        </div>
-                                        <div className={"px-0 text-truncate"}>
-                                            {formatCell(row[columns[1].accessor], columns[1].accessor)}
-                                        </div>
-                                    </div>
-                                    <div className={" justify-content-between pt-2 font-size-compact d-flex"}>
-                                        <div>
-                                            <div className={"font-weight-600 " + (category? "d-none": "")}>
-                                                    {columns[2].header}
+                                {columns.length > 4 //TODO: this is an extreme bandaid solution to accomodate transactions.js having an account column. this should be rewritten when you get the time.
+                                    ? <>
+                                        <div className={"px-0 w-100 " + (category? "d-flex align-items-center justify-content-between" : "")}>
+                                            <div className={category? "w-75" : ""}>
+                                                <div className={"px-0 font-size-compact font-weight-600 "}>
+                                                    {formatCell(row[columns[0].accessor], columns[0].accessor) + " - " + formatCell(row[columns[1].accessor], columns[1].accessor)}
+                                                </div>
+                                                <div className={"px-0 text-truncate"}>
+                                                    {formatCell(row[columns[2].accessor], columns[2].accessor)}
+                                                </div>
                                             </div>
-                                            <div className={"px-0 " + (category? "font-size-standard text-right" : "")}>
-                                                {formatCell(row[columns[2].accessor], columns[2].accessor)}
+                                            <div className={" justify-content-between pt-2 font-size-compact d-flex"}>
+                                                <div>
+                                                    <div className={"font-weight-600 " + (category? "d-none": "")}>
+                                                            {columns[3].header}
+                                                    </div>
+                                                    <div className={"px-0 " + (category? "font-size-standard text-right" : "")}>
+                                                        {formatCell(row[columns[3].accessor], columns[3].accessor)}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className={"font-weight-600 text-right " + (category? "d-none" : "")}>
+                                                            {columns[4].header}
+                                                    </div>
+                                                    <div className={"px-0 "}>
+                                                        {formatCell(row[columns[4].accessor], columns[4].accessor)}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <div className={"font-weight-600 text-right " + (category? "d-none" : "")}>
-                                                    {columns[3].header}
+                                    </>
+                                    : <>
+                                        <div className={"px-0 w-100 " + (category? "d-flex align-items-center justify-content-between" : "")}>
+                                            <div className={category? "w-75" : ""}>
+                                                <div className={"px-0 font-size-compact font-weight-600 "}>
+                                                    {formatCell(row[columns[0].accessor], columns[0].accessor)}
+                                                </div>
+                                                <div className={"px-0 text-truncate"}>
+                                                    {formatCell(row[columns[1].accessor], columns[1].accessor)}
+                                                </div>
                                             </div>
-                                            <div className={"px-0 "}>
-                                                {formatCell(row[columns[3].accessor], columns[3].accessor)}
+                                            <div className={" justify-content-between pt-2 font-size-compact d-flex"}>
+                                                <div>
+                                                    <div className={"font-weight-600 " + (category? "d-none": "")}>
+                                                            {columns[2].header}
+                                                    </div>
+                                                    <div className={"px-0 " + (category? "font-size-standard text-right" : "")}>
+                                                        {formatCell(row[columns[2].accessor], columns[2].accessor)}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className={"font-weight-600 text-right " + (category? "d-none" : "")}>
+                                                            {columns[3].header}
+                                                    </div>
+                                                    <div className={"px-0 "}>
+                                                        {formatCell(row[columns[3].accessor], columns[3].accessor)}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </>
+                                }
                             </Link>
                         )
                     })} 
                 </div>
-            </div>
-            <div className="d-flex justify-content-between px-1 py-2 border-top" >
-                <div className={first ? "invisible" : " "}>
-                    <Link replace onClick={previousPage} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>
-                </div>
-                <div className="align-self-center">
-                    Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength)} of {totalElements}{' '}
-                    results
-                </div>{/**TODO replace with page selector */}
-                <div className={last? " invisible" : " "}>
-                    <Link onClick={nextPage} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link>
+                <div className="d-flex justify-content-between px-1 py-2 border-top" >
+                    <div className={first ? "invisible" : " "}>
+                        <Link replace onClick={previousPage} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>
+                    </div>
+                    <div className="align-self-center">
+                        Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength)} of {totalElements}{' '}
+                        results
+                    </div>{/**TODO replace with page selector */}
+                    <div className={last? " invisible" : " "}>
+                        <Link onClick={nextPage} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link>
+                    </div>
                 </div>
             </div>
             

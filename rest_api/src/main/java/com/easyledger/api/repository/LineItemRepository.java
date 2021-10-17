@@ -23,4 +23,7 @@ public interface LineItemRepository extends JpaRepository<LineItem, Long> {
 		nativeQuery = true)
 	public boolean accountContainsLineItems(Long accountId);
 	
+	@Query(nativeQuery = true)
+	public Page<LineItemDTO> getAllAssetAndLiabilityLineItemsForOrganization(Long organizationId, Pageable pageable);
+	
 }
