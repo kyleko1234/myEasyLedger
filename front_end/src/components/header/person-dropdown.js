@@ -19,8 +19,12 @@ function PersonDropdown(props) {
                 </DropdownToggle>
                 <DropdownMenu className="shadow" right>
                     <DropdownItem text>
-                        <div className="font-weight-600">{appContext.firstName + " " + appContext.lastName}</div>
-                        <div className="small text-muted">{appContext.email}</div>
+                        <div className="font-weight-600">
+                                {appContext.firstName + " " + appContext.lastName} 
+                        </div>
+                        <div className="small text-muted">
+                            {appContext.email}
+                        </div>
                     </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem onClick={() => history.push("/settings")}>

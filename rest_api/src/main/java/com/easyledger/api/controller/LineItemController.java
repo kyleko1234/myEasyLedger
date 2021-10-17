@@ -19,8 +19,10 @@ import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.LineItem;
+import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.LineItemRepository;
+import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.security.AuthorizationService;
 
 @RestController
@@ -30,12 +32,15 @@ public class LineItemController {
 	private LineItemRepository lineItemRepo;
 	private AccountRepository accountRepo;
 	private AuthorizationService authorizationService;
+	private OrganizationRepository organizationRepo;
 
-	public LineItemController(LineItemRepository lineItemRepo, AccountRepository accountRepo, AuthorizationService authorizationService) {
+	public LineItemController(LineItemRepository lineItemRepo, AccountRepository accountRepo, 
+			OrganizationRepository organizationRepo, AuthorizationService authorizationService) {
 		super();
 		this.lineItemRepo = lineItemRepo;
 		this.accountRepo = accountRepo;
 		this.authorizationService = authorizationService;
+		this.organizationRepo = organizationRepo;
 	}
 
 	@Secured("ROLE_ADMIN")
@@ -69,6 +74,13 @@ public class LineItemController {
 	    return lineItemRepo.getAllLineItemsForAccount(accountId, pageable);
     }
     
-
+    @GetMapping("/organization/{organizationId}/assetAndLiabilityLineItem")
+    public Page<LineItemDTO> getAllAssetAndLiabilityLineItemsForOrganization(@PathVariable(value="organizationId") Long organizationId,
+    		Pageable pageable, Authentication authentication) throws ResourceNotFoundException, UnauthorizedException {
+    	Organization organization = organizationRepo.findById(organizationId)
+	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+    	return lineItemRepo.getAllAssetAndLiabilityLineItemsForOrganization(organizationId, pageable);
+    }
 }
 

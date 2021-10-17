@@ -55,7 +55,7 @@ export const verificationText = {
             return(
                 <>
                     <p className="font-size-larger font-weight-bold">
-                        {lastName + firstName}你好。
+                        {firstName + lastName}你好。
                     </p>
                     <p>
                         歡迎來到 myEasyLedger，你新開的帳戶用的電郵址已通過驗證無誤！
@@ -85,7 +85,7 @@ export const verificationText = {
             return(
                 <>
                     <p className="font-size-larger font-weight-bold">
-                        {lastName + firstName}你好。
+                        {firstName + lastName}你好。
                     </p>
                     <p>
                         你點擊的驗證連結已過期！
