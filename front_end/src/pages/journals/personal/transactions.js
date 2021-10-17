@@ -60,7 +60,7 @@ function Transactions() {
     return(
         <>
             <TableOfTransactions
-                tableTitle={ <div className="h1">Transactions</div>}
+                tableTitle={ <div className="h1">{transactionsText[appContext.locale]["Transactions"]}</div>}
                 hasAddEntryButton={true}
                 fetchData={fetchData}
                 pageSize={pageSize}

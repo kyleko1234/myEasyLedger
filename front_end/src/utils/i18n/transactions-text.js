@@ -6,7 +6,8 @@ export const transactionsText = {
         "Credit": "Credit",
         "Inflow": "Inflow",
         "Outflow": "Outflow",
-        "Account": "Account"
+        "Account": "Account",
+        "Transactions": "Transactions",
     },
     "zh-TW": {
         "Date": "日期",
@@ -15,6 +16,7 @@ export const transactionsText = {
         "Credit": "貸方",
         "Inflow": "流入",
         "Outflow": "流出",
-        "Account": "TRANSLATION"
+        "Account": "TRANSLATION",
+        "Transactions": "TRANSLATION",
     },
 }
