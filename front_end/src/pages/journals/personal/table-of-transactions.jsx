@@ -372,17 +372,17 @@ function TableOfTransactions({
                         )
                     })} 
                 </div>
-            </div>
-            <div className="d-flex justify-content-between px-1 py-2 border-top" >
-                <div className={first ? "invisible" : " "}>
-                    <Link replace onClick={previousPage} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>
-                </div>
-                <div className="align-self-center">
-                    Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength)} of {totalElements}{' '}
-                    results
-                </div>{/**TODO replace with page selector */}
-                <div className={last? " invisible" : " "}>
-                    <Link onClick={nextPage} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link>
+                <div className="d-flex justify-content-between px-1 py-2 border-top" >
+                    <div className={first ? "invisible" : " "}>
+                        <Link replace onClick={previousPage} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>
+                    </div>
+                    <div className="align-self-center">
+                        Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength)} of {totalElements}{' '}
+                        results
+                    </div>{/**TODO replace with page selector */}
+                    <div className={last? " invisible" : " "}>
+                        <Link onClick={nextPage} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link>
+                    </div>
                 </div>
             </div>
             
