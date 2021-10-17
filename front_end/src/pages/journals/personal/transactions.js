@@ -9,7 +9,8 @@ function Transactions() {
     const appContext = React.useContext(PageSettings);
     const columns = [ // accessor is the "key" in the data},
                 { header: transactionsText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-md-2 text-nowrap " },
-                { header: transactionsText[appContext.locale]['Description'], accessor: 'description', className: " col-md-6 text-truncate " },
+                { header: transactionsText[appContext.locale]['Account'], accessor: 'accountName', className: " col-md-2 text-truncate " },
+                { header: transactionsText[appContext.locale]['Description'], accessor: 'description', className: " col-md-4 text-truncate " },
                 { header: transactionsText[appContext.locale]['Inflow'], accessor: 'debitAmount', className: " text-right col-md-2 text-nowrap " },
                 { header: transactionsText[appContext.locale]['Outflow'], accessor: 'creditAmount', className: " text-right col-md-2 text-nowrap " },
     ];
