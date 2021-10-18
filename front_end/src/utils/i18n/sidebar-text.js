@@ -47,10 +47,10 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         //menu items
         "Dashboard": "帳目概覽",
         "Journals": "登錄分類帳",
-        "Transactions": "TRANSLATION",
+        "Transactions": "輸入交易",
         "Chart of Accounts": "會計科目",
-        "Reports": "財務報表",
-        "Accounts": "往來帳戶",
+        "Reports": "財務報告",
+        "Accounts": "帳戶／錢包",
         "Categories": "收支類別"
 
     }

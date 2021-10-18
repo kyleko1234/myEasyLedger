@@ -77,8 +77,8 @@ export const balanceSheetRenderText = {
         "Compare": "比較對照",
         "Custom": "自訂日期",
         "Update report": "更新報表",
-        "Invalid date(s) selected.": "TRANSLATION",
-        "yyyy-mm-dd": "TRANSLATION", //date string format
+        "Invalid date(s) selected.": "日期有誤。",
+        "yyyy-mm-dd": "yyyy-mm-dd", //date string format
 
         "Assets": "資產",
         "Current assets": "流動資產",

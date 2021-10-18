@@ -52,8 +52,8 @@ export const cashFlowReportText = {
         "Update report": "更新報表",
         "Date range": "日期區間",
         "Compare": "比較對照",
-        "Invalid date(s) selected.": "TRANSLATION",
-        "yyyy-mm-dd": "TRANSLATION", //date string format
+        "Invalid date(s) selected.": "日期有誤。",
+        "yyyy-mm-dd": "yyyy-mm-dd", //date string format
 
 
         "From:": "自:",
