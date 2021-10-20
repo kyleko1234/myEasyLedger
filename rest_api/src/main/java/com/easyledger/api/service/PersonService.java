@@ -241,7 +241,7 @@ public class PersonService {
 			case "zh-TW": {
 				ArrayList<Account> topLevelAccounts = new ArrayList<Account>();
 				ArrayList<Account> childAccounts = new ArrayList<Account>();
-				String[] assetAccountNames = {"活期存款帳戶", "投資理財帳戶"};
+				String[] assetAccountNames = {"活期存款帳戶", "投資理財帳戶", "現金"};
 				String[] liabilityAccountNames = {"信用卡"};
 				String[] incomeAccountNames = {"薪水", "其它"};
 				String[] expenseAccountNames = {"衣", "住", "行", "育", "樂", "所得稅", "其它"};
