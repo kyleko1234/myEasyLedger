@@ -4,6 +4,7 @@ import { Alert } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import Select from 'react-select';
 import {journalEntryEditModeText} from '../../../utils/i18n/journal-entry-edit-mode-text';
+import { formatCurrency } from '../../../utils/util-fns';
 
 function JournalEntryEditMode({
     data, setLineItemData,
@@ -232,8 +233,8 @@ function JournalEntryEditMode({
                         <div className="tr d-flex">
                             <div className="td col-4">{journalEntryEditModeText[appContext.locale]["Total"]}</div>
                             <div className="td col-3"></div>
-                            <div className="td col-2">{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}</div>
-                            <div className="td col-2">{new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}</div>
+                            <div className="td col-2"> {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}</div>
+                            <div className="td col-2">{formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}</div>
                             <div className="td col-1"></div>
                         </div>
                     </div>
@@ -298,7 +299,7 @@ function JournalEntryEditMode({
                                         {journalEntryEditModeText[appContext.locale]["Total Debit"]}
                                     </div>
                                     <div className="font-weight-normal">
-                                        {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}
+                                        {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                                     </div>
                                 </div>
                                 <div className="text-right">
@@ -306,7 +307,7 @@ function JournalEntryEditMode({
                                         {journalEntryEditModeText[appContext.locale]["Total Credit"]}
                                     </div>
                                     <div className="font-weight-normal">
-                                        {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}
+                                        {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}
                                     </div>
                                 </div>
                             </div>
