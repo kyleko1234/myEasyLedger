@@ -50,8 +50,8 @@ export const incomeStatementRenderText = {
         "Date range": "日期區間",
         "Compare": "比較對照",
         "Update report": "更新報表",
-        "Invalid date(s) selected.": "TRANSLATION",
-        "yyyy-mm-dd": "TRANSLATION", //date string format
+        "Invalid date(s) selected.": "日期有誤。",
+        "yyyy-mm-dd": "yyyy-mm-dd", //date string format
 
         "Revenue": "收入",
         "Total revenue": "收入合計",

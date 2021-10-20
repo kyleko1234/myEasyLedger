@@ -16,7 +16,7 @@ export const transactionsText = {
         "Credit": "貸方",
         "Inflow": "流入",
         "Outflow": "流出",
-        "Account": "TRANSLATION",
-        "Transactions": "TRANSLATION",
+        "Account": "帳戶／錢包",
+        "Transactions": "交易記錄",
     },
 }

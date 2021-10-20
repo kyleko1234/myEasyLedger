@@ -9,7 +9,7 @@ export const dashboardText = {
     "zh-TW": {
         "Dashboard": "帳目概覽",
         "Home": "首頁",
-        "Expense Breakdown": "費用明細",
+        "Expense Breakdown": "費用分佈",
         "Net Worth": "淨值",
         "Net Assets": "淨資產"
 
