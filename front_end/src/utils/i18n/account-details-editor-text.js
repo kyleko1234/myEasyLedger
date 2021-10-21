@@ -77,7 +77,7 @@ export const accountDetailsEditorText = {
         "Account Details": "科目說明",
         "Parent Account": "母科目:",
         "Account Type:": "主類別:",
-        "Account Subtype": "子類別",
+        "Account Subtype": "科目類型",
         "Total Debit Amount:": "借方加總:",
         "Total Credit Amount:": "貸方加總:",
         "Edit Account Details": "修改科目",
