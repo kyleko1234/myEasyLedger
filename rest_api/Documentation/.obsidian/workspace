@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "LineItem/Contents/Retrieve All Asset and Liability LineItems for an Organization.md",
+            "file": "Easy Ledger.md",
             "mode": "source"
           }
         },
@@ -21,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "LineItem/Contents/Retrieve All Asset and Liability LineItems for an Organization.md",
+            "file": "Easy Ledger.md",
             "mode": "preview"
           }
         },
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "LineItem/Contents/Retrieve All Asset and Liability LineItems for an Organization.md",
+                "file": "Easy Ledger.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,15 +101,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Easy Ledger.md",
+    "Organization/Organization.md",
+    "Organization/Contents/Delete an Organization.md",
     "LineItem/Contents/Retrieve All Asset and Liability LineItems for an Organization.md",
+    "Organization/Contents/Create an Organization.md",
+    "Organization/Contents/Untitled.md",
     "LineItem/Contents/Retrieve All LineItems for an Account.md",
     "LineItem/Contents/Untitled.md",
     "JournalEntry/Contents/Retrieve a JournalEntry.md",
-    "JournalEntry/Contents/Access Edit History of Journal Entries for an Organization.md",
-    "LineItem/Contents/Retrieve a LineItem.md",
-    "LineItem/Contents/List All LineItems.md",
-    "JournalEntry/Contents/The JournalEntry Object.md",
-    "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
-    "AccountSubtype/AccountSubtype.md"
+    "JournalEntry/Contents/Access Edit History of Journal Entries for an Organization.md"
   ]
 }
