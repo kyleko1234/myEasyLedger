@@ -5,6 +5,7 @@ import { API_BASE_URL } from '../../../utils/constants';
 import { Doughnut } from 'react-chartjs-2';
 import { dashboardText } from '../../../utils/i18n/dashboard-text';
 import { Card, CardBody, CardTitle } from 'reactstrap';
+import { formatCurrency } from '../../../utils/util-fns';
 
 function ExpenseBreakdown(props) {
     const appContext = React.useContext(PageSettings);
@@ -24,9 +25,9 @@ function ExpenseBreakdown(props) {
 
     const formatBalance = (debitsMinusCredits) => {
         if (debitsMinusCredits == 0) {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(0);
+            return formatCurrency(appContext.locale, appContext.currency, 0);
         } else {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(debitsMinusCredits);
+            return formatCurrency(appContext.locale, appContext.currency, debitsMinusCredits);
         }
     }
     

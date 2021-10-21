@@ -6,7 +6,7 @@ import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-
 import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { validateDate } from '../../../utils/util-fns';
+import { formatCurrency, validateDate } from '../../../utils/util-fns';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -192,9 +192,9 @@ function IncomeStatementRender() {
 
     const numberAsCurrency = (number) => {
         if (number == 0) {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(0);
+            return formatCurrency(appContext.locale, appContext.currency, 0);
         }
-        return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number)
+        return formatCurrency(appContext.locale, appContext.currency, number);
     }
 
     const handleSelectDateRangePreset = (selectedOption, i) => {

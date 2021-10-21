@@ -9,6 +9,7 @@ import TableOfTransactions from '../journals/personal/table-of-transactions';
 import AccountSwitcher from './components/account-switcher';
 import { Card, CardBody } from 'reactstrap';
 import AccountDetailsEditor from './components/account-details-editor';
+import { formatCurrency } from '../../utils/util-fns';
 
 function AccountDetails(props) {
 
@@ -54,12 +55,12 @@ function AccountDetails(props) {
     
     const formatBalance = (debitsMinusCredits, accountTypeId) => {
         if (debitsMinusCredits == 0) {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(0);
+            return formatCurrency(appContext.locale, appContext.currency, 0);
         }
         if (DEBIT_ACCOUNT_TYPES.includes(accountTypeId)) {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(debitsMinusCredits);
+            return formatCurrency(appContext.locale, appContext.currency, debitsMinusCredits);
         } else {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(debitsMinusCredits * -1);
+            return formatCurrency(appContext.locale, appContext.currency, debitsMinusCredits * -1);
         }
     }
 

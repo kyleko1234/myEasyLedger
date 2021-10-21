@@ -4,7 +4,7 @@ import {API_BASE_URL} from '../../../utils/constants.js';
 import axios from 'axios';
 import {incomeStatementRenderText} from '../../../utils/i18n/income-statement-render-text.js';
 import { Card, CardBody, Alert } from 'reactstrap';
-import { validateDate } from '../../../utils/util-fns.js';
+import { formatCurrency, validateDate } from '../../../utils/util-fns.js';
 
 function IncomeExpenseRender() {
     const appContext = React.useContext(PageSettings);
@@ -63,9 +63,9 @@ function IncomeExpenseRender() {
 
     const formatNumber = (number) => {
         if (number == 0) {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(0);
+            return formatCurrency(appContext.locale, appContext.currency, 0);
         }
-        return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number)
+        return formatCurrency(appContext.locale, appContext.currency, number);
     }
 
     const handleUpdateReportButton = async event => {

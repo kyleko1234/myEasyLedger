@@ -8,6 +8,7 @@ import JournalEntryEditMode from './journal-entry-edit-mode';
 import { PageSettings } from '../../../config/page-settings.js';
 import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-entries-text.js';
 import JournalEntryEditHistory from './journal-entry-edit-history.js';
+import { formatCurrency } from '../../../utils/util-fns.js';
 
 //optional props: parentComponentAccountId
 function TableOfJournalEntries({
@@ -142,7 +143,7 @@ function TableOfJournalEntries({
             if (cellValue == 0) { //falsey items qualify as zero
                 return '';
             }
-            return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cellValue));    
+            return formatCurrency(appContext.locale, appContext.currency, cellValue);
         }
         return cellValue;
     }

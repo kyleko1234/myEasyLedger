@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js'
+import { formatCurrency } from '../../../utils/util-fns';
 
 function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate, accountOptions }) {
     const appContext = React.useContext(PageSettings);
@@ -31,7 +32,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
             case "debitAmount":
             case "creditAmount":
                 if (cellValue) {
-                    return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cellValue));
+                    return formatCurrency(appContext.locale, appContext.currency, cellValue);
                 } else {
                     return null;
                 }
@@ -88,10 +89,10 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                             <div className="td col-6">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
                             <div className="td col-2"></div>
                             <div className="td col-2 text-right">
-                                {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}
+                                {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                             </div>
                             <div className="td col-2 text-right">
-                                {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}
+                                {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}
                             </div>
                         </div>
                     </div>
@@ -140,7 +141,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                                         {journalEntryViewModeText[appContext.locale]["Total Debit"]}
                                     </div>
                                     <div className="font-weight-normal">
-                                        {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("debitAmount"))}
+                                        {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                                     </div>
                                 </div>
                                 <div className="text-right">
@@ -148,7 +149,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                                         {journalEntryViewModeText[appContext.locale]["Total Credit"]}
                                     </div>
                                     <div className="font-weight-normal">
-                                        {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmountsInColumn("creditAmount"))}
+                                        {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}
                                     </div>
                                 </div>
                             </div>

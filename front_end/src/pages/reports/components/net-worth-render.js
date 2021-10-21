@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../../../utils/constants';
 import {netWorthReportText} from '../../../utils/i18n/net-worth-report-text.js';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
 import { Card, CardBody, Alert } from 'reactstrap';
-import { validateDate } from '../../../utils/util-fns';
+import { formatCurrency, validateDate } from '../../../utils/util-fns';
 
 function NetWorthRender() {
     const appContext = React.useContext(PageSettings);
@@ -70,9 +70,9 @@ function NetWorthRender() {
 
     const formatNumber = (number) => {
         if (number == 0) {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(0);
+            return formatCurrency(appContext.locale, appContext.currency, 0);
         }
-        return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number)
+        return formatCurrency(appContext.locale, appContext.currency, number);
     }
 
     return(

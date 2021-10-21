@@ -9,6 +9,7 @@ import axios from 'axios';
 import TransactionViewMode from './transaction-view-mode.jsx';
 import TransactionEditMode from './transaction-edit-mode.jsx';
 import TransactionEditHistory from './transaction-edit-history.js';
+import { formatCurrency } from '../../../utils/util-fns.js';
 
 
 // Let's add a fetchData method to our Table component that will be used to fetch
@@ -270,7 +271,6 @@ function TableOfTransactions({
         }).catch(console.log);
     }
 
-
     const formatCell = (cellValue, columnAccessor) => {
         switch (columnAccessor) {
             case "creditAmount":
@@ -279,7 +279,7 @@ function TableOfTransactions({
                 if (cellValue == 0) {
                     return '';
                 }
-                return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cellValue));
+                return formatCurrency(appContext.locale, appContext.currency, cellValue)
             default:
                 return (cellValue);
         }

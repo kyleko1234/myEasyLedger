@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Card, CardBody, Collapse } from 'reactstrap';
+import { formatCurrency } from '../../../utils/util-fns.js';
 
 
 function AccountSwitcher(props) {
@@ -51,7 +52,7 @@ function AccountSwitcher(props) {
     }, [appContext.currentOrganizationId, props.externalRefreshToken]) //load fresh data when props.externalRefreshToken changes
 
     const formatBalance = (accountTypeId, amount) => {
-        let formattedNumber = new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(amount)
+        let formattedNumber = formatCurrency(appContext.locale, appContext.currency, amount);
         let className = "";
         if (accountTypeId == 1 && amount < 0) {
             className = "text-red"
@@ -61,7 +62,7 @@ function AccountSwitcher(props) {
 
         return (
             <div className={className}>{formattedNumber}</div>
-        )
+        ) 
     }
     return (
         <Card className="very-rounded shadow-sm">

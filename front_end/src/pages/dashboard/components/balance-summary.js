@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import {balanceSummaryText} from "../../../utils/i18n/balance-summary-text.js";
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { formatCurrency } from '../../../utils/util-fns.js';
 
 
 function BalanceSummary(props) {
@@ -54,12 +55,19 @@ function BalanceSummary(props) {
                                                         </div>
                                                     </div>
                                                     <div className={" text-right " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
-                                                        {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(account.accountTypeId === 1? account.debitsMinusCredits : (account.debitsMinusCredits === 0? account.debitsMinusCredits : account.debitsMinusCredits * -1))}
+                                                        {formatCurrency(appContext.locale, appContext.currency, (
+                                                            account.accountTypeId === 1
+                                                                ? account.debitsMinusCredits
+                                                                : (account.debitsMinusCredits === 0
+                                                                    ? account.debitsMinusCredits
+                                                                    : account.debitsMinusCredits * -1
+                                                                )
+                                                        ))}
                                                     </div>
                                                 </div>
                                                 <div className="col-1 pl-0 text-muted"><i className="fas fa-angle-right "></i></div>
                                             </Link>
-                                        )
+                                        ) 
                                     })}
                                 </div>
                         }

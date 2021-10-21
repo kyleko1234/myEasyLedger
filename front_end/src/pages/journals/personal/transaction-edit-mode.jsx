@@ -4,6 +4,7 @@ import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view
 import {journalEntryEditModeText} from '../../../utils/i18n/journal-entry-edit-mode-text.js';
 import {Alert} from 'reactstrap';
 import Select from 'react-select';
+import { formatCurrency } from '../../../utils/util-fns';
 
 function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDescription, journalEntryDate, setJournalEntryDate, fromAccountId, setFromAccountId,
         fromAccountName, setFromAccountName,
@@ -229,7 +230,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                             <div className="td col-3 "></div>
                             <div className="td col-3 "></div>
                             <div className="td col-2 ">
-                                {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmounts())}
+                                {formatCurrency(appContext.locale, appContext.currency, sumAmounts())}
                             </div>
                             <div className="td col-1 "></div>
                         </div>

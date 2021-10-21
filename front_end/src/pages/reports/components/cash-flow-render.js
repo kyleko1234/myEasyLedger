@@ -6,7 +6,7 @@ import {API_BASE_URL} from '../../../utils/constants.js';
 import {cashFlowReportText} from '../../../utils/i18n/cash-flow-report-text.js';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { validateDate } from '../../../utils/util-fns';
+import { formatCurrency, validateDate } from '../../../utils/util-fns';
 
 
 function CashFlowRender() {
@@ -59,11 +59,11 @@ function CashFlowRender() {
 
     const numberAsCurrency = (number) => {
         if (number == 0) {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(0);
+            return formatCurrency(appContext.locale, appContext.currency, 0);
         } else if (number > 0) {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number)
+            return formatCurrency(appContext.locale, appContext.currency, number)
         } else if (number < 0) {
-            return "(" + new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number * -1) + ")";
+            return `(${formatCurrency(appContext.locale, appContext.currency, number * -1)})`;
         }
     }
 

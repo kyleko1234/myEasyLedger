@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js'
+import { formatCurrency } from '../../../utils/util-fns';
 
 function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, fromAccountName }) {
     const appContext = React.useContext(PageSettings);
@@ -34,7 +35,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
     const formatCell = (cellValue, columnAccessor) => {
         switch (columnAccessor) {
             case "amount":
-                return (new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(cellValue));
+                return formatCurrency(appContext.locale, appContext.currency, cellValue);
             default:
                 return cellValue;
         }
@@ -89,7 +90,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
                             <div className="td col-3"></div>
                             <div className="td col-3"></div>
                             <div className="td col-3 text-right">
-                                {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmounts())}
+                                {formatCurrency(appContext.locale, appContext.currency, sumAmounts())}
                             </div>
                         </div>
                     </div>
@@ -120,7 +121,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
                         <div className="tr d-flex justify-content-between">
                             <div className="px-2 py-2">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
                             <div className="px-2 py-2 text-right">
-                                {new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(sumAmounts())}
+                                {formatCurrency(appContext.locale, appContext.currency, sumAmounts())}
                             </div>
                         </div>
                     </div>

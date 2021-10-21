@@ -6,7 +6,7 @@ import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render
 import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { validateDate } from '../../../utils/util-fns';
+import { formatCurrency, validateDate } from '../../../utils/util-fns';
 
 function BalanceSheetRender() {
     const appContext = React.useContext(PageSettings);
@@ -34,9 +34,9 @@ function BalanceSheetRender() {
 
     const numberAsCurrency = (number) => {
         if (number == 0) {
-            return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(0);
+            return formatCurrency(appContext.locale, appContext.currency, 0);
         }
-        return new Intl.NumberFormat(appContext.locale, { style: 'currency', currency: appContext.currency }).format(number)
+        return formatCurrency(appContext.locale, appContext.currency, number);
     }
 
     const requestBalanceSheetObjects = async arrayToStoreObjects => {
@@ -207,7 +207,11 @@ function BalanceSheetRender() {
                                                     {balanceSheetObjects.map((balanceSheet, i) => {
                                                         return(
                                                             <div key={i} className="width-175">
-                                                                {numberAsCurrency(balanceSheet.balanceSheetAssets.currentAssetsSubtypeBalances.find(specificSubtype => specificSubtype.accountSubtypeId === subtypeBalance.accountSubtypeId).debitsMinusCredits)}
+                                                                {numberAsCurrency(
+                                                                    balanceSheet.balanceSheetAssets.currentAssetsSubtypeBalances
+                                                                        .find(specificSubtype => specificSubtype.accountSubtypeId === subtypeBalance.accountSubtypeId)
+                                                                        .debitsMinusCredits
+                                                                )}
                                                             </div>
                                                         )
                                                     })}
@@ -223,13 +227,17 @@ function BalanceSheetRender() {
                                                                     <div>{account.accountName}</div>
                                                                     <div className="text-right d-flex">
                                                                         {account.hasChildren 
-                                                                        ? null 
-                                                                        : balanceSheetObjects.map((balanceSheet, i) => {
-                                                                            return(
-                                                                                <div key={i} className="width-175">
-                                                                                    {numberAsCurrency(balanceSheet.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits)}
-                                                                                </div>
-                                                                            )
+                                                                            ? null 
+                                                                            : balanceSheetObjects.map((balanceSheet, i) => {
+                                                                                return(
+                                                                                    <div key={i} className="width-175">
+                                                                                        {numberAsCurrency(
+                                                                                            balanceSheet.accountBalances
+                                                                                                .find(specificAccount => specificAccount.accountId === account.accountId)
+                                                                                                .debitsMinusCredits
+                                                                                        )}
+                                                                                    </div>
+                                                                                )
                                                                         })}
                                                                     </div>
                                                                 </div>
@@ -245,7 +253,11 @@ function BalanceSheetRender() {
                                                                                     {balanceSheetObjects.map((balanceSheet, i) => {
                                                                                         return(
                                                                                             <div key={i} className="width-175">
-                                                                                                {numberAsCurrency(balanceSheet.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits)}
+                                                                                                {numberAsCurrency(
+                                                                                                    balanceSheet.accountBalances
+                                                                                                    .find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId)
+                                                                                                    .debitsMinusCredits
+                                                                                                )}
                                                                                             </div>
                                                                                         )
                                                                                     })}
