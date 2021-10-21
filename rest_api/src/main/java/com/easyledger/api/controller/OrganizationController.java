@@ -2,7 +2,9 @@ package com.easyledger.api.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -145,27 +148,21 @@ public class OrganizationController {
 		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return organizationService.getDateRangePresetsForOrganizationUpToDate(organizationId, endDate);
 	}
-/*    @DeleteMapping("/organization/{id}")
-    @Transactional(rollbackFor=Exception.class)
-    public Map<String, Boolean> deleteAccountSubtype(@PathVariable(value = "id") Long organizationId)
-        throws ResourceNotFoundException, ConflictException {
+	
+    @DeleteMapping("/organization/{id}")
+    public Map<String, Boolean> deleteAccountSubtype(@PathVariable(value = "id") Long organizationId, Authentication authentication)
+        throws ResourceNotFoundException, ConflictException, UnauthorizedException {
+    	authorizationService.authorizeOwnPermissionsByOrganizationId(authentication, organizationId);
         Organization organization = organizationRepo.findById(organizationId)
         	.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
-
-        if (!organization.getJournalEntries().isEmpty()) {
-        	throw new ConflictException("Please remove all Entries from this Organization before deleting the Organization.");
+        if (organizationRepo.organizationContainsJournalEntries(organizationId)) {
+        	throw new ConflictException("Organization contains undeleted journal entries!");
         }
-        
-        HashSet<Person> persons = new HashSet<Person>(organization.getPersons());
-        for (Person person : persons) {
-        	person.removeOrganization(organization);
-        }
-        
         organizationRepo.delete(organization);
         Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
+        response.put("deleted", Boolean.TRUE); 
+        return response; 
     }
-*/
+
 	
 }
