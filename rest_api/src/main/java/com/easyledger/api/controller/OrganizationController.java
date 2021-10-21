@@ -160,7 +160,7 @@ public class OrganizationController {
         }
         organizationRepo.delete(organization);
         Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE); 
+        response.put("deleted", Boolean.TRUE);
         return response; 
     }
 
