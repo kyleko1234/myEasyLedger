@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
@@ -96,19 +97,19 @@ public class Organization {
 	@Column(name = "fiscal_year_begin")
 	private LocalDate fiscalYearBegin = LocalDate.parse("2020-01-01");
 
-	@OneToMany(mappedBy = "organization")
+	@OneToMany(mappedBy = "organization", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<Permission> permissions = new HashSet<Permission>();
 
-	@OneToMany(mappedBy = "organization")
+	@OneToMany(mappedBy = "organization", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries = new HashSet<JournalEntry>();
 	
-	@OneToMany(mappedBy = "organization")
+	@OneToMany(mappedBy = "organization", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<Account> accounts = new HashSet<Account>();
 	
-	@OneToMany(mappedBy = "organization")
+	@OneToMany(mappedBy = "organization", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private List<JournalEntryLog> journalEntryLogs = new ArrayList<JournalEntryLog>();
 	
