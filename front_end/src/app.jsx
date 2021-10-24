@@ -75,32 +75,40 @@ class App extends React.Component {
         }
 	
 		this.fetchUserInfo = async (id) => {
-			await axios.get(`${API_BASE_URL}/person/${id}`).then(response => { //it is very important to await the completion of this function otherwise you will make many http requests with null organizationId or personIds
-				this.setState({
-					personId: id,
-					permissions: response.data.permissions.sort((permission1, permission2) => permission1.organization.name.toLowerCase() < permission2.organization.name.toLowerCase() ? -1 : 1),
+			await axios.get(`${API_BASE_URL}/person/${id}`).then(async response => { //it is very important to await the completion of this function otherwise you will make many http requests with null organizationId or personIds
+                let objectToSetToState = {
+                    personId: id,
+					permissions: (response.data.permissions
+                        ? response.data.permissions.sort((permission1, permission2) => permission1.organization.name.toLowerCase() < permission2.organization.name.toLowerCase() ? -1 : 1)
+                        : []),
 					firstName: response.data.firstName,
 					lastName: response.data.lastName,
 					email: response.data.email,
 					locale: response.data.locale,
-                    appearance: response.data.appearance,
-					currentOrganizationId: (response.data.currentOrganizationId? response.data.currentOrganizationId: response.data.permissions[0].organization.id)
-				}, () => {
-					let currentPermission = this.state.permissions.find(permission => permission.organization.id == this.state.currentOrganizationId)
-					this.setState({
-						currentPermissionTypeId: currentPermission.permissionType.id,
-						currentOrganizationName: currentPermission.organization.name,
-						currency: currentPermission.organization.currency,
-						isEnterprise: currentPermission.organization.isEnterprise
-					})
-                    if (this.state.appearance === 'system') {
-                        this.setColorSchemeToSystemPreference()
+                }
+                if (response.data.permissions && (response.data.permissions.length > 0)) {
+                    if (!response.data.currentOrganizationId) {
+                        let requestBody = {
+                            currentOrganizationId: response.data.permissions[0].organization.id
+                        }
+                        await axios.patch(`${API_BASE_URL}/person/${id}`, requestBody);
+                        await this.fetchUserInfo(id);
+                        return;
                     } else {
-                        this.setState({
-                            colorScheme: this.state.appearance
-                        })
+                        let currentPermission = response.data.permissions.find(permission => permission.organization.id == response.data.currentOrganizationId)
+                        objectToSetToState.currentOrganizationId = response.data.currentOrganizationId;
+                        objectToSetToState.currentPermissionTypeId = currentPermission.permissionType.id;
+                        objectToSetToState.currentOrganizationName = currentPermission.organization.name;
+                        objectToSetToState.currency = currentPermission.organization.currency;
+                        objectToSetToState.isEnterprise = currentPermission.organization.isEnterprise;
                     }
-				})	
+                }
+                if (response.data.appearance === 'system') {
+                    this.setColorSchemeToSystemPreference();
+                } else {
+                    objectToSetToState.colorScheme = response.data.appearance;
+                }
+                this.setState(objectToSetToState);
 			}).catch(console.log);
 		}
 

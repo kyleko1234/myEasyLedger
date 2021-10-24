@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/The Person Object.md",
+            "file": "Person/Contents/Update a Person.md",
             "mode": "source"
           }
         },
@@ -21,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/The Person Object.md",
+            "file": "Person/Contents/Update a Person.md",
             "mode": "preview"
           }
         },
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Person/Contents/The Person Object.md",
+                "file": "Person/Contents/Update a Person.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,8 +101,8 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "Person/Contents/The Person Object.md",
     "Person/Contents/Update a Person.md",
+    "Person/Contents/The Person Object.md",
     "Person/Person.md",
     "Person/Contents/List All Persons.md",
     "Easy Ledger.md",

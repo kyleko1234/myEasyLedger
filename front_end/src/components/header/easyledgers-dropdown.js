@@ -38,7 +38,10 @@ function EasyledgersDropdown(props) {
                         </div>
                         <div className="small text-muted">
                             {sidebarText[appContext.locale]["Permission level: "]}
-                            {permissionTypes.find(permissionType => permissionType.value === appContext.currentPermissionTypeId).label}
+                            {appContext.currentPermissionTypeId
+                                ? permissionTypes.find(permissionType => permissionType.value === appContext.currentPermissionTypeId).label
+                                : null
+                            }
                         </div>
                     </DropdownItem>
                     {(appContext.permissions.length > 1) ?
