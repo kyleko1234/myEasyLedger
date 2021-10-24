@@ -174,7 +174,7 @@ function AccountDetails(props) {
                                         </h1>
                                         <TableOfTransactions
                                             tableTitle={ <div className="h4 mb-0">{accountDetailsText[appContext.locale]["Balance"] +  ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}</div>}
-                                            hasAddEntryButton={true}
+                                            hasAddEntryButton={appContext.currentPermissionTypeId > 1 ? true : false}
                                             parentComponentAccountId={selectedAccountId}
                                             fetchData={fetchData}
                                             pageSize={pageSize}

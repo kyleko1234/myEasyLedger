@@ -134,12 +134,12 @@ class Accounts extends React.Component {
                                     <div className="d-sm-none w-50">
                                         {this.renderAccountTypeSelect()}
                                     </div>
-                                    <button
-                                        className="btn btn-primary my-1 ml-3"
-                                        onClick={() => {
-                                            this.handleAddAnAccountButton();
-                                        }}
-                                    > {chartOfAccountsText[this.context.locale]["Create an account"]} </button>
+                                    {(this.context.currentPermissionTypeId > 1)
+                                        ? <button className="btn btn-primary my-1 ml-3" onClick={() => this.handleAddAnAccountButton()}>   
+                                            {chartOfAccountsText[this.context.locale]["Create an account"]} 
+                                        </button>
+                                        : null
+                                    }
                                 </div>
                             }
                         </Nav>

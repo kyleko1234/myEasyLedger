@@ -50,7 +50,7 @@ function GeneralJournal() {
     return (
         <TableOfJournalEntries
             tableTitle={<div className="h1">{generalJournalText[appContext.locale]["Accounting Entries"]}</div>}
-            hasAddEntryButton={true}
+            hasAddEntryButton={appContext.currentPermissionTypeId > 1 ? true : false}
             fetchData={fetchData}
             pageSize={pageSize}
             pageIndex={pageIndex}
