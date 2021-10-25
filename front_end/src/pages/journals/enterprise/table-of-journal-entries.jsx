@@ -282,13 +282,13 @@ function TableOfJournalEntries({
             <div className="d-sm-flex  justify-content-between align-items-center">
                 {tableTitle}
                 {hasAddEntryButton ?
-                    <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={() => openEditorForNewEntry()}>
+                    <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
                         {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                     </button>
                 : null}
             </div>
             <div className="d-sm-none"> {/**On small screens render button-block */}
-                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => openEditorForNewEntry()}>
+                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
                     {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                 </button>
             </div>
@@ -421,9 +421,15 @@ function TableOfJournalEntries({
                                 {/**empty div to push buttons rightwards */}
                             </div>
                             <div>
-                                <button className="btn btn-info width-10ch" onClick={handleCopyJournalEntryButton}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
-                                <button className="btn btn-primary ml-2 width-10ch" onClick={handleEditButton}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
-                                <button className="btn btn-white ml-2 width-10ch" onClick={handleExitJournalEntryModal}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
+                                <button className="btn btn-info width-10ch" onClick={handleCopyJournalEntryButton} disabled={appContext.currentPermissionTypeId < 2}>
+                                    {tableOfJournalEntriesText[appContext.locale]["Copy"]}
+                                </button>
+                                <button className="btn btn-primary ml-2 width-10ch" onClick={handleEditButton} disabled={appContext.currentPermissionTypeId < 2}>
+                                    {tableOfJournalEntriesText[appContext.locale]["Edit"]}
+                                </button>
+                                <button className="btn btn-white ml-2 width-10ch" onClick={handleExitJournalEntryModal}>
+                                    {tableOfJournalEntriesText[appContext.locale]["Close"]}
+                                </button>
                             </div>
                         </>
                     }

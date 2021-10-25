@@ -102,8 +102,8 @@ function CategoryDetails(props) {
                                     </Link>
                                 </h1>
                                 <TableOfTransactions
-                                    hasAddEntryButton={false}
-                                    parentComponentAccountId={selectedAccountId}
+                                    tableTitle={<div></div>}
+                                    hasAddEntryButton={true}
                                     fetchData={fetchData}
                                     pageSize={pageSize}
                                     pageIndex={pageIndex}

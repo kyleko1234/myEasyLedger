@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
@@ -185,11 +186,11 @@ public class Account {
 	@JoinColumn(name = "parent_account_id")
 	private Account parentAccount;
 	
-	@OneToMany(mappedBy = "parentAccount")
+	@OneToMany(mappedBy = "parentAccount", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<Account> childAccounts = new HashSet<Account>();
 	
-	@OneToMany(mappedBy = "account")
+	@OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<LineItem> lineItems;
 	

@@ -250,6 +250,7 @@ function AccountDetailsEditor(props) {
                             </label>
                             <div className="col-md-8">
                                 <input
+                                    disabled={appContext.currentPermissionTypeId < 2 ? true : false}
                                     className="form-control"
                                     value={accountNameInput}
                                     onChange={event => {
@@ -265,6 +266,7 @@ function AccountDetailsEditor(props) {
                                 </label>
                                 <div className="col-md-8">
                                     <input
+                                        disabled={appContext.currentPermissionTypeId < 2 ? true : false}
                                         className="form-control"
                                         value={accountCodeInput}
                                         onChange={event => {
@@ -286,7 +288,7 @@ function AccountDetailsEditor(props) {
                                 value={parentAccountOptions.find(option => option.object.accountId == selectedParentAccountId)}
                                 isSearchable={true}
                                 onChange={handleChangeParentAccountOption}
-                                isDisabled={currentAccountHasChildren}
+                                isDisabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
                             />
                         </div>
                     </div>
@@ -302,6 +304,7 @@ function AccountDetailsEditor(props) {
                                 value={accountSubtypeOptions.find(option => option.object.id == selectedAccountSubtypeId)}
                                 isSearchable={true}
                                 onChange={handleChangeAccountSubtypeOption}
+                                isDisabled={appContext.currentPermissionTypeId < 2 ? true : false}
                             />
                         </div>
                     </div>
@@ -321,8 +324,7 @@ function AccountDetailsEditor(props) {
                                             onChange={event => {
                                                 setInitialDebitValueInput(event.target.value);
                                             }}
-                                            disabled={currentAccountHasChildren}
-
+                                            disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
                                         />
                                     </div>
                                 </div>
@@ -338,7 +340,7 @@ function AccountDetailsEditor(props) {
                                             onChange={event => {
                                                 setInitialCreditValueInput(event.target.value);
                                             }}
-                                            disabled={currentAccountHasChildren}
+                                            disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
                                         />
                                     </div>
                                 </div>
@@ -358,7 +360,7 @@ function AccountDetailsEditor(props) {
                                                 onChange={event => {
                                                     setInitialAccountValue(event.target.value);
                                                 }}
-                                                disabled={currentAccountHasChildren}
+                                                disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
                                             />
                                         </div>
                                     </div>
@@ -370,10 +372,16 @@ function AccountDetailsEditor(props) {
                 </ModalBody>
                 <ModalFooter className="justify-content-between">
                     <div>
-                        {!props.selectedAccountId? null : <button className="btn btn-danger width-10ch" onClick={handleDeleteButton}>{accountDetailsEditorText[appContext.locale]["Delete"]}</button>}
+                        {!props.selectedAccountId? null : 
+                            <button className="btn btn-danger width-10ch" onClick={handleDeleteButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                                {accountDetailsEditorText[appContext.locale]["Delete"]}
+                            </button>
+                        }
                     </div>
                     <div>
-                        <button className="btn btn-primary width-10ch" onClick={handleSaveButton}>{accountDetailsEditorText[appContext.locale]["Save"]}</button>
+                        <button className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                            {accountDetailsEditorText[appContext.locale]["Save"]}
+                        </button>
                         <button className="btn btn-white width-10ch ml-2" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
                     </div>
                 </ModalFooter>
@@ -382,7 +390,7 @@ function AccountDetailsEditor(props) {
             {deleteAccountAlert ?
                 <SweetAlert primary showCancel
                     confirmBtnText={accountDetailsEditorText[appContext.locale]["Yes, delete it!"]}
-                    confirmBtnBsStyle="primary"
+                    confirmBtnBsStyle="danger"
                     cancelBtnBsStyle="default"
                     cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
                     title={accountDetailsEditorText[appContext.locale]["Are you sure?"]}

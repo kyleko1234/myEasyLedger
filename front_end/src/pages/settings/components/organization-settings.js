@@ -5,12 +5,15 @@ import { CURRENCY_OPTIONS, CALENDAR_MONTH_OPTIONS, API_BASE_URL } from '../../..
 import { settingsText } from '../../../utils/i18n/settings-text';
 import Select from 'react-select';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 //requiredProps: organizationId
 function OrganizationSettings(props) {
     const appContext = React.useContext(PageSettings);
     const currencies = CURRENCY_OPTIONS(appContext.locale);
     const monthOptions = CALENDAR_MONTH_OPTIONS(appContext.locale);
+    const history = useHistory();
     const permissionObject = appContext.permissions.find(permission => permission.organization.id == props.organizationId);
     const fiscalYearBegin = permissionObject.organization.fiscalYearBegin.split("-");
     const [organizationName, setOrganizationName] = React.useState(permissionObject.organization.name);
@@ -19,7 +22,29 @@ function OrganizationSettings(props) {
     const [dateOptions, setDateOptions] = React.useState([]);
     const [savedAlert, setSavedAlert] = React.useState(false);
     const [errorAlert, setErrorAlert] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+
+    const [confirmDeleteOrganizationAlert, setConfirmDeleteOrganizationAlert] = React.useState(false);
+    const [cannotDeleteOrganizationAlert, setCannotDeleteOrganizationAlert] = React.useState(false);
+    const toggleConfirmDeleteOrganizationAlert = () => setConfirmDeleteOrganizationAlert(!confirmDeleteOrganizationAlert);
+    const toggleCannotDeleteOrganizationAlert = () => setCannotDeleteOrganizationAlert(!cannotDeleteOrganizationAlert);
     
+    const handleDeleteOrganizationButton = () => {
+        setConfirmDeleteOrganizationAlert(true);
+    }
+    const handleConfirmDeleteOrganizationButton = async () => {
+        setLoading(true);
+        setConfirmDeleteOrganizationAlert(false);
+        axios.delete(`${API_BASE_URL}/organization/${props.organizationId}`).then(async (response) => {
+            setLoading(false);
+            console.log(appContext);
+            await appContext.checkForAuthentication();
+            history.push('/');
+        }).catch(() => {
+            setLoading(false);
+            toggleCannotDeleteOrganizationAlert();
+        })
+    }
 
     const generateDateOptions = month => {
         let numberOfDays;
@@ -120,7 +145,41 @@ function OrganizationSettings(props) {
                     </div>
                     <button className="btn btn-primary width-175 d-none d-sm-inline-block" onClick={saveSettings}>{settingsText[appContext.locale]["Save"]}</button>
                     <button className="btn btn-primary btn-block d-sm-none" onClick={saveSettings}>{settingsText[appContext.locale]["Save"]}</button>
+                    {permissionObject.permissionType.id === 4 
+                        ? <button className="btn btn-danger d-none d-sm-inline-block ml-4" onClick={handleDeleteOrganizationButton}>{settingsText[appContext.locale]["Delete this EasyLedger"]}</button>
+                        : null
+                    }
+                    {permissionObject.permissionType.id === 4
+                        ? <button className="btn btn-danger btn-block d-sm-none mt-4" onClick={handleDeleteOrganizationButton}>{settingsText[appContext.locale]["Delete this EasyLedger"]}</button>
+                        : null
+                    }
                 </div>
+                {confirmDeleteOrganizationAlert
+                    ? <SweetAlert primary showCancel
+                        confirmBtnText={settingsText[appContext.locale]["Yes, delete it!"]}
+                        confirmBtnBsStyle="danger"
+                        cancelBtnBsStyle="default"
+                        cancelBtnText={settingsText[appContext.locale]["Cancel"]}
+                        title={settingsText[appContext.locale]["Are you sure?"]}
+                        onConfirm={handleConfirmDeleteOrganizationButton}
+                        onCancel={toggleConfirmDeleteOrganizationAlert}
+                    >
+                        {settingsText[appContext.locale]["Are you sure you want to delete this EasyLedger? This action cannot be undone."]}
+                    </SweetAlert>
+                    : null
+                }
+                {cannotDeleteOrganizationAlert
+                    ? <SweetAlert danger showConfirm={false} showCancel={true}
+                        cancelBtnBsStyle="default"
+                        cancelBtnText={settingsText[appContext.locale]["Cancel"]}
+                        title={settingsText[appContext.locale]["Cannot delete this EasyLedger."]}
+                        onConfirm={toggleCannotDeleteOrganizationAlert}
+                        onCancel={toggleCannotDeleteOrganizationAlert}
+                    >
+                        {settingsText[appContext.locale]["All Journal Entries and Transactions must be deleted before you can delete this EasyLedger."]}
+                    </SweetAlert>
+                    : null
+                }
             </CardBody>
         </Card>
     )
