@@ -111,12 +111,12 @@ function OrganizationRoster(props) {
                 <CardTitle className="font-weight-600">
                     <div className="tr d-flex align-items-center justify-content-between">
                         <div className="font-weight-600">
-                            {"People with access to " + ownPermissionForCurrentOrganization.organization.name}
+                            {settingsText[appContext.locale]["People with access to"](ownPermissionForCurrentOrganization.organization.name)}
                         </div>
                         <div className="d-none d-sm-inline-block">
                             {ownPermissionForCurrentOrganization.permissionType.id >= 3 ?
                                 <button className="btn btn-primary" onClick={toggleAddAPersonModal}>
-                                    Add a person
+                                    {settingsText[appContext.locale]["Add a person"]}
                                 </button>
                                 : null}
                         </div>
@@ -124,7 +124,7 @@ function OrganizationRoster(props) {
                     <div className="d-sm-none my-2">
                             {ownPermissionForCurrentOrganization.permissionType.id >= 3 ?
                                 <button className="btn btn-block btn-primary" onClick={toggleAddAPersonModal}>
-                                    Add a person
+                                    {settingsText[appContext.locale]["Add a person"]}
                                 </button>
                                 : null}
                         </div>
@@ -147,7 +147,7 @@ function OrganizationRoster(props) {
                                             <div className="tr d-flex" key={person.personId}>
                                                 <div className="td col-3">{person.firstName + " " + person.lastName}</div>
                                                 <div className="td col-4">{person.email}</div>
-                                                <div className="td col-4">{person.permissionTypeName}</div>
+                                                <div className="td col-4">{person.permissionTypeId ? permissionTypeOptions.find(permission => permission.value == person.permissionTypeId).label : null}</div>
                                                 <div className="td col-1">
                                                     <Link replace
                                                         className={"text-muted" + (person.permissionTypeId < ownPermissionForCurrentOrganization.permissionType.id ? " " : " invisible")}

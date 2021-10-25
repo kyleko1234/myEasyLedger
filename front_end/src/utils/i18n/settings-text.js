@@ -41,6 +41,9 @@ export const settingsText = {
         "Currency": "Currency",
         "Fiscal Year Begin Date": "Fiscal Year Begin Date",
 
+        "Add a person": "Add a person",
+        "People with access to": (organizationName) => `People with access to ${organizationName}`,
+
         //Appearance settings options
         "System": "System",
         "Light": "Light",
@@ -86,6 +89,9 @@ export const settingsText = {
         "Easyledger Name": "帳簿名稱",
         "Currency": "幣別",
         "Fiscal Year Begin Date": "會計年度起始日",
+
+        "Add a person": "TRANSLATION",
+        "People with access to": (organizationName) => `TRANSLATION`, //People with access to ${organizationName}
 
         //Appearance settings options
         "System": "系統模式",
