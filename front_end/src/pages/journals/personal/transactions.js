@@ -62,7 +62,7 @@ function Transactions() {
         <>
             <TableOfTransactions
                 tableTitle={ <div className="h1">{transactionsText[appContext.locale]["Transactions"]}</div>}
-                hasAddEntryButton={appContext.currentPermissionTypeId > 1 ? true : false}
+                hasAddEntryButton={true}
                 fetchData={fetchData}
                 pageSize={pageSize}
                 pageIndex={pageIndex}
