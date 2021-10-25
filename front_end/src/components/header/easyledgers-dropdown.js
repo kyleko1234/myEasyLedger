@@ -29,7 +29,12 @@ function EasyledgersDropdown(props) {
         <div className={props.className}>
             <Dropdown isOpen={isOpen} toggle={toggle}>
                 <DropdownToggle caret color="white" className="font-size-standard border-0 d-flex align-items-center easyledgers-dropdown-toggle">
-                    <span className="easyledgers-dropdown-text text-truncate">{appContext.currentOrganizationName}</span>
+                    <span className="easyledgers-dropdown-text text-truncate">
+                        {appContext.currentOrganizationId 
+                            ? appContext.currentOrganizationName
+                            : sidebarText[appContext.locale]["Click here!"]
+                        }
+                    </span>
                 </DropdownToggle>
                 <DropdownMenu className="shadow" right>
                     <DropdownItem text>
@@ -37,8 +42,10 @@ function EasyledgersDropdown(props) {
                             {appContext.currentOrganizationName}
                         </div>
                         <div className="small text-muted">
-                            {sidebarText[appContext.locale]["Permission level: "]}
-                            {permissionTypes.find(permissionType => permissionType.value === appContext.currentPermissionTypeId).label}
+                            {appContext.currentPermissionTypeId
+                                ? sidebarText[appContext.locale]["Permission level: "] + permissionTypes.find(permissionType => permissionType.value === appContext.currentPermissionTypeId).label
+                                : null
+                            }
                         </div>
                     </DropdownItem>
                     {(appContext.permissions.length > 1) ?

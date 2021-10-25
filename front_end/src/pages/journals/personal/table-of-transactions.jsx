@@ -298,14 +298,14 @@ function TableOfTransactions({
             <div className="d-sm-flex justify-content-between align-items-center">
                 {tableTitle}
                 {hasAddEntryButton ?
-                    <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={openEditorForNewTransaction}>
+                    <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={openEditorForNewTransaction} disabled={appContext.currentPermissionTypeId < 2}>
                         {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
                     </button>
                 : null}
             </div>
             {hasAddEntryButton ? 
                 <div className="d-sm-none">
-                    <button type="button" className="btn btn-primary btn-lg mt-2 btn-block" onClick={openEditorForNewTransaction}>
+                    <button type="button" className="btn btn-primary btn-lg mt-2 btn-block" onClick={openEditorForNewTransaction} disabled={appContext.currentPermissionTypeId < 2}>
                         {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
                     </button>
                 </div>
@@ -486,9 +486,15 @@ function TableOfTransactions({
                                 {/** empty div, pushes the other buttons to the right */}
                             </div>
                             <div>
-                                <button className="btn btn-info width-10ch" onClick={handleCopyTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Copy"]}</button>
-                                <button className="btn btn-primary ml-2 width-10ch" onClick={handleEditTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Edit"]}</button>
-                                <button className="btn btn-white ml-2 width-10ch" onClick={handleCloseTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Close"]}</button>
+                                <button className="btn btn-info width-10ch" onClick={handleCopyTransactionButton} disabled={appContext.currentPermissionTypeId < 2}>
+                                    {tableOfJournalEntriesText[appContext.locale]["Copy"]}
+                                </button>
+                                <button className="btn btn-primary ml-2 width-10ch" onClick={handleEditTransactionButton} disabled={appContext.currentPermissionTypeId < 2}>
+                                    {tableOfJournalEntriesText[appContext.locale]["Edit"]}
+                                </button>
+                                <button className="btn btn-white ml-2 width-10ch" onClick={handleCloseTransactionButton}>
+                                    {tableOfJournalEntriesText[appContext.locale]["Close"]}
+                                </button>
                             </div>
                         </>
                     }

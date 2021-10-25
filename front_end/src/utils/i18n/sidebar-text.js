@@ -8,6 +8,7 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Settings": "Settings",
         "Sign Out": "Sign Out",
         "Permission level: ": "Permission level: ",
+        "Click here!": "Click here!",
 
         //'create a new easyledger' form
         "Enter a name for this EasyLedger": "Enter a name for this EasyLedger",
@@ -35,6 +36,7 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Settings": "設定",
         "Sign Out": "登出",
         "Permission level: ": "權限等級：",
+        "Click here!": "TRANSLATION",
 
         //'create a new easyledger' form
         "Enter a name for this EasyLedger": "請給帳本取個名稱",

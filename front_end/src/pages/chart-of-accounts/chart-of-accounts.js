@@ -137,7 +137,10 @@ class ChartOfAccounts extends React.Component {
                                         onClick={() => {
                                             this.handleAddAnAccountButton();
                                         }}
-                                    > {chartOfAccountsText[this.context.locale]["Create an account"]} </button>
+                                        disabled={this.context.currentPermissionTypeId < 2}
+                                    > 
+                                        {chartOfAccountsText[this.context.locale]["Create an account"]}
+                                    </button>
                                 </div>
                             }
                         </Nav>
@@ -195,7 +198,7 @@ class ChartOfAccounts extends React.Component {
                                                                             </Link>
                                                                         );
                                                             })}
-                                                            {this.canAddChildren(account) ? 
+                                                            {(this.canAddChildren(account) && this.context.currentPermissionTypeId >= 2) ? 
                                                                 <Link replace className="tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
                                                                     <div className="td indent">
                                                                         <em>{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</em>

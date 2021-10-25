@@ -11,6 +11,7 @@ export const validateDate = (dateString) => {
     return true;
 }
 
+const customRound = number => Math.sign(number) * Math.round(Math.abs(number));
 /**
  * Takes a locale, currency, and a number and returns a formatted string representing the number as a currency. 
  * @param {String} locale 
@@ -23,14 +24,14 @@ export const formatCurrency = (locale, currency, amount) => {
         case "zh-TW":
             switch (currency) {
                 case "TWD":
-                    return `$${Math.round(amount)}`
+                    return `$${customRound(amount)}`
                 default: 
                     return new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(amount);
             }
         default: 
             switch (currency) {
                 case "TWD":
-                    return `NT$${Math.round(amount)}`
+                    return `NT$${customRound(amount)}`
                 default:
                     return new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(amount);
             }

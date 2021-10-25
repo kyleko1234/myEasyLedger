@@ -135,12 +135,9 @@ class Categories extends React.Component {
                                     <div className="d-sm-none w-50">
                                         {this.renderAccountTypeSelect()}
                                     </div>
-                                    <button
-                                        className="btn btn-primary my-1 ml-3"
-                                        onClick={() => {
-                                            this.handleAddAnAccountButton();
-                                        }}
-                                    > {chartOfAccountsText[this.context.locale]["Create a category"]} </button>
+                                    <button className="btn btn-primary my-1 ml-3" onClick={() => this.handleAddAnAccountButton()} disabled={this.context.currentPermissionTypeId < 2}>   
+                                        {chartOfAccountsText[this.context.locale]["Create a category"]} 
+                                    </button>
                                 </div>
                             }
                         </Nav>
@@ -197,7 +194,7 @@ class Categories extends React.Component {
                                                                         </Link>
                                                                     );
                                                         })}
-                                                        {this.canAddChildren(account) ? 
+                                                        {(this.canAddChildren(account) && this.context.currentPermissionTypeId >= 2) ? 
                                                             <Link replace className="tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
                                                                 <div className="td indent">
                                                                     <em className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child category..."]}</em>

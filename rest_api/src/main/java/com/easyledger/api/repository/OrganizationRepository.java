@@ -21,4 +21,15 @@ public interface OrganizationRepository extends JpaRepository<Organization, Long
 			+ "ORDER BY journal_entry_date ASC LIMIT 1",
 			nativeQuery = true)
 	public LocalDate getDateOfFirstJournalEntryForOrganization(Long organizationId);
+	
+	@Query(nativeQuery = true, value = "SELECT  "
+			+ "    CASE EXISTS  "
+			+ "        (SELECT 1  "
+			+ "            FROM  "
+			+ "                journal_entry "
+			+ "            WHERE  "
+			+ "                journal_entry.organization_id = ? AND  "
+			+ "                journal_entry.deleted = false)  "
+			+ "    WHEN true THEN true ELSE false END")
+	public boolean organizationContainsJournalEntries(Long organizationId);
 }

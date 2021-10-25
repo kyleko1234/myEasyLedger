@@ -26,19 +26,21 @@ function IncomeAndExpenseSummary(props) {
             let currentYearMonth = (currentDate.getFullYear() * 100) + (currentDate.getMonth() + 1);
             if (incomeAndExpenseData.length != 0) {
                 unparsedLabels.push(incomeAndExpenseData[0].yearMonth); //add earliest yearMonth in the returned data set to the array of unparsed date labels
-                while (unparsedLabels.length < props.numberOfMonths) { //generate consecutive months from the earliest yearMonth to the present yearMonth
-                    let nextMonth = unparsedLabels[unparsedLabels.length - 1] % 100;
-                    let nextYear = (unparsedLabels[unparsedLabels.length - 1] - nextMonth) / 100;
-                    if (nextMonth == 12) {
-                        nextMonth = 1;
-                        nextYear++;
-                    } else {
-                        nextMonth++;
-                    }
-                    let nextYearMonth = nextYear * 100 + nextMonth;
-                    unparsedLabels.push(nextYearMonth);
-                    if (nextYearMonth == currentYearMonth) {
-                        break;
+                if (!(incomeAndExpenseData[0].yearMonth == currentYearMonth)) {
+                    while (unparsedLabels.length < props.numberOfMonths) { //generate consecutive months from the earliest yearMonth to the present yearMonth
+                        let nextMonth = unparsedLabels[unparsedLabels.length - 1] % 100;
+                        let nextYear = (unparsedLabels[unparsedLabels.length - 1] - nextMonth) / 100;
+                        if (nextMonth == 12) {
+                            nextMonth = 1;
+                            nextYear++;
+                        } else {
+                            nextMonth++;
+                        }
+                        let nextYearMonth = nextYear * 100 + nextMonth;
+                        unparsedLabels.push(nextYearMonth);
+                        if (nextYearMonth == currentYearMonth) {
+                            break;
+                        }
                     }
                 }
                 unparsedLabels.forEach(unparsedLabel => { //populate income and expense summary arrays with data from corresponding objects

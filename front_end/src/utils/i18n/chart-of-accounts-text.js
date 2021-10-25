@@ -65,7 +65,7 @@ export const chartOfAccountsText = {
         "Please provide an account subtype for your account.": "請提供科目所屬的子類別。",
         "Account Group Name": "科目群名稱",
         "Account Type": "主類別",
-        "Account Subtype": "子類別",
+        "Account Subtype": "科目類型",
         "Save": "儲存",
         "Cancel": "取消",
         "Are you sure you want to delete this account group?": "你確定要删除這個科目群嗎？",
