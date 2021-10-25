@@ -150,7 +150,7 @@ function OrganizationRoster(props) {
                                                 <div className="td col-4">{person.permissionTypeName}</div>
                                                 <div className="td col-1">
                                                     <Link replace
-                                                        className={"text-muted" + (person.permissionTypeId <= ownPermissionForCurrentOrganization.permissionTypeId ? " " : " invisible")}
+                                                        className={"text-muted" + (person.permissionTypeId < ownPermissionForCurrentOrganization.permissionType.id ? " " : " invisible")}
                                                         to="#" onClick={() => handleEditAPersonButton(person)}>
                                                         <i className="fa fa-edit"></i>
                                                     </Link>
