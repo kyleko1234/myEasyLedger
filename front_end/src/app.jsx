@@ -77,7 +77,7 @@ class App extends React.Component {
 		this.fetchUserInfo = async (id) => {
 			await axios.get(`${API_BASE_URL}/person/${id}`).then(async response => { //it is very important to await the completion of this function otherwise you will make many http requests with null organizationId or personIds
                 let objectToSetToState = {
-                    personId: id,
+                    personId: response.data.id,
 					permissions: (response.data.permissions
                         ? response.data.permissions.sort((permission1, permission2) => permission1.organization.name.toLowerCase() < permission2.organization.name.toLowerCase() ? -1 : 1)
                         : []),

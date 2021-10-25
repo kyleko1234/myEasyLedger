@@ -390,7 +390,7 @@ function AccountDetailsEditor(props) {
             {deleteAccountAlert ?
                 <SweetAlert primary showCancel
                     confirmBtnText={accountDetailsEditorText[appContext.locale]["Yes, delete it!"]}
-                    confirmBtnBsStyle="primary"
+                    confirmBtnBsStyle="danger"
                     cancelBtnBsStyle="default"
                     cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
                     title={accountDetailsEditorText[appContext.locale]["Are you sure?"]}

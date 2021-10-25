@@ -22,9 +22,8 @@ function OrganizationRoster(props) {
     const [selectedPerson, setSelectedPerson] = React.useState(null);
     const [emailInput, setEmailInput] = React.useState('');
     const [selectedPermissionTypeOption, setSelectedPermissionTypeOption] = React.useState(permissionTypeOptions[0]);
-
+    
     const [removePersonAlert, setRemovePersonAlert] = React.useState(false);
-
     const [emailNotFoundAlert, setEmailNotFoundAlert] = React.useState(false);
 
 

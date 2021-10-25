@@ -43,6 +43,13 @@ export const settingsText = {
 
         "Add a person": "Add a person",
         "People with access to": (organizationName) => `People with access to ${organizationName}`,
+        "Delete this EasyLedger": "Delete this EasyLedger",
+
+        "Yes, delete it!": "Yes, delete it!",
+        "Are you sure?": "Are you sure?",
+        "Are you sure you want to delete this EasyLedger? This action cannot be undone.": "Are you sure you want to delete this EasyLedger? This action cannot be undone.",
+        "Cannot delete this EasyLedger.": "Cannot delete this EasyLedger.",
+        "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.",
 
         //Appearance settings options
         "System": "System",
@@ -92,6 +99,13 @@ export const settingsText = {
 
         "Add a person": "TRANSLATION",
         "People with access to": (organizationName) => `TRANSLATION`, //People with access to ${organizationName}
+        "Delete this EasyLedger": "TRANSLATION",
+
+        "Yes, delete it!": "TRANSLATION",
+        "Are you sure?": "TRANSLATION",
+        "Are you sure you want to delete this EasyLedger? This action cannot be undone.": "TRANSLATION",
+        "Cannot delete this EasyLedger.": "TRANSLATION",
+        "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "TRANSLATION",
 
         //Appearance settings options
         "System": "系統模式",
