@@ -103,7 +103,7 @@ function CategoryDetails(props) {
                                 </h1>
                                 <TableOfTransactions
                                     tableTitle={<div></div>}
-                                    hasAddEntryButton={appContext.currentPermissionTypeId > 1 ? true : false}
+                                    hasAddEntryButton={true}
                                     fetchData={fetchData}
                                     pageSize={pageSize}
                                     pageIndex={pageIndex}
