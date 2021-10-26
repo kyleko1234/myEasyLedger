@@ -8,7 +8,7 @@ import JournalEntryEditMode from './journal-entry-edit-mode';
 import { PageSettings } from '../../../config/page-settings.js';
 import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-entries-text.js';
 import JournalEntryEditHistory from './journal-entry-edit-history.js';
-import { formatCurrency } from '../../../utils/util-fns.js';
+import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns.js';
 
 //optional props: parentComponentAccountId
 function TableOfJournalEntries({
@@ -80,8 +80,7 @@ function TableOfJournalEntries({
     const openEditorForNewEntry = () => {
         setJournalEntryId(null);
         fetchAccounts();
-        let today = new Date();
-        setJournalEntryDate(today.toISOString().split('T')[0]);
+        setJournalEntryDate(getTodayAsDateString());
         setJournalEntryDescription('');
         setLineItemData([{
             lineItemId: "",
@@ -150,8 +149,8 @@ function TableOfJournalEntries({
 
     const checkEntryForValidationErrors = () => {
         let errorMessages = [];
-        if (!journalEntryDate) {
-            errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Please choose a date for this entry."]);
+        if (!validateDate(journalEntryDate)) {
+            errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Invalid date."]);
         }
         if (!journalEntryDescription) {
             errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Please provide a description for this entry."]);
@@ -236,8 +235,7 @@ function TableOfJournalEntries({
     }
 
     const handleCopyJournalEntryButton = () => {
-        let today = new Date();
-        setJournalEntryDate(today.toISOString().split('T')[0]);
+        setJournalEntryDate(getTodayAsDateString());
         toggleEditMode();
         setCreateMode(true);
         setJournalEntryId(null); //must set journalEntryId to null, otherwise program will edit the original journal entry instead of posting a copy to the server. Server requires journalEntryId to be null for POST requests, so we cannot check for createMode=true to determine PUT/POST instead.

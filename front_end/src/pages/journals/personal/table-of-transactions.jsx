@@ -9,7 +9,7 @@ import axios from 'axios';
 import TransactionViewMode from './transaction-view-mode.jsx';
 import TransactionEditMode from './transaction-edit-mode.jsx';
 import TransactionEditHistory from './transaction-edit-history.js';
-import { formatCurrency } from '../../../utils/util-fns.js';
+import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns.js';
 
 
 // Let's add a fetchData method to our Table component that will be used to fetch
@@ -89,8 +89,7 @@ function TableOfTransactions({
         setFromAccountId(parentComponentAccountId);
         setJournalEntryId(null);
         refreshAccounts();
-        let today = new Date();
-        setJournalEntryDate(today.toISOString().split('T')[0]);
+        setJournalEntryDate(getTodayAsDateString());
         setJournalEntryDescription('');
         setLineItemData([{
             lineItemId: "",
@@ -106,8 +105,7 @@ function TableOfTransactions({
         setTransactionExpanded(true);
     }
     const handleCopyTransactionButton = () => {
-        let today = new Date();
-        setJournalEntryDate(today.toISOString().split('T')[0]);
+        setJournalEntryDate(getTodayAsDateString());
         setJournalEntryId(null);
         setCreateMode(true);
         setEditMode(true);
@@ -146,8 +144,8 @@ function TableOfTransactions({
         if (!fromAccountId) {
             newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must be assigned to an account."]);
         }
-        if (!journalEntryDate) {
-            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must have a date."]);
+        if (!validateDate(journalEntryDate)) {
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Invalid date."]);
         }
         if (!journalEntryDescription) {
             newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must be given a description."]);

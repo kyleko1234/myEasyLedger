@@ -6,12 +6,12 @@ import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render
 import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { formatCurrency, validateDate } from '../../../utils/util-fns';
+import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
 
 function BalanceSheetRender() {
     const appContext = React.useContext(PageSettings);
 
-    const today = new Date().toISOString().split('T')[0];
+    const today = getTodayAsDateString();
     const [loading, setLoading] = React.useState(true);
 
     const [detailedView, setDetailedView] = React.useState(false);

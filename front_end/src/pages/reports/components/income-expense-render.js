@@ -4,13 +4,13 @@ import {API_BASE_URL} from '../../../utils/constants.js';
 import axios from 'axios';
 import {incomeStatementRenderText} from '../../../utils/i18n/income-statement-render-text.js';
 import { Card, CardBody, Alert } from 'reactstrap';
-import { formatCurrency, validateDate } from '../../../utils/util-fns.js';
+import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns.js';
 
 function IncomeExpenseRender() {
     const appContext = React.useContext(PageSettings);
     const today = new Date();
     const [startDate, setStartDate] = React.useState(today.getFullYear() + "-01-01");
-    const [endDate, setEndDate] = React.useState(today.toISOString().split('T')[0]);
+    const [endDate, setEndDate] = React.useState(getTodayAsDateString());
     const [accounts, setAccounts] = React.useState([]);
     const [totalIncome, setTotalIncome] = React.useState(null);
     const [totalExpenses, setTotalExpenses] = React.useState(null);
