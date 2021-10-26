@@ -9,7 +9,7 @@ import { formatCurrency, getTodayAsDateString, validateDate } from '../../../uti
 
 function NetWorthRender() {
     const appContext = React.useContext(PageSettings);
-    const today = new getTodayAsDateString();
+    const today = getTodayAsDateString();
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
 
 
