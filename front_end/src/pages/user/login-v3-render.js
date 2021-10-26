@@ -38,7 +38,6 @@ function LoginV3Render(props) {
             localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
             localStorage.setItem(REFRESH_TOKEN, response.data.refreshToken);
             appContext.checkForAuthentication();
-            setLoading(false);
             props.history.push('/');
         }).catch( error => {
             if (error.response.data.message == "User is disabled") {
