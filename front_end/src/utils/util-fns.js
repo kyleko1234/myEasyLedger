@@ -11,7 +11,13 @@ export const validateDate = (dateString) => {
     return true;
 }
 
+/**
+ * Custom rounding function because Math.round() sucks
+ * @param {*} number 
+ * @returns {number}
+ */
 const customRound = number => Math.sign(number) * Math.round(Math.abs(number));
+
 /**
  * Takes a locale, currency, and a number and returns a formatted string representing the number as a currency. 
  * @param {String} locale 
@@ -36,4 +42,28 @@ export const formatCurrency = (locale, currency, amount) => {
                     return new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(amount);
             }
     }
+}
+
+/**
+ * Gets today's date in local time as YYYY-mm-dd
+ * @returns {String}
+ */
+export const getTodayAsDateString = () => {
+    let todayDateObject = new Date();
+    let yearString = todayDateObject.getFullYear().toString();
+    let rawMonth = todayDateObject.getMonth() + 1;
+    let monthString;
+    if (rawMonth >= 10) {
+        monthString = rawMonth.toString();
+    } else {
+        monthString = "0" + rawMonth.toString();
+    }
+    let rawDate = todayDateObject.getDate();
+    let dateString;
+    if (rawDate >= 10) {
+        dateString = rawDate;
+    } else {
+        dateString = "0" + rawDate.toString();
+    }
+    return `${yearString}-${monthString}-${dateString}`
 }
