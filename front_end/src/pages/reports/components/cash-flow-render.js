@@ -6,14 +6,14 @@ import {API_BASE_URL} from '../../../utils/constants.js';
 import {cashFlowReportText} from '../../../utils/i18n/cash-flow-report-text.js';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { formatCurrency, validateDate } from '../../../utils/util-fns';
+import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
 
 
 function CashFlowRender() {
     const appContext = React.useContext(PageSettings);
 
     const dateToday = new Date();
-    const today = dateToday.toISOString().split(`T`)[0];
+    const today = getTodayAsDateString();
     const getDateInCurrentYear = date => {
         let dateComponentArray = date.split('-');
         return (dateToday.getFullYear() + "-" + dateComponentArray[1] + "-" + dateComponentArray[2]);

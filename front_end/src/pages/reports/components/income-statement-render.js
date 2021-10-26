@@ -6,7 +6,7 @@ import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-
 import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { formatCurrency, validateDate } from '../../../utils/util-fns';
+import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -37,7 +37,7 @@ import { formatCurrency, validateDate } from '../../../utils/util-fns';
 function IncomeStatementRender() {
     const appContext = React.useContext(PageSettings);
     const dateToday = new Date();
-    const today = dateToday.toISOString().split(`T`)[0];
+    const today = getTodayAsDateString();
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
 
     const getDateInCurrentYear = date => {

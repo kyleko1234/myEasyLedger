@@ -9,7 +9,7 @@ import axios from 'axios';
 import TransactionViewMode from './transaction-view-mode.jsx';
 import TransactionEditMode from './transaction-edit-mode.jsx';
 import TransactionEditHistory from './transaction-edit-history.js';
-import { formatCurrency } from '../../../utils/util-fns.js';
+import { formatCurrency, getTodayAsDateString } from '../../../utils/util-fns.js';
 
 
 // Let's add a fetchData method to our Table component that will be used to fetch
@@ -89,8 +89,7 @@ function TableOfTransactions({
         setFromAccountId(parentComponentAccountId);
         setJournalEntryId(null);
         refreshAccounts();
-        let today = new Date();
-        setJournalEntryDate(today.toISOString().split('T')[0]);
+        setJournalEntryDate(getTodayAsDateString());
         setJournalEntryDescription('');
         setLineItemData([{
             lineItemId: "",
@@ -106,8 +105,7 @@ function TableOfTransactions({
         setTransactionExpanded(true);
     }
     const handleCopyTransactionButton = () => {
-        let today = new Date();
-        setJournalEntryDate(today.toISOString().split('T')[0]);
+        setJournalEntryDate(getTodayAsDateString());
         setJournalEntryId(null);
         setCreateMode(true);
         setEditMode(true);

@@ -5,11 +5,11 @@ import { API_BASE_URL } from '../../../utils/constants';
 import {netWorthReportText} from '../../../utils/i18n/net-worth-report-text.js';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
 import { Card, CardBody, Alert } from 'reactstrap';
-import { formatCurrency, validateDate } from '../../../utils/util-fns';
+import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
 
 function NetWorthRender() {
     const appContext = React.useContext(PageSettings);
-    const today = new Date().toISOString().split('T')[0];
+    const today = new getTodayAsDateString();
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
 
 
