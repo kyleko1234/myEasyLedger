@@ -8,7 +8,7 @@ import JournalEntryEditMode from './journal-entry-edit-mode';
 import { PageSettings } from '../../../config/page-settings.js';
 import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-entries-text.js';
 import JournalEntryEditHistory from './journal-entry-edit-history.js';
-import { formatCurrency, getTodayAsDateString } from '../../../utils/util-fns.js';
+import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns.js';
 
 //optional props: parentComponentAccountId
 function TableOfJournalEntries({
@@ -149,8 +149,8 @@ function TableOfJournalEntries({
 
     const checkEntryForValidationErrors = () => {
         let errorMessages = [];
-        if (!journalEntryDate) {
-            errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Please choose a date for this entry."]);
+        if (!validateDate(journalEntryDate)) {
+            errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Invalid date."]);
         }
         if (!journalEntryDescription) {
             errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Please provide a description for this entry."]);

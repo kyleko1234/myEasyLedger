@@ -7,7 +7,7 @@ export const tableOfJournalEntriesText = {
         
         "Accounting Entries": "Accounting Entries",
 
-        "Please choose a date for this entry.": "Please choose a date for this entry.",
+        "Invalid date.": "Invalid date.",
         "Please provide a description for this entry.": "Please provide a description for this entry.",
         "Line-items must have a description.": "Line-items must have a description.",
         "Line-items must have either a debit or credit.": "Line-items must have either a debit or credit.",
@@ -26,7 +26,6 @@ export const tableOfJournalEntriesText = {
         "Close": "Close",
 
         "Transaction must be assigned to an account.": "Transaction must be assigned to an account.",
-        "Transaction must have a date.": "Transaction must have a date.",
         "Transaction must be given a description.": "Transaction must be given a description.",
         "Line-items must be assigned to an account or category.": "Line-items must be assigned to an account or category.",
         "Please provide an amount for each item.": "Please provide an amount for each item.",
@@ -45,7 +44,7 @@ export const tableOfJournalEntriesText = {
 
         "Accounting Entries": "記帳分錄",
 
-        "Please choose a date for this entry.": "請為分錄選一個日期。",
+        "Invalid date.": "TRANSLATION",
         "Please provide a description for this entry.": "請簡單描述一下這個分錄。",
         "Line-items must have a description.": "單行項目要有描述。",
         "Line-items must have either a debit or credit.": "單行項目至少要有一個借方金額或貸方金額。",
@@ -64,7 +63,6 @@ export const tableOfJournalEntriesText = {
         "Close": "關閉",
 
         "Transaction must be assigned to an account.": "交易紀錄必需要有針對的帳戶。",
-        "Transaction must have a date.": "交易記錄必需要有日期。",
         "Transaction must be given a description.": "交易記錄必需要有描述。",
         "Line-items must be assigned to an account or category.": "單行項目必需要有針對的帳戶或類別。",
         "Please provide an amount for each item.": "請為每個項目記錄下交易金額。",
