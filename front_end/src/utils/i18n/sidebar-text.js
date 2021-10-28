@@ -36,7 +36,7 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Settings": "設定",
         "Sign Out": "登出",
         "Permission level: ": "權限等級：",
-        "Click here!": "TRANSLATION",
+        "Click here!": "點這裡！",
 
         //'create a new easyledger' form
         "Enter a name for this EasyLedger": "請給帳本取個名稱",
