@@ -102,10 +102,10 @@ function ExpenseBreakdown(props) {
                 {appContext.isLoading
                 ?   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> 
                 :   <div>
-                        <div className="mb-3">
+                        <div className="mb-2">
                             {dashboardText[appContext.locale]["Date range"](startDate, endDate)}
                         </div>
-                        <Doughnut data={doughnutChart.data} options={doughnutChart.options} height={250}/>
+                        <Doughnut data={doughnutChart.data} options={doughnutChart.options} height={210}/>
                     </div>
                 } 
             </CardBody>
