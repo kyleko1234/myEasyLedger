@@ -69,7 +69,7 @@ export const settingsText = {
         "Name": "姓名",
         "Email": "電郵",
         "Permissions": "權限",
-        "Add user modal header": (organizationName) => `增加一個用戶到 ${organizationName} `,
+        "Add user modal header": (organizationName) => `增加一個用戶到 ${organizationName}`,
         "Could not find a user registered to this email.": "找不到以此電郵註册過的現存用戶。",
         "Add a user by email:": "加一個用戶，輸入她（他）的電郵：",
         "Permissions for this user": "給用戶的權限",
@@ -90,22 +90,22 @@ export const settingsText = {
         "Password successfully changed.": "密碼變更成功。",
         "Please log in again.": "請再次登入。",
 
-        "EasyLedger Settings": "帳簿設定",
+        "EasyLedger Settings": "帳本設定",
         "Settings saved.": "設定已儲存。",
         "Something went wrong. Please try again later.": "系統或設定有點問題，請再試一次。",
-        "Easyledger Name": "帳簿名稱",
+        "Easyledger Name": "帳本名稱",
         "Currency": "幣別",
         "Fiscal Year Begin Date": "會計年度起始日",
 
-        "Add a person": "TRANSLATION",
-        "People with access to": (organizationName) => `TRANSLATION`, //People with access to ${organizationName}
-        "Delete this EasyLedger": "TRANSLATION",
+        "Add a person": "加一個用戶",
+        "People with access to": (organizationName) => `以下用戶有「${organizationName}」帳本的使用權限：`,
+        "Delete this EasyLedger": "删除此帳本",
 
-        "Yes, delete it!": "TRANSLATION",
-        "Are you sure?": "TRANSLATION",
-        "Are you sure you want to delete this EasyLedger? This action cannot be undone.": "TRANSLATION",
-        "Cannot delete this EasyLedger.": "TRANSLATION",
-        "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "TRANSLATION",
+        "Yes, delete it!": "是的，删除它！",
+        "Are you sure?": "你確定嗎？",
+        "Are you sure you want to delete this EasyLedger? This action cannot be undone.": "你真的要删除此帳本嗎？",
+        "Cannot delete this EasyLedger.": "本帳本還不能被删除。",
+        "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "所有交易記錄都要先删除後，才能删除此帳本。",
 
         //Appearance settings options
         "System": "系統模式",
