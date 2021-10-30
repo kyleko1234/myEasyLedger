@@ -19,14 +19,22 @@ function BalanceSummary(props) {
 
     //fetch data on component mount
     React.useEffect(() => {
+        let mounted = true;
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
             if (response.data) {
                 let filteredAccounts = response.data.filter(account => (account.accountTypeId == 1 || account.accountTypeId == 2) && account.hasChildren === false);
-                setAssetAndLiabilityAccounts(filteredAccounts);
+                if (mounted) {
+                    setAssetAndLiabilityAccounts(filteredAccounts);
+                }
             }
-            setLoading(false);
+            if (mounted){
+                setLoading(false);
+            }
         }).catch(console.log);
-
+        
+        return () => {
+            mounted = false;
+        }
     }, [appContext.currentOrganizationId, props.externalRefreshToken])
 
 
