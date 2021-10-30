@@ -74,6 +74,8 @@ export const getTodayAsDateString = () => {
  * @returns {String}
  */
 export const getDateInCurrentYear = date => {
+    const dateToday = new Date();
+    
     let dateComponentArray = date.split('-');
     return (dateToday.getFullYear() + "-" + dateComponentArray[1] + "-" + dateComponentArray[2]);
 }

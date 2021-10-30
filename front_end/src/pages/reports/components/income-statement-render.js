@@ -36,7 +36,6 @@ import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDat
  */
 function IncomeStatementRender() {
     const appContext = React.useContext(PageSettings);
-    const dateToday = new Date();
     const today = getTodayAsDateString();
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
 
