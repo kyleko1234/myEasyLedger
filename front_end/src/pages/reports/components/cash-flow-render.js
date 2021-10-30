@@ -6,7 +6,7 @@ import {API_BASE_URL} from '../../../utils/constants.js';
 import {cashFlowReportText} from '../../../utils/i18n/cash-flow-report-text.js';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
 
 
 function CashFlowRender() {
@@ -14,10 +14,7 @@ function CashFlowRender() {
 
     const dateToday = new Date();
     const today = getTodayAsDateString();
-    const getDateInCurrentYear = date => {
-        let dateComponentArray = date.split('-');
-        return (dateToday.getFullYear() + "-" + dateComponentArray[1] + "-" + dateComponentArray[2]);
-    }
+
     const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
 
     const [startDate, setStartDate] = React.useState(dateToday.getFullYear() + "-01-01");
