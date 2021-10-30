@@ -67,3 +67,15 @@ export const getTodayAsDateString = () => {
     }
     return `${yearString}-${monthString}-${dateString}`
 }
+
+/**
+ * Takes in a date in the format yyyy-mm-dd and returns a date in the same format with the same month and date, but with the year replaced with the current year.
+ * @param {String} date 
+ * @returns {String}
+ */
+export const getDateInCurrentYear = date => {
+    const dateToday = new Date();
+    
+    let dateComponentArray = date.split('-');
+    return (dateToday.getFullYear() + "-" + dateComponentArray[1] + "-" + dateComponentArray[2]);
+}

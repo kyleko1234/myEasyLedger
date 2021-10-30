@@ -6,7 +6,7 @@ import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-
 import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -36,16 +36,9 @@ import { formatCurrency, getTodayAsDateString, validateDate } from '../../../uti
  */
 function IncomeStatementRender() {
     const appContext = React.useContext(PageSettings);
-    const dateToday = new Date();
     const today = getTodayAsDateString();
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
 
-    const getDateInCurrentYear = date => {
-        let dateComponentArray = date.split('-');
-        return (dateToday.getFullYear() + "-" + dateComponentArray[1] + "-" + dateComponentArray[2]);
-    }
-
-    
     const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
     const [detailedView, setDetailedView] = React.useState(false);
     const toggleDetailedView = () => setDetailedView(!detailedView);

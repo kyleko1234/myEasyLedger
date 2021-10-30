@@ -5,13 +5,18 @@ import { API_BASE_URL } from '../../../utils/constants';
 import { Doughnut } from 'react-chartjs-2';
 import { dashboardText } from '../../../utils/i18n/dashboard-text';
 import { Card, CardBody, CardTitle } from 'reactstrap';
-import { formatCurrency } from '../../../utils/util-fns';
+import { formatCurrency, getDateInCurrentYear, getTodayAsDateString } from '../../../utils/util-fns';
 
 function ExpenseBreakdown(props) {
     const appContext = React.useContext(PageSettings);
     const [loading, setLoading] = React.useState(true);
     const [labels, setLabels] = React.useState([]); 
     const [data, setData] = React.useState([]);
+    const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
+
+    const [startDate, setStartDate] = React.useState(beginningOfCurrentFiscalYear);
+    const [endDate, setEndDate] = React.useState(getTodayAsDateString());
+
     const [fontColor, setFontColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-text-color'));
 
     React.useEffect(() => {
@@ -61,13 +66,28 @@ function ExpenseBreakdown(props) {
         setLoading(true);
         let fetchedLabels = [];
         let fetchedData = [];
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountBalance/${startDate}/${endDate}`).then(response => {
+            let expenseAccountBalances = [];
             response.data
-                .filter(account => (account.accountTypeId === 5 && account.parentAccountId === null))
+                .filter(account => account.accountTypeId === 5)
+                .forEach(account => {
+                    expenseAccountBalances.push(account);
+                });
+            response.data
+                .filter(childAccount => childAccount.parentAccountId !== null)
+                .forEach(childAccount => {
+                    if (expenseAccountBalances.find(parentAccount => parentAccount.accountId === childAccount.parentAccountId)) {
+                        expenseAccountBalances.push(childAccount);
+                    }
+                })
+
+            expenseAccountBalances
+                .filter(account => !account.hasChildren)
                 .forEach(account => {
                     fetchedLabels.push(account.accountName);
                     fetchedData.push(account.debitsMinusCredits);
                 })
+
             setLabels(fetchedLabels);
             setData(fetchedData);
             setLoading(false);
@@ -81,8 +101,11 @@ function ExpenseBreakdown(props) {
                 <CardTitle className="font-weight-600">{dashboardText[appContext.locale]["Expense Breakdown"]}</CardTitle>
                 {appContext.isLoading
                 ?   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> 
-                :   <div className="py-3">
-                        <Doughnut data={doughnutChart.data} options={doughnutChart.options} height={250}/>
+                :   <div>
+                        <div className="mb-2">
+                            {dashboardText[appContext.locale]["Date range"](startDate, endDate)}
+                        </div>
+                        <Doughnut data={doughnutChart.data} options={doughnutChart.options} height={210}/>
                     </div>
                 } 
             </CardBody>

@@ -44,7 +44,7 @@ export const tableOfJournalEntriesText = {
 
         "Accounting Entries": "記帳分錄",
 
-        "Invalid date.": "TRANSLATION",
+        "Invalid date.": "日期有誤。",
         "Please provide a description for this entry.": "請簡單描述一下這個分錄。",
         "Line-items must have a description.": "單行項目要有描述。",
         "Line-items must have either a debit or credit.": "單行項目至少要有一個借方金額或貸方金額。",
