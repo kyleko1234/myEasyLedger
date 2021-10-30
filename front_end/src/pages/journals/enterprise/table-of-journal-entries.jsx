@@ -122,12 +122,20 @@ function TableOfJournalEntries({
 
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
     const fetchAccounts = () => {
+        let accountTypePrefixes = {
+            1: "[A] ",
+            2: "[L] ",
+            3: "[0] ",
+            4: "[I] ",
+            5: "[E] "
+        }
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`)
             .then(response => {
                 const formattedAccounts = response.data.filter(account => !account.hasChildren).map(account => {
                     return ({
                         value: account.accountId,
-                        label: account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName,
+                        label: accountTypePrefixes[account.accountTypeId] + 
+                            (account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName),
                         object: account
                     })
                 });
