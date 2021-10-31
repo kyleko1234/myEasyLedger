@@ -22,7 +22,7 @@ function RegisterV3Render(props) {
     const [agreeInput, setAgreeInput] = React.useState(true);
     const currencyOptions = CURRENCY_OPTIONS(appContext.locale);
     const [selectedCurrency, setSelectedCurrency] = React.useState(currencyOptions.find(option => option.value == (defaultCurrencyValue ? defaultCurrencyValue : "USD")));
-    const [isEnterprise, setIsEnterprise] = React.useState(true);
+    const [isEnterprise, setIsEnterprise] = React.useState(false);
     const [stepNumber, setStepNumber] = React.useState(1);
     const [somethingWentWrongAlert, setSomethingWentWrongAlert] = React.useState(false);
 
