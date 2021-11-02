@@ -58,7 +58,7 @@ function Dashboard() {
                 </div>
                 : <div className="d-flex justify-content-center">
                     <div className="text-muted h3 pt-3 text-center">
-                        Create a new EasyLedger by clicking the button in the upper-right corner.
+                        {dashboardText[appContext.locale]["Create a new EasyLedger by clicking the button in the upper-right corner."]}
                     </div>
                 </div>
             }
