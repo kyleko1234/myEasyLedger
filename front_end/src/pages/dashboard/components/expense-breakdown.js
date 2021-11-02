@@ -53,8 +53,8 @@ function ExpenseBreakdown(props) {
             }]
         },
         options: {
-            responsive: true,
             maintainAspectRatio: false,
+            responsive: true,
             legend: {
                 labels: {
                     fontColor: fontColor
@@ -105,7 +105,9 @@ function ExpenseBreakdown(props) {
                         <div className="mb-2">
                             {dashboardText[appContext.locale]["Date range"](startDate, endDate)}
                         </div>
-                        <Doughnut data={doughnutChart.data} options={doughnutChart.options} height={210}/>
+                        <div style={{overflow: "none"}}>
+                            <Doughnut data={doughnutChart.data} options={doughnutChart.options} height={275}/>
+                        </div>
                     </div>
                 } 
             </CardBody>
