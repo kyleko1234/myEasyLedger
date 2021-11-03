@@ -34,8 +34,14 @@ export const tableOfJournalEntriesText = {
         "Transaction must have at least one item.": "Transaction must have at least one item.",
         "Entry must have line-items.": "Entry must have line-items.",
 
-        "View edit history": "View edit history"
-    },
+        "View edit history": "View edit history",
+        "[A] ": "[A] ",
+        "[L] ": "[L] ",
+        "[O] ": "[O] ",
+        "[I] ": "[I] ",
+        "[E] ": "[E] ",
+
+},
     "zh-TW": {
         "Date": "日期",
         "Description": "描述",
@@ -71,7 +77,11 @@ export const tableOfJournalEntriesText = {
         "Transaction must have at least one item.": "一筆交易記錄至少要有一個單行項目",
         "Entry must have line-items.": "一筆分錄至少要有一個單行項目",
 
-        "View edit history": "檢視變更史"
-
+        "View edit history": "檢視變更史",
+        "[A] ": "[資產] ",
+        "[L] ": "[負債] ",
+        "[O] ": "[權益] ",
+        "[I] ": "[收入] ",
+        "[E] ": "[費損] ",
     }
 }

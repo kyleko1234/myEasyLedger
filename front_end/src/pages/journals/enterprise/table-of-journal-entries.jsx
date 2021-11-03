@@ -123,11 +123,11 @@ function TableOfJournalEntries({
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
     const fetchAccounts = () => {
         let accountTypePrefixes = {
-            1: "[A] ",
-            2: "[L] ",
-            3: "[0] ",
-            4: "[I] ",
-            5: "[E] "
+            1: tableOfJournalEntriesText[appContext.locale]["[A] "],
+            2: tableOfJournalEntriesText[appContext.locale]["[L] "],
+            3: tableOfJournalEntriesText[appContext.locale]["[0] "],
+            4: tableOfJournalEntriesText[appContext.locale]["[I] "],
+            5: tableOfJournalEntriesText[appContext.locale]["[E] "]
         }
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`)
             .then(response => {
