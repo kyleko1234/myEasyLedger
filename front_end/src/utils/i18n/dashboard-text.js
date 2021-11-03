@@ -15,6 +15,6 @@ export const dashboardText = {
         "Net Worth": "淨值",
         "Net Assets": "淨資產",
         "Create a new EasyLedger by clicking the button in the upper-right corner.": "請按右上角的按鈕來建立一本新帳本。",
-        "Date range": (startDate, endDate) => `TRANSLATION` //From ${startDate} to ${endDate}
+        "Date range": (startDate, endDate) => `自 ${startDate} 至 ${endDate}` //From ${startDate} to ${endDate}
     }
 }
