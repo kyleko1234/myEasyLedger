@@ -59,7 +59,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                         <input
                             type="number"
                             className="form-control"
-                            value={cellValue ? cellValue : ''}
+                            value={(cellValue !== null) ? cellValue : ''}
                             step="any"
                             onChange={event => {
                                 let updatedLineItemData = data.slice();
