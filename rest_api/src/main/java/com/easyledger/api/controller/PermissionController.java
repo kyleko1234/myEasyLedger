@@ -62,7 +62,7 @@ public class PermissionController {
      	
     	Permission permission = new Permission();
     	
-    	Person person = personRepo.findByEmail(dto.getEmail())
+    	Person person = personRepo.findByEmail(dto.getEmail().trim().toLowerCase())
     			.orElseThrow(() -> new ResourceNotFoundException("Person not found for this email: " + dto.getEmail()));
 
     	Organization organization = organizationRepo.findById(organizationId)
