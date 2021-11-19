@@ -112,6 +112,12 @@ export const settingsText = {
         "Cannot delete this EasyLedger.": "本帳本還不能被删除。",
         "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "所有交易記錄都要先删除後，才能删除此帳本。",
 
+
+        "Change Name": "TRANSLATION",
+        "Please provide a first and last name.": "TRANSLATION",
+        "First name": "TRANSLATION",
+        "Last name": "TRANSLATION",
+
         //Appearance settings options
         "System": "系統模式",
         "Light": "光亮模式",
