@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+            "file": "Person/Contents/Update a Person.md",
             "mode": "source"
           }
         },
@@ -21,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+            "file": "Person/Contents/Update a Person.md",
             "mode": "preview"
           }
         },
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+                "file": "Person/Contents/Update a Person.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,15 +101,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Person/Contents/Update a Person.md",
+    "Person/Contents/Retrieve a Person.md",
     "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
     "AccountSubtype/AccountSubtype.md",
     "Person/Contents/The Person Object.md",
     "Person/Person.md",
     "Permission/Permission.md",
-    "Person/Contents/Update a Person.md",
     "Person/Contents/List All Persons.md",
     "Easy Ledger.md",
-    "Organization/Organization.md",
-    "Organization/Contents/Delete an Organization.md"
+    "Organization/Organization.md"
   ]
 }
