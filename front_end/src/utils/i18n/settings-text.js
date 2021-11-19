@@ -51,10 +51,15 @@ export const settingsText = {
         "Cannot delete this EasyLedger.": "Cannot delete this EasyLedger.",
         "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.",
 
+        "Change Name": "Change Name",
+        "Please provide a first and last name.": "Please provide a first and last name.",
+        "First name": "First name",
+        "Last name": "Last name",
+
         //Appearance settings options
         "System": "System",
         "Light": "Light",
-        "Dark": "Dark"
+        "Dark": "Dark",
     },
     "zh-TW": {
         "Home": "首頁",
