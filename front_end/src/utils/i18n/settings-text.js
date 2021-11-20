@@ -66,8 +66,8 @@ export const settingsText = {
         "Settings": "設定",
         "Personal Settings": "個人設定",
         "Language": "語言",
-        "Language Settings": "語言設定",
-        "Appearance Settings": "顯示設定",
+        "Language Settings": "更改語言",
+        "Appearance Settings": "更改光亮模式",
         "Save": "儲存",
         "Manage my EasyLedgers...": "管理我所有的帳本...",
 
@@ -113,10 +113,10 @@ export const settingsText = {
         "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "所有交易記錄都要先删除後，才能删除此帳本。",
 
 
-        "Change Name": "TRANSLATION",
-        "Please provide a first and last name.": "TRANSLATION",
-        "First name": "TRANSLATION",
-        "Last name": "TRANSLATION",
+        "Change Name": "更改名字",
+        "Please provide a first and last name.": "請輸入你的個人姓名稱呼。",
+        "First name": "姓",
+        "Last name": "名",
 
         //Appearance settings options
         "System": "系統模式",
