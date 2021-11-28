@@ -115,7 +115,7 @@ function AccountSwitcher(props) {
                                                         </div>
                                                         <div className="col-1 pl-0"><i className="fas fa-angle-right invisible"></i></div>
                                                     </Link>
-                                                    <Collapse isOpen={account.expanded} style={{borderTop: "1px solid #dadada"}}>
+                                                    <Collapse isOpen={account.expanded} style={appContext.colorScheme == "dark" ? {borderTop: "1px solid #383838"} : {borderTop: "1px solid #dadada"}}>
                                                         {accounts
                                                             .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                             .map(childAccount => {
