@@ -76,7 +76,6 @@ function CategoryDetails(props) {
                 setLast(response.data.last);
             })
                 .catch(console.log);
-            console.log("hi")
         }
         await fetchTableData();
         setRefreshToken(Math.random());
