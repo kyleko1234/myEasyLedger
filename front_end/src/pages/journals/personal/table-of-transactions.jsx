@@ -86,7 +86,11 @@ function TableOfTransactions({
         fetchData(pageIndex, pageSize);
     }
     const openEditorForNewTransaction = () => {
-        setFromAccountId(parentComponentAccountId);
+        if (!category) {
+            setFromAccountId(parentComponentAccountId);
+        } else {
+            setFromAccountId(null);
+        }
         setJournalEntryId(null);
         refreshAccounts();
         setJournalEntryDate(getTodayAsDateString());

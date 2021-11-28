@@ -48,13 +48,15 @@ function CategoryDetails(props) {
         }).catch(console.log)
     }
 
-    const fetchData = async (pageIndex, pageSize) => {
+    const fetchData = React.useCallback(async ( pageIndex, pageSize ) => {
         // This will get called when the table needs new data
 
         //fetch data from Easy Ledger API
         const url = `${API_BASE_URL}/account/${selectedAccountId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
         setLoading(true);
-        async function fetchTableData () {
+        async function fetchTableData() {
+            //also refresh account data    
+            await refreshAccountData(); 
             await axios.get(url).then(response => {
                 var dataContent = response.data.content;
                 dataContent.forEach(lineItem => {
@@ -74,19 +76,18 @@ function CategoryDetails(props) {
                 setLast(response.data.last);
             })
                 .catch(console.log);
-            //also refresh account data    
-            await refreshAccountData(); 
+            console.log("hi")
         }
         await fetchTableData();
         setRefreshToken(Math.random());
         setLoading(false);
-    }
+    }, [selectedAccountId])
 
 
 
     React.useEffect(() => {
         refreshAccountData();
-    }, [])
+    }, [selectedAccountId])
 
     return(
         <div className="row">
@@ -118,6 +119,7 @@ function CategoryDetails(props) {
                                     previousPage={previousPage}
                                     nextPage={nextPage}                            
                                     category
+                                    parentComponentAccountId={selectedAccountId}
                                 /> 
                             </>
                         : <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}

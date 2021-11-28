@@ -66,10 +66,16 @@ function AccountDetails(props) {
 
     //initially fetch account data from API
     React.useEffect(() => {
+        let isMounted = true;
         axios.get(`${API_BASE_URL}/account/${selectedAccountId}`).then(response => {
             let selectedAccount = response.data
-            setSelectedAccount(selectedAccount);
+            if (isMounted){
+                setSelectedAccount(selectedAccount);
+            }
         }).catch(console.log);
+        return () => {
+            isMounted = false;
+        }
     }, [])
 
     const fetchData = React.useCallback(async ( pageIndex, pageSize ) => {
