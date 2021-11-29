@@ -55,9 +55,11 @@ function ExpenseBreakdown(props) {
         options: {
             maintainAspectRatio: false,
             responsive: true,
-            legend: {
-                labels: {
-                    fontColor: fontColor
+            plugins: {
+                legend: {
+                    labels: {
+                        color: fontColor
+                    }
                 }
             },
         }

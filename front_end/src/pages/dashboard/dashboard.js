@@ -42,13 +42,13 @@ function Dashboard() {
                         </div>
                         <div className="col-xl-4 col-lg-6 mb-3 mb-lg-0">
                             {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
-                            /*<BalanceSummary/>*/ null}
+                            <BalanceSummary/>}
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-lg-6 mb-3 mb-lg-0">
                             {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
-                            /*<ExpenseBreakdown/>*/null}
+                            <ExpenseBreakdown/>}
                         </div>
                         <div className="col-lg-6 mb-3 mb-lg-0">
                             {(appContext.isLoading || loading) ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
