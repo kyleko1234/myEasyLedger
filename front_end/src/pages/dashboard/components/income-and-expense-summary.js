@@ -153,7 +153,7 @@ function IncomeAndExpenseSummary(props) {
             plugins: {
                 legend: {
                     labels: {
-                        //color: fontColor
+                        color: fontColor
                     }
                 }
             },
@@ -163,7 +163,7 @@ function IncomeAndExpenseSummary(props) {
                         color: gridlineColor,
                     },
                     ticks: {
-                        //color: fontColor,
+                        color: fontColor,
                     },
                     min: 0
                 },
@@ -172,7 +172,7 @@ function IncomeAndExpenseSummary(props) {
                         color: gridlineColor
                     },
                     ticks: {
-                        //color: fontColor,
+                        color: fontColor,
                     },
                 }
             } 

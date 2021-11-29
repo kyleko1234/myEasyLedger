@@ -58,7 +58,7 @@ function NetAssets(props) {
                 },
                 legend: {
                     labels: {
-                        //color: fontColor
+                        color: fontColor
                     }
                 }
             },
@@ -66,11 +66,17 @@ function NetAssets(props) {
                 y: {
                     grid: {
                         color: gridlineColor,
+                    },
+                    ticks: {
+                        color: fontColor,
                     }
                 },
                 x: {
                     grid: {
                         color: gridlineColor
+                    },
+                    ticks: {
+                        color: fontColor,
                     }
                 }
             } 
@@ -79,6 +85,7 @@ function NetAssets(props) {
 
 
     React.useEffect(() => {
+        let isMounted = true;
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/monthlyNetAssets/${numberOfMonths}`).then(response => {
             if (response.data) {
                 let unparsedLabels = [];
@@ -87,10 +94,15 @@ function NetAssets(props) {
                     unparsedLabels.push(dto.yearMonth);
                     retrievedNetAssetsData.push(dto.netAssets);
                 })
-                setNetAssetsData(retrievedNetAssetsData);
-                setLabels(unparsedLabels.map(label => parseYearMonth(label)));
+                if (isMounted) {
+                    setNetAssetsData(retrievedNetAssetsData);
+                    setLabels(unparsedLabels.map(label => parseYearMonth(label)));    
+                }
             }
         })
+        return () => {
+            isMounted = false;
+        }
     }, [numberOfMonths])
 
     //takes integer representing a year and month in format yyyymm and returns a string "yyyy MonthName"
