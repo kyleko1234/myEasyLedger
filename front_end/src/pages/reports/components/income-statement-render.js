@@ -336,32 +336,31 @@ function IncomeStatementRender() {
                     </form>
                 </CardBody>
             </Card>
-            <div className="overflow-auto">
-                <div className="min-width-lg">
-                    <div className="d-flex justify-content-between font-weight-600 text-right">
-                        <div>{/*empty div for spacing*/}</div>
-                        <div className="text-right d-flex">
-                        {
-                            columnLabels.map((columnLabel, i) => {
-                                return(
-                                    <div className="td width-175" key={i}>
-                                        {columnLabel.label === "Custom"
-                                        ?   <>
-                                                <div>
-                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabel.startDate}
-                                                </div>
-                                                <div>
-                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabel.endDate}
-                                                </div>
-                                            </>
-                                        : columnLabel.label}
-                                    </div>
-                                )
-                            })
-                        }
-                        </div>
+            <div>
+                <div className="d-flex justify-content-between font-weight-600 text-right">
+                    <div>{/*empty div for spacing*/}</div>
+                    <div className="text-right d-flex">
+                    {
+                        columnLabels.map((columnLabel, i) => {
+                            return(
+                                <div className="td width-175" key={i}>
+                                    {columnLabel.label === "Custom"
+                                    ?   <>
+                                            <div>
+                                                {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabel.startDate}
+                                            </div>
+                                            <div>
+                                                {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabel.endDate}
+                                            </div>
+                                        </>
+                                    : columnLabel.label}
+                                </div>
+                            )
+                        })
+                    }
                     </div>
-                    <div>
+                </div>
+                <div>
                         {(loading || !incomeStatementObjects.length) ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                             <div>
                                 {!(incomeStatementObjects[0].accountBalances.filter(account => account.accountSubtypeId === incomeStatementObjects[0].revenueSubtypeId).length) ? null :
@@ -665,7 +664,6 @@ function IncomeStatementRender() {
                             </div>
                         }
                     </div>
-                </div>
             </div>
         </>
     )
