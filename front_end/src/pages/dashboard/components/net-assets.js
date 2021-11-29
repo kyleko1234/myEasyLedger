@@ -51,32 +51,41 @@ function NetAssets(props) {
                 mode: 'nearest',
                 intersect: true
             },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            legend: {
-                labels: {
-                    fontColor: fontColor
+            plugins: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: true,
+                },
+                legend: {
+                    labels: {
+                        color: fontColor
+                    }
                 }
             },
             scales: {
-                yAxes: [{
-                    gridLines: {
+                y: {
+                    grid: {
                         color: gridlineColor,
+                    },
+                    ticks: {
+                        color: fontColor,
                     }
-                }],
-              xAxes: [{
-                    gridLines: {
+                },
+                x: {
+                    grid: {
                         color: gridlineColor
+                    },
+                    ticks: {
+                        color: fontColor,
                     }
-                }]
+                }
             } 
         }
     };
 
 
     React.useEffect(() => {
+        let isMounted = true;
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/monthlyNetAssets/${numberOfMonths}`).then(response => {
             if (response.data) {
                 let unparsedLabels = [];
@@ -85,10 +94,15 @@ function NetAssets(props) {
                     unparsedLabels.push(dto.yearMonth);
                     retrievedNetAssetsData.push(dto.netAssets);
                 })
-                setNetAssetsData(retrievedNetAssetsData);
-                setLabels(unparsedLabels.map(label => parseYearMonth(label)));
+                if (isMounted) {
+                    setNetAssetsData(retrievedNetAssetsData);
+                    setLabels(unparsedLabels.map(label => parseYearMonth(label)));    
+                }
             }
         })
+        return () => {
+            isMounted = false;
+        }
     }, [numberOfMonths])
 
     //takes integer representing a year and month in format yyyymm and returns a string "yyyy MonthName"

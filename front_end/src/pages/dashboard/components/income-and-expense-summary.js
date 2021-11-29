@@ -1,10 +1,12 @@
 import React from 'react';
 import { Bar, defaults } from 'react-chartjs-2';
+import 'chart.js/auto';
 import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
 import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expense-summary-text.js';
 import { Card, CardBody, CardTitle } from 'reactstrap';
+import { timers } from 'jquery';
 
 //required props: accountTypeSummaries, numberOfMonths
 function IncomeAndExpenseSummary(props) {
@@ -148,22 +150,31 @@ function IncomeAndExpenseSummary(props) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            legend: {
-                labels: {
-                    fontColor: fontColor
+            plugins: {
+                legend: {
+                    labels: {
+                        color: fontColor
+                    }
                 }
             },
             scales: {
-                yAxes: [{
-                    gridLines: {
+                y: {
+                    grid: {
                         color: gridlineColor,
-                    }
-                }],
-              xAxes: [{
-                    gridLines: {
+                    },
+                    ticks: {
+                        color: fontColor,
+                    },
+                    min: 0
+                },
+                x: {
+                    grid: {
                         color: gridlineColor
-                    }
-                }]
+                    },
+                    ticks: {
+                        color: fontColor,
+                    },
+                }
             } 
         }
     };
