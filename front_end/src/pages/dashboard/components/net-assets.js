@@ -51,26 +51,28 @@ function NetAssets(props) {
                 mode: 'nearest',
                 intersect: true
             },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            legend: {
-                labels: {
-                    fontColor: fontColor
+            plugins: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: true,
+                },
+                legend: {
+                    labels: {
+                        //color: fontColor
+                    }
                 }
             },
             scales: {
-                yAxes: [{
-                    gridLines: {
+                y: {
+                    grid: {
                         color: gridlineColor,
                     }
-                }],
-              xAxes: [{
-                    gridLines: {
+                },
+                x: {
+                    grid: {
                         color: gridlineColor
                     }
-                }]
+                }
             } 
         }
     };
