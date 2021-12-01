@@ -301,8 +301,7 @@ function CashFlowRender() {
             </Card>
             <div >
                     {(loading || !cashFlowObjects.length) ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
-                    <div className="overflow-auto">
-                        <div className="min-width-lg">
+                    <div>
                             <div className="d-flex justify-content-between font-weight-600 text-right">
                                 <div>{/*empty div for spacing*/}</div>
                                 <div className="text-right d-flex">
@@ -510,7 +509,6 @@ function CashFlowRender() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     }
             </div>
