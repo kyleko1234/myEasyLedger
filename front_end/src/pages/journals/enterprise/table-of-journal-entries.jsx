@@ -125,7 +125,7 @@ function TableOfJournalEntries({
         let accountTypePrefixes = {
             1: tableOfJournalEntriesText[appContext.locale]["[A] "],
             2: tableOfJournalEntriesText[appContext.locale]["[L] "],
-            3: tableOfJournalEntriesText[appContext.locale]["[0] "],
+            3: tableOfJournalEntriesText[appContext.locale]["[O] "],
             4: tableOfJournalEntriesText[appContext.locale]["[I] "],
             5: tableOfJournalEntriesText[appContext.locale]["[E] "]
         }
