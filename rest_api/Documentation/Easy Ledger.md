@@ -21,6 +21,9 @@ Prefix all endpoints with `http://{host}/v0.4/`
 - [[Forgot Password#Resetting a user's password|POST /auth/resetPassword]]
 - [[Check For Available Email|POST /auth/checkForAvailableEmail]]
 <br/><br/>
+- [[Invite a Person by Email|POST /organization/{organizationId}/invitation]]
+- [[Check if invitation link has already been used|GET /acceptInvitation/hasCompletedSetup/{token}]]
+<br/><br/>
 - [[List All Persons|GET /person]]
 - [[Retrieve a Person|GET /person/{id}]]
 - [[Update a Person|PATCH /person/{id}]]
