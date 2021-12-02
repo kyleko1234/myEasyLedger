@@ -117,5 +117,32 @@ public class EmailDispatchService {
 		}
 		emailService.sendHtmlMessage(to, subject, message);
 	}
-
+	
+	public void sendInvitationEmail(String inviterFirstName, String inviterLastName, String organizationName, String to, String token, String locale) throws MessagingException {
+		String subject;
+		String message;
+		switch (locale) {
+			case "zh-TW":
+			case "en-US":
+			default:
+				subject = "Invitation to myEasyLedger";
+				message = "<!DOCTYPE html>   "
+						+ "<html>   "
+						+ "    <head>   "
+						+ "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> "
+						+ "    </head>   "
+						+ "    <body>   "
+						+ "    <p>Hello and welcome.</p>   "
+						+ "    <p>" + inviterFirstName + " " + inviterLastName + " has invited you to myEasyLedger to collaborate on \"organization\". Please click the link below to finish setting up your account.</p>   "
+						+ "    <a href=\"https://www.myeasyledger.com/accept-invitation/" + token + "/" + locale + "\">https://www.myeasyledger.com/accept-invitation/" + token + "/" + locale + "</a> "
+						+ "    <p>If clicking the URL above does not work, copy and paste the URL into a browser window.</p> "
+						+ "    <p>   "
+						+ "        <em>This is an automated email, please do not reply directly to this email.</em> <br />   "
+						+ "    </p>   "
+						+ "    </body>   "
+						+ "</html> ";
+				break;
+		}
+		emailService.sendHtmlMessage(to, subject, message);
+	}
 }

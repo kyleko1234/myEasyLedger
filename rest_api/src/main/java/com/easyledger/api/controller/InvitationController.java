@@ -1,5 +1,6 @@
 package com.easyledger.api.controller;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,8 @@ import com.easyledger.api.repository.PermissionRepository;
 import com.easyledger.api.repository.PermissionTypeRepository;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.security.AuthorizationService;
+import com.easyledger.api.security.UserPrincipal;
+import com.easyledger.api.service.EmailDispatchService;
 import com.easyledger.api.service.PersonService;
 
 @RestController
@@ -36,10 +39,11 @@ public class InvitationController {
 	private PermissionTypeRepository permissionTypeRepo;
 	private PersonService personService;
 	private PersonRepository personRepo;
+	private EmailDispatchService emailDispatchService;
 
 	public InvitationController(AuthorizationService authorizationService, PermissionRepository permissionRepo,
 			OrganizationRepository organizationRepo, PermissionTypeRepository permissionTypeRepo, PersonService personService,
-			PersonRepository personRepo) {
+			PersonRepository personRepo, EmailDispatchService emailDispatchService) {
 		super();
 		this.authorizationService = authorizationService;
 		this.permissionRepo = permissionRepo;
@@ -47,17 +51,22 @@ public class InvitationController {
 		this.permissionTypeRepo = permissionTypeRepo;
 		this.personService = personService;
 		this.personRepo = personRepo;
+		this.emailDispatchService = emailDispatchService;
 	}
 
 	@PostMapping("/organization/{organizationId}/invitation")
     @ResponseStatus(HttpStatus.CREATED)
     public Permission inviteUserByEmail(@PathVariable(value = "organizationId") Long organizationId, 
-    		@Valid @RequestBody PersonInRosterDTO dto, Authentication authentication) throws ResourceNotFoundException, UnauthorizedException, ConflictException {
+    		@Valid @RequestBody PersonInRosterDTO dto, Authentication authentication) throws ResourceNotFoundException, UnauthorizedException, ConflictException, MessagingException {
     	if (dto.getPermissionTypeId() >= 3) {
     		authorizationService.authorizeOwnPermissionsByOrganizationId(authentication, organizationId);
     	} else {
     		authorizationService.authorizeAdminPermissionsByOrganizationId(authentication, organizationId);
     	}
+    	UserPrincipal inviterPrincipal = (UserPrincipal) authentication.getPrincipal();	
+    	String inviterFirstName = inviterPrincipal.getFirstName();
+    	String inviterLastName = inviterPrincipal.getLastName();
+    	
     	Organization organization = organizationRepo.findById(organizationId)
     			.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id: " + organizationId));
     	PermissionType permissionType = permissionTypeRepo.findById(dto.getPermissionTypeId())
@@ -72,8 +81,8 @@ public class InvitationController {
     	permission.setOrganization(organization);
     	permission.setPermissionType(permissionType);
     	
+    	emailDispatchService.sendInvitationEmail(inviterFirstName, inviterLastName, organization.getName(), createdPerson.getEmail(), verificationToken.getToken(), createdPerson.getLocale());
     	return permissionRepo.save(permission);
-    	//emailDispatchService.sendInvitationEmail
 
     }
 	
