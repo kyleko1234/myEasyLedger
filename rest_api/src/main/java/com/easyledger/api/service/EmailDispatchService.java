@@ -133,7 +133,7 @@ public class EmailDispatchService {
 						+ "    </head>   "
 						+ "    <body>   "
 						+ "    <p>Hello and welcome.</p>   "
-						+ "    <p>" + inviterFirstName + " " + inviterLastName + " has invited you to myEasyLedger to collaborate on \"organization\". Please click the link below to finish setting up your account.</p>   "
+						+ "    <p>" + inviterFirstName + " " + inviterLastName + " has invited you to myEasyLedger to collaborate on \"" + organizationName +"\". Please click the link below to finish setting up your account.</p>   "
 						+ "    <a href=\"https://www.myeasyledger.com/accept-invitation/" + token + "/" + locale + "\">https://www.myeasyledger.com/accept-invitation/" + token + "/" + locale + "</a> "
 						+ "    <p>If clicking the URL above does not work, copy and paste the URL into a browser window.</p> "
 						+ "    <p>   "

@@ -197,6 +197,7 @@ public class PersonService {
 		person.setEmail(email);
 		person.setPassword(passwordEncoder.encode(UUID.randomUUID().toString())); //this password should never be used, and exists only to appease the non-null constraint of the password field on the person table
 		person.setLocale(locale);
+		person.setEnabled(false);
     	Role userRole = roleRepo.findByName("ROLE_USER")
     			.orElseThrow(() -> new AppException("ROLE_USER does not exist."));
     	person.setRoles(Collections.singleton(userRole));

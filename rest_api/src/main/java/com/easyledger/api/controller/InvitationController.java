@@ -72,8 +72,8 @@ public class InvitationController {
     	PermissionType permissionType = permissionTypeRepo.findById(dto.getPermissionTypeId())
     			.orElseThrow(() -> new ResourceNotFoundException("PermissionType not found for this id: " + dto.getPermissionTypeId()));
 
-    	VerificationToken verificationToken = personService.createInvitedPerson(dto.getEmail(), dto.getLocale()); //although we use a VerificationToken with a default expiry we will probably ignore the expiry when verifying user.
-    	Person createdPerson = personRepo.findByEmail(dto.getEmail())
+    	VerificationToken verificationToken = personService.createInvitedPerson(dto.getEmail().trim().toLowerCase(), dto.getLocale()); //although we use a VerificationToken with a default expiry we will probably ignore the expiry when verifying user.
+    	Person createdPerson = personRepo.findByEmail(dto.getEmail().trim().toLowerCase())
     			.orElseThrow(() -> new ResourceNotFoundException("Person not found for this email: " + dto.getEmail()));
     	
     	Permission permission = new Permission();
@@ -81,7 +81,7 @@ public class InvitationController {
     	permission.setOrganization(organization);
     	permission.setPermissionType(permissionType);
     	
-    	emailDispatchService.sendInvitationEmail(inviterFirstName, inviterLastName, organization.getName(), createdPerson.getEmail(), verificationToken.getToken(), createdPerson.getLocale());
+    	emailDispatchService.sendInvitationEmail(inviterFirstName, inviterLastName, organization.getName(), createdPerson.getEmail().trim().toLowerCase(), verificationToken.getToken(), createdPerson.getLocale());
     	return permissionRepo.save(permission);
 
     }
