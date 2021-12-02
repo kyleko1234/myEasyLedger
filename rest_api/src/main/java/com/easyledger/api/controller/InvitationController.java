@@ -63,7 +63,7 @@ public class InvitationController {
     	PermissionType permissionType = permissionTypeRepo.findById(dto.getPermissionTypeId())
     			.orElseThrow(() -> new ResourceNotFoundException("PermissionType not found for this id: " + dto.getPermissionTypeId()));
 
-    	VerificationToken verificationToken = personService.createInvitedPerson(dto.getEmail(), dto.getLocale());
+    	VerificationToken verificationToken = personService.createInvitedPerson(dto.getEmail(), dto.getLocale()); //although we use a VerificationToken with a default expiry we will probably ignore the expiry when verifying user.
     	Person createdPerson = personRepo.findByEmail(dto.getEmail())
     			.orElseThrow(() -> new ResourceNotFoundException("Person not found for this email: " + dto.getEmail()));
     	
