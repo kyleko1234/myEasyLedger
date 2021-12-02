@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.PermissionRepository;
 import com.easyledger.api.repository.PermissionTypeRepository;
 import com.easyledger.api.repository.PersonRepository;
+import com.easyledger.api.repository.VerificationTokenRepository;
 import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.security.UserPrincipal;
 import com.easyledger.api.service.EmailDispatchService;
@@ -40,10 +42,11 @@ public class InvitationController {
 	private PersonService personService;
 	private PersonRepository personRepo;
 	private EmailDispatchService emailDispatchService;
+	private VerificationTokenRepository verificationTokenRepo;
 
 	public InvitationController(AuthorizationService authorizationService, PermissionRepository permissionRepo,
 			OrganizationRepository organizationRepo, PermissionTypeRepository permissionTypeRepo, PersonService personService,
-			PersonRepository personRepo, EmailDispatchService emailDispatchService) {
+			PersonRepository personRepo, EmailDispatchService emailDispatchService, VerificationTokenRepository verificationTokenRepo) {
 		super();
 		this.authorizationService = authorizationService;
 		this.permissionRepo = permissionRepo;
@@ -52,6 +55,7 @@ public class InvitationController {
 		this.personService = personService;
 		this.personRepo = personRepo;
 		this.emailDispatchService = emailDispatchService;
+		this.verificationTokenRepo = verificationTokenRepo;
 	}
 
 	@PostMapping("/organization/{organizationId}/invitation")
@@ -85,5 +89,18 @@ public class InvitationController {
     	return permissionRepo.save(permission);
 
     }
+	
+	@GetMapping("/acceptInvitation/hasCompletedSetup/{token}")
+	public String hasInvitedUserCompletedSetup(@PathVariable(value = "token") String token) {
+		VerificationToken verificationToken = verificationTokenRepo.findByToken(token);
+		if (verificationToken == null) {
+			return "failure";
+		}
+		if (verificationToken.getPerson().isEnabled()) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
 	
 }
