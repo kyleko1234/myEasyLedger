@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -186,6 +187,23 @@ public class PersonService {
     	
     	return verificationToken;
     	
+	}
+	
+	public VerificationToken createInvitedPerson(String email, String locale) throws ConflictException {
+		assertUniqueEmail(email);
+		assertValidLocale(locale);
+		
+		Person person = new Person();
+		person.setEmail(email);
+		person.setPassword(passwordEncoder.encode(UUID.randomUUID().toString())); //this password should never be used, and exists only to appease the non-null constraint of the password field on the person table
+		person.setLocale(locale);
+    	Role userRole = roleRepo.findByName("ROLE_USER")
+    			.orElseThrow(() -> new AppException("ROLE_USER does not exist."));
+    	person.setRoles(Collections.singleton(userRole));
+    	person = personRepo.save(person);
+    	
+    	VerificationToken verificationToken = verificationService.createVerificationTokenForPerson(person);
+    	return verificationToken;
 	}
 	
 	/* Automatically populate a person with default AccountGroups. By default we create a corresponding AccountGroup for every AccountSubtype. */
