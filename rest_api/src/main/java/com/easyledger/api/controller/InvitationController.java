@@ -1,10 +1,14 @@
 package com.easyledger.api.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.AcceptInvitationDTO;
 import com.easyledger.api.dto.PersonInRosterDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -43,10 +48,12 @@ public class InvitationController {
 	private PersonRepository personRepo;
 	private EmailDispatchService emailDispatchService;
 	private VerificationTokenRepository verificationTokenRepo;
+    private PasswordEncoder passwordEncoder;
 
 	public InvitationController(AuthorizationService authorizationService, PermissionRepository permissionRepo,
 			OrganizationRepository organizationRepo, PermissionTypeRepository permissionTypeRepo, PersonService personService,
-			PersonRepository personRepo, EmailDispatchService emailDispatchService, VerificationTokenRepository verificationTokenRepo) {
+			PersonRepository personRepo, EmailDispatchService emailDispatchService, VerificationTokenRepository verificationTokenRepo,
+			PasswordEncoder passwordEncoder) {
 		super();
 		this.authorizationService = authorizationService;
 		this.permissionRepo = permissionRepo;
@@ -56,6 +63,7 @@ public class InvitationController {
 		this.personRepo = personRepo;
 		this.emailDispatchService = emailDispatchService;
 		this.verificationTokenRepo = verificationTokenRepo;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@PostMapping("/organization/{organizationId}/invitation")
@@ -103,4 +111,28 @@ public class InvitationController {
 		}
 	}
 	
+	@PostMapping("/acceptInvitation/{token}")
+	public Map<String, Boolean> acceptInvitation(@PathVariable(value = "token") String token, @Valid @RequestBody AcceptInvitationDTO dto) throws ResourceNotFoundException, ConflictException {
+		VerificationToken verificationToken = verificationTokenRepo.findByToken(token);
+		if (verificationToken == null) {
+			throw new ResourceNotFoundException("Invalid token.");
+		}
+		if (dto.getPassword() != dto.getReEnterPassword()) {
+			throw new ConflictException("Passwords do not match.");
+		}
+		Person person = verificationToken.getPerson();
+		if (person.isEnabled()) {
+			throw new ConflictException("This account is already set up.");
+		}
+		person.setFirstName(dto.getFirstName());
+		person.setLastName(dto.getLastName());
+		person.setPassword(passwordEncoder.encode(dto.getPassword()));
+		person.setLocale(dto.getLocale());
+		person.setEnabled(true);
+		personRepo.save(person);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("accepted", Boolean.TRUE);
+        return response;
+
+	}
 }
