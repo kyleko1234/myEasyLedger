@@ -61,7 +61,7 @@ public class EmailDispatchService {
 						+ "    <a href=\"https://www.myeasyledger.com/verification/" + token + "/" + locale + "\">https://www.myeasyledger.com/verification/" + token + "/" + locale + "</a> "
 						+ "    <p>If clicking on the link above does not work, copy and paste the link into a browser window.</p> "
 						+ "    <p> "
-						+ "      <em>This is an automated email, please do not reply directly to this email.</em> "
+						+ "      <em>This is an automated message; please do not reply directly to this email.</em> "
 						+ "    </p> "
 						+ "  </body> "
 						+ "</html>";
@@ -108,7 +108,7 @@ public class EmailDispatchService {
 						+ "    <h1>" + token + "</h1> "
 						+ "    <p>This code expires in 15 minutes.</p> "
 						+ "    <p> "
-						+ "      <em>This is an automated email, please do not reply directly to this email.</em> <br /> "
+						+ "      <em>This is an automated message; please do not reply directly to this email.</em> <br /> "
 						+ "    </p> "
 						+ "  </body> "
 						+ "</html>";
@@ -137,7 +137,7 @@ public class EmailDispatchService {
 						+ "    <a href=\"https://www.myeasyledger.com/accept-invitation/" + token + "/" + locale + "\">https://www.myeasyledger.com/accept-invitation/" + token + "/" + locale + "</a> "
 						+ "    <p>If clicking on the link above does not work, copy and paste the link into a browser window.</p> "
 						+ "    <p>   "
-						+ "        <em>This is an automated email, please do not reply directly to this email.</em> <br />   "
+						+ "        <em>This is an automated message; please do not reply directly to this email.</em> <br />   "
 						+ "    </p>   "
 						+ "    </body>   "
 						+ "</html> ";
