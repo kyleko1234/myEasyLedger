@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Person/Contents/Accept an invitation.md",
             "mode": "source"
           }
         },
@@ -21,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Person/Contents/Accept an invitation.md",
             "mode": "preview"
           }
         },
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md",
+                "file": "Person/Contents/Accept an invitation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,6 +101,7 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Person/Contents/Accept an invitation.md",
     "Easy Ledger.md",
     "Person/Contents/Check if invitation link has already been used.md",
     "Person/Contents/Invite a Person by Email.md",
@@ -109,7 +110,6 @@
     "Person/Contents/List All Persons.md",
     "Person/Contents/Update a Person.md",
     "Person/Contents/Retrieve a Person.md",
-    "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
-    "AccountSubtype/AccountSubtype.md"
+    "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md"
   ]
 }

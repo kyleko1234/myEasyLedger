@@ -120,6 +120,9 @@ public class InvitationController {
 		if (dto.getPassword() != dto.getReEnterPassword()) {
 			throw new ConflictException("Passwords do not match.");
 		}
+		if (!dto.isAgree()) {
+			throw new ConflictException("Please agree.");
+		}
 		Person person = verificationToken.getPerson();
 		if (person.isEnabled()) {
 			throw new ConflictException("This account is already set up.");

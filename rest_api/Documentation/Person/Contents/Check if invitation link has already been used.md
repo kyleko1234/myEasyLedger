@@ -1,7 +1,7 @@
 ### Check if invitation link has already been used
 Endpoint: `GET /acceptInvitation/hasCompletedSetup/{token}`
 
-**This endpoint can be accessed without authorization.**
+**This endpoint can be accessed without authentication.**
 
 Checks an invitation token to see if a user has already completed setup using this token. Returns three possible strings: 
 
