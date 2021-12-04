@@ -123,6 +123,22 @@ public class EmailDispatchService {
 		String message;
 		switch (locale) {
 			case "zh-TW":
+				subject = "邀請您使用 myEasyLedger 來記帳";
+				message = "<!DOCTYPE html>   "
+						+ "<html>   "
+						+ "    <head>   "
+						+ "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> "
+						+ "    </head>   "
+						+ "    <body>   "
+						+ "    <p>你好，</p>   "
+						+ "    <p>" + inviterFirstName + inviterLastName + "想要邀請你使用 myEasyLedger 來共用 \"" + organizationName + "\" 帳本，請點擊以下連結接受本邀請後，就能開始用你的記帳帳戶：</p>   "
+						+ "    <a href=\"https://www.myeasyledger.com/accept-invitation/" + token + "/" + locale + "\">https://www.myeasyledger.com/accept-invitation/" + token + "/" + locale + "</a> "
+						+ "    <p>如果因故點擊上面連結無效，你可以將該連結拷貝貼到瀏覽器視窗上試試看。</p> "
+						+ "    <p>   "
+						+ "        <em>註：本郵乃發自系統，故不要直接回覆此郵，因為没有人收得到。</em> <br />   "
+						+ "    </p>   "
+						+ "    </body>   "
+						+ "</html> ";
 			case "en-US":
 			default:
 				subject = "Invitation to myEasyLedger";
