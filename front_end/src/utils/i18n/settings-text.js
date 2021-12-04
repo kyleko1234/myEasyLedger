@@ -56,6 +56,19 @@ export const settingsText = {
         "First name": "First name",
         "Last name": "Last name",
 
+        "Yes, remove this person!": "Yes, remove this person!",
+        "Yes, invite this person!": "Yes, invite this person!",
+        "Invite this person to myEasyLedger?": "Invite this person to myEasyLedger?",
+        "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?": "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?",
+
+        "parseName": (firstName, lastName) => {
+            if (firstName != null && lastName != null) {
+                return firstName + " " + lastName
+            } else {
+                return <em>Pending invitation</em>
+            }
+        },
+
         //Appearance settings options
         "System": "System",
         "Light": "Light",
@@ -117,6 +130,19 @@ export const settingsText = {
         "Please provide a first and last name.": "請輸入你的個人姓名稱呼。",
         "First name": "姓",
         "Last name": "名",
+
+        "Yes, remove this person!": "TRANSLATION",
+        "Yes, invite this person!": "TRANSLATION",
+        "Invite this person to myEasyLedger?": "TRANSLATION",
+        "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?": "TRANSLATION",
+
+        "parseName": (firstName, lastName) => {
+            if (firstName !== null && lastName !== null) {
+                return firstName + lastName
+            } else {
+                return <em>Pending invitation</em>
+            } //TRANSLATION: translate the word "pending"
+        },
 
         //Appearance settings options
         "System": "系統模式",
