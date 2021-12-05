@@ -76,7 +76,7 @@ export const cashFlowReportText = {
         "Cash flow from operations": "營業活動之現金流量",
         "Investing activities": "投資活動",
         "Income (loss) from investing, net": "投資活動之淨收入（損失）",
-        "Decrease (increase) in marketable securities": "不具市場性證劵減少（增加）",
+        "Decrease (increase) in marketable securities": "市場性證劵減少（增加）",
         "Decrease (increase) in property, plant, and equipment": "不動產、廠房及設備減少（增加）",
         "Cash flow from investing": "投資活動之現金流量",
         "Financing activities": "籌資活動",

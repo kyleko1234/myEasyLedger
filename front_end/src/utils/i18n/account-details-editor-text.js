@@ -110,15 +110,15 @@ export const accountDetailsEditorText = {
 
         //Account Subtype Names.
         "Cash and cash equivalents": "現金及約當現金", 
-        "Current marketable securities": "具市場性證劵", 
+        "Current marketable securities": "流動市場性證劵", 
         "Current receivables": "流動應收帳款", 
         "Inventory": "存貨", 
         "Other current assets": "其它流動資產", 
-        "Non-current marketable securities": "不具市場性證劵", 
+        "Non-current marketable securities": "非流動市場性證劵", 
         "Non-current receivables": "非流動應收帳款",
         "Property, plant, and equipment": "不動產、廠房及設備", 
         "Intangible assets and goodwill": "無形資產及商譽",
-        "Other non-current assets": "其它非流動性資產", 
+        "Other non-current assets": "其它非流動資產", 
         "Current payables": "流動應付帳款", 
         "Dividends and equivalents payable": "應付股利",
         "Deferred revenue": "遞延收入", 
