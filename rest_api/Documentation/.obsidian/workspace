@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Invite a Person by Email.md",
+            "file": "Person/Contents/Check if invitation link has already been used.md",
             "mode": "source"
           }
         },
@@ -21,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Invite a Person by Email.md",
+            "file": "Person/Contents/Check if invitation link has already been used.md",
             "mode": "preview"
           }
         },
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Person/Contents/Invite a Person by Email.md",
+                "file": "Person/Contents/Check if invitation link has already been used.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,10 +101,10 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Person/Contents/Check if invitation link has already been used.md",
     "Person/Contents/Invite a Person by Email.md",
     "Easy Ledger.md",
     "Person/Contents/Accept an invitation.md",
-    "Person/Contents/Check if invitation link has already been used.md",
     "Permission/Permission.md",
     "Person/Contents/List All Persons in an Organization.md",
     "Person/Contents/List All Persons.md",

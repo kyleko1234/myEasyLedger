@@ -1,13 +1,15 @@
+import axios from 'axios';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { PageSettings } from '../../../config/page-settings';
-import { LOCALE_OPTIONS } from '../../../utils/constants';
+import { API_BASE_URL, LOCALE_OPTIONS } from '../../../utils/constants';
 import { registerV3Text } from '../../../utils/i18n/register-v3-text';
 
 function AcceptInvitation(props) {
     const appContext = React.useContext(PageSettings);
     const token = useParams().token;
     const defaultLocale = useParams().locale;
+    const [hasCompletedSetup, setHasCompletedSetup] = React.useState('');
 
     React.useEffect(() => {
         let mounted = true;
@@ -18,12 +20,18 @@ function AcceptInvitation(props) {
                 appContext.handleSetLocale(defaultLocale);
             }
         }
+        axios.get(`${API_BASE_URL}/acceptInvitation/hasCompletedSetup/${token}`).then(response => {
+            if (mounted) {
+                setHasCompletedSetup(response.data.hasCompletedSetup);
+            }
+        }).catch(console.log);
+
         return (() => {
             appContext.handleSetPageSidebar(true);
             appContext.handleSetPageHeader(true);    
             mounted = false;
         })
-    })
+    }, [])
 
     return (
         <div className="login-page" style={{ backgroundImage: 'url(/assets/img/login-bg/login-bg-12.jpg)' }}>

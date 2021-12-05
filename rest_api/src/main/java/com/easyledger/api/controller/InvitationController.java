@@ -99,16 +99,17 @@ public class InvitationController {
     }
 	
 	@GetMapping("/acceptInvitation/hasCompletedSetup/{token}")
-	public String hasInvitedUserCompletedSetup(@PathVariable(value = "token") String token) {
+	public Map<String, String> hasInvitedUserCompletedSetup(@PathVariable(value = "token") String token) {
 		VerificationToken verificationToken = verificationTokenRepo.findByToken(token);
+        Map<String, String> response = new HashMap<>();
 		if (verificationToken == null) {
-			return "failure";
-		}
-		if (verificationToken.getPerson().isEnabled()) {
-			return "true";
+	        response.put("hasCompletedSetup", "failure");
+		} else if (verificationToken.getPerson().isEnabled()) {
+	        response.put("hasCompletedSetup", "true");
 		} else {
-			return "false";
+	        response.put("hasCompletedSetup", "false");
 		}
+		return response;
 	}
 	
 	@PostMapping("/acceptInvitation/{token}")
