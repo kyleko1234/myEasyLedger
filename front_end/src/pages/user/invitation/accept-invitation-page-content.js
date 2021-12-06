@@ -3,11 +3,11 @@ import { PageSettings } from '../../../config/page-settings';
 import AcceptInvitationForm from './accept-invitation-form';
 
 //required props: hasCompletedSetup
-function AcceptInvitationPageContent(hasCompletedSetup, token) {
+function AcceptInvitationPageContent({hasCompletedSetup, token}) {
     const appContext = React.useContext(PageSettings);
     const [completed, setCompleted] = React.useState(false);
 
-    switch(hasCompletedSetup) {
+    switch (hasCompletedSetup) {
         case "true": 
             return (
                 <div>
@@ -29,6 +29,7 @@ function AcceptInvitationPageContent(hasCompletedSetup, token) {
         default:
             return (
                 <div>
+                    <button onClick={() => console.log(hasCompletedSetup)}></button>
                     This invitation link is invalid. Please click here to return to the login page.
                 </div>
             )
