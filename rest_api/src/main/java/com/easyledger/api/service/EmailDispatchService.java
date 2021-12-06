@@ -139,6 +139,7 @@ public class EmailDispatchService {
 						+ "    </p>   "
 						+ "    </body>   "
 						+ "</html> ";
+				break;
 			case "en-US":
 			default:
 				subject = "Invitation to myEasyLedger";
