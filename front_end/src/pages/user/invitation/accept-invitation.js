@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import LoadingSpinner from '../../../components/misc/loading-spinner';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL, LOCALE_OPTIONS, REGISTER_BG_URL } from '../../../utils/constants';
 import { registerV3Text } from '../../../utils/i18n/register-v3-text';
@@ -36,7 +37,7 @@ function AcceptInvitation(props) {
 
     return (
         <LoginPageSkeleton backgroundImage={REGISTER_BG_URL}>
-
+            <LoadingSpinner />
         </LoginPageSkeleton>
     );
 
