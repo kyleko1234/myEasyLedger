@@ -14,6 +14,7 @@ function AcceptInvitation(props) {
     const defaultLocale = useParams().locale;
     const [loading , setLoading] = React.useState(true);
     const [hasCompletedSetup, setHasCompletedSetup] = React.useState('');
+    const [email, setEmail] = React.useState('');
 
     React.useEffect(() => {
         let mounted = true;
@@ -30,6 +31,9 @@ function AcceptInvitation(props) {
         axios.get(`${API_BASE_URL}/acceptInvitation/hasCompletedSetup/${token}`).then(response => {
             if (mounted) {
                 setHasCompletedSetup(response.data.hasCompletedSetup);
+                if (response.data.email) {
+                    setEmail(response.data.email);
+                }
                 setLoading(false);
             }
         }).catch(console.log);
@@ -50,6 +54,7 @@ function AcceptInvitation(props) {
                 : <AcceptInvitationPageContent 
                     hasCompletedSetup={hasCompletedSetup}
                     token={token}
+                    email={email}
                 />
 
             }

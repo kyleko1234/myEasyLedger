@@ -6,7 +6,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
 import { registerV3Text } from '../../../utils/i18n/register-v3-text';
 
-function AcceptInvitationForm({token, setCompleted}) {
+function AcceptInvitationForm({token, setCompleted, email}) {
     const appContext = React.useContext(PageSettings);
     const axiosInstance = axios.create();
     const [firstNameInput, setFirstNameInput] = React.useState('');
@@ -47,6 +47,17 @@ function AcceptInvitationForm({token, setCompleted}) {
             locale: appContext.locale,
             agree: true
         }
+
+        axiosInstance.post(`${API_BASE_URL}/acceptInvitation/${token}`, requestBody).then(response => {
+            if (mounted) {
+                setLoading(false);
+            }
+            setCompleted(true);
+        }).catch(console.log);
+
+        return (() => {
+            mounted = false;
+        })
     }
 
     return (
@@ -55,7 +66,7 @@ function AcceptInvitationForm({token, setCompleted}) {
                 {registerV3Text[appContext.locale]["Sign Up"]}
             </h1>
             <h2 className="h5 font-weight-normal mb-2">{registerV3Text[appContext.locale]["Finish setting up your account."]}</h2>
-            <div className="login-content">
+            <div>
                 <form className="mb-0" onSubmit={event => validateForm(event)}>
                     <label className="control-label">{registerV3Text[appContext.locale]["Name"]} <span className="text-danger">*</span></label>
                     <div className="row mb-2">
@@ -64,6 +75,12 @@ function AcceptInvitationForm({token, setCompleted}) {
                         </div>
                         <div className="col-6 pl-1">
                             <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["Last name"]} required value={lastNameInput} onChange={event => setLastNameInput(event.target.value)}/>
+                        </div>
+                    </div>
+                    <label className="control-label">{registerV3Text[appContext.locale]["Email"]}</label>
+                    <div className="row mb-2">
+                        <div className="col-12">
+                            <input disabled type="email" className="form-control" placeholder={registerV3Text[appContext.locale]["Email address"]} value={email}/>
                         </div>
                     </div>
                     <label className="control-label">{registerV3Text[appContext.locale]["Password"]} <span className="text-danger">*</span></label>

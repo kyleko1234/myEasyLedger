@@ -120,7 +120,7 @@ public class InvitationController {
 		if (verificationToken == null) {
 			throw new ResourceNotFoundException("Invalid token.");
 		}
-		if (dto.getPassword() != dto.getReEnterPassword()) {
+		if (!dto.getPassword().equals(dto.getReEnterPassword())) {
 			throw new ConflictException("Passwords do not match.");
 		}
 		if (!dto.isAgree()) {

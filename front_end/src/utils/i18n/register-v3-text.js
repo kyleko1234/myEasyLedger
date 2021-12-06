@@ -40,6 +40,7 @@ export const registerV3Text = {
 
         "Finish setting up your account.": "Finish setting up your account.",
         "Finish": "Finish",
+        "You've finished setting up your account!": "You've finished setting up your account!",
     },
     "zh-TW": {
         "App description": "簡單來記帳。",
