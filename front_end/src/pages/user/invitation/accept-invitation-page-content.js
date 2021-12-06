@@ -1,8 +1,10 @@
 import React from 'react';
+import AcceptInvitationForm from './accept-invitation-form';
 
 //required props: hasCompletedSetup
-function AcceptInvitationPageContent(hasCompletedSetup) {
+function AcceptInvitationPageContent(hasCompletedSetup, token) {
     const appContext = React.useContext(PageSettings);
+    const [completed, setCompleted] = React.useState(false);
 
     switch(hasCompletedSetup) {
         case "true": 
@@ -12,6 +14,16 @@ function AcceptInvitationPageContent(hasCompletedSetup) {
                 </div>
             )
         case "false": 
+            if (completed) {
+
+            } else {
+                return (
+                    <AcceptInvitationForm
+                        token={token}
+                        setCompleted={setCompleted}
+                    />
+                )
+            }
         case "failure":
         default:
             return (

@@ -11,6 +11,7 @@ function AcceptInvitation(props) {
     const appContext = React.useContext(PageSettings);
     const token = useParams().token;
     const defaultLocale = useParams().locale;
+    const [loading , setLoading] = React.useState(true);
     const [hasCompletedSetup, setHasCompletedSetup] = React.useState('');
 
     React.useEffect(() => {
@@ -22,9 +23,13 @@ function AcceptInvitation(props) {
                 appContext.handleSetLocale(defaultLocale);
             }
         }
+        if (mounted) {
+            setLoading(true);
+        }
         axios.get(`${API_BASE_URL}/acceptInvitation/hasCompletedSetup/${token}`).then(response => {
             if (mounted) {
                 setHasCompletedSetup(response.data.hasCompletedSetup);
+                setLoading(false);
             }
         }).catch(console.log);
 
