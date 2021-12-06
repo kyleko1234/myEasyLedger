@@ -38,8 +38,8 @@ export const registerV3Text = {
         "Return to login page.": "Return to login page.",
         "Password must be 8-32 characters long.": "Password must be 8-32 characters long.",
 
-        "Finish setting up your myEasyLedger account.": "Finish setting up your myEasyLedger account.",
-        
+        "Finish setting up your account.": "Finish setting up your account.",
+        "Finish": "Finish",
     },
     "zh-TW": {
         "App description": "簡單來記帳。",

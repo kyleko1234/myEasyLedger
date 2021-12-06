@@ -10,7 +10,7 @@ function AcceptInvitationPageContent({hasCompletedSetup, token}) {
     switch (hasCompletedSetup) {
         case "true": 
             return (
-                <div>
+                <div className="mb-3">
                     This account has already been set up. Please click here to log in.
                 </div>
             )
@@ -28,8 +28,7 @@ function AcceptInvitationPageContent({hasCompletedSetup, token}) {
         case "failure":
         default:
             return (
-                <div>
-                    <button onClick={() => console.log(hasCompletedSetup)}></button>
+                <div className="mb-3">
                     This invitation link is invalid. Please click here to return to the login page.
                 </div>
             )
