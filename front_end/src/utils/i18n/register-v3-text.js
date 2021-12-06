@@ -64,7 +64,7 @@ export const registerV3Text = {
         "Password does not match.": "輸入的密碼前後不符。",
         "Agreement text": <div>點擊要建立新帳號，即表示您同意了我們的 <Link to="#" className="text-primary">使用條款</Link> 也讀了我們的 <Link to="#" className="text-primary">資料政策</Link>，包抱 <Link to="#" className="text-primary">Cookie 的使用</Link>。</div>,
         "Please agree.": "請同意。",
-        "Already a member": <div>已經有帳號了嗎？點擊 <Link to="/user/login/form" className="text-primary">這裡</Link> 就可以登入。</div>,
+        "Already a member": <div>你已經有帳號了嗎？點擊 <Link to="/user/login/form" className="text-primary">這裡</Link> 就可以登入。</div>,
         "Copyright text": `\u00A9 ${today.getFullYear()} myEasyLedger.com 版權所有。`,
 
         "Next": "下一步",
@@ -79,12 +79,12 @@ export const registerV3Text = {
         "Return to login page.": "回到登入頁。",
         "Password must be 8-32 characters long.": "密碼必需介於 8-32 字元長度。",
 
-        "Finish setting up your account.": "TRANSLATION",
-        "Finish": "TRANSLATION",
-        "You've finished setting up your account!": "TRANSLATION",
-        "This account has already been set up.": "TRANSLATION",
-        "This invitation link is invalid.": "TRANSLATION",
-        "Please click here to return to the login page.": <>Please click <Link to="/user/login/form" className="text-primary">here</Link> to return to the login page.</> //TRANSLATION
+        "Finish setting up your account.": "完成設定你的帳號。",
+        "Finish": "完成",
+        "You've finished setting up your account!": "你已完成設定你的帳號！",
+        "This account has already been set up.": "這個帳號已設定了。",
+        "This invitation link is invalid.": "這個邀請連結已過期或無效。",
+        "Please click here to return to the login page.": <>請點擊 <Link to="/user/login/form" className="text-primary">這裡</Link> 回到登入頁。</>
 
     }
 }

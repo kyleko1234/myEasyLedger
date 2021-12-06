@@ -122,7 +122,7 @@ export const settingsText = {
         "Yes, delete it!": "是的，删除它！",
         "Are you sure?": "你確定嗎？",
         "Are you sure you want to delete this EasyLedger? This action cannot be undone.": "你真的要删除此帳本嗎？",
-        "Cannot delete this EasyLedger.": "本帳本還不能被删除。",
+        "Cannot delete this EasyLedger.": "這個帳本還不能被删除。",
         "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "所有交易記錄都要先删除後，才能删除此帳本。",
 
 
@@ -131,9 +131,9 @@ export const settingsText = {
         "First name": "姓",
         "Last name": "名",
 
-        "Yes, remove this person!": "是的，解除這個人的對本帳本的使用權！",
-        "Yes, invite this person!": "是的，邀請此人來共用這本帳本！",
-        "Invite this person to myEasyLedger?": "您要邀請這個用 myEasyLedger 來記帳嗎？",
+        "Yes, remove this person!": "是的，移除此人對本帳本的使用權！",
+        "Yes, invite this person!": "是的，確定邀請他（她）！",
+        "Invite this person to myEasyLedger?": "邀請此人用 myEasyLedger？",
         "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?": "這個電郵從未在 myEasyLedger 註册過，你是否要邀請他（她）一起共同使用這本帳册？",
 
         "parseName": (firstName, lastName) => {
