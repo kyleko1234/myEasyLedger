@@ -8,7 +8,7 @@ import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expens
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import { timers } from 'jquery';
 
-//required props: accountTypeSummaries, numberOfMonths
+//required props: 
 function IncomeAndExpenseSummary(props) {
     const appContext = React.useContext(PageSettings);
     const [labels, setLabels] = React.useState([]);
@@ -16,56 +16,63 @@ function IncomeAndExpenseSummary(props) {
     const [expenseData, setExpenseData] = React.useState([]);
     const [fontColor, setFontColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-text-color'));
     const [gridlineColor, setGridlineColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-gridline-color'))
+    const [loading, setLoading] = React.useState(true);
+    const [numberOfMonths, setNumberOfMonths] = React.useState(12);
 
     //fetch data on component mount
     React.useEffect(() => {
-        if (props.accountTypeSummaries) { //Warning: proper formatting of data for the bar chart relies on server-side sorting of AccountTypeSummary by yearMonth ascending.
-            let incomeAndExpenseData = props.accountTypeSummaries.filter(accountTypeSummary => accountTypeSummary.accountTypeId == 4 || accountTypeSummary.accountTypeId == 5);
-            let unparsedLabels = [];
-            let incomeSummaries = [];
-            let expenseSummaries = [];
-            let currentDate = new Date();
-            let currentYearMonth = (currentDate.getFullYear() * 100) + (currentDate.getMonth() + 1);
-            if (incomeAndExpenseData.length != 0) {
-                unparsedLabels.push(incomeAndExpenseData[0].yearMonth); //add earliest yearMonth in the returned data set to the array of unparsed date labels
-                if (!(incomeAndExpenseData[0].yearMonth == currentYearMonth)) {
-                    while (unparsedLabels.length < props.numberOfMonths) { //generate consecutive months from the earliest yearMonth to the present yearMonth
-                        let nextMonth = unparsedLabels[unparsedLabels.length - 1] % 100;
-                        let nextYear = (unparsedLabels[unparsedLabels.length - 1] - nextMonth) / 100;
-                        if (nextMonth == 12) {
-                            nextMonth = 1;
-                            nextYear++;
+        async function fetchData() {
+            setLoading(true)
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountTypeSummary/monthly/${numberOfMonths - 1}`).then(response => {
+                let accountTypeSummaries = response.data;
+                let incomeAndExpenseData = accountTypeSummaries.filter(accountTypeSummary => accountTypeSummary.accountTypeId == 4 || accountTypeSummary.accountTypeId == 5);
+                let unparsedLabels = [];
+                let incomeSummaries = [];
+                let expenseSummaries = [];
+                let currentDate = new Date();
+                let currentYearMonth = (currentDate.getFullYear() * 100) + (currentDate.getMonth() + 1);
+                if (incomeAndExpenseData.length != 0) {
+                    unparsedLabels.push(incomeAndExpenseData[0].yearMonth); //add earliest yearMonth in the returned data set to the array of unparsed date labels
+                    if (!(incomeAndExpenseData[0].yearMonth == currentYearMonth)) {
+                        while (unparsedLabels.length < numberOfMonths) { //generate consecutive months from the earliest yearMonth to the present yearMonth
+                            let nextMonth = unparsedLabels[unparsedLabels.length - 1] % 100;
+                            let nextYear = (unparsedLabels[unparsedLabels.length - 1] - nextMonth) / 100;
+                            if (nextMonth == 12) {
+                                nextMonth = 1;
+                                nextYear++;
+                            } else {
+                                nextMonth++;
+                            }
+                            let nextYearMonth = nextYear * 100 + nextMonth;
+                            unparsedLabels.push(nextYearMonth);
+                            if (nextYearMonth == currentYearMonth) {
+                                break;
+                            }
+                        }
+                    }
+                    unparsedLabels.forEach(unparsedLabel => { //populate income and expense summary arrays with data from corresponding objects
+                        let incomeSummary = incomeAndExpenseData.find(summaryObject => summaryObject.accountTypeId == 4 && summaryObject.yearMonth == unparsedLabel);
+                        let expenseSummary = incomeAndExpenseData.find(summaryObject => summaryObject.accountTypeId == 5 && summaryObject.yearMonth == unparsedLabel);
+                        if (incomeSummary) {
+                            incomeSummaries.push(incomeSummary.creditAmount - incomeSummary.debitAmount);
                         } else {
-                            nextMonth++;
+                            incomeSummaries.push(0);
                         }
-                        let nextYearMonth = nextYear * 100 + nextMonth;
-                        unparsedLabels.push(nextYearMonth);
-                        if (nextYearMonth == currentYearMonth) {
-                            break;
+                        if (expenseSummary) {
+                            expenseSummaries.push(expenseSummary.debitAmount - expenseSummary.creditAmount);
+                        } else {
+                            expenseSummaries.push(0);
                         }
-                    }
+                    })
+                    setIncomeData(incomeSummaries);
+                    setExpenseData(expenseSummaries);
+                    setLabels(unparsedLabels.map(label => parseYearMonth(label)));
                 }
-                unparsedLabels.forEach(unparsedLabel => { //populate income and expense summary arrays with data from corresponding objects
-                    let incomeSummary = incomeAndExpenseData.find(summaryObject => summaryObject.accountTypeId == 4 && summaryObject.yearMonth == unparsedLabel);
-                    let expenseSummary = incomeAndExpenseData.find(summaryObject => summaryObject.accountTypeId == 5 && summaryObject.yearMonth == unparsedLabel);
-                    if (incomeSummary) {
-                        incomeSummaries.push(incomeSummary.creditAmount - incomeSummary.debitAmount);
-                    } else {
-                        incomeSummaries.push(0);
-                    }
-                    if (expenseSummary) {
-                        expenseSummaries.push(expenseSummary.debitAmount - expenseSummary.creditAmount);
-                    } else {
-                        expenseSummaries.push(0);
-                    }
-                })
-                setIncomeData(incomeSummaries);
-                setExpenseData(expenseSummaries);
-                setLabels(unparsedLabels.map(label => parseYearMonth(label)));
-            }
+            })    
+            setLoading(false);
         }
-    }, [props.accountTypeSummaries])
-
+        fetchData();
+    }, [])
 
     React.useEffect(() => {
         setFontColor(
