@@ -48,7 +48,7 @@ function EasyledgersDropdown(props) {
                             }
                         </div>
                     </DropdownItem>
-                    {(appContext.permissions.length > 1) ?
+                    {(appContext.permissions && appContext.permissions.length > 1) ?
                     <>
                         <DropdownItem divider />
                         {appContext.permissions
