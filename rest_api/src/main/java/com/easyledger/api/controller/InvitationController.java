@@ -106,8 +106,10 @@ public class InvitationController {
 	        response.put("hasCompletedSetup", "failure");
 		} else if (verificationToken.getPerson().isEnabled()) {
 	        response.put("hasCompletedSetup", "true");
+	        response.put("email", verificationToken.getPerson().getEmail());
 		} else {
 	        response.put("hasCompletedSetup", "false");
+	        response.put("email", verificationToken.getPerson().getEmail());
 		}
 		return response;
 	}
