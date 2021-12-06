@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from '../../../config/page-settings';
+import { LOGIN_BG_URL } from '../../../utils/constants';
 import { loginV3Text } from '../../../utils/i18n/login-v3-text';
 import LoginPageFooter from './login-page-footer';
 
@@ -27,5 +28,5 @@ function LoginPageSkeleton(props) {
 export default LoginPageSkeleton;
 
 LoginPageSkeleton.defaultProps = {
-    backgroundImage: 'url(/assets/img/login-bg/login-bg-11.jpg)'
+    backgroundImage: LOGIN_BG_URL
 }

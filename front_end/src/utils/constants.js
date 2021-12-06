@@ -289,3 +289,6 @@ export const CATEGORY_ACCOUNT_TYPES = [4, 5];
 export const NON_CATEGORY_ACCOUNT_TYPES = [1, 2];
 export const DEBIT_ACCOUNT_TYPES = [1, 5];
 export const CREDIT_ACCOUNT_TYPES = [2, 3, 4];
+
+export const LOGIN_BG_URL = "url(/assets/img/login-bg/login-bg-11.jpg)";
+export const REGISTER_BG_URL = "url(/assets/img/login-bg/login-bg-12.jpg)";
