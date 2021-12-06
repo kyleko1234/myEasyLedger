@@ -2,8 +2,9 @@ import axios from 'axios';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { PageSettings } from '../../../config/page-settings';
-import { API_BASE_URL, LOCALE_OPTIONS } from '../../../utils/constants';
+import { API_BASE_URL, LOCALE_OPTIONS, REGISTER_BG_URL } from '../../../utils/constants';
 import { registerV3Text } from '../../../utils/i18n/register-v3-text';
+import LoginPageSkeleton from '../components/login-page-skeleton';
 
 function AcceptInvitation(props) {
     const appContext = React.useContext(PageSettings);
@@ -34,31 +35,9 @@ function AcceptInvitation(props) {
     }, [])
 
     return (
-        <div className="login-page" style={{ backgroundImage: 'url(/assets/img/login-bg/login-bg-12.jpg)' }}>
-            <div className="login-left">
-                <div className="login-left-caption">
-                    <div className="login-left-caption-title">my<b>Easy</b>Ledger</div>
-                    <p>
-                        {registerV3Text[appContext.locale]["App description"]}
-                    </p>
-                </div>
-            </div>
-            <div className="login-right overflow-auto">
-                <div>
-                    {LOCALE_OPTIONS.map(localeOption => {
-                        return (
-                            appContext.locale == localeOption.value ?
-                                <b key={localeOption.value} className="mr-3 font-weight-600">{localeOption.label}</b> :
-                                <Link key={localeOption.value} replace to="#" onClick={() => appContext.handleSetLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
-                        )
-                    })}
-                </div>
-                <hr width="100%"/>
-                <p className="text-center text-grey-darker">
-                    {registerV3Text[appContext.locale]["Copyright text"]}
-                </p>
-            </div>
-        </div>
+        <LoginPageSkeleton backgroundImage={REGISTER_BG_URL}>
+
+        </LoginPageSkeleton>
     );
 
 }

@@ -34,7 +34,7 @@ function Verification(props) {
                 <div className="login-left-caption">
                     <div className="login-left-caption-title"> my<b>Easy</b>Ledger</div>
                     <p>
-                        {loginV3Text[appContext.locale]["App description 1"]}
+                        {loginV3Text[appContext.locale]["App description"]}
                     </p>
                 </div>
             </div>

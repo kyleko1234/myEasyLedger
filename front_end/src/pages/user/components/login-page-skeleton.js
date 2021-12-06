@@ -5,6 +5,7 @@ import { LOGIN_BG_URL } from '../../../utils/constants';
 import { loginV3Text } from '../../../utils/i18n/login-v3-text';
 import LoginPageFooter from './login-page-footer';
 
+//optional props: backgroundImage, children
 function LoginPageSkeleton(props) {
     const appContext = React.useContext(PageSettings);
     return (

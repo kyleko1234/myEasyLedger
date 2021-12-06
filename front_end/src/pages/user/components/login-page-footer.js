@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { PageSettings } from '../../../config/page-settings';
 import { LOCALE_OPTIONS } from '../../../utils/constants';
 import CopyrightText from './copyright-text';
+import LocaleSwitcher from './locale-switcher';
 
 function LoginPageFooter(props) {
     const appContext = React.useContext(PageSettings);
@@ -15,3 +16,5 @@ function LoginPageFooter(props) {
         </div>
     )
 }
+
+export default LoginPageFooter;

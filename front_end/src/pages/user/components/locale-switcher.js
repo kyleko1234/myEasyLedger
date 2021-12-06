@@ -18,3 +18,5 @@ function LocaleSwitcher(props) {
         </div>
     )
 }
+
+export default LocaleSwitcher;
