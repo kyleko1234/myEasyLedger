@@ -132,8 +132,8 @@ export const settingsText = {
         "Last name": "名",
 
         "Yes, remove this person!": "是的，移除此人對本帳本的使用權！",
-        "Yes, invite this person!": "是的，邀請此人來共用這本帳本！",
-        "Invite this person to myEasyLedger?": "您要邀請這個用 myEasyLedger 來記帳嗎？",
+        "Yes, invite this person!": "是的，確定邀請他（她）！",
+        "Invite this person to myEasyLedger?": "邀請此人用 myEasyLedger？",
         "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?": "這個電郵從未在 myEasyLedger 註册過，你是否要邀請他（她）一起共同使用這本帳册？",
 
         "parseName": (firstName, lastName) => {
