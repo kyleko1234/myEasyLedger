@@ -41,6 +41,9 @@ export const registerV3Text = {
         "Finish setting up your account.": "Finish setting up your account.",
         "Finish": "Finish",
         "You've finished setting up your account!": "You've finished setting up your account!",
+        "This account has already been set up.": "This account has already been set up.",
+        "This invitation link is invalid.": "This invitation link is invalid.",
+        "Please click here to return to the login page.": <>Please click <Link to="/user/login/form" className="text-primary">here</Link> to return to the login page.</>
     },
     "zh-TW": {
         "App description": "簡單來記帳。",
@@ -74,7 +77,14 @@ export const registerV3Text = {
         "Registration Successful!": "註册成功！",
         "A verification email is on its way to your inbox.": "一封確認電郵正在寄到你電郵箱的路上。",
         "Return to login page.": "回到登入頁。",
-        "Password must be 8-32 characters long.": "密碼必需介於 8-32 字元長度。"
+        "Password must be 8-32 characters long.": "密碼必需介於 8-32 字元長度。",
+
+        "Finish setting up your account.": "TRANSLATION",
+        "Finish": "TRANSLATION",
+        "You've finished setting up your account!": "TRANSLATION",
+        "This account has already been set up.": "TRANSLATION",
+        "This invitation link is invalid.": "TRANSLATION",
+        "Please click here to return to the login page.": <>Please click <Link to="/user/login/form" className="text-primary">here</Link> to return to the login page.</> //TRANSLATION
 
     }
 }

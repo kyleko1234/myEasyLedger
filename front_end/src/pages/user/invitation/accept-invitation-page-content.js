@@ -13,7 +13,10 @@ function AcceptInvitationPageContent({hasCompletedSetup, token, email}) {
         case "true": 
             return (
                 <div className="mb-3">
-                    This account has already been set up. Please click here to return to the login page.
+                    <p>
+                        {registerV3Text[appContext.locale]["This account has already been set up."]} <br/>
+                        {registerV3Text[appContext.locale]["Please click here to return to the login page."]}
+                    </p>
                 </div>
             )
         case "false": 
@@ -37,7 +40,10 @@ function AcceptInvitationPageContent({hasCompletedSetup, token, email}) {
         default:
             return (
                 <div className="mb-3">
-                    This invitation link is invalid. Please click here to return to the login page.
+                    <p>
+                        {registerV3Text[appContext.locale]["This invitation link is invalid."]} <br/>
+                        {registerV3Text[appContext.locale]["Please click here to return to the login page."]}
+                    </p>
                 </div>
             )
     }
