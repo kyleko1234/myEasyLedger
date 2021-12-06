@@ -5,7 +5,7 @@ const today = new Date();
 
 export const loginV3Text = {
     "en-US": {
-        "App description 1": "Bookkeeping made easy.",
+        "App description": "Bookkeeping made easy.",
         "Invalid email or password.": "Invalid email or password.",
         "Email not verified": "The email address for this account has not been verified. Please follow the instructions in your verification email to verify this account.",
         "Click here to send a new verification email.": "Click here to send a new verification email.",
@@ -44,7 +44,7 @@ export const loginV3Text = {
 
     },
     "zh-TW": {
-        "App description 1": "簡單來記帳。",
+        "App description": "簡單來記帳。",
         "Invalid email or password.": "輸入的電郵或密碼有誤。",
         "Email not verified": "您使用的電郵還未經確認，請檢視寄到該電郵的確認信，依指示以完成確認程序。",
         "Click here to send a new verification email.": "點此可再次寄出一封確認電郵指示到你的電郵箱。",

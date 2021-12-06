@@ -23,6 +23,7 @@ import GeneralJournal from '../pages/journals/enterprise/general-journal.jsx';
 import Verification from '../pages/verification/verification.js';
 import DefaultLandingPage from '../pages/default/default-landing-page.js';
 import Transactions from '../pages/journals/personal/transactions.js';
+import AcceptInvitation from '../pages/user/invitation/accept-invitation.js';
 
 const routes = [
   {
@@ -151,6 +152,11 @@ const routes = [
     path: '/transactions',
     title: 'Transactions',
     component: Transactions,
+  },
+  {
+    path: '/accept-invitation/:token/:locale',
+    title: 'Account Setup',
+    component: AcceptInvitation
   }
 
 ];

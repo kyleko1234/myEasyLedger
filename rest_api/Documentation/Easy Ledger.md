@@ -12,7 +12,7 @@ ___
 ___
 ### List of Endpoints
 
-Prefix all endpoints with `http://{host}/v0.4/`
+Prefix all endpoints with `http://{host}/v0.6/`
 - [[Sign In | POST /auth/signin]]
 - [[Sign Up| POST /auth/signup]]
 - [[Refresh JWT|GET /auth/refresh]]
@@ -20,6 +20,10 @@ Prefix all endpoints with `http://{host}/v0.4/`
 - [[Forgot Password#Verifying a Reset Password Code|POST /auth/verifyResetPasswordCode]]
 - [[Forgot Password#Resetting a user's password|POST /auth/resetPassword]]
 - [[Check For Available Email|POST /auth/checkForAvailableEmail]]
+<br/><br/>
+- [[Invite a Person by Email|POST /organization/{organizationId}/invitation]]
+- [[Check if invitation link has already been used|GET /acceptInvitation/hasCompletedSetup/{token}]]
+- [[Accept an invitation|POST /acceptInvitation/{token}]]
 <br/><br/>
 - [[List All Persons|GET /person]]
 - [[Retrieve a Person|GET /person/{id}]]

@@ -22,9 +22,11 @@ function OrganizationRoster(props) {
     const [selectedPerson, setSelectedPerson] = React.useState(null);
     const [emailInput, setEmailInput] = React.useState('');
     const [selectedPermissionTypeOption, setSelectedPermissionTypeOption] = React.useState(permissionTypeOptions[0]);
+
+    const [invitePersonAlert, setInvitePersonAlert] = React.useState(false);
+    const toggleInvitePersonAlert = () => setInvitePersonAlert(!invitePersonAlert);
     
     const [removePersonAlert, setRemovePersonAlert] = React.useState(false);
-    const [emailNotFoundAlert, setEmailNotFoundAlert] = React.useState(false);
 
 
     React.useEffect(() => {
@@ -43,7 +45,6 @@ function OrganizationRoster(props) {
         setAddAPersonModal(!addAPersonModal);
         setEmailInput('');
         setSelectedPermissionTypeOption(permissionTypeOptions[0]);
-        setEmailNotFoundAlert(false);
     }
 
     const handleEditAPersonButton = (person) => {
@@ -81,19 +82,20 @@ function OrganizationRoster(props) {
 
 
     const handleAddAPersonButton = () => {
-        let payload = {
+        //TODO build email validation
+        let requestBody = { 
             email: emailInput,
             organizationId: props.organizationId,
             permissionTypeId: selectedPermissionTypeOption.value
         }
-        axios.post(`${API_BASE_URL}/organization/${props.organizationId}/permission`, payload).then(response => {
+        axios.post(`${API_BASE_URL}/organization/${props.organizationId}/permission`, requestBody).then(response => {
             console.log(response);
             fetchRoster(props.organizationId);
             toggleAddAPersonModal();
         }).catch(error => {
             if (error.response) {
                 if (error.response.status === 404) {
-                    setEmailNotFoundAlert(true);
+                    setInvitePersonAlert(true);
                 }
             }
             console.log(error);
@@ -102,6 +104,24 @@ function OrganizationRoster(props) {
 
     const handleChangePermissionTypeOption = (selectedOption) => {
         setSelectedPermissionTypeOption(selectedOption);
+    }
+
+    const handleInvitePersonButton = () => {
+        setInvitePersonAlert(false);
+        setLoading(true);
+        let requestBody = {
+            permissionTypeId: selectedPermissionTypeOption.value,
+            email: emailInput,
+            locale: appContext.locale
+        }
+        axios.post(`${API_BASE_URL}/organization/${props.organizationId}/invitation`, requestBody).then(response => {
+            console.log(response);
+            fetchRoster(props.organizationId);
+            setAddAPersonModal(false);
+            setLoading(false);
+        }).catch(() => {
+            setLoading(false);
+        }); 
     }
 
     return (
@@ -144,7 +164,7 @@ function OrganizationRoster(props) {
                                     {personInRosterDTOs.map(person => {
                                         return (
                                             <div className="tr d-flex" key={person.personId}>
-                                                <div className="td col-3">{person.firstName + " " + person.lastName}</div>
+                                                <div className="td col-3">{settingsText[appContext.locale]["parseName"](person.firstName, person.lastName)}</div>
                                                 <div className="td col-4">{person.email}</div>
                                                 <div className="td col-4">{person.permissionTypeId ? permissionTypeOptions.find(permission => permission.value == person.permissionTypeId).label : null}</div>
                                                 <div className="td col-1">
@@ -165,7 +185,7 @@ function OrganizationRoster(props) {
                                         <div className="tr d-flex align-items-center justify-content-between" key={person.personId}>
                                             <div className="td">
                                                 <div className="font-weight-600">
-                                                    {person.firstName + " " + person.lastName}
+                                                    {settingsText[appContext.locale]["parseName"](person.firstName, person.lastName)}
                                                 </div>
                                                 <div className="font-size-compact">
                                                     {person.email}
@@ -191,11 +211,6 @@ function OrganizationRoster(props) {
                 <Modal isOpen={addAPersonModal} toggle={toggleAddAPersonModal} centered={true} size="lg">
                     <ModalHeader> {settingsText[appContext.locale]["Add user modal header"](ownPermissionForCurrentOrganization.organization.name)} </ModalHeader>
                     <ModalBody>
-                        {emailNotFoundAlert ?
-                            <Alert color="danger">
-                                {settingsText[appContext.locale]["Could not find a user registered to this email."]}
-                            </Alert>
-                            : null}
                         <form onSubmit={event => { event.preventDefault(); handleAddAPersonButton() }}>
                             <div className="form-group row justify-content-center">
                                 <label className="col-form-label col-lg-3">
@@ -203,6 +218,7 @@ function OrganizationRoster(props) {
                                 </label>
                                 <div className="col-lg-7">
                                     <input
+                                        type="email"
                                         className="form-control"
                                         value={emailInput}
                                         onChange={event => {
@@ -229,12 +245,14 @@ function OrganizationRoster(props) {
                     </ModalBody>
                     <ModalFooter>
                         <button
+                            type="submit"
                             className="btn btn-primary width-10ch"
                             onClick={handleAddAPersonButton}
                         >
-                            {settingsText[appContext.locale]["Add"]}
+                            {loading? <i className="fas fa-circle-notch fa-spin"></i> : settingsText[appContext.locale]["Add"]}
                         </button>
                         <button
+                            type="button"
                             className="btn btn-white width-10ch"
                             onClick={toggleAddAPersonModal}
                         >
@@ -309,17 +327,32 @@ function OrganizationRoster(props) {
 
                 {removePersonAlert ?
                     <SweetAlert danger showCancel
-                        confirmBtnText="Yes, remove this person!"
+                        confirmBtnText={settingsText[appContext.locale]["Yes, remove this person!"]}
                         confirmBtnBsStyle="danger"
                         cancelBtnBsStyle="default"
-                        cancelBtnText="Cancel"
-                        title="Are you sure?"
+                        cancelBtnText={settingsText[appContext.locale]["Cancel"]}
+                        title={settingsText[appContext.locale]["Are you sure?"]}
                         onConfirm={handleConfirmRemovePersonButton}
                         onCancel={toggleRemovePersonAlert}
                     >
                         {settingsText[appContext.locale]["Are you sure you want to remove this user?"]}
                     </SweetAlert>
                     : null}
+
+                {invitePersonAlert ?
+                    <SweetAlert primary showCancel
+                        confirmBtnText={settingsText[appContext.locale]["Yes, invite this person!"]}
+                        confirmBtnBsStyle="primary"
+                        cancelBtnBsStyle="default"
+                        cancelBtnText={settingsText[appContext.locale]["Cancel"]}
+                        title={settingsText[appContext.locale]["Invite this person to myEasyLedger?"]}
+                        onConfirm={handleInvitePersonButton}
+                        onCancel={toggleInvitePersonAlert}
+                    >
+                        {settingsText[appContext.locale]["This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?"]}
+                    </SweetAlert>
+                    : null}
+
             </CardBody>
         </Card>
 

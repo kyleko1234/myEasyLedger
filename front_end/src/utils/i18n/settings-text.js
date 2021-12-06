@@ -56,6 +56,19 @@ export const settingsText = {
         "First name": "First name",
         "Last name": "Last name",
 
+        "Yes, remove this person!": "Yes, remove this person!",
+        "Yes, invite this person!": "Yes, invite this person!",
+        "Invite this person to myEasyLedger?": "Invite this person to myEasyLedger?",
+        "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?": "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?",
+
+        "parseName": (firstName, lastName) => {
+            if (firstName != null && lastName != null) {
+                return firstName + " " + lastName
+            } else {
+                return <em>Pending invitation</em>
+            }
+        },
+
         //Appearance settings options
         "System": "System",
         "Light": "Light",
@@ -117,6 +130,19 @@ export const settingsText = {
         "Please provide a first and last name.": "請輸入你的個人姓名稱呼。",
         "First name": "姓",
         "Last name": "名",
+
+        "Yes, remove this person!": "是的，解除這個人的對本帳本的使用權！",
+        "Yes, invite this person!": "是的，邀請此人來共用這本帳本！",
+        "Invite this person to myEasyLedger?": "您要邀請這個用 myEasyLedger 來記帳嗎？",
+        "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?": "這個電郵從未在 myEasyLedger 註册過，你是否要邀請他（她）一起共同使用這本帳册？",
+
+        "parseName": (firstName, lastName) => {
+            if (firstName !== null && lastName !== null) {
+                return firstName + lastName
+            } else {
+                return <em>仍未完成接受邀請</em>
+            } 
+        },
 
         //Appearance settings options
         "System": "系統模式",

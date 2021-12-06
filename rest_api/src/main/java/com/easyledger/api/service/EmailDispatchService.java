@@ -37,7 +37,7 @@ public class EmailDispatchService {
 						+ "    <p>你好 " + lastName +"，</p> "
 						+ "    <p>歡迎來到 myEasyLedger。</p> "
 						+ "    <p>請點擊以下連結來起動你的新帳戶：</p> "
-						+ "    <a href=\"https://www.myeasyledger.com/verification/" + token + "/" + locale + "\">https://www.myeasyledger.com/verification/" + token + "/" + locale + "</a> "
+						+ "    <a href=\"" + frontendUrl + "/verification/" + token + "/" + locale + "\">" + frontendUrl + "/verification/" + token + "/" + locale + "</a> "
 						+ "    <p>如果點擊上述連結無效，你可以試著拷貝該連結，將它貼進你的瀏覽器的視窗中。</p> "
 						+ "    <p> "
 						+ "      <em>本電郵是來自系統的自動回覆，請不要直接回覆本電郵。</em> "
@@ -57,11 +57,11 @@ public class EmailDispatchService {
 						+ "  <body> "
 						+ "    <p>Hello " + firstName + ",</p> "
 						+ "    <p>Welcome to myEasyLedger.</p> "
-						+ "    <p>Please click the following URL to activate your account:</p> "
-						+ "    <a href=\"https://www.myeasyledger.com/verification/" + token + "/" + locale + "\">https://www.myeasyledger.com/verification/" + token + "/" + locale + "</a> "
-						+ "    <p>If clicking the URL above does not work, copy and paste the URL into a browser window.</p> "
+						+ "    <p>Please click on the following link to activate your account:</p> "
+						+ "    <a href=\"" + frontendUrl + "/verification/" + token + "/" + locale + "\">" + frontendUrl + "/verification/" + token + "/" + locale + "</a> "
+						+ "    <p>If clicking on the link above does not work, copy and paste the link into a browser window.</p> "
 						+ "    <p> "
-						+ "      <em>This is an automated email, please do not reply directly to this email.</em> "
+						+ "      <em>This is an automated message; please do not reply directly to this email.</em> "
 						+ "    </p> "
 						+ "  </body> "
 						+ "</html>";
@@ -108,7 +108,7 @@ public class EmailDispatchService {
 						+ "    <h1>" + token + "</h1> "
 						+ "    <p>This code expires in 15 minutes.</p> "
 						+ "    <p> "
-						+ "      <em>This is an automated email, please do not reply directly to this email.</em> <br /> "
+						+ "      <em>This is an automated message; please do not reply directly to this email.</em> <br /> "
 						+ "    </p> "
 						+ "  </body> "
 						+ "</html>";
@@ -117,5 +117,48 @@ public class EmailDispatchService {
 		}
 		emailService.sendHtmlMessage(to, subject, message);
 	}
-
+	
+	public void sendInvitationEmail(String inviterFirstName, String inviterLastName, String organizationName, String to, String token, String locale) throws MessagingException {
+		String subject;
+		String message;
+		switch (locale) {
+			case "zh-TW":
+				subject = "邀請您使用 myEasyLedger 來記帳";
+				message = "<!DOCTYPE html>   "
+						+ "<html>   "
+						+ "    <head>   "
+						+ "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> "
+						+ "    </head>   "
+						+ "    <body>   "
+						+ "    <p>你好，</p>   "
+						+ "    <p>" + inviterFirstName + inviterLastName + "想要邀請你使用 myEasyLedger 來共用 \"" + organizationName + "\" 帳本，請點擊以下連結接受本邀請後，就能開始用你的記帳帳戶：</p>   "
+						+ "    <a href=\"" + frontendUrl + "/accept-invitation/" + token + "/" + locale + "\">" + frontendUrl + "/accept-invitation/" + token + "/" + locale + "</a> "
+						+ "    <p>如果因故點擊上面連結無效，你可以將該連結拷貝貼到瀏覽器視窗上試試看。</p> "
+						+ "    <p>   "
+						+ "        <em>註：本郵乃發自系統，故不要直接回覆此郵，因為没有人收得到。</em> <br />   "
+						+ "    </p>   "
+						+ "    </body>   "
+						+ "</html> ";
+			case "en-US":
+			default:
+				subject = "Invitation to myEasyLedger";
+				message = "<!DOCTYPE html>   "
+						+ "<html>   "
+						+ "    <head>   "
+						+ "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> "
+						+ "    </head>   "
+						+ "    <body>   "
+						+ "    <p>Hello and welcome.</p>   "
+						+ "    <p>" + inviterFirstName + " " + inviterLastName + " has invited you to myEasyLedger to collaborate on \"" + organizationName +"\". Please click on the link below to finish setting up your account.</p>   "
+						+ "    <a href=\"" + frontendUrl + "/accept-invitation/" + token + "/" + locale + "\">" + frontendUrl + "/accept-invitation/" + token + "/" + locale + "</a> "
+						+ "    <p>If clicking on the link above does not work, copy and paste the link into a browser window.</p> "
+						+ "    <p>   "
+						+ "        <em>This is an automated message; please do not reply directly to this email.</em> <br />   "
+						+ "    </p>   "
+						+ "    </body>   "
+						+ "</html> ";
+				break;
+		}
+		emailService.sendHtmlMessage(to, subject, message);
+	}
 }
