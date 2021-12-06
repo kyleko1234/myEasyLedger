@@ -630,70 +630,70 @@ function BalanceSheetRender() {
                                                         )
                                                     })
                                                 : null}
-                                            <div className="striped-row indent font-weight-600">{balanceSheetRenderText[appContext.locale]["Retained Earnings"]}</div>
-                                            <div className="striped-row justify-content-between indent-2">
-                                                <div>{balanceSheetRenderText[appContext.locale]["Beginning balances"]}</div>
-                                                <div className="text-right d-flex">
-                                                    {balanceSheetObjects.map((balanceSheet, i) => {
-                                                        return(
-                                                            <div key={i} className="width-175">
-                                                                {numberAsCurrency(balanceSheet.balanceSheetEquity.prevPeriodRetainedEarnings)}
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                            <div className="striped-row justify-content-between indent-2">
-                                                <div>{balanceSheetRenderText[appContext.locale]["Net income for current fiscal period"]}</div>
-                                                <div className="text-right d-flex">
-                                                    {balanceSheetObjects.map((balanceSheet, i) => {
-                                                        return(
-                                                            <div key={i} className="width-175">
-                                                                {numberAsCurrency(balanceSheet.balanceSheetEquity.currPeriodNetIncome)}
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                            <div className="striped-row justify-content-between indent-2">
-                                                <div>{balanceSheetRenderText[appContext.locale]["Dividends for current fiscal period"]}</div>
-                                                <div className="text-right d-flex">
-                                                    {balanceSheetObjects.map((balanceSheet, i) => {
-                                                        return(
-                                                            <div key={i} className="width-175">
-                                                                {numberAsCurrency(balanceSheet.balanceSheetEquity.currPeriodDividendsAndEquivalents)}
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                            <div className="striped-row justify-content-between indent-3 font-weight-600">
-                                                <div>{balanceSheetRenderText[appContext.locale]["Ending balances of retained earnings"]}</div>
-                                                <div className="text-right d-flex">
-                                                    {balanceSheetObjects.map((balanceSheet, i) => {
-                                                        return(
-                                                            <div key={i} className="width-175">
-                                                                {numberAsCurrency(balanceSheet.balanceSheetEquity.totalRetainedEarnings)}
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                            <div className="striped-row font-weight-600 justify-content-between">
-                                                <div>{balanceSheetRenderText[appContext.locale]["Total equity"]}</div>
-                                                <div className="text-right d-flex">
-                                                    {balanceSheetObjects.map((balanceSheet, i) => {
-                                                        return(
-                                                            <div key={i} className="width-175">
-                                                                {numberAsCurrency(balanceSheet.balanceSheetEquity.totalEquity)}
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
                                         </React.Fragment>
                                     )
                                 })}
+                                <div className="striped-row indent font-weight-600">{balanceSheetRenderText[appContext.locale]["Retained Earnings"]}</div>
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{balanceSheetRenderText[appContext.locale]["Beginning balances"]}</div>
+                                        <div className="text-right d-flex">
+                                            {balanceSheetObjects.map((balanceSheet, i) => {
+                                                return(
+                                                    <div key={i} className="width-175">
+                                                        {numberAsCurrency(balanceSheet.balanceSheetEquity.prevPeriodRetainedEarnings)}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{balanceSheetRenderText[appContext.locale]["Net income for current fiscal period"]}</div>
+                                        <div className="text-right d-flex">
+                                            {balanceSheetObjects.map((balanceSheet, i) => {
+                                                return(
+                                                    <div key={i} className="width-175">
+                                                        {numberAsCurrency(balanceSheet.balanceSheetEquity.currPeriodNetIncome)}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                    <div className="striped-row justify-content-between indent-2">
+                                        <div>{balanceSheetRenderText[appContext.locale]["Dividends for current fiscal period"]}</div>
+                                        <div className="text-right d-flex">
+                                            {balanceSheetObjects.map((balanceSheet, i) => {
+                                                return(
+                                                    <div key={i} className="width-175">
+                                                        {numberAsCurrency(balanceSheet.balanceSheetEquity.currPeriodDividendsAndEquivalents)}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                    <div className="striped-row justify-content-between indent-3 font-weight-600">
+                                        <div>{balanceSheetRenderText[appContext.locale]["Ending balances of retained earnings"]}</div>
+                                        <div className="text-right d-flex">
+                                            {balanceSheetObjects.map((balanceSheet, i) => {
+                                                return(
+                                                    <div key={i} className="width-175">
+                                                        {numberAsCurrency(balanceSheet.balanceSheetEquity.totalRetainedEarnings)}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                    <div className="striped-row font-weight-600 justify-content-between">
+                                        <div>{balanceSheetRenderText[appContext.locale]["Total equity"]}</div>
+                                        <div className="text-right d-flex">
+                                            {balanceSheetObjects.map((balanceSheet, i) => {
+                                                return(
+                                                    <div key={i} className="width-175">
+                                                        {numberAsCurrency(balanceSheet.balanceSheetEquity.totalEquity)}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
                             </>
                         }
                     </div>
