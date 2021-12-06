@@ -1,4 +1,5 @@
 import React from 'react';
+import { PageSettings } from '../../../config/page-settings';
 import AcceptInvitationForm from './accept-invitation-form';
 
 //required props: hasCompletedSetup

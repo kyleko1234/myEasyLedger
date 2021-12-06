@@ -19,7 +19,9 @@ function LoginPageSkeleton(props) {
                 </div>
             </div>
             <div className="login-right overflow-auto">
-                {props.children}
+                <div className="login-content">
+                    {props.children}
+                </div>
                 <LoginPageFooter />
             </div>
         </div>

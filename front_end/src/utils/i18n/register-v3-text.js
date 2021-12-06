@@ -36,7 +36,10 @@ export const registerV3Text = {
         "Registration Successful!": "Registration Successful!",
         "A verification email is on its way to your inbox.": "A verification email is on its way to your inbox.",
         "Return to login page.": "Return to login page.",
-        "Password must be 8-32 characters long.": "Password must be 8-32 characters long."
+        "Password must be 8-32 characters long.": "Password must be 8-32 characters long.",
+
+        "Finish setting up your myEasyLedger account.": "Finish setting up your myEasyLedger account.",
+        
     },
     "zh-TW": {
         "App description": "簡單來記帳。",

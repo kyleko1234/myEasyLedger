@@ -6,6 +6,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL, LOCALE_OPTIONS, REGISTER_BG_URL } from '../../../utils/constants';
 import { registerV3Text } from '../../../utils/i18n/register-v3-text';
 import LoginPageSkeleton from '../components/login-page-skeleton';
+import AcceptInvitationPageContent from './accept-invitation-page-content';
 
 function AcceptInvitation(props) {
     const appContext = React.useContext(PageSettings);
@@ -42,7 +43,16 @@ function AcceptInvitation(props) {
 
     return (
         <LoginPageSkeleton backgroundImage={REGISTER_BG_URL}>
-            <LoadingSpinner />
+            {loading
+                ? <div className="d-flex justify-content-center mb-5">
+                    <LoadingSpinner big/>
+                </div>
+                : <AcceptInvitationPageContent 
+                    hasCompletedSetup={hasCompletedSetup}
+                    token={token}
+                />
+
+            }
         </LoginPageSkeleton>
     );
 
