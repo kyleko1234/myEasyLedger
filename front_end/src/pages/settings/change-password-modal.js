@@ -102,7 +102,7 @@ function ChangePasswordModal(props) {
                     confirmBtnText={settingsText[appContext.locale]["Take me to the login page!"]}
                     confirmBtnBsStyle="primary"
                     title={settingsText[appContext.locale]["Password successfully changed."]}
-                    onConfirm={() => history.push("/user/logout")}
+                    onConfirm={appContext.logout}
                     allowEscape={false}
                     closeOnClickOutside={false}
                 >
