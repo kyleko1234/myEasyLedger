@@ -136,7 +136,7 @@ function CategoryDetails(props) {
                 }
                 </div>
             </div>
-            <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={selectedAccountId} fetchData={() => fetchData(pageIndex, pageSize)} />
+            <AccountDetailsEditor isOpen={accountDetailsEditorModal} toggle={toggleAccountDetailsEditorModal} selectedAccountId={selectedAccountId} fetchData={() => fetchData(pageIndex, pageSize)} category/>
 
         </div>
     )
