@@ -184,7 +184,9 @@ function AccountDetailsEditor(props) {
     }
     const handleChangeParentAccountOption = selectedOption => {
         setSelectedParentAccountId(selectedOption.object.accountId);
-        setSelectedAccountSubtypeId(selectedOption.object.accountSubtypeId);
+        if (selectedOption.object.accountSubtypeId) {
+            setSelectedAccountSubtypeId(selectedOption.object.accountSubtypeId);
+        }
         resetToDefaultSubtypeId(); //prevents personal interface from throwing an error when parent account is changed from something other than 'none' to 'none
     }
 

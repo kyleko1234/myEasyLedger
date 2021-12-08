@@ -82,7 +82,7 @@ export const registerV3Text = {
         "Finish setting up your account.": "完成設定你的帳號。",
         "Finish": "完成",
         "You've finished setting up your account!": "你已完成設定你的帳號！",
-        "This account has already been set up.": "這個帳號已設定了。",
+        "This account has already been set up.": "這個帳號已經成功開通。",
         "This invitation link is invalid.": "這個邀請連結已過期或無效。",
         "Please click here to return to the login page.": <>請點擊 <Link to="/user/login/form" className="text-primary">這裡</Link> 回到登入頁。</>
 
