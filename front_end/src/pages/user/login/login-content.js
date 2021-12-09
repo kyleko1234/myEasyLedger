@@ -6,6 +6,7 @@ import axios from 'axios';
 import {Alert} from 'reactstrap';
 import {loginV3Text} from '../../../utils/i18n/login-v3-text.js'
 import LoginHeader from '../components/login-header.js';
+import LoadingSpinner from '../../../components/misc/loading-spinner.js';
 
 function LoginContent(props) {
     //required props: history
@@ -69,7 +70,6 @@ function LoginContent(props) {
     return (
         <>
             <LoginHeader className="mb-3"/>
-            <div className="login-content">
                 <Alert color="danger" isOpen={loginAlert}>
                     {loginV3Text[appContext.locale]["Invalid email or password."]}
                 </Alert>
@@ -93,7 +93,7 @@ function LoginContent(props) {
                     <div className="mb-3">
                         <button type="submit" className="btn btn-primary btn-block btn-lg">
                             {loading
-                                ? <i className="fas fa-circle-notch fa-spin"></i> 
+                                ? <LoadingSpinner /> 
                                 : loginV3Text[appContext.locale]["Sign me in"]
                             }
                         </button>
@@ -102,7 +102,6 @@ function LoginContent(props) {
                         {loginV3Text[appContext.locale]["Not a member"]}
                     </div>
                 </form>
-            </div>
         </>
     )
 
