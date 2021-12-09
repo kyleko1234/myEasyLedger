@@ -5,6 +5,7 @@ import LoginContent from './login-content.js';
 import { loginV3Text } from '../../../utils/i18n/login-v3-text';
 import ForgotPassword from '../forgot-password.js';
 import {LOCALE_OPTIONS} from '../../../utils/constants.js';
+import LoginPageSkeleton from '../components/login-page-skeleton.js';
 //Login page
 class LoginPage extends React.Component {
 	static contextType = PageSettings;
@@ -22,38 +23,14 @@ class LoginPage extends React.Component {
 
 	render() {
 		return (
-			<div className="login-page" style={{ backgroundImage: 'url(/assets/img/login-bg/login-bg-11.jpg)' }} >
-				<div className="login-left" >
-					<div className="login-left-caption">
-						<div className="login-left-caption-title"> my<b>Easy</b>Ledger</div>
-						<p>
-							{loginV3Text[this.context.locale]["App description"]}
-						</p>
-					</div>
-				</div>
-				<div className="login-right overflow-auto">
-						<Route path="/user/login/form">
-							<LoginContent history={this.props.history}/>
-						</Route>
-						<Route path="/user/login/forgot">
-							<ForgotPassword />
-						</Route>
-						<div>
-							{LOCALE_OPTIONS.map(localeOption => {
-								return (
-									this.context.locale == localeOption.value ?
-										<b key={localeOption.value} className="mr-3 font-weight-600">{localeOption.label}</b> :
-										<Link key={localeOption.value} replace to="#" onClick={() => this.context.handleSetLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
-								)
-							})}
-						</div>
-						<hr width="100%"/>
-						<p className="text-center text-grey-darker">
-							{loginV3Text[this.context.locale]["Copyright text"]}
-						</p>
-				</div>
-			</div>
-		)
+            <LoginPageSkeleton>
+                <Route path="/user/login/form">
+                    <LoginContent history={this.props.history}/>
+                </Route>
+                <Route path="/user/login/forgot">
+                    <ForgotPassword />
+                </Route>
+            </LoginPageSkeleton>		)
 	}
 }
 
