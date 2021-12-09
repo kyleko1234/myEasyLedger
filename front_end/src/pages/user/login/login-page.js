@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Route, Link} from 'react-router-dom';
 import { PageSettings } from '../../../config/page-settings.js';
-import LoginV3Render from './login-v3-render.js';
+import LoginContent from './login-content.js';
 import { loginV3Text } from '../../../utils/i18n/login-v3-text';
 import ForgotPassword from '../forgot-password.js';
 import {LOCALE_OPTIONS} from '../../../utils/constants.js';
@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
 				</div>
 				<div className="login-right overflow-auto">
 						<Route path="/user/login/form">
-							<LoginV3Render history={this.props.history}/>
+							<LoginContent history={this.props.history}/>
 						</Route>
 						<Route path="/user/login/forgot">
 							<ForgotPassword />

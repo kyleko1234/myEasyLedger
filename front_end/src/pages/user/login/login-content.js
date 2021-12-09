@@ -6,7 +6,7 @@ import axios from 'axios';
 import {Alert} from 'reactstrap';
 import {loginV3Text} from '../../../utils/i18n/login-v3-text.js'
 
-function LoginV3Render(props) {
+function LoginContent(props) {
     //required props: history
     //optional props: className
     const [emailInput, setEmailInput] = React.useState('');
@@ -107,4 +107,4 @@ function LoginV3Render(props) {
 
 }
 
-export default LoginV3Render;
+export default LoginContent;
