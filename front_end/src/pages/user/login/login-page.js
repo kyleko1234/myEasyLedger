@@ -6,7 +6,7 @@ import { loginV3Text } from '../../../utils/i18n/login-v3-text';
 import ForgotPassword from '../forgot-password.js';
 import {LOCALE_OPTIONS} from '../../../utils/constants.js';
 //Login page
-class LoginV3 extends React.Component {
+class LoginPage extends React.Component {
 	static contextType = PageSettings;
 
 	componentDidMount() {
@@ -57,4 +57,4 @@ class LoginV3 extends React.Component {
 	}
 }
 
-export default withRouter(LoginV3);
+export default withRouter(LoginPage);

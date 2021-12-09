@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 
-import LoginV3 from '../pages/user/login/login-v3.js';
+import LoginPage from '../pages/user/login/login-page.js';
 import RegisterV3 from './../pages/user/register-v3.js';
 
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
@@ -34,7 +34,7 @@ const routes = [
   {
     path: '/user/login',
     title: 'Login',
-    component: LoginV3,
+    component: LoginPage,
   },
   {
     path: '/user/register',

@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../../utils/constants';
 import Dashboard from '../dashboard/dashboard';
-import LoginV3 from '../user/login/login-v3';
+import LoginPage from '../user/login/login-page';
 
 function DefaultLandingPage(props) {
     let userJwt = localStorage.getItem(ACCESS_TOKEN);
