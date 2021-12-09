@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {PageSettings} from '../../config/page-settings.js';
-import {ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN, LOCALE_OPTIONS} from '../../utils/constants.js';
+import {PageSettings} from '../../../config/page-settings.js';
+import {ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN, LOCALE_OPTIONS} from '../../../utils/constants.js';
 import axios from 'axios';
 import {Alert} from 'reactstrap';
-import {loginV3Text} from '../../utils/i18n/login-v3-text.js'
+import {loginV3Text} from '../../../utils/i18n/login-v3-text.js'
 
 function LoginV3Render(props) {
     //required props: history

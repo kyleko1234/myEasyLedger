@@ -8,7 +8,7 @@ import { registerV3Text } from '../../../utils/i18n/register-v3-text';
 import LoginPageSkeleton from '../components/login-page-skeleton';
 import AcceptInvitationPageContent from './accept-invitation-page-content';
 
-function AcceptInvitation(props) {
+function AcceptInvitationPage(props) {
     const appContext = React.useContext(PageSettings);
     const token = useParams().token;
     const defaultLocale = useParams().locale;
@@ -63,4 +63,4 @@ function AcceptInvitation(props) {
 
 }
 
-export default AcceptInvitation;
+export default AcceptInvitationPage;
