@@ -5,6 +5,7 @@ import {ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN, LOCALE_OPTIONS} from '../../.
 import axios from 'axios';
 import {Alert} from 'reactstrap';
 import {loginV3Text} from '../../../utils/i18n/login-v3-text.js'
+import LoginHeader from '../components/login-header.js';
 
 function LoginContent(props) {
     //required props: history
@@ -67,9 +68,7 @@ function LoginContent(props) {
 
     return (
         <>
-            <div className="login-header mb-3">
-                my<b>Easy</b>Ledger
-            </div>
+            <LoginHeader className="mb-3"/>
             <div className="login-content">
                 {loginAlert? <Alert color="danger">{loginV3Text[appContext.locale]["Invalid email or password."]}</Alert> : null}
                 {accountDisabledAlert? 
