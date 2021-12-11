@@ -121,7 +121,7 @@ export const balanceSheetRenderText = {
         "Other current liabilities": "其它流動負債", 
         "Long-term debt": "長期負債", 
         "Non-current payables": "非流動應付帳款", 
-        "Other non-current liabilities": "其它流動負債", 
+        "Other non-current liabilities": "其它非流動負債", 
         "Paid-in capital": "投入資本", 
         "Share-based compensation": "股份報酬",
         "Dividends and equivalents": "本期股利及約當股利", 
