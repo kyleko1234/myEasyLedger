@@ -129,7 +129,7 @@ export const accountDetailsEditorText = {
         "Non-current payables": "非流動應付帳款", 
         "Other non-current liabilities": "其他非流動負債", 
         "Paid-in capital": "投入資本", 
-        "Share-based compensation": "股份報酬",
+        "Share-based compensation": "權益奬酬",
         "Dividends and equivalents": "本期股利及約當股利", 
         "Other equity items": "其他業主權益", 
         "Revenue": "收入", 
