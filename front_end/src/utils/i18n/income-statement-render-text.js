@@ -70,7 +70,7 @@ export const incomeStatementRenderText = {
         "Net income": "淨利",
 
         "Net income/expense from investing activities": "投資活動之淨收入／支出",
-        "Net income/expense from financing activities": "融資活動之淨收入／支出",
+        "Net income/expense from financing activities": "金融活動之淨收入／支出",
         "Total other income/expense, net": "其他淨 收入／支出 總計",
         "Earnings before interest and tax": "息稅前利潤",
         "Interest expense": "利息費用",

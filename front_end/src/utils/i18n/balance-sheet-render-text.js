@@ -128,7 +128,7 @@ export const balanceSheetRenderText = {
         "Other equity items": "其他業主權益", 
         "Revenue": "收入", 
         "Income from investing activities": "投資活動之收入",
-        "Income from financing activities": "融資活動之收入",
+        "Income from financing activities": "金融活動之收入",
         "Other income": "其他收入", 
         "Cost of sales": "銷貨成本", 
         "Research and development": "研究發展費用", 
