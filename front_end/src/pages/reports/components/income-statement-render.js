@@ -243,6 +243,18 @@ function IncomeStatementRender() {
         setLoading(false);
     }
 
+    const sumDebitsAndCreditsOfChildren = (accountId, indexOfIncomeStatementObject) => {
+        let total;
+        let childAccounts = incomeStatementObjects[indexOfIncomeStatementObject]
+            .accountBalances
+            .filter(childAccount => childAccount.parentAccountId === accountId);
+        childAccounts
+            .forEach(account => {
+                total += account.debitsMinusCredits;
+        })
+        return total;
+    }
+
     return (
         <>
             <Card className="very-rounded shadow-sm bg-light my-4">
