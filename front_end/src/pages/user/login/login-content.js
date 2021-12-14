@@ -1,12 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {PageSettings} from '../../config/page-settings.js';
-import {ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN, LOCALE_OPTIONS} from '../../utils/constants.js';
+import {PageSettings} from '../../../config/page-settings.js';
+import {ACCESS_TOKEN, API_BASE_URL, REFRESH_TOKEN, LOCALE_OPTIONS} from '../../../utils/constants.js';
 import axios from 'axios';
 import {Alert} from 'reactstrap';
-import {loginV3Text} from '../../utils/i18n/login-v3-text.js'
+import {loginV3Text} from '../../../utils/i18n/login-v3-text.js'
+import LoginHeader from '../components/login-header.js';
+import LoadingSpinner from '../../../components/misc/loading-spinner.js';
 
-function LoginV3Render(props) {
+function LoginContent(props) {
     //required props: history
     //optional props: className
     const [emailInput, setEmailInput] = React.useState('');
@@ -67,18 +69,17 @@ function LoginV3Render(props) {
 
     return (
         <>
-            <div className="login-header mb-3">
-                my<b>Easy</b>Ledger
-            </div>
-            <div className="login-content">
-                {loginAlert? <Alert color="danger">{loginV3Text[appContext.locale]["Invalid email or password."]}</Alert> : null}
-                {accountDisabledAlert? 
-                    <Alert color="danger">
-                        {loginV3Text[appContext.locale]["Email not verified"]}
-                        &nbsp;<Link to="#" onClick={() => handleResendEmail()} className="alert-link">{loginV3Text[appContext.locale]["Click here to send a new verification email."]}</Link>
-                    </Alert> 
-                : null}
-                {verificationSentAlert? <Alert color="success">{loginV3Text[appContext.locale]["Verification email sent!"]}</Alert> : null}
+            <LoginHeader className="mb-3"/>
+                <Alert color="danger" isOpen={loginAlert}>
+                    {loginV3Text[appContext.locale]["Invalid email or password."]}
+                </Alert>
+                <Alert color="danger" isOpen={accountDisabledAlert}>
+                    {loginV3Text[appContext.locale]["Email not verified"]}
+                    &nbsp;<Link to="#" onClick={() => handleResendEmail()} className="alert-link">{loginV3Text[appContext.locale]["Click here to send a new verification email."]}</Link>
+                </Alert> 
+                <Alert color="success" isOpen={verificationSentAlert}>
+                    {loginV3Text[appContext.locale]["Verification email sent!"]}
+                </Alert>
                 <form className="mb-0" onSubmit={event => handleSubmit(event)}>
                     <div className="form-group mb-3">
                         <input type="email" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Email Address"]} required value={emailInput} onChange={event => setEmailInput(event.target.value)}/>
@@ -92,7 +93,7 @@ function LoginV3Render(props) {
                     <div className="mb-3">
                         <button type="submit" className="btn btn-primary btn-block btn-lg">
                             {loading
-                                ? <i className="fas fa-circle-notch fa-spin"></i> 
+                                ? <LoadingSpinner /> 
                                 : loginV3Text[appContext.locale]["Sign me in"]
                             }
                         </button>
@@ -101,10 +102,9 @@ function LoginV3Render(props) {
                         {loginV3Text[appContext.locale]["Not a member"]}
                     </div>
                 </form>
-            </div>
         </>
     )
 
 }
 
-export default LoginV3Render;
+export default LoginContent;

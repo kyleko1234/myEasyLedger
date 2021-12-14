@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 
-import LoginV3 from './../pages/user/login-v3.js';
+import LoginPage from '../pages/user/login/login-page.js';
 import RegisterV3 from './../pages/user/register-v3.js';
 
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
@@ -23,7 +23,7 @@ import GeneralJournal from '../pages/journals/enterprise/general-journal.jsx';
 import Verification from '../pages/verification/verification.js';
 import DefaultLandingPage from '../pages/default/default-landing-page.js';
 import Transactions from '../pages/journals/personal/transactions.js';
-import AcceptInvitation from '../pages/user/invitation/accept-invitation.js';
+import AcceptInvitationPage from '../pages/user/invitation/accept-invitation-page.js';
 
 const routes = [
   {
@@ -34,7 +34,7 @@ const routes = [
   {
     path: '/user/login',
     title: 'Login',
-    component: LoginV3,
+    component: LoginPage,
   },
   {
     path: '/user/register',
@@ -156,7 +156,7 @@ const routes = [
   {
     path: '/accept-invitation/:token/:locale',
     title: 'Account Setup',
-    component: AcceptInvitation
+    component: AcceptInvitationPage
   }
 
 ];
