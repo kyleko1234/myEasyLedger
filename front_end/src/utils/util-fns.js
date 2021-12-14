@@ -13,10 +13,45 @@ export const validateDate = (dateString) => {
 
 /**
  * Custom rounding function because Math.round() sucks
- * @param {*} number 
- * @returns {number}
+ * @param {Number} number 
+ * @returns {Number}
  */
 const customRound = number => Math.sign(number) * Math.round(Math.abs(number));
+
+/**
+ * Applies commas to a number. Returns a string. 
+ * Does not preserve precision of decimal; e.g. -1200.00 will be converted to "-1,200".
+ * Does not correct octal numbers to decimal. e.g. 012345 will be converted to "5,349".
+ * @param {Number} number 
+ * @returns {String}
+ */
+const applyCommaToNumber = number => {
+    let sign;
+    if (number < 0) {
+        sign = "-";
+    } else {
+        sign = "";
+    }
+    let numberComponents = Math.abs(number).toString().split(".");
+    let decimal;
+    if (numberComponents[1]) {
+        decimal = "." + numberComponents[1];
+    } else {
+        decimal = "";
+    }
+    let integer = numberComponents[0];
+    let returnedInteger = "";
+    while (integer.length) {
+        let subInteger = integer.substring(integer.length - 3, integer.length);
+        if (returnedInteger.length){
+            returnedInteger = subInteger + "," + returnedInteger;
+        } else {
+            returnedInteger = subInteger;
+        }
+        integer = integer.substring(0, integer.length - 3);
+    }
+    return sign + returnedInteger + decimal;
+}
 
 /**
  * Takes a locale, currency, and a number and returns a formatted string representing the number as a currency. 
@@ -30,14 +65,14 @@ export const formatCurrency = (locale, currency, amount) => {
         case "zh-TW":
             switch (currency) {
                 case "TWD":
-                    return `$${customRound(amount)}`
+                    return `$${applyCommaToNumber(customRound(amount))}`
                 default: 
                     return new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(amount);
             }
         default: 
             switch (currency) {
                 case "TWD":
-                    return `NT$${customRound(amount)}`
+                    return `NT$${applyCommaToNumber(customRound(amount))}`
                 default:
                     return new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(amount);
             }
