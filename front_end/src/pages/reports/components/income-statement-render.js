@@ -430,8 +430,8 @@ function IncomeStatementRender() {
                                     .map(account => {
                                         return (
                                             <React.Fragment key={account.accountId}>
-                                                <div className="striped-row justify-content-between indent-2">
-                                                    <div>{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div>
+                                                <div className="striped-row justify-content-between indent">
+                                                    <div>{account.accountName}</div>
                                                     <div className="text-right d-flex">
                                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                                             return(
