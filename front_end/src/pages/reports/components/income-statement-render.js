@@ -407,7 +407,7 @@ function IncomeStatementRender() {
                                                 )
                                             })
                                         }
-                                        <div className="striped-row justify-content-between indent-2 font-weight-600">
+                                        <div className="striped-row justify-content-between font-weight-600">
                                             <div>{incomeStatementRenderText[appContext.locale]["Total revenue"]}</div>
                                             <div className="text-right d-flex">
                                                 {incomeStatementObjects.map((incomeStatement, i) => {
@@ -467,7 +467,7 @@ function IncomeStatementRender() {
 
                                     })
                                 }
-                                <div className="striped-row justify-content-between font-weight-600 indent-2">
+                                <div className="striped-row justify-content-between font-weight-600 ">
                                     <div>{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div>
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
@@ -506,7 +506,7 @@ function IncomeStatementRender() {
                                 {renderDetails(incomeStatementObjects[0].sgaSubtypeId, 5)}
                                 {renderRow("totalDepreciationAndAmortization", "Depreciation and amortization")}
                                 {renderDetails(incomeStatementObjects[0].depreciationAmortizationSubtypeId, 5)}
-                                <div className="striped-row justify-content-between indent-2 font-weight-600">
+                                <div className="striped-row justify-content-between font-weight-600">
                                     <div>{incomeStatementRenderText[appContext.locale]["Total operating expenses"]}</div>
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
@@ -568,7 +568,7 @@ function IncomeStatementRender() {
                                 }
                                 {renderDetails(incomeStatementObjects[0].incomeFromFinancingSubtypeId, 4)}
                                 {renderDetails(incomeStatementObjects[0].expenseFromFinancingSubtypeId, 4) /** similar reason for using the wrong accountTypeId here as above */}
-                                <div className="striped-row justify-content-between indent-2 font-weight-600">
+                                <div className="striped-row justify-content-between font-weight-600">
                                     <div>{incomeStatementRenderText[appContext.locale]["Total other income/expense, net"]}</div>
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
