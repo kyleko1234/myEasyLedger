@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router';
 
 import LoginPage from '../pages/user/login/login-page.js';
-import RegisterV3 from './../pages/user/register-v3.js';
+import RegisterPage from '../pages/user/register-page.js';
 
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
 import Dashboard from './../pages/dashboard/dashboard.js';
@@ -39,7 +39,7 @@ const routes = [
   {
     path: '/user/register',
     title: 'Register',
-    component: RegisterV3,
+    component: RegisterPage,
   },
   {
     path: '/journals',
