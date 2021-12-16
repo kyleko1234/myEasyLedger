@@ -70,38 +70,38 @@ function LoginContent(props) {
     return (
         <>
             <LoginHeader className="mb-3"/>
-                <Alert color="danger" isOpen={loginAlert}>
-                    {loginV3Text[appContext.locale]["Invalid email or password."]}
-                </Alert>
-                <Alert color="danger" isOpen={accountDisabledAlert}>
-                    {loginV3Text[appContext.locale]["Email not verified"]}
-                    &nbsp;<Link to="#" onClick={() => handleResendEmail()} className="alert-link">{loginV3Text[appContext.locale]["Click here to send a new verification email."]}</Link>
-                </Alert> 
-                <Alert color="success" isOpen={verificationSentAlert}>
-                    {loginV3Text[appContext.locale]["Verification email sent!"]}
-                </Alert>
-                <form className="mb-0" onSubmit={event => handleSubmit(event)}>
-                    <div className="form-group mb-3">
-                        <input type="email" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Email Address"]} required value={emailInput} onChange={event => setEmailInput(event.target.value)}/>
-                    </div>
-                    <div className="form-group mb-3">
-                        <input type="password" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Password"]} required value={passwordInput} onChange={event => setPasswordInput(event.target.value)} />
-                    </div>
-                    <div className="mb-3">
-                        <Link to="/user/login/forgot/find-email" className="text-primary">{loginV3Text[appContext.locale]["Forgot Password?"]}</Link>
-                    </div>
-                    <div className="mb-3">
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">
-                            {loading
-                                ? <LoadingSpinner /> 
-                                : loginV3Text[appContext.locale]["Sign me in"]
-                            }
-                        </button>
-                    </div>
-                    <div className="mb-5 pb-5 text-inverse">
-                        {loginV3Text[appContext.locale]["Not a member"]}
-                    </div>
-                </form>
+            <Alert color="danger" isOpen={loginAlert}>
+                {loginV3Text[appContext.locale]["Invalid email or password."]}
+            </Alert>
+            <Alert color="danger" isOpen={accountDisabledAlert}>
+                {loginV3Text[appContext.locale]["Email not verified"]}
+                &nbsp;<Link to="#" onClick={() => handleResendEmail()} className="alert-link">{loginV3Text[appContext.locale]["Click here to send a new verification email."]}</Link>
+            </Alert> 
+            <Alert color="success" isOpen={verificationSentAlert}>
+                {loginV3Text[appContext.locale]["Verification email sent!"]}
+            </Alert>
+            <form className="mb-0" onSubmit={event => handleSubmit(event)}>
+                <div className="form-group mb-3">
+                    <input type="email" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Email Address"]} required value={emailInput} onChange={event => setEmailInput(event.target.value)}/>
+                </div>
+                <div className="form-group mb-3">
+                    <input type="password" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Password"]} required value={passwordInput} onChange={event => setPasswordInput(event.target.value)} />
+                </div>
+                <div className="mb-3">
+                    <Link to="/user/login/forgot/find-email" className="text-primary">{loginV3Text[appContext.locale]["Forgot Password?"]}</Link>
+                </div>
+                <div className="mb-3">
+                    <button type="submit" className="btn btn-primary btn-block btn-lg">
+                        {loading
+                            ? <LoadingSpinner /> 
+                            : loginV3Text[appContext.locale]["Sign me in"]
+                        }
+                    </button>
+                </div>
+                <div className="mb-5 pb-5 text-inverse">
+                    {loginV3Text[appContext.locale]["Not a member"]}
+                </div>
+            </form>
         </>
     )
 

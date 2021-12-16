@@ -1,9 +1,8 @@
 import React from 'react';
 import { PageSettings } from '../../config/page-settings.js';
-import RegisterV3Render from './register-v3-render.js';
-import { registerV3Text } from '../../utils/i18n/register-v3-text.js';
 import { REGISTER_BG_URL } from '../../utils/constants.js';
 import LoginPageSkeleton from './components/login-page-skeleton.js';
+import RegisterController from './register-controller.js';
 
 class RegisterPage extends React.Component {
     static contextType = PageSettings;
@@ -25,7 +24,7 @@ class RegisterPage extends React.Component {
     render() {
         return (
             <LoginPageSkeleton backgroundImage={REGISTER_BG_URL}>
-                <RegisterV3Render history={this.props.history} />
+                <RegisterController history={this.props.history} />
             </LoginPageSkeleton>
         );
     }
