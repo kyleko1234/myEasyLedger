@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Accept an invitation.md",
+            "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
             "mode": "source"
           }
         },
@@ -21,8 +21,8 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Accept an invitation.md",
-            "mode": "preview"
+            "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+            "mode": "source"
           }
         },
         "group": "ac08efec71731141"
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Person/Contents/Accept an invitation.md",
+                "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,6 +101,8 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+    "Reports/Contents/Generate an Income Statement.md",
     "Person/Contents/Accept an invitation.md",
     "Person/Contents/Check if invitation link has already been used.md",
     "Person/Contents/Invite a Person by Email.md",
@@ -108,8 +110,6 @@
     "Permission/Permission.md",
     "Person/Contents/List All Persons in an Organization.md",
     "Person/Contents/List All Persons.md",
-    "Person/Contents/Update a Person.md",
-    "Person/Contents/Retrieve a Person.md",
-    "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md"
+    "Person/Contents/Update a Person.md"
   ]
 }

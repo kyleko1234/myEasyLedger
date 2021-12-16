@@ -272,7 +272,7 @@ function BalanceSheetRender() {
                                         </React.Fragment>
                                     )
                                 })}
-                                <div className="striped-row font-weight-600 indent-3 justify-content-between">
+                                <div className="striped-row font-weight-600 indent justify-content-between">
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Total current assets"]}
                                     </div>
@@ -452,7 +452,7 @@ function BalanceSheetRender() {
                                         </React.Fragment>
                                     )
                                 })}
-                                <div className="striped-row font-weight-600 indent-3 justify-content-between">
+                                <div className="striped-row font-weight-600 indent justify-content-between">
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Total current liabilities"]}
                                     </div>
@@ -670,7 +670,7 @@ function BalanceSheetRender() {
                                             })}
                                         </div>
                                     </div>
-                                    <div className="striped-row justify-content-between indent-3 font-weight-600">
+                                    <div className="striped-row justify-content-between indent-2 font-weight-600">
                                         <div>{balanceSheetRenderText[appContext.locale]["Ending balances of retained earnings"]}</div>
                                         <div className="text-right d-flex">
                                             {balanceSheetObjects.map((balanceSheet, i) => {

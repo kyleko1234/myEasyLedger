@@ -7,6 +7,7 @@ import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import { number } from 'prop-types';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -98,7 +99,7 @@ function IncomeStatementRender() {
                                             let accountDebitsMinusCredits = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits;
                                             return(
                                                 <div key={i} className="width-175">
-                                                    {numberAsCurrency(typeId === 5 ? accountDebitsMinusCredits: accountDebitsMinusCredits * -1)}
+                                                    {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i) * (typeId === 5 ? 1 : -1))}
                                                 </div>
                                             )
                                         })}
@@ -243,6 +244,20 @@ function IncomeStatementRender() {
         setLoading(false);
     }
 
+    const sumDebitsAndCreditsOfChildren = (accountId, indexOfIncomeStatementObject) => {
+        let total = 0;
+        let childAccounts = incomeStatementObjects[indexOfIncomeStatementObject]
+            .accountBalances
+            .filter(childAccount => childAccount.parentAccountId === accountId);
+        childAccounts
+            .forEach(account => {
+                if (account.debitsMinusCredits) {
+                    total += account.debitsMinusCredits;
+                }
+        })
+        return total;
+    }
+
     return (
         <>
             <Card className="very-rounded shadow-sm bg-light my-4">
@@ -377,7 +392,7 @@ function IncomeStatementRender() {
                                                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                                                     return(
                                                                         <div key={i} className="width-175">
-                                                                            {numberAsCurrency(incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits * -1)}
+                                                                            {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i) * -1)}
                                                                         </div>
                                                                     )
                                                                 })}
@@ -407,7 +422,7 @@ function IncomeStatementRender() {
                                                 )
                                             })
                                         }
-                                        <div className="striped-row justify-content-between indent-2 font-weight-600">
+                                        <div className="striped-row justify-content-between font-weight-600">
                                             <div>{incomeStatementRenderText[appContext.locale]["Total revenue"]}</div>
                                             <div className="text-right d-flex">
                                                 {incomeStatementObjects.map((incomeStatement, i) => {
@@ -430,13 +445,13 @@ function IncomeStatementRender() {
                                     .map(account => {
                                         return (
                                             <React.Fragment key={account.accountId}>
-                                                <div className="striped-row justify-content-between indent-2">
-                                                    <div>{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div>
+                                                <div className="striped-row justify-content-between indent">
+                                                    <div>{account.accountName}</div>
                                                     <div className="text-right d-flex">
                                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                                             return(
                                                                 <div key={i} className="width-175">
-                                                                    {numberAsCurrency(incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits)}
+                                                                    {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i))}
                                                                 </div>
                                                             )
                                                         })}
@@ -467,7 +482,7 @@ function IncomeStatementRender() {
 
                                     })
                                 }
-                                <div className="striped-row justify-content-between font-weight-600 indent-2">
+                                <div className="striped-row justify-content-between font-weight-600 ">
                                     <div>{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div>
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
@@ -506,7 +521,7 @@ function IncomeStatementRender() {
                                 {renderDetails(incomeStatementObjects[0].sgaSubtypeId, 5)}
                                 {renderRow("totalDepreciationAndAmortization", "Depreciation and amortization")}
                                 {renderDetails(incomeStatementObjects[0].depreciationAmortizationSubtypeId, 5)}
-                                <div className="striped-row justify-content-between indent-2 font-weight-600">
+                                <div className="striped-row justify-content-between font-weight-600">
                                     <div>{incomeStatementRenderText[appContext.locale]["Total operating expenses"]}</div>
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
@@ -568,7 +583,7 @@ function IncomeStatementRender() {
                                 }
                                 {renderDetails(incomeStatementObjects[0].incomeFromFinancingSubtypeId, 4)}
                                 {renderDetails(incomeStatementObjects[0].expenseFromFinancingSubtypeId, 4) /** similar reason for using the wrong accountTypeId here as above */}
-                                <div className="striped-row justify-content-between indent-2 font-weight-600">
+                                <div className="striped-row justify-content-between font-weight-600">
                                     <div>{incomeStatementRenderText[appContext.locale]["Total other income/expense, net"]}</div>
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
