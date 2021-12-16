@@ -4,6 +4,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
 import { loginV3Text } from '../../../utils/i18n/login-v3-text';
 import { Alert } from 'reactstrap';
+import LoadingSpinner from '../../../components/misc/loading-spinner';
 
 function ResetPassword(props) {
     //required props: userEmail, resetPasswordCode, newPassword, setNewPassword, axiosInstance
@@ -58,16 +59,12 @@ function ResetPassword(props) {
             <p>
                 {loginV3Text[appContext.locale]["Please enter your new password below."]}
             </p>
-            {errorAlert
-                ? <Alert color="danger">{loginV3Text[appContext.locale][alertMessage]}</Alert>
-                : null}
-            {expiredAlert
-                ?   <Alert color="danger">
-                        {loginV3Text[appContext.locale]["This session has expired."]}
-                        <br/>
-                        <Link className="alert-link" to="/user/login/forgot/find-email">{loginV3Text[appContext.locale]["Please click here to restart this process."]}</Link>
-                    </Alert>
-                : null}
+            <Alert isOpen={errorAlert} color="danger">{loginV3Text[appContext.locale][alertMessage]}</Alert>
+            <Alert isOpen={expiredAlert} color="danger">
+                {loginV3Text[appContext.locale]["This session has expired."]}
+                <br/>
+                <Link className="alert-link" to="/user/login/forgot/find-email">{loginV3Text[appContext.locale]["Please click here to restart this process."]}</Link>
+            </Alert>
             <form onSubmit={event => handleSubmit(event)} className="mb-5 pb-5">
                 <div className="form-group mb-3">
                     <input type="password" required className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Password"]} value={props.newPassword} onChange={event => props.setNewPassword(event.target.value)}/>
@@ -81,7 +78,7 @@ function ResetPassword(props) {
                     </button>
                     <button className="btn btn-lg btn-primary width-175" type="submit" onClick={handleSubmit}>
                         {loading
-                        ? <i className="fas fa-circle-notch fa-spin"></i> 
+                        ? <LoadingSpinner />
                         : loginV3Text[appContext.locale]["Submit"]}
                     </button>
                 </div>
