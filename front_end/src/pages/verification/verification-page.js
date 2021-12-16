@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL, LOCALE_OPTIONS } from '../../utils/constants';
 import { loginV3Text } from '../../utils/i18n/login-v3-text';
 import { verificationText } from '../../utils/i18n/verification-text';
+import LoginHeader from '../user/components/login-header';
+import LoginPageSkeleton from '../user/components/login-page-skeleton';
 
 function VerificationPage(props) {
     const appContext = React.useContext(PageSettings);
@@ -29,40 +32,17 @@ function VerificationPage(props) {
 
 
     return (
-        <div className="login-page" style={{ backgroundImage: 'url(/assets/img/login-bg/login-bg-11.jpg)' }} >
-            <div className="login-left" >
-                <div className="login-left-caption">
-                    <div className="login-left-caption-title"> my<b>Easy</b>Ledger</div>
-                    <p>
-                        {loginV3Text[appContext.locale]["App description"]}
-                    </p>
-                </div>
+        <LoginPageSkeleton>
+            <LoginHeader className="mb-3"/>
+            <div className="mb-5">
+                {verificationResult
+                    ? verificationText[appContext.locale][verificationResult](firstName, lastName)
+                    : <div className="d-flex justify-content-center">
+                        <LoadingSpinner big />
+                    </div>
+                }
             </div>
-            <div className="login-right overflow-auto">
-                <div className="login-header mb-3">
-                    my<b>Easy</b>Ledger
-                </div>
-                <div className="login-content mb-5">
-                    {verificationResult
-                        ? verificationText[appContext.locale][verificationResult](firstName, lastName)
-                        : <div className="d-flex justify-content-center"><i className="fa-3x fas fa-circle-notch fa-spin"></i></div>
-                    }
-                </div>
-                <div>
-                    {LOCALE_OPTIONS.map(localeOption => {
-                        return (
-                            appContext.locale == localeOption.value ?
-                                <b key={localeOption.value} className="mr-3 font-weight-600">{localeOption.label}</b> :
-                                <Link key={localeOption.value} replace to="#" onClick={() => appContext.handleSetLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
-                        )
-                    })}
-                </div>
-                <hr width="100%"/>
-                <p className="text-center text-grey-darker">
-                    {loginV3Text[appContext.locale]["Copyright text"]}
-                </p>
-            </div>
-        </div>
+        </LoginPageSkeleton>
     )
 }
 
