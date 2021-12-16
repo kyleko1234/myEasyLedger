@@ -1,7 +1,7 @@
 import React from 'react';
-import { PageSettings } from '../../config/page-settings.js';
-import { REGISTER_BG_URL } from '../../utils/constants.js';
-import LoginPageSkeleton from './components/login-page-skeleton.js';
+import { PageSettings } from '../../../config/page-settings.js';
+import { REGISTER_BG_URL } from '../../../utils/constants.js';
+import LoginPageSkeleton from '../components/login-page-skeleton.js';
 import RegisterController from './register-controller.js';
 
 class RegisterPage extends React.Component {

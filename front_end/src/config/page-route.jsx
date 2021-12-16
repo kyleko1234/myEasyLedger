@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router';
 
 import LoginPage from '../pages/user/login/login-page.js';
-import RegisterPage from '../pages/user/register-page.js';
+import RegisterPage from '../pages/user/register/register-page.js';
 
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
 import Dashboard from './../pages/dashboard/dashboard.js';

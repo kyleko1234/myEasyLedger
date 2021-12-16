@@ -1,10 +1,9 @@
 import React from 'react';
-import { PageSettings } from '../../config/page-settings';
-import { LOCALE_OPTIONS } from '../../utils/constants';
-import { registerV3Text } from '../../utils/i18n/register-v3-text';
+import { PageSettings } from '../../../config/page-settings';
+import { registerV3Text } from '../../../utils/i18n/register-v3-text';
 import Select from 'react-select';
 import { Alert } from 'reactstrap';
-import {Link} from 'react-router-dom';
+import LoadingSpinner from '../../../components/misc/loading-spinner';
 
 
 function FirstOrganizationForm(props) {
@@ -34,7 +33,7 @@ function FirstOrganizationForm(props) {
         <div className="slide-in">
             <h1>
                 {registerV3Text[appContext.locale]["Sign Up"]}
-                {props.somethingWentWrongAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Something went wrong. Please try again later."]}</Alert> : null}
+                <Alert isOpen={props.somethingWentWrongAlert} color="danger">{registerV3Text[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
             </h1>
             <h2 className="h5 font-weight-normal mb-3">{registerV3Text[appContext.locale]["Create your first EasyLedger."]}</h2>
             <div className="login-content">
@@ -84,12 +83,11 @@ function FirstOrganizationForm(props) {
                         </div>
                     </div>
                     */}
-                    {agreeAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Please agree."]}</Alert> : null}
-
+                    <Alert isOpen={agreeAlert} color="danger">{registerV3Text[appContext.locale]["Please agree."]}</Alert>
                     <div className="register-buttons mb-3">
                         <button type="submit" className="btn btn-primary btn-block btn-lg">
                             {loading
-                                ? <i className="fas fa-circle-notch fa-spin"></i> 
+                                ? <LoadingSpinner />
                                 : registerV3Text[appContext.locale]["Sign Up"]
                             }
                         </button>
@@ -97,19 +95,6 @@ function FirstOrganizationForm(props) {
                     <div className="mb-4">
                         {registerV3Text[appContext.locale]["Already a member"]}
                     </div>
-                    <div>
-                        {LOCALE_OPTIONS.map(localeOption => {
-                            return(
-                                appContext.locale == localeOption.value? 
-                                <b key={localeOption.value} className="mr-3 font-weight-600">{localeOption.label}</b> : 
-                                <Link key={localeOption.value} replace to="#" onClick={() => props.handleChangeLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
-                            )
-                        })}
-                    </div>
-                    <hr />
-                    <p className="text-center mb-0">
-                        {registerV3Text[appContext.locale]["Copyright text"]}
-                    </p>
                 </form>
             </div>
         </div>
