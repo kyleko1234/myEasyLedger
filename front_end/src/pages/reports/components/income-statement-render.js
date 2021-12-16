@@ -7,6 +7,7 @@ import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import { number } from 'prop-types';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -98,7 +99,7 @@ function IncomeStatementRender() {
                                             let accountDebitsMinusCredits = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits;
                                             return(
                                                 <div key={i} className="width-175">
-                                                    {numberAsCurrency(typeId === 5 ? accountDebitsMinusCredits: accountDebitsMinusCredits * -1)}
+                                                    {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i) * (typeId === 5 ? 1 : -1))}
                                                 </div>
                                             )
                                         })}
@@ -244,13 +245,15 @@ function IncomeStatementRender() {
     }
 
     const sumDebitsAndCreditsOfChildren = (accountId, indexOfIncomeStatementObject) => {
-        let total;
+        let total = 0;
         let childAccounts = incomeStatementObjects[indexOfIncomeStatementObject]
             .accountBalances
             .filter(childAccount => childAccount.parentAccountId === accountId);
         childAccounts
             .forEach(account => {
-                total += account.debitsMinusCredits;
+                if (account.debitsMinusCredits) {
+                    total += account.debitsMinusCredits;
+                }
         })
         return total;
     }
@@ -389,7 +392,7 @@ function IncomeStatementRender() {
                                                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                                                     return(
                                                                         <div key={i} className="width-175">
-                                                                            {numberAsCurrency(incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits * -1)}
+                                                                            {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i) * -1)}
                                                                         </div>
                                                                     )
                                                                 })}
@@ -448,7 +451,7 @@ function IncomeStatementRender() {
                                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                                             return(
                                                                 <div key={i} className="width-175">
-                                                                    {numberAsCurrency(incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits)}
+                                                                    {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i))}
                                                                 </div>
                                                             )
                                                         })}
