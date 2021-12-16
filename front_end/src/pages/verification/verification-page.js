@@ -6,7 +6,7 @@ import { API_BASE_URL, LOCALE_OPTIONS } from '../../utils/constants';
 import { loginV3Text } from '../../utils/i18n/login-v3-text';
 import { verificationText } from '../../utils/i18n/verification-text';
 
-function Verification(props) {
+function VerificationPage(props) {
     const appContext = React.useContext(PageSettings);
     const verificationToken = useParams().verificationToken;
     const defaultLocale = useParams().locale;
@@ -66,4 +66,4 @@ function Verification(props) {
     )
 }
 
-export default Verification;
+export default VerificationPage;
