@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { PageSettings } from '../../config/page-settings';
-import {loginV3Text} from '../../utils/i18n/login-v3-text';
-import {API_BASE_URL} from '../../utils/constants.js';
+import { PageSettings } from '../../../config/page-settings';
+import {loginV3Text} from '../../../utils/i18n/login-v3-text';
+import {API_BASE_URL} from '../../../utils/constants.js';
 import {Alert} from 'reactstrap';
 
 function FindEmail(props) {

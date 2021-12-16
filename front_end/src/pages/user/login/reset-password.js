@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { PageSettings } from '../../config/page-settings';
-import { API_BASE_URL } from '../../utils/constants';
-import { loginV3Text } from '../../utils/i18n/login-v3-text';
+import { PageSettings } from '../../../config/page-settings';
+import { API_BASE_URL } from '../../../utils/constants';
+import { loginV3Text } from '../../../utils/i18n/login-v3-text';
 import { Alert } from 'reactstrap';
 
 function ResetPassword(props) {

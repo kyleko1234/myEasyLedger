@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
-import { Router, Route, withRouter} from 'react-router';
-import { PageSettings } from '../../config/page-settings';
+import { Route, withRouter} from 'react-router';
+import { PageSettings } from '../../../config/page-settings';
 import FindEmail from './find-email';
 import ResetPassword from './reset-password';
 import ResetSuccess from './reset-success';
