@@ -216,7 +216,7 @@ public class PersonService {
 		}
 		
 	}
-	private void autoPopulateEnterprise(Organization organization, String locale) {
+	private void autoPopulateEnterprise(Organization organization, String locale) throws ResourceNotFoundException {
 		switch (locale) {
 			case "zh-TW":
 				autoPopulateEnterpriseZhTW(organization);
@@ -241,13 +241,62 @@ public class PersonService {
 		accountRepo.saveAll(defaultAccounts);
 	}
 	
-	private void autoPopulateEnterpriseZhTW(Organization organization) {
+	//this is LONG. sorry
+	private void autoPopulateEnterpriseZhTW(Organization organization) throws ResourceNotFoundException {
+		ArrayList<Account> topLevelAccounts = new ArrayList<Account>();
+		ArrayList<Account> childAccounts = new ArrayList<Account>();
 		
+		/*create default COA */
+		AccountSubtype cashAndCashEquivalents = accountSubtypeRepo.findById((long) 1)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		Account 現金及約當現金 = new Account("現金及約當現金", cashAndCashEquivalents, "111");
+		topLevelAccounts.add(現金及約當現金);
+		childAccounts.add(new Account("庫存現金", 現金及約當現金, "1111"));
+		childAccounts.add(new Account("零用金／週轉金", 現金及約當現金, "1112"));
+		childAccounts.add(new Account("銀行存款", 現金及約當現金, "1113"));
+		childAccounts.add(new Account("在途現金", 現金及約當現金, "1114"));
+		childAccounts.add(new Account("約當現金", 現金及約當現金, "1115"));
+		
+		AccountSubtype currentReceivables = accountSubtypeRepo.findById((long) 3)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		Account 應收帳款淨額 = new Account("應收帳款淨額", currentReceivables, "119");
+		topLevelAccounts.add(應收帳款淨額);
+		Account 應收票據淨額 = new Account("應收票據淨額", currentReceivables, "118");
+		topLevelAccounts.add(應收票據淨額);
+		childAccounts.add(new Account("未賺得融資收益", 應收帳款淨額, "1196"));
+		childAccounts.add(new Account("應收分期帳款", 應收帳款淨額, "1193"));
+		childAccounts.add(new Account("未實現利息收入", 應收帳款淨額, "1194"));
+		childAccounts.add(new Account("備抵呆帳 - 應收租賃款", 應收帳款淨額, "1198"));
+		childAccounts.add(new Account("備抵銷售退回及折讓", 應收帳款淨額, "1192"));
+		childAccounts.add(new Account("備抵呆帳 - 應收帳款及分期帳款", 應收帳款淨額, "1199"));
+		childAccounts.add(new Account("應收帳款 - 關係人", 應收帳款淨額, "1197"));
+		childAccounts.add(new Account("應收租賃款", 應收帳款淨額, "1195"));
+		childAccounts.add(new Account("應收帳款", 應收帳款淨額, "1191"));
+		childAccounts.add(new Account("應收票據貼現 - 關係人", 應收票據淨額, "1186"));
+		childAccounts.add(new Account("備抵呆帳-應收關係人票據", 應收票據淨額, "1188"));
+		childAccounts.add(new Account("應收票據貼現", 應收票據淨額, "1182"));
+		childAccounts.add(new Account("其他應收票據", 應收票據淨額, "1184"));
+		childAccounts.add(new Account("應收票據 - 關係人", 應收票據淨額, "1183"));
+		childAccounts.add(new Account("應收票據", 應收票據淨額, "1181"));
+		childAccounts.add(new Account("備抵呆帳 - 應收票據", 應收票據淨額, "1185"));
+		childAccounts.add(new Account("其他應收票據 - 關係人", 應收票據淨額, "1187"));
+
+		/* end creation of COA*/
+		
+		//save accounts
+		for (Account account : topLevelAccounts) {
+			account.setOrganization(organization);
+		}
+		accountRepo.saveAll(topLevelAccounts);
+		for (Account account : childAccounts) {
+			account.setOrganization(organization);
+		}
+		accountRepo.saveAll(childAccounts);
 	}
 	
 	private void autoPopulatePersonal(Organization organization, String locale) throws ResourceNotFoundException {
 		AccountSubtype otherCurrentAssets = accountSubtypeRepo.findById((long) 5)
-		.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
 		AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 16)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 16"));
 		AccountSubtype revenue = accountSubtypeRepo.findById((long) 24)
