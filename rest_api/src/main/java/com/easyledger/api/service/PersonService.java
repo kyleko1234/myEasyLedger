@@ -331,7 +331,46 @@ public class PersonService {
 		childAccounts.add(new Account("備抵存貨跌價", 存貨, "1234"));
 		childAccounts.add(new Account("製成品", 存貨, "1235"));
 		
-		
+		AccountSubtype nonCurrentReceivables = accountSubtypeRepo.findById((long) 7)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		Account 非流動應收票據 = new Account("非流動應收票據 / 帳款", nonCurrentReceivables, "157");
+		topLevelAccounts.add(非流動應收票據);
+		childAccounts.add(new Account("長期應收票據及款項 - 關係人", 非流動應收票據, "1576"));
+		childAccounts.add(new Account("長期應收款", 非流動應收票據, "1572"));
+		childAccounts.add(new Account("長期應收票據", 非流動應收票據, "1571"));
+		childAccounts.add(new Account("催收款項 - 關係人", 非流動應收票據, "1577"));
+		childAccounts.add(new Account("催收款項", 非流動應收票據, "1573"));
+
+		AccountSubtype otherCurrentAssets = accountSubtypeRepo.findById((long) 5)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		Account 其他流動資產 = new Account("其他流動資產", otherCurrentAssets, "128");
+		topLevelAccounts.add(其他流動資產);
+		Account 預付款項 = new Account("預付款項", otherCurrentAssets, "126");
+		topLevelAccounts.add(預付款項);
+		childAccounts.add(new Account("備供出售金融資產 - 流動", 其他流動資產, "113"));
+		childAccounts.add(new Account("無活絡市場之債務工具投資 - 流動", 其他流動資產, "115"));
+		childAccounts.add(new Account("本期所得稅資產", 其他流動資產, "122"));
+		childAccounts.add(new Account("生物資產 - 流動", 其他流動資產, "125"));
+		childAccounts.add(new Account("透過損益按公允價值衡量之金融資產 - 流動", 其他流動資產, "112"));
+		childAccounts.add(new Account("應收建造合約款", 其他流動資產, "120"));
+		childAccounts.add(new Account("員工借支", 其他流動資產, "1283"));
+		childAccounts.add(new Account("避險之衍生金融資產 - 流動", 其他流動資產, "117"));
+		childAccounts.add(new Account("以成本衡量之金融資產 - 流動", 其他流動資產, "114"));
+		childAccounts.add(new Account("存出保證金 - 流動", 其他流動資產, "1284"));
+		childAccounts.add(new Account("其他應收款 - 流動", 其他流動資產, "121"));
+		childAccounts.add(new Account("代付款", 其他流動資產, "1282"));
+		childAccounts.add(new Account("暫付款", 其他流動資產, "1281"));
+		childAccounts.add(new Account("持有至到期日金融資產 - 流動", 其他流動資產, "116"));
+		childAccounts.add(new Account("用品盤存", 預付款項, "1264"));
+		childAccounts.add(new Account("預付投資款", 預付款項, "1267"));
+		childAccounts.add(new Account("留抵稅額", 預付款項, "1269"));
+		childAccounts.add(new Account("預付保險費", 預付款項, "1263"));
+		childAccounts.add(new Account("預付租金", 預付款項, "1262"));
+		childAccounts.add(new Account("其他預付款項", 預付款項, "1270"));
+		childAccounts.add(new Account("進項稅額", 預付款項, "1268"));
+		childAccounts.add(new Account("預付貨款", 預付款項, "1266"));
+		childAccounts.add(new Account("預付款項", 預付款項, "1261"));
+		childAccounts.add(new Account("其他預付費用", 預付款項, "1265"));
 
 		/* end creation of COA*/
 		
