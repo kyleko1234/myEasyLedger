@@ -724,6 +724,60 @@ public class PersonService {
 		childAccounts.add(new Account("保證合約之長期負債準備", 負債準備非流動, "2373"));
 		childAccounts.add(new Account("虧損性合約之長期負債準備", 負債準備非流動, "2371"));
 
+		AccountSubtype shortTermDebt = accountSubtypeRepo.findById((long) 14)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 14"));
+		Account 一年內到期長期負債 = new Account("一年內到期長期負債", shortTermDebt, "223");
+		topLevelAccounts.add(一年內到期長期負債);
+		Account 短期借款 = new Account("短期借款", shortTermDebt, "211");
+		topLevelAccounts.add(短期借款);
+		childAccounts.add(new Account("一年內到期其他長期負債", 一年內到期長期負債, "2235"));
+		childAccounts.add(new Account("一年內到期應付公司債", 一年內到期長期負債, "2231"));
+		childAccounts.add(new Account("一年內到期長期借款", 一年內到期長期負債, "2232"));
+		childAccounts.add(new Account("一年內到期長期應付票據及款項 - 關係人", 一年內到期長期負債, "2234"));
+		childAccounts.add(new Account("一年內到期長期應付票據及款項", 一年內到期長期負債, "2233"));
+
+		childAccounts.add(new Account("銀行透支", 短期借款, "2111"));
+		childAccounts.add(new Account("銀行借款", 短期借款, "2112"));
+		childAccounts.add(new Account("短期借款 - 員工", 短期借款, "2114"));
+		childAccounts.add(new Account("短期借款 - 業主", 短期借款, "2113"));
+		childAccounts.add(new Account("短期借款 - 其他", 短期借款, "2116"));
+		childAccounts.add(new Account("短期借款 - 關係人", 短期借款, "2115"));
+
+		AccountSubtype otherEquityItems = accountSubtypeRepo.findById((long) 23)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 23"));
+		Account 其他權益 = new Account("其他權益", otherEquityItems, "341");
+		topLevelAccounts.add(其他權益);
+		Account 資本公積 = new Account("資本公積", otherEquityItems, "321");
+		topLevelAccounts.add(資本公積);
+		Account 庫藏股票 = new Account("庫藏股票", otherEquityItems, "351");
+		topLevelAccounts.add(庫藏股票);
+		
+		childAccounts.add(new Account("未實現重估增值", 其他權益, "3414"));
+		childAccounts.add(new Account("現金流量避險中屬有效避險部分之避險工具損益", 其他權益, "3412"));
+		childAccounts.add(new Account("其他權益 - 其他", 其他權益, "3415"));
+		childAccounts.add(new Account("國外營運機構財務報表換算之兌換差額", 其他權益, "3413"));
+		childAccounts.add(new Account("備供出售金融資產未實現損益", 其他權益, "3411"));
+
+		childAccounts.add(new Account("資本公積 - 特別股股票溢價", 資本公積, "3212"));
+		childAccounts.add(new Account("資本公積 - 庫藏股票交易", 資本公積, "3213"));
+		childAccounts.add(new Account("資本公積 - 普通股股票溢價", 資本公積, "3211"));
+		childAccounts.add(new Account("資本公積 - 其他", 資本公積, "3220"));
+		childAccounts.add(new Account("資本公積 - 認列對子公司所有權權益變動數", 資本公積, "3218"));
+		childAccounts.add(new Account("資本公積 - 認股權", 資本公積, "3219"));
+		childAccounts.add(new Account("資本公積 - 採用權益法認列關聯企業及合資股權淨值變動數", 資本公積, "3216"));
+		childAccounts.add(new Account("資本公積 - 實際取得或處分子公司股權價格與帳面價值差額", 資本公積, "3217"));
+		childAccounts.add(new Account("資本公積 - 受贈資產", 資本公積, "3215"));
+		childAccounts.add(new Account("資本公積 - 股份基礎給付", 資本公積, "3214"));
+
+		AccountSubtype paidInCapital = accountSubtypeRepo.findById((long) 20)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 20"));
+		Account 資本或股本 = new Account("資本(或股本)", paidInCapital, "311");
+		topLevelAccounts.add(資本或股本);
+		
+		childAccounts.add(new Account("普通股股本", 資本或股本, "3111"));
+		childAccounts.add(new Account("特別股股本", 資本或股本, "3112"));
+		childAccounts.add(new Account("特別股股本", 資本或股本, "3113"));
+		childAccounts.add(new Account("待分配股票股利", 資本或股本, "3114"));
 		/* end creation of COA*/
 		
 		//save accounts
