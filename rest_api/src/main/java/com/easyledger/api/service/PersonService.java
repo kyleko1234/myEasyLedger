@@ -776,7 +776,7 @@ public class PersonService {
 		
 		childAccounts.add(new Account("普通股股本", 資本或股本, "3111"));
 		childAccounts.add(new Account("特別股股本", 資本或股本, "3112"));
-		childAccounts.add(new Account("特別股股本", 資本或股本, "3113"));
+		childAccounts.add(new Account("預收股本", 資本或股本, "3113"));
 		childAccounts.add(new Account("待分配股票股利", 資本或股本, "3114"));
 		/* end creation of COA*/
 		
