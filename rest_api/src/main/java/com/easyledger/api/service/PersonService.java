@@ -446,6 +446,78 @@ public class PersonService {
 		childAccounts.add(new Account("投資性不動產 - 建築物 - 累計公允價值變動數", 投資性不動產, "1386"));
 		childAccounts.add(new Account("投資性不動產 - 建築物 - 成本", 投資性不動產, "1384"));
 
+		AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		Account 直接人工 = new Account("直接人工", costOfSales, "514");
+		topLevelAccounts.add(直接人工);
+		Account 銷貨成本 = new Account("銷貨成本", costOfSales, "511");
+		topLevelAccounts.add(銷貨成本);
+		Account 製造費用 = new Account("製造費用", costOfSales, "515 - 516");
+		topLevelAccounts.add(直接人工);
+		Account 進料 = new Account("進料", costOfSales, "513");
+		topLevelAccounts.add(直接人工);
+		Account 營業費用 = new Account("營業費用", costOfSales, "611 - 613");
+		topLevelAccounts.add(直接人工);
+		Account 勞務成本 = new Account("勞務成本", costOfSales, "561");
+		topLevelAccounts.add(直接人工);
+		Account 進貨 = new Account("進貨", costOfSales, "512");
+		topLevelAccounts.add(直接人工);
+
+		childAccounts.add(new Account("捐贈", 營業費用, "6122"));
+		childAccounts.add(new Account("薪資支出", 營業費用, "6111"));
+		childAccounts.add(new Account("研究發展費用", 營業費用, "6130"));
+		childAccounts.add(new Account("其他營業費用", 營業費用, "6134"));
+		childAccounts.add(new Account("勞務費", 營業費用, "6133"));
+		childAccounts.add(new Account("稅捐", 營業費用, "6123"));
+		childAccounts.add(new Account("訓練費", 營業費用, "6132"));
+		childAccounts.add(new Account("廣告費", 營業費用, "6118"));
+		childAccounts.add(new Account("文具用品", 營業費用, "6113"));
+		childAccounts.add(new Account("修繕費", 營業費用, "6117"));
+		childAccounts.add(new Account("呆帳損失", 營業費用, "6124"));
+		childAccounts.add(new Account("租金支出", 營業費用, "6112"));
+		childAccounts.add(new Account("伙食費", 營業費用, "6128"));
+		childAccounts.add(new Account("水電瓦斯費", 營業費用, "6119"));
+		childAccounts.add(new Account("外銷損失", 營業費用, "6127"));
+		childAccounts.add(new Account("郵電費", 營業費用, "6116"));
+		childAccounts.add(new Account("保險費", 營業費用, "6120"));
+		childAccounts.add(new Account("職工福利", 營業費用, "6129"));
+		childAccounts.add(new Account("運費", 營業費用, "6115"));
+		childAccounts.add(new Account("旅費", 營業費用, "6114"));
+		childAccounts.add(new Account("交際費", 營業費用, "6121"));
+		childAccounts.add(new Account("佣金支出", 營業費用, "6131"));
+
+		childAccounts.add(new Account("其他製造費用", 製造費用, "5169"));
+		childAccounts.add(new Account("製造費用 - 訓練費", 製造費用, "5167"));
+		childAccounts.add(new Account("製造費用 - 郵電費", 製造費用, "5156"));
+		childAccounts.add(new Account("製造費用 - 保險費", 製造費用, "5160"));
+		childAccounts.add(new Account("製造費用 - 運費", 製造費用, "5155"));
+		childAccounts.add(new Account("製造費用 - 租金支出", 製造費用, "5152"));
+		childAccounts.add(new Account("製造費用 - 伙食費", 製造費用, "5165"));
+		childAccounts.add(new Account("製造費用 - 水電瓦斯費", 製造費用, "5159"));
+		childAccounts.add(new Account("製造費用 - 稅捐", 製造費用, "5162"));
+		childAccounts.add(new Account("製造費用 - 間接材料", 製造費用, "5168"));
+		childAccounts.add(new Account("製造費用 - 包裝費", 製造費用, "5158"));
+		childAccounts.add(new Account("製造費用 - 修繕費", 製造費用, "5157"));
+		childAccounts.add(new Account("製造費用 - 職工福利", 製造費用, "5166"));
+		childAccounts.add(new Account("製造費用 - 旅費", 製造費用, "5154"));
+		childAccounts.add(new Account("間接人工", 製造費用, "5151"));
+		childAccounts.add(new Account("製造費用 - 文具用品", 製造費用, "5153"));
+		childAccounts.add(new Account("製造費用 - 加工費", 製造費用, "5161"));
+
+		childAccounts.add(new Account("進料退出", 進料, "5133"));
+		childAccounts.add(new Account("進料費用", 進料, "5132"));
+		childAccounts.add(new Account("進料折讓", 進料, "5134"));
+		childAccounts.add(new Account("進料", 進料, "5131"));
+		
+		childAccounts.add(new Account("進貨退出", 進貨, "5123"));
+		childAccounts.add(new Account("進貨", 進貨, "5121"));
+		childAccounts.add(new Account("進貨折讓", 進貨, "5124"));
+		childAccounts.add(new Account("進貨費用", 進貨, "5122"));
+
+		childAccounts.add(new Account("銷貨成本", 銷貨成本, "5111"));
+		childAccounts.add(new Account("分期付款銷貨成本", 銷貨成本, "5112"));
+
+
 
 		/* end creation of COA*/
 		
