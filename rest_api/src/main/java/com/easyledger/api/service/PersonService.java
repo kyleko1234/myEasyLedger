@@ -401,6 +401,51 @@ public class PersonService {
 		childAccounts.add(new Account("長期預付租金", 其他非流動資產, "1578"));
 		childAccounts.add(new Account("業主 (股東) 往來", 其他非流動資產, "1584"));
 
+		AccountSubtype propertyPlantEquipment = accountSubtypeRepo.findById((long) 8)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		Account 投資性不動產 = new Account("投資性不動產", propertyPlantEquipment, "138");
+		topLevelAccounts.add(投資性不動產);
+		Account 不動產廠房及設備 = new Account("不動產、廠房及設備", propertyPlantEquipment, "139 - 146");
+		topLevelAccounts.add(不動產廠房及設備);
+		childAccounts.add(new Account("累計減損 - 生產性植 物", 不動產廠房及設備, "1468"));
+		childAccounts.add(new Account("未完工程及待驗設備", 不動產廠房及設備, "1464"));
+		childAccounts.add(new Account("機器設備 - 成本", 不動產廠房及設備, "1421"));
+		childAccounts.add(new Account("土地 - 重估增值", 不動產廠房及設備, "1392"));
+		childAccounts.add(new Account("累計折舊 - 機器設備", 不動產廠房及設備, "1422"));
+		childAccounts.add(new Account("累計折舊 - 土地改良物", 不動產廠房及設備, "1403"));
+		childAccounts.add(new Account("累計減損 - 土地", 不動產廠房及設備, "1393"));
+		childAccounts.add(new Account("累計折舊 - 辦公設備", 不動產廠房及設備, "1432"));
+		childAccounts.add(new Account("累計折舊 - 租賃權益改良", 不動產廠房及設備, "1462"));
+		childAccounts.add(new Account("土地改良物 - 重估增值", 不動產廠房及設備, "1402"));
+		childAccounts.add(new Account("累計減損 - 房屋及建築", 不動產廠房及設備, "1414"));
+		childAccounts.add(new Account("土地 - 成本", 不動產廠房及設備, "1391"));
+		childAccounts.add(new Account("累計減損 - 出租設備", 不動產廠房及設備, "1453"));
+		childAccounts.add(new Account("累計減損 - 租賃權益改良", 不動產廠房及設備, "1463"));
+		childAccounts.add(new Account("累計折舊 - 房屋及建築", 不動產廠房及設備, "1413"));
+		childAccounts.add(new Account("累計減損 - 租賃資產", 不動產廠房及設備, "1443"));
+		childAccounts.add(new Account("房屋及建築 - 成本", 不動產廠房及設備, "1411"));
+		childAccounts.add(new Account("出租設備 - 成本", 不動產廠房及設備, "1451"));
+		childAccounts.add(new Account("房屋及建築 - 重估增值", 不動產廠房及設備, "1412"));
+		childAccounts.add(new Account("累計減損 - 機器設備", 不動產廠房及設備, "1423"));
+		childAccounts.add(new Account("累計減損 - 辦公設備", 不動產廠房及設備, "1433"));
+		childAccounts.add(new Account("租賃權益改良 - 成本", 不動產廠房及設備, "1461"));
+		childAccounts.add(new Account("累計折舊 - 租賃資產", 不動產廠房及設備, "1442"));
+		childAccounts.add(new Account("土地改良物 - 成本", 不動產廠房及設備, "1401"));
+		childAccounts.add(new Account("生產性植物 - 成本", 不動產廠房及設備, "1466"));
+		childAccounts.add(new Account("累計減損 - 土地改良物", 不動產廠房及設備, "1404"));
+		childAccounts.add(new Account("租賃資產 - 成本", 不動產廠房及設備, "1441"));
+		childAccounts.add(new Account("辦公設備 - 成本", 不動產廠房及設備, "1431"));
+		childAccounts.add(new Account("累計折舊 - 生產性植物", 不動產廠房及設備, "1467"));
+		childAccounts.add(new Account("累計折舊 - 出租設備", 不動產廠房及設備, "1452"));
+		childAccounts.add(new Account("累計減損 - 投資性不動產 - 土地", 投資性不動產, "1383"));
+		childAccounts.add(new Account("累計折舊 - 投資性不動產 - 建築物", 投資性不動產, "1387"));
+		childAccounts.add(new Account("投資性不動產 - 土地 - 成本", 投資性不動產, "1381"));
+		childAccounts.add(new Account("累計減損- 投資性不動產 - 建築物", 投資性不動產, "1388"));
+		childAccounts.add(new Account("投資性不動產 - 建築物 - 重估增值", 投資性不動產, "1385"));
+		childAccounts.add(new Account("投資性不動產 - 土地 - 累計公允價值變動數", 投資性不動產, "1382"));
+		childAccounts.add(new Account("投資性不動產 - 建築物 - 累計公允價值變動數", 投資性不動產, "1386"));
+		childAccounts.add(new Account("投資性不動產 - 建築物 - 成本", 投資性不動產, "1384"));
+
 
 		/* end creation of COA*/
 		
