@@ -312,6 +312,27 @@ public class PersonService {
 		childAccounts.add(new Account("累計攤銷 - 商標權", 無形資產及商譽, "1493"));
 		childAccounts.add(new Account("專利權 - 重估增值", 無形資產及商譽, "1502"));
 
+		AccountSubtype inventory = accountSubtypeRepo.findById((long) 4)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		Account 存貨 = new Account("存貨", inventory, "123");
+		topLevelAccounts.add(存貨);
+		childAccounts.add(new Account("商品存貨", 存貨, "1231"));
+		childAccounts.add(new Account("在製品", 存貨, "1237"));
+		childAccounts.add(new Account("委外加工", 存貨, "1238"));
+		childAccounts.add(new Account("在途原物料", 存貨, "1241"));
+		childAccounts.add(new Account("寄銷品", 存貨, "1232"));
+		childAccounts.add(new Account("原料", 存貨, "1239"));
+		childAccounts.add(new Account("農業產品", 存貨, "1243"));
+		childAccounts.add(new Account("備抵存貨跌價", 存貨, "1242"));
+		childAccounts.add(new Account("物料", 存貨, "1240"));
+		childAccounts.add(new Account("在建工程", 存貨, "1244"));
+		childAccounts.add(new Account("在途商品", 存貨, "1233"));
+		childAccounts.add(new Account("副產品", 存貨, "1236"));
+		childAccounts.add(new Account("備抵存貨跌價", 存貨, "1234"));
+		childAccounts.add(new Account("製成品", 存貨, "1235"));
+		
+		
+
 		/* end creation of COA*/
 		
 		//save accounts
