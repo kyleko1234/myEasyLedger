@@ -371,6 +371,36 @@ public class PersonService {
 		childAccounts.add(new Account("預付貨款", 預付款項, "1266"));
 		childAccounts.add(new Account("預付款項", 預付款項, "1261"));
 		childAccounts.add(new Account("其他預付費用", 預付款項, "1265"));
+		
+		AccountSubtype otherNonCurrentAssets = accountSubtypeRepo.findById((long) 10)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		Account 其他非流動資產 = new Account("其他非流動資產", otherNonCurrentAssets, "157 - 158");
+		topLevelAccounts.add(其他非流動資產);
+		childAccounts.add(new Account("備抵呆帳 - 長期應收關係人票據及款項", 其他非流動資產, "1588"));
+		childAccounts.add(new Account("預付設備款", 其他非流動資產, "1582"));
+		childAccounts.add(new Account("備抵呆帳 - 催收款項", 其他非流動資產, "1575"));
+		childAccounts.add(new Account("持有至到期日金融資產 - 非流動", 其他非流動資產, "135"));
+		childAccounts.add(new Account("同業往來", 其他非流動資產, "1585"));
+		childAccounts.add(new Account("以成本衡量之金融資產 - 非流動", 其他非流動資產, "133"));
+		childAccounts.add(new Account("人壽保險現金解約價值", 其他非流動資產, "1587"));
+		childAccounts.add(new Account("備供出售金融資產 - 非流動", 其他非流動資產, "132"));
+		childAccounts.add(new Account("無活絡市場之債務工具投資 - 非流動", 其他非流動資產, "134"));
+		childAccounts.add(new Account("生物資產 - 非流動", 其他非流動資產, "148"));
+		childAccounts.add(new Account("存出保證金 - 非流動", 其他非流動資產, "1583"));
+		childAccounts.add(new Account("遞延所得稅資產", 其他非流動資產, "156"));
+		childAccounts.add(new Account("採用權益法之投資", 其他非流動資產, "137"));
+		childAccounts.add(new Account("避險之衍生金融資產 - 非流動", 其他非流動資產, "136"));
+		childAccounts.add(new Account("備抵呆帳 - 催收關係人款項", 其他非流動資產, "1589"));
+		childAccounts.add(new Account("預付退休金", 其他非流動資產, "1581"));
+		childAccounts.add(new Account("預付投資款", 其他非流動資產, "1580"));
+		childAccounts.add(new Account("礦產資源淨額", 其他非流動資產, "147"));
+		childAccounts.add(new Account("其他非流動資產 - 其他", 其他非流動資產, "1586"));
+		childAccounts.add(new Account("備抵呆帳 - 長期應收票據及款項", 其他非流動資產, "1574"));
+		childAccounts.add(new Account("長期預付保險費", 其他非流動資產, "1579"));
+		childAccounts.add(new Account("透過損益按公允價值衡量之金融資產", 其他非流動資產, "131"));
+		childAccounts.add(new Account("長期預付租金", 其他非流動資產, "1578"));
+		childAccounts.add(new Account("業主 (股東) 往來", 其他非流動資產, "1584"));
+
 
 		/* end creation of COA*/
 		
