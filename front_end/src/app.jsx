@@ -171,7 +171,8 @@ class App extends React.Component {
         if (window.matchMedia) { //apparently some people still use safari 12
             try {
                 window.matchMedia('(prefers-color-scheme: dark)')
-                        .addEventListener('change', this.setColorSchemeToSystemPreference)
+                        .addEventListener('change', this.setColorSchemeToSystemPreference);
+                this.setColorSchemeToSystemPreference();
             } catch (error) {
                 console.log(error);
             }
