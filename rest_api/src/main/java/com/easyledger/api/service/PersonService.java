@@ -248,7 +248,7 @@ public class PersonService {
 		
 		/*create default COA */
 		AccountSubtype cashAndCashEquivalents = accountSubtypeRepo.findById((long) 1)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 1"));
 		Account 現金及約當現金 = new Account("現金及約當現金", cashAndCashEquivalents, "111");
 		topLevelAccounts.add(現金及約當現金);
 		childAccounts.add(new Account("庫存現金", 現金及約當現金, "1111"));
@@ -258,7 +258,7 @@ public class PersonService {
 		childAccounts.add(new Account("約當現金", 現金及約當現金, "1115"));
 		
 		AccountSubtype currentReceivables = accountSubtypeRepo.findById((long) 3)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 3"));
 		Account 應收帳款淨額 = new Account("應收帳款淨額", currentReceivables, "119");
 		topLevelAccounts.add(應收帳款淨額);
 		Account 應收票據淨額 = new Account("應收票據淨額", currentReceivables, "118");
@@ -282,7 +282,7 @@ public class PersonService {
 		childAccounts.add(new Account("其他應收票據 - 關係人", 應收票據淨額, "1187"));
 
 		AccountSubtype intangibleAssetsAndGoodwill = accountSubtypeRepo.findById((long) 9)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 9"));
 		Account 無形資產及商譽 = new Account("無形資產及商譽", intangibleAssetsAndGoodwill, "149 - 155");
 		topLevelAccounts.add(無形資產及商譽);
 		childAccounts.add(new Account("商譽 - 成本", 無形資產及商譽, "1541"));
@@ -313,7 +313,7 @@ public class PersonService {
 		childAccounts.add(new Account("專利權 - 重估增值", 無形資產及商譽, "1502"));
 
 		AccountSubtype inventory = accountSubtypeRepo.findById((long) 4)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 4"));
 		Account 存貨 = new Account("存貨", inventory, "123");
 		topLevelAccounts.add(存貨);
 		childAccounts.add(new Account("商品存貨", 存貨, "1231"));
@@ -332,7 +332,7 @@ public class PersonService {
 		childAccounts.add(new Account("製成品", 存貨, "1235"));
 		
 		AccountSubtype nonCurrentReceivables = accountSubtypeRepo.findById((long) 7)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 7"));
 		Account 非流動應收票據 = new Account("非流動應收票據 / 帳款", nonCurrentReceivables, "157");
 		topLevelAccounts.add(非流動應收票據);
 		childAccounts.add(new Account("長期應收票據及款項 - 關係人", 非流動應收票據, "1576"));
@@ -373,7 +373,7 @@ public class PersonService {
 		childAccounts.add(new Account("其他預付費用", 預付款項, "1265"));
 		
 		AccountSubtype otherNonCurrentAssets = accountSubtypeRepo.findById((long) 10)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 10"));
 		Account 其他非流動資產 = new Account("其他非流動資產", otherNonCurrentAssets, "157 - 158");
 		topLevelAccounts.add(其他非流動資產);
 		childAccounts.add(new Account("備抵呆帳 - 長期應收關係人票據及款項", 其他非流動資產, "1588"));
@@ -402,7 +402,7 @@ public class PersonService {
 		childAccounts.add(new Account("業主 (股東) 往來", 其他非流動資產, "1584"));
 
 		AccountSubtype propertyPlantEquipment = accountSubtypeRepo.findById((long) 8)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 8"));
 		Account 投資性不動產 = new Account("投資性不動產", propertyPlantEquipment, "138");
 		topLevelAccounts.add(投資性不動產);
 		Account 不動產廠房及設備 = new Account("不動產、廠房及設備", propertyPlantEquipment, "139 - 146");
@@ -447,7 +447,7 @@ public class PersonService {
 		childAccounts.add(new Account("投資性不動產 - 建築物 - 成本", 投資性不動產, "1384"));
 
 		AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
 		Account 直接人工 = new Account("直接人工", costOfSales, "514");
 		topLevelAccounts.add(直接人工);
 		Account 銷貨成本 = new Account("銷貨成本", costOfSales, "511");
@@ -518,7 +518,7 @@ public class PersonService {
 		childAccounts.add(new Account("分期付款銷貨成本", 銷貨成本, "5112"));
 
 		AccountSubtype depreciationAndAmortization = accountSubtypeRepo.findById((long) 30)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 30"));
 		Account 折舊及攤銷 = new Account("折舊及攤銷", depreciationAndAmortization);
 		topLevelAccounts.add(折舊及攤銷);
 		childAccounts.add(new Account("折舊", 折舊及攤銷, "6125"));
@@ -527,25 +527,25 @@ public class PersonService {
 		childAccounts.add(new Account("製造費用 - 各項耗竭及攤提", 折舊及攤銷, "5164"));
 
 		AccountSubtype expenseFromFinancing = accountSubtypeRepo.findById((long) 32)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 32"));
 		Account 金融活動之費用 = new Account("金融活動之費用", expenseFromFinancing);
 		topLevelAccounts.add(金融活動之費用);
 		childAccounts.add(new Account("兌換損失", 金融活動之費用, "7182"));
 		
 		AccountSubtype expenseFromInvesting = accountSubtypeRepo.findById((long) 31)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 31"));
 		Account 投資活動之費用 = new Account("投資活動之費用", expenseFromInvesting);
 		topLevelAccounts.add(投資活動之費用);
 		childAccounts.add(new Account("處分投資性不動產損失", 投資活動之費用, "7192"));
 		childAccounts.add(new Account("處分投資損失", 投資活動之費用, "7194"));
 
 		AccountSubtype interestExpense = accountSubtypeRepo.findById((long) 33)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 33"));
 		Account 利息費用 = new Account("利息費用", interestExpense, "715");
 		topLevelAccounts.add(利息費用);
 		
 		AccountSubtype nonRecurringItems = accountSubtypeRepo.findById((long) 35)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 35"));
 		Account 非經常性項目 = new Account("非經常性項目", nonRecurringItems);
 		topLevelAccounts.add(非經常性項目);
 		childAccounts.add(new Account("其他營業外費損", 非經常性項目, "724"));
@@ -555,26 +555,85 @@ public class PersonService {
 		childAccounts.add(new Account("減損損失", 非經常性項目, "721"));
 
 		AccountSubtype taxExpense = accountSubtypeRepo.findById((long) 34)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 34"));
 		Account 賦稅費用 = new Account("賦稅費用", taxExpense, "821");
 		topLevelAccounts.add(賦稅費用);
 		childAccounts.add(new Account("營業稅金", 賦稅費用));
 		childAccounts.add(new Account("營所稅金", 賦稅費用, "8211"));
 
 		AccountSubtype incomeFromFinancing = accountSubtypeRepo.findById((long) 26)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 26"));
 		Account 金融活動之收入 = new Account("金融活動之收入", incomeFromFinancing, "711, 718");
 		topLevelAccounts.add(金融活動之收入);
 		childAccounts.add(new Account("兌換利益", 金融活動之收入, "7181"));
 		childAccounts.add(new Account("利息收入", 金融活動之收入, "7111"));
 
 		AccountSubtype incomeFromInvesting = accountSubtypeRepo.findById((long) 25)
-				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 25"));
 		Account 投資活動之收入 = new Account("投資活動之收入", incomeFromInvesting, "714, 719");
 		topLevelAccounts.add(投資活動之收入);
 		childAccounts.add(new Account("處分投資利益", 投資活動之收入, "7193"));
 		childAccounts.add(new Account("股利收入", 投資活動之收入, "7141"));
 		childAccounts.add(new Account("處分投資性不動產利益", 投資活動之收入, "7191"));
+
+		AccountSubtype revenue = accountSubtypeRepo.findById((long) 24)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 24"));
+		Account 銷貨收入 = new Account ("銷貨收入", revenue, "411");
+		topLevelAccounts.add(銷貨收入);
+		Account 工程收入 = new Account ("工程收入", revenue, "413 - 423");
+		topLevelAccounts.add(工程收入);
+		Account 其他營業收入 = new Account ("其他營業收入", revenue, "414");
+		topLevelAccounts.add(其他營業收入);
+		Account 勞務收入 = new Account ("勞務收入", revenue, "412");
+		topLevelAccounts.add(勞務收入);
+		Account 營業外收益 = new Account ("營業外收益", revenue, "71, 72");
+		topLevelAccounts.add(營業外收益);
+
+		childAccounts.add(new Account("工程收入退回及折讓", 工程收入, "4232"));
+		childAccounts.add(new Account("工程收入", 工程收入, "4131"));
+		
+		childAccounts.add(new Account("採權益法認列之投資利益", 營業外收益, "7171"));
+		childAccounts.add(new Account("權利金收入", 營業外收益, "7131"));
+		childAccounts.add(new Account("處分不動產、廠房及設 備利益", 營業外收益, "7201"));
+		childAccounts.add(new Account("減損迴轉利益", 營業外收益, "722"));
+		childAccounts.add(new Account("其他營業外收益", 營業外收益, "723"));
+		childAccounts.add(new Account("租金收入", 營業外收益, "7121"));
+		childAccounts.add(new Account("透過損益按公允價值衡量之金融資產(負債)利益", 營業外收益, "7161"));
+
+		childAccounts.add(new Account("銷貨退回", 銷貨收入, "4113"));
+		childAccounts.add(new Account("銷貨收入", 銷貨收入, "4111"));
+		childAccounts.add(new Account("銷貨折讓", 銷貨收入, "4114"));
+		childAccounts.add(new Account("分期付款銷貨收入", 銷貨收入, "4112"));
+
+		AccountSubtype currentPayables = accountSubtypeRepo.findById((long) 11)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 11"));
+		Account 應付票據短期 = new Account("應付票據 - 短期", currentPayables, "216");
+		topLevelAccounts.add(應付票據短期);
+		Account 應付短期票券 = new Account("應付短期票券", currentPayables, "212");
+		topLevelAccounts.add(應付短期票券);
+		Account 流動應付帳款 = new Account("流動應付帳款", currentPayables, "217");
+		topLevelAccounts.add(流動應付帳款);
+		
+		childAccounts.add(new Account("應付商業本票", 應付短期票券, "2121"));
+		childAccounts.add(new Account("應付短期票券折價", 應付短期票券, "2124"));
+		childAccounts.add(new Account("銀行承兌匯票", 應付短期票券, "2122"));
+		childAccounts.add(new Account("其他應付短期票券", 應付短期票券, "2123"));
+		
+		childAccounts.add(new Account("短期應付票據 - 關係人", 應付票據短期, "2162"));
+		childAccounts.add(new Account("其他短期應付票據", 應付票據短期, "2163"));
+		childAccounts.add(new Account("短期應付票據", 應付票據短期, "2161"));
+
+		childAccounts.add(new Account("應付帳款", 流動應付帳款, "2171"));
+		childAccounts.add(new Account("應付帳款 - 關係人", 流動應付帳款, "2173"));
+		childAccounts.add(new Account("應付租賃款 - 流動", 流動應付帳款, "2172"));
+
+		AccountSubtype deferredTax = accountSubtypeRepo.findById((long) 15)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 15"));
+		Account 遞延所得稅 = new Account("遞延所得稅", deferredTax, "238");
+		topLevelAccounts.add(遞延所得稅);
+		childAccounts.add(new Account("遞延所得稅負債 - 土地增值稅", 遞延所得稅, "2381"));
+		childAccounts.add(new Account("遞延所得稅負債  所得稅", 遞延所得稅, "2382"));
+
 
 		/* end creation of COA*/
 		
