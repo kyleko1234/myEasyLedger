@@ -634,6 +634,95 @@ public class PersonService {
 		childAccounts.add(new Account("遞延所得稅負債 - 土地增值稅", 遞延所得稅, "2381"));
 		childAccounts.add(new Account("遞延所得稅負債  所得稅", 遞延所得稅, "2382"));
 
+		AccountSubtype longTermDebt = accountSubtypeRepo.findById((long) 17)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 17"));
+		Account 應付公司債 = new Account("應付公司債", longTermDebt, "234");
+		topLevelAccounts.add(應付公司債);
+		Account 長期借款 = new Account("長期借款", longTermDebt, "235");
+		topLevelAccounts.add(長期借款);
+		childAccounts.add(new Account("應付公司債溢(折)價", 應付公司債, "2342"));
+		childAccounts.add(new Account("應付公司債 - 長期", 應付公司債, "2341"));
+		
+		childAccounts.add(new Account("長期借款 - 員工", 長期借款, "2353"));
+		childAccounts.add(new Account("長期銀行借款", 長期借款, "2351"));
+		childAccounts.add(new Account("長期借款 - 業主", 長期借款, "2352"));
+		childAccounts.add(new Account("長期借款 - 關係人", 長期借款, "2354"));
+		childAccounts.add(new Account("長期借款 - 其他", 長期借款, "2355"));
+
+		AccountSubtype longTermPayables = accountSubtypeRepo.findById((long) 18)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 18"));
+		Account 長期應付票據及款項 = new Account("長期應付票據及款項", longTermPayables, "236");
+		topLevelAccounts.add(長期應付票據及款項);
+		childAccounts.add(new Account("其他長期應付款項", 長期應付票據及款項, "2365"));
+		childAccounts.add(new Account("長期應付帳款", 長期應付票據及款項, "2362"));
+		childAccounts.add(new Account("長期應付票據", 長期應付票據及款項, "2361"));
+		childAccounts.add(new Account("長期應付票據及款項 - 關係人", 長期應付票據及款項, "2364"));
+		childAccounts.add(new Account("應付租賃款 - 非流動", 長期應付票據及款項, "2363"));
+
+		AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 16)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 16"));
+		Account 其他應付款 = new Account("其他應付款", otherCurrentLiabilities, "218 - 221");
+		topLevelAccounts.add(其他應付款);
+		Account 其他流動負債 = new Account("其他流動負債", otherCurrentLiabilities, "225");
+		topLevelAccounts.add(其他流動負債);
+		Account 負債準備流動 = new Account("負債準備 - 流動", otherCurrentLiabilities, "224");
+		topLevelAccounts.add(負債準備流動);
+		
+		childAccounts.add(new Account("其他應付款 - 其他", 其他應付款, "2206"));
+		childAccounts.add(new Account("其他應付費用", 其他應付款, "2197"));
+		childAccounts.add(new Account("其他應付款 - 關係人", 其他應付款, "2200"));
+		childAccounts.add(new Account("應付董監事酬勞", 其他應付款, "2203"));
+		childAccounts.add(new Account("應付薪資", 其他應付款, "2191"));
+		childAccounts.add(new Account("應付建造合約款", 其他應付款, "218"));
+		childAccounts.add(new Account("本期所得稅負債", 其他應付款, "2211"));
+		childAccounts.add(new Account("應付利息", 其他應付款, "2193"));
+		childAccounts.add(new Account("其他應付款 - 股份基礎給付", 其他應付款, "2205"));
+		childAccounts.add(new Account("應付租金", 其他應付款, "2192"));
+		childAccounts.add(new Account("應付退休金費用", 其他應付款, "2196"));
+		childAccounts.add(new Account("應付土地房屋款", 其他應付款, "2198"));
+		childAccounts.add(new Account("應付股利", 其他應付款, "2201"));
+		childAccounts.add(new Account("應付設備款", 其他應付款, "2199"));
+		childAccounts.add(new Account("應付稅捐 - 其他", 其他應付款, "2195"));
+		childAccounts.add(new Account("應付營業稅", 其他應付款, "2194"));
+		childAccounts.add(new Account("應付員工酬勞", 其他應付款, "2202"));
+		childAccounts.add(new Account("銷項稅額", 其他應付款, "2204"));
+
+		childAccounts.add(new Account("預收收入 - 流動", 其他流動負債, "2222"));
+		childAccounts.add(new Account("透過損益按公允價值衡量之金融負債 - 流動", 其他流動負債, "213"));
+		childAccounts.add(new Account("暫收款", 其他流動負債, "2251"));
+		childAccounts.add(new Account("避險之衍生金融負債 - 流動", 其他流動負債, "214"));
+		childAccounts.add(new Account("以成本衡量之金融負債 - 流動", 其他流動負債, "215"));
+		childAccounts.add(new Account("其他預收款 - 流動", 其他流動負債, "2223"));
+		childAccounts.add(new Account("代收款", 其他流動負債, "2252"));
+		childAccounts.add(new Account("預收貨款 - 流動", 其他流動負債, "2221"));
+
+		childAccounts.add(new Account("除役、復原及修復成本之短期負債準備", 負債準備流動, "2243"));
+		childAccounts.add(new Account("虧損性合約之短期負債準備", 負債準備流動, "2242"));
+		childAccounts.add(new Account("其他短期負債準備", 負債準備流動, "2246"));
+		childAccounts.add(new Account("保證合約之短期負債準備", 負債準備流動, "2244"));
+		childAccounts.add(new Account("銷貨退回及折讓之短期負債準備", 負債準備流動, "2245"));
+		childAccounts.add(new Account("保固之短期負債準備", 負債準備流動, "2241"));
+
+		AccountSubtype otherNonCurrentLiabilities = accountSubtypeRepo.findById((long) 19)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 19"));
+		Account 負債準備非流動 = new Account("負債準備 - 非流動", otherNonCurrentLiabilities, "237");
+		topLevelAccounts.add(負債準備非流動);
+		Account 其他非流動負債 = new Account("其他非流動負債", otherNonCurrentLiabilities, "239");
+		topLevelAccounts.add(其他非流動負債);
+		
+		childAccounts.add(new Account("遞延收入", 其他非流動負債, "2391"));
+		childAccounts.add(new Account("同業往來", 其他非流動負債, "2394"));
+		childAccounts.add(new Account("存入保證金", 其他非流動負債, "2392"));
+		childAccounts.add(new Account("業主(股東)往來", 其他非流動負債, "2393"));
+		childAccounts.add(new Account("以成本衡量之金融負債 - 非流動", 其他非流動負債, "233"));
+		childAccounts.add(new Account("避險之衍生金融負債 - 非流動", 其他非流動負債, "232"));
+		childAccounts.add(new Account("其他非流動負債 - 股份基礎給付", 其他非流動負債, "2395"));
+		childAccounts.add(new Account("透過損益按公允價值 衡量之金融負債 - 非流動", 其他非流動負債, "231"));
+
+		childAccounts.add(new Account("除役、復原及修復成本之長期負債準備", 負債準備非流動, "2372"));
+		childAccounts.add(new Account("保固之長期負債準備", 負債準備非流動, "2374"));
+		childAccounts.add(new Account("保證合約之長期負債準備", 負債準備非流動, "2373"));
+		childAccounts.add(new Account("虧損性合約之長期負債準備", 負債準備非流動, "2371"));
 
 		/* end creation of COA*/
 		
