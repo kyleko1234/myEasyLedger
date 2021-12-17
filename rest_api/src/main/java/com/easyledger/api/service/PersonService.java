@@ -281,6 +281,37 @@ public class PersonService {
 		childAccounts.add(new Account("備抵呆帳 - 應收票據", 應收票據淨額, "1185"));
 		childAccounts.add(new Account("其他應收票據 - 關係人", 應收票據淨額, "1187"));
 
+		AccountSubtype intangibleAssetsAndGoodwill = accountSubtypeRepo.findById((long) 9)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		Account 無形資產及商譽 = new Account("無形資產及商譽", intangibleAssetsAndGoodwill, "149 - 155");
+		topLevelAccounts.add(無形資產及商譽);
+		childAccounts.add(new Account("商譽 - 成本", 無形資產及商譽, "1541"));
+		childAccounts.add(new Account("特許權 - 成本", 無形資產及商譽, "1511"));
+		childAccounts.add(new Account("電腦軟體 - 重估增值", 無形資產及商譽, "1532"));
+		childAccounts.add(new Account("累計減損 - 商標權", 無形資產及商譽, "1494"));
+		childAccounts.add(new Account("累計減損 - 商譽", 無形資產及商譽, "1543"));
+		childAccounts.add(new Account("著作權 - 成本", 無形資產及商譽, "1521"));
+		childAccounts.add(new Account("累計攤銷 - 其他無形資產", 無形資產及商譽, "1552"));
+		childAccounts.add(new Account("商標權 - 重估增值", 無形資產及商譽, "1492"));
+		childAccounts.add(new Account("累計攤銷 - 電腦軟體", 無形資產及商譽, "1533"));
+		childAccounts.add(new Account("電腦軟體 - 成本", 無形資產及商譽, "1531"));
+		childAccounts.add(new Account("累計攤銷 - 特許權", 無形資產及商譽, "1513"));
+		childAccounts.add(new Account("累計減損 - 其他無形資產", 無形資產及商譽, "1553"));
+		childAccounts.add(new Account("累計減損 - 特許權", 無形資產及商譽, "1514"));
+		childAccounts.add(new Account("累計減損 - 電腦軟體", 無形資產及商譽, "1534"));
+		childAccounts.add(new Account("累計攤銷 - 商譽", 無形資產及商譽, "1542"));
+		childAccounts.add(new Account("專利權 - 成本", 無形資產及商譽, "1501"));
+		childAccounts.add(new Account("著作權 - 重估增值", 無形資產及商譽, "1522"));
+		childAccounts.add(new Account("其他無形資產", 無形資產及商譽, "1551"));
+		childAccounts.add(new Account("累計減損 - 專利權", 無形資產及商譽, "1504"));
+		childAccounts.add(new Account("特許權 - 重估增值", 無形資產及商譽, "1512"));
+		childAccounts.add(new Account("累計攤銷 - 著作權", 無形資產及商譽, "1523"));
+		childAccounts.add(new Account("累計攤銷 - 專利權", 無形資產及商譽, "1503"));
+		childAccounts.add(new Account("商標權 - 成本", 無形資產及商譽, "1491"));
+		childAccounts.add(new Account("累計減損 - 著作權", 無形資產及商譽, "1524"));
+		childAccounts.add(new Account("累計攤銷 - 商標權", 無形資產及商譽, "1493"));
+		childAccounts.add(new Account("專利權 - 重估增值", 無形資產及商譽, "1502"));
+
 		/* end creation of COA*/
 		
 		//save accounts
