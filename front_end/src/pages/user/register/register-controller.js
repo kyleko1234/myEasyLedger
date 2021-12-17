@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import {PageSettings} from '../../config/page-settings.js';
-import {API_BASE_URL, LOCALE_OPTIONS, CURRENCY_OPTIONS} from '../../utils/constants.js';
+import {PageSettings} from '../../../config/page-settings.js';
+import {API_BASE_URL, LOCALE_OPTIONS, CURRENCY_OPTIONS} from '../../../utils/constants.js';
 import NewAccountForm from './new-account-form.js';
 import FirstOrganizationForm from './first-organization-form.js';
 import RegistrationSuccessful from './registration-successful.js';
 
-function RegisterV3Render(props) {
+function RegisterController(props) {
     //required props: history
     const appContext = React.useContext(PageSettings);
     const axiosRegistrationInstance = axios.create();
@@ -93,4 +93,4 @@ function RegisterV3Render(props) {
     )
 }
 
-export default RegisterV3Render;
+export default RegisterController;

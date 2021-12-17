@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import { PageSettings } from '../../config/page-settings';
-import { loginV3Text } from '../../utils/i18n/login-v3-text';
+import { PageSettings } from '../../../config/page-settings';
+import { loginV3Text } from '../../../utils/i18n/login-v3-text';
 
 function ResetSuccess(props) {
     //optional props: className

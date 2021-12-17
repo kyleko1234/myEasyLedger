@@ -7,7 +7,6 @@ import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
-import { number } from 'prop-types';
 
 /**
  * INCOME STATEMENT FORMAT

@@ -1,10 +1,8 @@
 import React from 'react';
-import { withRouter, Route, Link} from 'react-router-dom';
+import { withRouter, Route } from 'react-router-dom';
 import { PageSettings } from '../../../config/page-settings.js';
 import LoginContent from './login-content.js';
-import { loginV3Text } from '../../../utils/i18n/login-v3-text';
-import ForgotPassword from '../forgot-password.js';
-import {LOCALE_OPTIONS} from '../../../utils/constants.js';
+import ForgotPassword from './forgot-password.js';
 import LoginPageSkeleton from '../components/login-page-skeleton.js';
 //Login page
 class LoginPage extends React.Component {

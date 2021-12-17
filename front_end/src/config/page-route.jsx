@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router';
 
 import LoginPage from '../pages/user/login/login-page.js';
-import RegisterV3 from './../pages/user/register-v3.js';
+import RegisterPage from '../pages/user/register/register-page.js';
 
 import ChartOfAccounts from '../pages/chart-of-accounts/chart-of-accounts.js';
 import Dashboard from './../pages/dashboard/dashboard.js';
@@ -20,7 +20,7 @@ import NetWorthReport from '../pages/reports/net-worth-report.js';
 import IncomeExpenseReport from '../pages/reports/income-expense-report.js';
 import CashFlowReport from '../pages/reports/cash-flow-report.js';
 import GeneralJournal from '../pages/journals/enterprise/general-journal.jsx';
-import Verification from '../pages/verification/verification.js';
+import VerificationPage from '../pages/verification/verification-page.js';
 import DefaultLandingPage from '../pages/default/default-landing-page.js';
 import Transactions from '../pages/journals/personal/transactions.js';
 import AcceptInvitationPage from '../pages/user/invitation/accept-invitation-page.js';
@@ -39,7 +39,7 @@ const routes = [
   {
     path: '/user/register',
     title: 'Register',
-    component: RegisterV3,
+    component: RegisterPage,
   },
   {
     path: '/journals',
@@ -146,7 +146,7 @@ const routes = [
   {
     path: '/verification/:verificationToken/:locale',
     title: 'Verification',
-    component: Verification,
+    component: VerificationPage,
   },
   {
     path: '/transactions',

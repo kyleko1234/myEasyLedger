@@ -1,9 +1,10 @@
 import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import { PageSettings } from '../../config/page-settings';
-import { API_BASE_URL } from '../../utils/constants';
-import {loginV3Text} from '../../utils/i18n/login-v3-text';
+import { PageSettings } from '../../../config/page-settings';
+import { API_BASE_URL } from '../../../utils/constants';
+import {loginV3Text} from '../../../utils/i18n/login-v3-text';
 import {Alert} from 'reactstrap';
+import LoadingSpinner from '../../../components/misc/loading-spinner';
 
 
 function VerifyEmail(props) {
@@ -69,12 +70,8 @@ function VerifyEmail(props) {
                 <br/>
                 <Link replace className="text-primary" to="#" onClick={resendCode}>{loginV3Text[appContext.locale]["Click here to send a new code."]}</Link>
             </p>
-            {errorAlert
-                ? <Alert color="danger">{loginV3Text[appContext.locale][errorMessage]}</Alert>
-                : null}
-            {successAlert
-                ? <Alert color="success">{loginV3Text[appContext.locale]["A new code has been sent to your email!"]}</Alert>
-                : null}
+            <Alert isOpen={errorAlert} color="danger">{loginV3Text[appContext.locale][errorMessage]}</Alert>
+            <Alert isOpen={successAlert} color="success">{loginV3Text[appContext.locale]["A new code has been sent to your email!"]}</Alert>
             <form onSubmit={event => handleSubmit(event)} className="mb-5 pb-5">
                 <div className="form-group mb-3">
                     <input type="text" required className="form-control-lg form-control" placeholder={loginV3Text[appContext.locale]["Reset Password Code"]} value={props.resetPasswordCode} onChange={event => props.setResetPasswordCode(event.target.value)}/>
@@ -85,8 +82,9 @@ function VerifyEmail(props) {
                     </button>
                     <button className="btn btn-lg btn-primary width-175" type="submit" onClick={handleSubmit}>
                         {loading
-                        ? <i className="fas fa-circle-notch fa-spin"></i> 
-                        : loginV3Text[appContext.locale]["Submit"]}
+                            ? <LoadingSpinner />
+                            : loginV3Text[appContext.locale]["Submit"]
+                        }
                     </button>
                 </div>
             </form>
