@@ -584,6 +584,10 @@ a.tr:hover {
     font-weight: 600 !important;
 }
 
+.font-weight-semibold {
+    font-weight: 600 !important;
+}
+
 .bg-white-hover {
     background-color: #f3f3f3 !important;
 }
