@@ -453,15 +453,15 @@ public class PersonService {
 		Account 銷貨成本 = new Account("銷貨成本", costOfSales, "511");
 		topLevelAccounts.add(銷貨成本);
 		Account 製造費用 = new Account("製造費用", costOfSales, "515 - 516");
-		topLevelAccounts.add(直接人工);
+		topLevelAccounts.add(製造費用);
 		Account 進料 = new Account("進料", costOfSales, "513");
-		topLevelAccounts.add(直接人工);
+		topLevelAccounts.add(進料);
 		Account 營業費用 = new Account("營業費用", costOfSales, "611 - 613");
-		topLevelAccounts.add(直接人工);
+		topLevelAccounts.add(營業費用);
 		Account 勞務成本 = new Account("勞務成本", costOfSales, "561");
-		topLevelAccounts.add(直接人工);
+		topLevelAccounts.add(勞務成本);
 		Account 進貨 = new Account("進貨", costOfSales, "512");
-		topLevelAccounts.add(直接人工);
+		topLevelAccounts.add(進貨);
 
 		childAccounts.add(new Account("捐贈", 營業費用, "6122"));
 		childAccounts.add(new Account("薪資支出", 營業費用, "6111"));

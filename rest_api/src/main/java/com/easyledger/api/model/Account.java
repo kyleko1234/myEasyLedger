@@ -182,11 +182,11 @@ public class Account {
 	@JoinColumn(name = "organization_id")
 	private Organization organization;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "parent_account_id")
 	private Account parentAccount;
 	
-	@OneToMany(mappedBy = "parentAccount", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "parentAccount", cascade = CascadeType.REMOVE)
 	@JsonIgnore
 	private Set<Account> childAccounts = new HashSet<Account>();
 	

@@ -32,6 +32,7 @@ export const accountDetailsEditorText = {
         "Cannot delete this category.": "Cannot delete this category.",
         "Please remove all line items and child categories from this category and try again." : "Please remove all line items and child categories from this category and try again.",
         "Initial Account Value": "Initial Account Value",
+        "Display Order": "Display Order",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "Cash and cash equivalents", 
@@ -146,6 +147,7 @@ export const accountDetailsEditorText = {
         "Interest expense": "利息費用",
         "Tax expense": "賦稅費用",
         "Non-recurring and extraordinary items": "非經常性項目",
-        
+        "Display Order": "TRANSLATION",
+
     }
 }

@@ -261,23 +261,24 @@ function AccountDetailsEditor(props) {
                                 />
                             </div>
                         </div>
-                        {appContext.isEnterprise? 
-                            <div className="form-group row">
-                                <label className="col-form-label col-md-4">
-                                    {accountDetailsEditorText[appContext.locale]["Account Code"]}
-                                </label>
-                                <div className="col-md-8">
-                                    <input
-                                        disabled={appContext.currentPermissionTypeId < 2 ? true : false}
-                                        className="form-control"
-                                        value={accountCodeInput}
-                                        onChange={event => {
-                                            setAccountCodeInput(event.target.value);
-                                        }}
-                                    />
-                                </div>
+                        <div className="form-group row">
+                            <label className="col-form-label col-md-4">
+                                {appContext.isEnterprise 
+                                    ? accountDetailsEditorText[appContext.locale]["Account Code"]
+                                    : accountDetailsEditorText[appContext.locale]["Display Order"]
+                                }
+                            </label>
+                            <div className="col-md-8">
+                                <input
+                                    disabled={appContext.currentPermissionTypeId < 2 ? true : false}
+                                    className="form-control"
+                                    value={accountCodeInput}
+                                    onChange={event => {
+                                        setAccountCodeInput(event.target.value);
+                                    }}
+                                />
                             </div>
-                        : null }
+                        </div>
                     </form>
                     <div className="form-group row">
                         <label className="col-form-label col-md-4">
