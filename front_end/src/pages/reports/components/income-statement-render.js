@@ -8,6 +8,7 @@ import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
 import StripedRow from '../../../components/tables/striped-row';
+import LoadingSpinner from '../../../components/misc/loading-spinner';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -347,11 +348,12 @@ function IncomeStatementRender() {
                             })}
                         </div>
                         {datesToRequest.length < 3
-                        ?   <div className="mb-2">
-                                <Link replace to="#" onClick={handleCompareButton} className="text-decoration-none">
-                                <i className="ion ion-md-add"></i> {incomeStatementRenderText[appContext.locale]["Compare"]}                            </Link>
-                            </div>
-                        : null}
+                            ?   <div className="mb-2">
+                                    <Link replace to="#" onClick={handleCompareButton} className="text-decoration-none">
+                                    <i className="ion ion-md-add"></i> {incomeStatementRenderText[appContext.locale]["Compare"]}                            </Link>
+                                </div>
+                            : null
+                        }
                         <div className="custom-control custom-switch">
                             <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
                             <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
@@ -384,17 +386,21 @@ function IncomeStatementRender() {
                     </div>
                 </div>
                 <div>
-                    {(loading || !incomeStatementObjects.length) ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                        <div>
-                            {!(incomeStatementObjects[0].accountBalances.filter(account => account.accountSubtypeId === incomeStatementObjects[0].revenueSubtypeId).length) ? null :
-                                <>
-                                    <div className="striped-row font-weight-600">{incomeStatementRenderText[appContext.locale]["Revenue"]}</div>
+                    {(loading || !incomeStatementObjects.length) 
+                        ? <LoadingSpinner big />
+                        : <div>
+                            {!(incomeStatementObjects[0].accountBalances.filter(account => account.accountSubtypeId === incomeStatementObjects[0].revenueSubtypeId).length) 
+                                ? null 
+                                : <>
+                                    <StripedRow className="font-weight-600">
+                                        {incomeStatementRenderText[appContext.locale]["Revenue"]}
+                                    </StripedRow>
                                     {incomeStatementObjects[0].accountBalances
                                         .filter(account => account.accountSubtypeId === incomeStatementObjects[0].revenueSubtypeId)
                                         .map(account => {
                                             return (
                                                 <React.Fragment key={account.accountId}>
-                                                    <div className="striped-row justify-content-between indent">
+                                                    <StripedRow className="justify-content-between indent">
                                                         <div>{account.accountName}</div>
                                                         <div className="text-right d-flex">
                                                             {incomeStatementObjects.map((incomeStatement, i) => {
@@ -405,13 +411,13 @@ function IncomeStatementRender() {
                                                                 )
                                                             })}
                                                         </div>
-                                                    </div>
-                                                    {detailedView ?
-                                                        incomeStatementObjects[0].accountBalances
+                                                    </StripedRow>
+                                                    {detailedView 
+                                                        ? incomeStatementObjects[0].accountBalances
                                                             .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                             .map(childAccount => {
                                                                 return (
-                                                                    <div key={childAccount.accountId} className="striped-row justify-content-between indent-2">
+                                                                    <StripedRow key={childAccount.accountId} className="justify-content-between indent-2">
                                                                         <div>{childAccount.accountName}</div>
                                                                         <div className="text-right d-flex">
                                                                             {incomeStatementObjects.map((incomeStatement, i) => {
@@ -422,15 +428,16 @@ function IncomeStatementRender() {
                                                                                 )
                                                                             })}
                                                                         </div>
-                                                                    </div>
+                                                                    </StripedRow>
                                                                 )
                                                             })
-                                                        : null}
+                                                        : null
+                                                    }
                                                 </React.Fragment>
                                             )
                                         })
                                     }
-                                    <div className="striped-row justify-content-between font-weight-600">
+                                    <StripedRow className="justify-content-between font-weight-600">
                                         <div>{incomeStatementRenderText[appContext.locale]["Total revenue"]}</div>
                                         <div className="text-right d-flex">
                                             {incomeStatementObjects.map((incomeStatement, i) => {
@@ -441,19 +448,21 @@ function IncomeStatementRender() {
                                                 )
                                             })}
                                         </div>
-                                    </div>
-                                    <div className="striped-row">
+                                    </StripedRow>
+                                    <StripedRow>
                                         <div className="invisible">{/** empty row */} empty row </div>
-                                    </div>
+                                    </StripedRow>
                                 </>
                             }
-                            <div className="striped-row font-weight-600">{incomeStatementRenderText[appContext.locale]["Cost of sales"]}</div>
+                            <StripedRow className="font-weight-600">
+                                {incomeStatementRenderText[appContext.locale]["Cost of sales"]}
+                            </StripedRow>
                             {incomeStatementObjects[0].accountBalances
                                 .filter(account => account.accountSubtypeId === incomeStatementObjects[0].costOfSalesSubtypeId)
                                 .map(account => {
                                     return (
                                         <React.Fragment key={account.accountId}>
-                                            <div className="striped-row justify-content-between indent">
+                                            <StripedRow className="justify-content-between indent">
                                                 <div>{account.accountName}</div>
                                                 <div className="text-right d-flex">
                                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -464,13 +473,13 @@ function IncomeStatementRender() {
                                                         )
                                                     })}
                                                 </div>
-                                            </div>
-                                            {detailedView ?
-                                                incomeStatementObjects[0].accountBalances
+                                            </StripedRow>
+                                            {detailedView
+                                                ? incomeStatementObjects[0].accountBalances
                                                     .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                     .map(childAccount => {
                                                         return (
-                                                            <div key={childAccount.accountId} className="striped-row justify-content-between indent-2">
+                                                            <StripedRow key={childAccount.accountId} className="justify-content-between indent-2">
                                                                 <div>{childAccount.accountName}</div>
                                                                 <div className="text-right d-flex">
                                                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -481,16 +490,17 @@ function IncomeStatementRender() {
                                                                         )
                                                                     })}
                                                                 </div>
-                                                            </div>
+                                                            </StripedRow>
                                                         )
                                                     })
-                                                : null}
+                                                : null
+                                            }
                                         </React.Fragment>
                                     )
 
                                 })
                             }
-                            <div className="striped-row justify-content-between font-weight-600 ">
+                            <StripedRow className="justify-content-between font-weight-600 ">
                                 <div>{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div>
                                 <div className="text-right d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -501,13 +511,12 @@ function IncomeStatementRender() {
                                         )
                                     })}
                                 </div>
-                            </div>
-
-                            <div className="striped-row">
+                            </StripedRow>
+                            <StripedRow>
                                 <div className="invisible">{/** empty row */} empty row </div>
-                            </div>
+                            </StripedRow>
 
-                            <div className="striped-row justify-content-between font-weight-600">
+                            <StripedRow className="justify-content-between font-weight-600">
                                 <div>{incomeStatementRenderText[appContext.locale]["Gross profit"]}</div>
                                 <div className="text-right d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -518,18 +527,22 @@ function IncomeStatementRender() {
                                         )
                                     })}
                                 </div>
-                            </div>
+                            </StripedRow>
 
-                            <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
+                            <StripedRow>
+                                <div className="invisible">{/* empty row */} empty row</div>
+                            </StripedRow>
 
-                            <div className="striped-row font-weight-600">{incomeStatementRenderText[appContext.locale]["Operating expenses"]}</div>
+                            <StripedRow className="font-weight-600">
+                                {incomeStatementRenderText[appContext.locale]["Operating expenses"]}
+                            </StripedRow>
                             {renderRow("totalResearchAndDevelopment", "Research and development", 1)}
                             {renderDetails(incomeStatementObjects[0].researchAndDevelopmentSubtypeId, 5, 2)}
                             {renderRow("totalSalesGeneralAndAdministration", "Sales, general, and administration", 1)}
                             {renderDetails(incomeStatementObjects[0].sgaSubtypeId, 5, 2)}
                             {renderRow("totalDepreciationAndAmortization", "Depreciation and amortization", 1)}
                             {renderDetails(incomeStatementObjects[0].depreciationAmortizationSubtypeId, 5, 2)}
-                            <div className="striped-row justify-content-between font-weight-600">
+                            <StripedRow className="justify-content-between font-weight-600">
                                 <div>{incomeStatementRenderText[appContext.locale]["Total operating expenses"]}</div>
                                 <div className="text-right d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -540,10 +553,11 @@ function IncomeStatementRender() {
                                         )
                                     })}
                                 </div>
-                            </div>
-                            <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
-                            
-                            <div className="striped-row justify-content-between font-weight-600">
+                            </StripedRow>
+                            <StripedRow>
+                                <div className="invisible">{/* empty row */} empty row</div>
+                            </StripedRow>
+                            <StripedRow className="justify-content-between font-weight-600">
                                 <div>{incomeStatementRenderText[appContext.locale]["Operating income"]}</div>
                                 <div className="text-right d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -554,13 +568,16 @@ function IncomeStatementRender() {
                                         )
                                     })}
                                 </div>
-                            </div>
-                            <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
-
-                            <div className="striped-row font-weight-600"><div>{incomeStatementRenderText[appContext.locale]["Other income/expense"]}</div></div>
-
-                            {(hasZeroAmountsForFieldInAllDateRanges("incomeFromInvesting") && hasZeroAmountsForFieldInAllDateRanges("expenseFromInvesting")) ? null : 
-                                <div className="striped-row justify-content-between indent">
+                            </StripedRow>
+                            <StripedRow>
+                                <div className="invisible">{/* empty row */} empty row</div>
+                            </StripedRow>
+                            <StripedRow className="font-weight-600">
+                                <div>{incomeStatementRenderText[appContext.locale]["Other income/expense"]}</div>
+                            </StripedRow>
+                            {(hasZeroAmountsForFieldInAllDateRanges("incomeFromInvesting") && hasZeroAmountsForFieldInAllDateRanges("expenseFromInvesting")) 
+                                ? null 
+                                : <StripedRow className="justify-content-between indent">
                                     <div>{incomeStatementRenderText[appContext.locale]["Net income/expense from investing activities"]}</div>
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
@@ -571,12 +588,12 @@ function IncomeStatementRender() {
                                             )
                                         })}
                                     </div>
-                                </div>
+                                </StripedRow>
                             }
-                            {renderDetails(incomeStatementObjects[0].incomeFromInvestingSubtypeId, 4, 1)}
-                            {renderDetails(incomeStatementObjects[0].expenseFromInvestingSubtypeId, 4, 1) /** Use a negative number for expenses here since it is a component of other income/expense net*/}
+                            {renderDetails(incomeStatementObjects[0].incomeFromInvestingSubtypeId, 4, 2)}
+                            {renderDetails(incomeStatementObjects[0].expenseFromInvestingSubtypeId, 4, 2) /** Use a negative number for expenses here since it is a component of other income/expense net*/}
                             {(hasZeroAmountsForFieldInAllDateRanges("incomeFromFinancing") && hasZeroAmountsForFieldInAllDateRanges("expenseFromFinancing")) ? null : 
-                                <div className="striped-row justify-content-between indent">
+                                <StripedRow className="justify-content-between indent">
                                     <div>{incomeStatementRenderText[appContext.locale]["Net income/expense from financing activities"]}</div>
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
@@ -587,11 +604,11 @@ function IncomeStatementRender() {
                                             )
                                         })}
                                     </div>
-                                </div>
+                                </StripedRow>
                             }
-                            {renderDetails(incomeStatementObjects[0].incomeFromFinancingSubtypeId, 4, 1)}
-                            {renderDetails(incomeStatementObjects[0].expenseFromFinancingSubtypeId, 4, 1) /** similar reason for using the wrong accountTypeId here as above */}
-                            <div className="striped-row justify-content-between font-weight-600">
+                            {renderDetails(incomeStatementObjects[0].incomeFromFinancingSubtypeId, 4, 2)}
+                            {renderDetails(incomeStatementObjects[0].expenseFromFinancingSubtypeId, 4, 2) /** similar reason for using the wrong accountTypeId here as above */}
+                            <StripedRow className="justify-content-between font-weight-600">
                                 <div>{incomeStatementRenderText[appContext.locale]["Total other income/expense, net"]}</div>
                                 <div className="text-right d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -602,10 +619,11 @@ function IncomeStatementRender() {
                                         )
                                     })}
                                 </div>
-                            </div>
-                            <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
-
-                            <div className="striped-row justify-content-between font-weight-600">
+                            </StripedRow>
+                            <StripedRow>
+                                <div className="invisible">{/* empty row */} empty row</div>
+                            </StripedRow>
+                            <StripedRow className=" justify-content-between font-weight-600">
                                 <div>{incomeStatementRenderText[appContext.locale]["Earnings before interest and tax"]}</div>
                                 <div className="text-right d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -616,8 +634,8 @@ function IncomeStatementRender() {
                                         )
                                     })}
                                 </div>
-                            </div>
-                            <div className="striped-row justify-content-between">
+                            </StripedRow>
+                            <StripedRow className="justify-content-between">
                                 <div>{incomeStatementRenderText[appContext.locale]["Interest expense"]}</div>
                                 <div className="text-right d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -628,8 +646,9 @@ function IncomeStatementRender() {
                                         )
                                     })}
                                 </div>
-                            </div>
-                            <div className="striped-row justify-content-between font-weight-600">
+                            </StripedRow>
+                            {renderDetails(incomeStatementObjects[0].interestExpenseSubtypeId, 5, 1)}
+                            <StripedRow className="justify-content-between font-weight-600">
                                 <div>{incomeStatementRenderText[appContext.locale]["Earnings before tax"]}</div>
                                 <div className="text-right d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -640,8 +659,8 @@ function IncomeStatementRender() {
                                         )
                                     })}
                                 </div>
-                            </div>
-                            <div className="striped-row justify-content-between">
+                            </StripedRow>
+                            <StripedRow className="justify-content-between">
                                 <div>{incomeStatementRenderText[appContext.locale]["Tax expense"]}</div>
                                 <div className="text-right d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -652,11 +671,15 @@ function IncomeStatementRender() {
                                         )
                                     })}
                                 </div>
-                            </div>
-                            <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
-                            {hasZeroAmountsForFieldInAllDateRanges("nonRecurringAndExtraordinaryItems") ? null : 
-                                <>
-                                    <div className="striped-row justify-content-between">
+                            </StripedRow>
+                            {renderDetails(incomeStatementObjects[0].taxExpenseSubtypeId, 5, 1)}
+                            <StripedRow>
+                                <div className="invisible">{/* empty row */} empty row</div>
+                            </StripedRow>
+                            {hasZeroAmountsForFieldInAllDateRanges("nonRecurringAndExtraordinaryItems") 
+                                ? null 
+                                : <>
+                                    <StripedRow className=" justify-content-between">
                                         <div>{incomeStatementRenderText[appContext.locale]["Non-recurring and extraordinary items"]}</div>
                                         <div className="text-right d-flex">
                                             {incomeStatementObjects.map((incomeStatement, i) => {
@@ -667,12 +690,15 @@ function IncomeStatementRender() {
                                                 )
                                             })}
                                         </div>
-                                    </div>
-                                    <div className="striped-row"><div className="invisible">{/* empty row */} empty row</div></div>
+                                    </StripedRow>
+                                        {renderDetails(incomeStatementObjects[0].nonRecurringSubtypeId, 5, 1)}
+                                    <StripedRow className="striped-row">
+                                        <div className="invisible">{/* empty row */} empty row</div>
+                                    </StripedRow>
                                 </>
                             }
                     
-                            <div className="striped-row justify-content-between font-weight-600">
+                            <StripedRow className="justify-content-between font-weight-600">
                                 <div>{incomeStatementRenderText[appContext.locale]["Net income"]}</div>
                                 <div className="text-right d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
@@ -683,7 +709,7 @@ function IncomeStatementRender() {
                                         )
                                     })}
                                 </div>
-                            </div>
+                            </StripedRow>
                         </div>
                     }
                 </div>
