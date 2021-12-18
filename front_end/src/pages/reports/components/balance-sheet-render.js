@@ -139,7 +139,7 @@ function BalanceSheetRender() {
                                 return(
                                     <div className="mb-2" key={i}>
                                         { endDatesToRequest.length > 1 
-                                        ?   <div className="font-weight-600 my-1 d-flex align-items-center">
+                                        ?   <div className="font-weight-semibold my-1 d-flex align-items-center">
                                                 {balanceSheetRenderText[appContext.locale]["Date range"] + " " + (i + 1)}
                                                 <button className="btn btn-light py-0 px-1 mx-1 border-0" onClick={() => handleRemoveDateRangeButton(i)}><i className="ion ion-md-close fa-fw"></i></button>
                                             </div> 
@@ -178,7 +178,7 @@ function BalanceSheetRender() {
                 </CardBody>
             </Card>
             <div>
-                <div className="d-flex justify-content-between font-weight-600 text-right">
+                <div className="d-flex justify-content-between font-weight-semibold text-right">
                     <div>{/*empty div for spacing*/}</div>
                     <div className="text-right d-flex">
                         {columnLabels.map((columnLabel, i) => {
@@ -196,10 +196,10 @@ function BalanceSheetRender() {
                     {(loading || !balanceSheetObjects.length ) 
                         ? <LoadingSpinner big /> 
                         : <> {/**Render balance sheet assets */}
-                            <StripedRow className="striped-row font-weight-600">
+                            <StripedRow className="striped-row font-weight-semibold">
                                 {balanceSheetRenderText[appContext.locale]["Assets"]}
                             </StripedRow>
-                            <StripedRow className="striped-row font-weight-600 indent">
+                            <StripedRow className="striped-row font-weight-semibold indent">
                                 {balanceSheetRenderText[appContext.locale]["Current assets"]}
                             </StripedRow>
                             {balanceSheetObjects[0].balanceSheetAssets.currentAssetsSubtypeBalances.map(subtypeBalance => {
@@ -278,7 +278,7 @@ function BalanceSheetRender() {
                                     </React.Fragment>
                                 )
                             })}
-                                <StripedRow className="font-weight-600 indent justify-content-between">
+                                <StripedRow className="font-weight-semibold indent justify-content-between">
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Total current assets"]}
                                     </div>
@@ -292,7 +292,7 @@ function BalanceSheetRender() {
                                         })}
                                     </div>
                                 </StripedRow>
-                                <StripedRow className="font-weight-600 indent">
+                                <StripedRow className="font-weight-semibold indent">
                                     {balanceSheetRenderText[appContext.locale]["Non-current assets"]}
                                 </StripedRow>
                                 {balanceSheetObjects[0].balanceSheetAssets.nonCurrentAssetsSubtypeBalances.map(subtypeBalance => {
@@ -361,7 +361,7 @@ function BalanceSheetRender() {
                                         </React.Fragment>
                                     )
                                 })}
-                                <StripedRow className="justify-content-between font-weight-600 indent">
+                                <StripedRow className="justify-content-between font-weight-semibold indent">
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Total non-current assets"]}
                                     </div>
@@ -375,7 +375,7 @@ function BalanceSheetRender() {
                                         })}
                                     </div>
                                 </StripedRow>
-                                <StripedRow className="justify-content-between font-weight-600">
+                                <StripedRow className="justify-content-between font-weight-semibold">
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Total assets"]}
                                     </div>
@@ -397,10 +397,10 @@ function BalanceSheetRender() {
                     {(loading || !balanceSheetObjects.length ) 
                         ? <LoadingSpinner big />
                         : <> {/**Render balance sheet liabilities */}
-                            <StripedRow className="font-weight-600">
+                            <StripedRow className="font-weight-semibold">
                                 {balanceSheetRenderText[appContext.locale]["Liabilities"]}
                             </StripedRow>
-                            <StripedRow className="font-weight-600 indent">
+                            <StripedRow className="font-weight-semibold indent">
                                 {balanceSheetRenderText[appContext.locale]["Current liabilities"]}
                             </StripedRow>
                             {/** render current liabilities */}
@@ -470,7 +470,7 @@ function BalanceSheetRender() {
                                     </React.Fragment>
                                 )
                             })}
-                            <StripedRow className="font-weight-600 indent justify-content-between">
+                            <StripedRow className="font-weight-semibold indent justify-content-between">
                                 <div>
                                     {balanceSheetRenderText[appContext.locale]["Total current liabilities"]}
                                 </div>
@@ -484,7 +484,7 @@ function BalanceSheetRender() {
                                     })}
                                 </div>
                             </StripedRow>
-                            <StripedRow className="font-weight-600 indent">
+                            <StripedRow className="font-weight-semibold indent">
                                 {balanceSheetRenderText[appContext.locale]["Non-current liabilities"]}
                             </StripedRow>
                             {balanceSheetObjects[0].balanceSheetLiabilities.nonCurrentLiabilitiesSubtypeBalances.map(subtypeBalance => {
@@ -553,7 +553,7 @@ function BalanceSheetRender() {
                                     </React.Fragment>
                                 )
                             })}
-                            <StripedRow className="justify-content-between font-weight-600 indent">
+                            <StripedRow className="justify-content-between font-weight-semibold indent">
                                 <div>
                                     {balanceSheetRenderText[appContext.locale]["Total non-current liabilities"]}
                                 </div>
@@ -567,7 +567,7 @@ function BalanceSheetRender() {
                                     })}
                                 </div>
                             </StripedRow>
-                            <StripedRow className="justify-content-between font-weight-600">
+                            <StripedRow className="justify-content-between font-weight-semibold">
                                 <div>
                                     {balanceSheetRenderText[appContext.locale]["Total liabilities"]}
                                 </div>
@@ -589,7 +589,7 @@ function BalanceSheetRender() {
                     {(loading || !balanceSheetObjects.length )
                         ? <LoadingSpinner big />
                         : <>
-                            <StripedRow className="striped-row font-weight-600">
+                            <StripedRow className="striped-row font-weight-semibold">
                                 {balanceSheetRenderText[appContext.locale]["Equity"]}
                             </StripedRow>
                             {/**Render balance sheet equity */}
@@ -661,7 +661,7 @@ function BalanceSheetRender() {
                                     </React.Fragment>
                                 )
                             })}
-                            <StripedRow className="indent font-weight-600">
+                            <StripedRow className="indent font-weight-semibold">
                                     {balanceSheetRenderText[appContext.locale]["Retained Earnings"]}
                             </StripedRow>
                             <StripedRow className="justify-content-between indent-2">
@@ -706,7 +706,7 @@ function BalanceSheetRender() {
                                     })}
                                 </div>
                             </StripedRow>
-                            <StripedRow className="justify-content-between indent-2 font-weight-600">
+                            <StripedRow className="justify-content-between indent-2 font-weight-semibold">
                                 <div>
                                     {balanceSheetRenderText[appContext.locale]["Ending balances of retained earnings"]}
                                 </div>
@@ -720,7 +720,7 @@ function BalanceSheetRender() {
                                     })}
                                 </div>
                             </StripedRow>
-                            <StripedRow className="font-weight-600 justify-content-between">
+                            <StripedRow className="font-weight-semibold justify-content-between">
                                 <div>
                                     {balanceSheetRenderText[appContext.locale]["Total equity"]}
                                 </div>
