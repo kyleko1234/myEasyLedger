@@ -73,7 +73,7 @@ export const tableOfJournalEntriesText = {
         "Line-items must be assigned to an account or category.": "單行項目必需要有針對的帳戶或類別。",
         "Please provide an amount for each item.": "請為每個項目記錄下交易金額。",
         "Please specify a transaction type for each item.": "請為每個單行項目指定其交易類別。",
-        "Add a new transaction": "記錄一個新的交易",
+        "Add a new transaction": "記錄一筆新交易",
         "Transaction must have at least one item.": "一筆交易記錄至少要有一個單行項目",
         "Entry must have line-items.": "一筆分錄至少要有一個單行項目",
 
