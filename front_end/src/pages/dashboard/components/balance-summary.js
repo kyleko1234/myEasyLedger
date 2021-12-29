@@ -55,7 +55,7 @@ function BalanceSummary(props) {
                                             <Link key={account.accountId} to={`/account-details/${account.accountId}`} className="tr d-flex align-items-center">
                                                 <div className="td d-flex col-11 justify-content-between align-items-center">
                                                     <div className="col-8">
-                                                        <div className={"font-size-compact font-weight-600 " + (account.accountCode? "" : " d-none")}>
+                                                        <div className={"font-size-compact font-weight-600 " + ((account.accountCode && appContext.isEnterprise)? "" : " d-none")}>
                                                             {account.accountCode}
                                                         </div>
                                                         <div className="text-truncate">
