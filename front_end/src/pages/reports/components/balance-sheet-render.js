@@ -124,6 +124,37 @@ function BalanceSheetRender() {
         setEndDatesToRequest(endDatesArray);
     }
 
+    const sumDebitsAndCreditsOfChildren = (accountId, indexOfBalanceSheetObject) => {
+        let total = 0;
+        let childAccounts = balanceSheetObjects[indexOfBalanceSheetObject]
+            .accountBalances
+            .filter(childAccount => childAccount.parentAccountId === accountId);
+        childAccounts
+            .forEach(account => {
+                if (account.debitsMinusCredits) {
+                    total += account.debitsMinusCredits;
+                }
+        })
+        return total;
+    }
+
+    //returns true if debitsMinusCredits of an account is zero for all date ranges selected by the user
+    const zeroDebitsMinusCreditsInAccount = (account) => {
+        for (let i = 0; i < balanceSheetObjects.length; i++) {
+            let accountForThisDatePeriod = balanceSheetObjects[i].accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
+            if (account.hasChildren) {
+                if (sumDebitsAndCreditsOfChildren(account.accountId), i) {
+                    return false;
+                }    
+            } else {
+                if (accountForThisDatePeriod.debitsMinusCredits) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     return (
         <>
             <Card className="bg-light shadow-sm very-rounded my-4">
@@ -185,8 +216,8 @@ function BalanceSheetRender() {
                             return(
                                 <div className="td width-175" key={i}>
                                     {columnLabel.label === "Custom"
-                                    ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + columnLabel.endDate
-                                    : columnLabel.label}
+                                        ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + columnLabel.endDate
+                                        : columnLabel.label}
                                 </div>
                             )
                         })}
@@ -249,7 +280,7 @@ function BalanceSheetRender() {
                                                                 .filter(childAccount => childAccount.parentAccountId === account.accountId)
                                                                 .map(childAccount => {
                                                                     return (
-                                                                        <StripedRow className="justify-content-between indent-4" key={childAccount.accountId}>
+                                                                       <StripedRow className="justify-content-between indent-4" key={childAccount.accountId}>
                                                                             <div>
                                                                                 {childAccount.accountName}
                                                                             </div>

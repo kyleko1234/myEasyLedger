@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Reports/Contents/Generate an Income Statement.md",
+            "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
             "mode": "source"
           }
         },
@@ -21,8 +21,8 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Reports/Contents/Generate an Income Statement.md",
-            "mode": "source"
+            "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+            "mode": "preview"
           }
         },
         "group": "ac08efec71731141"
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Reports/Contents/Generate an Income Statement.md",
+                "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,17 +99,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "e9ecb484239110b1",
+  "active": "e48223cc93a66da0",
   "lastOpenFiles": [
+    "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+    "Reports/Contents/Generate a Balance Sheet.md",
     "Reports/Contents/Generate an Income Statement.md",
     "AccountSubtype/AccountSubtype.md",
-    "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
     "Person/Contents/Accept an invitation.md",
     "Person/Contents/Check if invitation link has already been used.md",
     "Person/Contents/Invite a Person by Email.md",
     "Easy Ledger.md",
     "Permission/Permission.md",
-    "Person/Contents/List All Persons in an Organization.md",
-    "Person/Contents/List All Persons.md"
+    "Person/Contents/List All Persons in an Organization.md"
   ]
 }
