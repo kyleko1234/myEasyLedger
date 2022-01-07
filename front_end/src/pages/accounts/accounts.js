@@ -155,7 +155,7 @@ class Accounts extends React.Component {
                                                         {account.hasChildren ?
                                                             <div className="tr d-flex justify-content-between align-items-center">
                                                                 <div className="td font-weight-600">
-                                                                    {account.accountName}
+                                                                    {account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName}
                                                                 </div>
                                                                 <div className="td py-0 d-flex align-items-center">
                                                                     <button className="btn btn-sm btn-white border-0 text-muted" onClick={() => this.handleEditAccountButton(account)}>
@@ -167,7 +167,7 @@ class Accounts extends React.Component {
                                                         :
                                                             <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
                                                                     <div className="td font-weight-600">
-                                                                        {account.accountName}
+                                                                        {account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName}
                                                                     </div>
                                                                     <div className="td py-0 d-flex align-items-center">
                                                                         <button className="btn btn-sm text-muted invisible">
@@ -185,7 +185,7 @@ class Accounts extends React.Component {
                                                                     return (
                                                                         <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId}>
                                                                             <div className="td indent">
-                                                                                <div>{childAccount.accountName}</div>
+                                                                                <div>{childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
                                                                             </div>
                                                                             <div className="td">
                                                                                 <i className="fas fa-angle-right text-muted"></i>
