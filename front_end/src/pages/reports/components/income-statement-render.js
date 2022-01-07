@@ -69,7 +69,7 @@ function IncomeStatementRender() {
         let indentClassName = baseIndent === 1 
             ? "indent" 
             : "indent-" + baseIndent;
-        if (hasZeroAmountsForFieldInAllDateRanges(accessor) && !detailedView) {
+        if (hasZeroAmountsForFieldInAllDateRanges(accessor) /* && !detailedView */) {
             return null;
         } else {
             return(
@@ -100,40 +100,44 @@ function IncomeStatementRender() {
                     .filter(account => account.accountSubtypeId === subtypeId)
                     .map(account => {
                         return (
-                            <React.Fragment key={account.accountId}>
-                                <StripedRow className={"justify-content-between " + baseIndentClassName}>
-                                    <div>{account.accountName}</div>
-                                    <div className="text-right d-flex">
-                                        {incomeStatementObjects.map((incomeStatement, i) => {
-                                            let accountDebitsMinusCredits = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits;
-                                            return(
-                                                <div key={i} className="width-175">
-                                                    {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i) * (typeId === 5 ? 1 : -1))}
-                                                </div>
+                            zeroDebitsMinusCreditsInAccount(account)
+                                ? null
+                                : <React.Fragment key={account.accountId}>
+                                    <StripedRow className={"justify-content-between " + baseIndentClassName}>
+                                        <div>{account.accountName}</div>
+                                        <div className="text-right d-flex">
+                                            {incomeStatementObjects.map((incomeStatement, i) => {
+                                                let accountDebitsMinusCredits = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits;
+                                                return(
+                                                    <div key={i} className="width-175">
+                                                        {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i) * (typeId === 5 ? 1 : -1))}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </StripedRow>
+                                    {incomeStatementObjects[0].accountBalances
+                                        .filter(childAccount => childAccount.parentAccountId === account.accountId)
+                                        .map(childAccount => {
+                                            return (
+                                                zeroDebitsMinusCreditsInAccount(childAccount)
+                                                    ? null
+                                                    : <StripedRow key={childAccount.accountId} className={"justify-content-between " + incrementIndentClassName}>
+                                                        <div>{childAccount.accountName}</div>
+                                                        <div className="text-right d-flex">
+                                                            {incomeStatementObjects.map((incomeStatement, i) => {
+                                                                let childAccountDebitsMinusCredits = incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits;
+                                                                return(
+                                                                    <div key={i} className="width-175">
+                                                                        {numberAsCurrency(typeId === 5 ? childAccountDebitsMinusCredits: childAccountDebitsMinusCredits * -1)}
+                                                                    </div>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    </StripedRow>
                                             )
                                         })}
-                                    </div>
-                                </StripedRow>
-                                {incomeStatementObjects[0].accountBalances
-                                    .filter(childAccount => childAccount.parentAccountId === account.accountId)
-                                    .map(childAccount => {
-                                        return (
-                                            <StripedRow key={childAccount.accountId} className={"justify-content-between " + incrementIndentClassName}>
-                                                <div>{childAccount.accountName}</div>
-                                                <div className="text-right d-flex">
-                                                    {incomeStatementObjects.map((incomeStatement, i) => {
-                                                        let childAccountDebitsMinusCredits = incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits;
-                                                        return(
-                                                            <div key={i} className="width-175">
-                                                                {numberAsCurrency(typeId === 5 ? childAccountDebitsMinusCredits: childAccountDebitsMinusCredits * -1)}
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </StripedRow>
-                                        )
-                                    })}
-                            </React.Fragment>
+                                </React.Fragment>
                         )
                     })
             )
@@ -267,6 +271,23 @@ function IncomeStatementRender() {
         return total;
     }
 
+        //returns true if debitsMinusCredits of an account is zero for all date ranges selected by the user
+        const zeroDebitsMinusCreditsInAccount = (account) => {
+            for (let i = 0; i < incomeStatementObjects.length; i++) {
+                let accountForThisDatePeriod = incomeStatementObjects[i].accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
+                if (account.hasChildren) {
+                    if (sumDebitsAndCreditsOfChildren(account.accountId, i)) {
+                        return false;
+                    }    
+                } else {
+                    if (accountForThisDatePeriod.debitsMinusCredits) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+    
     return (
         <>
             <Card className="very-rounded shadow-sm bg-light my-4">
@@ -399,41 +420,45 @@ function IncomeStatementRender() {
                                         .filter(account => account.accountSubtypeId === incomeStatementObjects[0].revenueSubtypeId)
                                         .map(account => {
                                             return (
-                                                <React.Fragment key={account.accountId}>
-                                                    <StripedRow className="justify-content-between indent">
-                                                        <div>{account.accountName}</div>
-                                                        <div className="text-right d-flex">
-                                                            {incomeStatementObjects.map((incomeStatement, i) => {
-                                                                return(
-                                                                    <div key={i} className="width-175">
-                                                                        {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i) * -1)}
-                                                                    </div>
-                                                                )
-                                                            })}
-                                                        </div>
-                                                    </StripedRow>
-                                                    {detailedView 
-                                                        ? incomeStatementObjects[0].accountBalances
-                                                            .filter(childAccount => childAccount.parentAccountId == account.accountId)
-                                                            .map(childAccount => {
-                                                                return (
-                                                                    <StripedRow key={childAccount.accountId} className="justify-content-between indent-2">
-                                                                        <div>{childAccount.accountName}</div>
-                                                                        <div className="text-right d-flex">
-                                                                            {incomeStatementObjects.map((incomeStatement, i) => {
-                                                                                return(
-                                                                                    <div key={i} className="width-175">
-                                                                                        {numberAsCurrency(incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits * -1)}
-                                                                                    </div>
-                                                                                )
-                                                                            })}
+                                                zeroDebitsMinusCreditsInAccount(account)
+                                                    ? null
+                                                    : <React.Fragment key={account.accountId}>
+                                                        <StripedRow className="justify-content-between indent">
+                                                            <div>{account.accountName}</div>
+                                                            <div className="text-right d-flex">
+                                                                {incomeStatementObjects.map((incomeStatement, i) => {
+                                                                    return(
+                                                                        <div key={i} className="width-175">
+                                                                            {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i) * -1)}
                                                                         </div>
-                                                                    </StripedRow>
-                                                                )
-                                                            })
-                                                        : null
-                                                    }
-                                                </React.Fragment>
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        </StripedRow>
+                                                        {detailedView 
+                                                            ? incomeStatementObjects[0].accountBalances
+                                                                .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                                                .map(childAccount => {
+                                                                    return (
+                                                                        zeroDebitsMinusCreditsInAccount(childAccount)
+                                                                            ? null
+                                                                            : <StripedRow key={childAccount.accountId} className="justify-content-between indent-2">
+                                                                                <div>{childAccount.accountName}</div>
+                                                                                <div className="text-right d-flex">
+                                                                                    {incomeStatementObjects.map((incomeStatement, i) => {
+                                                                                        return(
+                                                                                            <div key={i} className="width-175">
+                                                                                                {numberAsCurrency(incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits * -1)}
+                                                                                            </div>
+                                                                                        )
+                                                                                    })}
+                                                                                </div>
+                                                                            </StripedRow>
+                                                                    )
+                                                                })
+                                                            : null
+                                                        }
+                                                    </React.Fragment>
                                             )
                                         })
                                     }
@@ -461,41 +486,45 @@ function IncomeStatementRender() {
                                 .filter(account => account.accountSubtypeId === incomeStatementObjects[0].costOfSalesSubtypeId)
                                 .map(account => {
                                     return (
-                                        <React.Fragment key={account.accountId}>
-                                            <StripedRow className="justify-content-between indent">
-                                                <div>{account.accountName}</div>
-                                                <div className="text-right d-flex">
-                                                    {incomeStatementObjects.map((incomeStatement, i) => {
-                                                        return(
-                                                            <div key={i} className="width-175">
-                                                                {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i))}
-                                                            </div>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </StripedRow>
-                                            {detailedView
-                                                ? incomeStatementObjects[0].accountBalances
-                                                    .filter(childAccount => childAccount.parentAccountId == account.accountId)
-                                                    .map(childAccount => {
-                                                        return (
-                                                            <StripedRow key={childAccount.accountId} className="justify-content-between indent-2">
-                                                                <div>{childAccount.accountName}</div>
-                                                                <div className="text-right d-flex">
-                                                                    {incomeStatementObjects.map((incomeStatement, i) => {
-                                                                        return(
-                                                                            <div key={i} className="width-175">
-                                                                                {numberAsCurrency(incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits)}
-                                                                            </div>
-                                                                        )
-                                                                    })}
+                                        zeroDebitsMinusCreditsInAccount(account)
+                                            ? null
+                                            : <React.Fragment key={account.accountId}>
+                                                <StripedRow className="justify-content-between indent">
+                                                    <div>{account.accountName}</div>
+                                                    <div className="text-right d-flex">
+                                                        {incomeStatementObjects.map((incomeStatement, i) => {
+                                                            return(
+                                                                <div key={i} className="width-175">
+                                                                    {numberAsCurrency(sumDebitsAndCreditsOfChildren(account.accountId, i))}
                                                                 </div>
-                                                            </StripedRow>
-                                                        )
-                                                    })
-                                                : null
-                                            }
-                                        </React.Fragment>
+                                                            )
+                                                        })}
+                                                    </div>
+                                                </StripedRow>
+                                                {detailedView
+                                                    ? incomeStatementObjects[0].accountBalances
+                                                        .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                                        .map(childAccount => {
+                                                            return (
+                                                                zeroDebitsMinusCreditsInAccount(childAccount)
+                                                                    ? null
+                                                                    : <StripedRow key={childAccount.accountId} className="justify-content-between indent-2">
+                                                                        <div>{childAccount.accountName}</div>
+                                                                        <div className="text-right d-flex">
+                                                                            {incomeStatementObjects.map((incomeStatement, i) => {
+                                                                                return(
+                                                                                    <div key={i} className="width-175">
+                                                                                        {numberAsCurrency(incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits)}
+                                                                                    </div>
+                                                                                )
+                                                                            })}
+                                                                        </div>
+                                                                    </StripedRow>
+                                                            )
+                                                        })
+                                                    : null
+                                                }
+                                            </React.Fragment>
                                     )
 
                                 })
@@ -592,8 +621,9 @@ function IncomeStatementRender() {
                             }
                             {renderDetails(incomeStatementObjects[0].incomeFromInvestingSubtypeId, 4, 2)}
                             {renderDetails(incomeStatementObjects[0].expenseFromInvestingSubtypeId, 4, 2) /** Use a negative number for expenses here since it is a component of other income/expense net*/}
-                            {(hasZeroAmountsForFieldInAllDateRanges("incomeFromFinancing") && hasZeroAmountsForFieldInAllDateRanges("expenseFromFinancing")) ? null : 
-                                <StripedRow className="justify-content-between indent">
+                            {(hasZeroAmountsForFieldInAllDateRanges("incomeFromFinancing") && hasZeroAmountsForFieldInAllDateRanges("expenseFromFinancing")) 
+                                ? null 
+                                : <StripedRow className="justify-content-between indent">
                                     <div>{incomeStatementRenderText[appContext.locale]["Net income/expense from financing activities"]}</div>
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
@@ -691,13 +721,12 @@ function IncomeStatementRender() {
                                             })}
                                         </div>
                                     </StripedRow>
-                                        {renderDetails(incomeStatementObjects[0].nonRecurringSubtypeId, 5, 1)}
+                                    {renderDetails(incomeStatementObjects[0].nonRecurringSubtypeId, 5, 1)}
                                     <StripedRow className="striped-row">
                                         <div className="invisible">{/* empty row */} empty row</div>
                                     </StripedRow>
                                 </>
                             }
-                    
                             <StripedRow className="justify-content-between font-weight-semibold">
                                 <div>{incomeStatementRenderText[appContext.locale]["Net income"]}</div>
                                 <div className="text-right d-flex">
