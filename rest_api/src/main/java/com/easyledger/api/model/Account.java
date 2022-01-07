@@ -65,7 +65,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    organization.id = :organizationId AND " + 
 				"    account.organization_id = organization.id AND  " + 
 				"    account.deleted = false " + 
-				"ORDER BY account_type.id, account.account_code, account.name",
+				"ORDER BY account_type.id, NULLIF(account.account_code, ''), account.name NULLS LAST",
 		resultSetMapping = "accountDTOMapping"
 )
 
@@ -89,7 +89,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    account.organization_id = organization.id AND  " + 
 				"    account.deleted = false " + 
 				"GROUP BY account.id, parent_account.id, account_subtype.id, account_type.id, organization.id " + 
-				"ORDER BY account_type.id, account.account_code, account.name ",
+				"ORDER BY account_type.id, NULLIF(account.account_code, ''), account.name NULLS LAST",
 		resultSetMapping = "accountDTOMapping"
 )
 
@@ -139,7 +139,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    account.organization_id = organization.id AND  " + 
 				"    account.deleted = false " + 
 				"GROUP BY account.id, parent_account.id, account_subtype.id, account_type.id, organization.id " + 
-				"ORDER BY account_type.id, account.account_code, account.name ",
+				"ORDER BY account_type.id, NULLIF(account.account_code, ''), account.name NULLS LAST",
 		resultSetMapping = "accountBalanceDTOMapping"
 )
 
