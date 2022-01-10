@@ -17,6 +17,6 @@ export const transactionsText = {
         "Inflow": "流入",
         "Outflow": "流出",
         "Account": "帳戶／錢包",
-        "Transactions": "交易記錄",
+        "Transactions": "帳戶交易記錄",
     },
 }
