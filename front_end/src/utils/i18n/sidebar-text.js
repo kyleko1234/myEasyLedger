@@ -50,7 +50,7 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Dashboard": "帳目概覽",
         "Journals": "登錄分類帳",
         "Transactions": "輸入交易",
-        "Chart of Accounts": "會計科目",
+        "Chart of Accounts": "維護會計科目",
         "Reports": "財務報告",
         "Accounts": "帳戶／錢包",
         "Categories": "收支類別"

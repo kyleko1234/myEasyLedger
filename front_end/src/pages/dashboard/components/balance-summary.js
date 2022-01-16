@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import {balanceSummaryText} from "../../../utils/i18n/balance-summary-text.js";
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { formatCurrency } from '../../../utils/util-fns.js';
+import { formatCurrency, getTodayAsDateString } from '../../../utils/util-fns.js';
 
 
 function BalanceSummary(props) {
@@ -16,13 +16,26 @@ function BalanceSummary(props) {
     const history = useHistory();
     const [loading, setLoading] = React.useState(true);
     const [assetAndLiabilityAccounts, setAssetAndLiabilityAccounts] = React.useState([]);
+    const today = getTodayAsDateString();
 
     //fetch data on component mount
     React.useEffect(() => {
         let mounted = true;
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountBalance/${today}`).then(response => {
             if (response.data) {
-                let filteredAccounts = response.data.filter(account => (account.accountTypeId == 1 || account.accountTypeId == 2) && account.hasChildren === false);
+                let formattedAccounts = response.data.map(account => {
+                    if (!account.accountTypeId) {
+                        account.accountTypeId = response.data.find(parentAccount => parentAccount.accountId === account.parentAccountId).accountTypeId;
+                    }
+                    return account;
+                })
+                let filteredAccounts = formattedAccounts.filter(account => {
+                    if ((account.accountTypeId == 1 || account.accountTypeId == 2) && !account.hasChildren) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
                 if (mounted) {
                     setAssetAndLiabilityAccounts(filteredAccounts);
                 }
@@ -41,8 +54,14 @@ function BalanceSummary(props) {
     return (
         <Card className="shadow-sm very-rounded" style={{ height: '500px' }}>
             <CardBody>
-                <CardTitle className="font-weight-600">
-                    {balanceSummaryText[appContext.locale]["Balance Summary"]}
+                <CardTitle className="font-weight-semibold">
+                    {balanceSummaryText[appContext.locale]["Balance Summary"]} 
+                    <span className="font-weight-normal">
+                        {loading
+                            ? null
+                            : balanceSummaryText[appContext.locale]["Date text"](today)
+                        }
+                    </span>
                 </CardTitle>
 				<PerfectScrollbar style={{maxHeight: "427px", marginLeft: "-1.25rem", marginRight: "-1.25rem"}} options={{suppressScrollX: true, wheelPropagation: false}}>
                     <div style={{paddingLeft: "1.25rem", paddingRight: "1.25rem"}}>

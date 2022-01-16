@@ -100,13 +100,18 @@ function ExpenseBreakdown(props) {
     return(
         <Card className="shadow-sm very-rounded" style={{height: "380px"}}>
             <CardBody >
-                <CardTitle className="font-weight-600">{dashboardText[appContext.locale]["Expense Breakdown"]}</CardTitle>
+                <CardTitle className="font-weight-semibold">
+                    {dashboardText[appContext.locale]["Expense Breakdown"]}
+                    <span className="font-weight-normal">                            
+                        {appContext.isLoading
+                            ? null
+                            : dashboardText[appContext.locale]["Date range"](startDate, endDate)
+                        }
+                    </span>
+                </CardTitle>
                 {appContext.isLoading
                 ?   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> 
                 :   <div>
-                        <div className="mb-2">
-                            {dashboardText[appContext.locale]["Date range"](startDate, endDate)}
-                        </div>
                         <div style={{overflow: "none"}}>
                             <Doughnut data={doughnutChart.data} options={doughnutChart.options} height={275}/>
                         </div>
