@@ -54,8 +54,14 @@ function BalanceSummary(props) {
     return (
         <Card className="shadow-sm very-rounded" style={{ height: '500px' }}>
             <CardBody>
-                <CardTitle className="font-weight-600">
-                    {balanceSummaryText[appContext.locale]["Balance Summary"]}
+                <CardTitle className="font-weight-semibold">
+                    {balanceSummaryText[appContext.locale]["Balance Summary"]} 
+                    <span className="font-weight-normal">
+                        {loading
+                            ? null
+                            : balanceSummaryText[appContext.locale]["Date text"](today)
+                        }
+                    </span>
                 </CardTitle>
 				<PerfectScrollbar style={{maxHeight: "427px", marginLeft: "-1.25rem", marginRight: "-1.25rem"}} options={{suppressScrollX: true, wheelPropagation: false}}>
                     <div style={{paddingLeft: "1.25rem", paddingRight: "1.25rem"}}>
