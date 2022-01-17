@@ -24,7 +24,7 @@ function CategoryDetails(props) {
     const [selectedAccount, setSelectedAccount] = React.useState(null);
     const selectedAccountId = useParams().id;
 
-    const [pageSize, setPageSize] = React.useState(10);
+    const [pageSize, setPageSize] = React.useState(appContext.resultsPerPage);
     const [pageIndex, setPageIndex] = React.useState(0);
     const [data, setData] = React.useState([]);
     const [totalPages, setTotalPages] = React.useState(0);
