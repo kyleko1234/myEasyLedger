@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+            "file": "Person/Contents/Accept an invitation.md",
             "mode": "source"
           }
         },
@@ -21,7 +21,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+            "file": "Person/Contents/Accept an invitation.md",
             "mode": "preview"
           }
         },
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+                "file": "Person/Contents/Accept an invitation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,15 +101,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
-    "Account/Contents/List All Accounts Belonging to an Organization.md",
-    "Reports/Contents/Generate a Balance Sheet.md",
-    "Reports/Contents/Generate an Income Statement.md",
-    "AccountSubtype/AccountSubtype.md",
     "Person/Contents/Accept an invitation.md",
     "Person/Contents/Check if invitation link has already been used.md",
     "Person/Contents/Invite a Person by Email.md",
-    "Easy Ledger.md",
-    "Permission/Permission.md"
+    "Person/Contents/List All Persons.md",
+    "Person/Contents/List All Persons in an Organization.md",
+    "Person/Contents/Retrieve a Person.md",
+    "Person/Contents/Update a Person.md",
+    "Person/Contents/Update a Person's Password.md",
+    "Person/Person.md",
+    "Person/Contents/The Person Object.md"
   ]
 }

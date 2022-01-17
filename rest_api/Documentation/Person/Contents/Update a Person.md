@@ -22,6 +22,9 @@ Locale representing the language settings for the user. A list of valid locales 
 - **appearance (`String` 16)**<br/>
 The user's preferred color scheme. Three options are valid: `'system'`, `'light', and 'dark'`. The `'system'` option changes the color scheme based on the user's system preferences; the other two are self explanatory. If an invalid option is given here, the app should default to system appearance.
 
+- **resultsPerPage (`Integer`) <br/>**
+The number of results per page on any paginated table-like pages (Journal Entries, Transactions, Account Details, etc) that the user wishes to display.
+
 - **currentOrganizationId (optional`Long`)**<br/>
 The current organization that the user is viewing information or making edits for. This should be an organization that the user belongs to; otherwise any requests involving organizationId will likely return an unauthorized exception. The API does not validate this field!
 ___
@@ -48,7 +51,8 @@ Body:
     "email": "kyleko1234@gmail.com",
     "locale": "en-US",
     "currentOrganizationId": 1,
-	"darkMode": "system",
+	"appearance": "system",
+	"resultsPerPage": 10,
     "organizations": [
         {
             "id": 1,
