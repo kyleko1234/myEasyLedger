@@ -128,6 +128,10 @@ public class PersonService {
         		case "appearance":
         			person.setAppearance(v.toString());
         			break;
+        		
+        		case "resultsPerPage":
+        			person.setResultsPerPage((int) v);
+        			break;
         	}  	
         }
 	}

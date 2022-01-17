@@ -97,6 +97,9 @@ public class Person {
 	@Column(name = "appearance")
 	private String appearance = "system";
 	
+	@Column(name = "results_per_page")
+	private Integer resultsPerPage = 10;
+	
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries;
@@ -119,6 +122,7 @@ public class Person {
     @JsonIgnore
 	@OneToOne(mappedBy = "person")
 	private VerificationToken verificationToken;
+    
 
 	public Person() {
 		this.permissions = new HashSet<Permission>();
@@ -266,6 +270,14 @@ public class Person {
 
 	public void setAppearance(String appearance) {
 		this.appearance = reduceExcessStringSize(appearance, 16);
+	}
+
+	public Integer getResultsPerPage() {
+		return resultsPerPage;
+	}
+
+	public void setResultsPerPage(Integer resultsPerPage) {
+		this.resultsPerPage = resultsPerPage;
 	}
 
 	@Override
