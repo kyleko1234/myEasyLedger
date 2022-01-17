@@ -1,6 +1,6 @@
 {
   "name": "myeasyledger",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "private": true,
   "dependencies": {
     "apexcharts": "^3.26.0",

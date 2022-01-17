@@ -25,6 +25,9 @@ The current organization that the user is viewing information or making edits fo
 - **appearance (`String` 16)**<br/>
 The user's preferred color scheme. Three options are valid: `'system'`, `'light', and 'dark'`. The `'system'` option changes the color scheme based on the user's system preferences; the other two are self explanatory. If an invalid option is given here, the app should default to system appearance.
 
+- **resultsPerPage (`Integer`) <br/>**
+The number of results per page on any paginated table-like pages (Journal Entries, Transactions, Account Details, etc) that the user wishes to display. Defaults to 10.
+
 - **permissions(`Array<Permission>`)**<br/>
  A list of Permission objects that affect this user. See [[Permission]]. A Person can be expected to have exactly one permission object for each organization they belong to.
  
@@ -42,6 +45,7 @@ ___
     "locale": "en-US",
     "currentOrganizationId": 1,
 	"appearance": "system",
+	"resultsPerPage": 10,
     "permissions": [
         {
             "id": 1,

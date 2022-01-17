@@ -26,6 +26,7 @@ ___
     "locale": "en-US",
     "currentOrganizationId": 1,
 	"appearance": "system",
+	"resultsPerPage": 10,
     "permissions": [
         {
             "id": 1,
