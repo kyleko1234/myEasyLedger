@@ -7,6 +7,7 @@ import ChangePasswordModal from './change-password-modal';
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import AppearanceSettingsModal from './appearance-settings-modal';
 import ChangeNameModal from './change-name-modal';
+import ChangeResultsPerPageModal from './change-results-per-page-modal';
 function Settings() {
     const appContext = React.useContext(PageSettings);
 
@@ -25,6 +26,11 @@ function Settings() {
     const [changeNameModal, setChangeNameModal] = React.useState(false);
     const toggleChangeNameModal = () => {
         setChangeNameModal(!changeNameModal);
+    }
+
+    const [changeResultsPerPageModal, setChangeResultsPerPageModal] = React.useState(false);
+    const toggleChangeResultsPerPageModal = () => {
+        setChangeResultsPerPageModal(!changeResultsPerPageModal);
     }
 
     return (
@@ -60,6 +66,12 @@ function Settings() {
                                 <i className="fas fa-angle-right"></i>
                             </div>
                         </Link>
+                        <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleChangeResultsPerPageModal}>
+                            <div className="indent td">{settingsText[appContext.locale]["Results per Page"]}</div>
+                            <div className="text-muted pr-2">
+                                <i className="fas fa-angle-right"></i>
+                            </div>
+                        </Link>
                     </div>
                 </CardBody>
             </Card>
@@ -88,6 +100,7 @@ function Settings() {
             <AppearanceSettingsModal isOpen={appearanceSettingsModal} toggle={toggleAppearanceSettingsModal}/>
             <ChangePasswordModal isOpen={changePasswordModal} toggle={toggleChangePasswordModal} />
             <ChangeNameModal isOpen={changeNameModal} toggle={toggleChangeNameModal} />
+            <ChangeResultsPerPageModal isOpen={changeResultsPerPageModal} toggle={toggleChangeResultsPerPageModal} />
         </div>
 
     )

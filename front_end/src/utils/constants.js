@@ -8,6 +8,14 @@ export const LOCALE_OPTIONS = [
     {value: "zh-TW", label: "中文 (繁體)", defaultCurrency: "TWD"}
 ]
 
+export const RESULTS_PER_PAGE_OPTIONS = [
+    {value: 10, label: 10},
+    {value: 20, label: 20},
+    {value: 30, label: 30},
+    {value: 50, label: 50},
+    {value: 100, label: 100},
+]
+
 // cny yen usd twd eur
 const CURRENCY_I18N = {
     "en-US": {
