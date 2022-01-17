@@ -41,6 +41,7 @@ export const tableOfJournalEntriesText = {
         "[I] ": "[I] ",
         "[E] ": "[E] ",
 
+        "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "Showing " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " of " + totalElements + " results"
 },
     "zh-TW": {
         "Date": "日期",
@@ -83,5 +84,7 @@ export const tableOfJournalEntriesText = {
         "[O] ": "[權益] ",
         "[I] ": "[收入] ",
         "[E] ": "[費損] ",
+
+        "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "顯示 " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " 筆" + "（共" + totalElements + "筆）"
     }
 }

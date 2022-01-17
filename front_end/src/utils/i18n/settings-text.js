@@ -69,6 +69,9 @@ export const settingsText = {
             }
         },
 
+        "Results per Page": "Results per Page",
+        "Number of results to display per page" : "Number of results to display per page",
+
         //Appearance settings options
         "System": "System",
         "Light": "Light",
@@ -143,6 +146,9 @@ export const settingsText = {
                 return <em>仍未完成接受邀請</em>
             } 
         },
+
+        "Results per Page": "TRANSLATION",
+        "Number of results to display per page" : "TRANSLATION",
 
         //Appearance settings options
         "System": "系統模式",

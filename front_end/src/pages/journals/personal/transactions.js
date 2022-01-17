@@ -15,7 +15,7 @@ function Transactions() {
                 { header: transactionsText[appContext.locale]['Outflow'], accessor: 'creditAmount', className: " text-right col-md-2 text-nowrap " },
     ];
 
-    const [pageSize, setPageSize] = React.useState(10);
+    const [pageSize, setPageSize] = React.useState(appContext.resultsPerPage);
     const [pageIndex, setPageIndex] = React.useState(0);
     const [data, setData] = React.useState([]);
     const [totalPages, setTotalPages] = React.useState(0);

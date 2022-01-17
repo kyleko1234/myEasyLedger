@@ -363,8 +363,7 @@ function TableOfJournalEntries({
                         <Link replace onClick={previousPage} to="#">&larr; {tableOfJournalEntriesText[appContext.locale]["Newer"]}</Link>
                     </div>
                     <div className="align-self-center">
-                        Showing {((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength)} of {totalElements}{' '}
-                    results
+                        {tableOfJournalEntriesText[appContext.locale]["Footer text"](pageIndex, pageSize, pageLength, totalElements)}
                     </div>{/**TODO replace with page selector */}
                     <div className={last ? "invisible" : ""}>
                         <Link replace onClick={nextPage} to="#">{tableOfJournalEntriesText[appContext.locale]["Older"]} &rarr;</Link>
