@@ -21,6 +21,6 @@ export const balanceSummaryText = {
         "Select an account type:": "選擇一個科目類別",
         "(Expand All)": "(展開所有子項)",
         "(Collapse All)": "(閉合所有子項)",
-        "Date text": (endDate) => `截至 ${endDate}` //TRANSLATION
+        "Date text": (endDate) => `截至 ${endDate}`
     }
 }

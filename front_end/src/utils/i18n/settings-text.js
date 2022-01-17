@@ -147,8 +147,8 @@ export const settingsText = {
             } 
         },
 
-        "Results per Page": "TRANSLATION",
-        "Number of results to display per page" : "TRANSLATION",
+        "Results per Page": "更改每頁筆數",
+        "Number of results to display per page" : "每頁顯示帳目筆數數量",
 
         //Appearance settings options
         "System": "系統模式",
