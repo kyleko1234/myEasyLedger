@@ -17,7 +17,7 @@ function GeneralJournal() {
         { header: tableOfJournalEntriesText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-right col-md-2" },
         { header: tableOfJournalEntriesText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-right col-md-2" },
     ]
-    const [pageSize, setPageSize] = React.useState(10);
+    const [pageSize, setPageSize] = React.useState(appContext.resultsPerPage);
     const [pageIndex, setPageIndex] = React.useState(0);
     const [data, setData] = React.useState([]);
     const [totalPages, setTotalPages] = React.useState(0);

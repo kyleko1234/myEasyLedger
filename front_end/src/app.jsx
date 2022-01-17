@@ -85,6 +85,7 @@ class App extends React.Component {
 					lastName: response.data.lastName,
 					email: response.data.email,
 					locale: response.data.locale,
+                    resultsPerPage: response.data.resultsPerPage
                 }
                 if (response.data.permissions && (response.data.permissions.length > 0)) {
                     if (!response.data.currentOrganizationId) {
@@ -151,6 +152,7 @@ class App extends React.Component {
             ),
             appearance: 'system',
             colorScheme: 'light',
+            resultsPerPage: null,
 			handleSetLocale: this.handleSetLocale, //setting a user's locale should call PATCH /person/{personId} and then fetchUserInfo(personId); however, changing the locale on the registration/login pages should call handleSetLocale()
 
 			currentOrganizationName: '',
