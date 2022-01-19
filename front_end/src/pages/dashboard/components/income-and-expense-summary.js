@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar, defaults } from 'react-chartjs-2';
+import { Bar, defaults, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2';
 import 'chart.js/auto';
 import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
@@ -18,6 +18,10 @@ function IncomeAndExpenseSummary(props) {
     const [gridlineColor, setGridlineColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-gridline-color'))
     const [loading, setLoading] = React.useState(true);
     const [numberOfMonths, setNumberOfMonths] = React.useState(12);
+    const chartRef = React.useRef();
+    const chartOnClick = event => {
+        console.log(getElementAtEvent(chartRef.current, event));
+    }
 
     //fetch data on component mount
     React.useEffect(() => {
@@ -179,7 +183,8 @@ function IncomeAndExpenseSummary(props) {
                         color: fontColor,
                     },
                 }
-            } 
+            },
+            
         }
     };
 
@@ -190,7 +195,12 @@ function IncomeAndExpenseSummary(props) {
                     {incomeAndExpenseSummaryText[appContext.locale]["Income and Expenses"]}
                 </CardTitle>
                 <div style={{height: "90%"}}>
-                    <Bar data={barChart.data} options={barChart.options} />
+                    <Bar 
+                        data={barChart.data} 
+                        options={barChart.options} 
+                        ref={chartRef}
+                        onClick={chartOnClick}
+                    />
                 </div>
             </CardBody>
         </Card>
