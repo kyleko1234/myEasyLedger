@@ -12,6 +12,7 @@ import { timers } from 'jquery';
 function IncomeAndExpenseSummary(props) {
     const appContext = React.useContext(PageSettings);
     const [labels, setLabels] = React.useState([]);
+    const [yearMonths, setYearMonths] = React.useState([]);
     const [incomeData, setIncomeData] = React.useState([]);
     const [expenseData, setExpenseData] = React.useState([]);
     const [fontColor, setFontColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-text-color'));
@@ -20,7 +21,11 @@ function IncomeAndExpenseSummary(props) {
     const [numberOfMonths, setNumberOfMonths] = React.useState(12);
     const chartRef = React.useRef();
     const chartOnClick = event => {
-        console.log(getElementAtEvent(chartRef.current, event));
+        let element = getElementAtEvent(chartRef.current, event);
+        let yearMonth;
+        if (element[0]) {
+            let selectedYearMonth = yearMonths[element[0].index];
+        }
     }
 
     //fetch data on component mount
@@ -69,6 +74,7 @@ function IncomeAndExpenseSummary(props) {
                 })
                 setIncomeData(incomeSummaries);
                 setExpenseData(expenseSummaries);
+                setYearMonths(unparsedLabels.slice());
                 setLabels(unparsedLabels.map(label => parseYearMonth(label)));
                 setLoading(false);
             }
@@ -167,10 +173,10 @@ function IncomeAndExpenseSummary(props) {
                     labels: {
                         color: fontColor,
                     },
-                    onHover: (event, chartElement) => {
+                    onHover: (event) => {
                         event.native.target.style.cursor = 'pointer'
                     },
-                    onLeave: (event, chartElement) => {
+                    onLeave: (event) => {
                         event.native.target.style.cursor =  '';
                     }
                 },
