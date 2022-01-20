@@ -144,15 +144,19 @@ function IncomeAndExpenseSummary(props) {
             datasets: [{
                 label: incomeAndExpenseSummaryText[appContext.locale]["Income"],
                 borderWidth: 2,
-                borderColor: '#727cb6',
-                backgroundColor: 'rgba(114, 124, 182, 0.3)',
-                data: incomeData
+                borderColor: '#348fe2',
+                backgroundColor: 'rgba(52, 143, 226, 0.3)',
+                hoverBorderColor: "#61A8E8",
+                hoverBackgroundColor: "rgba(97, 168, 232, 0.3)",
+                data: incomeData,
             }, {
                 label: incomeAndExpenseSummaryText[appContext.locale]["Expenses"],
                 borderWidth: 2,
                 borderColor: '#8f103c',
                 backgroundColor: 'rgba(143, 16, 60, 0.3)',
-                data: expenseData
+                data: expenseData,
+                hoverBackgroundColor:'rgba(189, 21, 79, 0.3)',
+                hoverBorderColor: '#BD154F'
             }]
         },
         options: {
@@ -183,8 +187,7 @@ function IncomeAndExpenseSummary(props) {
                         color: fontColor,
                     },
                 }
-            },
-            
+            }, 
         }
     };
 
