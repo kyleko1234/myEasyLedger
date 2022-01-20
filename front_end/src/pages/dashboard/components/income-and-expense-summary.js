@@ -148,7 +148,7 @@ function IncomeAndExpenseSummary(props) {
                 backgroundColor: 'rgba(52, 143, 226, 0.3)',
                 hoverBorderColor: "#61A8E8",
                 hoverBackgroundColor: "rgba(97, 168, 232, 0.3)",
-                data: incomeData,
+                data: incomeData
             }, {
                 label: incomeAndExpenseSummaryText[appContext.locale]["Expenses"],
                 borderWidth: 2,
@@ -165,9 +165,16 @@ function IncomeAndExpenseSummary(props) {
             plugins: {
                 legend: {
                     labels: {
-                        color: fontColor
+                        color: fontColor,
+                    },
+                    onHover: (event, chartElement) => {
+                        event.native.target.style.cursor = 'pointer'
+                    },
+                    onLeave: (event, chartElement) => {
+                        event.native.target.style.cursor =  '';
                     }
-                }
+                },
+            
             },
             scales: {
                 y: {
@@ -177,7 +184,8 @@ function IncomeAndExpenseSummary(props) {
                     ticks: {
                         color: fontColor,
                     },
-                    min: 0
+                    beginAtZero: true,
+                    grace: "5%"
                 },
                 x: {
                     grid: {
@@ -187,7 +195,11 @@ function IncomeAndExpenseSummary(props) {
                         color: fontColor,
                     },
                 }
-            }, 
+            },
+            onHover: (event, chartElement) => {
+                event.native.target.style.cursor = chartElement[0] ? 'pointer' : '';
+            },    
+        
         }
     };
 
