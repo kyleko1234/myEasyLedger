@@ -13,10 +13,10 @@ function TimeoutSweetAlert(props) {
                 danger
                 showConfirm={false} 
                 showCancel={false}
-                title={timeoutSweetalertText[appContext.locale]["Your request timed out."]}
+                title={timeoutSweetalertText[appContext.locale]["Our system is under maintenance."]}
                 onCancel={props.toggle}
             >
-                {timeoutSweetalertText[appContext.locale]["We took too long to process this request. Please try again later."]}
+                {timeoutSweetalertText[appContext.locale]["Please try again later."]}
             </SweetAlert>
         )
     } else {
