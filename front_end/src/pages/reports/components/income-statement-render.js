@@ -36,7 +36,9 @@ import LoadingSpinner from '../../../components/misc/loading-spinner';
  * empty
  * Net income
  */
-function IncomeStatementRender() {
+
+function IncomeStatementRender(props) {
+    //optional props: defaultStartDate, defaultEndDate
     const appContext = React.useContext(PageSettings);
     const today = getTodayAsDateString();
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
@@ -49,8 +51,8 @@ function IncomeStatementRender() {
     const [incomeStatementObjects, setIncomeStatementObjects] = React.useState([]);
     const [datesToRequest, setDatesToRequest] = React.useState([{
         label: "Custom",
-        startDate: beginningOfCurrentFiscalYear,
-        endDate: today
+        startDate: props.defaultStartDate ? props.defaultStartDate : beginningOfCurrentFiscalYear, //cannot use defaultProps here because we would need to call appContext at the top level, so conditional is used here instead
+        endDate: props.defaultEndDate ? props.defaultEndDate : today
     }]);
     const [columnLabels, setColumnLabels] = React.useState([]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);

@@ -1,23 +1,39 @@
 import React from 'react';
-import { Bar, defaults } from 'react-chartjs-2';
+import { Bar, defaults, getElementAtEvent } from 'react-chartjs-2';
 import 'chart.js/auto';
 import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
 import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expense-summary-text.js';
 import { Card, CardBody, CardTitle } from 'reactstrap';
-import { timers } from 'jquery';
+import {useHistory} from 'react-router-dom';
+import { getStartAndEndDatesForYearMonth } from '../../../utils/util-fns';
 
 //required props: 
 function IncomeAndExpenseSummary(props) {
     const appContext = React.useContext(PageSettings);
+    const history = useHistory();
     const [labels, setLabels] = React.useState([]);
+    const [yearMonths, setYearMonths] = React.useState([]);
     const [incomeData, setIncomeData] = React.useState([]);
     const [expenseData, setExpenseData] = React.useState([]);
     const [fontColor, setFontColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-text-color'));
     const [gridlineColor, setGridlineColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-gridline-color'))
     const [loading, setLoading] = React.useState(true);
     const [numberOfMonths, setNumberOfMonths] = React.useState(12);
+    const chartRef = React.useRef();
+    const chartOnClick = event => {
+        let element = getElementAtEvent(chartRef.current, event);
+        if (element[0]) {
+            let selectedYearMonth = yearMonths[element[0].index];
+            let startAndEndDatesOfYearMonth = getStartAndEndDatesForYearMonth(selectedYearMonth);
+            if (appContext.isEnterprise) {
+                history.push("/reports/income-statement/" + startAndEndDatesOfYearMonth.startDate + "/" + startAndEndDatesOfYearMonth.endDate)
+            } else {
+                history.push("/reports/income-expense/" + startAndEndDatesOfYearMonth.startDate + "/" + startAndEndDatesOfYearMonth.endDate);
+            }
+        }
+    }
 
     //fetch data on component mount
     React.useEffect(() => {
@@ -65,6 +81,7 @@ function IncomeAndExpenseSummary(props) {
                 })
                 setIncomeData(incomeSummaries);
                 setExpenseData(expenseSummaries);
+                setYearMonths(unparsedLabels.slice());
                 setLabels(unparsedLabels.map(label => parseYearMonth(label)));
                 setLoading(false);
             }
@@ -140,15 +157,19 @@ function IncomeAndExpenseSummary(props) {
             datasets: [{
                 label: incomeAndExpenseSummaryText[appContext.locale]["Income"],
                 borderWidth: 2,
-                borderColor: '#727cb6',
-                backgroundColor: 'rgba(114, 124, 182, 0.3)',
+                borderColor: '#348fe2',
+                backgroundColor: 'rgba(52, 143, 226, 0.3)',
+                hoverBorderColor: "#61A8E8",
+                hoverBackgroundColor: "rgba(97, 168, 232, 0.3)",
                 data: incomeData
             }, {
                 label: incomeAndExpenseSummaryText[appContext.locale]["Expenses"],
                 borderWidth: 2,
                 borderColor: '#8f103c',
                 backgroundColor: 'rgba(143, 16, 60, 0.3)',
-                data: expenseData
+                data: expenseData,
+                hoverBackgroundColor:'rgba(189, 21, 79, 0.3)',
+                hoverBorderColor: '#BD154F'
             }]
         },
         options: {
@@ -157,9 +178,16 @@ function IncomeAndExpenseSummary(props) {
             plugins: {
                 legend: {
                     labels: {
-                        color: fontColor
+                        color: fontColor,
+                    },
+                    onHover: (event) => {
+                        event.native.target.style.cursor = 'pointer'
+                    },
+                    onLeave: (event) => {
+                        event.native.target.style.cursor =  '';
                     }
-                }
+                },
+            
             },
             scales: {
                 y: {
@@ -169,7 +197,8 @@ function IncomeAndExpenseSummary(props) {
                     ticks: {
                         color: fontColor,
                     },
-                    min: 0
+                    beginAtZero: true,
+                    grace: "5%"
                 },
                 x: {
                     grid: {
@@ -179,7 +208,11 @@ function IncomeAndExpenseSummary(props) {
                         color: fontColor,
                     },
                 }
-            } 
+            },
+            onHover: (event, chartElement) => {
+                event.native.target.style.cursor = chartElement[0] ? 'pointer' : '';
+            },    
+        
         }
     };
 
@@ -190,7 +223,12 @@ function IncomeAndExpenseSummary(props) {
                     {incomeAndExpenseSummaryText[appContext.locale]["Income and Expenses"]}
                 </CardTitle>
                 <div style={{height: "90%"}}>
-                    <Bar data={barChart.data} options={barChart.options} />
+                    <Bar 
+                        data={barChart.data} 
+                        options={barChart.options} 
+                        ref={chartRef}
+                        onClick={chartOnClick}
+                    />
                 </div>
             </CardBody>
         </Card>

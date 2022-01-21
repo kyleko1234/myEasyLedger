@@ -114,3 +114,42 @@ export const getDateInCurrentYear = date => {
     let dateComponentArray = date.split('-');
     return (dateToday.getFullYear() + "-" + dateComponentArray[1] + "-" + dateComponentArray[2]);
 }
+
+/**
+ * Takes a six digit integer representing a year and a month, in the format yyyymm. 
+ * Returns the first and last dates of the month represented by yearMonth, in the format yyyy-mm-dd. 
+ * The returned object is in the following format: {startDate: String, endDate: String}
+ * @param {number} yearMonth 
+ * @returns {Object} 
+ */
+export const getStartAndEndDatesForYearMonth = yearMonth => {
+    let month = yearMonth % 100;
+    let year = (yearMonth - month) / 100;
+    let monthString;
+    if (month >= 10) {
+        monthString = month.toString();
+    } else {
+        monthString = "0" + month.toString();
+    }
+    let lastDateOfMonth = {
+        "01": "31",
+        "02": "28",
+        "03": "31",
+        "04": "30",
+        "05": "31",
+        "06": "30",
+        "07": "31",
+        "08": "31",
+        "09": "30",
+        "10": "31",
+        "11": "30",
+        "12": "31",
+    }
+    if (year % 4 === 0) {
+        lastDateOfMonth["02"] = "29";
+    }
+    return ({
+        startDate: year + "-" + monthString + "-" + "01",
+        endDate: year + "-" + monthString + "-" + lastDateOfMonth[monthString]
+    })
+}

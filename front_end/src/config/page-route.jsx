@@ -76,13 +76,17 @@ const routes = [
   },
   {
     path: '/reports/balance-sheet',
-    exact: true,
     title: 'Balance Sheet Report',
     component: BalanceSheetReport
   },
   {
     path: '/reports/income-statement',
     exact: true,
+    title: 'Income Statement Report',
+    component: IncomeStatementReport
+  },
+  {
+    path: '/reports/income-statement/:startDate/:endDate',
     title: 'Income Statement Report',
     component: IncomeStatementReport
   },
@@ -135,6 +139,12 @@ const routes = [
   },
   {
     path: '/reports/income-expense',
+    title: 'Income and Expense Report',
+    exact: true,
+    component: IncomeExpenseReport,
+  },
+  {
+    path: '/reports/income-expense/:startDate/:endDate',
     title: 'Income and Expense Report',
     component: IncomeExpenseReport,
   },
