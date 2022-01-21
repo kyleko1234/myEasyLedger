@@ -7,11 +7,12 @@ import { Card, CardBody, Alert } from 'reactstrap';
 import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns.js';
 import LoadingSpinner from '../../../components/misc/loading-spinner.js';
 import StripedRow from '../../../components/tables/striped-row.js';
-function IncomeExpenseRender() {
+function IncomeExpenseRender(props) {
+    //optional props: defualtStartDate, defaultEndDate
     const appContext = React.useContext(PageSettings);
     const today = new Date();
-    const [startDate, setStartDate] = React.useState(today.getFullYear() + "-01-01");
-    const [endDate, setEndDate] = React.useState(getTodayAsDateString());
+    const [startDate, setStartDate] = React.useState(props.defaultStartDate? props.defaultStartDate : (today.getFullYear() + "-01-01"));
+    const [endDate, setEndDate] = React.useState(props.defaultEndDate? props.defaultEndDate : getTodayAsDateString());
     const [accounts, setAccounts] = React.useState([]);
     const [totalIncome, setTotalIncome] = React.useState(null);
     const [totalExpenses, setTotalExpenses] = React.useState(null);
