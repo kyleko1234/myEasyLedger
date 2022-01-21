@@ -1,16 +1,18 @@
 import React from 'react';
-import { Bar, defaults, getDatasetAtEvent, getElementAtEvent } from 'react-chartjs-2';
+import { Bar, defaults, getElementAtEvent } from 'react-chartjs-2';
 import 'chart.js/auto';
 import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
 import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expense-summary-text.js';
 import { Card, CardBody, CardTitle } from 'reactstrap';
-import { timers } from 'jquery';
+import {useHistory} from 'react-router-dom';
+import { getStartAndEndDatesForYearMonth } from '../../../utils/util-fns';
 
 //required props: 
 function IncomeAndExpenseSummary(props) {
     const appContext = React.useContext(PageSettings);
+    const history = useHistory();
     const [labels, setLabels] = React.useState([]);
     const [yearMonths, setYearMonths] = React.useState([]);
     const [incomeData, setIncomeData] = React.useState([]);
@@ -22,9 +24,15 @@ function IncomeAndExpenseSummary(props) {
     const chartRef = React.useRef();
     const chartOnClick = event => {
         let element = getElementAtEvent(chartRef.current, event);
-        let yearMonth;
         if (element[0]) {
             let selectedYearMonth = yearMonths[element[0].index];
+            let startAndEndDatesOfYearMonth = getStartAndEndDatesForYearMonth(selectedYearMonth);
+            console.log(startAndEndDatesOfYearMonth)
+            if (appContext.isEnterprise) {
+                history.push("/reports/income-statement/" + startAndEndDatesOfYearMonth.startDate + "/" + startAndEndDatesOfYearMonth.endDate)
+            } else {
+                history.push("/reports/income-expense/" + startAndEndDatesOfYearMonth.startDate + "/" + startAndEndDatesOfYearMonth.endDate);
+            }
         }
     }
 

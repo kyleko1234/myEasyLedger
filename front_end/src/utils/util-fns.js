@@ -124,7 +124,7 @@ export const getDateInCurrentYear = date => {
  */
 export const getStartAndEndDatesForYearMonth = yearMonth => {
     let month = yearMonth % 100;
-    let year = yearMonth - month;
+    let year = (yearMonth - month) / 100;
     let monthString;
     if (month >= 10) {
         monthString = month.toString();
@@ -150,6 +150,6 @@ export const getStartAndEndDatesForYearMonth = yearMonth => {
     }
     return ({
         startDate: year + "-" + monthString + "-" + "01",
-        endDate: year + "-" + monthString + "-" + lastDateOfMonth
+        endDate: year + "-" + monthString + "-" + lastDateOfMonth[monthString]
     })
 }
