@@ -81,6 +81,7 @@ const routes = [
   },
   {
     path: '/reports/income-statement',
+    exact: true,
     title: 'Income Statement Report',
     component: IncomeStatementReport
   },
@@ -139,6 +140,7 @@ const routes = [
   {
     path: '/reports/income-expense',
     title: 'Income and Expense Report',
+    exact: true,
     component: IncomeExpenseReport,
   },
   {

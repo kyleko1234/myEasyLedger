@@ -27,7 +27,6 @@ function IncomeAndExpenseSummary(props) {
         if (element[0]) {
             let selectedYearMonth = yearMonths[element[0].index];
             let startAndEndDatesOfYearMonth = getStartAndEndDatesForYearMonth(selectedYearMonth);
-            console.log(startAndEndDatesOfYearMonth)
             if (appContext.isEnterprise) {
                 history.push("/reports/income-statement/" + startAndEndDatesOfYearMonth.startDate + "/" + startAndEndDatesOfYearMonth.endDate)
             } else {
