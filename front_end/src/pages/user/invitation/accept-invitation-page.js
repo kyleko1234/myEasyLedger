@@ -36,7 +36,9 @@ function AcceptInvitationPage(props) {
                 }
                 setLoading(false);
             }
-        }).catch(console.log);
+        }).catch(() => {
+            setLoading(false);
+        });
 
         return (() => {
             appContext.handleSetPageSidebar(true);

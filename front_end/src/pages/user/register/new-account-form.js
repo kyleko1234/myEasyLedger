@@ -56,6 +56,7 @@ function NewAccountForm(props) {
                 setLoading(false);
                 setEmailTakenAlert(true);
             }
+            setLoading(false);
         });
     }
 

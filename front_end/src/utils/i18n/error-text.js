@@ -1,4 +1,4 @@
-export const timeoutSweetAlertText = {
+export const errorText = {
     "en-US" : {
         "Our system is under maintenance.": "Our system is under maintenance.",
         "Please try again later.": "Please try again later."

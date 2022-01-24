@@ -1,10 +1,10 @@
 import React from 'react';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import { PageSettings } from '../../config/page-settings';
-import { timeoutSweetAlertText } from '../../utils/i18n/timeout-sweetalert-text';
+import { PageSettings } from '../../../config/page-settings';
+import { errorText } from '../../../utils/i18n/error-text';
 
 //required props: isOpen, toggle
-function TimeoutSweetAlert(props) {
+function NetworkErrorSweetAlert(props) {
     const appContext = React.useContext(PageSettings);
     
     if (props.isOpen) {
@@ -14,10 +14,10 @@ function TimeoutSweetAlert(props) {
                 showConfirm={false} 
                 showCancel={false}
                 onConfirm={props.toggle}
-                title={timeoutSweetAlertText[appContext.locale]["Our system is under maintenance."]}
+                title={errorText[appContext.locale]["Our system is under maintenance."]}
                 onCancel={props.toggle}
             >
-                {timeoutSweetAlertText[appContext.locale]["Please try again later."]}
+                {errorText[appContext.locale]["Please try again later."]}
             </SweetAlert>
         )
     } else {
@@ -26,4 +26,4 @@ function TimeoutSweetAlert(props) {
 
 }
 
-export default TimeoutSweetAlert;
+export default NetworkErrorSweetAlert;

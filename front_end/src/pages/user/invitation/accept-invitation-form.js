@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { Alert } from 'reactstrap';
+import NetworkErrorHandler from '../../../components/error/network-error/network-error-handler';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
@@ -53,7 +54,9 @@ function AcceptInvitationForm({token, setCompleted, email}) {
                 setLoading(false);
             }
             setCompleted(true);
-        }).catch(console.log);
+        }).catch(() => {
+            setLoading(false);
+        });
 
         return (() => {
             mounted = false;
@@ -107,6 +110,7 @@ function AcceptInvitationForm({token, setCompleted, email}) {
                     </div>
                 </form>
             </div>
+            <NetworkErrorHandler axiosInstance={axiosInstance} />
         </div>
     )
 

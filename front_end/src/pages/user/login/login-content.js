@@ -7,6 +7,7 @@ import {Alert} from 'reactstrap';
 import {loginV3Text} from '../../../utils/i18n/login-v3-text.js'
 import LoginHeader from '../components/login-header.js';
 import LoadingSpinner from '../../../components/misc/loading-spinner.js';
+import NetworkErrorHandler from '../../../components/error/network-error/network-error-handler.js';
 
 function LoginContent(props) {
     //required props: history
@@ -42,13 +43,16 @@ function LoginContent(props) {
             appContext.checkForAuthentication();
             props.history.push('/');
         }).catch( error => {
-            if (error.response.data.message == "User is disabled") {
-                setAccountDisabledAlert(true);
-                setLoading(false);
-            } else {
-                setLoginAlert(true);
-                setLoading(false);
+            if (error && error.response && error.response.data && error.response.data.message) {
+                if (error.response.data.message == "User is disabled") {
+                    setAccountDisabledAlert(true);
+                    setLoading(false);
+                } else {
+                    setLoginAlert(true);
+                    setLoading(false);
+                }
             }
+            setLoading(false);
         });
 
     }
@@ -102,6 +106,7 @@ function LoginContent(props) {
                     {loginV3Text[appContext.locale]["Not a member"]}
                 </div>
             </form>
+            <NetworkErrorHandler axiosInstance={axiosLoginInstance}/>
         </>
     )
 
