@@ -13,7 +13,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import './index.css';
 
 // axios config
-axios.defaults.timeout = 2
+axios.defaults.timeout = 5000;
 
 // ========================================
 
