@@ -788,10 +788,10 @@ public class PersonService {
 		for (Account account : topLevelAccounts) {
 			account.setOrganization(organization);
 		}
-		accountRepo.saveAll(topLevelAccounts);
 		for (Account account : childAccounts) {
 			account.setOrganization(organization);
 		}
+		accountRepo.saveAll(topLevelAccounts);
 		accountRepo.saveAll(childAccounts);
 	}
 	
@@ -824,9 +824,9 @@ public class PersonService {
 		Account 現金 = new Account("現金", otherCurrentAssets, "00");
 		topLevelAccounts.add(現金);
 		Account 活期存款 = new Account("活期存款", otherCurrentAssets, "01");
-		topLevelAccounts.add(現金);
+		topLevelAccounts.add(活期存款);
 		Account 定期存款 = new Account("定期存款", otherCurrentAssets, "02");
-		topLevelAccounts.add(現金);
+		topLevelAccounts.add(定期存款);
 		childAccounts.add(new Account("XX銀行 - 定存帳戶", 定期存款, "021"));
 		childAccounts.add(new Account("XX銀行 - 活存帳戶", 活期存款, "011"));
 		
