@@ -888,6 +888,56 @@ public class PersonService {
 		}
 	}
 
+	private void autoPopulatePersonalEnUS(Organization organization) throws ResourceNotFoundException {
+		AccountSubtype otherCurrentAssets = accountSubtypeRepo.findById((long) 5)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
+		AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 16)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 16"));
+		AccountSubtype revenue = accountSubtypeRepo.findById((long) 24)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 24"));
+		AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
+		Account bankAccounts = new Account("Bank Accounts", otherCurrentAssets);
+		Account cash = new Account("Cash", otherCurrentAssets);
+		Account creditCards = new Account("Credit Cards", otherCurrentLiabilities);
+		Account jobs = new Account("Jobs", revenue);
+		Account projects = new Account("Projects", revenue);
+		Account discretionary = new Account("Discretionary", costOfSales);
+		Account education = new Account("Education", costOfSales);
+		Account food = new Account("Food", costOfSales);
+		Account living = new Account("Living", costOfSales);
+		Account transportation = new Account("Transportation", costOfSales);
+		Account[] topLevelAccounts = {
+				bankAccounts, cash, creditCards, jobs, projects, discretionary, education, food, living, transportation
+		};
+		for (Account account : topLevelAccounts) {
+			account.setOrganization(organization);
+		}
+		accountRepo.saveAll(Arrays.asList(topLevelAccounts));
+		
+		Account savingsAccount = new Account("Savings Account", bankAccounts);
+		Account checkingAccount = new Account("Checking Account", bankAccounts);
+		Account investmentAccount = new Account("Investment Account", bankAccounts);
+		Account creditCardOne = new Account("Credit Card #1", creditCards);
+		Account jobOne = new Account("Job #1", jobs);
+		Account projectOne = new Account("Project #1", projects);
+		Account apparel = new Account("Apparel", discretionary);
+		Account entertainment = new Account("Entertainment", discretionary);
+		Account tuition = new Account("Tuition", education);
+		Account dining = new Account("Dining", food);
+		Account groceries = new Account("Groceries", food);
+		Account rent = new Account("Rent", living);
+		Account gas = new Account("Gas", transportation);
+		Account[] childAccounts = {
+				savingsAccount, checkingAccount, investmentAccount, creditCardOne, jobOne, projectOne, apparel,
+				entertainment, tuition, dining, groceries, rent, gas
+		};
+		for (Account account : childAccounts) {
+			account.setOrganization(organization);
+		}
+		accountRepo.saveAll(Arrays.asList(childAccounts));
+
+	}
 	
 	public void assertCompletePerson(Person person) 
 			throws ConflictException {
