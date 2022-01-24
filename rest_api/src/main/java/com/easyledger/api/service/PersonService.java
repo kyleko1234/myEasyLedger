@@ -796,6 +796,20 @@ public class PersonService {
 	}
 	
 	private void autoPopulatePersonal(Organization organization, String locale) throws ResourceNotFoundException {
+		switch (locale) {
+			case "zh-TW": {
+				autoPopulatePersonalZhTW(organization);
+				break;
+			}
+			case "en-US":
+			default: {
+				autoPopulatePersonalEnUS(organization);
+				break;
+			}
+		}
+	}
+	
+	private void autoPopulatePersonalZhTW(Organization organization) throws ResourceNotFoundException {
 		AccountSubtype otherCurrentAssets = accountSubtypeRepo.findById((long) 5)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 5"));
 		AccountSubtype otherCurrentLiabilities = accountSubtypeRepo.findById((long) 16)
@@ -804,88 +818,90 @@ public class PersonService {
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 24"));
 		AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
-		switch (locale) {
-			case "zh-TW": {
-				ArrayList<Account> topLevelAccounts = new ArrayList<Account>();
-				ArrayList<Account> childAccounts = new ArrayList<Account>();
-				String[] assetAccountNames = {"活期存款帳戶", "投資理財帳戶", "現金"};
-				String[] liabilityAccountNames = {"信用卡"};
-				String[] incomeAccountNames = {"薪水", "其它"};
-				String[] expenseAccountNames = {"衣", "住", "行", "育", "樂", "所得稅", "其它"};
-				for (String accountName : assetAccountNames) {
-					Account account = new Account(accountName, otherCurrentAssets);
-					topLevelAccounts.add(account);
-				}
-				for (String accountName : liabilityAccountNames) {
-					Account account = new Account(accountName, otherCurrentLiabilities);
-					topLevelAccounts.add(account);
-				}
-				for (String accountName : incomeAccountNames) {
-					Account account = new Account(accountName, revenue);
-					topLevelAccounts.add(account);
-				}
-				for (String accountName : expenseAccountNames) {
-					Account account = new Account(accountName, costOfSales);
-					topLevelAccounts.add(account);
-				}
-				Account foodExpensesParentAccount = new Account("食", costOfSales);
-				topLevelAccounts.add(foodExpensesParentAccount);
-				for (Account account : topLevelAccounts) {
-					account.setOrganization(organization);
-				}
-				accountRepo.saveAll(topLevelAccounts);
-				String[] foodExpensesChildAccountNames = {"食品", "外食"};
-				for (String accountName : foodExpensesChildAccountNames) {
-					Account account = new Account(accountName, foodExpensesParentAccount);
-					account.setOrganization(organization);
-					accountRepo.save(account);
-				}
-				break;
-			}
-			case "en-US":
-			default: {
-				Account bankAccounts = new Account("Bank Accounts", otherCurrentAssets);
-				Account cash = new Account("Cash", otherCurrentAssets);
-				Account creditCards = new Account("Credit Cards", otherCurrentLiabilities);
-				Account jobs = new Account("Jobs", revenue);
-				Account projects = new Account("Projects", revenue);
-				Account discretionary = new Account("Discretionary", costOfSales);
-				Account education = new Account("Education", costOfSales);
-				Account food = new Account("Food", costOfSales);
-				Account living = new Account("Living", costOfSales);
-				Account transportation = new Account("Transportation", costOfSales);
-				Account[] topLevelAccounts = {
-						bankAccounts, cash, creditCards, jobs, projects, discretionary, education, food, living, transportation
-				};
-				for (Account account : topLevelAccounts) {
-					account.setOrganization(organization);
-				}
-				accountRepo.saveAll(Arrays.asList(topLevelAccounts));
-				
-				Account savingsAccount = new Account("Savings Account", bankAccounts);
-				Account checkingAccount = new Account("Checking Account", bankAccounts);
-				Account investmentAccount = new Account("Investment Account", bankAccounts);
-				Account creditCardOne = new Account("Credit Card #1", creditCards);
-				Account jobOne = new Account("Job #1", jobs);
-				Account projectOne = new Account("Project #1", projects);
-				Account apparel = new Account("Apparel", discretionary);
-				Account entertainment = new Account("Entertainment", discretionary);
-				Account tuition = new Account("Tuition", education);
-				Account dining = new Account("Dining", food);
-				Account groceries = new Account("Groceries", food);
-				Account rent = new Account("Rent", living);
-				Account gas = new Account("Gas", transportation);
-				Account[] childAccounts = {
-						savingsAccount, checkingAccount, investmentAccount, creditCardOne, jobOne, projectOne, apparel,
-						entertainment, tuition, dining, groceries, rent, gas
-				};
-				for (Account account : childAccounts) {
-					account.setOrganization(organization);
-				}
-				accountRepo.saveAll(Arrays.asList(childAccounts));
-				break;
-			}
+		ArrayList<Account> topLevelAccounts = new ArrayList<Account>();
+		ArrayList<Account> childAccounts = new ArrayList<Account>();
+		
+		Account 現金 = new Account("現金", otherCurrentAssets, "00");
+		topLevelAccounts.add(現金);
+		Account 活期存款 = new Account("活期存款", otherCurrentAssets, "01");
+		topLevelAccounts.add(現金);
+		Account 定期存款 = new Account("定期存款", otherCurrentAssets, "02");
+		topLevelAccounts.add(現金);
+		childAccounts.add(new Account("XX銀行 - 定存帳戶", 定期存款, "021"));
+		childAccounts.add(new Account("XX銀行 - 活存帳戶", 活期存款, "011"));
+		
+		Account 醫 = new Account("醫", costOfSales, "07");
+		topLevelAccounts.add(醫);
+		Account 行 = new Account("行", costOfSales, "04");
+		topLevelAccounts.add(行);
+		Account 住 = new Account("住", costOfSales, "03");
+		topLevelAccounts.add(住);
+		Account 稅 = new Account("稅", costOfSales, "09");
+		topLevelAccounts.add(稅);
+		Account 食 = new Account("食", costOfSales, "01");
+		topLevelAccounts.add(食);
+		Account 未分類支出 = new Account("未分類支出", costOfSales);
+		topLevelAccounts.add(未分類支出);
+		Account 樂 = new Account("樂", costOfSales, "06");
+		topLevelAccounts.add(樂);
+		Account 孝 = new Account("孝", costOfSales, "08");
+		topLevelAccounts.add(孝);
+		Account 育 = new Account("育", costOfSales, "05");
+		topLevelAccounts.add(育);
+		Account 衣 = new Account("衣", costOfSales, "02");
+		topLevelAccounts.add(衣);
+
+		childAccounts.add(new Account("住 - 房貸利息", 住, "033"));
+		childAccounts.add(new Account("住 - 修繕", 住, "034"));
+		childAccounts.add(new Account("住 - 其他", 住, "039"));
+		childAccounts.add(new Account("住 - 居家用品", 住, "031"));
+		childAccounts.add(new Account("住 - 房租", 住, "032"));
+
+		childAccounts.add(new Account("育 - 書", 育, "053"));
+		childAccounts.add(new Account("育 - 其他", 育, "059"));
+		childAccounts.add(new Account("育 - 學費", 育, "051"));
+		childAccounts.add(new Account("育 - 補習費", 育, "052"));
+
+		childAccounts.add(new Account("行 - 停車費", 行, "043"));
+		childAccounts.add(new Account("行 - 油費", 行, "042"));
+		childAccounts.add(new Account("行 - 其他", 行, "049"));
+		childAccounts.add(new Account("行 - 維修保養", 行, "044"));
+		childAccounts.add(new Account("行 - 交通費", 行, "041"));
+
+		childAccounts.add(new Account("食 - 買菜", 食, "011"));
+		childAccounts.add(new Account("食 - 其他", 食, "019"));
+		childAccounts.add(new Account("食 - 外食", 食, "012"));
+
+		Account 其它收入 = new Account("其它收入", revenue);
+		topLevelAccounts.add(其它收入);
+		Account 工作 = new Account("工作", revenue, "01");
+		topLevelAccounts.add(工作);
+		Account 投資 = new Account("投資", revenue, "02");
+		topLevelAccounts.add(投資);
+		
+		childAccounts.add(new Account("薪水（XX公司）", 工作, "011"));
+		childAccounts.add(new Account("奬金（XX公司）", 工作, "012"));
+
+		childAccounts.add(new Account("資本利得", 投資, "0201"));
+		childAccounts.add(new Account("利息收入", 投資, "0299"));
+		
+		Account 信用卡 = new Account("信用卡", otherCurrentLiabilities, "01");
+		topLevelAccounts.add(信用卡);
+		Account 貸款 = new Account("貸款", otherCurrentLiabilities, "02");
+		topLevelAccounts.add(貸款);
+
+		childAccounts.add(new Account("XX現金回饋卡", 信用卡, "011"));
+		childAccounts.add(new Account("XX銀行車貸", 貸款, "022"));
+		childAccounts.add(new Account("XX銀行房貸", 貸款, "021"));
+
+		for (Account account : topLevelAccounts) {
+			account.setOrganization(organization);
 		}
+		accountRepo.saveAll(topLevelAccounts);
+		for (Account account : childAccounts) {
+			account.setOrganization(organization);
+		}
+		accountRepo.saveAll(childAccounts);
 	}
 
 	private void autoPopulatePersonalEnUS(Organization organization) throws ResourceNotFoundException {
