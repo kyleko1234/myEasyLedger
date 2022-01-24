@@ -8,6 +8,7 @@ import { Card, CardBody, CardTitle } from 'reactstrap';
 import AppearanceSettingsModal from './appearance-settings-modal';
 import ChangeNameModal from './change-name-modal';
 import ChangeResultsPerPageModal from './change-results-per-page-modal';
+import LoadingSpinner from '../../components/misc/loading-spinner';
 function Settings() {
     const appContext = React.useContext(PageSettings);
 
@@ -75,26 +76,31 @@ function Settings() {
                     </div>
                 </CardBody>
             </Card>
-            {appContext.permissions.filter(permission => permission.permissionType.id >= 3).length == 0 ? null : //only show this widget if user administrates at least one organization
-                <Card className="very-rounded shadow-sm">
-                    <CardBody>
-                        <CardTitle className="font-weight-600">
-                            {settingsText[appContext.locale]["Manage my EasyLedgers..."]}
-                        </CardTitle>
-                        <div>
-                            {appContext.permissions.map(permission => {
-                                return (
-                                    <Link key={permission.id} to={`/manage-easyledger/${permission.organization.id}`} className="tr d-flex justify-content-between align-items-center">
-                                        <div className="indent td">{permission.organization.name}</div>
-                                        <div className="pr-2 text-muted">
-                                            <i className="fas fa-angle-right"></i>
-                                        </div>
-                                    </Link>
-                                )
-                            })}
-                        </div>
-                    </CardBody>
-                </Card>
+            {appContext.permissions 
+                ? appContext.permissions.filter(permission => permission.permissionType.id >= 3).length == 0 
+                    ? null  //only show this widget if user administrates at least one organization
+                    : <Card className="very-rounded shadow-sm">
+                        <CardBody>
+                            <CardTitle className="font-weight-600">
+                                {settingsText[appContext.locale]["Manage my EasyLedgers..."]}
+                            </CardTitle>
+                            <div>
+                                {appContext.permissions.map(permission => {
+                                    return (
+                                        <Link key={permission.id} to={`/manage-easyledger/${permission.organization.id}`} className="tr d-flex justify-content-between align-items-center">
+                                            <div className="indent td">{permission.organization.name}</div>
+                                            <div className="pr-2 text-muted">
+                                                <i className="fas fa-angle-right"></i>
+                                            </div>
+                                        </Link>
+                                    )
+                                })}
+                            </div>
+                        </CardBody>
+                    </Card>
+                : <div className="d-flex width-100 justify-content-center">
+                    <LoadingSpinner big />
+                </div>
             }
             <LanguageSettingsModal isOpen={languageSettingsModal} toggle={toggleLanguageSettingsModal}/>
             <AppearanceSettingsModal isOpen={appearanceSettingsModal} toggle={toggleAppearanceSettingsModal}/>

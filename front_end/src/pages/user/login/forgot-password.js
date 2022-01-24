@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { Route, withRouter} from 'react-router';
+import NetworkErrorHandler from '../../../components/network-error/network-error-handler';
 import { PageSettings } from '../../../config/page-settings';
 import FindEmail from './find-email';
 import ResetPassword from './reset-password';
@@ -32,6 +33,7 @@ function ForgotPassword(props) {
             <Route path={props.match.path + "/reset-success"}>
                 <ResetSuccess/>
             </Route>
+            <NetworkErrorHandler axiosInstance={forgotPasswordAxiosInstance} />
         </>
     )
 }
