@@ -1,7 +1,7 @@
 import React from 'react';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { PageSettings } from '../../config/page-settings';
-import timeoutSweetalertText from '../../utils/i18n/timeout-sweetalert-text';
+import { timeoutSweetAlertText } from '../../utils/i18n/timeout-sweetalert-text';
 
 //required props: isOpen, toggle
 function TimeoutSweetAlert(props) {
@@ -13,10 +13,10 @@ function TimeoutSweetAlert(props) {
                 danger
                 showConfirm={false} 
                 showCancel={false}
-                title={timeoutSweetalertText[appContext.locale]["Our system is under maintenance."]}
+                title={timeoutSweetAlertText[appContext.locale]["Our system is under maintenance."]}
                 onCancel={props.toggle}
             >
-                {timeoutSweetalertText[appContext.locale]["Please try again later."]}
+                {timeoutSweetAlertText[appContext.locale]["Please try again later."]}
             </SweetAlert>
         )
     } else {
