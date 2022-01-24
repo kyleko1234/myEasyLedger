@@ -8,7 +8,7 @@ import { ACCESS_TOKEN, API_BASE_URL} from './utils/constants.js';
 import jwt_decode from 'jwt-decode';
 import interceptors from "./utils/interceptors"; //interceptors for API requests, used for auth purposes. keep this as an unused import.
 import axios from 'axios';
-import NetworkErrorHandler from './components/error/network-error/network-error-handler.js';
+import NetworkErrorHandler from './components/network-error/network-error-handler.js';
 
 
 class App extends React.Component {

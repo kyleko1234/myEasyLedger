@@ -7,7 +7,7 @@ import {Alert} from 'reactstrap';
 import {loginV3Text} from '../../../utils/i18n/login-v3-text.js'
 import LoginHeader from '../components/login-header.js';
 import LoadingSpinner from '../../../components/misc/loading-spinner.js';
-import NetworkErrorHandler from '../../../components/error/network-error/network-error-handler.js';
+import NetworkErrorHandler from '../../../components/network-error/network-error-handler.js';
 
 function LoginContent(props) {
     //required props: history

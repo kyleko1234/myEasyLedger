@@ -5,7 +5,7 @@ import {API_BASE_URL, LOCALE_OPTIONS, CURRENCY_OPTIONS} from '../../../utils/con
 import NewAccountForm from './new-account-form.js';
 import FirstOrganizationForm from './first-organization-form.js';
 import RegistrationSuccessful from './registration-successful.js';
-import NetworkErrorHandler from '../../../components/error/network-error/network-error-handler.js';
+import NetworkErrorHandler from '../../../components/network-error/network-error-handler.js';
 
 function RegisterController(props) {
     //required props: history

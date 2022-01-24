@@ -6,7 +6,7 @@ import { PageSettings } from '../../config/page-settings';
 import { settingsText } from '../../utils/i18n/settings-text';
 import { API_BASE_URL, ACCESS_TOKEN } from '../../utils/constants';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import NetworkErrorHandler from '../../components/error/network-error/network-error-handler';
+import NetworkErrorHandler from '../../components/network-error/network-error-handler';
 
 function ChangePasswordModal(props) {
 //required props: isOpen, toggle
