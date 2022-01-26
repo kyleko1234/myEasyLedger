@@ -154,7 +154,7 @@ public class AuthController {
     }
     
     @PostMapping("/auth/checkForAvailableEmail")
-    public Map<String, Boolean> checkForAvailableEmail(@RequestBody SignUpRequest request) throws MessagingException, ConflictException{
+    public Map<String, Boolean> checkForAvailableEmail(@RequestBody SignUpRequest request) throws MessagingException, ConflictException {
     	if (personRepository.existsByEmail(request.getEmail().toLowerCase().trim())) {
         	throw new ConflictException("Person already registered with this email :: " + request.getEmail().trim());
     	}

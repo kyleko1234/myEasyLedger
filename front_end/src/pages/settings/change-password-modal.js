@@ -39,6 +39,7 @@ function ChangePasswordModal(props) {
             console.log(response);
             setLoginAlert(true);
         }).catch(error => {
+            console.log(error)
             if (error.response) {
                 if (error.response.status === 401) {
                     setIncorrectPasswordAlert(true);
@@ -46,7 +47,6 @@ function ChangePasswordModal(props) {
                     setMatchingPasswordAlert(true);
                 }
             }
-            console.log(error);
         })
     }
 

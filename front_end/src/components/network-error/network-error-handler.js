@@ -19,8 +19,8 @@ function NetworkErrorHandler(props) {
         props.axiosInstance.interceptors.response.use((response) => {
             return response;
         }, async function (error) {
-            if (!error.status && !error.code) { //if request times out
-                networkError(true);
+            if (!error.response && !error.status && !error.code) { //if request times out
+                setNetworkError(true);
             } else if (error.code === "ECONNABORTED") {
                 setTimeoutError(true);
             }
@@ -30,7 +30,7 @@ function NetworkErrorHandler(props) {
         axios.interceptors.response.use((response) => {
             return response;
         }, async function (error) {
-            if (!error.status && !error.code) { //if request times out
+            if (!error.response && !error.status && !error.code) { //if request times out
                 setNetworkError(true);
             } else if (error.code === "ECONNABORTED") {
                 setTimeoutError(true);

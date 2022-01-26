@@ -52,8 +52,6 @@ function NewAccountForm(props) {
             props.setStepNumber(2);
         }).catch(error => {
             if (error.response) {
-                console.log(error.response);
-                setLoading(false);
                 setEmailTakenAlert(true);
             }
             setLoading(false);
