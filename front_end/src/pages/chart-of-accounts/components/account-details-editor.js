@@ -287,7 +287,7 @@ function AccountDetailsEditor(props) {
                         <div className="col-md-8">
                             <Select
                                 classNamePrefix="form-control"
-                                options={parentAccountOptions.filter(option => option.object.accountTypeId == accountTypeId)}
+                                options={parentAccountOptions.filter(option => (option.object.accountTypeId == accountTypeId && option.object.accountId != props.selectedAccountId))}
                                 value={parentAccountOptions.find(option => option.object.accountId == selectedParentAccountId)}
                                 isSearchable={true}
                                 onChange={handleChangeParentAccountOption}
