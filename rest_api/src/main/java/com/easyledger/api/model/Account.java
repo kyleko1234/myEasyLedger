@@ -186,7 +186,7 @@ public class Account {
 	@JoinColumn(name = "parent_account_id")
 	private Account parentAccount;
 	
-	@OneToMany(mappedBy = "parentAccount", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "parentAccount")
 	@JsonIgnore
 	private Set<Account> childAccounts = new HashSet<Account>();
 	
