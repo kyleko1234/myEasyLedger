@@ -68,7 +68,6 @@ public class AuthController {
     @Autowired
     VerificationService verificationService;	
     
-    
     @PostMapping("/auth/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     	Authentication authentication = authenticationManager.authenticate(

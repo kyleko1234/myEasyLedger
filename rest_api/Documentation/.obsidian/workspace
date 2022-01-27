@@ -9,23 +9,10 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Person/Contents/Update a Person.md",
+            "file": "Authentication/Contents/Sign In.md",
             "mode": "source"
           }
-        },
-        "group": "ac08efec71731141"
-      },
-      {
-        "id": "e48223cc93a66da0",
-        "type": "leaf",
-        "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Person/Contents/Update a Person.md",
-            "mode": "preview"
-          }
-        },
-        "group": "ac08efec71731141"
+        }
       }
     ],
     "direction": "vertical"
@@ -81,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Person/Contents/Update a Person.md",
+                "file": "Authentication/Contents/Sign In.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -101,15 +88,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Authentication/Contents/Sign In.md",
+    "Organization/Contents/Get Date Range Presets for Generating Reports for Organization Up To Date.md",
+    "Easy Ledger.md",
+    "Account/Contents/Update an Account.md",
     "Person/Contents/Update a Person.md",
     "Person/Contents/The Person Object.md",
     "Person/Contents/Accept an invitation.md",
     "Person/Contents/Check if invitation link has already been used.md",
     "Person/Contents/Invite a Person by Email.md",
-    "Person/Contents/List All Persons.md",
-    "Person/Contents/List All Persons in an Organization.md",
-    "Person/Contents/Retrieve a Person.md",
-    "Person/Contents/Update a Person's Password.md",
-    "Person/Person.md"
+    "Person/Contents/List All Persons.md"
   ]
 }

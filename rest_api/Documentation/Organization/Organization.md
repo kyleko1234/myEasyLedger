@@ -10,7 +10,7 @@ ___
 - [[Update an Organization]]
 - [[List All Organizations]]
 - [[Retrieve Monthly Net Assets for an Organization]]
-- [[Get Fiscal Year Date Range Presets for Generating Reports for Organization Up To Date]]
+- [[Get Date Range Presets for Generating Reports for Organization Up To Date]]
 - [[Delete an Organization]]
 
 

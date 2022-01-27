@@ -79,15 +79,8 @@ function BalanceSheetRender() {
     React.useEffect(() => {
         async function fetchData() {
             setLoading(true);
-            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/dateRangePresetsUpToDate/${today}`).then(response => {
-                let formattedPresets = response.data.map(preset => {
-                    return {
-                        value: preset.name,
-                        label: preset.name,
-                        object: preset
-                    }
-                })
-                setDateRangePresets(formattedPresets);
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/dateRangePresetsUpToDate/${today}/${appContext.locale}`).then(response => {
+                setDateRangePresets(response.data);
             })
             let fetchedBalanceSheetObjects = []
             await requestBalanceSheetObjects(fetchedBalanceSheetObjects);
