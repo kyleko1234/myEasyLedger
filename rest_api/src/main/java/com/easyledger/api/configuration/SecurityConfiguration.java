@@ -83,7 +83,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	                    "/**/*.jpg",
 	                    "/**/*.html",
 	                    "/**/*.css",
-	                    "/**/*.js")
+	                    "/**/*.js",
+	                    "/error")
 	                    .permitAll()
 	                .antMatchers("/v0.6.1/auth/**", "/v0.6.1/verification/**", "/v0.6.1/acceptInvitation/**")
 	                	.permitAll()
