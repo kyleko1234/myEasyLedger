@@ -141,12 +141,12 @@ public class OrganizationController {
     	return organizationService.getMonthlyNetAssetsDTOsForOrganization(organizationId, numberOfMonths);
 	}
 		
-	@GetMapping("/organization/{organizationId}/dateRangePresetsUpToDate/{endDate}")
-	public List<DateRangeDTO> getDateRangePresetsForOrganizationUpToDate(@PathVariable(value = "organizationId") Long organizationId, 
-			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
+	@GetMapping("/organization/{organizationId}/dateRangePresetsUpToDate/{endDate}/{locale}")
+	public List<Object> getDateRangePresetsForOrganizationUpToDate(@PathVariable(value = "organizationId") Long organizationId, 
+			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, @PathVariable(value = "locale") String locale, Authentication authentication) 
 			throws UnauthorizedException, ResourceNotFoundException {
 		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
-		return organizationService.getDateRangePresetsForOrganizationUpToDate(organizationId, endDate);
+		return organizationService.getDateRangePresetsForOrganizationUpToDate(organizationId, endDate, locale);
 	}
 	
     @DeleteMapping("/organization/{id}")
