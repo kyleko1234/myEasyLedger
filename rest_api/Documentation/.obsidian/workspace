@@ -12,20 +12,7 @@
             "file": "Organization/Contents/Get Fiscal Year Date Range Presets for Generating Reports for Organization Up To Date.md",
             "mode": "source"
           }
-        },
-        "group": "ac08efec71731141"
-      },
-      {
-        "id": "e48223cc93a66da0",
-        "type": "leaf",
-        "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Organization/Contents/Get Fiscal Year Date Range Presets for Generating Reports for Organization Up To Date.md",
-            "mode": "preview"
-          }
-        },
-        "group": "ac08efec71731141"
+        }
       }
     ],
     "direction": "vertical"
@@ -99,7 +86,7 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "e48223cc93a66da0",
+  "active": "e9ecb484239110b1",
   "lastOpenFiles": [
     "Organization/Contents/Get Fiscal Year Date Range Presets for Generating Reports for Organization Up To Date.md",
     "Account/Contents/Update an Account.md",
