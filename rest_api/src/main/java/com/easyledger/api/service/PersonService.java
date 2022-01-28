@@ -818,6 +818,8 @@ public class PersonService {
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 24"));
 		AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
+		AccountSubtype propertyPlantAndEquipment = accountSubtypeRepo.findById((long) 8)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 8"));
 		ArrayList<Account> topLevelAccounts = new ArrayList<Account>();
 		ArrayList<Account> childAccounts = new ArrayList<Account>();
 		
@@ -894,7 +896,7 @@ public class PersonService {
 		childAccounts.add(new Account("XX銀行車貸", 貸款, "022"));
 		childAccounts.add(new Account("XX銀行房貸", 貸款, "021"));
 		
-		Account 房地產 = new Account("房地產", otherCurrentAssets, "03");
+		Account 房地產 = new Account("房地產", propertyPlantAndEquipment, "03");
 		topLevelAccounts.add(房地產);
 		childAccounts.add(new Account("自購房宅", 房地產, "031"));
 
