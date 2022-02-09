@@ -37,20 +37,25 @@ function EasyledgersDropdown(props) {
                     </span>
                 </DropdownToggle>
                 <DropdownMenu className="shadow" right>
-                    <DropdownItem text>
-                        <div className="font-weight-600 text-nowrap">
-                            {appContext.currentOrganizationName}
-                        </div>
-                        <div className="small text-muted">
-                            {appContext.currentPermissionTypeId
-                                ? sidebarText[appContext.locale]["Permission level: "] + permissionTypes.find(permissionType => permissionType.value === appContext.currentPermissionTypeId).label
-                                : null
-                            }
-                        </div>
-                    </DropdownItem>
+                    {appContext.currentOrganizationId
+                        ? <>
+                            <DropdownItem text>
+                                <div className="font-weight-600 text-nowrap">
+                                    {appContext.currentOrganizationName}
+                                </div>
+                                <div className="small text-muted">
+                                    {appContext.currentPermissionTypeId
+                                        ? sidebarText[appContext.locale]["Permission level: "] + permissionTypes.find(permissionType => permissionType.value === appContext.currentPermissionTypeId).label
+                                        : null
+                                    }
+                                </div>
+                            </DropdownItem>
+                            <DropdownItem divider />
+                        </>
+                        : null
+                    }
                     {(appContext.permissions && appContext.permissions.length > 1) ?
                     <>
-                        <DropdownItem divider />
                         {appContext.permissions
                             .filter(permission => permission.organization.id !== appContext.currentOrganizationId)
                             .map(permission => {
@@ -64,9 +69,9 @@ function EasyledgersDropdown(props) {
                                     </DropdownItem>
                                 )
                             })}
+                        <DropdownItem divider />
                     </>
                     : null}
-                    <DropdownItem divider />
                     <DropdownItem 
                         onClick={() => history.push("/create-a-new-easyledger")}
                         className="text-nowrap"
