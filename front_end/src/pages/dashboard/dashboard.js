@@ -8,9 +8,11 @@ import ExpenseBreakdown from './components/expense-breakdown';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/constants';
 import NetAssets from './components/net-assets';
+import LoadingSpinner from '../../components/misc/loading-spinner';
 
 function Dashboard() {
     const appContext = React.useContext(PageSettings);
+    const [loading, setLoading] = React.useState(true);
 
     return (
         <>
@@ -19,21 +21,21 @@ function Dashboard() {
                     {/*<button type="button" onClick={populateSampleUserWithSampleData}>POPULATE SAMPLE DATA</button>*/}
                     <div className="row mb-md-3">
                         <div className="col-xl-8 col-lg-6 mb-3 mb-lg-0">
-                            {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                            {(appContext.isLoading || loading) ? <LoadingSpinner big /> :
                             <IncomeAndExpenseSummary/>}
                         </div>
                         <div className="col-xl-4 col-lg-6 mb-3 mb-lg-0">
-                            {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
+                            {(appContext.isLoading || loading) ? <LoadingSpinner big /> : 
                             <BalanceSummary/>}
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-lg-6 mb-3 mb-lg-0">
-                            {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : 
+                            {(appContext.isLoading || loading) ? <LoadingSpinner big /> : 
                             <ExpenseBreakdown/>}
                         </div>
                         <div className="col-lg-6 mb-3 mb-lg-0">
-                            {appContext.isLoading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
+                            {(appContext.isLoading || loading) ? <LoadingSpinner big /> :
                             <NetAssets/>}
                         </div>
                     </div>

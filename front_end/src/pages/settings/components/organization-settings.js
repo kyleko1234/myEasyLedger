@@ -37,7 +37,6 @@ function OrganizationSettings(props) {
         setConfirmDeleteOrganizationAlert(false);
         axios.delete(`${API_BASE_URL}/organization/${props.organizationId}`).then(async (response) => {
             setLoading(false);
-            console.log(appContext);
             await appContext.checkForAuthentication();
             history.push('/');
         }).catch(() => {
