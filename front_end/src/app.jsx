@@ -104,6 +104,8 @@ class App extends React.Component {
                         objectToSetToState.currency = currentPermission.organization.currency;
                         objectToSetToState.isEnterprise = currentPermission.organization.isEnterprise;
                     }
+                } else {
+                    objectToSetToState.currentOrganizationId = null
                 }
                 if (response.data.appearance === 'system') {
                     this.setColorSchemeToSystemPreference();
