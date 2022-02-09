@@ -366,7 +366,7 @@ public class PersonService {
 		childAccounts.add(new Account("暫付款", 其他流動資產, "1281"));
 		childAccounts.add(new Account("持有至到期日金融資產 - 流動", 其他流動資產, "116"));
 		childAccounts.add(new Account("用品盤存", 預付款項, "1264"));
-		childAccounts.add(new Account("預付投資款", 預付款項, "1267"));
+		childAccounts.add(new Account("預付投資款 - 流動", 預付款項, "1267"));
 		childAccounts.add(new Account("留抵稅額", 預付款項, "1269"));
 		childAccounts.add(new Account("預付保險費", 預付款項, "1263"));
 		childAccounts.add(new Account("預付租金", 預付款項, "1262"));
@@ -396,7 +396,7 @@ public class PersonService {
 		childAccounts.add(new Account("避險之衍生金融資產 - 非流動", 其他非流動資產, "136"));
 		childAccounts.add(new Account("備抵呆帳 - 催收關係人款項", 其他非流動資產, "1589"));
 		childAccounts.add(new Account("預付退休金", 其他非流動資產, "1581"));
-		childAccounts.add(new Account("預付投資款", 其他非流動資產, "1580"));
+		childAccounts.add(new Account("預付投資款 - 非流動", 其他非流動資產, "1580"));
 		childAccounts.add(new Account("礦產資源淨額", 其他非流動資產, "147"));
 		childAccounts.add(new Account("其他非流動資產 - 其他", 其他非流動資產, "1586"));
 		childAccounts.add(new Account("備抵呆帳 - 長期應收票據及款項", 其他非流動資產, "1574"));
