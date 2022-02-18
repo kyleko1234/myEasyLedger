@@ -4,23 +4,36 @@ import {API_BASE_URL} from '../../../utils/constants.js';
 import axios from 'axios';
 import {incomeStatementRenderText} from '../../../utils/i18n/income-statement-render-text.js';
 import { Card, CardBody, Alert } from 'reactstrap';
-import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns.js';
+import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns.js';
 import LoadingSpinner from '../../../components/misc/loading-spinner.js';
 import StripedRow from '../../../components/tables/striped-row.js';
 function IncomeExpenseRender(props) {
     //optional props: defualtStartDate, defaultEndDate
     const appContext = React.useContext(PageSettings);
-    const today = new Date();
-    const [startDate, setStartDate] = React.useState(props.defaultStartDate? props.defaultStartDate : (today.getFullYear() + "-01-01"));
-    const [endDate, setEndDate] = React.useState(props.defaultEndDate? props.defaultEndDate : getTodayAsDateString());
+    const today = getTodayAsDateString();
+    const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
+
+    const [startDate, setStartDate] = React.useState(props.defaultStartDate? props.defaultStartDate : beginningOfCurrentFiscalYear);
+    const [endDate, setEndDate] = React.useState(props.defaultEndDate? props.defaultEndDate : today);
     const [accounts, setAccounts] = React.useState([]);
     const [totalIncome, setTotalIncome] = React.useState(null);
     const [totalExpenses, setTotalExpenses] = React.useState(null);
     const [netIncome, setNetIncome] = React.useState();
-    const [loading, setLoading] = React.useState(true);
+
     const [detailedView, setDetailedView] = React.useState(false);
     const toggleDetailedView = () => setDetailedView(!detailedView);
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
+
+    const [incomeStatementObjects, setIncomeStatementObjects] = React.useState([]);
+    const [datesToRequest, setDatesToRequest] = React.useState([{
+        label: "Custom",
+        startDate: props.defaultStartDate ? props.defaultStartDate : beginningOfCurrentFiscalYear, //cannot use defaultProps here because we would need to call appContext at the top level, so conditional is used here instead
+        endDate: props.defaultEndDate ? props.defaultEndDate : today
+    }]);
+    const [columnLabels, setColumnLabels] = React.useState([]);
+    const [dateRangePresets, setDateRangePresets] = React.useState([]);
+
 
     const sumCreditsMinusDebits = (objects) => {
         let totalDebitsMinusCredits = 0;
