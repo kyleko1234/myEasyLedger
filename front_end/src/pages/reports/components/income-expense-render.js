@@ -66,6 +66,36 @@ function IncomeExpenseRender(props) {
         }).catch(console.log);  
     }
 
+    const requestIncomeStatementObjects = async arrayToStoreObjects => {
+        let newColumnLabels = [];
+        for (const dateObject of datesToRequest) {
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement/${dateObject.startDate}/${dateObject.endDate}`).then(response => {
+                newColumnLabels.push(dateObject);     //column labels are not updated until the report is actually updated
+                let formattedIncomeStatementObject = response.data;
+                let formattedAccounts = response.data.accountBalances;
+                formattedAccounts.forEach(account => {
+                    if (account.hasChildren) {
+                        let totalDebits = 0;
+                        let totalCredits = 0;    
+                        formattedAccounts.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
+                            totalDebits = totalDebits + childAccount.debitTotal;
+                            totalCredits = totalCredits + childAccount.creditTotal;
+                        })
+                        account.debitTotal = totalDebits;
+                        account.creditTotal = totalCredits;
+                        account.debitsMinusCredits = totalDebits - totalCredits;    
+                    }    
+                })
+                formattedIncomeStatementObject.accounts = formattedAccounts;
+                formattedIncomeStatementObject.netIncome = response.data.netIncome;
+                formattedIncomeStatementObject.totalIncome = sumCreditsMinusDebits(formattedAccounts.filter(account => account.accountTypeId == 4));
+                formattedIncomeStatementObject.totalExpenses = sumCreditsMinusDebits(formattedAccounts.filter(account => account.accountTypeId == 5)) * -1;
+                arrayToStoreObjects.push(formattedIncomeStatementObject);
+            }).catch(console.log);
+        }
+        setColumnLabels(newColumnLabels);
+    }
+
     React.useEffect(() => {
         async function fetchInitialReport() {
             setLoading(true);
