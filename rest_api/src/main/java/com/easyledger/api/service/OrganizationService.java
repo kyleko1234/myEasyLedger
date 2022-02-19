@@ -86,18 +86,26 @@ public class OrganizationService {
 		int firstFiscalYear;
 		int lastFiscalYear;
 		List<Object> returnedList = new ArrayList<Object>();
-		//if date of first journal entry is before fiscal year begin date, the first fiscal year is the year before the calendar year of the date of the first journal entry
-		if (dateOfFirstJournalEntry.withYear(fiscalYearBeginDate.getYear()).compareTo(fiscalYearBeginDate) < 0) { 
-			firstFiscalYear = dateOfFirstJournalEntry.getYear() - 1;
-		} else {
-			firstFiscalYear = dateOfFirstJournalEntry.getYear();
-		}
+		
 		//if endDate  is before fiscal year begin date, the last fiscal year is the year before the calendar year of endDate
 		if (endDate.withYear(fiscalYearBeginDate.getYear()).compareTo(fiscalYearBeginDate) < 0) {
 			lastFiscalYear = endDate.getYear() - 1;
 		} else {
 			lastFiscalYear = endDate.getYear();
 		}
+		
+		//if date of first journal entry is null (no entries in system) first fiscal year is the last (current) fiscal year
+		if (dateOfFirstJournalEntry != null) {
+			//if date of first journal entry is before fiscal year begin date, the first fiscal year is the year before the calendar year of the date of the first journal entry
+			if (dateOfFirstJournalEntry.withYear(fiscalYearBeginDate.getYear()).compareTo(fiscalYearBeginDate) < 0) { 
+				firstFiscalYear = dateOfFirstJournalEntry.getYear() - 1;
+			} else {
+				firstFiscalYear = dateOfFirstJournalEntry.getYear();
+			}
+		} else {
+			firstFiscalYear = lastFiscalYear;
+		}
+
 		
 		for (int yearNumber = lastFiscalYear; yearNumber >= firstFiscalYear; yearNumber--) {
 			String name = ((Integer) yearNumber).toString();

@@ -105,6 +105,20 @@ function IncomeExpenseRender(props) {
         fetchInitialReport();
     }, []);
 
+    React.useEffect(() => {
+        async function fetchData() {
+            setLoading(true);
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/dateRangePresetsUpToDate/${today}/${appContext.locale}`).then(response => {
+                setDateRangePresets(response.data);
+            });
+            let fetchedIncomeStatementObjects = [];
+            await requestIncomeStatementObjects(fetchedIncomeStatementObjects);
+            setIncomeStatementObjects(fetchedIncomeStatementObjects);
+            setLoading(false);
+        }
+        fetchData();
+    }, [])
+
     const formatNumber = (number) => {
         if (number == 0) {
             return formatCurrency(appContext.locale, appContext.currency, 0);
