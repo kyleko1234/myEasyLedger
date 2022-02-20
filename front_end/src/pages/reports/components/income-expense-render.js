@@ -16,13 +16,6 @@ function IncomeExpenseRender(props) {
     const today = getTodayAsDateString();
     const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
 
-    const [startDate, setStartDate] = React.useState(props.defaultStartDate? props.defaultStartDate : beginningOfCurrentFiscalYear);
-    const [endDate, setEndDate] = React.useState(props.defaultEndDate? props.defaultEndDate : today);
-    const [accounts, setAccounts] = React.useState([]);
-    const [totalIncome, setTotalIncome] = React.useState(null);
-    const [totalExpenses, setTotalExpenses] = React.useState(null);
-    const [netIncome, setNetIncome] = React.useState();
-
     const [detailedView, setDetailedView] = React.useState(false);
     const toggleDetailedView = () => setDetailedView(!detailedView);
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
@@ -60,29 +53,6 @@ function IncomeExpenseRender(props) {
         return total;
     }
 
-    const fetchReport =  async (startDate, endDate) => {
-        await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement/${startDate}/${endDate}`).then(response => {
-            let formattedAccounts = response.data.accountBalances;
-            formattedAccounts.forEach(account => {
-                if (account.hasChildren) {
-                    let totalDebits = 0;
-                    let totalCredits = 0;    
-                    formattedAccounts.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
-                        totalDebits = totalDebits + childAccount.debitTotal;
-                        totalCredits = totalCredits + childAccount.creditTotal;
-                    })
-                    account.debitTotal = totalDebits;
-                    account.creditTotal = totalCredits;
-                    account.debitsMinusCredits = totalDebits - totalCredits;    
-                }
-            })
-            setAccounts(formattedAccounts);
-            setNetIncome(response.data.netIncome);
-            setTotalIncome(sumCreditsMinusDebits(formattedAccounts.filter(account => account.accountTypeId == 4)));
-            setTotalExpenses(sumCreditsMinusDebits(formattedAccounts.filter(account => account.accountTypeId == 5)) * -1);
-        }).catch(console.log);  
-    }
-
     const requestIncomeStatementObjects = async arrayToStoreObjects => {
         let newColumnLabels = [];
         for (const dateObject of datesToRequest) {
@@ -112,15 +82,6 @@ function IncomeExpenseRender(props) {
         }
         setColumnLabels(newColumnLabels);
     }
-
-    React.useEffect(() => {
-        async function fetchInitialReport() {
-            setLoading(true);
-            await fetchReport(startDate, endDate);
-            setLoading(false);
-        }
-        fetchInitialReport();
-    }, []);
 
     React.useEffect(() => {
         async function fetchData() {
