@@ -247,81 +247,161 @@ function NetWorthRender() {
                 </CardBody>
             </Card>
             <div>
-                {loading
-                    ? <LoadingSpinner big/>
-                    : <>
-                        <StripedRow className="font-weight-semibold">
-                            {netWorthReportText[appContext.locale]["Assets"]}
-                        </StripedRow>
-                        {accounts.filter(account => account.accountTypeId == 1).map(account => {
+                <div className="d-flex justify-content-between font-weight-semibold text-right">
+                    <div>{/*empty div for spacing*/}</div>
+                    <div className="text-right d-flex">
+                        {columnLabels.map((columnLabel, i) => {
                             return(
-                                <React.Fragment key={account.accountId}>
-                                    <StripedRow className="indent d-flex justify-content-between font-weight-semibold">
-                                        <div>{account.accountName}</div>
-                                        <div className={account.debitsMinusCredits >= 0? "" : "text-red"}>{formatNumber(account.debitsMinusCredits)}</div>
-                                    </StripedRow>
-                                    {detailedView
-                                        ? accounts
-                                            .filter(childAccount => childAccount.parentAccountId == account.accountId)
-                                            .map(childAccount => {
-                                                return(
-                                                        <StripedRow key={childAccount.accountId} className="indent-2 d-flex justify-content-between">
-                                                            <div>{childAccount.accountName}</div>
-                                                            <div className={childAccount.debitsMinusCredits >= 0? "" : "text-red"}>{formatNumber(childAccount.debitsMinusCredits)}</div>
-                                                        </StripedRow> 
-                                                )
-                                        })
-                                        : null
+                                <div className="td width-175" key={i}>
+                                    {columnLabel.label === "Custom"
+                                        ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + columnLabel.endDate
+                                        : columnLabel.label
                                     }
-                                </React.Fragment>
+                                </div>
                             )
                         })}
-                        <StripedRow className="font-weight-semibold d-flex justify-content-between">
-                            <div>{netWorthReportText[appContext.locale]["Total Assets"]}</div>
-                            <div className={balanceSheetAssets.totalAssets >= 0? "" : "text-red"}>{formatNumber(balanceSheetAssets.totalAssets)}</div>
-                        </StripedRow>
-                        <StripedRow>
-                            <div className="invisible">{/*empty row */}empty row</div>
-                        </StripedRow>
-                        <StripedRow className="font-weight-semibold">
-                            {netWorthReportText[appContext.locale]["Liabilities"]}
-                        </StripedRow>
-                        {accounts.filter(account => account.accountTypeId == 2).map(account => {
-                            return(
-                                <React.Fragment key={account.accountId}>
-                                    <StripedRow className="indent justify-content-between font-weight-semibold">
-                                        <div>{account.accountName}</div>
-                                        <div className={account.debitsMinusCredits > 0? "" : "text-red"}>{formatNumber(account.debitsMinusCredits * -1)}</div>
-                                    </StripedRow>
-                                    {detailedView
-                                        ? accounts
-                                            .filter(childAccount => childAccount.parentAccountId == account.accountId)
-                                            .map(childAccount => {
-                                                    return(
-                                                        <StripedRow key={childAccount.accountId} className="indent-2 justify-content-between">
-                                                            <div>{childAccount.accountName}</div>
-                                                            <div className={childAccount.debitsMinusCredits > 0? "" : "text-red"}>{formatNumber(childAccount.debitsMinusCredits * -1)}</div>
-                                                        </StripedRow> 
-                                                    )
-                                        })
-                                        : null
-                                    }
-                                </React.Fragment>
-                            )
-                        })}
-                        <StripedRow className="font-weight-semibold justify-content-between">
-                            <div>{netWorthReportText[appContext.locale]["Total Liabilities"]}</div>
-                            <div className={balanceSheetLiabilities.totalLiabilities > 0? "" : "text-red"}>{formatNumber(balanceSheetLiabilities.totalLiabilities)}</div>
-                        </StripedRow>
-                        <StripedRow>
-                            <div className="invisible">{/*empty row */}empty row</div>
-                        </StripedRow>
-                        <StripedRow className="font-weight-semibold d-flex justify-content-between py-3">
-                            <div>{netWorthReportText[appContext.locale]["Total Net Worth"]}</div>
-                            <div>{formatNumber(balanceSheetAssets.totalAssets - balanceSheetLiabilities.totalLiabilities)}</div>
-                        </StripedRow>
-                    </>
-                }
+                    </div>
+                </div>
+                <div>
+                    {(loading || !balanceSheetObjects.length )
+                        ? <LoadingSpinner big/>
+                        : <>
+                            <StripedRow className="font-weight-semibold">
+                                {netWorthReportText[appContext.locale]["Assets"]}
+                            </StripedRow>
+                            {balanceSheetObjects[0].accounts
+                                .filter(account => account.accountTypeId == 1)
+                                .map(account => {
+                                    return(
+                                        <React.Fragment key={account.accountId}>
+                                            <StripedRow className="indent d-flex justify-content-between font-weight-semibold">
+                                                <div>{account.accountName}</div>
+                                                <div className="text-right d-flex">
+                                                    {balanceSheetObjects.map((balanceSheet, i) => {
+                                                        let specificAccount = balanceSheet.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
+                                                        return(
+                                                            <div key = {i} className="width-175">
+                                                                {formatNumber(specificAccount.debitsMinusCredits)}
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </StripedRow>
+                                            {detailedView
+                                                ? balanceSheetObjects[0].accounts
+                                                    .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                                    .map(childAccount => {
+                                                        return(
+                                                            <StripedRow key={childAccount.accountId} className="indent-2 d-flex justify-content-between">
+                                                                <div>{childAccount.accountName}</div>
+                                                                <div className="text-right d-flex">
+                                                                    {balanceSheetObjects.map((balanceSheet, i) => {
+                                                                        let specificChildAccount = balanceSheet.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
+                                                                        return(
+                                                                            <div key={i} className="width-175">
+                                                                                {formatNumber(specificChildAccount.debitsMinusCredits)}
+                                                                            </div>                                                                        )
+                                                                    })}
+                                                                </div>    
+                                                            </StripedRow> 
+                                                        )
+                                                })
+                                                : null
+                                            }
+                                        </React.Fragment>
+                                    )
+                            })}
+                            <StripedRow className="font-weight-semibold d-flex justify-content-between">
+                                <div>{netWorthReportText[appContext.locale]["Total Assets"]}</div>
+                                <div className="text-right d-flex">
+                                    {balanceSheetObjects.map((balanceSheet, i) => {
+                                        return(
+                                            <div key={i} className="width-175">
+                                                {formatNumber(balanceSheet.balanceSheetAssets.totalAssets)}
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </StripedRow>
+                            <StripedRow>
+                                <div className="invisible">{/*empty row */}empty row</div>
+                            </StripedRow>
+                            <StripedRow className="font-weight-semibold">
+                                {netWorthReportText[appContext.locale]["Liabilities"]}
+                            </StripedRow>
+                            {balanceSheetObjects[0].accounts
+                                .filter(account => account.accountTypeId == 2)
+                                .map(account => {
+                                    return(
+                                        <React.Fragment key={account.accountId}>
+                                            <StripedRow className="indent justify-content-between font-weight-semibold">
+                                                <div>{account.accountName}</div>
+                                                <div className="text-right d-flex">
+                                                    {balanceSheetObjects.map((balanceSheet, i) => {
+                                                        let specificAccount = balanceSheet.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
+                                                        return(
+                                                            <div key = {i} className="width-175">
+                                                                {formatNumber(specificAccount.debitsMinusCredits * -1)}
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </StripedRow>
+                                            {detailedView
+                                                ? balanceSheetObjects[0].accounts
+                                                    .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                                    .map(childAccount => {
+                                                            return(
+                                                                <StripedRow key={childAccount.accountId} className="indent-2 justify-content-between">
+                                                                    <div>{childAccount.accountName}</div>
+                                                                    <div className="text-right d-flex">
+                                                                        {balanceSheetObjects.map((balanceSheet, i) => {
+                                                                            let specificChildAccount = balanceSheet.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
+                                                                            return(
+                                                                                <div key={i} className="width-175">
+                                                                                    {formatNumber(specificChildAccount.debitsMinusCredits * -1)}
+                                                                                </div>                                                                        
+                                                                            )
+                                                                        })}
+                                                                    </div>    
+                                                                </StripedRow> 
+                                                            )
+                                                })
+                                                : null
+                                            }
+                                        </React.Fragment>
+                                    )
+                            })}
+                            <StripedRow className="font-weight-semibold justify-content-between">
+                                <div>{netWorthReportText[appContext.locale]["Total Liabilities"]}</div>
+                                <div className="text-right d-flex">
+                                    {balanceSheetObjects.map((balanceSheet, i) => {
+                                        return(
+                                            <div key={i} className="width-175">
+                                                {formatNumber(balanceSheet.balanceSheetLiabilities.totalLiabilities)}
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </StripedRow>
+                            <StripedRow>
+                                <div className="invisible">{/*empty row */}empty row</div>
+                            </StripedRow>
+                            <StripedRow className="font-weight-semibold d-flex justify-content-between py-3">
+                                <div>{netWorthReportText[appContext.locale]["Total Net Worth"]}</div>
+                                <div className="text-right d-flex">
+                                    {balanceSheetObjects.map((balanceSheet, i) => {
+                                        return(
+                                            <div key={i} className="width-175">
+                                                {formatNumber(balanceSheet.balanceSheetAssets.totalAssets - balanceSheet.balanceSheetLiabilities.totalLiabilities)}
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </StripedRow>
+                        </>
+                    }
+                </div>
             </div>
         </>
     )
