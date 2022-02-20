@@ -12,6 +12,9 @@ import StripedRow from '../../../components/tables/striped-row';
 function NetWorthRender() {
     const appContext = React.useContext(PageSettings);
     const today = getTodayAsDateString();
+    const [loading, setLoading] = React.useState(true);
+    const [detailedView, setDetailedView] = React.useState(false);
+    const toggleDetailedView = () => setDetailedView(!detailedView);
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
 
 
@@ -19,9 +22,12 @@ function NetWorthRender() {
     const [accounts, setAccounts] = React.useState([]);
     const [balanceSheetAssets, setBalanceSheetAssets] = React.useState(null);
     const [balanceSheetLiabilities, setBalanceSheetLiabilities] = React.useState(null);
-    const [detailedView, setDetailedView] = React.useState(false);
-    const toggleDetailedView = () => setDetailedView(!detailedView);
-    const [loading, setLoading] = React.useState(true);
+
+    const [balanceSheetObjects, setBalanceSheetObjects] = React.useState([]);
+    const [endDatesToRequest, setEndDatesToRequest] = React.useState([{label: "Custom", endDate:today}]);
+    const [columnLabels, setColumnLabels] = React.useState([]);
+    const [dateRangePresets, setDateRangePresets] = React.useState([]);
+
 
     const fetchReport  = async (date) => {
         await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDate}`).then(response => {
@@ -45,6 +51,36 @@ function NetWorthRender() {
         }).catch(console.log);  
     }
 
+    const requestBalanceSheetObjects = async arrayToStoreObjects => {
+        let newColumnLabels = [];
+        for (const endDateObject of endDatesToRequest) {
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDateObject.endDate}`).then(response => {
+                newColumnLabels.push(endDateObject);     //column labels are not updated until the report is actually updated
+                let formattedAccounts = response.data.accountBalances;
+                let formattedBalanceSheetObject = response.data;
+                formattedAccounts.forEach(account => {
+                    if (account.hasChildren) {
+                        let totalDebits = 0;
+                        let totalCredits = 0;
+                        formattedAccounts.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
+                            totalDebits = totalDebits + childAccount.debitTotal;
+                            totalCredits = totalCredits + childAccount.creditTotal;
+                        });
+                        account.debitTotal = totalDebits;
+                        account.creditTotal = totalCredits;
+                        account.debitsMinusCredits = totalDebits - totalCredits;    
+                    }
+                })
+                formattedBalanceSheetObject.accounts = formattedAccounts;
+                formattedBalanceSheetObject.balanceSheetAssets = response.data.balanceSheetAssets;
+                formattedBalanceSheetObject.balanceSheetLiabilities = response.data.balanceSheetLiabilities;
+                arrayToStoreObjects.push(formattedBalanceSheetObject);
+            }).catch(console.log);
+        }
+        setColumnLabels(newColumnLabels);
+    }
+
+
     React.useEffect(() => {
         async function fetchInitialReport() {
             setLoading(true);
@@ -53,22 +89,64 @@ function NetWorthRender() {
         }
         fetchInitialReport(today);
     },[])
-
-    const handleChangeDate = event => {
-        setEndDate(event.target.value);
-    }
     
-    const handleUpdateReportButton = async event => {
+    const handleChangeDate = (date, i) => {
+        let newEndDatesToRequestArray = endDatesToRequest.slice();
+        newEndDatesToRequestArray[i] = (
+            {label: "Custom", endDate: date}
+        )
+        setEndDatesToRequest(newEndDatesToRequestArray);
+    }
+
+    const validateDatesToRequest = endDatesToRequest => {
+        let returnedBoolean = true
+        endDatesToRequest.forEach(endDateToRequestObject => {
+            if (!validateDate(endDateToRequestObject.endDate)) {
+                returnedBoolean = false;
+            }
+        })
+        return returnedBoolean;
+    }
+
+    const handleUpdateReportButton = async (event) => {
         event.preventDefault();
-        setInvalidDateAlert(false);
         setLoading(true);
-        if (validateDate(endDate)) {
-            await fetchReport(endDate);
+        setInvalidDateAlert(false);
+        if (validateDatesToRequest(endDatesToRequest)) {
+            let fetchedBalanceSheetObjects = [];
+            await requestBalanceSheetObjects(fetchedBalanceSheetObjects);
+            setBalanceSheetObjects(fetchedBalanceSheetObjects);    
         } else {
             setInvalidDateAlert(true);
         }
         setLoading(false);
     }
+
+    const handleSelectDateRangePreset = (selectedOption, i) => {
+        if (selectedOption) {
+            let endDateToRequestObject = {
+                label: selectedOption.label,
+                endDate: selectedOption.object.endDate
+            };
+            let newEndDatesToRequestArray = endDatesToRequest.slice();
+            newEndDatesToRequestArray[i] = endDateToRequestObject;
+            setEndDatesToRequest(newEndDatesToRequestArray);
+        }
+    }
+
+    React.useEffect(() => {
+        async function fetchData() {
+            setLoading(true);
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/dateRangePresetsUpToDate/${today}/${appContext.locale}`).then(response => {
+                setDateRangePresets(response.data);
+            })
+            let fetchedBalanceSheetObjects = []
+            await requestBalanceSheetObjects(fetchedBalanceSheetObjects);
+            setBalanceSheetObjects(fetchedBalanceSheetObjects);
+            setLoading(false);
+        }
+        fetchData();
+    }, [])
 
     const formatNumber = (number) => {
         if (number == 0) {
