@@ -333,7 +333,7 @@ function IncomeExpenseRender(props) {
                                                                 let specificAccount = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
                                                                 return(
                                                                     <div key={i} className={"width-175"}>
-                                                                        {formatNumber((account.hasChildren ? sumDebitsAndCreditsOfChildren(account.accountId, i) : specificAccount.debitsMinusCredits) * -1)}
+                                                                        {formatNumber(specificAccount.debitsMinusCredits * -1)}
                                                                     </div>    
                                                                 )
                                                             })}
@@ -374,7 +374,7 @@ function IncomeExpenseRender(props) {
                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                             return(
                                                 <div key={i} className={"width-175 "}>
-                                                    {formatNumber(incomeStatementObjects[i].totalIncome)}
+                                                    {formatNumber(incomeStatement.totalIncome)}
                                                 </div>              
                                             )
                                         })}
@@ -400,7 +400,7 @@ function IncomeExpenseRender(props) {
                                                             let specificAccount = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
                                                             return(
                                                                 <div key={i} className={"width-175"}>
-                                                                    {formatNumber(account.hasChildren ? sumDebitsAndCreditsOfChildren(account.accountId, i) : specificAccount.debitsMinusCredits)}
+                                                                    {formatNumber(specificAccount.debitsMinusCredits)}
                                                                 </div>    
                                                             )
                                                         })}
@@ -441,7 +441,7 @@ function IncomeExpenseRender(props) {
                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                             return(
                                                 <div key={i} className={"width-175 "}>
-                                                    {formatNumber(incomeStatementObjects[i].totalExpenses)}
+                                                    {formatNumber(incomeStatement.totalExpenses)}
                                                 </div>              
                                             )
                                         })}
@@ -458,7 +458,7 @@ function IncomeExpenseRender(props) {
                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                             return( 
                                                 <div key={i} className="width-175 ">
-                                                    {formatNumber(incomeStatementObjects[i].netIncome)}
+                                                    {formatNumber(incomeStatement.netIncome)}
                                                 </div>
                                             )
                                         })}
