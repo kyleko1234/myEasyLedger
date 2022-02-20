@@ -141,13 +141,10 @@ function NetWorthRender() {
                         {balanceSheetRenderText[appContext.locale]["Invalid date(s) selected."]}
                     </Alert>
                     <form onSubmit={handleUpdateReportButton}>
-                        <div className="d-flex align-items-center justify-content-between mb-2">
+                        <div className="mb-2">
                             <h2 className="h5">
                                 {balanceSheetRenderText[appContext.locale]["Options"]}
                             </h2>
-                            <button type="submit" className="btn btn-primary" onClick={handleUpdateReportButton}>
-                                {balanceSheetRenderText[appContext.locale]["Update report"]}
-                            </button>
                         </div>
                         <div>
                             {endDatesToRequest.map((endDateObject, i) => {
@@ -193,17 +190,22 @@ function NetWorthRender() {
                             </div>
                             : null
                         }
-                        <div className="custom-control custom-switch">
-                            <input 
-                                type="checkbox" 
-                                id="detailedViewCheckbox" 
-                                className="custom-control-input" 
-                                value={detailedView} 
-                                onChange={toggleDetailedView} 
-                            />
-                            <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">
-                                {balanceSheetRenderText[appContext.locale]["Detailed View"]}
-                            </label>
+                        <div className="d-flex align-items-center justify-content-between mt-2">
+                            <div className="custom-control custom-switch">
+                                <input 
+                                    type="checkbox" 
+                                    id="detailedViewCheckbox" 
+                                    className="custom-control-input" 
+                                    value={detailedView} 
+                                    onChange={toggleDetailedView} 
+                                />
+                                <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">
+                                    {balanceSheetRenderText[appContext.locale]["Detailed View"]}
+                                </label>
+                            </div>
+                            <button type="submit" className="btn btn-primary width-200" onClick={handleUpdateReportButton}>
+                                {balanceSheetRenderText[appContext.locale]["Update report"]}
+                            </button>
                         </div>
                     </form>
                 </CardBody>

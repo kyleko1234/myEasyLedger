@@ -210,13 +210,10 @@ function CashFlowRender() {
                 <CardBody>
                     {invalidDateAlert? <Alert color="danger">{cashFlowReportText[appContext.locale]["Invalid date(s) selected."]}</Alert> : null}
                     <form onSubmit={handleUpdateReportButton}>
-                        <div className="d-flex justify-content-between align-items-center mb-2">
+                        <div className="mb-2">
                             <h2 className="h5">
                                 {cashFlowReportText[appContext.locale]["Options"]}
                             </h2>
-                            <button type="submit" className="btn btn-primary" onClick={handleUpdateReportButton}>
-                                {cashFlowReportText[appContext.locale]["Update report"]}
-                            </button>
                         </div>
                         <div className="d-none d-md-block">
                             {datesToRequest.map((dateObject, i) => {
@@ -290,10 +287,17 @@ function CashFlowRender() {
                         {datesToRequest.length < 3
                             ?   <div className="mb-2">
                                     <Link replace to="#" onClick={handleCompareButton} className="text-decoration-none">
-                                    <i className="ion ion-md-add"></i> {cashFlowReportText[appContext.locale]["Compare"]}                            </Link>
+                                        <i className="ion ion-md-add"></i> {cashFlowReportText[appContext.locale]["Compare"]}                            
+                                    </Link>
                                 </div>
                             : null
                         }
+                        <div className="d-flex justify-content-between align-items-center mt-2">
+                            <div>{/* empty div for spacing */}</div>
+                            <button type="submit" className="btn btn-primary width-200" onClick={handleUpdateReportButton}>
+                                {cashFlowReportText[appContext.locale]["Update report"]}
+                            </button>
+                        </div>
                     </form>
                 </CardBody>
             </Card>
