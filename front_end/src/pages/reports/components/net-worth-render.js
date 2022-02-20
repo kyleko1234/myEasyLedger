@@ -19,39 +19,10 @@ function NetWorthRender() {
     const toggleDetailedView = () => setDetailedView(!detailedView);
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
 
-
-    const [endDate, setEndDate] = React.useState(today);
-    const [accounts, setAccounts] = React.useState([]);
-    const [balanceSheetAssets, setBalanceSheetAssets] = React.useState(null);
-    const [balanceSheetLiabilities, setBalanceSheetLiabilities] = React.useState(null);
-
     const [balanceSheetObjects, setBalanceSheetObjects] = React.useState([]);
     const [endDatesToRequest, setEndDatesToRequest] = React.useState([{label: "Custom", endDate:today}]);
     const [columnLabels, setColumnLabels] = React.useState([]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
-
-
-    const fetchReport  = async (date) => {
-        await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDate}`).then(response => {
-            let formattedAccounts = response.data.accountBalances;
-            formattedAccounts.forEach(account => {
-                if (account.hasChildren) {
-                    let totalDebits = 0;
-                    let totalCredits = 0;    
-                    formattedAccounts.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
-                        totalDebits = totalDebits + childAccount.debitTotal;
-                        totalCredits = totalCredits + childAccount.creditTotal;
-                    })
-                    account.debitTotal = totalDebits;
-                    account.creditTotal = totalCredits;
-                    account.debitsMinusCredits = totalDebits - totalCredits;    
-                }
-            })
-            setAccounts(formattedAccounts);
-            setBalanceSheetAssets(response.data.balanceSheetAssets);
-            setBalanceSheetLiabilities(response.data.balanceSheetLiabilities);
-        }).catch(console.log);  
-    }
 
     const requestBalanceSheetObjects = async arrayToStoreObjects => {
         let newColumnLabels = [];
@@ -81,15 +52,6 @@ function NetWorthRender() {
         }
         setColumnLabels(newColumnLabels);
     }
-
-    React.useEffect(() => {
-        async function fetchInitialReport() {
-            setLoading(true);
-            await fetchReport(endDate);
-            setLoading(false);
-        }
-        fetchInitialReport(today);
-    },[])
     
     const handleChangeDate = (date, i) => {
         let newEndDatesToRequestArray = endDatesToRequest.slice();
