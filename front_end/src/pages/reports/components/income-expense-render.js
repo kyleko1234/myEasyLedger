@@ -330,7 +330,7 @@ function IncomeExpenseRender(props) {
                                                         </div>
                                                         <div className="text-right d-flex">
                                                             {incomeStatementObjects.map((incomeStatement, i) => {
-                                                                let specificAccount = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
+                                                                let specificAccount = incomeStatement.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
                                                                 return(
                                                                     <div key={i} className={"width-175"}>
                                                                         {formatNumber(specificAccount.debitsMinusCredits * -1)}
@@ -350,7 +350,7 @@ function IncomeExpenseRender(props) {
                                                                         </div>
                                                                         <div className="text-right d-flex">
                                                                             {incomeStatementObjects.map((incomeStatement, i) => {
-                                                                                let specificChildAccount = incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
+                                                                                let specificChildAccount = incomeStatement.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                                 return(
                                                                                     <div key={i} className={"width-175 "}>
                                                                                         {formatNumber(specificChildAccount.debitsMinusCredits * -1)}
@@ -397,7 +397,7 @@ function IncomeExpenseRender(props) {
                                                     </div>
                                                     <div className="text-right d-flex">
                                                         {incomeStatementObjects.map((incomeStatement, i) => {
-                                                            let specificAccount = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
+                                                            let specificAccount = incomeStatement.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
                                                             return(
                                                                 <div key={i} className={"width-175"}>
                                                                     {formatNumber(specificAccount.debitsMinusCredits)}
@@ -417,7 +417,7 @@ function IncomeExpenseRender(props) {
                                                                     </div>
                                                                     <div className="text-right d-flex">
                                                                         {incomeStatementObjects.map((incomeStatement, i) => {
-                                                                            let specificChildAccount = incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
+                                                                            let specificChildAccount = incomeStatement.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                             return(
                                                                                 <div key={i} className={"width-175 "}>
                                                                                     {formatNumber(specificChildAccount.debitsMinusCredits)}
