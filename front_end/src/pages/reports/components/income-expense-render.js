@@ -7,6 +7,9 @@ import { Card, CardBody, Alert } from 'reactstrap';
 import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns.js';
 import LoadingSpinner from '../../../components/misc/loading-spinner.js';
 import StripedRow from '../../../components/tables/striped-row.js';
+import Select from 'react-select';
+import { Link } from 'react-router-dom';
+
 function IncomeExpenseRender(props) {
     //optional props: defualtStartDate, defaultEndDate
     const appContext = React.useContext(PageSettings);
@@ -41,6 +44,20 @@ function IncomeExpenseRender(props) {
             totalDebitsMinusCredits = totalDebitsMinusCredits + object.debitsMinusCredits;
         })
         return totalDebitsMinusCredits * -1;
+    }
+
+    const sumDebitsAndCreditsOfChildren = (accountId, indexOfIncomeStatementObject) => {
+        let total = 0;
+        let childAccounts = incomeStatementObjects[indexOfIncomeStatementObject]
+            .accountBalances
+            .filter(childAccount => childAccount.parentAccountId === accountId);
+        childAccounts
+            .forEach(account => {
+                if (account.debitsMinusCredits) {
+                    total += account.debitsMinusCredits;
+                }
+        })
+        return total;
     }
 
     const fetchReport =  async (startDate, endDate) => {
@@ -126,26 +143,77 @@ function IncomeExpenseRender(props) {
         return formatCurrency(appContext.locale, appContext.currency, number);
     }
 
+    const handleChangeStartDate = (date, i) => {
+        let newDatesToRequestArray = datesToRequest.slice();
+        newDatesToRequestArray[i] = {
+            label: "Custom", 
+            startDate: date, 
+            endDate: newDatesToRequestArray[i].endDate
+        }
+        setDatesToRequest(newDatesToRequestArray)
+    }
+    const handleChangeEndDate = (date, i) => {
+        let newDatesToRequestArray = datesToRequest.slice();
+        newDatesToRequestArray[i] = {
+            label: "Custom", 
+            startDate: newDatesToRequestArray[i].startDate, 
+            endDate: date
+        }
+        setDatesToRequest(newDatesToRequestArray)
+    }
+
+    const handleSelectDateRangePreset = (selectedOption, i) => {
+        if (selectedOption) {
+            let dateToRequestObject = {
+                label: selectedOption.label,
+                startDate: selectedOption.object.startDate,
+                endDate: selectedOption.object.endDate
+            };
+            let newDatesToRequestArray = datesToRequest.slice();
+            newDatesToRequestArray[i] = dateToRequestObject;
+            setDatesToRequest(newDatesToRequestArray);
+        }
+    }
+
+    const handleRemoveDateRangeButton = i => {
+        let datesArray = datesToRequest.slice();
+        datesArray.splice(i, 1);
+        setDatesToRequest(datesArray);
+    }
+
+    const handleCompareButton = () => {
+        let datesArray = datesToRequest.slice();
+        datesArray.push({
+            label: "Custom", 
+            startDate: beginningOfCurrentFiscalYear,
+            endDate: today}
+        )
+        setDatesToRequest(datesArray);
+    }
+    
+    const validateDatesToRequest = datesToRequest => {
+        let returnedBoolean = true
+        datesToRequest.forEach(dateToRequestObject => {
+            if (!(validateDate(dateToRequestObject.startDate) && validateDate(dateToRequestObject.endDate))) {
+                returnedBoolean = false;
+            }
+        })
+        return returnedBoolean;
+    }
+
     const handleUpdateReportButton = async event => {
         event.preventDefault();
         setInvalidDateAlert(false);
         setLoading(true);
-        if (validateDate(startDate) && validateDate(endDate)) {
-            await fetchReport(startDate, endDate);
+        if (validateDatesToRequest(datesToRequest)) {
+            let fetchedIncomeStatementObjects = [];
+            await requestIncomeStatementObjects(fetchedIncomeStatementObjects);
+            setIncomeStatementObjects(fetchedIncomeStatementObjects);
         } else {
             setInvalidDateAlert(true);
         }
         setLoading(false);
     }
-
-    const handleChangeStartDate = (event) => {
-        setStartDate(event.target.value);
-    }
-    const handleChangeEndDate = event => {
-        setEndDate(event.target.value);
-    }
-
-    
 
     return(
         <>
@@ -157,18 +225,101 @@ function IncomeExpenseRender(props) {
                     <form onSubmit={handleUpdateReportButton}>
                         <div className="d-flex align-items-center justify-content-between mb-2">
                             <h2 className="h5">{incomeStatementRenderText[appContext.locale]["Options"]}</h2>
-                            <button type="submit" className="btn btn-primary" onClick={handleUpdateReportButton}>{incomeStatementRenderText[appContext.locale]["Update report"]}</button>
+                            <button type="submit" className="btn btn-primary" onClick={handleUpdateReportButton}>
+                                {incomeStatementRenderText[appContext.locale]["Update report"]}
+                            </button>
                         </div>
-                        <div className="d-sm-flex align-items-center">
-                            <div className="d-flex align-items-center justify-content-between mr-3 mb-2">
-                                <label className="my-0 mr-5">{incomeStatementRenderText[appContext.locale]["From:"]}</label>
-                                <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control form-control-sm width-175 align-self-center" value={startDate} onChange={handleChangeStartDate}/>
-                            </div>
-                            <div className="d-flex align-items-center justify-content-between mr-3 mb-2">
-                                <label className="my-0 mr-5">{incomeStatementRenderText[appContext.locale]["To:"]}</label>
-                                <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control form-control-sm width-175 align-self-center" value={endDate} onChange={handleChangeEndDate}/>
-                            </div>
+                        <div className="d-none d-md-block">
+                            {datesToRequest.map((dateObject, i) => {
+                                return (
+                                    <div key={i}>
+                                        {datesToRequest.length > 1
+                                        ?   <div className="font-weight-semibold my-1 d-flex align-items-center">
+                                                {incomeStatementRenderText[appContext.locale]["Date range"] + " " + (i + 1)}
+                                                <button className="btn btn-light py-0 px-1 mx-1 border-0" onClick={() => handleRemoveDateRangeButton(i)}>
+                                                    <i className="ion ion-md-close fa-fw"></i>
+                                                </button>
+                                            </div>
+                                        : null}
+                                        <div className="d-flex w-100 align-items-center mb-2">
+                                            <Select
+                                                className="col-4 px-0"
+                                                classNamePrefix="form-control"
+                                                options={dateRangePresets}
+                                                menuPortalTarget={document.body}
+                                                menuShouldScrollIntoView={false}
+                                                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
+                                                placeholder={"Custom"}
+                                                value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
+                                            />
+                                            <label className="my-0 text-right col-1 px-2">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
+                                            <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
+                                            <label className="my-0 text-right col-1 px-2">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
+                                            <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                        </div>
+                                    </div>
+                                )
+                            })}
                         </div>
+                        <div className="d-md-none">
+                            {datesToRequest.map((dateObject, i) => {
+                                return (
+                                    <div key={i}>
+                                        <div className="d-flex my-1 justify-content-between">
+                                            <div className="font-weight-semibold d-flex align-items-center">
+                                                {incomeStatementRenderText[appContext.locale]["Date range"] + (datesToRequest.length > 1? (" " + (i + 1)) : "" )}
+                                                <button className={"btn btn-light py-0 px-1 mx-1 border-0 " + (datesToRequest.length > 1 ? "" : " invisible")} onClick={() => handleRemoveDateRangeButton(i)}>
+                                                    <i className="ion ion-md-close fa-fw"></i>
+                                                </button>
+                                            </div>
+                                            <Select
+                                                className="col-6 px-0"
+                                                classNamePrefix="form-control"
+                                                options={dateRangePresets}
+                                                menuPortalTarget={document.body}
+                                                menuShouldScrollIntoView={false}
+                                                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                                                onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
+                                                placeholder={"Custom"}
+                                                value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
+                                            />
+                                        </div>
+                                        <div className="d-flex justify-content-between text-left align-items-center my-1">
+                                            <label className="my-0 col-3 px-0">
+                                                {incomeStatementRenderText[appContext.locale]["From:"]} 
+                                            </label>
+                                            <input 
+                                                type="date" 
+                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                className="form-control" 
+                                                value={datesToRequest[i].startDate} 
+                                                onChange={event => handleChangeStartDate(event.target.value, i)} 
+                                            />
+                                        </div>
+                                        <div className="d-flex justify-content-between text-left align-items-center mb-2">
+                                            <label className="my-0 col-3 px-0">
+                                                {incomeStatementRenderText[appContext.locale]["To:"]}
+                                            </label>
+                                            <input 
+                                                type="date" 
+                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]}
+                                                className="form-control" 
+                                                value={datesToRequest[i].endDate} 
+                                                onChange={event => handleChangeEndDate(event.target.value, i)} 
+                                            />
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        {datesToRequest.length < 3
+                            ?   <div className="mb-2">
+                                    <Link replace to="#" onClick={handleCompareButton} className="text-decoration-none">
+                                    <i className="ion ion-md-add"></i> {incomeStatementRenderText[appContext.locale]["Compare"]}                            </Link>
+                                </div>
+                            : null
+                        }
                         <div className="custom-control custom-switch">
                             <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
                             <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>

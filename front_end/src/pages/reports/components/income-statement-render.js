@@ -287,7 +287,9 @@ function IncomeStatementRender(props) {
         <>
             <Card className="very-rounded shadow-sm bg-light my-4">
                 <CardBody className="">
-                    {invalidDateAlert? <Alert color="danger">{incomeStatementRenderText[appContext.locale]["Invalid date(s) selected."]}</Alert> : null}
+                    <Alert isOpen={invalidDateAlert} color="danger">
+                        {incomeStatementRenderText[appContext.locale]["Invalid date(s) selected."]}
+                    </Alert>
                     <form onSubmit={handleUpdateReportButton}>
                         <div className="d-flex justify-content-between align-items-center mb-2">
                             <h2 className="h5 my-0">{incomeStatementRenderText[appContext.locale]["Options"]}</h2>
@@ -352,12 +354,28 @@ function IncomeStatementRender(props) {
                                             />
                                         </div>
                                         <div className="d-flex justify-content-between text-left align-items-center my-1">
-                                            <label className="my-0 col-3 px-0">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
-                                            <input type="date" className="form-control" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
+                                            <label className="my-0 col-3 px-0">
+                                                {incomeStatementRenderText[appContext.locale]["From:"]} 
+                                            </label>
+                                            <input 
+                                                type="date" 
+                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]}
+                                                className="form-control" 
+                                                value={datesToRequest[i].startDate} 
+                                                onChange={event => handleChangeStartDate(event.target.value, i)} 
+                                            />
                                         </div>
                                         <div className="d-flex justify-content-between text-left align-items-center mb-2">
-                                            <label className="my-0 col-3 px-0">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
-                                            <input type="date" className="form-control" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                            <label className="my-0 col-3 px-0">
+                                                {incomeStatementRenderText[appContext.locale]["To:"]} 
+                                            </label>
+                                            <input 
+                                                type="date" 
+                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]}
+                                                className="form-control" 
+                                                value={datesToRequest[i].endDate} 
+                                                onChange={event => handleChangeEndDate(event.target.value, i)} 
+                                            />
                                         </div>
                                     </div>
                                 )
