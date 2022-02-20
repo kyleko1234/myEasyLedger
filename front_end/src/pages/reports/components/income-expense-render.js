@@ -358,7 +358,7 @@ function IncomeExpenseRender(props) {
                                 <StripedRow className="font-weight-semibold">
                                     {incomeStatementRenderText[appContext.locale]["Income"]}
                                 </StripedRow>
-                                    {incomeStatementObjects[0].accounts
+                                {incomeStatementObjects[0].accounts
                                         .filter(account => account.accountTypeId == 4)
                                         .map(account => {
                                             return(
@@ -404,7 +404,7 @@ function IncomeExpenseRender(props) {
                                                     }
                                                 </React.Fragment>
                                             )
-                                    })}
+                                })}
                                 <StripedRow className="justify-content-between font-weight-semibold">
                                     <div>
                                         {incomeStatementRenderText[appContext.locale]["Total Income"]}
@@ -425,43 +425,65 @@ function IncomeExpenseRender(props) {
                                 <StripedRow className="font-weight-semibold">
                                     {incomeStatementRenderText[appContext.locale]["Expenses"]}
                                 </StripedRow>
-                                {accounts.filter(account => account.accountTypeId == 5).map(account => {
-                                    return(
-                                        <React.Fragment key={account.accountId}>
-                                            <StripedRow className="indent justify-content-between font-weight-semibold">
-                                                <div>
-                                                    {account.accountName}
-                                                </div>
-                                                <div className={account.debitsMinusCredits >= 0? "text-red" : ""}>
-                                                    {formatNumber(account.debitsMinusCredits)}
-                                                </div>
-                                            </StripedRow>
-                                            {detailedView 
-                                                ? accounts
-                                                    .filter(childAccount => childAccount.parentAccountId == account.accountId)
-                                                    .map(childAccount => {
-                                                        return(
-                                                            <StripedRow className="indent-2 justify-content-between"key={childAccount.accountId}>
-                                                                <div>
-                                                                    {childAccount.accountName}
-                                                                </div>
-                                                                <div className={childAccount.debitsMinusCredits >= 0? "text-red" : ""}>
-                                                                    {formatNumber(childAccount.debitsMinusCredits)}
-                                                                </div>
-                                                            </StripedRow> 
-                                                        )
-                                                    })
-                                                : null
-                                            }
-                                        </React.Fragment>
-                                    )
+                                {incomeStatementObjects[0].accounts
+                                    .filter(account => account.accountTypeId == 5)
+                                    .map(account => {
+                                        return(
+                                            <React.Fragment key={account.accountId}>
+                                                <StripedRow className="indent justify-content-between font-weight-semibold">
+                                                    <div>
+                                                        {account.accountName}
+                                                    </div>
+                                                    <div className="text-right d-flex">
+                                                        {incomeStatementObjects.map((incomeStatement, i) => {
+                                                            let specificAccount = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
+                                                            return(
+                                                                <div key={i} className={"width-175 " + (specificAccount.debitsMinusCredits > 0? "text-red" : "")}>
+                                                                    {formatNumber(sumDebitsAndCreditsOfChildren(account.accountId, i))}
+                                                                </div>    
+                                                            )
+                                                        })}
+                                                    </div>
+                                                </StripedRow>
+                                                {detailedView
+                                                    ? incomeStatementObjects[0].accounts
+                                                        .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                                        .map(childAccount => {
+                                                            return(
+                                                                <StripedRow className="indent-2 justify-content-between" key={childAccount.accountId}>
+                                                                    <div>
+                                                                        {childAccount.accountName}
+                                                                    </div>
+                                                                    <div className="text-right d-flex">
+                                                                        {incomeStatementObjects.map((incomeStatement, i) => {
+                                                                            let specificChildAccount = incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
+                                                                            return(
+                                                                                <div key={i} className={"width-175 " + (specificChildAccount.debitsMinusCredits > 0? "text-red" : "")}>
+                                                                                    {formatNumber(specificChildAccount.debitsMinusCredits)}
+                                                                                </div>
+                                                                            )
+                                                                        })}
+                                                                    </div>
+                                                                </StripedRow> 
+                                                            )
+                                                        })
+                                                    : null
+                                                }
+                                            </React.Fragment>
+                                        )
                                 })}
                                 <StripedRow className="font-weight-semibold justify-content-between">
                                     <div>
                                         {incomeStatementRenderText[appContext.locale]["Total Expenses"]}
                                     </div>
-                                    <div className={totalExpenses > 0? "text-red" : ""}>
-                                        {formatNumber(totalExpenses)}
+                                    <div className="text-right d-flex">
+                                        {incomeStatementObjects.map((incomeStatement, i) => {
+                                            return(
+                                                <div key={i} className={"width-175 " + (incomeStatementObjects[i].totalExpenses >= 0? "" : "text-red")}>
+                                                    {formatNumber(incomeStatementObjects[i].totalExpenses)}
+                                                </div>              
+                                            )
+                                        })}
                                     </div>
                                 </StripedRow>
                                 <StripedRow>
@@ -471,8 +493,14 @@ function IncomeExpenseRender(props) {
                                     <div>
                                         {incomeStatementRenderText[appContext.locale]["Total Income less Expenses"]}
                                     </div>
-                                    <div>
-                                        {formatNumber(netIncome)}
+                                    <div className="text-right d-flex">
+                                        {incomeStatementObjects.map((incomeStatement, i) => {
+                                            return( 
+                                                <div key={i} className="width-175 ">
+                                                    {formatNumber(incomeStatementObjects[i].netIncome)}
+                                                </div>
+                                            )
+                                        })}
                                     </div>
                                 </StripedRow>
                             </>
