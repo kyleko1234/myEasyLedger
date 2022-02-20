@@ -371,8 +371,8 @@ function IncomeExpenseRender(props) {
                                                             {incomeStatementObjects.map((incomeStatement, i) => {
                                                                 let specificAccount = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
                                                                 return(
-                                                                    <div key={i} className={"width-175 " + (specificAccount.debitsMinusCredits > 0? "text-red" : "")}>
-                                                                        {formatNumber(sumDebitsAndCreditsOfChildren(account.accountId, i) * -1)}
+                                                                    <div key={i} className={"width-175"}>
+                                                                        {formatNumber((account.hasChildren ? sumDebitsAndCreditsOfChildren(account.accountId, i) : specificAccount.debitsMinusCredits) * -1)}
                                                                     </div>    
                                                                 )
                                                             })}
@@ -391,7 +391,7 @@ function IncomeExpenseRender(props) {
                                                                             {incomeStatementObjects.map((incomeStatement, i) => {
                                                                                 let specificChildAccount = incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                                 return(
-                                                                                    <div key={i} className={"width-175 " + (specificChildAccount.debitsMinusCredits > 0? "text-red" : "")}>
+                                                                                    <div key={i} className={"width-175 "}>
                                                                                         {formatNumber(specificChildAccount.debitsMinusCredits * -1)}
                                                                                     </div>
                                                                                 )
@@ -412,7 +412,7 @@ function IncomeExpenseRender(props) {
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                             return(
-                                                <div key={i} className={"width-175 " + (incomeStatementObjects[i].totalIncome >= 0? "" : "text-red")}>
+                                                <div key={i} className={"width-175 "}>
                                                     {formatNumber(incomeStatementObjects[i].totalIncome)}
                                                 </div>              
                                             )
@@ -438,8 +438,8 @@ function IncomeExpenseRender(props) {
                                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                                             let specificAccount = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
                                                             return(
-                                                                <div key={i} className={"width-175 " + (specificAccount.debitsMinusCredits > 0? "text-red" : "")}>
-                                                                    {formatNumber(sumDebitsAndCreditsOfChildren(account.accountId, i))}
+                                                                <div key={i} className={"width-175"}>
+                                                                    {formatNumber(account.hasChildren ? sumDebitsAndCreditsOfChildren(account.accountId, i) : specificAccount.debitsMinusCredits)}
                                                                 </div>    
                                                             )
                                                         })}
@@ -458,7 +458,7 @@ function IncomeExpenseRender(props) {
                                                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                                                             let specificChildAccount = incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                             return(
-                                                                                <div key={i} className={"width-175 " + (specificChildAccount.debitsMinusCredits > 0? "text-red" : "")}>
+                                                                                <div key={i} className={"width-175 "}>
                                                                                     {formatNumber(specificChildAccount.debitsMinusCredits)}
                                                                                 </div>
                                                                             )
@@ -479,7 +479,7 @@ function IncomeExpenseRender(props) {
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                             return(
-                                                <div key={i} className={"width-175 " + (incomeStatementObjects[i].totalExpenses >= 0? "" : "text-red")}>
+                                                <div key={i} className={"width-175 "}>
                                                     {formatNumber(incomeStatementObjects[i].totalExpenses)}
                                                 </div>              
                                             )
