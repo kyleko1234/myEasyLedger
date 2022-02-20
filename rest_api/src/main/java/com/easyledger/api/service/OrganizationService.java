@@ -60,6 +60,9 @@ public class OrganizationService {
 		Organization organization = organizationRepo.findById(organizationId)
 				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
 		LocalDate dateOfFirstJournalEntry = organizationRepo.getDateOfFirstJournalEntryForOrganization(organizationId);
+		if (dateOfFirstJournalEntry == null) {
+			dateOfFirstJournalEntry = LocalDate.now();
+		}
 		LocalDate fiscalYearBeginDate = organization.getFiscalYearBegin();
 		Map<String, Object> annualGroup = new HashMap<String, Object>();
 		Map<String, Object> quarterlyGroup = new HashMap<String, Object>();
@@ -86,18 +89,22 @@ public class OrganizationService {
 		int firstFiscalYear;
 		int lastFiscalYear;
 		List<Object> returnedList = new ArrayList<Object>();
+		
+		
 		//if date of first journal entry is before fiscal year begin date, the first fiscal year is the year before the calendar year of the date of the first journal entry
 		if (dateOfFirstJournalEntry.withYear(fiscalYearBeginDate.getYear()).compareTo(fiscalYearBeginDate) < 0) { 
 			firstFiscalYear = dateOfFirstJournalEntry.getYear() - 1;
 		} else {
 			firstFiscalYear = dateOfFirstJournalEntry.getYear();
 		}
+		
 		//if endDate  is before fiscal year begin date, the last fiscal year is the year before the calendar year of endDate
 		if (endDate.withYear(fiscalYearBeginDate.getYear()).compareTo(fiscalYearBeginDate) < 0) {
 			lastFiscalYear = endDate.getYear() - 1;
 		} else {
 			lastFiscalYear = endDate.getYear();
 		}
+
 		
 		for (int yearNumber = lastFiscalYear; yearNumber >= firstFiscalYear; yearNumber--) {
 			String name = ((Integer) yearNumber).toString();
@@ -132,7 +139,7 @@ public class OrganizationService {
 			startDateOfLastQuarterToReturn = startDateOfLastQuarterToReturn.plusMonths(3);
 		}
 		
-		 while (startDateOfLastQuarterToReturn.plusMonths(3).compareTo(dateOfFirstJournalEntry) > 0) {
+		while (startDateOfLastQuarterToReturn.plusMonths(3).compareTo(dateOfFirstJournalEntry) > 0) {
 			LocalDate endDateOfDateRange = startDateOfLastQuarterToReturn.plusMonths(3).minusDays(1);
 			int quarterNumber = Math.floorMod(zeroIndexedQuarterNumber, 4) + 1; //java's default modulo operator returns a negative result
 			String name = fiscalYearOfLastQuarterToReturn + " " + "Q" + quarterNumber;
