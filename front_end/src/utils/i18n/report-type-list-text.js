@@ -5,7 +5,8 @@ export const reportTypeListText = {
         "Income Statement": "Income Statement",
         "Net Worth": "Net Worth",
         "Income and Expense Report": "Income and Expense Report",
-        "Cash Flow": "Cash Flow"
+        "Cash Flow": "Cash Flow",
+        "Expense Report": "Expense Report"
     },
     "zh-TW": {
         "Select a type of report to view...": "選擇你要檢視的報表 ...",
@@ -13,6 +14,8 @@ export const reportTypeListText = {
         "Income Statement": "損益表",
         "Net Worth": "淨資產報告",
         "Income and Expense Report": "收入支出報告",
-        "Cash Flow": "現金流量表"
+        "Cash Flow": "現金流量表",
+        "Expense Report": "TRANSLATION"
+
     }
 }
