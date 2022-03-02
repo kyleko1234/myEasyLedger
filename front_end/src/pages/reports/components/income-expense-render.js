@@ -39,20 +39,6 @@ function IncomeExpenseRender(props) {
         return totalDebitsMinusCredits * -1;
     }
 
-    const sumDebitsAndCreditsOfChildren = (accountId, indexOfIncomeStatementObject) => {
-        let total = 0;
-        let childAccounts = incomeStatementObjects[indexOfIncomeStatementObject]
-            .accountBalances
-            .filter(childAccount => childAccount.parentAccountId === accountId);
-        childAccounts
-            .forEach(account => {
-                if (account.debitsMinusCredits) {
-                    total += account.debitsMinusCredits;
-                }
-        })
-        return total;
-    }
-
     const requestIncomeStatementObjects = async arrayToStoreObjects => {
         let newColumnLabels = [];
         for (const dateObject of datesToRequest) {

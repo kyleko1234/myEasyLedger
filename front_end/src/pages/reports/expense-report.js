@@ -6,6 +6,7 @@ import DateRangeControls from './components/date-range-controls';
 import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../utils/util-fns';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/constants';
+import PersonalExpenseReportRender from './components/personal-expense-report-render';
 
 function ExpenseReport() {
     const appContext = React.useContext(PageSettings);
@@ -34,7 +35,26 @@ function ExpenseReport() {
         for (const dateObject of datesToRequest) {
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement/${dateObject.startDate}/${dateObject.endDate}`).then(response => {
                 newColumnLabels.push(dateObject);     //column labels are not updated until the report is actually updated
-                arrayToStoreObjects.push(response.data);
+                let formattedIncomeStatementObject = response.data;
+                let formattedAccounts = response.data.accountBalances;
+                formattedAccounts.forEach(account => {
+                    if (account.hasChildren) {
+                        let totalDebits = 0;
+                        let totalCredits = 0;    
+                        formattedAccounts.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
+                            totalDebits = totalDebits + childAccount.debitTotal;
+                            totalCredits = totalCredits + childAccount.creditTotal;
+                        })
+                        account.debitTotal = totalDebits;
+                        account.creditTotal = totalCredits;
+                        account.debitsMinusCredits = totalDebits - totalCredits;    
+                    }    
+                })
+                formattedIncomeStatementObject.accounts = formattedAccounts;
+                formattedIncomeStatementObject.netIncome = response.data.netIncome;
+                formattedIncomeStatementObject.totalIncome = sumCreditsMinusDebits(formattedAccounts.filter(account => account.accountTypeId == 4));
+                formattedIncomeStatementObject.totalExpenses = sumCreditsMinusDebits(formattedAccounts.filter(account => account.accountTypeId == 5)) * -1;
+                arrayToStoreObjects.push(formattedIncomeStatementObject);
             }).catch(console.log);
         }
         setColumnLabels(newColumnLabels);
@@ -132,19 +152,14 @@ function ExpenseReport() {
         setLoading(false);
     }
 
-    const sumDebitsAndCreditsOfChildren = (accountId, indexOfIncomeStatementObject) => {
-        let total = 0;
-        let childAccounts = incomeStatementObjects[indexOfIncomeStatementObject]
-            .accountBalances
-            .filter(childAccount => childAccount.parentAccountId === accountId);
-        childAccounts
-            .forEach(account => {
-                if (account.debitsMinusCredits) {
-                    total += account.debitsMinusCredits;
-                }
+    const sumCreditsMinusDebits = (objects) => {
+        let totalDebitsMinusCredits = 0;
+        objects.forEach(object => {
+            totalDebitsMinusCredits = totalDebitsMinusCredits + object.debitsMinusCredits;
         })
-        return total;
+        return totalDebitsMinusCredits * -1;
     }
+
 
     return (
         <div>
@@ -165,15 +180,19 @@ function ExpenseReport() {
                 handleCompareButton={handleCompareButton}
             />
             <div>
-                {appContext.isLoading
+                {(appContext.isLoading)
                     ? <LoadingSpinner big />
                     : (appContext.isEnterprise
                         ? <div>
                             ENTERPRISE REPORT
                         </div>
-                        : <div>
-                            PERSONAL REPORT
-                        </div>
+                        : <PersonalExpenseReportRender 
+                            columnLabels={columnLabels}
+                            incomeStatementObjects={incomeStatementObjects}
+                            loading={loading}
+                            formatNumber={numberAsCurrency}
+                            detailedView={detailedView}
+                        />
                     )
                 }
             </div>
