@@ -16,15 +16,15 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
                             return(
                                 <div className="td width-175" key={i}>
                                     {columnLabel.label === "Custom"
-                                    ?   <>
-                                            <div>
-                                                {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabel.startDate}
-                                            </div>
-                                            <div>
-                                                {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabel.endDate}
-                                            </div>
-                                        </>
-                                    : columnLabel.label}
+                                        ?   <>
+                                                <div>
+                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabel.startDate}
+                                                </div>
+                                                <div>
+                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabel.endDate}
+                                                </div>
+                                            </>
+                                        : columnLabel.label}
                                 </div>
                             )
                         })
