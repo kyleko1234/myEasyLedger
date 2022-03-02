@@ -166,7 +166,7 @@ export const getPercentage = (portion, total) => {
     if (total == 0) {
         product = 0;
     } else {
-        product = portion / total;
+        product = portion * 100 / total;
     }
     return product.toFixed(2);
 }
