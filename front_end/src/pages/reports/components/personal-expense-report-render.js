@@ -5,7 +5,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { getPercentage } from '../../../utils/util-fns';
 
-function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObjects, formatNumber, detailedView}) {
+function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObjects, numberAsCurrency, detailedView}) {
     const appContext = React.useContext(PageSettings);
 
     return(
@@ -53,7 +53,7 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
                                                     let specificAccount = incomeStatement.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
                                                     return(
                                                         <div key={i} className={"width-175"}>
-                                                            {formatNumber(specificAccount.debitsMinusCredits) + " (" + getPercentage(specificAccount.debitsMinusCredits, incomeStatement.totalExpenses) + "%)"}
+                                                            {numberAsCurrency(specificAccount.debitsMinusCredits) + " (" + getPercentage(specificAccount.debitsMinusCredits, incomeStatement.totalExpenses) + "%)"}
                                                         </div>    
                                                     )
                                                 })}
@@ -73,7 +73,7 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
                                                                     let specificChildAccount = incomeStatement.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                     return(
                                                                         <div key={i} className={"width-175 "}>
-                                                                            {formatNumber(specificChildAccount.debitsMinusCredits) + " (" + getPercentage(specificChildAccount.debitsMinusCredits, incomeStatement.totalExpenses) + "%)"}
+                                                                            {numberAsCurrency(specificChildAccount.debitsMinusCredits) + " (" + getPercentage(specificChildAccount.debitsMinusCredits, incomeStatement.totalExpenses) + "%)"}
                                                                         </div>
                                                                     )
                                                                 })}
@@ -97,7 +97,7 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                     return(
                                         <div key={i} className={"width-175 "}>
-                                            {formatNumber(incomeStatement.totalExpenses)}
+                                            {numberAsCurrency(incomeStatement.totalExpenses)}
                                         </div>              
                                     )
                                 })}

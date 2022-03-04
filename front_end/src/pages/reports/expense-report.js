@@ -190,7 +190,7 @@ function ExpenseReport() {
                             columnLabels={columnLabels}
                             incomeStatementObjects={incomeStatementObjects}
                             loading={loading}
-                            formatNumber={numberAsCurrency}
+                            numberAsCurrency={numberAsCurrency}
                             detailedView={detailedView}
                         />
                     )
