@@ -423,7 +423,7 @@ function IncomeExpenseRender(props) {
                                 })}
                                 <StripedRow className="font-weight-semibold justify-content-between">
                                     <div>
-                                        {incomeStatementRenderText[appContext.locale]["Total Expenses"]}
+                                        {incomeStatementRenderText[appContext.locale]["Total expenses"]}
                                     </div>
                                     <div className="text-right d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {

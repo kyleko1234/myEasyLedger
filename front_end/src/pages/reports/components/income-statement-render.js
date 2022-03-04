@@ -266,22 +266,22 @@ function IncomeStatementRender(props) {
         return total;
     }
 
-        //returns true if debitsMinusCredits of an account is zero for all date ranges selected by the user
-        const zeroDebitsMinusCreditsInAccount = (account) => {
-            for (let i = 0; i < incomeStatementObjects.length; i++) {
-                let accountForThisDatePeriod = incomeStatementObjects[i].accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
-                if (account.hasChildren) {
-                    if (sumDebitsAndCreditsOfChildren(account.accountId, i)) {
-                        return false;
-                    }    
-                } else {
-                    if (accountForThisDatePeriod.debitsMinusCredits) {
-                        return false;
-                    }
+    //returns true if debitsMinusCredits of an account is zero for all date ranges selected by the user
+    const zeroDebitsMinusCreditsInAccount = (account) => {
+        for (let i = 0; i < incomeStatementObjects.length; i++) {
+            let accountForThisDatePeriod = incomeStatementObjects[i].accountBalances.find(specificAccount => specificAccount.accountId === account.accountId);
+            if (account.hasChildren) {
+                if (sumDebitsAndCreditsOfChildren(account.accountId, i)) {
+                    return false;
+                }    
+            } else {
+                if (accountForThisDatePeriod.debitsMinusCredits) {
+                    return false;
                 }
             }
-            return true;
         }
+        return true;
+    }
     
     return (
         <>
@@ -541,7 +541,6 @@ function IncomeStatementRender(props) {
                                                 }
                                             </React.Fragment>
                                     )
-
                                 })
                             }
                             <StripedRow className="justify-content-between font-weight-semibold ">

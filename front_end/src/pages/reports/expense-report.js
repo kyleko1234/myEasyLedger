@@ -7,6 +7,7 @@ import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDat
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/constants';
 import PersonalExpenseReportRender from './components/personal-expense-report-render';
+import EnterpriseExpenseReportRender from './components/enterprise-expense-report-render';
 
 function ExpenseReport() {
     const appContext = React.useContext(PageSettings);
@@ -183,9 +184,13 @@ function ExpenseReport() {
                 {(appContext.isLoading)
                     ? <LoadingSpinner big />
                     : (appContext.isEnterprise
-                        ? <div>
-                            ENTERPRISE REPORT
-                        </div>
+                        ? <EnterpriseExpenseReportRender
+                            columnLabels={columnLabels}
+                            incomeStatementObjects={incomeStatementObjects}
+                            loading={loading}
+                            numberAsCurrency={numberAsCurrency}
+                            detailedView={detailedView}
+                        />
                         : <PersonalExpenseReportRender 
                             columnLabels={columnLabels}
                             incomeStatementObjects={incomeStatementObjects}
