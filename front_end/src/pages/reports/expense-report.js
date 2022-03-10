@@ -8,6 +8,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../utils/constants';
 import PersonalExpenseReportRender from './components/personal-expense-report-render';
 import EnterpriseExpenseReportRender from './components/enterprise-expense-report-render';
+import PersonalExpenseReportPieChart from './components/personal-expense-report-pie-chart';
 
 function ExpenseReport() {
     const appContext = React.useContext(PageSettings);
@@ -180,6 +181,19 @@ function ExpenseReport() {
                 toggleDetailedView={toggleDetailedView}
                 handleCompareButton={handleCompareButton}
             />
+            <div>
+                {(appContext.isLoading)
+                    ? <LoadingSpinner big />
+                    : (appContext.isEnterprise
+                        ? <div>TODO</div>
+                        : <PersonalExpenseReportPieChart
+                            columnLabels={columnLabels}
+                            incomeStatementObjects={incomeStatementObjects}
+                            loading={loading}
+                        />
+                    )
+                }
+            </div>
             <div>
                 {(appContext.isLoading)
                     ? <LoadingSpinner big />
