@@ -2,6 +2,7 @@ import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import { PageSettings } from '../../../config/page-settings';
+import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 
 function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, loading}) {
     const appContext = React.useContext(PageSettings);
@@ -42,11 +43,13 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
                     responsive: true,
                     plugins: {
                         legend: {
+                            display: false,
                             labels: {
                                 color: fontColor
                             }
                         }
                     },
+                    
                 }
             }
             let expenseParentLevelAccounts = incomeStatement.accountBalances.filter(account => account.accountTypeId === 5);
@@ -57,19 +60,37 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
             newDataObjectArray.push(pieChartObject);
         })
         setPieChartObjects(newDataObjectArray);
-    }, [incomeStatementObjects]);
+    }, [incomeStatementObjects, fontColor]);
 
     return(
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-center">
             {loading
                 ? <LoadingSpinner big />
                 : pieChartObjects.map((pieChartObject, i) => {
                     return(
-                        <Pie
-                            key={i}
-                            data={pieChartObject.data}
-                            options={pieChartObject.options}
-                        />
+                        <div className="mx-5 d-flex flex-column align-items-center">
+                            <div style={{height: "300px"}} >
+                                <Pie
+                                    key={i}
+                                    data={pieChartObject.data}
+                                    options={pieChartObject.options}
+                                />
+                            </div>
+                            <div className="my-3">
+                                <div className="font-weight-semibold text-center" key={i}>
+                                    {columnLabels[i].label === "Custom"
+                                        ?   <>
+                                                <div>
+                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabels[i].startDate}
+                                                </div>
+                                                <div>
+                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabels[i].endDate}
+                                                </div>
+                                            </>
+                                        : columnLabels[i].label}
+                                </div>
+                            </div>
+                        </div>
                     )
                 })
             }

@@ -184,8 +184,12 @@ function ExpenseReport() {
             <div>
                 {(appContext.isLoading)
                     ? <LoadingSpinner big />
-                    : (appContext.isEnterprise
-                        ? <div>TODO</div>
+                    : (appContext.isEnterprise 
+                        ? <PersonalExpenseReportPieChart //for now everyone gets the same treatment. TODO make an enterprise version better
+                            columnLabels={columnLabels}
+                            incomeStatementObjects={incomeStatementObjects}
+                            loading={loading}
+                        />
                         : <PersonalExpenseReportPieChart
                             columnLabels={columnLabels}
                             incomeStatementObjects={incomeStatementObjects}
@@ -194,6 +198,7 @@ function ExpenseReport() {
                     )
                 }
             </div>
+            <hr/>
             <div>
                 {(appContext.isLoading)
                     ? <LoadingSpinner big />
