@@ -181,7 +181,7 @@ function ExpenseReport() {
                 toggleDetailedView={toggleDetailedView}
                 handleCompareButton={handleCompareButton}
             />
-            <div>
+            <div className="d-none d-xl-block">
                 {(appContext.isLoading)
                     ? <LoadingSpinner big />
                     : (appContext.isEnterprise 
@@ -197,8 +197,8 @@ function ExpenseReport() {
                         />
                     )
                 }
+                <hr/>
             </div>
-            <hr/>
             <div>
                 {(appContext.isLoading)
                     ? <LoadingSpinner big />
