@@ -9,6 +9,7 @@ import { API_BASE_URL } from '../../utils/constants';
 import PersonalExpenseReportRender from './components/personal-expense-report-render';
 import EnterpriseExpenseReportRender from './components/enterprise-expense-report-render';
 import PersonalExpenseReportPieChart from './components/personal-expense-report-pie-chart';
+import { incomeStatementReportText } from '../../utils/i18n/income-statement-report-text';
 
 function ExpenseReport() {
     const appContext = React.useContext(PageSettings);
@@ -162,11 +163,10 @@ function ExpenseReport() {
         return totalDebitsMinusCredits * -1;
     }
 
-
     return (
         <div>
             <h1 className="page-header">
-                Expense Report
+                {incomeStatementReportText[appContext.locale]["Expense Report"]} 
             </h1>
             <DateRangeControls 
                 datesToRequest={datesToRequest}
