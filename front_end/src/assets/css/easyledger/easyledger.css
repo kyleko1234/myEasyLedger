@@ -572,8 +572,24 @@ a.tr:hover {
     width: 10ch !important;
 }
 
+.min-width-xs{
+    min-width: var(--breakpoint-xs);
+}
+
+.min-width-sm{
+    min-width: var(--breakpoint-sm);
+}
+
+.min-width-md{
+    min-width: var(--breakpoint-md);
+}
+
 .min-width-lg{
-    min-width: 992px;
+    min-width: var(--breakpoint-lg);
+}
+
+.min-width-xl{
+    min-width: var(--breakpoint-xl);
 }
 
 .overflow-visible {

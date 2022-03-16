@@ -9,6 +9,7 @@ import LoadingSpinner from '../../../components/misc/loading-spinner.js';
 import StripedRow from '../../../components/tables/striped-row.js';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 function IncomeExpenseRender(props) {
     //optional props: defualtStartDate, defaultEndDate
@@ -37,20 +38,6 @@ function IncomeExpenseRender(props) {
             totalDebitsMinusCredits = totalDebitsMinusCredits + object.debitsMinusCredits;
         })
         return totalDebitsMinusCredits * -1;
-    }
-
-    const sumDebitsAndCreditsOfChildren = (accountId, indexOfIncomeStatementObject) => {
-        let total = 0;
-        let childAccounts = incomeStatementObjects[indexOfIncomeStatementObject]
-            .accountBalances
-            .filter(childAccount => childAccount.parentAccountId === accountId);
-        childAccounts
-            .forEach(account => {
-                if (account.debitsMinusCredits) {
-                    total += account.debitsMinusCredits;
-                }
-        })
-        return total;
     }
 
     const requestIncomeStatementObjects = async arrayToStoreObjects => {
@@ -290,39 +277,107 @@ function IncomeExpenseRender(props) {
                     </form>
                 </CardBody>
             </Card>
-            <div>
-                <div className="d-flex justify-content-between font-weight-semibold text-right">
-                    <div>{/*empty div for spacing*/}</div>
-                    <div className="text-right d-flex">
-                        {columnLabels.map((columnLabel, i) => {
-                                return(
-                                    <div className="td width-175" key={i}>
-                                        {columnLabel.label === "Custom"
-                                        ?   <>
-                                                <div>
-                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabel.startDate}
-                                                </div>
-                                                <div>
-                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabel.endDate}
-                                                </div>
-                                            </>
-                                        : columnLabel.label}
-                                    </div>
-                                )
-                            })
-                        }
+            <PerfectScrollbar>
+                <div className="min-width-md">
+                    <div className="d-flex justify-content-between font-weight-semibold text-right">
+                        <div>{/*empty div for spacing*/}</div>
+                        <div className="text-right d-flex">
+                            {columnLabels.map((columnLabel, i) => {
+                                    return(
+                                        <div className="td width-175" key={i}>
+                                            {columnLabel.label === "Custom"
+                                            ?   <>
+                                                    <div>
+                                                        {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabel.startDate}
+                                                    </div>
+                                                    <div>
+                                                        {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabel.endDate}
+                                                    </div>
+                                                </>
+                                            : columnLabel.label}
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
-                </div>
-                <div>
-                    {(loading || !incomeStatementObjects.length)
-                        ? <LoadingSpinner big />
-                        : <div>
-                            <>
-                                <StripedRow className="font-weight-semibold">
-                                    {incomeStatementRenderText[appContext.locale]["Income"]}
-                                </StripedRow>
-                                {incomeStatementObjects[0].accounts
-                                        .filter(account => account.accountTypeId == 4)
+                    <div>
+                        {(loading || !incomeStatementObjects.length)
+                            ? <LoadingSpinner big />
+                            : <div>
+                                <>
+                                    <StripedRow className="font-weight-semibold">
+                                        {incomeStatementRenderText[appContext.locale]["Income"]}
+                                    </StripedRow>
+                                    {incomeStatementObjects[0].accounts
+                                            .filter(account => account.accountTypeId == 4)
+                                            .map(account => {
+                                                return(
+                                                    <React.Fragment key={account.accountId}>
+                                                        <StripedRow className="indent justify-content-between font-weight-semibold">
+                                                            <div>
+                                                                {account.accountName}
+                                                            </div>
+                                                            <div className="text-right d-flex">
+                                                                {incomeStatementObjects.map((incomeStatement, i) => {
+                                                                    let specificAccount = incomeStatement.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
+                                                                    return(
+                                                                        <div key={i} className={"width-175"}>
+                                                                            {formatNumber(specificAccount.debitsMinusCredits * -1)}
+                                                                        </div>    
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        </StripedRow>
+                                                        {detailedView
+                                                            ? incomeStatementObjects[0].accounts
+                                                                .filter(childAccount => childAccount.parentAccountId == account.accountId)
+                                                                .map(childAccount => {
+                                                                    return(
+                                                                        <StripedRow className="indent-2 justify-content-between" key={childAccount.accountId}>
+                                                                            <div>
+                                                                                {childAccount.accountName}
+                                                                            </div>
+                                                                            <div className="text-right d-flex">
+                                                                                {incomeStatementObjects.map((incomeStatement, i) => {
+                                                                                    let specificChildAccount = incomeStatement.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
+                                                                                    return(
+                                                                                        <div key={i} className={"width-175 "}>
+                                                                                            {formatNumber(specificChildAccount.debitsMinusCredits * -1)}
+                                                                                        </div>
+                                                                                    )
+                                                                                })}
+                                                                            </div>
+                                                                        </StripedRow> 
+                                                                    )
+                                                                })
+                                                            : null
+                                                        }
+                                                    </React.Fragment>
+                                                )
+                                    })}
+                                    <StripedRow className="justify-content-between font-weight-semibold">
+                                        <div>
+                                            {incomeStatementRenderText[appContext.locale]["Total Income"]}
+                                        </div>
+                                        <div className="text-right d-flex">
+                                            {incomeStatementObjects.map((incomeStatement, i) => {
+                                                return(
+                                                    <div key={i} className={"width-175 "}>
+                                                        {formatNumber(incomeStatement.totalIncome)}
+                                                    </div>              
+                                                )
+                                            })}
+                                        </div>
+                                    </StripedRow>
+                                    <StripedRow>
+                                        <div className="invisible">{/** empty row */} empty row </div>
+                                    </StripedRow>
+                                    <StripedRow className="font-weight-semibold">
+                                        {incomeStatementRenderText[appContext.locale]["Expenses"]}
+                                    </StripedRow>
+                                    {incomeStatementObjects[0].accounts
+                                        .filter(account => account.accountTypeId == 5)
                                         .map(account => {
                                             return(
                                                 <React.Fragment key={account.accountId}>
@@ -335,7 +390,7 @@ function IncomeExpenseRender(props) {
                                                                 let specificAccount = incomeStatement.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
                                                                 return(
                                                                     <div key={i} className={"width-175"}>
-                                                                        {formatNumber(specificAccount.debitsMinusCredits * -1)}
+                                                                        {formatNumber(specificAccount.debitsMinusCredits)}
                                                                     </div>    
                                                                 )
                                                             })}
@@ -355,7 +410,7 @@ function IncomeExpenseRender(props) {
                                                                                 let specificChildAccount = incomeStatement.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                                 return(
                                                                                     <div key={i} className={"width-175 "}>
-                                                                                        {formatNumber(specificChildAccount.debitsMinusCredits * -1)}
+                                                                                        {formatNumber(specificChildAccount.debitsMinusCredits)}
                                                                                     </div>
                                                                                 )
                                                                             })}
@@ -367,110 +422,44 @@ function IncomeExpenseRender(props) {
                                                     }
                                                 </React.Fragment>
                                             )
-                                })}
-                                <StripedRow className="justify-content-between font-weight-semibold">
-                                    <div>
-                                        {incomeStatementRenderText[appContext.locale]["Total Income"]}
-                                    </div>
-                                    <div className="text-right d-flex">
-                                        {incomeStatementObjects.map((incomeStatement, i) => {
-                                            return(
-                                                <div key={i} className={"width-175 "}>
-                                                    {formatNumber(incomeStatement.totalIncome)}
-                                                </div>              
-                                            )
-                                        })}
-                                    </div>
-                                </StripedRow>
-                                <StripedRow>
-                                    <div className="invisible">{/** empty row */} empty row </div>
-                                </StripedRow>
-                                <StripedRow className="font-weight-semibold">
-                                    {incomeStatementRenderText[appContext.locale]["Expenses"]}
-                                </StripedRow>
-                                {incomeStatementObjects[0].accounts
-                                    .filter(account => account.accountTypeId == 5)
-                                    .map(account => {
-                                        return(
-                                            <React.Fragment key={account.accountId}>
-                                                <StripedRow className="indent justify-content-between font-weight-semibold">
-                                                    <div>
-                                                        {account.accountName}
+                                    })}
+                                    <StripedRow className="font-weight-semibold justify-content-between">
+                                        <div>
+                                            {incomeStatementRenderText[appContext.locale]["Total expenses"]}
+                                        </div>
+                                        <div className="text-right d-flex">
+                                            {incomeStatementObjects.map((incomeStatement, i) => {
+                                                return(
+                                                    <div key={i} className={"width-175 "}>
+                                                        {formatNumber(incomeStatement.totalExpenses)}
+                                                    </div>              
+                                                )
+                                            })}
+                                        </div>
+                                    </StripedRow>
+                                    <StripedRow>
+                                        <div className="invisible">{/** empty row */} empty row </div>
+                                    </StripedRow>
+                                    <StripedRow className="font-weight-semibold justify-content-between">
+                                        <div>
+                                            {incomeStatementRenderText[appContext.locale]["Total Income less Expenses"]}
+                                        </div>
+                                        <div className="text-right d-flex">
+                                            {incomeStatementObjects.map((incomeStatement, i) => {
+                                                return( 
+                                                    <div key={i} className="width-175 ">
+                                                        {formatNumber(incomeStatement.netIncome)}
                                                     </div>
-                                                    <div className="text-right d-flex">
-                                                        {incomeStatementObjects.map((incomeStatement, i) => {
-                                                            let specificAccount = incomeStatement.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
-                                                            return(
-                                                                <div key={i} className={"width-175"}>
-                                                                    {formatNumber(specificAccount.debitsMinusCredits)}
-                                                                </div>    
-                                                            )
-                                                        })}
-                                                    </div>
-                                                </StripedRow>
-                                                {detailedView
-                                                    ? incomeStatementObjects[0].accounts
-                                                        .filter(childAccount => childAccount.parentAccountId == account.accountId)
-                                                        .map(childAccount => {
-                                                            return(
-                                                                <StripedRow className="indent-2 justify-content-between" key={childAccount.accountId}>
-                                                                    <div>
-                                                                        {childAccount.accountName}
-                                                                    </div>
-                                                                    <div className="text-right d-flex">
-                                                                        {incomeStatementObjects.map((incomeStatement, i) => {
-                                                                            let specificChildAccount = incomeStatement.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
-                                                                            return(
-                                                                                <div key={i} className={"width-175 "}>
-                                                                                    {formatNumber(specificChildAccount.debitsMinusCredits)}
-                                                                                </div>
-                                                                            )
-                                                                        })}
-                                                                    </div>
-                                                                </StripedRow> 
-                                                            )
-                                                        })
-                                                    : null
-                                                }
-                                            </React.Fragment>
-                                        )
-                                })}
-                                <StripedRow className="font-weight-semibold justify-content-between">
-                                    <div>
-                                        {incomeStatementRenderText[appContext.locale]["Total Expenses"]}
-                                    </div>
-                                    <div className="text-right d-flex">
-                                        {incomeStatementObjects.map((incomeStatement, i) => {
-                                            return(
-                                                <div key={i} className={"width-175 "}>
-                                                    {formatNumber(incomeStatement.totalExpenses)}
-                                                </div>              
-                                            )
-                                        })}
-                                    </div>
-                                </StripedRow>
-                                <StripedRow>
-                                    <div className="invisible">{/** empty row */} empty row </div>
-                                </StripedRow>
-                                <StripedRow className="font-weight-semibold justify-content-between">
-                                    <div>
-                                        {incomeStatementRenderText[appContext.locale]["Total Income less Expenses"]}
-                                    </div>
-                                    <div className="text-right d-flex">
-                                        {incomeStatementObjects.map((incomeStatement, i) => {
-                                            return( 
-                                                <div key={i} className="width-175 ">
-                                                    {formatNumber(incomeStatement.netIncome)}
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                </StripedRow>
-                            </>
-                        </div>
-                    }
+                                                )
+                                            })}
+                                        </div>
+                                    </StripedRow>
+                                </>
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
+            </PerfectScrollbar>
         </>
     )
 }

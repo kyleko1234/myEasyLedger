@@ -24,6 +24,7 @@ import VerificationPage from '../pages/verification/verification-page.js';
 import DefaultLandingPage from '../pages/default/default-landing-page.js';
 import Transactions from '../pages/journals/personal/transactions.js';
 import AcceptInvitationPage from '../pages/user/invitation/accept-invitation-page.js';
+import ExpenseReport from '../pages/reports/expense-report.js';
 
 const routes = [
   {
@@ -167,6 +168,17 @@ const routes = [
     path: '/accept-invitation/:token/:locale',
     title: 'Account Setup',
     component: AcceptInvitationPage
+  },
+  {
+      path: '/reports/expense',
+      title: 'Expense Report',
+      exact: true,
+      component: ExpenseReport
+  },
+  {
+    path: '/reports/expense/:startDate/:endDate',
+    title: 'Expense Report',
+    component: ExpenseReport
   }
 
 ];

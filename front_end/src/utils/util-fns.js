@@ -153,3 +153,20 @@ export const getStartAndEndDatesForYearMonth = yearMonth => {
         endDate: year + "-" + monthString + "-" + lastDateOfMonth[monthString]
     })
 }
+
+/**
+ * Takes two numbers, and returns what percentage the first number is out of the second number (portion / total).
+ * Guarantees two decimal precision. Division by zero will result in zero.
+ * @param {number} portion 
+ * @param {number} total 
+ * @returns {number}
+ */
+export const getPercentage = (portion, total) => {
+    let product;
+    if (total == 0) {
+        product = 0;
+    } else {
+        product = portion * 100 / total;
+    }
+    return product.toFixed(2);
+}
