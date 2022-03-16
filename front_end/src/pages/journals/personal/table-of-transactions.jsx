@@ -230,6 +230,7 @@ function TableOfTransactions({
                 fetchJournalEntry(response.data.journalEntryId);
                 setCreateMode(false);
                 setEditMode(false);
+                appContext.createSuccessNotification(tableOfJournalEntriesText[appContext.locale]["Successfully saved."]);
             }).catch(console.log);
         } else {
             axios.put(`${API_BASE_URL}/journalEntry/${journalEntryId}`, requestBody).then(response => {
@@ -237,6 +238,7 @@ function TableOfTransactions({
                 fetchData(pageIndex, pageSize);
                 fetchJournalEntry(journalEntryId);
                 setEditMode(false);
+                appContext.createSuccessNotification(tableOfJournalEntriesText[appContext.locale]["Successfully saved."]);
             }).catch(console.log);
         }
     }

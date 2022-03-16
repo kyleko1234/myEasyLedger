@@ -9,6 +9,7 @@ import jwt_decode from 'jwt-decode';
 import interceptors from "./utils/interceptors"; //interceptors for API requests, used for auth purposes. keep this as an unused import.
 import axios from 'axios';
 import NetworkErrorHandler from './components/network-error/network-error-handler.js';
+import { ToastContainer, toast, Flip, Slide, Bounce} from 'react-toastify';
 
 
 class App extends React.Component {
@@ -125,6 +126,19 @@ class App extends React.Component {
             window.location.href = window.location.origin + "/user/login/form";
 		}
 		
+        this.createSuccessNotification = message => {
+            toast.success(message, {
+                position: "bottom-center",
+                autoClose: 500,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+
 		this.state = {
 			pageHeader: true,
 			handleSetPageHeader: this.handleSetPageHeader,
@@ -164,8 +178,9 @@ class App extends React.Component {
 			isEnterprise: false,
 
 			checkForAuthentication: this.checkForAuthentication,
-			logout: this.logout
+			logout: this.logout,
 
+            createSuccessNotification: this.createSuccessNotification
 		};
 	}
 	
@@ -209,6 +224,19 @@ class App extends React.Component {
 	render() {
 		return (
 			<PageSettings.Provider value={this.state}>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={500}
+                    hideProgressBar
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss={false}
+                    draggable
+                    pauseOnHover
+                    transition={Flip}
+                    closeButton={false}
+                />
 				<div className={
 					'page-sidebar-fixed ' + 
 					(this.state.pageHeader ? 'page-header-fixed ' : '') + 
