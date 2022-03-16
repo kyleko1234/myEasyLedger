@@ -229,6 +229,7 @@ function TableOfJournalEntries({
                 fetchJournalEntry(response.data.journalEntryId);
                 setCreateMode(false);
                 toggleEditMode();
+                appContext.createSuccessNotification(tableOfJournalEntriesText[appContext.locale]["Successfully saved."]);
             }).catch(console.log);
     }
 
@@ -239,6 +240,7 @@ function TableOfJournalEntries({
                 fetchData(pageIndex, pageSize);
                 fetchJournalEntry(id);
                 toggleEditMode();
+                appContext.createSuccessNotification(tableOfJournalEntriesText[appContext.locale]["Successfully saved."]);
             }).catch(console.log);
     }
 

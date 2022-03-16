@@ -41,7 +41,9 @@ export const tableOfJournalEntriesText = {
         "[I] ": "[I] ",
         "[E] ": "[E] ",
 
-        "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "Showing " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " of " + totalElements + " results"
+        "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "Showing " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " of " + totalElements + " results",
+
+        "Successfully saved.": "Successfully saved."
 },
     "zh-TW": {
         "Date": "日期",
@@ -85,6 +87,8 @@ export const tableOfJournalEntriesText = {
         "[I] ": "[收入] ",
         "[E] ": "[費損] ",
 
-        "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "顯示 " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " 筆" + "（共" + totalElements + "筆）"
+        "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "顯示 " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " 筆" + "（共" + totalElements + "筆）",
+        "Successfully saved.": "已成功儲存。"
+
     }
 }
