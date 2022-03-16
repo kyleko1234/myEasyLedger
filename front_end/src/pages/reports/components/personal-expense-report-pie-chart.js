@@ -68,7 +68,7 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
                 ? <LoadingSpinner big />
                 : pieChartObjects.map((pieChartObject, i) => {
                     return(
-                        <div className="mx-4 d-flex flex-column align-items-center">
+                        <div key={i} className="mx-4 d-flex flex-column align-items-center">
                             <div style={{height: "260px"}} >
                                 <Pie
                                     key={i}
