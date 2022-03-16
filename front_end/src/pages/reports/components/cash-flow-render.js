@@ -301,7 +301,7 @@ function CashFlowRender() {
                     </form>
                 </CardBody>
             </Card>
-            <div >
+            <div className="min-width-md" >
                     {(loading || !cashFlowObjects.length) 
                         ? <LoadingSpinner big />
                         : <div>

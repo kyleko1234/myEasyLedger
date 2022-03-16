@@ -112,7 +112,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
     }
 
     return(
-        <div>
+        <div className="min-width-md">
             <div className="d-flex justify-content-between font-weight-semibold text-right">
                 <div>{/*empty div for spacing*/}</div>
                 <div className="text-right d-flex">

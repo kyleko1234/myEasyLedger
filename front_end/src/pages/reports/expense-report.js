@@ -10,6 +10,8 @@ import PersonalExpenseReportRender from './components/personal-expense-report-re
 import EnterpriseExpenseReportRender from './components/enterprise-expense-report-render';
 import PersonalExpenseReportPieChart from './components/personal-expense-report-pie-chart';
 import { incomeStatementReportText } from '../../utils/i18n/income-statement-report-text';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+
 
 function ExpenseReport() {
     const appContext = React.useContext(PageSettings);
@@ -181,7 +183,7 @@ function ExpenseReport() {
                 toggleDetailedView={toggleDetailedView}
                 handleCompareButton={handleCompareButton}
             />
-            <div className="d-none d-xl-block">
+            <div className="d-none d-lg-block">
                 {(appContext.isLoading)
                     ? <LoadingSpinner big />
                     : (appContext.isEnterprise 
@@ -199,27 +201,29 @@ function ExpenseReport() {
                 }
                 <hr/>
             </div>
-            <div>
-                {(appContext.isLoading)
-                    ? <LoadingSpinner big />
-                    : (appContext.isEnterprise
-                        ? <EnterpriseExpenseReportRender
-                            columnLabels={columnLabels}
-                            incomeStatementObjects={incomeStatementObjects}
-                            loading={loading}
-                            numberAsCurrency={numberAsCurrency}
-                            detailedView={detailedView}
-                        />
-                        : <PersonalExpenseReportRender 
-                            columnLabels={columnLabels}
-                            incomeStatementObjects={incomeStatementObjects}
-                            loading={loading}
-                            numberAsCurrency={numberAsCurrency}
-                            detailedView={detailedView}
-                        />
-                    )
-                }
-            </div>
+            <PerfectScrollbar>
+                <div>
+                    {(appContext.isLoading)
+                        ? <LoadingSpinner big />
+                        : (appContext.isEnterprise
+                            ? <EnterpriseExpenseReportRender
+                                columnLabels={columnLabels}
+                                incomeStatementObjects={incomeStatementObjects}
+                                loading={loading}
+                                numberAsCurrency={numberAsCurrency}
+                                detailedView={detailedView}
+                            />
+                            : <PersonalExpenseReportRender 
+                                columnLabels={columnLabels}
+                                incomeStatementObjects={incomeStatementObjects}
+                                loading={loading}
+                                numberAsCurrency={numberAsCurrency}
+                                detailedView={detailedView}
+                            />
+                        )
+                    }
+                </div>
+            </PerfectScrollbar>
 		</div>
     )
 

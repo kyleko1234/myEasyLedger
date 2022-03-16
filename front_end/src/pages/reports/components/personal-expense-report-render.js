@@ -9,7 +9,7 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
     const appContext = React.useContext(PageSettings);
 
     return(
-        <div className="min-width-lg">                
+        <div className="min-width-md">                
             <div className="d-flex justify-content-between font-weight-semibold text-right">
                 <div>{/*empty div for spacing*/}</div>
                 <div className="text-right d-flex">
