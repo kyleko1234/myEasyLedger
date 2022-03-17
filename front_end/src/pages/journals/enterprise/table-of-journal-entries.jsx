@@ -222,7 +222,6 @@ function TableOfJournalEntries({
     }
 
     const postJournalEntry = (data) => {
-        console.log(data);
         axios.post(`${API_BASE_URL}/journalEntry`, data)
             .then(response => {
                 fetchData(pageIndex, pageSize);
@@ -236,7 +235,6 @@ function TableOfJournalEntries({
     const putJournalEntry = (id, data) => {
         axios.put(`${API_BASE_URL}/journalEntry/${id}`, data)
             .then(response => {
-                console.log(response);
                 fetchData(pageIndex, pageSize);
                 fetchJournalEntry(id);
                 toggleEditMode();
@@ -265,7 +263,6 @@ function TableOfJournalEntries({
     const handleDeleteJournalEntryButton = (id) => {
         axios.delete(`${API_BASE_URL}/journalEntry/${id}`)
             .then(response => {
-                console.log(response)
                 fetchData(pageIndex, pageSize);
                 toggleEditMode();
                 toggleJournalEntryModal();
