@@ -7,6 +7,7 @@ import {balanceSummaryText} from "../../../utils/i18n/balance-summary-text.js";
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { formatCurrency, getTodayAsDateString } from '../../../utils/util-fns.js';
+import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-entries-text.js';
 
 
 function BalanceSummary(props) {
@@ -15,8 +16,18 @@ function BalanceSummary(props) {
     const appContext = React.useContext(PageSettings);
     const history = useHistory();
     const [loading, setLoading] = React.useState(true);
-    const [assetAndLiabilityAccounts, setAssetAndLiabilityAccounts] = React.useState([]);
+    const [displayedAccounts, setDisplayedAccounts] = React.useState([]);
     const today = getTodayAsDateString();
+
+    const filterZeroBalanceAccounts = true;
+
+    const accountTypePrefixes = {
+        1: tableOfJournalEntriesText[appContext.locale]["[A] "],
+        2: tableOfJournalEntriesText[appContext.locale]["[L] "],
+        3: tableOfJournalEntriesText[appContext.locale]["[O] "],
+        4: tableOfJournalEntriesText[appContext.locale]["[I] "],
+        5: tableOfJournalEntriesText[appContext.locale]["[E] "]
+    }
 
     //fetch data on component mount
     React.useEffect(() => {
@@ -30,14 +41,24 @@ function BalanceSummary(props) {
                     return account;
                 })
                 let filteredAccounts = formattedAccounts.filter(account => {
-                    if ((account.accountTypeId == 1 || account.accountTypeId == 2) && !account.hasChildren) {
-                        return true;
+                    if ((account.accountTypeId === 1 || account.accountTypeId === 2 || account.accountTypeId === 3) 
+                            && !account.hasChildren) {
+                        if (filterZeroBalanceAccounts) {
+                            if (account.debitsMinusCredits) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            return true;
+                        }
                     } else {
                         return false;
                     }
                 });
                 if (mounted) {
-                    setAssetAndLiabilityAccounts(filteredAccounts);
+                    console.log(filteredAccounts)
+                    setDisplayedAccounts(filteredAccounts);
                 }
             }
             if (mounted){
@@ -69,7 +90,7 @@ function BalanceSummary(props) {
                             ?   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> 
                             :   
                                 <div>
-                                    {assetAndLiabilityAccounts.map(account => {
+                                    {displayedAccounts.map(account => {
                                         return(
                                             <Link key={account.accountId} to={`/account-details/${account.accountId}`} className="tr d-flex align-items-center">
                                                 <div className="td d-flex col-11 justify-content-between align-items-center">
@@ -78,7 +99,9 @@ function BalanceSummary(props) {
                                                             {account.accountCode}
                                                         </div>
                                                         <div className="text-truncate">
-                                                            {account.accountName}
+                                                            {appContext.isEnterprise
+                                                                ? accountTypePrefixes[account.accountTypeId] + " - " + account.accountName
+                                                                : account.accountName}
                                                         </div>
                                                     </div>
                                                     <div className={" text-right " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>

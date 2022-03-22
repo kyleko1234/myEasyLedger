@@ -81,7 +81,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    LEFT JOIN line_item ON line_item.account_id = account.id " + 
 				"    LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
 				"    LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id " + 
-				"    LEFT JOIN account_subtype ON account_subtype.id = account.account_subtype_id " + 
+				"    LEFT JOIN account_subtype ON account_subtype.id = account.account_subtype_id OR parent_account.account_subtype_id = account_subtype.id " + 
 				"    LEFT JOIN account_type ON account_type.id = account_subtype.account_type_id, " + 
 				"    organization " + 
 				"WHERE " + 
@@ -131,7 +131,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"    LEFT JOIN line_item ON line_item.account_id = account.id " + 
 				"    LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
 				"    LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id " + 
-				"    LEFT JOIN account_subtype ON account_subtype.id = account.account_subtype_id " + 
+				"    LEFT JOIN account_subtype ON account_subtype.id = account.account_subtype_id OR parent_account.account_subtype_id = account_subtype.id " + 
 				"    LEFT JOIN account_type ON account_type.id = account_subtype.account_type_id, " + 
 				"    organization " + 
 				"WHERE " + 

@@ -129,7 +129,7 @@ class App extends React.Component {
         this.createSuccessNotification = message => {
             toast.success(message, {
                 position: "bottom-center",
-                autoClose: 500,
+                autoClose: 2000,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -226,7 +226,7 @@ class App extends React.Component {
 			<PageSettings.Provider value={this.state}>
                 <ToastContainer
                     position="top-right"
-                    autoClose={500}
+                    autoClose={2000}
                     hideProgressBar
                     newestOnTop={false}
                     closeOnClick

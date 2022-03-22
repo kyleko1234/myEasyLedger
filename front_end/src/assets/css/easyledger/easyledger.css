@@ -11,8 +11,11 @@
     --dark-mode-sidebar-text-color: #dddddd;
     --base-gridline-color: rgba(0, 0, 0, 0.1);
     --dark-mode-gridline-color: rgba(255, 255, 255, 0.1);
-    --toastify-color-success: var(--success) !important;
-    --toastify-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    
+    /* Override react-toastify defaults */
+    --toastify-color-success: var(--success);
+    --toastify-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --toastify-toast-min-height: 32px;
 }
 body {
     margin: 0;
@@ -28,6 +31,7 @@ body.dark-mode{
     color: var(--dark-mode-text-color);
     background-color: #1e1e1e;
 }
+
 /* SIDEBAR CLASSES */
 .sidebar {
     width: var(--sidebar-width);
