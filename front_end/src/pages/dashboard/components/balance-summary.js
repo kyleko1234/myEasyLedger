@@ -19,6 +19,8 @@ function BalanceSummary(props) {
     const [displayedAccounts, setDisplayedAccounts] = React.useState([]);
     const today = getTodayAsDateString();
 
+    const filterZeroBalanceAccounts = true;
+
     const accountTypePrefixes = {
         1: tableOfJournalEntriesText[appContext.locale]["[A] "],
         2: tableOfJournalEntriesText[appContext.locale]["[L] "],
@@ -39,8 +41,17 @@ function BalanceSummary(props) {
                     return account;
                 })
                 let filteredAccounts = formattedAccounts.filter(account => {
-                    if ((account.accountTypeId === 1 || account.accountTypeId === 2 || account.accountTypeId === 3) && !account.hasChildren) {
-                        return true;
+                    if ((account.accountTypeId === 1 || account.accountTypeId === 2 || account.accountTypeId === 3) 
+                            && !account.hasChildren) {
+                        if (filterZeroBalanceAccounts) {
+                            if (account.debitsMinusCredits) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            return true;
+                        }
                     } else {
                         return false;
                     }
