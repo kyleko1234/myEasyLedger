@@ -47,15 +47,12 @@ function NetAssets(props) {
         options: {
             responsive: true, 
             maintainAspectRatio: false,
-            hover: {
+            interaction: {
                 mode: 'nearest',
-                intersect: true
+                intersect: false
             },
             plugins: {
-                tooltips: {
-                    mode: 'index',
-                    intersect: true,
-                },
+                
                 legend: {
                     labels: {
                         color: fontColor
