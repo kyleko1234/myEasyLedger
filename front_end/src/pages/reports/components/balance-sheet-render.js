@@ -11,7 +11,7 @@ import StripedRow from '../../../components/tables/striped-row';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-function BalanceSheetRender() {
+function BalanceSheetRender(props) {
     const appContext = React.useContext(PageSettings);
 
     const today = getTodayAsDateString();
@@ -22,7 +22,11 @@ function BalanceSheetRender() {
 
     const [balanceSheetObjects, setBalanceSheetObjects] = React.useState([]);
 
-    const [endDatesToRequest, setEndDatesToRequest] = React.useState([{label: "Custom", endDate:today}]);
+    const [endDatesToRequest, setEndDatesToRequest] = React.useState([{
+        label: "Custom", 
+        endDate: props.endDate? props.endDate : today
+    }]);
+    
     const [columnLabels, setColumnLabels] = React.useState([]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
