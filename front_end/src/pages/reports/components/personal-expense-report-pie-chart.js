@@ -39,6 +39,7 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
                     }]
                 },
                 options: {
+                    cutout: "40%",
                     maintainAspectRatio: false,
                     responsive: true,
                     plugins: {
