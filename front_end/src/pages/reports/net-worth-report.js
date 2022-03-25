@@ -2,9 +2,12 @@ import React from 'react';
 import { PageSettings } from '../../config/page-settings';
 import NetWorthRender from './components/net-worth-render';
 import {netWorthReportText} from '../../utils/i18n/net-worth-report-text.js';
+import { useParams } from 'react-router-dom';
+import LoadingSpinner from '../../components/misc/loading-spinner';
 
 function NetWorthReport() {
     const appContext = React.useContext(PageSettings);
+    const params = useParams();
 
     return (
         <div>
@@ -12,7 +15,11 @@ function NetWorthReport() {
                 {netWorthReportText[appContext.locale]["Net Worth Report"]} 
             </h1>
             <div>
-                {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : <NetWorthRender/>}
+                {appContext.isLoading
+                    ? <LoadingSpinner big/> 
+                    : <NetWorthRender
+                        endDate={params.endDate}
+                    />}
             </div>
 		</div>
     )

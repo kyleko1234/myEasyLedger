@@ -12,7 +12,7 @@ import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-function NetWorthRender() {
+function NetWorthRender(props) {
     const appContext = React.useContext(PageSettings);
     const today = getTodayAsDateString();
     const [loading, setLoading] = React.useState(true);
@@ -21,7 +21,10 @@ function NetWorthRender() {
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
 
     const [balanceSheetObjects, setBalanceSheetObjects] = React.useState([]);
-    const [endDatesToRequest, setEndDatesToRequest] = React.useState([{label: "Custom", endDate:today}]);
+    const [endDatesToRequest, setEndDatesToRequest] = React.useState([{
+        label: "Custom", 
+        endDate: props.endDate? props.endDate: today
+    }]);
     const [columnLabels, setColumnLabels] = React.useState([]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
 
