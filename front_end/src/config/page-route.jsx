@@ -142,12 +142,12 @@ const routes = [
   {
     path: '/reports/net-worth',
     title: 'Net Worth Report',
+    exact: true,
     component: NetWorthReport,
   },
   {
     path: '/reports/net-worth/:endDate',
     title: 'Net Worth Report',
-    exact: true,
     component: NetWorthReport,
   },
   {
