@@ -78,6 +78,12 @@ const routes = [
   {
     path: '/reports/balance-sheet',
     title: 'Balance Sheet Report',
+    exact: true,
+    component: BalanceSheetReport
+  },
+  {
+    path: '/reports/balance-sheet/:endDate',
+    title: 'Balance Sheet Report',
     component: BalanceSheetReport
   },
   {
@@ -136,6 +142,12 @@ const routes = [
   {
     path: '/reports/net-worth',
     title: 'Net Worth Report',
+    component: NetWorthReport,
+  },
+  {
+    path: '/reports/net-worth/:endDate',
+    title: 'Net Worth Report',
+    exact: true,
     component: NetWorthReport,
   },
   {
