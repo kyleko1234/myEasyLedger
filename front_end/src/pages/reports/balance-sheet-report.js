@@ -2,9 +2,12 @@ import React from 'react';
 import { PageSettings } from '../../config/page-settings';
 import BalanceSheetRender from './components/balance-sheet-render';
 import {balanceSheetReportText} from '../../utils/i18n/balance-sheet-report-text.js';
+import { useParams } from 'react-router-dom';
+import LoadingSpinner from '../../components/misc/loading-spinner';
 
 function BalanceSheetReport() {
     const appContext = React.useContext(PageSettings);
+    const params = useParams();
 
     return (
         <div>
@@ -12,7 +15,12 @@ function BalanceSheetReport() {
                 {balanceSheetReportText[appContext.locale]["Balance Sheet Report"]} 
             </h1>
             <div>
-                {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : <BalanceSheetRender/>}
+                {appContext.isLoading
+                    ? <LoadingSpinner big/>
+                    : <BalanceSheetRender
+                        endDate={params.endDate}
+                    />
+                }
             </div>
 		</div>
     )

@@ -53,10 +53,12 @@ function ExpenseBreakdown(props) {
             }]
         },
         options: {
+            cutout: "40%",
             maintainAspectRatio: false,
             responsive: true,
             plugins: {
                 legend: {
+                    //display: false,
                     labels: {
                         color: fontColor
                     }
