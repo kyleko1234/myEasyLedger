@@ -48,11 +48,10 @@ function NetAssets(props) {
             responsive: true, 
             maintainAspectRatio: false,
             interaction: {
-                mode: 'nearest',
+                mode: 'index',
                 intersect: false
             },
             plugins: {
-                
                 legend: {
                     labels: {
                         color: fontColor
