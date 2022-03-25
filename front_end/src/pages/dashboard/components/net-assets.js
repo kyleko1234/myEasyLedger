@@ -1,20 +1,38 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { Card, CardBody, CardTitle } from 'reactstrap';
-import { Line, defaults } from 'react-chartjs-2';
+import { Line, defaults, getElementAtEvent } from 'react-chartjs-2';
 import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expense-summary-text.js';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
 import { dashboardText } from '../../../utils/i18n/dashboard-text';
+import { getStartAndEndDatesForYearMonth } from '../../../utils/util-fns';
+import { useHistory } from 'react-router-dom';
 
 //required props: numberOfMonths
 function NetAssets(props) {
     const appContext = React.useContext(PageSettings);
+    const history = useHistory();
     const [numberOfMonths, setNumberOfMonths] = React.useState(12);
+    const [yearMonths, setYearMonths] = React.useState([])
     const [netAssetsData, setNetAssetsData] = React.useState([]);
     const [labels, setLabels] = React.useState([]);
     const [fontColor, setFontColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-text-color'));
     const [gridlineColor, setGridlineColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-gridline-color'))
+    const chartRef = React.useRef();
+
+    const chartOnClick = event => {
+        let element = getElementAtEvent(chartRef.current, event);
+        if (element[0]) {
+            let selectedYearMonth = yearMonths[element[0].index];
+            let startAndEndDatesOfYearMonth = getStartAndEndDatesForYearMonth(selectedYearMonth);
+            if (appContext.isEnterprise) {
+                history.push("/reports/balance-sheet/" + startAndEndDatesOfYearMonth.endDate)
+            } else {
+                history.push("/reports/net-worth/" + startAndEndDatesOfYearMonth.endDate);
+            }
+        }
+    }
 
     React.useEffect(() => {
         setFontColor(
@@ -48,8 +66,8 @@ function NetAssets(props) {
             responsive: true, 
             maintainAspectRatio: false,
             interaction: {
-                mode: 'index',
-                intersect: false
+                mode: 'nearest',
+                intersect: true
             },
             plugins: {
                 legend: {
@@ -75,7 +93,10 @@ function NetAssets(props) {
                         color: fontColor,
                     }
                 }
-            } 
+            },
+            onHover: (event, chartElement) => {
+                event.native.target.style.cursor = chartElement[0] ? 'pointer' : '';
+            },    
         }
     };
 
@@ -92,6 +113,7 @@ function NetAssets(props) {
                 })
                 if (isMounted) {
                     setNetAssetsData(retrievedNetAssetsData);
+                    setYearMonths(unparsedLabels);
                     setLabels(unparsedLabels.map(label => parseYearMonth(label)));    
                 }
             }
@@ -148,8 +170,6 @@ function NetAssets(props) {
         }
         return (year.toString() + monthString);
     }
-    
-    
 
     return(
         <Card className="shadow-sm very-rounded " style={{height: "380px"}}>
@@ -158,7 +178,13 @@ function NetAssets(props) {
                     {appContext.isEnterprise? dashboardText[appContext.locale]["Net Assets"] : dashboardText[appContext.locale]["Net Worth"]}
                 </CardTitle>
                 <div >
-                    <Line data={lineChart.data} options={lineChart.options} height={300}/>
+                    <Line 
+                        data={lineChart.data} 
+                        options={lineChart.options} 
+                        height={300}
+                        ref={chartRef}
+                        onClick={chartOnClick}
+                    />
                 </div>
             </CardBody>
         </Card>
