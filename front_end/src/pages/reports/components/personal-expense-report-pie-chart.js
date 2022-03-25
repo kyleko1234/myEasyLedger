@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pie } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
@@ -70,7 +70,7 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
                     return(
                         <div key={i} className="mx-4 d-flex flex-column align-items-center">
                             <div style={{height: "260px"}} >
-                                <Pie
+                                <Doughnut
                                     key={i}
                                     data={pieChartObject.data}
                                     options={pieChartObject.options}
