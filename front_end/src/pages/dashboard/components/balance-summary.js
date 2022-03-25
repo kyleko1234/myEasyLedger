@@ -57,7 +57,6 @@ function BalanceSummary(props) {
                     }
                 });
                 if (mounted) {
-                    console.log(filteredAccounts)
                     setDisplayedAccounts(filteredAccounts);
                 }
             }
@@ -84,7 +83,7 @@ function BalanceSummary(props) {
                         }
                     </span>
                 </CardTitle>
-				<PerfectScrollbar style={{maxHeight: "427px", marginLeft: "-1.25rem", marginRight: "-1.25rem"}} options={{suppressScrollX: true, wheelPropagation: false}}>
+				<PerfectScrollbar style={{maxHeight: "427px", marginLeft: "-1.25rem", marginRight: "-1.25rem"}} options={{suppressScrollX: true, wheelPropagation: true}}>
                     <div style={{paddingLeft: "1.25rem", paddingRight: "1.25rem"}}>
                         {loading 
                             ?   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> 
