@@ -19,7 +19,7 @@ function BalanceSummary(props) {
     const [displayedAccounts, setDisplayedAccounts] = React.useState([]);
     const today = getTodayAsDateString();
 
-    const filterZeroBalanceAccounts = true;
+    const filterZeroBalanceAccounts = false;
 
     const accountTypePrefixes = {
         1: tableOfJournalEntriesText[appContext.locale]["[A] "],
@@ -56,6 +56,27 @@ function BalanceSummary(props) {
                         return false;
                     }
                 });
+                filteredAccounts.sort((a, b) => {
+                    if (a.accountTypeId < b.accountTypeId) {
+                        return -1;
+                    } else if (a.accountTypeId > b.accountTypeId) {
+                        return 11;
+                    } else {
+                        if ((a.accountCode < b.accountCode) || (a.accountCode && !b.accountCode)) {
+                            return -1;
+                        } else if ((a.accountCode > b.accountCode) || (!a.accountCode && b.accountCode)) {
+                            return 1;
+                        } else {
+                            if (a.accountName < b.accountName) {
+                                return -1;
+                            } else if (a.accountName > b.accountName) {
+                                return 1;
+                            } else {
+                                return 0;
+                            }
+                        }
+                    }
+                })
                 if (mounted) {
                     setDisplayedAccounts(filteredAccounts);
                 }
