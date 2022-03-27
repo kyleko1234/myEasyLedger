@@ -18,7 +18,7 @@ Date parameters should be provided in `yyyy-mm-dd` format. If no date parameters
 
 If start date and end date are the same date, the resulting totals will only encompass LineItems dated for that day. If the given end date is earlier than the given start date, all resulting totals will be 0.
 
-**When requesting a date range, the debitTotal and creditTotal for parent accounts will be 0; only child accounts will carry debitTotal and creditTotals.**
+**When requesting a date range, the debitTotal and creditTotal for parent accounts will be 0; only child accounts will carry debitTotal and creditTotals. Child accounts will carry null accountSubtypeId and accountTypeId; all child accounts appear last if they do not have account codes, and will be sorted strictly by accountName. This behavior is intentional as it allows child accounts to carry a pseudo "hasParent" flag, where a null accountSubtypeId indicates that a child account has a parent account.**
 ___
 #### Request Body Parameters
 None
