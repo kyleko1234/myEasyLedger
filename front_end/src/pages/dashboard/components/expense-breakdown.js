@@ -58,7 +58,7 @@ function ExpenseBreakdown(props) {
             responsive: true,
             plugins: {
                 legend: {
-                    //display: false,
+                    display: false,
                     labels: {
                         color: fontColor
                     }
