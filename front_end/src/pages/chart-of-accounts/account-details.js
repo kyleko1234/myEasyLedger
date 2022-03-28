@@ -54,9 +54,6 @@ function AccountDetails(props) {
     const [selectedAccount, setSelectedAccount] = React.useState(null);
     
     const formatBalance = (debitsMinusCredits, accountTypeId) => {
-        if (debitsMinusCredits == 0) {
-            return formatCurrency(appContext.locale, appContext.currency, 0);
-        }
         if (DEBIT_ACCOUNT_TYPES.includes(accountTypeId)) {
             return formatCurrency(appContext.locale, appContext.currency, debitsMinusCredits);
         } else {

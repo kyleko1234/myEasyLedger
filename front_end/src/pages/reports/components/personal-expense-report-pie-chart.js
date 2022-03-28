@@ -53,7 +53,6 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
                         tooltip: {
                             callbacks: {
                                 label: (toolTipItem) => {
-                                    console.log(toolTipItem);
                                     return ` ${toolTipItem.label}: ${formatCurrency(appContext.locale, appContext.currency, toolTipItem.raw)} (${getPercentage(toolTipItem.raw, incomeStatement.totalExpenses)}%)`
                                 },
                             }
