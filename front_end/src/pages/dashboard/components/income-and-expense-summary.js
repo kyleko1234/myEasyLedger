@@ -7,7 +7,7 @@ import { API_BASE_URL } from '../../../utils/constants';
 import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expense-summary-text.js';
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import {useHistory} from 'react-router-dom';
-import { getStartAndEndDatesForYearMonth } from '../../../utils/util-fns';
+import { formatCurrency, getStartAndEndDatesForYearMonth } from '../../../utils/util-fns';
 
 //required props: 
 function IncomeAndExpenseSummary(props) {
@@ -187,7 +187,13 @@ function IncomeAndExpenseSummary(props) {
                         event.native.target.style.cursor =  '';
                     }
                 },
-            
+                tooltip: {
+                    callbacks: {
+                        label: (toolTipItem) => {
+                            return ` ${toolTipItem.dataset.label}: ${formatCurrency(appContext.locale, appContext.currency, toolTipItem.raw)}`
+                        },
+                    }
+                }
             },
             scales: {
                 y: {

@@ -14,7 +14,6 @@ function BalanceSummary(props) {
     //optional props: selectedAccountId, externalRefreshToken
     //externalRefreshToken can be any data. This prop should be changed when you want to force this component to refresh data. This prop should not be used for anything else. 
     const appContext = React.useContext(PageSettings);
-    const history = useHistory();
     const [loading, setLoading] = React.useState(true);
     const [displayedAccounts, setDisplayedAccounts] = React.useState([]);
     const today = getTodayAsDateString();
