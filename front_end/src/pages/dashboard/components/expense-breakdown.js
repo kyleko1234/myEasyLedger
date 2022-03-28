@@ -2,14 +2,16 @@ import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, getElementAtEvent} from 'react-chartjs-2';
 import { dashboardText } from '../../../utils/i18n/dashboard-text';
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import { formatCurrency, getDateInCurrentYear, getPercentage, getTodayAsDateString } from '../../../utils/util-fns';
+import { useHistory } from 'react-router-dom';
 
 function ExpenseBreakdown(props) {
     const appContext = React.useContext(PageSettings);
     const [loading, setLoading] = React.useState(true);
+    const history = useHistory();
     const [labels, setLabels] = React.useState([]); 
     const [data, setData] = React.useState([]);
     const [totalExpenses, setTotalExpenses] = React.useState(0);
@@ -19,6 +21,7 @@ function ExpenseBreakdown(props) {
     const [endDate, setEndDate] = React.useState(getTodayAsDateString());
 
     const [fontColor, setFontColor] = React.useState(getComputedStyle(document.documentElement).getPropertyValue('--base-text-color'));
+    const chartRef = React.useRef();
 
     React.useEffect(() => {
         setFontColor(
@@ -28,6 +31,12 @@ function ExpenseBreakdown(props) {
         );
     }, [appContext.colorScheme]) //detects color scheme and changes the color of the chart text accordingly
 
+    const chartOnClick = event => {
+        let element = getElementAtEvent(chartRef.current, event);
+        if (element[0]) { //this 'element' related code is really just here to make sure the whitespace in the chart isn't clickable 
+            history.push(`/reports/expense/${startDate}/${endDate}`)
+        }
+    }
 
     const formatBalance = (debitsMinusCredits) => {
         if (debitsMinusCredits == 0) {
@@ -80,6 +89,9 @@ function ExpenseBreakdown(props) {
                     }
                 }
             },
+            onHover: (event, chartElement) => {
+                event.native.target.style.cursor = chartElement[0] ? 'pointer' : '';
+            }
         }
     }
     React.useEffect(() => {
@@ -141,7 +153,13 @@ function ExpenseBreakdown(props) {
                 ?   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> 
                 :   <div>
                         <div style={{overflow: "none"}}>
-                            <Doughnut data={doughnutChart.data} options={doughnutChart.options} height={275}/>
+                            <Doughnut 
+                                data={doughnutChart.data} 
+                                options={doughnutChart.options} 
+                                height={275}
+                                ref={chartRef}
+                                onClick={chartOnClick}
+                            />
                         </div>
                     </div>
                 } 
