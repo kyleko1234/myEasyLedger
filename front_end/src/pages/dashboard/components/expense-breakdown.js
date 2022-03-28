@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../../../utils/constants';
 import { Doughnut } from 'react-chartjs-2';
 import { dashboardText } from '../../../utils/i18n/dashboard-text';
 import { Card, CardBody, CardTitle } from 'reactstrap';
-import { formatCurrency, getDateInCurrentYear, getTodayAsDateString } from '../../../utils/util-fns';
+import { formatCurrency, getDateInCurrentYear, getPercentage, getTodayAsDateString } from '../../../utils/util-fns';
 
 function ExpenseBreakdown(props) {
     const appContext = React.useContext(PageSettings);
@@ -70,6 +70,13 @@ function ExpenseBreakdown(props) {
                     display: false,
                     labels: {
                         color: fontColor
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (toolTipItem) => {
+                            return ` ${toolTipItem.label}: ${formatCurrency(appContext.locale, appContext.currency, toolTipItem.raw)} (${getPercentage(toolTipItem.raw, totalExpenses)}%)`
+                        },
                     }
                 }
             },
