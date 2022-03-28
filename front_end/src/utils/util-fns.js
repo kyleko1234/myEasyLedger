@@ -61,20 +61,27 @@ const applyCommaToNumber = number => {
  * @returns {String}
  */
 export const formatCurrency = (locale, currency, amount) => {
+    let saferAmount;
+    if (amount == 0) {
+        saferAmount = 0;
+    } else {
+        saferAmount = amount;
+    }
+
     switch (locale) {
         case "zh-TW":
             switch (currency) {
                 case "TWD":
-                    return `$${applyCommaToNumber(customRound(amount))}`
+                    return `$${applyCommaToNumber(customRound(saferAmount))}`
                 default: 
-                    return new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(amount);
+                    return new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(saferAmount);
             }
         default: 
             switch (currency) {
                 case "TWD":
-                    return `NT$${applyCommaToNumber(customRound(amount))}`
+                    return `NT$${applyCommaToNumber(customRound(saferAmount))}`
                 default:
-                    return new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(amount);
+                    return new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(saferAmount);
             }
     }
 }

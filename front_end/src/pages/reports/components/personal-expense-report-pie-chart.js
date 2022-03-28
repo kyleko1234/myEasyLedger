@@ -3,6 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
+import { formatCurrency, getPercentage } from '../../../utils/util-fns';
 
 function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, loading}) {
     const appContext = React.useContext(PageSettings);
@@ -47,6 +48,14 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
                             display: false,
                             labels: {
                                 color: fontColor
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (toolTipItem) => {
+                                    console.log(toolTipItem);
+                                    return ` ${toolTipItem.label}: ${formatCurrency(appContext.locale, appContext.currency, toolTipItem.raw)} (${getPercentage(toolTipItem.raw, incomeStatement.totalExpenses)}%)`
+                                },
                             }
                         }
                     },
