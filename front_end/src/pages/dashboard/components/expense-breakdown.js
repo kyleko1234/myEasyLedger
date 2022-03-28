@@ -120,7 +120,6 @@ function ExpenseBreakdown(props) {
             setLabels(fetchedLabels);
             setData(fetchedData);
             setTotalExpenses(sumDebitsMinusCredits(expenseAccountBalances));
-            console.log(sumDebitsMinusCredits(expenseAccountBalances));
             setLoading(false);
         }).catch(() => {
             setLoading(false);

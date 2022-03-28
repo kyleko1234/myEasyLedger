@@ -6,7 +6,7 @@ import {incomeAndExpenseSummaryText} from '../../../utils/i18n/income-and-expens
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants';
 import { dashboardText } from '../../../utils/i18n/dashboard-text';
-import { getStartAndEndDatesForYearMonth } from '../../../utils/util-fns';
+import { formatCurrency, getStartAndEndDatesForYearMonth } from '../../../utils/util-fns';
 import { useHistory } from 'react-router-dom';
 
 //required props: numberOfMonths
@@ -73,6 +73,13 @@ function NetAssets(props) {
                 legend: {
                     labels: {
                         color: fontColor
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (toolTipItem) => {
+                            return ` ${toolTipItem.dataset.label}: ${formatCurrency(appContext.locale, appContext.currency, toolTipItem.raw)}`
+                        },
                     }
                 }
             },
