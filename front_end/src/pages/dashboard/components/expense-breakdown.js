@@ -12,6 +12,7 @@ function ExpenseBreakdown(props) {
     const [loading, setLoading] = React.useState(true);
     const [labels, setLabels] = React.useState([]); 
     const [data, setData] = React.useState([]);
+    const [totalExpenses, setTotalExpenses] = React.useState(0);
     const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
 
     const [startDate, setStartDate] = React.useState(beginningOfCurrentFiscalYear);
@@ -35,7 +36,15 @@ function ExpenseBreakdown(props) {
             return formatCurrency(appContext.locale, appContext.currency, debitsMinusCredits);
         }
     }
-    
+
+    const sumDebitsMinusCredits = (objects) => {
+        let totalDebitsMinusCredits = 0;
+        objects.forEach(object => {
+            totalDebitsMinusCredits = totalDebitsMinusCredits + object.debitsMinusCredits;
+        })
+        return totalDebitsMinusCredits;
+    }
+
     const doughnutChart = {
         data: {
             labels: labels,
@@ -72,28 +81,39 @@ function ExpenseBreakdown(props) {
         let fetchedData = [];
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/accountBalance/${startDate}/${endDate}`).then(response => {
             let expenseAccountBalances = [];
+
+            //filter first-level expense accounts from response data
             response.data
                 .filter(account => account.accountTypeId === 5)
                 .forEach(account => {
                     expenseAccountBalances.push(account);
                 });
-            response.data
-                .filter(childAccount => childAccount.parentAccountId !== null)
-                .forEach(childAccount => {
-                    if (expenseAccountBalances.find(parentAccount => parentAccount.accountId === childAccount.parentAccountId)) {
-                        expenseAccountBalances.push(childAccount);
-                    }
-                })
 
+            //for accounts that have children, sum up the debits and credits of the child accounts to find the debitTotal, reditTotal, and debitsMinusCredits
+            expenseAccountBalances.forEach(account => {
+                if (account.hasChildren) {
+                    let totalDebits = 0;
+                    let totalCredits = 0;    
+                    response.data.filter(childAccount => childAccount.parentAccountId == account.accountId).forEach(childAccount => {
+                        totalDebits = totalDebits + childAccount.debitTotal;
+                        totalCredits = totalCredits + childAccount.creditTotal;
+                    })
+                    account.debitTotal = totalDebits;
+                    account.creditTotal = totalCredits;
+                    account.debitsMinusCredits = totalDebits - totalCredits;    
+                }    
+            })
+
+            //push formatted expense accounts to labels/data to be used by the pie chart
             expenseAccountBalances
-                .filter(account => !account.hasChildren)
                 .forEach(account => {
                     fetchedLabels.push(account.accountName);
                     fetchedData.push(account.debitsMinusCredits);
                 })
-
             setLabels(fetchedLabels);
             setData(fetchedData);
+            setTotalExpenses(sumDebitsMinusCredits(expenseAccountBalances));
+            console.log(sumDebitsMinusCredits(expenseAccountBalances));
             setLoading(false);
         }).catch(() => {
             setLoading(false);

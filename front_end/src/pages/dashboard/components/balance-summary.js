@@ -19,7 +19,7 @@ function BalanceSummary(props) {
     const [displayedAccounts, setDisplayedAccounts] = React.useState([]);
     const today = getTodayAsDateString();
 
-    const filterZeroBalanceAccounts = false;
+    const filterZeroBalanceAccounts = true;
 
     const accountTypePrefixes = {
         1: tableOfJournalEntriesText[appContext.locale]["[A] "],
