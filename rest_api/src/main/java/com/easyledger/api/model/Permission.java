@@ -82,7 +82,7 @@ public class Permission {
 
 	@Override
 	public String toString() {
-		return "Permission [id=" + id + ", person=" + person + ", organization=" + organization + ", permissionType="
+		return "Permission [id=" + id + ", person=" + person.getId() + ", organization=" + organization.getId() + ", permissionType="
 				+ permissionType + "]";
 	}
 	
