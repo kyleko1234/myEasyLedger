@@ -19,7 +19,10 @@ public class AuthorizationService {
 		System.out.println("organizationId: " + organizationId);
 		Set<Permission> permissions = ((UserPrincipal) authentication.getPrincipal()).getPermissions();
 		for (Permission permission : permissions) {
-			System.out.println("Comparing organizationId " + organizationId + " to user's organization " + permission.getOrganization().getId());
+			System.out.println("Comparing organizationId " + organizationId + " to user's organization " + permission.getOrganization().getId() + ": ");
+			System.out.print(permission.getOrganization().getId() == organizationId);
+			System.out.print("| ");
+			System.out.println(permission.getPermissionType().getId() >= 1);
 			if (permission.getOrganization().getId() == organizationId && permission.getPermissionType().getId() >= 1) {
 				System.out.println("Success!");
 				return;
