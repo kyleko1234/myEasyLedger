@@ -16,13 +16,16 @@ public class AuthorizationService {
 	}
 	
 	public void authorizeViewPermissionsByOrganizationId(Authentication authentication, Long organizationId) throws UnauthorizedException {
+		System.out.println("organizationId: " + organizationId);
 		Set<Permission> permissions = ((UserPrincipal) authentication.getPrincipal()).getPermissions();
 		for (Permission permission : permissions) {
+			System.out.println("Comparing organizationId " + organizationId + " to user's organization " + permission.getOrganization().getId());
 			if (permission.getOrganization().getId() == organizationId && permission.getPermissionType().getId() >= 1) {
-				System.out.println(permission.getOrganization().getId() + ": " + permission.getOrganization().getName() + "| " + permission.getPermissionType().getName());
+				System.out.println("Success!");
 				return;
 			}
 		}
+		System.out.println("Authentication failed.");
 		//throw new UnauthorizedException("User is not authorized to access this resource.");
 	}
 	
