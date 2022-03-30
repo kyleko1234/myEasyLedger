@@ -16,50 +16,44 @@ public class AuthorizationService {
 	}
 	
 	public void authorizeViewPermissionsByOrganizationId(Authentication authentication, Long organizationId) throws UnauthorizedException {
-		System.out.println("organizationId: " + organizationId);
 		Set<Permission> permissions = ((UserPrincipal) authentication.getPrincipal()).getPermissions();
 		for (Permission permission : permissions) {
-			System.out.println("Comparing organizationId " + organizationId + " to user's organization " + permission.getOrganization().getId() + ": ");
-			System.out.print(permission.getOrganization().getId().equals(organizationId));
-			System.out.print("| ");
-			System.out.println(permission.getPermissionType().getId() >= 1);
 			if (permission.getOrganization().getId().equals(organizationId) && permission.getPermissionType().getId() >= 1) {
-				System.out.println("Success!");
 				return;
 			}
 		}
 		System.out.println("Authentication failed.");
-		//throw new UnauthorizedException("User is not authorized to access this resource.");
+		throw new UnauthorizedException("User is not authorized to access this resource.");
 	}
 	
 	public void authorizeEditPermissionsByOrganizationId(Authentication authentication, Long organizationId) throws UnauthorizedException {
 		Set<Permission> permissions = ((UserPrincipal) authentication.getPrincipal()).getPermissions();
 		for (Permission permission : permissions) {
-			if (permission.getOrganization().getId() == organizationId && permission.getPermissionType().getId() >= 2) {
+			if (permission.getOrganization().getId().equals(organizationId) && permission.getPermissionType().getId() >= 2) {
 				return;
 			}
 		}
-		//throw new UnauthorizedException("User is not authorized to access this resource.");
+		throw new UnauthorizedException("User is not authorized to access this resource.");
 	}
 	
 	public void authorizeAdminPermissionsByOrganizationId(Authentication authentication, Long organizationId) throws UnauthorizedException {
 		Set<Permission> permissions = ((UserPrincipal) authentication.getPrincipal()).getPermissions();
 		for (Permission permission : permissions) {
-			if (permission.getOrganization().getId() == organizationId && permission.getPermissionType().getId() >= 3) {
+			if (permission.getOrganization().getId().equals(organizationId) && permission.getPermissionType().getId() >= 3) {
 				return;
 			}
 		}
-		//throw new UnauthorizedException("User is not authorized to access this resource.");
+		throw new UnauthorizedException("User is not authorized to access this resource.");
 	}
 	
 	public void authorizeOwnPermissionsByOrganizationId(Authentication authentication, Long organizationId) throws UnauthorizedException {
 		Set<Permission> permissions = ((UserPrincipal) authentication.getPrincipal()).getPermissions();
 		for (Permission permission : permissions) {
-			if (permission.getOrganization().getId() == organizationId && permission.getPermissionType().getId() >= 4) {
+			if (permission.getOrganization().getId().equals(organizationId) && permission.getPermissionType().getId() >= 4) {
 				return;
 			}
 		}
-		//throw new UnauthorizedException("User is not authorized to access this resource.");
+		throw new UnauthorizedException("User is not authorized to access this resource.");
 	}
 	
 	public void assertHigherPermissionType(Authentication authentication, Long organizationId, Long permissionType) throws UnauthorizedException {
