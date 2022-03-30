@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+            "file": "Permission/Permission.md",
             "mode": "source"
           }
         }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
+                "file": "Permission/Permission.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,15 +88,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Permission/Permission.md",
+    "Permission/Contents/Create a Permission for an Organization.md",
+    "Permission/Contents/Edit a Permission Object.md",
+    "Permission/Contents/Delete a Permission Object.md",
     "Account/Contents/Find All Account Balances for an Organization For a Certain Date Range.md",
     "Authentication/Contents/Sign In.md",
     "Organization/Contents/Get Date Range Presets for Generating Reports for Organization Up To Date.md",
     "Easy Ledger.md",
     "Account/Contents/Update an Account.md",
-    "Person/Contents/Update a Person.md",
-    "Person/Contents/The Person Object.md",
-    "Person/Contents/Accept an invitation.md",
-    "Person/Contents/Check if invitation link has already been used.md",
-    "Person/Contents/Invite a Person by Email.md"
+    "Person/Contents/Update a Person.md"
   ]
 }
