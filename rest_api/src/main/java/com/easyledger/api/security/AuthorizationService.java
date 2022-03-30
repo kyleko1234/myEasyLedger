@@ -18,8 +18,8 @@ public class AuthorizationService {
 	public void authorizeViewPermissionsByOrganizationId(Authentication authentication, Long organizationId) throws UnauthorizedException {
 		Set<Permission> permissions = ((UserPrincipal) authentication.getPrincipal()).getPermissions();
 		for (Permission permission : permissions) {
-			System.out.println(permission.getOrganization().getId() + ": " + permission.getOrganization().getName() + "| " + permission.getPermissionType().getName());
 			if (permission.getOrganization().getId() == organizationId && permission.getPermissionType().getId() >= 1) {
+				System.out.println(permission.getOrganization().getId() + ": " + permission.getOrganization().getName() + "| " + permission.getPermissionType().getName());
 				return;
 			}
 		}
