@@ -142,16 +142,35 @@ function OrganizationSettings(props) {
                             </div>
                         </div>
                     </div>
-                    <button className="btn btn-primary width-175 d-none d-sm-inline-block" onClick={saveSettings}>{settingsText[appContext.locale]["Save"]}</button>
-                    <button className="btn btn-primary btn-block d-sm-none" onClick={saveSettings}>{settingsText[appContext.locale]["Save"]}</button>
-                    {permissionObject.permissionType.id === 4 
-                        ? <button className="btn btn-danger d-none d-sm-inline-block ml-4" onClick={handleDeleteOrganizationButton}>{settingsText[appContext.locale]["Delete this EasyLedger"]}</button>
-                        : null
-                    }
-                    {permissionObject.permissionType.id === 4
-                        ? <button className="btn btn-danger btn-block d-sm-none mt-4" onClick={handleDeleteOrganizationButton}>{settingsText[appContext.locale]["Delete this EasyLedger"]}</button>
-                        : null
-                    }
+                    <button 
+                        className="btn btn-primary width-175 d-none d-sm-inline-block" 
+                        onClick={saveSettings}
+                        disabled={permissionObject.permissionType.id < 3}
+                    >
+                        {settingsText[appContext.locale]["Save"]}
+                    </button>
+                    <button 
+                        className="btn btn-primary btn-block d-sm-none" 
+                        onClick={saveSettings}
+                        disabled={permissionObject.permissionType.id < 3}
+                    >
+                        {settingsText[appContext.locale]["Save"]}
+                    </button>
+                    <button 
+                        className="btn btn-danger d-none d-sm-inline-block ml-4" 
+                        onClick={handleDeleteOrganizationButton}
+                        disabled={permissionObject.permissionType.id < 4}
+                    >
+                        {settingsText[appContext.locale]["Delete this EasyLedger"]}
+                    </button>
+                    <button 
+                        className="btn btn-danger btn-block d-sm-none mt-4" 
+                        onClick={handleDeleteOrganizationButton}
+                        disabled={permissionObject.permissionType.id < 4}
+                    >
+                        {settingsText[appContext.locale]["Delete this EasyLedger"]}
+                    </button>
+                    
                 </div>
                 {confirmDeleteOrganizationAlert
                     ? <SweetAlert primary showCancel
