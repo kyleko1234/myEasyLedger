@@ -30,13 +30,16 @@ function AccountDetailsEditor(props) {
     const [noParentOrSubtypeAlert, setNoParentOrSubtypeAlert] = React.useState(false);
     const [deleteAccountAlert, setDeleteAccountAlert] = React.useState(false);
     const [cannotDeleteAccountAlert, setCannotDeleteAccountAlert] = React.useState(false);
+    const [initialValueLockedAlert, setInitialValueLockedAlert] = React.useState(false);
     const toggleDeleteAccountAlert = () => {
         setDeleteAccountAlert(!deleteAccountAlert);
     }
     const toggleCannotDeleteAccountAlert = () => {
         setCannotDeleteAccountAlert(!cannotDeleteAccountAlert);
     }
-
+    const toggleInitialValueLockedAlert = () => {
+        setInitialValueLockedAlert(!initialValueLockedAlert);
+    }
     const resetToDefaultSubtypeId = () => {
         if (!appContext.isEnterprise) {
             let defaultSubtypeId;
@@ -210,7 +213,9 @@ function AccountDetailsEditor(props) {
             console.log(response);
             props.fetchData();
             props.toggle();
-        }).catch(console.log);
+        }).catch(() => {
+            toggleInitialValueLockedAlert();
+        });
     }
 
     const setInitialAccountValue = initialAccountValue => {
@@ -416,7 +421,19 @@ function AccountDetailsEditor(props) {
                         : accountDetailsEditorText[appContext.locale]["Please remove all line items and child accounts from this account and try again."]}
                 </SweetAlert>
                 : null}
-
+            {initialValueLockedAlert 
+                ? <SweetAlert danger showConfirm={false} showCancel={true}
+                    cancelBtnBsStyle="default"
+                    cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
+                    title={props.category? accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this category."] : accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this account."]}
+                    onConfirm={toggleInitialValueLockedAlert}
+                    onCancel={toggleInitialValueLockedAlert}
+                >
+                    {props.category
+                        ? accountDetailsEditorText[appContext.locale]["Please remove all line items from this category and try again."]
+                        : accountDetailsEditorText[appContext.locale]["Please remove all line items from this account and try again."]}
+                </SweetAlert>
+                : null}
         </>
     )
 }

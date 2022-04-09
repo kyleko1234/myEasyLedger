@@ -34,6 +34,11 @@ export const accountDetailsEditorText = {
         "Initial Account Value": "Initial Account Value",
         "Display Order": "Display Order",
 
+        "Cannot edit the initial value of this category.": "Cannot edit the initial value of this category.",
+        "Cannot edit the initial value of this account.": "Cannot edit the initial value of this account.",
+        "Please remove all line items from this category and try again.": "Please remove all line items from this category and try again.",
+        "Please remove all line items from this account and try again.": "Please remove all line items from this account and try again.",
+
         //Account Subtype Names.
         "Cash and cash equivalents": "Cash and cash equivalents", 
         "Current marketable securities": "Current marketable securities", 
@@ -108,6 +113,10 @@ export const accountDetailsEditorText = {
         "Please remove all line items and child categories from this category and try again." : "請删先本類別下所有單行項目及其子類別後再試一次。",
         "Initial Account Value": "科目初始餘額",
 
+        "Cannot edit the initial value of this category.": "TRANSLATION",
+        "Cannot edit the initial value of this account.": "TRANSLATION",
+        "Please remove all line items from this category and try again.": "TRANSLATION",
+        "Please remove all line items from this account and try again.": "TRANSLATION",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "現金及約當現金", 
