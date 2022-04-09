@@ -119,7 +119,7 @@ public class AccountService {
 		}
 		
 		if (dto.getInitialCreditAmount() != oldAccount.getInitialCreditAmount() || dto.getInitialDebitAmount() != oldAccount.getInitialDebitAmount()) {
-			if (lineItemRepo.accountContainsLineItems(oldAccount.getId())) {
+			if (oldAccount.getOrganization().isLockInitialAccountValues() && lineItemRepo.accountContainsLineItems(oldAccount.getId())) {
 				throw new ConflictException("Cannot change the initial value of a non-empty account");
 			}
 			if (oldAccount.isHasChildren()) {
