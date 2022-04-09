@@ -7,6 +7,7 @@ import Select from 'react-select';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { validateDate } from '../../../utils/util-fns';
 
 //requiredProps: organizationId
 function OrganizationSettings(props) {
@@ -28,6 +29,8 @@ function OrganizationSettings(props) {
     const [dateOptions, setDateOptions] = React.useState([]);
     const [savedAlert, setSavedAlert] = React.useState(false);
     const [errorAlert, setErrorAlert] = React.useState(false);
+    const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
+
     const [loading, setLoading] = React.useState(false);
 
     const [confirmDeleteOrganizationAlert, setConfirmDeleteOrganizationAlert] = React.useState(false);
@@ -84,6 +87,13 @@ function OrganizationSettings(props) {
     }, [fiscalYearBeginMonth])
 
     const saveSettings = () => {
+        setSavedAlert(false);
+        setErrorAlert(false);
+        setInvalidDateAlert(false);
+        if (!validateDate(lockJournalEntriesBefore)) {
+            setInvalidDateAlert(true);
+            return;
+        }
         let requestBody = {
             id: props.organizationId,
             name: organizationName,
@@ -106,8 +116,8 @@ function OrganizationSettings(props) {
                     {settingsText[appContext.locale]["EasyLedger Settings"]}
                 </CardTitle>   
                 <div>
-                    {savedAlert? <Alert color="success">{settingsText[appContext.locale]["Settings saved."]}</Alert> : null}
-                    {errorAlert? <Alert color="danger">{settingsText[appContext.locale]["Something went wrong. Please try again later."]}</Alert> : null}
+                    <Alert color="success" isOpen={savedAlert}>{settingsText[appContext.locale]["Settings saved."]}</Alert>
+                    <Alert color="danger" isOpen={errorAlert}>{settingsText[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
                     <div className="form-group row mx-0 my-2 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
                             {settingsText[appContext.locale]["Easyledger Name"] + ":"}
@@ -166,6 +176,7 @@ function OrganizationSettings(props) {
                             </label>
                         </div>
                     </div>
+                    <Alert color="danger" isOpen={invalidDateAlert}>Invalid date.</Alert>
                     <div className="form-group row mx-0 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
                             Lock journal entries before:
