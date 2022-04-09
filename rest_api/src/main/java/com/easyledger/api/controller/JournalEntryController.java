@@ -121,7 +121,7 @@ public class JournalEntryController {
     public Map<String, Boolean> deleteJournalEntry(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
          throws ResourceNotFoundException, UnauthorizedException, JsonProcessingException {
         JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
-       .orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
+        		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
 
         authorizationService.authorizeEditPermissionsByOrganizationId(authentication, journalEntry.getOrganization().getId());
         
