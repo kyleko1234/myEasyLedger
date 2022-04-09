@@ -110,6 +110,7 @@ public class AccountService {
 		if (oldAccount.isHasChildren() && dto.getParentAccountId() != null) {
 			throw new ConflictException("An account with children may not have a parent account.");
 		}
+		
 		Account updatedAccount = new Account();
 		updatedAccount.setId(dto.getAccountId());
 		updatedAccount.setName(dto.getAccountName());
@@ -117,6 +118,16 @@ public class AccountService {
 			updatedAccount.setAccountCode(dto.getAccountCode());
 		}
 		
+		if (dto.getInitialCreditAmount() != oldAccount.getInitialCreditAmount() || dto.getInitialDebitAmount() != oldAccount.getInitialDebitAmount()) {
+			if (lineItemRepo.accountContainsLineItems(oldAccount.getId())) {
+				throw new ConflictException("Cannot change the initial value of a non-empty account");
+			}
+			if (oldAccount.isHasChildren()) {
+				throw new ConflictException("Cannot change the initial value of an account with children.");
+			}
+		}
+	
+	
 		updatedAccount.setDebitTotal(oldAccount.getDebitTotal().subtract(oldAccount.getInitialDebitAmount()));
 		updatedAccount.setInitialDebitAmount(dto.getInitialDebitAmount());
 		updatedAccount.setDebitTotal(updatedAccount.getDebitTotal().add(updatedAccount.getInitialDebitAmount()));
