@@ -19,6 +19,12 @@ function OrganizationSettings(props) {
     const [organizationName, setOrganizationName] = React.useState(permissionObject.organization.name);
     const [fiscalYearBeginMonth, setFiscalYearBeginMonth] = React.useState(fiscalYearBegin[1]);
     const [fiscalYearBeginDay, setFiscalYearBeginDay] = React.useState(fiscalYearBegin[2]);
+    const [lockInitialAccountValues, setLockInitialAccountValues] = React.useState(permissionObject.organization.lockInitialAccountValues);
+    const toggleLockInitialAccountValues = () => {
+        setLockInitialAccountValues(!lockInitialAccountValues);
+    }
+    const [lockJournalEntriesBefore, setLockJournalEntriesBefore] = React.useState(permissionObject.organization.lockJournalEntriesBefore);
+
     const [dateOptions, setDateOptions] = React.useState([]);
     const [savedAlert, setSavedAlert] = React.useState(false);
     const [errorAlert, setErrorAlert] = React.useState(false);
@@ -81,7 +87,9 @@ function OrganizationSettings(props) {
         let requestBody = {
             id: props.organizationId,
             name: organizationName,
-            fiscalYearBegin: "2020-" + fiscalYearBeginMonth + "-" + fiscalYearBeginDay
+            fiscalYearBegin: "2020-" + fiscalYearBeginMonth + "-" + fiscalYearBeginDay,
+            lockInitialAccountValues: lockInitialAccountValues,
+            lockJournalEntriesBefore: lockJournalEntriesBefore
         }
         axios.put(`${API_BASE_URL}/organization/${props.organizationId}`, requestBody).then(response => {
             appContext.fetchUserInfo(appContext.personId);
@@ -141,6 +149,33 @@ function OrganizationSettings(props) {
                                 />
                             </div>
                         </div>
+                    </div>
+                    <div className="form-group row mx-0 align-items-center">
+                        <div className="custom-control custom-switch">
+                            <input 
+                                type="checkbox" 
+                                id="lockInitialAccountValueCheckbox" 
+                                className="custom-control-input" 
+                                value={lockInitialAccountValues} 
+                                checked={lockInitialAccountValues}
+                                onChange={toggleLockInitialAccountValues} 
+                                disabled={permissionObject.permissionType.id < 3}
+                            />
+                            <label htmlFor="lockInitialAccountValueCheckbox" className="my-0 custom-control-label">
+                                Lock initial account values for accounts with transactions
+                            </label>
+                        </div>
+                    </div>
+                    <div className="form-group row mx-0 align-items-center">
+                        <label className="col-lg-3 col-form-label my-0 px-0">
+                            Lock journal entries before:
+                        </label>
+                        <input 
+                            className="form-control col-md-9 "
+                            disabled={permissionObject.permissionType.id < 3}
+                            type="date" value={lockJournalEntriesBefore? lockJournalEntriesBefore : ''} 
+                            onChange={event => setLockJournalEntriesBefore(event.target.value)}
+                        />
                     </div>
                     <button 
                         className="btn btn-primary width-175 d-none d-sm-inline-block" 
