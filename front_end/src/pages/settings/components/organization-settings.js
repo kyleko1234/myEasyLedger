@@ -172,14 +172,14 @@ function OrganizationSettings(props) {
                                 disabled={permissionObject.permissionType.id < 3}
                             />
                             <label htmlFor="lockInitialAccountValueCheckbox" className="my-0 custom-control-label">
-                                Lock initial account values for accounts with transactions
+                                {settingsText[appContext.locale]["Lock initial account values for accounts with transactions"]}
                             </label>
                         </div>
                     </div>
-                    <Alert color="danger" isOpen={invalidDateAlert}>Invalid date.</Alert>
+                    <Alert color="danger" isOpen={invalidDateAlert}>{settingsText[appContext.locale]["Invalid date."]}</Alert>
                     <div className="form-group row mx-0 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
-                            Lock journal entries before:
+                            {settingsText[appContext.locale]["Lock journal entries before"] + ":"}
                         </label>
                         <input 
                             className="form-control col-md-9 "

@@ -72,6 +72,10 @@ export const settingsText = {
         "Results per Page": "Results per Page",
         "Number of results to display per page" : "Number of results to display per page",
 
+        "Lock initial account values for accounts with transactions": "Lock initial account values for accounts with transactions",
+        "Lock journal entries before": "Lock journal entries before",
+        "Invalid date.": "Invalid date.",
+
         //Appearance settings options
         "System": "System",
         "Light": "Light",
@@ -149,6 +153,10 @@ export const settingsText = {
 
         "Results per Page": "更改每頁筆數",
         "Number of results to display per page" : "每頁顯示帳目筆數數量",
+
+        "Lock initial account values for accounts with transactions": "TRANSLATION",
+        "Lock journal entries before": "TRANSLATION",
+        "Invalid date.": "TRANSLATION",
 
         //Appearance settings options
         "System": "系統模式",
