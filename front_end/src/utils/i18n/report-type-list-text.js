@@ -15,7 +15,7 @@ export const reportTypeListText = {
         "Net Worth": "淨資產報告",
         "Income and Expense Report": "收入支出報告",
         "Cash Flow": "現金流量表",
-        "Expense Report": "支出報告"
+        "Expense Report": "支出分佈報告"
 
     }
 }
