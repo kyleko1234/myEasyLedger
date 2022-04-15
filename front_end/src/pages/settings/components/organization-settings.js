@@ -172,7 +172,10 @@ function OrganizationSettings(props) {
                                 disabled={permissionObject.permissionType.id < 3}
                             />
                             <label htmlFor="lockInitialAccountValueCheckbox" className="my-0 custom-control-label">
-                                {settingsText[appContext.locale]["Lock initial account values for accounts with transactions"]}
+                                {permissionObject.organization.isEnterprise
+                                    ? settingsText[appContext.locale]["Lock initial values for accounts with journal entries"]
+                                    : settingsText[appContext.locale]["Lock initial values for accounts and categories with transactions"]
+                                }
                             </label>
                         </div>
                     </div>
