@@ -111,6 +111,7 @@ public class AccountService {
 			throw new ConflictException("An account with children may not have a parent account.");
 		}
 		
+		
 		Account updatedAccount = new Account();
 		updatedAccount.setId(dto.getAccountId());
 		updatedAccount.setName(dto.getAccountName());
@@ -118,7 +119,7 @@ public class AccountService {
 			updatedAccount.setAccountCode(dto.getAccountCode());
 		}
 		
-		if (dto.getInitialCreditAmount() != oldAccount.getInitialCreditAmount() || dto.getInitialDebitAmount() != oldAccount.getInitialDebitAmount()) {
+		if (dto.getInitialCreditAmount().compareTo(oldAccount.getInitialCreditAmount()) != 0 || dto.getInitialDebitAmount().compareTo(oldAccount.getInitialDebitAmount()) != 0) {
 			if (oldAccount.getOrganization().isLockInitialAccountValues() && lineItemRepo.accountContainsLineItems(oldAccount.getId())) {
 				throw new ConflictException("Cannot change the initial value of a non-empty account");
 			}
