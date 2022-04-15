@@ -36,8 +36,8 @@ export const accountDetailsEditorText = {
 
         "Cannot edit the initial value of this category.": "Cannot edit the initial value of this category.",
         "Cannot edit the initial value of this account.": "Cannot edit the initial value of this account.",
-        "Please remove all line items from this category and try again.": "Please remove all line items from this category and try again.",
-        "Please remove all line items from this account and try again.": "Please remove all line items from this account and try again.",
+        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.": "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.",
+        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.": "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "Cash and cash equivalents", 
@@ -115,8 +115,8 @@ export const accountDetailsEditorText = {
 
         "Cannot edit the initial value of this category.": "TRANSLATION",
         "Cannot edit the initial value of this account.": "TRANSLATION",
-        "Please remove all line items from this category and try again.": "TRANSLATION",
-        "Please remove all line items from this account and try again.": "TRANSLATION",
+        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.": "TRANSLATION",
+        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.": "TRANSLATION",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "現金及約當現金", 

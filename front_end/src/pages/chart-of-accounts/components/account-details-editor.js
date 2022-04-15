@@ -425,13 +425,16 @@ function AccountDetailsEditor(props) {
                 ? <SweetAlert danger showConfirm={false} showCancel={true}
                     cancelBtnBsStyle="default"
                     cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title={props.category? accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this category."] : accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this account."]}
+                    title={props.category
+                        ? accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this category."] 
+                        : accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this account."]
+                    }
                     onConfirm={toggleInitialValueLockedAlert}
                     onCancel={toggleInitialValueLockedAlert}
                 >
                     {props.category
-                        ? accountDetailsEditorText[appContext.locale]["Please remove all line items from this category and try again."]
-                        : accountDetailsEditorText[appContext.locale]["Please remove all line items from this account and try again."]}
+                        ? accountDetailsEditorText[appContext.locale]["Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts."]
+                        : accountDetailsEditorText[appContext.locale]["Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories."]}
                 </SweetAlert>
                 : null}
         </>
