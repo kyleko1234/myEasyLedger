@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Organization/Contents/Create an Organization.md",
+            "file": "JournalEntry/Contents/Delete a JournalEntry.md",
             "mode": "source"
           }
         }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Organization/Contents/Create an Organization.md",
+                "file": "JournalEntry/Contents/Delete a JournalEntry.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,15 +88,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "JournalEntry/Contents/Delete a JournalEntry.md",
+    "JournalEntry/Contents/Update a JournalEntry.md",
+    "Organization/Contents/The Organization Object.md",
     "Organization/Contents/Create an Organization.md",
     "Organization/Contents/Get Date Range Presets for Generating Reports for Organization Up To Date.md",
     "Organization/Contents/Retrieve an Organization.md",
-    "Organization/Contents/The Organization Object.md",
     "Organization/Contents/Update an Organization.md",
     "Organization/Contents/Retrieve Monthly Net Assets for an Organization.md",
     "Organization/Contents/List All Organizations.md",
-    "Organization/Organization.md",
-    "Permission/Permission.md",
-    "Permission/Contents/Create a Permission for an Organization.md"
+    "Organization/Organization.md"
   ]
 }

@@ -20,7 +20,7 @@ The beginning date of the fiscal year for this organization. The year is general
 If true, the initial debit and credit amounts of the accounts this organization owns may not be modified after the account contains line-items. Defaults to true.
 
 - **lockJournalEntriesBefore(`LocalDate`)**<br/>
-Journal entries belonging to this organization dated before this date cannot be edited. Defaults to "null".
+Journal entries belonging to this organization dated before this date cannot be edited. Journal entries with dates that *match* this date *can* be edited. Defaults to "01-01-0001". 
 
 ___
 #### Sample Object
