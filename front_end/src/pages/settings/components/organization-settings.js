@@ -161,17 +161,17 @@ function OrganizationSettings(props) {
                         </div>
                     </div>
                     <div className="form-group row mx-0 align-items-center">
-                        <div className="custom-control custom-switch">
+                        <div className="form-check form-switch">
                             <input 
                                 type="checkbox" 
                                 id="lockInitialAccountValueCheckbox" 
-                                className="custom-control-input" 
+                                className="form-check-input" 
                                 value={lockInitialAccountValues} 
                                 checked={lockInitialAccountValues}
                                 onChange={toggleLockInitialAccountValues} 
                                 disabled={permissionObject.permissionType.id < 3}
                             />
-                            <label htmlFor="lockInitialAccountValueCheckbox" className="my-0 custom-control-label">
+                            <label htmlFor="lockInitialAccountValueCheckbox" className="my-0 form-check-label">
                                 {permissionObject.organization.isEnterprise
                                     ? settingsText[appContext.locale]["Lock initial values for accounts with journal entries"]
                                     : settingsText[appContext.locale]["Lock initial values for accounts and categories with transactions"]

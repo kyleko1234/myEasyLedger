@@ -228,15 +228,16 @@ function BalanceSheetRender(props) {
                             : null
                         }
                         <div className="d-flex align-items-center justify-content-between mt-2">
-                            <div className="custom-control custom-switch">
+                            <div className="form-check form-switch">
                                 <input 
                                     type="checkbox" 
+                                    role="switch"
                                     id="detailedViewCheckbox" 
-                                    className="custom-control-input" 
+                                    className="form-check-input" 
                                     value={detailedView} 
                                     onChange={toggleDetailedView} 
                                 />
-                                <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">
+                                <label htmlFor="detailedViewCheckbox" className="my-0 form-check-label">
                                     {balanceSheetRenderText[appContext.locale]["Detailed View"]}
                                 </label>
                             </div>

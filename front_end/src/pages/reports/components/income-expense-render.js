@@ -266,9 +266,9 @@ function IncomeExpenseRender(props) {
                             : null
                         }
                         <div className="d-flex align-items-center justify-content-between mt-2">
-                            <div className="custom-control custom-switch">
-                                <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
-                                <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
+                            <div className="form-check form-switch">
+                                <input type="checkbox" role="switch" id="detailedViewCheckbox" className="form-check-input" value={detailedView} onChange={toggleDetailedView} />
+                                <label htmlFor="detailedViewCheckbox" className="my-0 form-check-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
                             </div>
                             <button type="submit" className="btn btn-primary width-200" onClick={handleUpdateReportButton}>
                                 {incomeStatementRenderText[appContext.locale]["Update report"]}
