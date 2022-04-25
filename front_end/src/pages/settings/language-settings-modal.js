@@ -32,7 +32,7 @@ function LanguageSettingsModal(props) {
                 </ModalHeader>
                 <ModalBody>
                     <div className="px-3 py-3">
-                            <form className="form-group row" onSubmit={handleSaveButton}>
+                            <form className="mb-3 row" onSubmit={handleSaveButton}>
                                 <label className="col-sm-3 col-form-label">
                                     {settingsText[appContext.locale]["Language"]}
                                 </label>

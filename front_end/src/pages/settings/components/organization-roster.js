@@ -212,7 +212,7 @@ function OrganizationRoster(props) {
                     <ModalHeader> {settingsText[appContext.locale]["Add user modal header"](ownPermissionForCurrentOrganization.organization.name)} </ModalHeader>
                     <ModalBody>
                         <form onSubmit={event => { event.preventDefault(); handleAddAPersonButton() }}>
-                            <div className="form-group row justify-content-center">
+                            <div className="mb-3 row justify-content-center">
                                 <label className="col-form-label col-lg-3">
                                     {settingsText[appContext.locale]["Add a user by email:"]}
                                 </label>
@@ -228,7 +228,7 @@ function OrganizationRoster(props) {
                                 </div>
                             </div>
                         </form>
-                        <div className="form-group row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
+                        <div className="mb-3 row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
                             <label className="col-form-label col-lg-3">
                                 {settingsText[appContext.locale]["Permissions for this user"] + ":"}
                             </label>
@@ -267,7 +267,7 @@ function OrganizationRoster(props) {
                     <ModalBody>
                         {selectedPerson ?
                             <div>
-                                <div className="form-group row justify-content-center">
+                                <div className="mb-3 row justify-content-center">
                                     <div className="col-lg-3">
                                         {settingsText[appContext.locale]["Name"] + ":"}
                                     </div>
@@ -275,7 +275,7 @@ function OrganizationRoster(props) {
                                         {FIRSTNAME_LASTNAME_LOCALES.includes(selectedPerson.locale) ? selectedPerson.firstName + " " + selectedPerson.lastName : selectedPerson.lastName + " " + selectedPerson.firstName}
                                     </div>
                                 </div>
-                                <div className="form-group row justify-content-center">
+                                <div className="mb-3 row justify-content-center">
                                     <div className="col-lg-3">
                                         {settingsText[appContext.locale]["Email"] + ":"}
                                     </div>
@@ -283,7 +283,7 @@ function OrganizationRoster(props) {
                                         {selectedPerson.email}
                                     </div>
                                 </div>
-                                <div className="form-group row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
+                                <div className="mb-3 row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
                                     <label className="col-form-label col-lg-3">
                                         {settingsText[appContext.locale]["Permissions for this user"] + ":"}
                                     </label>

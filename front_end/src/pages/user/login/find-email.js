@@ -41,7 +41,7 @@ function FindEmail(props) {
             <p>{loginV3Text[appContext.locale]["Please enter your email to search for your account."]}</p>
             <Alert isOpen={noUserWithThisEmailAlert} color="danger">{loginV3Text[appContext.locale]["Could not find an account registered with this email address."]}</Alert>
             <form onSubmit={event => handleSubmit(event)} className="mb-5 pb-5">
-                <div className="form-group mb-3">
+                <div className="mb-3">
                     <input type="email" required className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Email Address"]} value={props.emailInput} onChange={event => props.setEmailInput(event.target.value)}/>
                 </div>
                 <div className="d-flex justify-content-between">

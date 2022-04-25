@@ -118,7 +118,7 @@ function OrganizationSettings(props) {
                 <div>
                     <Alert color="success" isOpen={savedAlert}>{settingsText[appContext.locale]["Settings saved."]}</Alert>
                     <Alert color="danger" isOpen={errorAlert}>{settingsText[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
-                    <div className="form-group row mx-0 my-2 align-items-center">
+                    <div className="mb-3 row mx-0 my-2 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
                             {settingsText[appContext.locale]["Easyledger Name"] + ":"}
                         </label>
@@ -129,13 +129,13 @@ function OrganizationSettings(props) {
                             onChange={event => setOrganizationName(event.target.value)}
                         />
                     </div>
-                    <div className="form-group row mx-0 my-2 align-items-center">
+                    <div className="mb-3 row mx-0 my-2 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
                             {settingsText[appContext.locale]["Currency"] + ":"}
                         </label>
                         <div className="col-md-9 px-0">{currencies.find(currency => currency.value === permissionObject.organization.currency).label}</div>
                     </div>
-                    <div className="form-group row mx-0 align-items-center">
+                    <div className="mb-3 row mx-0 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
                             {settingsText[appContext.locale]["Fiscal Year Begin Date"] + ":"}
                         </label>
@@ -160,7 +160,7 @@ function OrganizationSettings(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="form-group row mx-0 align-items-center">
+                    <div className="mb-3 row mx-0 align-items-center">
                         <div className="form-check form-switch">
                             <input 
                                 type="checkbox" 
@@ -180,7 +180,7 @@ function OrganizationSettings(props) {
                         </div>
                     </div>
                     <Alert color="danger" isOpen={invalidDateAlert}>{settingsText[appContext.locale]["Invalid date."]}</Alert>
-                    <div className="form-group row mx-0 align-items-center">
+                    <div className="mb-3 row mx-0 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
                             {settingsText[appContext.locale]["Lock journal entries before"] + ":"}
                         </label>

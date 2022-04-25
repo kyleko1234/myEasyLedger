@@ -46,13 +46,13 @@ function ChangeNameModal(props) {
                         ? <Alert color="danger">{settingsText[appContext.locale]["Please provide a first and last name."]}</Alert>
                         : null}
                     <form className="px-3 py-3" onSubmit={event => {event.preventDefault(); handleSaveButton();}}>
-                        <div className="form-group row align-items-center">
+                        <div className="mb-3 row align-items-center">
                             <label className="col-4 mb-0">
                                 {settingsText[appContext.locale]["First name"]}
                             </label>
                             <input className="form-control col-8" type="text" value={firstNameInput} onChange={event => setFirstNameInput(event.target.value)}/>
                         </div>
-                        <div className="form-group row align-items-center">
+                        <div className="mb-3 row align-items-center">
                             <label className="col-4 mb-0">
                                 {settingsText[appContext.locale]["Last name"]}
                             </label>

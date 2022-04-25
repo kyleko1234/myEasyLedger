@@ -31,7 +31,7 @@ function AppearanceSettingsModal(props) {
                 </ModalHeader>
                 <ModalBody>
                     <div className="px-3 py-3">
-                            <form className="form-group row" onSubmit={handleSaveButton}>
+                            <form className="mb-3 row" onSubmit={handleSaveButton}>
                                 <div className="col-xl-4">
                                     <div className="radio radio-css">
                                         <input type="radio" value={"system"} id="appearance-system" name="is-enterprise" checked={selectedAppearance === "system"} onChange={handleChangeAppearance} />

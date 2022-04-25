@@ -72,19 +72,19 @@ function ChangePasswordModal(props) {
                         ? <Alert color="danger">{settingsText[appContext.locale]["Current password is incorrect."]}</Alert>
                         : null}
                     <form className="px-3 py-3" onSubmit={event => {event.preventDefault(); handleSaveButton();}}>
-                        <div className="form-group row align-items-center">
+                        <div className="mb-3 row align-items-center">
                             <label className="col-md-5 col-form-label">
                                 {settingsText[appContext.locale]["Current Password"]}
                             </label>
                             <input className="form-control col-md-7 m-l-5" type="password" value={currentPasswordInput} onChange={event => setCurrentPasswordInput(event.target.value)}/>
                         </div>
-                        <div className="form-group row align-items-center">
+                        <div className="mb-3 row align-items-center">
                             <label className="col-md-5 col-form-label">
                                 {settingsText[appContext.locale]["New Password"]}
                             </label>
                             <input className="form-control col-md-7 m-l-5" type="password" value={newPasswordInput} onChange={event => setNewPasswordInput(event.target.value)}/>
                         </div>
-                        <label className="form-group row align-items-center">
+                        <label className="mb-3 row align-items-center">
                             <div className="col-md-5 col-form-label">
                                 {settingsText[appContext.locale]["Confirm New Password"]}
                             </div>

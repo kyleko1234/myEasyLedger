@@ -251,7 +251,7 @@ function AccountDetailsEditor(props) {
                         </Alert>
                         : null}
                     <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
-                        <div className="form-group row">
+                        <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
                                 {props.category? accountDetailsEditorText[appContext.locale]["Category Name"] : accountDetailsEditorText[appContext.locale]["Account Name"]}
                             </label>
@@ -266,7 +266,7 @@ function AccountDetailsEditor(props) {
                                 />
                             </div>
                         </div>
-                        <div className="form-group row">
+                        <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
                                 {appContext.isEnterprise 
                                     ? accountDetailsEditorText[appContext.locale]["Account Code"]
@@ -285,7 +285,7 @@ function AccountDetailsEditor(props) {
                             </div>
                         </div>
                     </form>
-                    <div className="form-group row">
+                    <div className="mb-3 row">
                         <label className="col-form-label col-md-4">
                             {props.category? accountDetailsEditorText[appContext.locale]["Parent Category"] : accountDetailsEditorText[appContext.locale]["Parent Account"]}
                         </label>
@@ -301,7 +301,7 @@ function AccountDetailsEditor(props) {
                         </div>
                     </div>
                     {appContext.isEnterprise?
-                        <div className="form-group row">
+                        <div className="mb-3 row">
                         <label className="col-form-label col-md-4">
                             {accountDetailsEditorText[appContext.locale]["Account Subtype"]}
                         </label>
@@ -320,7 +320,7 @@ function AccountDetailsEditor(props) {
                     <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
                         {appContext.isEnterprise? 
                             <>
-                                <div className="form-group row">
+                                <div className="mb-3 row">
                                     <label className="col-form-label col-md-4">
                                         {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
                                     </label>
@@ -336,7 +336,7 @@ function AccountDetailsEditor(props) {
                                         />
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="mb-3 row">
                                     <label className="col-form-label col-md-4">
                                         {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
                                     </label>
@@ -356,7 +356,7 @@ function AccountDetailsEditor(props) {
                             :
                             <>
                                 {(accountTypeId == 1 || accountTypeId == 2) ?
-                                    <div className="form-group row">
+                                    <div className="mb-3 row">
                                         <label className="col-form-label col-md-4">
                                             {accountDetailsEditorText[appContext.locale]["Initial Account Value"]}
                                         </label>

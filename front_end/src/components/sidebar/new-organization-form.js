@@ -35,7 +35,7 @@ function NewOrganizationForm(props) {
 
     return (
         <div className="my-3">
-            <div className="form-group row">
+            <div className="mb-3 row">
                 <label className="col-xl-3 col-form-label">
                     {sidebarText[appContext.locale]["Enter a name for this EasyLedger"] + ":"}
                 </label>
@@ -48,7 +48,7 @@ function NewOrganizationForm(props) {
                     />
                 </div>
             </div>
-            <div className="form-group row">
+            <div className="mb-3 row">
                 <label className="col-xl-3 col-form-label">
                     {sidebarText[appContext.locale]["Select a currency for this EasyLedger"] + ":"}
                 </label>
@@ -65,7 +65,7 @@ function NewOrganizationForm(props) {
                     />
                 </div>
             </div>
-            <div className="form-group row">
+            <div className="mb-3 row">
                 <div className="col-xl-3">
                     {sidebarText[appContext.locale]["Create an EasyLedger using"] + ":"}
                 </div>
