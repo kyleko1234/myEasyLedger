@@ -624,11 +624,7 @@ a.tr:hover {
     overflow: visible;
 }
 
-.font-weight-600 {
-    font-weight: 600 !important;
-}
-
-.font-weight-semibold {
+.font-weight-600, .font-weight-semibold, .fw-600, .fw-semibold {
     font-weight: 600 !important;
 }
 

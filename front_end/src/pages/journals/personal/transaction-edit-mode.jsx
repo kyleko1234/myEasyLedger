@@ -245,7 +245,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                         <div className="td w-100">
                                             <div className="d-flex mb-2 align-items-center">
                                                 <div className="col-5 px-0 me-2">
-                                                    <div className="font-weight-600 font-size-compact">
+                                                    <div className="fw-semibold font-size-compact">
                                                         {columns[0].header}
                                                     </div>
                                                     <div>
@@ -253,7 +253,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                                     </div>
                                                 </div>
                                                 <div className="col-5 px-0 me-2">
-                                                    <div className="font-weight-600 font-size-compact">
+                                                    <div className="fw-semibold font-size-compact">
                                                         {columns[1].header}
                                                     </div>
                                                     <div>
@@ -261,7 +261,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                                     </div>
                                                 </div>
                                                 <div className="col-1 px-0">
-                                                    <div className="font-weight-600 font-size-compact invisible">
+                                                    <div className="fw-semibold font-size-compact invisible">
                                                         space {/**invisible text to align button */}
                                                     </div> 
                                                     <div>
@@ -273,7 +273,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                             </div>
                                             <div className="d-flex mb-2 align-items-center">
                                                     <div className="col-6 px-0 me-2">
-                                                        <div className="font-weight-600 font-size-compact">
+                                                        <div className="fw-semibold font-size-compact">
                                                             {columns[2].header}
                                                         </div>
                                                         <div>
@@ -281,7 +281,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                                         </div>
                                                     </div>
                                                     <div className="col-4 px-0 me-2">
-                                                        <div className="font-weight-600 font-size-compact">
+                                                        <div className="fw-semibold font-size-compact">
                                                             {columns[3].header}
                                                         </div>
                                                         <div>

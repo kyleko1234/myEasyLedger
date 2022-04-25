@@ -101,7 +101,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
                             return(
                                 <div key={i} className="tr d-flex">
                                     <div className="px-2 py-2 w-100">
-                                        <div className="font-weight-600">
+                                        <div className="fw-semibold">
                                             {row[columns[0].accessor] + " - " + row[columns[1].accessor]}
                                         </div>
                                         <div className="d-flex justify-content-between">

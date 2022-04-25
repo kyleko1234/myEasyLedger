@@ -247,7 +247,7 @@ function JournalEntryEditMode({
                                     <div className="tr d-flex align-items-center" key={i}>
                                         <div className="td">
                                             <div className="mb-2">
-                                                <div className="font-weight-600 font-size-compact">
+                                                <div className="fw-semibold font-size-compact">
                                                     {columns[1].header}
                                                 </div>
                                                 <div className="d-flex justify-content-between">
@@ -260,7 +260,7 @@ function JournalEntryEditMode({
                                                 </div>
                                             </div>
                                             <div className="mb-2">
-                                                <div className="font-weight-600 font-size-compact">
+                                                <div className="fw-semibold font-size-compact">
                                                     {columns[0].header}
                                                 </div>
                                                 <div>
@@ -269,7 +269,7 @@ function JournalEntryEditMode({
                                             </div>
                                             <div className="d-flex justify-content-between">
                                                 <div className="me-2">
-                                                    <div className="font-weight-600 font-size-compact">
+                                                    <div className="fw-semibold font-size-compact">
                                                         {columns[2].header}
                                                     </div>
                                                     <div>
@@ -277,7 +277,7 @@ function JournalEntryEditMode({
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div className="font-weight-600 font-size-compact">
+                                                    <div className="fw-semibold font-size-compact">
                                                         {columns[3].header}
                                                     </div>
                                                     <div>
@@ -298,7 +298,7 @@ function JournalEntryEditMode({
                                     <div>
                                         {journalEntryEditModeText[appContext.locale]["Total Debit"]}
                                     </div>
-                                    <div className="font-weight-normal">
+                                    <div className="fw-normal">
                                         {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                                     </div>
                                 </div>
@@ -306,7 +306,7 @@ function JournalEntryEditMode({
                                     <div>
                                         {journalEntryEditModeText[appContext.locale]["Total Credit"]}
                                     </div>
-                                    <div className="font-weight-normal">
+                                    <div className="fw-normal">
                                         {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}
                                     </div>
                                 </div>

@@ -161,7 +161,7 @@ class ChartOfAccounts extends React.Component {
                                                         <React.Fragment key={account.accountId}>
                                                             {account.hasChildren ?
                                                                 <div className="tr d-flex justify-content-between align-items-center">
-                                                                    <div className="td font-weight-600">
+                                                                    <div className="td fw-semibold">
                                                                         {account.accountCode? account.accountCode + " - " + account.accountName: account.accountName}
                                                                     </div>
                                                                     <div className="td py-0 d-flex align-items-center">
@@ -173,7 +173,7 @@ class ChartOfAccounts extends React.Component {
                                                                 </div>
                                                             :
                                                                 <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
-                                                                    <div className="td font-weight-600">
+                                                                    <div className="td fw-semibold">
                                                                         {account.accountCode? account.accountCode + " - " + account.accountName: account.accountName}
                                                                     </div>
                                                                     <div className="td py-0 d-flex align-items-center">

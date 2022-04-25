@@ -112,7 +112,7 @@ function OrganizationSettings(props) {
     return(
         <Card className="very-rounded shadow-sm mb-3">
             <CardBody>
-                <CardTitle className="font-weight-600">
+                <CardTitle className="fw-semibold">
                     {settingsText[appContext.locale]["EasyLedger Settings"]}
                 </CardTitle>   
                 <div>

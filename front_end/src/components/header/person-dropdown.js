@@ -19,7 +19,7 @@ function PersonDropdown(props) {
                 </DropdownToggle>
                 <DropdownMenu className="shadow" right>
                     <DropdownItem text>
-                        <div className="font-weight-600">
+                        <div className="fw-semibold">
                                 {appContext.firstName + " " + appContext.lastName} 
                         </div>
                         <div className="small text-muted">

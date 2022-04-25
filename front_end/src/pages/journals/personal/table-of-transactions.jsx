@@ -348,7 +348,7 @@ function TableOfTransactions({
                                     ? <>
                                         <div className={"px-0 w-100 " + (category? "d-flex align-items-center justify-content-between" : "")}>
                                             <div className={category? "w-75" : ""}>
-                                                <div className={"px-0 font-size-compact font-weight-600 "}>
+                                                <div className={"px-0 font-size-compact fw-semibold "}>
                                                     {formatCell(row[columns[0].accessor], columns[0].accessor) + " - " + formatCell(row[columns[1].accessor], columns[1].accessor)}
                                                 </div>
                                                 <div className={"px-0 text-truncate"}>
@@ -357,7 +357,7 @@ function TableOfTransactions({
                                             </div>
                                             <div className={" justify-content-between pt-2 font-size-compact d-flex"}>
                                                 <div>
-                                                    <div className={"font-weight-600 " + (category? "d-none": "")}>
+                                                    <div className={"fw-semibold " + (category? "d-none": "")}>
                                                             {columns[3].header}
                                                     </div>
                                                     <div className={"px-0 " + (category? "font-size-standard text-end" : "")}>
@@ -365,7 +365,7 @@ function TableOfTransactions({
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div className={"font-weight-600 text-end " + (category? "d-none" : "")}>
+                                                    <div className={"fw-semibold text-end " + (category? "d-none" : "")}>
                                                             {columns[4].header}
                                                     </div>
                                                     <div className={"px-0 "}>
@@ -378,7 +378,7 @@ function TableOfTransactions({
                                     : <>
                                         <div className={"px-0 w-100 " + (category? "d-flex align-items-center justify-content-between" : "")}>
                                             <div className={category? "w-75" : ""}>
-                                                <div className={"px-0 font-size-compact font-weight-600 "}>
+                                                <div className={"px-0 font-size-compact fw-semibold "}>
                                                     {formatCell(row[columns[0].accessor], columns[0].accessor)}
                                                 </div>
                                                 <div className={"px-0 text-truncate"}>
@@ -387,7 +387,7 @@ function TableOfTransactions({
                                             </div>
                                             <div className={" justify-content-between pt-2 font-size-compact d-flex"}>
                                                 <div>
-                                                    <div className={"font-weight-600 " + (category? "d-none": "")}>
+                                                    <div className={"fw-semibold " + (category? "d-none": "")}>
                                                             {columns[2].header}
                                                     </div>
                                                     <div className={"px-0 " + (category? "font-size-standard text-end" : "")}>
@@ -395,7 +395,7 @@ function TableOfTransactions({
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div className={"font-weight-600 text-end " + (category? "d-none" : "")}>
+                                                    <div className={"fw-semibold text-end " + (category? "d-none" : "")}>
                                                             {columns[3].header}
                                                     </div>
                                                     <div className={"px-0 "}>

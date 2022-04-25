@@ -127,9 +127,9 @@ function OrganizationRoster(props) {
     return (
         <Card className="very-rounded shadow-sm">
             <CardBody>
-                <CardTitle className="font-weight-600">
+                <CardTitle className="fw-semibold">
                     <div className="tr d-flex align-items-center justify-content-between">
-                        <div className="font-weight-600">
+                        <div className="fw-semibold">
                             {settingsText[appContext.locale]["People with access to"](ownPermissionForCurrentOrganization.organization.name)}
                         </div>
                         <div className="d-none d-sm-inline-block">
@@ -184,7 +184,7 @@ function OrganizationRoster(props) {
                                     return(
                                         <div className="tr d-flex align-items-center justify-content-between" key={person.personId}>
                                             <div className="td">
-                                                <div className="font-weight-600">
+                                                <div className="fw-semibold">
                                                     {settingsText[appContext.locale]["parseName"](person.firstName, person.lastName)}
                                                 </div>
                                                 <div className="font-size-compact">

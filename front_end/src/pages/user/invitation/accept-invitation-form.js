@@ -68,7 +68,7 @@ function AcceptInvitationForm({token, setCompleted, email}) {
             <h1>
                 {registerV3Text[appContext.locale]["Sign Up"]}
             </h1>
-            <h2 className="h5 font-weight-normal mb-2">{registerV3Text[appContext.locale]["Finish setting up your account."]}</h2>
+            <h2 className="h5 fw-normal mb-2">{registerV3Text[appContext.locale]["Finish setting up your account."]}</h2>
             <div>
                 <form className="mb-0" onSubmit={event => validateForm(event)}>
                     <label className="control-label">{registerV3Text[appContext.locale]["Name"]} <span className="text-danger">*</span></label>

@@ -328,7 +328,7 @@ function TableOfJournalEntries({
                         return(
                             <Link replace to="#" className="tr d-flex justify-content-between d-md-none align-items-center td" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
                                 <div className="px-0 w-100">
-                                    <div className={"px-0 font-size-compact font-weight-600 " + columns[0].className}>
+                                    <div className={"px-0 font-size-compact fw-semibold " + columns[0].className}>
                                         {formatCell(row[columns[0].accessor], columns[0].accessor)}
                                     </div>
                                     <div className={"px-0 " + columns[1].className}>
@@ -336,7 +336,7 @@ function TableOfJournalEntries({
                                     </div>
                                     <div className="d-flex justify-content-between pt-2">
                                         <div className="font-size-compact">
-                                            <div className="font-weight-600 ">
+                                            <div className="fw-semibold ">
                                                     {columns[2].header}
                                             </div>
                                             <div className={"px-0 " + columns[2].className}>
@@ -344,7 +344,7 @@ function TableOfJournalEntries({
                                             </div>
                                         </div>
                                         <div className="font-size-compact">
-                                            <div className="font-weight-600 text-end">
+                                            <div className="fw-semibold text-end">
                                                     {columns[3].header}
                                             </div>
                                             <div className={"px-0 " + columns[3].className}>

@@ -35,7 +35,7 @@ function FirstOrganizationForm(props) {
                 {registerV3Text[appContext.locale]["Sign Up"]}
                 <Alert isOpen={props.somethingWentWrongAlert} color="danger">{registerV3Text[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
             </h1>
-            <h2 className="h5 font-weight-normal mb-3">{registerV3Text[appContext.locale]["Create your first EasyLedger."]}</h2>
+            <h2 className="h5 fw-normal mb-3">{registerV3Text[appContext.locale]["Create your first EasyLedger."]}</h2>
             <div className="login-content">
                 <form className="mb-0" onSubmit={event => validateForm(event)}>
                     <label className="control-label">{registerV3Text[appContext.locale]["EasyLedger Name"]} <span className="text-danger">*</span></label>

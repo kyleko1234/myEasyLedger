@@ -41,7 +41,7 @@ function Settings() {
             </h1>
             <Card className="very-rounded mb-3 shadow-sm">
                 <CardBody>
-                    <CardTitle className="font-weight-600">{settingsText[appContext.locale]["Personal Settings"]}</CardTitle>
+                    <CardTitle className="fw-semibold">{settingsText[appContext.locale]["Personal Settings"]}</CardTitle>
                     <div>
                         <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleLanguageSettingsModal}>
                             <div className="indent td">{settingsText[appContext.locale]["Language Settings"]}</div>
@@ -81,7 +81,7 @@ function Settings() {
                     ? null  //only show this widget if user administrates at least one organization
                     : <Card className="very-rounded shadow-sm">
                         <CardBody>
-                            <CardTitle className="font-weight-600">
+                            <CardTitle className="fw-semibold">
                                 {settingsText[appContext.locale]["Manage my EasyLedgers..."]}
                             </CardTitle>
                             <div>

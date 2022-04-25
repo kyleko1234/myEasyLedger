@@ -64,7 +64,7 @@ function NewAccountForm(props) {
             <h1>
                 {registerV3Text[appContext.locale]["Sign Up"]}
             </h1>
-            <h2 className="h5 font-weight-normal mb-2">{registerV3Text[appContext.locale]["Create your myEasyLedger Account."]}</h2>
+            <h2 className="h5 fw-normal mb-2">{registerV3Text[appContext.locale]["Create your myEasyLedger Account."]}</h2>
             <div className="login-content">
                 <form className="mb-0" onSubmit={event => validateForm(event)}>
                     <label className="control-label">{registerV3Text[appContext.locale]["Name"]} <span className="text-danger">*</span></label>

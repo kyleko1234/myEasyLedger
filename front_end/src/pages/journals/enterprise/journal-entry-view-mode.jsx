@@ -103,7 +103,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                             return(
                                 <div key={i} className="tr d-flex">
                                     <div className="px-2 py-2 w-100">
-                                        <div className="font-weight-600">
+                                        <div className="fw-semibold">
                                             {formatCell(row[columns[1].accessor], columns[1].accessor)}
                                         </div>
                                         <div className="mb-2">
@@ -111,7 +111,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                                         </div>
                                         <div className="d-flex justify-content-between ">
                                             <div className="">
-                                                <div className="font-weight-600">
+                                                <div className="fw-semibold">
                                                     {columns[2].header}
                                                 </div>
                                                 <div>
@@ -119,7 +119,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                                                 </div>
                                             </div>
                                             <div className="text-end">
-                                                <div className="font-weight-600">
+                                                <div className="fw-semibold">
                                                     {columns[3].header}
                                                 </div>
                                                 <div>
@@ -140,7 +140,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                                     <div>
                                         {journalEntryViewModeText[appContext.locale]["Total Debit"]}
                                     </div>
-                                    <div className="font-weight-normal">
+                                    <div className="fw-normal">
                                         {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                                     </div>
                                 </div>
@@ -148,7 +148,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                                     <div>
                                         {journalEntryViewModeText[appContext.locale]["Total Credit"]}
                                     </div>
-                                    <div className="font-weight-normal">
+                                    <div className="fw-normal">
                                         {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}
                                     </div>
                                 </div>

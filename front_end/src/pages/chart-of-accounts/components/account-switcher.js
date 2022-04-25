@@ -68,7 +68,7 @@ function AccountSwitcher(props) {
         <Card className="very-rounded shadow-sm">
             <CardBody>
                 <h4>{balanceSummaryText[appContext.locale][props.widgetTitle]}</h4>
-                <div className="font-weight-normal">
+                <div className="fw-normal">
                     <Link replace to="#" onClick={handleExpandAll}>{balanceSummaryText[appContext.locale]["(Expand All)"]}</Link>
                     <span> / </span>
                     <Link replace to="#" onClick={handleCollapseAll}>{balanceSummaryText[appContext.locale]["(Collapse All)"]}</Link>
@@ -106,7 +106,7 @@ function AccountSwitcher(props) {
                                                             <i className={"fas fa-angle-right rotating-caret" + (account.expanded? " expand" : "")}></i>
                                                         </div>
                                                         <div className= "col-10 td px-0">
-                                                            <div className={"font-weight-600 font-size-compact " + ((account.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
+                                                            <div className={"fw-semibold font-size-compact " + ((account.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
                                                                 {account.accountCode}
                                                             </div>
                                                             <div className="text-truncate">
@@ -123,7 +123,7 @@ function AccountSwitcher(props) {
                                                                     <Link to={props.category ? `/category-details/${childAccount.accountId}` : `/account-details/${childAccount.accountId}`} key={childAccount.accountId} className="tr d-flex align-items-center">
                                                                         <div className="col-1 ps-2"></div>
                                                                         <div className= "col-10 td ps-3 pe-0">
-                                                                            <div className={"font-weight-600 font-size-compact " + ((childAccount.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
+                                                                            <div className={"fw-semibold font-size-compact " + ((childAccount.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
                                                                                 {childAccount.accountCode}
                                                                             </div>
                                                                             <div className="text-truncate">
@@ -143,7 +143,7 @@ function AccountSwitcher(props) {
                                                         <i className="fas fa-angle-right rotating-caret px-2 invisible"></i>
                                                     </div>
                                                     <div className= "col-10 td px-0">
-                                                        <div className={"font-weight-600 font-size-compact " + ((account.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
+                                                        <div className={"fw-semibold font-size-compact " + ((account.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
                                                             {account.accountCode}
                                                         </div>
                                                         <div className="text-truncate">

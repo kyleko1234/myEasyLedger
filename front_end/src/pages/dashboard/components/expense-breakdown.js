@@ -142,7 +142,7 @@ function ExpenseBreakdown(props) {
             <CardBody >
                 <CardTitle className="font-weight-semibold">
                     {dashboardText[appContext.locale]["Expense Breakdown"]}
-                    <span className="font-weight-normal">                            
+                    <span className="fw-normal">                            
                         {appContext.isLoading
                             ? null
                             : dashboardText[appContext.locale]["Date range"](startDate, endDate)
