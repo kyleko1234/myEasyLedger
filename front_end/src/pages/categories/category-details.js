@@ -97,7 +97,7 @@ function CategoryDetails(props) {
                         ?   <>
                                 <h1 className="h2 d-flex">
                                     {selectedAccount.accountName}
-                                    <Link replace className="icon-link-text-muted ml-3 font-size-larger align-self-center" to="#" onClick={toggleAccountDetailsEditorModal}>
+                                    <Link replace className="icon-link-text-muted ms-3 font-size-larger align-self-center" to="#" onClick={toggleAccountDetailsEditorModal}>
                                         <i className="fas fa-edit"></i>
                                     </Link>
                                 </h1>

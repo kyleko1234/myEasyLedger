@@ -105,7 +105,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
                                             {row[columns[0].accessor] + " - " + row[columns[1].accessor]}
                                         </div>
                                         <div className="d-flex justify-content-between">
-                                            <div className="mr-5">
+                                            <div className="me-5">
                                                 {row[columns[2].accessor]? row[columns[2].accessor]: <em className="text-muted font-weight-light">{journalEntryViewModeText[appContext.locale]["No memo"]}</em> }
                                             </div>
                                             <div className="text-right">

@@ -21,14 +21,14 @@ class Header extends React.Component {
 					<div id="header" className="header d-flex justify-content-between">
 						<div className="d-flex align-items-center">
                             {pageSidebar && (
-									<button type="button" className="btn btn-white border-0 mx-1 ml-2 font-size-larger" onClick={toggleHiddenSidebar}>
+									<button type="button" className="btn btn-white border-0 mx-1 ms-2 font-size-larger" onClick={toggleHiddenSidebar}>
 										<i className="fas fa-bars"></i>
 									</button>
 							)}
 							<Link to="/" className="header-logo">my<b>Easy</b>Ledger</Link>
 						</div>
-						<div className="d-flex align-items-center mr-3">
-							<PersonDropdown className="mr-1"/>
+						<div className="d-flex align-items-center me-3">
+							<PersonDropdown className="me-1"/>
 							<EasyledgersDropdown/>
 						</div>
 					</div>

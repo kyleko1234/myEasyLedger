@@ -479,7 +479,7 @@ function TableOfTransactions({
                                     onClick={handleSaveTransactionButton}>
                                     {tableOfJournalEntriesText[appContext.locale]["Save"]}</button>
                                 <button
-                                    className="btn btn-white ml-2 width-10ch"
+                                    className="btn btn-white ms-2 width-10ch"
                                     onClick={handleCancelEditTransactionButton}>
                                     {tableOfJournalEntriesText[appContext.locale]["Cancel"]}</button>
                             </div>
@@ -492,10 +492,10 @@ function TableOfTransactions({
                                 <button className="btn btn-info width-10ch" onClick={handleCopyTransactionButton} disabled={appContext.currentPermissionTypeId < 2}>
                                     {tableOfJournalEntriesText[appContext.locale]["Copy"]}
                                 </button>
-                                <button className="btn btn-primary ml-2 width-10ch" onClick={handleEditTransactionButton} disabled={appContext.currentPermissionTypeId < 2}>
+                                <button className="btn btn-primary ms-2 width-10ch" onClick={handleEditTransactionButton} disabled={appContext.currentPermissionTypeId < 2}>
                                     {tableOfJournalEntriesText[appContext.locale]["Edit"]}
                                 </button>
-                                <button className="btn btn-white ml-2 width-10ch" onClick={handleCloseTransactionButton}>
+                                <button className="btn btn-white ms-2 width-10ch" onClick={handleCloseTransactionButton}>
                                     {tableOfJournalEntriesText[appContext.locale]["Close"]}
                                 </button>
                             </div>

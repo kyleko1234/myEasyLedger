@@ -414,7 +414,7 @@ function TableOfJournalEntries({
                                 <button className="btn btn-primary width-10ch"onClick={() => handleSaveJournalEntryButton()}>
                                     {tableOfJournalEntriesText[appContext.locale]["Save"]}
                                 </button>
-                                <button className="btn btn-white ml-2 width-10ch" onClick={createMode ? cancelCreateMode : cancelEditMode}>
+                                <button className="btn btn-white ms-2 width-10ch" onClick={createMode ? cancelCreateMode : cancelEditMode}>
                                     {tableOfJournalEntriesText[appContext.locale]["Cancel"]}
                                 </button>
                             </div>
@@ -428,10 +428,10 @@ function TableOfJournalEntries({
                                 <button className="btn btn-info width-10ch" onClick={handleCopyJournalEntryButton} disabled={appContext.currentPermissionTypeId < 2}>
                                     {tableOfJournalEntriesText[appContext.locale]["Copy"]}
                                 </button>
-                                <button className="btn btn-primary ml-2 width-10ch" onClick={handleEditButton} disabled={appContext.currentPermissionTypeId < 2}>
+                                <button className="btn btn-primary ms-2 width-10ch" onClick={handleEditButton} disabled={appContext.currentPermissionTypeId < 2}>
                                     {tableOfJournalEntriesText[appContext.locale]["Edit"]}
                                 </button>
-                                <button className="btn btn-white ml-2 width-10ch" onClick={handleExitJournalEntryModal}>
+                                <button className="btn btn-white ms-2 width-10ch" onClick={handleExitJournalEntryModal}>
                                     {tableOfJournalEntriesText[appContext.locale]["Close"]}
                                 </button>
                             </div>

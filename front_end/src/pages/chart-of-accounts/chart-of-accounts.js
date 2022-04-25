@@ -133,7 +133,7 @@ class ChartOfAccounts extends React.Component {
                                         {this.renderAccountTypeSelect()}
                                     </div>
                                     <button
-                                        className="btn font-size-standard btn-primary ml-3 "
+                                        className="btn font-size-standard btn-primary ms-3 "
                                         onClick={() => {
                                             this.handleAddAnAccountButton();
                                         }}

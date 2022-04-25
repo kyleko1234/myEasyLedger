@@ -244,7 +244,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                     <div className="tr d-flex" key={i}>
                                         <div className="td w-100">
                                             <div className="d-flex mb-2 align-items-center">
-                                                <div className="col-5 px-0 mr-2">
+                                                <div className="col-5 px-0 me-2">
                                                     <div className="font-weight-600 font-size-compact">
                                                         {columns[0].header}
                                                     </div>
@@ -252,7 +252,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                                         {returnFormByColumnType(row[columns[0].accessor], columns[0].accessor, i)}
                                                     </div>
                                                 </div>
-                                                <div className="col-5 px-0 mr-2">
+                                                <div className="col-5 px-0 me-2">
                                                     <div className="font-weight-600 font-size-compact">
                                                         {columns[1].header}
                                                     </div>
@@ -272,7 +272,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                                 </div>
                                             </div>
                                             <div className="d-flex mb-2 align-items-center">
-                                                    <div className="col-6 px-0 mr-2">
+                                                    <div className="col-6 px-0 me-2">
                                                         <div className="font-weight-600 font-size-compact">
                                                             {columns[2].header}
                                                         </div>
@@ -280,7 +280,7 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                                             {returnFormByColumnType(row[columns[2].accessor], columns[2].accessor, i)}
                                                         </div>
                                                     </div>
-                                                    <div className="col-4 px-0 mr-2">
+                                                    <div className="col-4 px-0 me-2">
                                                         <div className="font-weight-600 font-size-compact">
                                                             {columns[3].header}
                                                         </div>

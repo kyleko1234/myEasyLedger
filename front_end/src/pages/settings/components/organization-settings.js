@@ -140,7 +140,7 @@ function OrganizationSettings(props) {
                             {settingsText[appContext.locale]["Fiscal Year Begin Date"] + ":"}
                         </label>
                         <div className="col-md-9 d-flex px-0">
-                            <div className="w-50 mr-3">
+                            <div className="w-50 me-3">
                                 <Select
                                     classNamePrefix="form-control"
                                     options={monthOptions}
@@ -206,7 +206,7 @@ function OrganizationSettings(props) {
                         {settingsText[appContext.locale]["Save"]}
                     </button>
                     <button 
-                        className="btn btn-danger d-none d-sm-inline-block ml-4" 
+                        className="btn btn-danger d-none d-sm-inline-block ms-4" 
                         onClick={handleDeleteOrganizationButton}
                         disabled={permissionObject.permissionType.id < 4}
                     >

@@ -135,7 +135,7 @@ class Categories extends React.Component {
                                     <div className="d-sm-none w-50">
                                         {this.renderAccountTypeSelect()}
                                     </div>
-                                    <button className="btn btn-primary my-1 ml-3" onClick={() => this.handleAddAnAccountButton()} disabled={this.context.currentPermissionTypeId < 2}>   
+                                    <button className="btn btn-primary my-1 ms-3" onClick={() => this.handleAddAnAccountButton()} disabled={this.context.currentPermissionTypeId < 2}>   
                                         {chartOfAccountsText[this.context.locale]["Create a category"]} 
                                     </button>
                                 </div>

@@ -28,10 +28,10 @@ function PersonDropdown(props) {
                     </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem onClick={() => history.push("/settings")}>
-                        <i className="fas fa-cog mr-2"></i>{sidebarText[appContext.locale]["Settings"]}
+                        <i className="fas fa-cog me-2"></i>{sidebarText[appContext.locale]["Settings"]}
                     </DropdownItem>
                     <DropdownItem onClick={appContext.logout}>
-                        <i className="fas fa-sign-out-alt mr-2"></i>{sidebarText[appContext.locale]["Sign Out"]}
+                        <i className="fas fa-sign-out-alt me-2"></i>{sidebarText[appContext.locale]["Sign Out"]}
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>

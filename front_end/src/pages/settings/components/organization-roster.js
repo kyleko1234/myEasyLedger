@@ -316,7 +316,7 @@ function OrganizationRoster(props) {
                                 {settingsText[appContext.locale]["Save"]}
                             </button>
                             <button
-                                className="btn btn-white width-10ch ml-2"
+                                className="btn btn-white width-10ch ms-2"
                                 onClick={toggleEditAPersonModal}
                             >
                                 {settingsText[appContext.locale]["Cancel"]}

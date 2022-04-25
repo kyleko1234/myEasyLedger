@@ -390,7 +390,7 @@ function AccountDetailsEditor(props) {
                         <button className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
                             {accountDetailsEditorText[appContext.locale]["Save"]}
                         </button>
-                        <button className="btn btn-white width-10ch ml-2" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
+                        <button className="btn btn-white width-10ch ms-2" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
                     </div>
                 </ModalFooter>
             </Modal>

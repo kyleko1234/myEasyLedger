@@ -253,7 +253,7 @@ function JournalEntryEditMode({
                                                 <div className="d-flex justify-content-between">
                                                     <div className="w-100">{returnFormByColumnType(row, i, columns[1].accessor)}</div>
                                                     <div>
-                                                        <button className="btn btn-lg btn-white border-0 px-1 ml-2" onClick={() => removeRow(i)}>
+                                                        <button className="btn btn-lg btn-white border-0 px-1 ms-2" onClick={() => removeRow(i)}>
                                                             <i className="ion ion-md-close fa-fw fa-lg"></i>
                                                         </button>
                                                     </div>
@@ -268,7 +268,7 @@ function JournalEntryEditMode({
                                                 </div>
                                             </div>
                                             <div className="d-flex justify-content-between">
-                                                <div className="mr-2">
+                                                <div className="me-2">
                                                     <div className="font-weight-600 font-size-compact">
                                                         {columns[2].header}
                                                     </div>
