@@ -17,7 +17,7 @@ function CategoryDetails(props) {
         () => [ // accessor is the "key" in the data},
             { header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-3" },
             { header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', className: " col-6 text-truncate" },
-            { header: accountDetailsText[appContext.locale]['Amount'], accessor: 'amount', className: " col-3 text-right" },
+            { header: accountDetailsText[appContext.locale]['Amount'], accessor: 'amount', className: " col-3 text-end" },
             { accessor: "blank"}
         ], []
     )

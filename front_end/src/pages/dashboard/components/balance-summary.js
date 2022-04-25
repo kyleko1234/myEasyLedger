@@ -123,7 +123,7 @@ function BalanceSummary(props) {
                                                                 : account.accountName}
                                                         </div>
                                                     </div>
-                                                    <div className={" text-right " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
+                                                    <div className={" text-end " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
                                                         {formatCurrency(appContext.locale, appContext.currency, (
                                                             account.accountTypeId === 1
                                                                 ? account.debitsMinusCredits

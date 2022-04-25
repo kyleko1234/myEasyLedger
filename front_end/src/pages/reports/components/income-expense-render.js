@@ -198,9 +198,9 @@ function IncomeExpenseRender(props) {
                                                 placeholder={"Custom"}
                                                 value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                             />
-                                            <label className="my-0 text-right col-1 px-2">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
+                                            <label className="my-0 text-end col-1 px-2">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
                                             <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
-                                            <label className="my-0 text-right col-1 px-2">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
+                                            <label className="my-0 text-end col-1 px-2">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
                                             <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
                                         </div>
                                     </div>
@@ -230,7 +230,7 @@ function IncomeExpenseRender(props) {
                                                 value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                             />
                                         </div>
-                                        <div className="d-flex justify-content-between text-left align-items-center my-1">
+                                        <div className="d-flex justify-content-between text-start align-items-center my-1">
                                             <label className="my-0 col-3 px-0">
                                                 {incomeStatementRenderText[appContext.locale]["From:"]} 
                                             </label>
@@ -242,7 +242,7 @@ function IncomeExpenseRender(props) {
                                                 onChange={event => handleChangeStartDate(event.target.value, i)} 
                                             />
                                         </div>
-                                        <div className="d-flex justify-content-between text-left align-items-center mb-2">
+                                        <div className="d-flex justify-content-between text-start align-items-center mb-2">
                                             <label className="my-0 col-3 px-0">
                                                 {incomeStatementRenderText[appContext.locale]["To:"]}
                                             </label>
@@ -279,9 +279,9 @@ function IncomeExpenseRender(props) {
             </Card>
             <PerfectScrollbar>
                 <div className="min-width-md">
-                    <div className="d-flex justify-content-between font-weight-semibold text-right">
+                    <div className="d-flex justify-content-between font-weight-semibold text-end">
                         <div>{/*empty div for spacing*/}</div>
-                        <div className="text-right d-flex">
+                        <div className="text-end d-flex">
                             {columnLabels.map((columnLabel, i) => {
                                     return(
                                         <div className="td width-175" key={i}>
@@ -318,7 +318,7 @@ function IncomeExpenseRender(props) {
                                                             <div>
                                                                 {account.accountName}
                                                             </div>
-                                                            <div className="text-right d-flex">
+                                                            <div className="text-end d-flex">
                                                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                                                     let specificAccount = incomeStatement.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
                                                                     return(
@@ -338,7 +338,7 @@ function IncomeExpenseRender(props) {
                                                                             <div>
                                                                                 {childAccount.accountName}
                                                                             </div>
-                                                                            <div className="text-right d-flex">
+                                                                            <div className="text-end d-flex">
                                                                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                                                                     let specificChildAccount = incomeStatement.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                                     return(
@@ -360,7 +360,7 @@ function IncomeExpenseRender(props) {
                                         <div>
                                             {incomeStatementRenderText[appContext.locale]["Total Income"]}
                                         </div>
-                                        <div className="text-right d-flex">
+                                        <div className="text-end d-flex">
                                             {incomeStatementObjects.map((incomeStatement, i) => {
                                                 return(
                                                     <div key={i} className={"width-175 "}>
@@ -385,7 +385,7 @@ function IncomeExpenseRender(props) {
                                                         <div>
                                                             {account.accountName}
                                                         </div>
-                                                        <div className="text-right d-flex">
+                                                        <div className="text-end d-flex">
                                                             {incomeStatementObjects.map((incomeStatement, i) => {
                                                                 let specificAccount = incomeStatement.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
                                                                 return(
@@ -405,7 +405,7 @@ function IncomeExpenseRender(props) {
                                                                         <div>
                                                                             {childAccount.accountName}
                                                                         </div>
-                                                                        <div className="text-right d-flex">
+                                                                        <div className="text-end d-flex">
                                                                             {incomeStatementObjects.map((incomeStatement, i) => {
                                                                                 let specificChildAccount = incomeStatement.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                                 return(
@@ -427,7 +427,7 @@ function IncomeExpenseRender(props) {
                                         <div>
                                             {incomeStatementRenderText[appContext.locale]["Total expenses"]}
                                         </div>
-                                        <div className="text-right d-flex">
+                                        <div className="text-end d-flex">
                                             {incomeStatementObjects.map((incomeStatement, i) => {
                                                 return(
                                                     <div key={i} className={"width-175 "}>
@@ -444,7 +444,7 @@ function IncomeExpenseRender(props) {
                                         <div>
                                             {incomeStatementRenderText[appContext.locale]["Total Income less Expenses"]}
                                         </div>
-                                        <div className="text-right d-flex">
+                                        <div className="text-end d-flex">
                                             {incomeStatementObjects.map((incomeStatement, i) => {
                                                 return( 
                                                     <div key={i} className="width-175 ">

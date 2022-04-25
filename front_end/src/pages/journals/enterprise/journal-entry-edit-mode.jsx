@@ -302,7 +302,7 @@ function JournalEntryEditMode({
                                         {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                                     </div>
                                 </div>
-                                <div className="text-right">
+                                <div className="text-end">
                                     <div>
                                         {journalEntryEditModeText[appContext.locale]["Total Credit"]}
                                     </div>

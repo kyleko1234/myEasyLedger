@@ -9,8 +9,8 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
         () => [ // accessor is the "key" in the data},
             { header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', className: 'col-6 ' },
             { header: journalEntryViewModeText[appContext.locale]['Account'], accessor: 'accountId', className: 'col-2 ' },
-            { header: journalEntryViewModeText[appContext.locale]['Debit'], accessor: 'debitAmount', className: 'col-2 text-right ' },
-            { header: journalEntryViewModeText[appContext.locale]['Credit'], accessor: 'creditAmount', className: 'col-2 text-right ' },
+            { header: journalEntryViewModeText[appContext.locale]['Debit'], accessor: 'debitAmount', className: 'col-2 text-end ' },
+            { header: journalEntryViewModeText[appContext.locale]['Credit'], accessor: 'creditAmount', className: 'col-2 text-end ' },
         ],
         []
     )
@@ -88,10 +88,10 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                         <div className="tr d-flex">
                             <div className="td col-6">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
                             <div className="td col-2"></div>
-                            <div className="td col-2 text-right">
+                            <div className="td col-2 text-end">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                             </div>
-                            <div className="td col-2 text-right">
+                            <div className="td col-2 text-end">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}
                             </div>
                         </div>
@@ -118,7 +118,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                                                     {formatCell(row[columns[2].accessor], columns[2].accessor)}
                                                 </div>
                                             </div>
-                                            <div className="text-right">
+                                            <div className="text-end">
                                                 <div className="font-weight-600">
                                                     {columns[3].header}
                                                 </div>
@@ -144,7 +144,7 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                                         {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                                     </div>
                                 </div>
-                                <div className="text-right">
+                                <div className="text-end">
                                     <div>
                                         {journalEntryViewModeText[appContext.locale]["Total Credit"]}
                                     </div>

@@ -10,9 +10,9 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
 
     return(
         <div className="min-width-md">                
-            <div className="d-flex justify-content-between font-weight-semibold text-right">
+            <div className="d-flex justify-content-between font-weight-semibold text-end">
                 <div>{/*empty div for spacing*/}</div>
-                <div className="text-right d-flex">
+                <div className="text-end d-flex">
                     {columnLabels.map((columnLabel, i) => {
                             return(
                                 <div className="td width-175" key={i}>
@@ -48,7 +48,7 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
                                             <div>
                                                 {account.accountName}
                                             </div>
-                                            <div className="text-right d-flex">
+                                            <div className="text-end d-flex">
                                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                                     let specificAccount = incomeStatement.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
                                                     return(
@@ -68,7 +68,7 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
                                                             <div>
                                                                 {childAccount.accountName}
                                                             </div>
-                                                            <div className="text-right d-flex">
+                                                            <div className="text-end d-flex">
                                                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                                                     let specificChildAccount = incomeStatement.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                     return(
@@ -93,7 +93,7 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
                             <div>
                                 {incomeStatementRenderText[appContext.locale]["Total expenses"]}
                             </div>
-                            <div className="text-right d-flex">
+                            <div className="text-end d-flex">
                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                     return(
                                         <div key={i} className={"width-175 "}>

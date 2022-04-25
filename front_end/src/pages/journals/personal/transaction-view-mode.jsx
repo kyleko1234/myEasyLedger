@@ -10,7 +10,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
             { header: journalEntryViewModeText[appContext.locale]['Transaction Type'], accessor: 'transactionTypeName', className: 'col-3 ' },
             { header: journalEntryViewModeText[appContext.locale]['Category or Account'], accessor: 'accountName', className: 'col-3' },
             { header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', className: 'col-4 ' },
-            { header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', className: 'col-2 text-right' },
+            { header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', className: 'col-2 text-end' },
         ],
         []
     )
@@ -89,7 +89,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
                             <div className="td col-3">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
                             <div className="td col-3"></div>
                             <div className="td col-3"></div>
-                            <div className="td col-3 text-right">
+                            <div className="td col-3 text-end">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmounts())}
                             </div>
                         </div>
@@ -108,7 +108,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
                                             <div className="me-5">
                                                 {row[columns[2].accessor]? row[columns[2].accessor]: <em className="text-muted font-weight-light">{journalEntryViewModeText[appContext.locale]["No memo"]}</em> }
                                             </div>
-                                            <div className="text-right">
+                                            <div className="text-end">
                                                 {formatCell(row[columns[3].accessor], columns[3].accessor)}
                                             </div>
                                         </div>
@@ -120,7 +120,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
                     <div className="tfoot">
                         <div className="tr d-flex justify-content-between">
                             <div className="px-2 py-2">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
-                            <div className="px-2 py-2 text-right">
+                            <div className="px-2 py-2 text-end">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmounts())}
                             </div>
                         </div>

@@ -360,12 +360,12 @@ function TableOfTransactions({
                                                     <div className={"font-weight-600 " + (category? "d-none": "")}>
                                                             {columns[3].header}
                                                     </div>
-                                                    <div className={"px-0 " + (category? "font-size-standard text-right" : "")}>
+                                                    <div className={"px-0 " + (category? "font-size-standard text-end" : "")}>
                                                         {formatCell(row[columns[3].accessor], columns[3].accessor)}
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div className={"font-weight-600 text-right " + (category? "d-none" : "")}>
+                                                    <div className={"font-weight-600 text-end " + (category? "d-none" : "")}>
                                                             {columns[4].header}
                                                     </div>
                                                     <div className={"px-0 "}>
@@ -390,12 +390,12 @@ function TableOfTransactions({
                                                     <div className={"font-weight-600 " + (category? "d-none": "")}>
                                                             {columns[2].header}
                                                     </div>
-                                                    <div className={"px-0 " + (category? "font-size-standard text-right" : "")}>
+                                                    <div className={"px-0 " + (category? "font-size-standard text-end" : "")}>
                                                         {formatCell(row[columns[2].accessor], columns[2].accessor)}
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div className={"font-weight-600 text-right " + (category? "d-none" : "")}>
+                                                    <div className={"font-weight-600 text-end " + (category? "d-none" : "")}>
                                                             {columns[3].header}
                                                     </div>
                                                     <div className={"px-0 "}>

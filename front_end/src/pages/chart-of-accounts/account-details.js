@@ -19,14 +19,14 @@ function AccountDetails(props) {
         ?   [ // accessor is the "key" in the data},
                 { header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-md-2 text-nowrap " },
                 { header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', className: "col-md-6 text-truncate " },
-                { header: accountDetailsText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-right col-md-2 text-nowrap" },
-                { header: accountDetailsText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-right col-md-2 text-nowrap" },
+                { header: accountDetailsText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-end col-md-2 text-nowrap" },
+                { header: accountDetailsText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-end col-md-2 text-nowrap" },
             ]
         :   [ // accessor is the "key" in the data},
                 { header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-md-2 text-nowrap " },
                 { header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', className: " col-md-6 text-truncate " },
-                { header: accountDetailsText[appContext.locale]['Inflow'], accessor: 'debitAmount', className: " text-right col-md-2 text-nowrap " },
-                { header: accountDetailsText[appContext.locale]['Outflow'], accessor: 'creditAmount', className: " text-right col-md-2 text-nowrap " },
+                { header: accountDetailsText[appContext.locale]['Inflow'], accessor: 'debitAmount', className: " text-end col-md-2 text-nowrap " },
+                { header: accountDetailsText[appContext.locale]['Outflow'], accessor: 'creditAmount', className: " text-end col-md-2 text-nowrap " },
             ];
 
     //get the selected account ID from URL parameters

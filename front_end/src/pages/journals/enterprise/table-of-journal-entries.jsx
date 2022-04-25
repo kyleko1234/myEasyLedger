@@ -344,7 +344,7 @@ function TableOfJournalEntries({
                                             </div>
                                         </div>
                                         <div className="font-size-compact">
-                                            <div className="font-weight-600 text-right">
+                                            <div className="font-weight-600 text-end">
                                                     {columns[3].header}
                                             </div>
                                             <div className={"px-0 " + columns[3].className}>
