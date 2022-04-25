@@ -282,6 +282,11 @@ a {
 }
 
 /* MODIFICATIONS TO BOOTSTRAP DROPDOWN*/
+
+.dropdown-divider {
+    border-top: 1px solid #e9ecef;
+}
+
 .dropdown-item,
 .dropdown-item-text {
     font-size: var(--base-font-size);
