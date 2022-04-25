@@ -142,7 +142,7 @@ function OrganizationRoster(props) {
                     </div>
                     <div className="d-sm-none my-2">
                             {ownPermissionForCurrentOrganization.permissionType.id >= 3 ?
-                                <button className="btn btn-block btn-primary" onClick={toggleAddAPersonModal}>
+                                <button className="btn d-block w-100 btn-primary" onClick={toggleAddAPersonModal}>
                                     {settingsText[appContext.locale]["Add a person"]}
                                 </button>
                                 : null}

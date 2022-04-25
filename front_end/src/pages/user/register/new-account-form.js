@@ -105,7 +105,7 @@ function NewAccountForm(props) {
                     </div>
                     <Alert isOpen={passwordMatchAlert} color="danger">{registerV3Text[appContext.locale]["Password does not match."]}</Alert>
                     <div className="mb-2">
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">
+                        <button type="submit" className="btn btn-primary d-block w-100 btn-lg">
                             {loading
                                 ? <LoadingSpinner />
                                 : registerV3Text[appContext.locale]["Next"]

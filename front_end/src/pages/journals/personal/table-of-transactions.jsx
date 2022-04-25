@@ -309,7 +309,7 @@ function TableOfTransactions({
             </div>
             {hasAddEntryButton ? 
                 <div className="d-sm-none">
-                    <button type="button" className="btn btn-primary btn-lg mt-2 btn-block" onClick={openEditorForNewTransaction} disabled={appContext.currentPermissionTypeId < 2}>
+                    <button type="button" className="btn btn-primary btn-lg mt-2 d-block w-100" onClick={openEditorForNewTransaction} disabled={appContext.currentPermissionTypeId < 2}>
                         {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
                     </button>
                 </div>

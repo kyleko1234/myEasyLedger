@@ -199,7 +199,7 @@ function OrganizationSettings(props) {
                         {settingsText[appContext.locale]["Save"]}
                     </button>
                     <button 
-                        className="btn btn-primary btn-block d-sm-none" 
+                        className="btn btn-primary d-block w-100 d-sm-none" 
                         onClick={saveSettings}
                         disabled={permissionObject.permissionType.id < 3}
                     >
@@ -213,7 +213,7 @@ function OrganizationSettings(props) {
                         {settingsText[appContext.locale]["Delete this EasyLedger"]}
                     </button>
                     <button 
-                        className="btn btn-danger btn-block d-sm-none mt-4" 
+                        className="btn btn-danger d-block w-100 d-sm-none mt-4" 
                         onClick={handleDeleteOrganizationButton}
                         disabled={permissionObject.permissionType.id < 4}
                     >

@@ -187,11 +187,11 @@ function JournalEntryEditMode({
                         value={journalEntryDescription} 
                         onChange={event => setJournalEntryDescription(event.target.value)}/>
                 </div>
-                <button className="btn btn-white d-none d-xl-inline-block" onClick={handleCopyDescriptionToLineItemsButton}>
+                <button className="btn btn-white d-none d-xl-inline-block col-xl-3" onClick={handleCopyDescriptionToLineItemsButton}>
                     {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
                 </button>
             </div>
-            <button className="btn btn-white my-3 btn-block d-xl-none" onClick={handleCopyDescriptionToLineItemsButton}>
+            <button className="btn btn-white my-3 d-block w-100 d-xl-none" onClick={handleCopyDescriptionToLineItemsButton}>
                     {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
             </button>
 
@@ -315,7 +315,7 @@ function JournalEntryEditMode({
                     </div>
                 </div>
                 <div>
-                    <button className="btn btn-lg btn-white btn-block" onClick={() => addEmptyLineItem()}>
+                    <button className="btn btn-lg btn-white w-100 d-block" onClick={() => addEmptyLineItem()}>
                         <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
                     </button>
                 </div>

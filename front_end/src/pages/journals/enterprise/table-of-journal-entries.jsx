@@ -293,7 +293,7 @@ function TableOfJournalEntries({
                 : null}
             </div>
             <div className="d-sm-none"> {/**On small screens render button-block */}
-                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
+                <button type="button" className="btn btn-primary btn-lg d-block w-100" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
                     {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                 </button>
             </div>

@@ -101,7 +101,7 @@ function AcceptInvitationForm({token, setCompleted, email}) {
                     </div>
                     {passwordMatchAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Password does not match."]}</Alert> : null}
                     <div className="mb-2">
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">
+                        <button type="submit" className="btn btn-primary w-100 d-block btn-lg">
                             {loading
                                 ? <LoadingSpinner /> 
                                 : registerV3Text[appContext.locale]["Finish"]

@@ -95,7 +95,7 @@ function LoginContent(props) {
                     <Link to="/user/login/forgot/find-email" className="text-primary">{loginV3Text[appContext.locale]["Forgot Password?"]}</Link>
                 </div>
                 <div className="mb-3">
-                    <button type="submit" className="btn btn-primary btn-block btn-lg">
+                    <button type="submit" className="btn btn-primary d-block w-100 btn-lg">
                         {loading
                             ? <LoadingSpinner /> 
                             : loginV3Text[appContext.locale]["Sign me in"]

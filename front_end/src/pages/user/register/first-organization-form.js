@@ -85,7 +85,7 @@ function FirstOrganizationForm(props) {
                     */}
                     <Alert isOpen={agreeAlert} color="danger">{registerV3Text[appContext.locale]["Please agree."]}</Alert>
                     <div className="register-buttons mb-3">
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">
+                        <button type="submit" className="btn btn-primary d-block w-100 btn-lg">
                             {loading
                                 ? <LoadingSpinner />
                                 : registerV3Text[appContext.locale]["Sign Up"]
