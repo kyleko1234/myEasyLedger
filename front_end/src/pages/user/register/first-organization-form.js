@@ -59,17 +59,17 @@ function FirstOrganizationForm(props) {
                         </div>
                     </div>
                     <label>{registerV3Text[appContext.locale]["Create an EasyLedger using:"]}</label>
-                    <div className="row mb-3 pl-3">
+                    <div className="row mb-3 ps-3">
                         <div className="col-12 form-check">
                             <input type="radio" id="is-enterprise-false" name="is-enterprise-radio" value={false} checked={props.isEnterprise === false} onChange={handleIsEnterpriseRadioChange} className="form-check-input"/>
                             <label htmlFor="is-enterprise-false" className="form-check-label">
-                                <div className="pl-2">{registerV3Text[appContext.locale]["Single-entry accounting"]}</div>
+                                <div className="ps-2">{registerV3Text[appContext.locale]["Single-entry accounting"]}</div>
                             </label>
                         </div>
                         <div className="col-12 form-check">
                             <input type="radio" id="is-enterprise-true" name="is-enterprise-radio" value={true} checked={props.isEnterprise === true} onChange={handleIsEnterpriseRadioChange} className="form-check-input"/>
                             <label htmlFor="is-enterprise-true" className="form-check-label">
-                                <div className="pl-2">{registerV3Text[appContext.locale]["Double-entry accounting"]}</div>
+                                <div className="ps-2">{registerV3Text[appContext.locale]["Double-entry accounting"]}</div>
                             </label>
                         </div>       
                     </div>

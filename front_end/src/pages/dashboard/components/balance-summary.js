@@ -134,7 +134,7 @@ function BalanceSummary(props) {
                                                         ))}
                                                     </div>
                                                 </div>
-                                                <div className="col-1 pl-0 text-muted"><i className="fas fa-angle-right "></i></div>
+                                                <div className="col-1 ps-0 text-muted"><i className="fas fa-angle-right "></i></div>
                                             </Link>
                                         ) 
                                     })}

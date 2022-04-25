@@ -69,10 +69,10 @@ function NewAccountForm(props) {
                 <form className="mb-0" onSubmit={event => validateForm(event)}>
                     <label className="control-label">{registerV3Text[appContext.locale]["Name"]} <span className="text-danger">*</span></label>
                     <div className="row mb-2">
-                        <div className="col-6 pr-1">
+                        <div className="col-6 pe-1">
                             <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["First name"]} required value={props.firstNameInput} onChange={event => props.setFirstNameInput(event.target.value)} />
                         </div>
-                        <div className="col-6 pl-1">
+                        <div className="col-6 ps-1">
                             <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["Last name"]} required value={props.lastNameInput} onChange={event => props.setLastNameInput(event.target.value)}/>
                         </div>
                     </div>

@@ -17,19 +17,19 @@ function ReportTypeList() {
                 <div className="tbody">
                     <Link to="/reports/balance-sheet" className="tr d-flex justify-content-between align-items-center">
                             <div className="td indent">{reportTypeListText[appContext.locale]["Balance Sheet"]}</div>
-                            <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                            <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
                     <Link to="/reports/income-statement" className="tr d-flex justify-content-between align-items-center">
                             <div className="td indent">{reportTypeListText[appContext.locale]["Income Statement"]}</div>
-                            <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                            <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
                     <Link to="/reports/cash-flow" className="tr d-flex justify-content-between align-items-center">
                             <div className="td indent">{reportTypeListText[appContext.locale]["Cash Flow"]}</div>
-                            <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                            <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
                     <Link to="/reports/expense" className="tr d-flex justify-content-between align-items-center">
                             <div className="td indent">{reportTypeListText[appContext.locale]["Expense Report"]}</div>
-                            <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                            <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
 
                 </div>
@@ -47,15 +47,15 @@ function ReportTypeList() {
                 <div className="tbody">
                     <Link to="/reports/net-worth" className="tr d-flex justify-content-between align-items-center">
                         <div className="td indent">{reportTypeListText[appContext.locale]["Net Worth"]}</div>
-                        <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                        <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
                     <Link to="/reports/income-expense" className="tr d-flex justify-content-between align-items-center">
                         <div className="td indent">{reportTypeListText[appContext.locale]["Income and Expense Report"]}</div>
-                        <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                        <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
                     <Link to="/reports/expense" className="tr d-flex justify-content-between align-items-center">
                             <div className="td indent">{reportTypeListText[appContext.locale]["Expense Report"]}</div>
-                            <div className="pr-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                            <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
 
                 </div>

@@ -102,7 +102,7 @@ function AccountSwitcher(props) {
                                         account.hasChildren
                                             ?   <React.Fragment key={account.accountId}>
                                                     <Link to="#" className="tr d-flex align-items-center" onClick={() => account.expanded = !account.expanded}>
-                                                        <div className="col-1 pl-2">
+                                                        <div className="col-1 ps-2">
                                                             <i className={"fas fa-angle-right rotating-caret" + (account.expanded? " expand" : "")}></i>
                                                         </div>
                                                         <div className= "col-10 td px-0">
@@ -113,7 +113,7 @@ function AccountSwitcher(props) {
                                                                 {account.accountName}
                                                             </div>
                                                         </div>
-                                                        <div className="col-1 pl-0"><i className="fas fa-angle-right invisible"></i></div>
+                                                        <div className="col-1 ps-0"><i className="fas fa-angle-right invisible"></i></div>
                                                     </Link>
                                                     <Collapse isOpen={account.expanded} style={appContext.colorScheme == "dark" ? {borderTop: "1px solid #383838"} : {borderTop: "1px solid #dadada"}}>
                                                         {accounts
@@ -121,8 +121,8 @@ function AccountSwitcher(props) {
                                                             .map(childAccount => {
                                                                 return(
                                                                     <Link to={props.category ? `/category-details/${childAccount.accountId}` : `/account-details/${childAccount.accountId}`} key={childAccount.accountId} className="tr d-flex align-items-center">
-                                                                        <div className="col-1 pl-2"></div>
-                                                                        <div className= "col-10 td pl-3 pr-0">
+                                                                        <div className="col-1 ps-2"></div>
+                                                                        <div className= "col-10 td ps-3 pe-0">
                                                                             <div className={"font-weight-600 font-size-compact " + ((childAccount.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
                                                                                 {childAccount.accountCode}
                                                                             </div>
@@ -130,7 +130,7 @@ function AccountSwitcher(props) {
                                                                                 {childAccount.accountName}
                                                                             </div>
                                                                         </div>
-                                                                        <div className="col-1 pl-0 text-muted"><i className="fas fa-angle-right "></i></div>
+                                                                        <div className="col-1 ps-0 text-muted"><i className="fas fa-angle-right "></i></div>
                                                                     </Link>
                                                                 )
                                                             })
@@ -139,7 +139,7 @@ function AccountSwitcher(props) {
                                                     {/**children go here */}
                                                 </React.Fragment>
                                             :   <Link key={account.accountId} to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`} className="tr d-flex align-items-center">
-                                                    <div className="col-1 pl-2">
+                                                    <div className="col-1 ps-2">
                                                         <i className="fas fa-angle-right rotating-caret px-2 invisible"></i>
                                                     </div>
                                                     <div className= "col-10 td px-0">
@@ -150,7 +150,7 @@ function AccountSwitcher(props) {
                                                             {account.accountName}
                                                         </div>
                                                     </div>
-                                                    <div className="col-1 pl-0 text-muted"><i className="fas fa-angle-right "></i></div>
+                                                    <div className="col-1 ps-0 text-muted"><i className="fas fa-angle-right "></i></div>
                                                 </Link>
                                     )
                                 })
