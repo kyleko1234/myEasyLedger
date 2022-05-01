@@ -57,24 +57,24 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
             </div>
 
             <div className="mt-3">
-                <div className="table d-none d-lg-block">
-                    <div className="thead">
-                        <div className="tr bg-light rounded border d-flex">
+                <div className="pseudo-table d-none d-lg-block">
+                    <div className="pseudo-thead">
+                        <div className="pseudo-tr bg-light rounded border d-flex">
                             {columns.map(column => (
-                                <div key={column.accessor} className={"th " + column.className}>
+                                <div key={column.accessor} className={"pseudo-th " + column.className}>
                                     {column.header}
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <div className="tbody">
+                    <div className="pseudo-tbody">
                         {data.map(
                             (row, i) => {
                                 return (
-                                    <div className="tr d-flex" key={i}>
+                                    <div className="pseudo-tr d-flex" key={i}>
                                         {columns.map(column => {
                                             return (
-                                                <div className={"td " + column.className} key={column.accessor}>
+                                                <div className={"pseudo-td " + column.className} key={column.accessor}>
                                                     {formatCell(row[column.accessor], column.accessor)}
                                                 </div>
                                             )
@@ -84,24 +84,24 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                             }
                         )}
                     </div>
-                    <div className="tfoot">
-                        <div className="tr d-flex">
-                            <div className="td col-6">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
-                            <div className="td col-2"></div>
-                            <div className="td col-2 text-end">
+                    <div className="pseudo-tfoot">
+                        <div className="pseudo-tr d-flex">
+                            <div className="pseudo-td col-6">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
+                            <div className="pseudo-td col-2"></div>
+                            <div className="pseudo-td col-2 text-end">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                             </div>
-                            <div className="td col-2 text-end">
+                            <div className="pseudo-td col-2 text-end">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="table d-lg-none">
-                    <div className="tbody border-top">
+                <div className="pseudo-table d-lg-none">
+                    <div className="pseudo-tbody border-top">
                         {data.map((row, i) => { /**Probably refactor this at some point */
                             return(
-                                <div key={i} className="tr d-flex">
+                                <div key={i} className="pseudo-tr d-flex">
                                     <div className="px-2 py-2 w-100">
                                         <div className="fw-semibold">
                                             {formatCell(row[columns[1].accessor], columns[1].accessor)}
@@ -133,8 +133,8 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                             )
                         })}
                     </div>
-                    <div className="tfoot">
-                        <div className="tr d-flex">
+                    <div className="pseudo-tfoot">
+                        <div className="pseudo-tr d-flex">
                             <div className="px-2 py-2 w-100 d-flex justify-content-between">
                                 <div>
                                     <div>

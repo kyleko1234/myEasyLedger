@@ -196,30 +196,30 @@ function JournalEntryEditMode({
             </button>
 
             <div className="mt-3">
-                <div className="table d-none d-lg-block">
-                    <div className="thead">
-                        <div className="tr bg-light rounded border d-flex">
+                <div className="pseudo-table d-none d-lg-block">
+                    <div className="pseudo-thead">
+                        <div className="pseudo-tr bg-light rounded border d-flex">
                             {columns.map(column => (
-                                <div className={"th " + column.className} key={column.accessor}>
+                                <div className={"pseudo-th " + column.className} key={column.accessor}>
                                     {column.header}
                                 </div>
                             ))}
-                            <div className="th col-1"></div>
+                            <div className="pseudo-th col-1"></div>
                         </div>
                     </div>
-                    <div className="tbody">
+                    <div className="pseudo-tbody">
                         {data.map(
                             (row, i) => {
                                 return (
-                                    <div className="tr d-flex" key={i}>
+                                    <div className="pseudo-tr d-flex" key={i}>
                                         {columns.map(column => {
                                             return (
-                                                <div key={column.accessor} className={"td " + column.className}>
+                                                <div key={column.accessor} className={"pseudo-td " + column.className}>
                                                     {returnFormByColumnType(row, i, column.accessor)}
                                                 </div>
                                             )
                                         })}
-                                        <div className="td col-1">
+                                        <div className="pseudo-td col-1">
                                             <button className="btn btn-lg btn-icon btn-white border-0" onClick={() => removeRow(i)}>
                                                 <i className="ion ion-md-close fa-fw fa-lg"></i>
                                             </button>
@@ -229,23 +229,23 @@ function JournalEntryEditMode({
                             }
                         )}
                     </div>
-                    <div className="tfoot">
-                        <div className="tr d-flex">
-                            <div className="td col-4">{journalEntryEditModeText[appContext.locale]["Total"]}</div>
-                            <div className="td col-3"></div>
-                            <div className="td col-2"> {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}</div>
-                            <div className="td col-2">{formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}</div>
-                            <div className="td col-1"></div>
+                    <div className="pseudo-tfoot">
+                        <div className="pseudo-tr d-flex">
+                            <div className="pseudo-td col-4">{journalEntryEditModeText[appContext.locale]["Total"]}</div>
+                            <div className="pseudo-td col-3"></div>
+                            <div className="pseudo-td col-2"> {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}</div>
+                            <div className="pseudo-td col-2">{formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}</div>
+                            <div className="pseudo-td col-1"></div>
                         </div>
                     </div>
                 </div>
-                <div className="table d-lg-none">
-                    <div className="tbody">
+                <div className="pseudo-table d-lg-none">
+                    <div className="pseudo-tbody">
                         {data.map(
                             (row, i) => {
                                 return(
-                                    <div className="tr d-flex align-items-center" key={i}>
-                                        <div className="td">
+                                    <div className="pseudo-tr d-flex align-items-center" key={i}>
+                                        <div className="pseudo-td">
                                             <div className="mb-2">
                                                 <div className="fw-semibold font-size-compact">
                                                     {columns[1].header}
@@ -291,9 +291,9 @@ function JournalEntryEditMode({
                             }
                         )}
                     </div>
-                    <div className="tfoot">
-                        <div className="tr d-flex">
-                            <div className="td w-100 d-flex justify-content-between">
+                    <div className="pseudo-tfoot">
+                        <div className="pseudo-tr d-flex">
+                            <div className="pseudo-td w-100 d-flex justify-content-between">
                                 <div>
                                     <div>
                                         {journalEntryEditModeText[appContext.locale]["Total Debit"]}

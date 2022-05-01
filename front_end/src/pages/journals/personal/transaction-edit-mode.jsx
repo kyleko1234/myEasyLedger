@@ -189,32 +189,32 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                 </div>
             </div>
             <div className="mt-3">
-                <div className="table d-none d-lg-block">
-                    <div className="thead">
-                            <div className="tr bg-light rounded border d-flex">
+                <div className="pseudo-table d-none d-lg-block">
+                    <div className="pseudo-thead">
+                            <div className="pseudo-tr bg-light rounded border d-flex">
                                 {columns.map(column => {
                                     return(
-                                        <div className={"th " + column.className} key={column.accessor}>
+                                        <div className={"pseudo-th " + column.className} key={column.accessor}>
                                             {column.header}
                                         </div>
                                     )
                                 })}
-                                <div className="th col-1"></div>
+                                <div className="pseudo-th col-1"></div>
                             </div>
                     </div>
-                    <div className="tbody">
+                    <div className="pseudo-tbody">
                         {data.map(
                             (row, i) => {
                                 return (
-                                    <div className="tr d-flex" key={i}>
+                                    <div className="pseudo-tr d-flex" key={i}>
                                         {columns.map(column => {
                                             return (
-                                                <div className={"td " + column.className} key={column.accessor}>
+                                                <div className={"pseudo-td " + column.className} key={column.accessor}>
                                                     {returnFormByColumnType(row[column.accessor], column.accessor, i)}
                                                 </div>
                                             )
                                         })}
-                                        <div className="td col-1 px-0">
+                                        <div className="pseudo-td col-1 px-0">
                                             <button className="btn btn-lg btn-white border-0" onClick={() => removeLineItem(i)}>
                                                 <i className="ion ion-md-close fa-fw fa-lg"></i>
                                             </button>
@@ -224,25 +224,25 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                             }
                         )}
                     </div>
-                    <div className="tfoot">
-                        <div className="tr d-flex">
-                            <div className="td col-3 ">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
-                            <div className="td col-3 "></div>
-                            <div className="td col-3 "></div>
-                            <div className="td col-2 ">
+                    <div className="pseudo-tfoot">
+                        <div className="pseudo-tr d-flex">
+                            <div className="pseudo-td col-3 ">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
+                            <div className="pseudo-td col-3 "></div>
+                            <div className="pseudo-td col-3 "></div>
+                            <div className="pseudo-td col-2 ">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmounts())}
                             </div>
-                            <div className="td col-1 "></div>
+                            <div className="pseudo-td col-1 "></div>
                         </div>
                     </div>
                 </div>
-                <div className="table d-lg-none">
-                    <div className="tbody border-top">
+                <div className="pseudo-table d-lg-none">
+                    <div className="pseudo-tbody border-top">
                         {data.map(
                             (row, i) => {
                                 return(
-                                    <div className="tr d-flex" key={i}>
-                                        <div className="td w-100">
+                                    <div className="pseudo-tr d-flex" key={i}>
+                                        <div className="pseudo-td w-100">
                                             <div className="d-flex mb-2 align-items-center">
                                                 <div className="col-5 px-0 me-2">
                                                     <div className="fw-semibold font-size-compact">

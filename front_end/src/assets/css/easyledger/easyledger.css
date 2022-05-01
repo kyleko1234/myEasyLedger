@@ -370,47 +370,47 @@ a.nav-link:hover {
 }
 
 /* PSEUDO-TABLE UTILITIES */
-.table {
+.pseudo-table {
     border-collapse: collapse !important;
 }
 
-.th {
+.pseudo-th {
     font-weight: 600;
     padding: .75rem;
 }
-.td {
+.pseudo-td {
     padding: .75rem;
 }
-.tr {
+.pseudo-tr {
     border-top: #dadada 1px solid;
 }
-.dark-mode .tr{
+.dark-mode .pseudo-tr{
     border-top: #383838 1px solid;
 }
-.tr:first-child {
+.pseudo-tr:first-child {
     border-top: none;
 }
 
-.tfoot{
+.pseudo-tfoot{
     border-top: silver 1px solid;
     font-weight: 600;
 }
-.dark-mode .tfoot {
+.dark-mode .pseudo-tfoot {
     border-top: #484848 1px solid /*TODO check if this actually looks ok*/
 }
 
-a.tr {
+a.pseudo-tr {
     color: var(--base-text-color);
 }
-a.tr:hover {
+a.pseudo-tr:hover {
     text-decoration: none;
     color: var(--base-text-color);
     background-color: #e1e1e1;
 }
-.dark-mode a.tr{
+.dark-mode a.pseudo-tr{
     color: var(--dark-mode-text-color);
 }
-.dark-mode a.tr:hover{
+.dark-mode a.pseudo-tr:hover{
     color: var(--dark-mode-text-color);
     background-color: #2a2a2a;
 }
