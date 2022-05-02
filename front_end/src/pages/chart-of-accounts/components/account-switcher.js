@@ -101,11 +101,11 @@ function AccountSwitcher(props) {
                                     return (
                                         account.hasChildren
                                             ?   <React.Fragment key={account.accountId}>
-                                                    <Link to="#" className="tr d-flex align-items-center" onClick={() => account.expanded = !account.expanded}>
+                                                    <Link to="#" className="pseudo-tr d-flex align-items-center" onClick={() => account.expanded = !account.expanded}>
                                                         <div className="col-1 ps-2">
                                                             <i className={"fas fa-angle-right rotating-caret" + (account.expanded? " expand" : "")}></i>
                                                         </div>
-                                                        <div className= "col-10 td px-0">
+                                                        <div className= "col-10 pseudo-td px-0">
                                                             <div className={"fw-semibold font-size-compact " + ((account.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
                                                                 {account.accountCode}
                                                             </div>
@@ -120,9 +120,9 @@ function AccountSwitcher(props) {
                                                             .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                             .map(childAccount => {
                                                                 return(
-                                                                    <Link to={props.category ? `/category-details/${childAccount.accountId}` : `/account-details/${childAccount.accountId}`} key={childAccount.accountId} className="tr d-flex align-items-center">
+                                                                    <Link to={props.category ? `/category-details/${childAccount.accountId}` : `/account-details/${childAccount.accountId}`} key={childAccount.accountId} className="pseudo-tr d-flex align-items-center">
                                                                         <div className="col-1 ps-2"></div>
-                                                                        <div className= "col-10 td ps-3 pe-0">
+                                                                        <div className= "col-10 pseudo-td ps-3 pe-0">
                                                                             <div className={"fw-semibold font-size-compact " + ((childAccount.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
                                                                                 {childAccount.accountCode}
                                                                             </div>
@@ -138,11 +138,11 @@ function AccountSwitcher(props) {
                                                     </Collapse>
                                                     {/**children go here */}
                                                 </React.Fragment>
-                                            :   <Link key={account.accountId} to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`} className="tr d-flex align-items-center">
+                                            :   <Link key={account.accountId} to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`} className="pseudo-tr d-flex align-items-center">
                                                     <div className="col-1 ps-2">
                                                         <i className="fas fa-angle-right rotating-caret px-2 invisible"></i>
                                                     </div>
-                                                    <div className= "col-10 td px-0">
+                                                    <div className= "col-10 pseudo-td px-0">
                                                         <div className={"fw-semibold font-size-compact " + ((account.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
                                                             {account.accountCode}
                                                         </div>

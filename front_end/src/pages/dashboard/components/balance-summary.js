@@ -111,8 +111,8 @@ function BalanceSummary(props) {
                                 <div>
                                     {displayedAccounts.map(account => {
                                         return(
-                                            <Link key={account.accountId} to={`/account-details/${account.accountId}`} className="tr d-flex align-items-center">
-                                                <div className="td d-flex col-11 justify-content-between align-items-center">
+                                            <Link key={account.accountId} to={`/account-details/${account.accountId}`} className="pseudo-tr d-flex align-items-center">
+                                                <div className="pseudo-td d-flex col-11 justify-content-between align-items-center">
                                                     <div className="col-8">
                                                         <div className={"font-size-compact fw-semibold " + ((account.accountCode && appContext.isEnterprise)? "" : " d-none")}>
                                                             {account.accountCode}

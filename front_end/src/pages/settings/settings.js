@@ -43,32 +43,32 @@ function Settings() {
                 <CardBody>
                     <CardTitle className="fw-semibold">{settingsText[appContext.locale]["Personal Settings"]}</CardTitle>
                     <div>
-                        <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleLanguageSettingsModal}>
-                            <div className="indent td">{settingsText[appContext.locale]["Language Settings"]}</div>
+                        <Link replace to="#" className="pseudo-tr d-flex justify-content-between align-items-center" onClick={toggleLanguageSettingsModal}>
+                            <div className="indent pseudo-td">{settingsText[appContext.locale]["Language Settings"]}</div>
                             <div className="pe-2 text-muted">
                                 <i className="fas fa-angle-right"></i>
                             </div>
                         </Link>
-                        <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleAppearanceSettingsModal}>
-                            <div className="indent td">{settingsText[appContext.locale]["Appearance Settings"]}</div>
+                        <Link replace to="#" className="pseudo-tr d-flex justify-content-between align-items-center" onClick={toggleAppearanceSettingsModal}>
+                            <div className="indent pseudo-td">{settingsText[appContext.locale]["Appearance Settings"]}</div>
                             <div className="text-muted pe-2">
                                 <i className="fas fa-angle-right"></i>
                             </div>
                         </Link>
-                        <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleChangePasswordModal}>
-                            <div className="indent td">{settingsText[appContext.locale]["Change Password"]}</div>
+                        <Link replace to="#" className="pseudo-tr d-flex justify-content-between align-items-center" onClick={toggleChangePasswordModal}>
+                            <div className="indent pseudo-td">{settingsText[appContext.locale]["Change Password"]}</div>
                             <div className="text-muted pe-2">
                                 <i className="fas fa-angle-right"></i>
                             </div>
                         </Link>
-                        <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleChangeNameModal}>
-                            <div className="indent td">{settingsText[appContext.locale]["Change Name"]}</div>
+                        <Link replace to="#" className="pseudo-tr d-flex justify-content-between align-items-center" onClick={toggleChangeNameModal}>
+                            <div className="indent pseudo-td">{settingsText[appContext.locale]["Change Name"]}</div>
                             <div className="text-muted pe-2">
                                 <i className="fas fa-angle-right"></i>
                             </div>
                         </Link>
-                        <Link replace to="#" className="tr d-flex justify-content-between align-items-center" onClick={toggleChangeResultsPerPageModal}>
-                            <div className="indent td">{settingsText[appContext.locale]["Results per Page"]}</div>
+                        <Link replace to="#" className="pseudo-tr d-flex justify-content-between align-items-center" onClick={toggleChangeResultsPerPageModal}>
+                            <div className="indent pseudo-td">{settingsText[appContext.locale]["Results per Page"]}</div>
                             <div className="text-muted pe-2">
                                 <i className="fas fa-angle-right"></i>
                             </div>
@@ -87,8 +87,8 @@ function Settings() {
                             <div>
                                 {appContext.permissions.map(permission => {
                                     return (
-                                        <Link key={permission.id} to={`/manage-easyledger/${permission.organization.id}`} className="tr d-flex justify-content-between align-items-center">
-                                            <div className="indent td">{permission.organization.name}</div>
+                                        <Link key={permission.id} to={`/manage-easyledger/${permission.organization.id}`} className="pseudo-tr d-flex justify-content-between align-items-center">
+                                            <div className="indent pseudo-td">{permission.organization.name}</div>
                                             <div className="pe-2 text-muted">
                                                 <i className="fas fa-angle-right"></i>
                                             </div>

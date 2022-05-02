@@ -153,11 +153,11 @@ class Accounts extends React.Component {
                                                 return (
                                                     <React.Fragment key={account.accountId}>
                                                         {account.hasChildren ?
-                                                            <div className="tr d-flex justify-content-between align-items-center">
-                                                                <div className="td fw-semibold">
+                                                            <div className="pseudo-tr d-flex justify-content-between align-items-center">
+                                                                <div className="pseudo-td fw-semibold">
                                                                     {account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName}
                                                                 </div>
-                                                                <div className="td py-0 d-flex align-items-center">
+                                                                <div className="pseudo-td py-0 d-flex align-items-center">
                                                                     <button className="btn btn-sm btn-white border-0 text-muted" onClick={() => this.handleEditAccountButton(account)}>
                                                                         <i className="fas fa-edit font-size-compact"></i>
                                                                     </button>
@@ -165,11 +165,11 @@ class Accounts extends React.Component {
                                                                 </div>
                                                             </div>
                                                         :
-                                                            <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
-                                                                    <div className="td fw-semibold">
+                                                            <Link className="pseudo-tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
+                                                                    <div className="pseudo-td fw-semibold">
                                                                         {account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName}
                                                                     </div>
-                                                                    <div className="td py-0 d-flex align-items-center">
+                                                                    <div className="pseudo-td py-0 d-flex align-items-center">
                                                                         <button className="btn btn-sm text-muted invisible">
                                                                             <i className="fas fa-edit"></i>
                                                                         </button>
@@ -183,22 +183,22 @@ class Accounts extends React.Component {
                                                                 .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                                 .map(childAccount => {
                                                                     return (
-                                                                        <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId}>
-                                                                            <div className="td indent">
+                                                                        <Link className="pseudo-tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId}>
+                                                                            <div className="pseudo-td indent">
                                                                                 <div>{childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
                                                                             </div>
-                                                                            <div className="td">
+                                                                            <div className="pseudo-td">
                                                                                 <i className="fas fa-angle-right text-muted"></i>
                                                                             </div>
                                                                         </Link>
                                                                     );
                                                         })}
                                                         {(this.canAddChildren(account) && this.context.currentPermissionTypeId >= 2 )? 
-                                                            <Link replace className="tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
-                                                                <div className="td indent">
+                                                            <Link replace className="pseudo-tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
+                                                                <div className="pseudo-td indent">
                                                                     <em className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</em>
                                                                 </div>
-                                                                <div className="td"></div>
+                                                                <div className="pseudo-td"></div>
                                                             </Link>
                                                         : null}
                                                     </React.Fragment>

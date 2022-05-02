@@ -315,24 +315,24 @@ function TableOfTransactions({
                 </div>
             : null}
             <div className="my-2">
-                <div className="thead">
-                    <div className="d-none d-md-flex tr bg-light border rounded">
+                <div className="pseudo-thead">
+                    <div className="d-none d-md-flex pseudo-tr bg-light border rounded">
                         {columns.map(column => {
                             return(
-                                <div key={column.accessor} className={"th " + column.className}>
+                                <div key={column.accessor} className={"pseudo-th " + column.className}>
                                     {column.header}
                                 </div>
                             )
                         })}
                     </div>
                 </div>
-                <div className="tbody">
+                <div className="pseudo-tbody">
                     {data.map((row, i) => {
                         return (
-                            <Link replace to="#" className="tr d-none d-md-flex" key={i} onClick={() => expandTransaction(row.journalEntryId)}>
+                            <Link replace to="#" className="pseudo-tr d-none d-md-flex" key={i} onClick={() => expandTransaction(row.journalEntryId)}>
                                 {columns.map(column => {
                                     return(
-                                        <div key={column.accessor} className={"td " + column.className}>
+                                        <div key={column.accessor} className={"pseudo-td " + column.className}>
                                             {formatCell(row[column.accessor], column.accessor)}
                                         </div>
                                     )
@@ -343,7 +343,7 @@ function TableOfTransactions({
                     {/**for small screens goes here. this is a bit messy, TODO refactor later */}
                     {data.map((row, i) => {
                         return(
-                            <Link replace to="#" className="tr d-flex justify-content-between d-md-none align-items-center td" key={i} onClick={() => expandTransaction(row.journalEntryId)}>
+                            <Link replace to="#" className="pseudo-tr d-flex justify-content-between d-md-none align-items-center pseudo-td" key={i} onClick={() => expandTransaction(row.journalEntryId)}>
                                 {columns.length > 4 //TODO: this is an extreme bandaid solution to accomodate transactions.js having an account column. this should be rewritten when you get the time.
                                     ? <>
                                         <div className={"px-0 w-100 " + (category? "d-flex align-items-center justify-content-between" : "")}>
