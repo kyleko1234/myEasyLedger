@@ -15,7 +15,7 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
                 <div className="text-end d-flex">
                     {columnLabels.map((columnLabel, i) => {
                             return(
-                                <div className="td width-175" key={i}>
+                                <div className="pseudo-td width-175" key={i}>
                                     {columnLabel.label === "Custom"
                                         ?   <>
                                                 <div>

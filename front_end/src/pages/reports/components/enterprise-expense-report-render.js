@@ -119,7 +119,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                     {
                         columnLabels.map((columnLabel, i) => {
                             return(
-                                <div className="td width-175" key={i}>
+                                <div className="pseudo-td width-175" key={i}>
                                     {columnLabel.label === "Custom"
                                     ?   <>
                                             <div>

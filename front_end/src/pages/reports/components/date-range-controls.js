@@ -43,10 +43,28 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                             placeholder={"Custom"}
                                             value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                         />
-                                        <label className="my-0 text-end col-1 px-2">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
-                                        <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
-                                        <label className="my-0 text-end col-1 px-2">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
-                                        <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                        <label className="my-0 text-end col-1 px-2">
+                                            {incomeStatementRenderText[appContext.locale]["From:"]} 
+                                        </label>
+                                        <div className="col-3">
+                                            <input 
+                                                type="date" 
+                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                className="form-control" value={datesToRequest[i].startDate} 
+                                                onChange={event => handleChangeStartDate(event.target.value, i)} 
+                                            />
+                                        </div>
+                                        <label className="my-0 text-end col-1 px-2">
+                                            {incomeStatementRenderText[appContext.locale]["To:"]} 
+                                        </label>
+                                        <div className="col-3">
+                                            <input 
+                                                type="date" 
+                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                className="form-control" value={datesToRequest[i].endDate} 
+                                                onChange={event => handleChangeEndDate(event.target.value, i)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             )
