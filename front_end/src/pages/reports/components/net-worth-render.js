@@ -195,7 +195,7 @@ function NetWorthRender(props) {
                             : null
                         }
                         <div className="d-flex align-items-center justify-content-between mt-2">
-                            <div className="form-check-control form-switch">
+                            <div className="form-check form-switch">
                                 <input 
                                     type="checkbox" 
                                     role="switch"
