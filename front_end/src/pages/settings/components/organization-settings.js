@@ -119,27 +119,30 @@ function OrganizationSettings(props) {
                     <Alert color="success" isOpen={savedAlert}>{settingsText[appContext.locale]["Settings saved."]}</Alert>
                     <Alert color="danger" isOpen={errorAlert}>{settingsText[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
                     <div className="mb-3 row mx-0 my-2 align-items-center">
-                        <label className="col-lg-3 col-form-label my-0 px-0">
+                        <label className="col-lg-3 col-form-label my-0 px-0" htmlFor='easyledger-name-input'>
                             {settingsText[appContext.locale]["Easyledger Name"] + ":"}
                         </label>
-                        <input 
-                            className="form-control col-md-9 "
-                            disabled={permissionObject.permissionType.id < 3? true : false}
-                            type="text" value={organizationName} 
-                            onChange={event => setOrganizationName(event.target.value)}
-                        />
+                        <div className="col-md-9">
+                            <input 
+                                id="easyledger-name-input"
+                                className="form-control"
+                                disabled={permissionObject.permissionType.id < 3? true : false}
+                                type="text" value={organizationName} 
+                                onChange={event => setOrganizationName(event.target.value)}
+                            />
+                        </div>
                     </div>
                     <div className="mb-3 row mx-0 my-2 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
                             {settingsText[appContext.locale]["Currency"] + ":"}
                         </label>
-                        <div className="col-md-9 px-0">{currencies.find(currency => currency.value === permissionObject.organization.currency).label}</div>
+                        <div className="col-md-9">{currencies.find(currency => currency.value === permissionObject.organization.currency).label}</div>
                     </div>
                     <div className="mb-3 row mx-0 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
                             {settingsText[appContext.locale]["Fiscal Year Begin Date"] + ":"}
                         </label>
-                        <div className="col-md-9 d-flex px-0">
+                        <div className="col-md-9 d-flex">
                             <div className="w-50 me-3">
                                 <Select
                                     classNamePrefix="form-control"
@@ -181,15 +184,18 @@ function OrganizationSettings(props) {
                     </div>
                     <Alert color="danger" isOpen={invalidDateAlert}>{settingsText[appContext.locale]["Invalid date."]}</Alert>
                     <div className="mb-3 row mx-0 align-items-center">
-                        <label className="col-lg-3 col-form-label my-0 px-0">
+                        <label className="col-lg-3 col-form-label my-0 px-0" htmlFor="lock-entries-before-input">
                             {settingsText[appContext.locale]["Lock journal entries before"] + ":"}
                         </label>
-                        <input 
-                            className="form-control col-md-9 "
-                            disabled={permissionObject.permissionType.id < 3}
-                            type="date" value={lockJournalEntriesBefore? lockJournalEntriesBefore : ''} 
-                            onChange={event => setLockJournalEntriesBefore(event.target.value)}
-                        />
+                        <div className="col-md-9">
+                            <input 
+                                id="lock-entries-before-input"
+                                className="form-control"
+                                disabled={permissionObject.permissionType.id < 3}
+                                type="date" value={lockJournalEntriesBefore? lockJournalEntriesBefore : ''} 
+                                onChange={event => setLockJournalEntriesBefore(event.target.value)}
+                            />
+                        </div>
                     </div>
                     <button 
                         className="btn btn-primary width-175 d-none d-sm-inline-block" 

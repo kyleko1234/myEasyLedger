@@ -73,22 +73,46 @@ function ChangePasswordModal(props) {
                         : null}
                     <form className="px-3 py-3" onSubmit={event => {event.preventDefault(); handleSaveButton();}}>
                         <div className="mb-3 row align-items-center">
-                            <label className="col-md-5 col-form-label">
+                            <label className="col-md-5 col-form-label" htmlFor="current-password-input">
                                 {settingsText[appContext.locale]["Current Password"]}
                             </label>
-                            <input className="form-control col-md-7 m-l-5" type="password" value={currentPasswordInput} onChange={event => setCurrentPasswordInput(event.target.value)}/>
+                            <div className="col-md-7">
+                                <input 
+                                    id="current-password-input"
+                                    className="form-control m-l-5" 
+                                    type="password" 
+                                    value={currentPasswordInput} 
+                                    onChange={event => setCurrentPasswordInput(event.target.value)}
+                                />
+                            </div>
                         </div>
                         <div className="mb-3 row align-items-center">
-                            <label className="col-md-5 col-form-label">
+                            <label className="col-md-5 col-form-label" htmlFor='new-password-input'>
                                 {settingsText[appContext.locale]["New Password"]}
                             </label>
-                            <input className="form-control col-md-7 m-l-5" type="password" value={newPasswordInput} onChange={event => setNewPasswordInput(event.target.value)}/>
+                            <div className="col-md-7">
+                                <input 
+                                    id="new-password-input"
+                                    className="form-control m-l-5" 
+                                    type="password" 
+                                    value={newPasswordInput} 
+                                    onChange={event => setNewPasswordInput(event.target.value)}
+                                />
+                            </div>
                         </div>
-                        <label className="mb-3 row align-items-center">
+                        <label className="mb-3 row align-items-center" htmlFor='confirm-new-password-input'>
                             <div className="col-md-5 col-form-label">
                                 {settingsText[appContext.locale]["Confirm New Password"]}
                             </div>
-                            <input className="form-control col-md-7 m-l-5" type="password" value={confirmNewPasswordInput} onChange={event => setConfirmNewPasswordInput(event.target.value)}/>
+                            <div className="col-md-7">
+                                <input 
+                                    id="confirm-new-password-input"
+                                    className="form-control m-l-5" 
+                                    type="password" 
+                                    value={confirmNewPasswordInput} 
+                                    onChange={event => setConfirmNewPasswordInput(event.target.value)}
+                                />
+                            </div>
                         </label>
                         <button style={{display: "none"}}>{/* A hacky solution to force the form to submit when the enter key is pressed. */}</button>
                     </form>
