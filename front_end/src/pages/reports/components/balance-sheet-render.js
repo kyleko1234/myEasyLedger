@@ -206,16 +206,19 @@ function BalanceSheetRender(props) {
                                                 placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                                 value={endDatesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == endDatesToRequest[i].label)}
                                             />
-                                            <label className="col-2 px-1 px-sm-2 text-end my-0">
-                                                {balanceSheetRenderText   [appContext.locale]["As of:"]} 
+                                            <label className="col-2 px-1 px-sm-2 text-end my-0" htmlFor={`end-date-${i}`}>
+                                                {balanceSheetRenderText[appContext.locale]["As of:"]} 
                                             </label>
-                                            <input 
-                                                type="date" 
-                                                className=" col-6 form-control align-self-center" 
-                                                placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} 
-                                                value={endDatesToRequest[i].endDate} 
-                                                onChange={event => handleChangeDate(event.target.value, i)} 
-                                            />
+                                            <div className="col-6">
+                                                <input 
+                                                    type="date" 
+                                                    id={`end-date-${i}`}
+                                                    className="form-control align-self-center" 
+                                                    placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                    value={endDatesToRequest[i].endDate} 
+                                                    onChange={event => handleChangeDate(event.target.value, i)} 
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 )
@@ -255,7 +258,7 @@ function BalanceSheetRender(props) {
                         <div className="text-end d-flex">
                             {columnLabels.map((columnLabel, i) => {
                                 return(
-                                    <div className="td width-175" key={i}>
+                                    <div className="pseudo-td width-175" key={i}>
                                         {columnLabel.label === "Custom"
                                             ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + columnLabel.endDate
                                             : columnLabel.label

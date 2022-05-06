@@ -319,10 +319,30 @@ function IncomeStatementRender(props) {
                                                 placeholder={"Custom"}
                                                 value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                             />
-                                            <label className="my-0 text-end col-1 px-2">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
-                                            <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
-                                            <label className="my-0 text-end col-1 px-2">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
-                                            <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                            <label className="my-0 text-end col-1 px-2" htmlFor={`start-date=${i}`}>
+                                                {incomeStatementRenderText[appContext.locale]["From:"]}
+                                            </label>
+                                            <div className="col-3">
+                                                <input 
+                                                    type="date" 
+                                                    id={`start-date=${i}`}
+                                                    placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                    className="form-control" value={datesToRequest[i].startDate} 
+                                                    onChange={event => handleChangeStartDate(event.target.value, i)} 
+                                                />
+                                            </div>
+                                            <label className="my-0 text-end col-1 px-2" htmlFor={`end-date=${i}`}>
+                                                {incomeStatementRenderText[appContext.locale]["To:"]} 
+                                            </label>
+                                            <div className="col-3">
+                                                <input 
+                                                    type="date" 
+                                                    id={`end-date=${i}`}
+                                                    placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                    className="form-control col-3" value={datesToRequest[i].endDate} 
+                                                    onChange={event => handleChangeEndDate(event.target.value, i)} 
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 )
@@ -352,11 +372,12 @@ function IncomeStatementRender(props) {
                                             />
                                         </div>
                                         <div className="d-flex justify-content-between text-start align-items-center my-1">
-                                            <label className="my-0 col-3 px-0">
+                                            <label className="my-0 col-3 px-0" htmlFor={`small-screen-start-date-${i}`}>
                                                 {incomeStatementRenderText[appContext.locale]["From:"]} 
                                             </label>
                                             <input 
                                                 type="date" 
+                                                id={`small-screen-start-date-${i}`}
                                                 placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]}
                                                 className="form-control" 
                                                 value={datesToRequest[i].startDate} 
@@ -364,11 +385,12 @@ function IncomeStatementRender(props) {
                                             />
                                         </div>
                                         <div className="d-flex justify-content-between text-start align-items-center mb-2">
-                                            <label className="my-0 col-3 px-0">
+                                            <label className="my-0 col-3 px-0" htmlFor={`small-screen-end-date-${i}`}>
                                                 {incomeStatementRenderText[appContext.locale]["To:"]} 
                                             </label>
                                             <input 
                                                 type="date" 
+                                                id={`small-screen-end-date-${i}`}
                                                 placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]}
                                                 className="form-control" 
                                                 value={datesToRequest[i].endDate} 
@@ -406,7 +428,7 @@ function IncomeStatementRender(props) {
                         {
                             columnLabels.map((columnLabel, i) => {
                                 return(
-                                    <div className="td width-175" key={i}>
+                                    <div className="pseudo-td width-175" key={i}>
                                         {columnLabel.label === "Custom"
                                         ?   <>
                                                 <div>
