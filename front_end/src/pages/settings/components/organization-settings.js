@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardBody, CardTitle, Alert} from 'reactstrap';
+import { Card, CardBody, CardTitle, Alert, Tooltip} from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import { CURRENCY_OPTIONS, CALENDAR_MONTH_OPTIONS, API_BASE_URL } from '../../../utils/constants';
 import { settingsText } from '../../../utils/i18n/settings-text';
@@ -197,35 +197,40 @@ function OrganizationSettings(props) {
                             />
                         </div>
                     </div>
-                    <button 
-                        className="btn btn-primary width-175 d-none d-sm-inline-block" 
-                        onClick={saveSettings}
-                        disabled={permissionObject.permissionType.id < 3}
-                    >
-                        {settingsText[appContext.locale]["Save"]}
-                    </button>
-                    <button 
-                        className="btn btn-primary d-block w-100 d-sm-none" 
-                        onClick={saveSettings}
-                        disabled={permissionObject.permissionType.id < 3}
-                    >
-                        {settingsText[appContext.locale]["Save"]}
-                    </button>
-                    <button 
-                        className="btn btn-danger d-none d-sm-inline-block ms-4" 
-                        onClick={handleDeleteOrganizationButton}
-                        disabled={permissionObject.permissionType.id < 4}
-                    >
-                        {settingsText[appContext.locale]["Delete this EasyLedger"]}
-                    </button>
-                    <button 
-                        className="btn btn-danger d-block w-100 d-sm-none mt-4" 
-                        onClick={handleDeleteOrganizationButton}
-                        disabled={permissionObject.permissionType.id < 4}
-                    >
-                        {settingsText[appContext.locale]["Delete this EasyLedger"]}
-                    </button>
-                    
+                    <div className="d-sm-flex">
+                        <div id="save-button" className="">
+                            <button 
+                                className="btn btn-primary width-175 d-none d-sm-inline-block" 
+                                onClick={saveSettings}
+                                disabled={permissionObject.permissionType.id < 3}
+                            >
+                                {settingsText[appContext.locale]["Save"]}
+                            </button>
+                            <button 
+                                className="btn btn-primary d-block w-100 d-sm-none" 
+                                onClick={saveSettings}
+                                disabled={permissionObject.permissionType.id < 3}
+                            >
+                                {settingsText[appContext.locale]["Save"]}
+                            </button>
+                        </div>
+                        <div id="delete-button" className="">
+                            <button 
+                                className="btn btn-danger d-none d-sm-inline-block ms-4" 
+                                onClick={handleDeleteOrganizationButton}
+                                disabled={permissionObject.permissionType.id < 4}
+                            >
+                                {settingsText[appContext.locale]["Delete this EasyLedger"]}
+                            </button>
+                            <button 
+                                className="btn btn-danger d-block w-100 d-sm-none mt-3" 
+                                onClick={handleDeleteOrganizationButton}
+                                disabled={permissionObject.permissionType.id < 4}
+                            >
+                                {settingsText[appContext.locale]["Delete this EasyLedger"]}
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 {confirmDeleteOrganizationAlert
                     ? <SweetAlert primary showCancel
@@ -253,6 +258,7 @@ function OrganizationSettings(props) {
                     </SweetAlert>
                     : null
                 }
+                
             </CardBody>
         </Card>
     )
