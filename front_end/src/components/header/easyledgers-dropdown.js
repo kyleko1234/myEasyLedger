@@ -36,7 +36,7 @@ function EasyledgersDropdown(props) {
                         }
                     </span>
                 </DropdownToggle>
-                <DropdownMenu className="shadow" right>
+                <DropdownMenu className="shadow" end>
                     {appContext.currentOrganizationId
                         ? <>
                             <DropdownItem text>

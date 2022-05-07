@@ -17,7 +17,7 @@ function PersonDropdown(props) {
                 <DropdownToggle caret color="white" className="border-0 header-icon font-size-larger">
                     <i className="far fa-user-circle"></i>
                 </DropdownToggle>
-                <DropdownMenu className="shadow" right>
+                <DropdownMenu className="shadow" end>
                     <DropdownItem text>
                         <div className="fw-semibold">
                                 {appContext.firstName + " " + appContext.lastName} 
