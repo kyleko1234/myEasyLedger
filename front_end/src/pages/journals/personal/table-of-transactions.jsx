@@ -4,7 +4,7 @@ import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-
 import { Link } from 'react-router-dom';
 import { PageSettings } from '../../../config/page-settings.js';
 import { API_BASE_URL, PERSONAL_TRANSACTION_TYPES } from '../../../utils/constants.js';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Tooltip } from 'reactstrap';
 import axios from 'axios';
 import TransactionViewMode from './transaction-view-mode.jsx';
 import TransactionEditMode from './transaction-edit-mode.jsx';
@@ -54,6 +54,11 @@ function TableOfTransactions({
 
     const [transactionEditHistoryModal, setTransactionEditHistoryModal] = React.useState(false);
     const toggleTransactionEditHistoryModal = () => setTransactionEditHistoryModal(!transactionEditHistoryModal);
+
+    const [addAnEntryTooltip, setAddAnEntryTooltip] = React.useState(false);
+    const toggleAddAnEntryTooltip = () => setAddAnEntryTooltip(!addAnEntryTooltip);
+    const [smallScreenAddAnEntryTooltip, setSmallScreenAddAnEntryTooltip] = React.useState(false);
+    const toggleSmallScreenAddAnEntryTooltip = () => setSmallScreenAddAnEntryTooltip(!smallScreenAddAnEntryTooltip);
 
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
     const refreshAccounts = () => {
@@ -301,14 +306,16 @@ function TableOfTransactions({
             {/*loading? <div className="widget widget-rounded"><div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div></div> :  this line is commented out for now since seeing a loading spinner every time you close a modal is incredibly annoying */}
             <div className="d-sm-flex justify-content-between align-items-center">
                 {tableTitle}
-                {hasAddEntryButton ?
-                    <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={openEditorForNewTransaction} disabled={appContext.currentPermissionTypeId < 2}>
-                        {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
-                    </button>
-                : null}
+                <div id="add-an-entry-button">
+                    {hasAddEntryButton ?
+                        <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={openEditorForNewTransaction} disabled={appContext.currentPermissionTypeId < 2}>
+                            {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
+                        </button>
+                    : null}
+                </div>
             </div>
             {hasAddEntryButton ? 
-                <div className="d-sm-none">
+                <div id="small-screen-add-an-entry-button" className="d-sm-none">
                     <button type="button" className="btn btn-primary btn-lg mt-2 d-block w-100" onClick={openEditorForNewTransaction} disabled={appContext.currentPermissionTypeId < 2}>
                         {tableOfJournalEntriesText[appContext.locale]["Add a new transaction"]}
                     </button>
@@ -503,7 +510,33 @@ function TableOfTransactions({
                     }
                 </ModalFooter>
             </Modal>
-            {journalEntryId ? <TransactionEditHistory journalEntryId={journalEntryId} isOpen={transactionEditHistoryModal} toggle={toggleTransactionEditHistoryModal}/> : null}
+            {journalEntryId 
+                ? <TransactionEditHistory journalEntryId={journalEntryId} isOpen={transactionEditHistoryModal} toggle={toggleTransactionEditHistoryModal}/> 
+                : null
+            }
+            {appContext.currentPermissionTypeId < 2
+                ? <Tooltip
+                    target="add-an-entry-button"
+                    isOpen={addAnEntryTooltip}
+                    toggle={toggleAddAnEntryTooltip}
+                    fade={false}  
+                    placement="left"
+                >
+                    {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                </Tooltip>
+                : null
+            }
+            {appContext.currentPermissionTypeId < 2
+                ? <Tooltip
+                    target="small-screen-add-an-entry-button"
+                    isOpen={smallScreenAddAnEntryTooltip}
+                    toggle={toggleSmallScreenAddAnEntryTooltip}
+                    fade={false}  
+                >
+                    {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                </Tooltip>
+                : null
+            }
         </>
     )
 }

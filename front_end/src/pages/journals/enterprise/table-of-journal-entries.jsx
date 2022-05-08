@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, Tooltip } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants.js';
@@ -49,7 +49,12 @@ function TableOfJournalEntries({
     const [accountOptions, setAccountOptions] = React.useState([]);
 
     const [journalEntryHistoryModal, setJournalEntryHistoryModal] = React.useState(false);
-    const toggleJournalEntryHistoryModal = () => setJournalEntryHistoryModal(!journalEntryHistoryModal);    
+    const toggleJournalEntryHistoryModal = () => setJournalEntryHistoryModal(!journalEntryHistoryModal);  
+    
+    const [addAnEntryTooltip, setAddAnEntryTooltip] = React.useState(false);
+    const toggleAddAnEntryTooltip = () => setAddAnEntryTooltip(!addAnEntryTooltip);
+    const [smallScreenAddAnEntryTooltip, setSmallScreenAddAnEntryTooltip] = React.useState(false);
+    const toggleSmallScreenAddAnEntryTooltip = () => setSmallScreenAddAnEntryTooltip(!smallScreenAddAnEntryTooltip);
 
     const fetchJournalEntry = journalEntryId => {
         axios.get(`${API_BASE_URL}/journalEntry/${journalEntryId}`)
@@ -286,13 +291,15 @@ function TableOfJournalEntries({
         <>
             <div className="d-sm-flex  justify-content-between align-items-center">
                 {tableTitle}
-                {hasAddEntryButton ?
-                    <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
-                        {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
-                    </button>
-                : null}
+                <div id="add-an-entry-button">
+                    {hasAddEntryButton ?
+                        <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
+                            {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
+                        </button>
+                    : null}
+                </div>
             </div>
-            <div className="d-sm-none"> {/**On small screens render button-block */}
+            <div id="small-screen-add-an-entry-button" className="d-sm-none"> {/**On small screens render button-block */}
                 <button type="button" className="btn btn-primary btn-lg d-block w-100" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
                     {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                 </button>
@@ -440,6 +447,30 @@ function TableOfJournalEntries({
                 </ModalFooter>
             </Modal>
             <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} accountOptions={accountOptions} /> 
+            
+            {appContext.currentPermissionTypeId < 2
+                ? <Tooltip
+                    target="add-an-entry-button"
+                    isOpen={addAnEntryTooltip}
+                    toggle={toggleAddAnEntryTooltip}
+                    fade={false}  
+                    placement="left"
+                >
+                    {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                </Tooltip>
+                : null
+            }
+            {appContext.currentPermissionTypeId < 2
+                ? <Tooltip
+                    target="small-screen-add-an-entry-button"
+                    isOpen={smallScreenAddAnEntryTooltip}
+                    toggle={toggleSmallScreenAddAnEntryTooltip}
+                    fade={false}  
+                >
+                    {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                </Tooltip>
+                : null
+            }
         </>
     )
 
