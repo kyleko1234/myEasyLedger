@@ -39,6 +39,8 @@ export const accountDetailsEditorText = {
         "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.": "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.",
         "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.": "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.",
 
+        "This action requires EDIT permissions for this EasyLedger.": "This action requires EDIT permissions for this EasyLedger.",
+
         //Account Subtype Names.
         "Cash and cash equivalents": "Cash and cash equivalents", 
         "Current marketable securities": "Current marketable securities", 
@@ -118,6 +120,8 @@ export const accountDetailsEditorText = {
         "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.": "TRANSLATION",
         "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.": "TRANSLATION",
 
+        "This action requires EDIT permissions for this EasyLedger.": "TRANSLATION",
+        
         //Account Subtype Names.
         "Cash and cash equivalents": "現金及約當現金", 
         "Current marketable securities": "流動市場性證劵", 

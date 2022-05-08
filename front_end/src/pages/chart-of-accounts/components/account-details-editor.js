@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap'
+import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Tooltip } from 'reactstrap'
 import axios from 'axios';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants.js';
@@ -31,6 +31,8 @@ function AccountDetailsEditor(props) {
     const [deleteAccountAlert, setDeleteAccountAlert] = React.useState(false);
     const [cannotDeleteAccountAlert, setCannotDeleteAccountAlert] = React.useState(false);
     const [initialValueLockedAlert, setInitialValueLockedAlert] = React.useState(false);
+    const [saveButtonTooltip, setSaveButtonTooltip] = React.useState(false);
+    const [deleteButtonTooltip, setDeleteButtonTooltip] = React.useState(false);
     const toggleDeleteAccountAlert = () => {
         setDeleteAccountAlert(!deleteAccountAlert);
     }
@@ -39,6 +41,12 @@ function AccountDetailsEditor(props) {
     }
     const toggleInitialValueLockedAlert = () => {
         setInitialValueLockedAlert(!initialValueLockedAlert);
+    }
+    const toggleSaveButtonTooltip = () => {
+        setSaveButtonTooltip(!saveButtonTooltip);
+    }
+    const toggleDeleteButtonTooltip = () => {
+        setDeleteButtonTooltip(!deleteButtonTooltip);
     }
     const resetToDefaultSubtypeId = () => {
         if (!appContext.isEnterprise) {
@@ -379,20 +387,48 @@ function AccountDetailsEditor(props) {
                       
                 </ModalBody>
                 <ModalFooter className="justify-content-between">
-                    <div>
-                        {!props.selectedAccountId? null : 
-                            <button className="btn btn-danger width-10ch" onClick={handleDeleteButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
-                                {accountDetailsEditorText[appContext.locale]["Delete"]}
-                            </button>
+                    <div id="delete-button">
+                        {!props.selectedAccountId
+                            ? null 
+                            : <div>
+                                <button className="btn btn-danger width-10ch" onClick={handleDeleteButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                                    {accountDetailsEditorText[appContext.locale]["Delete"]}
+                                </button>
+                            </div>
                         }
                     </div>
                     <div>
-                        <button className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
-                            {accountDetailsEditorText[appContext.locale]["Save"]}
-                        </button>
+                        <div id="save-button" className="d-inline-block">
+                            <button className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                                {accountDetailsEditorText[appContext.locale]["Save"]}
+                            </button>
+                        </div>
                         <button className="btn btn-white width-10ch ms-2" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
                     </div>
                 </ModalFooter>
+                {/** Tooltip component must be placed inside the modal component, otherwise react will render the tooltip before the targets and the app will crash.*/}
+                {appContext.currentPermissionTypeId < 2
+                    ? <Tooltip 
+                        target="delete-button" 
+                        isOpen={deleteButtonTooltip} 
+                        toggle={toggleDeleteButtonTooltip}
+                        fade={false}
+                    >
+                        {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    </Tooltip>
+                    : null
+                }
+                {appContext.currentPermissionTypeId < 2
+                    ? <Tooltip 
+                        target="save-button" 
+                        isOpen={saveButtonTooltip} 
+                        toggle={toggleSaveButtonTooltip}
+                        fade={false}
+                    >
+                        {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    </Tooltip>
+                    : null
+                }
             </Modal>
 
             {deleteAccountAlert ?
@@ -436,7 +472,8 @@ function AccountDetailsEditor(props) {
                         ? accountDetailsEditorText[appContext.locale]["Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts."]
                         : accountDetailsEditorText[appContext.locale]["Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories."]}
                 </SweetAlert>
-                : null}
+                : null
+            }
         </>
     )
 }
