@@ -76,8 +76,8 @@ export const settingsText = {
         "Lock initial values for accounts and categories with transactions": "Lock initial values for accounts and categories with transactions",
         "Lock journal entries before": "Lock journal entries before",
         "Invalid date.": "Invalid date.",
-        "This action requires ADMIN permissions.": "This action requires ADMIN permissions.",
-        "This action requires OWN permissions.": "This action requires OWN permissions.",
+        "This action requires ADMIN permissions for this EasyLedger.": "This action requires ADMIN permissions for this EasyLedger.",
+        "This action requires OWN permissions for this EasyLedger.": "This action requires OWN permissions for this EasyLedger.",
 
         //Appearance settings options
         "System": "System",
@@ -161,8 +161,8 @@ export const settingsText = {
         "Lock initial values for accounts and categories with transactions": "TRANSLATION",
         "Lock journal entries before": "TRANSLATION",
         "Invalid date.": "TRANSLATION",
-        "This action requires ADMIN permissions.": "TRANSLATION",
-        "This action requires OWN permissions.": "TRANSLATION",
+        "This action requires ADMIN permissions for this EasyLedger.": "TRANSLATION",
+        "This action requires OWN permissions for this EasyLedger.": "TRANSLATION",
 
         //Appearance settings options
         "System": "系統模式",

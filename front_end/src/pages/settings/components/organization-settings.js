@@ -271,7 +271,7 @@ function OrganizationSettings(props) {
                         isOpen={saveButtonTooltip} 
                         toggle={toggleSaveButtonTooltip}
                     >
-                        {settingsText[appContext.locale]["This action requires ADMIN permissions."]}
+                        {settingsText[appContext.locale]["This action requires ADMIN permissions for this EasyLedger."]}
                     </Tooltip>
                     : null
                 }
@@ -282,7 +282,7 @@ function OrganizationSettings(props) {
                         isOpen={deleteButtonTooltip} 
                         toggle={toggleDeleteButtonTooltip}
                     >
-                        {settingsText[appContext.locale]["This action requires OWN permissions."]}
+                        {settingsText[appContext.locale]["This action requires OWN permissions for this EasyLedger."]}
                     </Tooltip>
                     : null
                 }
