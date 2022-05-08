@@ -37,7 +37,13 @@ function OrganizationSettings(props) {
     const [cannotDeleteOrganizationAlert, setCannotDeleteOrganizationAlert] = React.useState(false);
     const toggleConfirmDeleteOrganizationAlert = () => setConfirmDeleteOrganizationAlert(!confirmDeleteOrganizationAlert);
     const toggleCannotDeleteOrganizationAlert = () => setCannotDeleteOrganizationAlert(!cannotDeleteOrganizationAlert);
-    
+
+    const [saveButtonTooltip, setSaveButtonTooltip] = React.useState(false);
+    const toggleSaveButtonTooltip = () => setSaveButtonTooltip(!saveButtonTooltip);
+    const [deleteButtonTooltip, setDeleteButtonTooltip] = React.useState(false);
+    const toggleDeleteButtonTooltip = () => setDeleteButtonTooltip(!deleteButtonTooltip);
+
+
     const handleDeleteOrganizationButton = () => {
         setConfirmDeleteOrganizationAlert(true);
     }
@@ -198,7 +204,7 @@ function OrganizationSettings(props) {
                         </div>
                     </div>
                     <div className="d-sm-flex">
-                        <div id="save-button" className="">
+                        <div id="save-button">
                             <button 
                                 className="btn btn-primary width-175 d-none d-sm-inline-block" 
                                 onClick={saveSettings}
@@ -214,9 +220,9 @@ function OrganizationSettings(props) {
                                 {settingsText[appContext.locale]["Save"]}
                             </button>
                         </div>
-                        <div id="delete-button" className="">
+                        <div id="delete-button" className="ms-sm-4">
                             <button 
-                                className="btn btn-danger d-none d-sm-inline-block ms-4" 
+                                className="btn btn-danger d-none d-sm-inline-block" 
                                 onClick={handleDeleteOrganizationButton}
                                 disabled={permissionObject.permissionType.id < 4}
                             >
@@ -258,7 +264,28 @@ function OrganizationSettings(props) {
                     </SweetAlert>
                     : null
                 }
-                
+                {permissionObject.permissionType.id < 3
+                    ? <Tooltip 
+                        target="save-button" 
+                        fade={false}
+                        isOpen={saveButtonTooltip} 
+                        toggle={toggleSaveButtonTooltip}
+                    >
+                        {settingsText[appContext.locale]["This action requires ADMIN permissions."]}
+                    </Tooltip>
+                    : null
+                }
+                {permissionObject.permissionType.id < 4
+                    ? <Tooltip 
+                        target="delete-button" 
+                        fade={false}
+                        isOpen={deleteButtonTooltip} 
+                        toggle={toggleDeleteButtonTooltip}
+                    >
+                        {settingsText[appContext.locale]["This action requires OWN permissions."]}
+                    </Tooltip>
+                    : null
+                }
             </CardBody>
         </Card>
     )
