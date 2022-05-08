@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardBody } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardBody, Tooltip } from 'reactstrap';
 import { API_BASE_URL, ACCOUNT_TYPE_OPTIONS} from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
@@ -28,8 +28,10 @@ class ChartOfAccounts extends React.Component {
             createMode: true,
 
             addAnAccountModal: false,
+            createAnAccountButtonTooltip: false
         };
 
+        this.toggleCreateAnAccountButtonTooltip = this.toggleCreateAnAccountButtonTooltip.bind(this);
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
         this.fetchData = this.fetchData.bind(this);
 
@@ -78,6 +80,12 @@ class ChartOfAccounts extends React.Component {
         })
     }
     /**End utility functions for adding/editing account */
+
+    toggleCreateAnAccountButtonTooltip() {
+        this.setState(state => ({
+            createAnAccountButtonTooltip: !state.createAnAccountButtonTooltip
+        }));
+    }
 
     canAddChildren(account) {
         if (account.parentAccountId != null) {
@@ -132,15 +140,17 @@ class ChartOfAccounts extends React.Component {
                                     <div className="d-lg-none w-50">
                                         {this.renderAccountTypeSelect()}
                                     </div>
-                                    <button
-                                        className="btn font-size-standard btn-primary ms-3 "
-                                        onClick={() => {
-                                            this.handleAddAnAccountButton();
-                                        }}
-                                        disabled={this.context.currentPermissionTypeId < 2}
-                                    > 
-                                        {chartOfAccountsText[this.context.locale]["Create an account"]}
-                                    </button>
+                                    <div id="create-an-account-button">
+                                        <button
+                                            className="btn font-size-standard btn-primary ms-3 "
+                                            onClick={() => {
+                                                this.handleAddAnAccountButton();
+                                            }}
+                                            disabled={this.context.currentPermissionTypeId < 2}
+                                        > 
+                                            {chartOfAccountsText[this.context.locale]["Create an account"]}
+                                        </button>
+                                    </div>
                                 </div>
                             }
                         </Nav>
@@ -218,7 +228,18 @@ class ChartOfAccounts extends React.Component {
                 </Card>
 
                 <AccountDetailsEditor isOpen={this.state.editAccountModal} toggle={this.toggleEditAccountModal} selectedAccountId={this.state.selectedAccountId} fetchData={this.fetchData} createMode={this.state.createMode} accountTypeId={this.props.match.params.activeTabId} selectedParentAccount={this.state.selectedParentAccount}/>
-
+                
+                {this.context.currentPermissionTypeId < 2
+                    ? <Tooltip
+                        target="create-an-account-button"
+                        fade={false}
+                        isOpen={this.state.createAnAccountButtonTooltip}
+                        toggle={this.toggleCreateAnAccountButtonTooltip}
+                    >
+                        {chartOfAccountsText[this.context.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    </Tooltip>
+                    : null
+                }
             </div>
 
         )

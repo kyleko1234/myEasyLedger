@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardBody } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardBody, Tooltip } from 'reactstrap';
 import { ACCOUNT_TYPE_OPTIONS, API_BASE_URL, NON_CATEGORY_ACCOUNT_TYPES } from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
@@ -28,8 +28,10 @@ class Accounts extends React.Component {
             createMode: true,
             
             addAnAccountModal: false,
+            createAnAccountButtonTooltip: false
         };
 
+        this.toggleCreateAnAccountButtonTooltip = this.toggleCreateAnAccountButtonTooltip.bind(this);
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
         this.fetchData = this.fetchData.bind(this);
 
@@ -80,6 +82,12 @@ class Accounts extends React.Component {
         })
     }
     /** End utility functions for adding/editing account group */
+
+    toggleCreateAnAccountButtonTooltip() {
+        this.setState(state => ({
+            createAnAccountButtonTooltip: !state.createAnAccountButtonTooltip
+        }));
+    }
 
     canAddChildren(account) {
         if (account.parentAccountId != null) {
@@ -134,9 +142,15 @@ class Accounts extends React.Component {
                                     <div className="d-sm-none w-50">
                                         {this.renderAccountTypeSelect()}
                                     </div>
-                                    <button className="btn btn-primary my-1 ms-3" onClick={() => this.handleAddAnAccountButton()} disabled={this.context.currentPermissionTypeId < 2}>   
-                                        {chartOfAccountsText[this.context.locale]["Create an account"]} 
-                                    </button>
+                                    <div id="create-an-account-button">
+                                        <button 
+                                            className="btn btn-primary my-1 ms-3" 
+                                            onClick={() => this.handleAddAnAccountButton()} 
+                                            disabled={this.context.currentPermissionTypeId < 2}
+                                        >   
+                                            {chartOfAccountsText[this.context.locale]["Create an account"]} 
+                                        </button>
+                                    </div>
                                 </div>
                             }
                         </Nav>
@@ -213,6 +227,18 @@ class Accounts extends React.Component {
                 </Card>
 
                 <AccountDetailsEditor isOpen={this.state.editAccountModal} toggle={this.toggleEditAccountModal} selectedAccountId={this.state.selectedAccountId} fetchData={this.fetchData} createMode={this.state.createMode} accountTypeId={this.props.match.params.activeTabId} selectedParentAccount={this.state.selectedParentAccount}/>
+                {this.context.currentPermissionTypeId < 2
+                    ? <Tooltip
+                        target="create-an-account-button"
+                        fade={false}
+                        isOpen={this.state.createAnAccountButtonTooltip}
+                        toggle={this.toggleCreateAnAccountButtonTooltip}
+                    >
+                        {chartOfAccountsText[this.context.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    </Tooltip>
+                    : null
+                }
+                
             </div>
 
         )
