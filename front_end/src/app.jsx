@@ -104,6 +104,7 @@ class App extends React.Component {
                         objectToSetToState.currentOrganizationName = currentPermission.organization.name;
                         objectToSetToState.currency = currentPermission.organization.currency;
                         objectToSetToState.isEnterprise = currentPermission.organization.isEnterprise;
+                        objectToSetToState.lockJournalEntriesBefore = currentPermission.organization.lockJournalEntriesBefore;
                     }
                 } else {
                     objectToSetToState.currentOrganizationId = null
@@ -176,6 +177,7 @@ class App extends React.Component {
 			currentPermissionTypeId: null,
 			currency: 'USD',
 			isEnterprise: false,
+            lockJournalEntriesBefore: '',
 
 			checkForAuthentication: this.checkForAuthentication,
 			logout: this.logout,
