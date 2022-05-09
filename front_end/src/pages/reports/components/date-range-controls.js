@@ -43,10 +43,28 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                             placeholder={"Custom"}
                                             value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                         />
-                                        <label className="my-0 text-right col-1 px-2">{incomeStatementRenderText[appContext.locale]["From:"]} </label>
-                                        <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
-                                        <label className="my-0 text-right col-1 px-2">{incomeStatementRenderText[appContext.locale]["To:"]} </label>
-                                        <input type="date" placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                        <label className="my-0 text-end col-1 px-2">
+                                            {incomeStatementRenderText[appContext.locale]["From:"]} 
+                                        </label>
+                                        <div className="col-3">
+                                            <input 
+                                                type="date" 
+                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                className="form-control" value={datesToRequest[i].startDate} 
+                                                onChange={event => handleChangeStartDate(event.target.value, i)} 
+                                            />
+                                        </div>
+                                        <label className="my-0 text-end col-1 px-2">
+                                            {incomeStatementRenderText[appContext.locale]["To:"]} 
+                                        </label>
+                                        <div className="col-3">
+                                            <input 
+                                                type="date" 
+                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                className="form-control" value={datesToRequest[i].endDate} 
+                                                onChange={event => handleChangeEndDate(event.target.value, i)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             )
@@ -75,7 +93,7 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                             value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                         />
                                     </div>
-                                    <div className="d-flex justify-content-between text-left align-items-center my-1">
+                                    <div className="d-flex justify-content-between text-start align-items-center my-1">
                                         <label className="my-0 col-3 px-0">
                                             {incomeStatementRenderText[appContext.locale]["From:"]} 
                                         </label>
@@ -87,7 +105,7 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                             onChange={event => handleChangeStartDate(event.target.value, i)} 
                                         />
                                     </div>
-                                    <div className="d-flex justify-content-between text-left align-items-center mb-2">
+                                    <div className="d-flex justify-content-between text-start align-items-center mb-2">
                                         <label className="my-0 col-3 px-0">
                                             {incomeStatementRenderText[appContext.locale]["To:"]} 
                                         </label>
@@ -112,9 +130,9 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                         : null
                     }
                     <div className="d-flex align-items-center justify-content-between mt-2">
-                        <div className="custom-control custom-switch">
-                            <input type="checkbox" id="detailedViewCheckbox" className="custom-control-input" value={detailedView} onChange={toggleDetailedView} />
-                            <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
+                        <div className="form-check form-switch">
+                            <input type="checkbox" role="switch" id="detailedViewCheckbox" className="form-check-input" value={detailedView} onChange={toggleDetailedView} />
+                            <label htmlFor="detailedViewCheckbox" className="my-0 form-check-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
                         </div>
                         <button type="submit" className="btn btn-primary width-200" onClick={handleUpdateReportButton}>
                             {incomeStatementRenderText[appContext.locale]["Update report"]}

@@ -127,9 +127,9 @@ function OrganizationRoster(props) {
     return (
         <Card className="very-rounded shadow-sm">
             <CardBody>
-                <CardTitle className="font-weight-600">
+                <CardTitle className="fw-semibold">
                     <div className="tr d-flex align-items-center justify-content-between">
-                        <div className="font-weight-600">
+                        <div className="fw-semibold">
                             {settingsText[appContext.locale]["People with access to"](ownPermissionForCurrentOrganization.organization.name)}
                         </div>
                         <div className="d-none d-sm-inline-block">
@@ -142,7 +142,7 @@ function OrganizationRoster(props) {
                     </div>
                     <div className="d-sm-none my-2">
                             {ownPermissionForCurrentOrganization.permissionType.id >= 3 ?
-                                <button className="btn btn-block btn-primary" onClick={toggleAddAPersonModal}>
+                                <button className="btn d-block w-100 btn-primary" onClick={toggleAddAPersonModal}>
                                     {settingsText[appContext.locale]["Add a person"]}
                                 </button>
                                 : null}
@@ -151,23 +151,23 @@ function OrganizationRoster(props) {
                 <div className="overflow-auto" style={{ height: '300px' }}>
                     {loading ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
                         <div>
-                            <div className="table d-none d-md-block">
-                                <div className="thead">
-                                    <div className="bg-light tr border rounded d-flex">
-                                        <div className="th col-3">{settingsText[appContext.locale]["Name"]}</div>
-                                        <div className="th col-4">{settingsText[appContext.locale]["Email"]}</div>
-                                        <div className="th col-4">{settingsText[appContext.locale]["Permissions"]}</div>
-                                        <div className="th col-1"></div>
+                            <div className="pseudo-table d-none d-md-block">
+                                <div className="pseudo-thead">
+                                    <div className="bg-light pseudo-tr border rounded d-flex">
+                                        <div className="pseudo-th col-3">{settingsText[appContext.locale]["Name"]}</div>
+                                        <div className="pseudo-th col-4">{settingsText[appContext.locale]["Email"]}</div>
+                                        <div className="pseudo-th col-4">{settingsText[appContext.locale]["Permissions"]}</div>
+                                        <div className="pseudo-th col-1"></div>
                                     </div>
                                 </div>
-                                <div className="tbody">
+                                <div className="pseudo-tbody">
                                     {personInRosterDTOs.map(person => {
                                         return (
-                                            <div className="tr d-flex" key={person.personId}>
-                                                <div className="td col-3">{settingsText[appContext.locale]["parseName"](person.firstName, person.lastName)}</div>
-                                                <div className="td col-4">{person.email}</div>
-                                                <div className="td col-4">{person.permissionTypeId ? permissionTypeOptions.find(permission => permission.value == person.permissionTypeId).label : null}</div>
-                                                <div className="td col-1">
+                                            <div className="pseudo-tr d-flex" key={person.personId}>
+                                                <div className="pseudo-td col-3">{settingsText[appContext.locale]["parseName"](person.firstName, person.lastName)}</div>
+                                                <div className="pseudo-td col-4">{person.email}</div>
+                                                <div className="pseudo-td col-4">{person.permissionTypeId ? permissionTypeOptions.find(permission => permission.value == person.permissionTypeId).label : null}</div>
+                                                <div className="pseudo-td col-1">
                                                     <Link replace
                                                         className={"text-muted" + (person.permissionTypeId < ownPermissionForCurrentOrganization.permissionType.id ? " " : " invisible")}
                                                         to="#" onClick={() => handleEditAPersonButton(person)}>
@@ -179,22 +179,22 @@ function OrganizationRoster(props) {
                                     })}
                                 </div>
                             </div>
-                            <div className="table d-md-none border-top">
+                            <div className="pseudo-table d-md-none border-top">
                                 {personInRosterDTOs.map(person => {
                                     return(
-                                        <div className="tr d-flex align-items-center justify-content-between" key={person.personId}>
-                                            <div className="td">
-                                                <div className="font-weight-600">
+                                        <div className="pseudo-tr d-flex align-items-center justify-content-between" key={person.personId}>
+                                            <div className="pseudo-td">
+                                                <div className="fw-semibold">
                                                     {settingsText[appContext.locale]["parseName"](person.firstName, person.lastName)}
                                                 </div>
                                                 <div className="font-size-compact">
                                                     {person.email}
                                                 </div>
                                             </div>
-                                            <div className="td">
+                                            <div className="pseudo-td">
                                                 {person.permissionTypeName}
                                             </div>
-                                            <div className="td">
+                                            <div className="pseudo-td">
                                                 <Link replace
                                                     className={"text-muted" + (person.permissionTypeId < appContext.permissions.find(permission => permission.organization.id == props.organizationId).permissionType.id ? "" : " visibility-hidden")}
                                                     to="#" onClick={() => handleEditAPersonButton(person)}>
@@ -212,7 +212,7 @@ function OrganizationRoster(props) {
                     <ModalHeader> {settingsText[appContext.locale]["Add user modal header"](ownPermissionForCurrentOrganization.organization.name)} </ModalHeader>
                     <ModalBody>
                         <form onSubmit={event => { event.preventDefault(); handleAddAPersonButton() }}>
-                            <div className="form-group row justify-content-center">
+                            <div className="mb-3 row justify-content-center">
                                 <label className="col-form-label col-lg-3">
                                     {settingsText[appContext.locale]["Add a user by email:"]}
                                 </label>
@@ -228,7 +228,7 @@ function OrganizationRoster(props) {
                                 </div>
                             </div>
                         </form>
-                        <div className="form-group row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
+                        <div className="mb-3 row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
                             <label className="col-form-label col-lg-3">
                                 {settingsText[appContext.locale]["Permissions for this user"] + ":"}
                             </label>
@@ -267,7 +267,7 @@ function OrganizationRoster(props) {
                     <ModalBody>
                         {selectedPerson ?
                             <div>
-                                <div className="form-group row justify-content-center">
+                                <div className="mb-3 row justify-content-center">
                                     <div className="col-lg-3">
                                         {settingsText[appContext.locale]["Name"] + ":"}
                                     </div>
@@ -275,7 +275,7 @@ function OrganizationRoster(props) {
                                         {FIRSTNAME_LASTNAME_LOCALES.includes(selectedPerson.locale) ? selectedPerson.firstName + " " + selectedPerson.lastName : selectedPerson.lastName + " " + selectedPerson.firstName}
                                     </div>
                                 </div>
-                                <div className="form-group row justify-content-center">
+                                <div className="mb-3 row justify-content-center">
                                     <div className="col-lg-3">
                                         {settingsText[appContext.locale]["Email"] + ":"}
                                     </div>
@@ -283,7 +283,7 @@ function OrganizationRoster(props) {
                                         {selectedPerson.email}
                                     </div>
                                 </div>
-                                <div className="form-group row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
+                                <div className="mb-3 row justify-content-center"> {/**React-select must exist outside of <form> if we want the form to be submittable with the enter key. */}
                                     <label className="col-form-label col-lg-3">
                                         {settingsText[appContext.locale]["Permissions for this user"] + ":"}
                                     </label>
@@ -316,7 +316,7 @@ function OrganizationRoster(props) {
                                 {settingsText[appContext.locale]["Save"]}
                             </button>
                             <button
-                                className="btn btn-white width-10ch ml-2"
+                                className="btn btn-white width-10ch ms-2"
                                 onClick={toggleEditAPersonModal}
                             >
                                 {settingsText[appContext.locale]["Cancel"]}

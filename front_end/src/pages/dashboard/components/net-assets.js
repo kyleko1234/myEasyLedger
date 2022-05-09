@@ -181,7 +181,7 @@ function NetAssets(props) {
     return(
         <Card className="shadow-sm very-rounded " style={{height: "380px"}}>
             <CardBody>
-                <CardTitle className="font-weight-600">
+                <CardTitle className="fw-semibold">
                     {appContext.isEnterprise? dashboardText[appContext.locale]["Net Assets"] : dashboardText[appContext.locale]["Net Worth"]}
                 </CardTitle>
                 <div >

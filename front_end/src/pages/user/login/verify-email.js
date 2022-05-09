@@ -73,7 +73,7 @@ function VerifyEmail(props) {
             <Alert isOpen={errorAlert} color="danger">{loginV3Text[appContext.locale][errorMessage]}</Alert>
             <Alert isOpen={successAlert} color="success">{loginV3Text[appContext.locale]["A new code has been sent to your email!"]}</Alert>
             <form onSubmit={event => handleSubmit(event)} className="mb-5 pb-5">
-                <div className="form-group mb-3">
+                <div className="mb-3">
                     <input type="text" required className="form-control-lg form-control" placeholder={loginV3Text[appContext.locale]["Reset Password Code"]} value={props.resetPasswordCode} onChange={event => props.setResetPasswordCode(event.target.value)}/>
                 </div>
                 <div className="d-flex justify-content-between">

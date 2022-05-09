@@ -72,6 +72,13 @@ export const settingsText = {
         "Results per Page": "Results per Page",
         "Number of results to display per page" : "Number of results to display per page",
 
+        "Lock initial values for accounts with journal entries": "Lock initial values for accounts with journal entries",
+        "Lock initial values for accounts and categories with transactions": "Lock initial values for accounts and categories with transactions",
+        "Lock journal entries before": "Lock journal entries before",
+        "Invalid date.": "Invalid date.",
+        "This action requires ADMIN permissions for this EasyLedger.": "This action requires ADMIN permissions for this EasyLedger.",
+        "This action requires OWN permissions for this EasyLedger.": "This action requires OWN permissions for this EasyLedger.",
+
         //Appearance settings options
         "System": "System",
         "Light": "Light",
@@ -149,6 +156,13 @@ export const settingsText = {
 
         "Results per Page": "更改每頁筆數",
         "Number of results to display per page" : "每頁顯示帳目筆數數量",
+
+        "Lock initial values for accounts with journal entries": "TRANSLATION",
+        "Lock initial values for accounts and categories with transactions": "TRANSLATION",
+        "Lock journal entries before": "TRANSLATION",
+        "Invalid date.": "TRANSLATION",
+        "This action requires ADMIN permissions for this EasyLedger.": "TRANSLATION",
+        "This action requires OWN permissions for this EasyLedger.": "TRANSLATION",
 
         //Appearance settings options
         "System": "系統模式",

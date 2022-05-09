@@ -35,16 +35,16 @@ function FirstOrganizationForm(props) {
                 {registerV3Text[appContext.locale]["Sign Up"]}
                 <Alert isOpen={props.somethingWentWrongAlert} color="danger">{registerV3Text[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
             </h1>
-            <h2 className="h5 font-weight-normal mb-3">{registerV3Text[appContext.locale]["Create your first EasyLedger."]}</h2>
+            <h2 className="h5 fw-normal mb-3">{registerV3Text[appContext.locale]["Create your first EasyLedger."]}</h2>
             <div className="login-content">
                 <form className="mb-0" onSubmit={event => validateForm(event)}>
-                    <label className="control-label">{registerV3Text[appContext.locale]["EasyLedger Name"]} <span className="text-danger">*</span></label>
+                    <label className="form-label">{registerV3Text[appContext.locale]["EasyLedger Name"]} <span className="text-danger">*</span></label>
                     <div className="row mb-3">
                         <div className="col-12">
                             <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["EasyLedger Name"]} required value={props.organizationNameInput} onChange={event => props.setOrganizationNameInput(event.target.value)}/>
                         </div>
                     </div>
-                    <label className="control-label">{registerV3Text[appContext.locale]["Currency"]}<span className="text-danger">*</span></label>
+                    <label className="form-label">{registerV3Text[appContext.locale]["Currency"]}<span className="text-danger">*</span></label>
                     <div className="row mb-3">
                         <div className="col-12">
                             <Select
@@ -58,18 +58,18 @@ function FirstOrganizationForm(props) {
                             />
                         </div>
                     </div>
-                    <label>{registerV3Text[appContext.locale]["Create an EasyLedger using:"]}</label>
-                    <div className="row mb-3 pl-3">
+                    <label className='form-label'>{registerV3Text[appContext.locale]["Create an EasyLedger using:"]}</label>
+                    <div className="row mb-3 ps-3">
                         <div className="col-12 form-check">
                             <input type="radio" id="is-enterprise-false" name="is-enterprise-radio" value={false} checked={props.isEnterprise === false} onChange={handleIsEnterpriseRadioChange} className="form-check-input"/>
                             <label htmlFor="is-enterprise-false" className="form-check-label">
-                                <div className="pl-2">{registerV3Text[appContext.locale]["Single-entry accounting"]}</div>
+                                <div className="ps-2">{registerV3Text[appContext.locale]["Single-entry accounting"]}</div>
                             </label>
                         </div>
                         <div className="col-12 form-check">
                             <input type="radio" id="is-enterprise-true" name="is-enterprise-radio" value={true} checked={props.isEnterprise === true} onChange={handleIsEnterpriseRadioChange} className="form-check-input"/>
                             <label htmlFor="is-enterprise-true" className="form-check-label">
-                                <div className="pl-2">{registerV3Text[appContext.locale]["Double-entry accounting"]}</div>
+                                <div className="ps-2">{registerV3Text[appContext.locale]["Double-entry accounting"]}</div>
                             </label>
                         </div>       
                     </div>
@@ -85,7 +85,7 @@ function FirstOrganizationForm(props) {
                     */}
                     <Alert isOpen={agreeAlert} color="danger">{registerV3Text[appContext.locale]["Please agree."]}</Alert>
                     <div className="register-buttons mb-3">
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">
+                        <button type="submit" className="btn btn-primary d-block w-100 btn-lg">
                             {loading
                                 ? <LoadingSpinner />
                                 : registerV3Text[appContext.locale]["Sign Up"]

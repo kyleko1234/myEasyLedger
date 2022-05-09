@@ -96,7 +96,7 @@ function BalanceSummary(props) {
             <CardBody>
                 <CardTitle className="font-weight-semibold">
                     {balanceSummaryText[appContext.locale]["Balance Summary"]} 
-                    <span className="font-weight-normal">
+                    <span className="fw-normal">
                         {loading
                             ? null
                             : balanceSummaryText[appContext.locale]["Date text"](today)
@@ -111,10 +111,10 @@ function BalanceSummary(props) {
                                 <div>
                                     {displayedAccounts.map(account => {
                                         return(
-                                            <Link key={account.accountId} to={`/account-details/${account.accountId}`} className="tr d-flex align-items-center">
-                                                <div className="td d-flex col-11 justify-content-between align-items-center">
+                                            <Link key={account.accountId} to={`/account-details/${account.accountId}`} className="pseudo-tr d-flex align-items-center">
+                                                <div className="pseudo-td d-flex col-11 justify-content-between align-items-center">
                                                     <div className="col-8">
-                                                        <div className={"font-size-compact font-weight-600 " + ((account.accountCode && appContext.isEnterprise)? "" : " d-none")}>
+                                                        <div className={"font-size-compact fw-semibold " + ((account.accountCode && appContext.isEnterprise)? "" : " d-none")}>
                                                             {account.accountCode}
                                                         </div>
                                                         <div className="text-truncate">
@@ -123,7 +123,7 @@ function BalanceSummary(props) {
                                                                 : account.accountName}
                                                         </div>
                                                     </div>
-                                                    <div className={" text-right " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
+                                                    <div className={" text-end " + (account.creditTotal > account.debitTotal ? "text-red" : "")}>
                                                         {formatCurrency(appContext.locale, appContext.currency, (
                                                             account.accountTypeId === 1
                                                                 ? account.debitsMinusCredits
@@ -134,7 +134,7 @@ function BalanceSummary(props) {
                                                         ))}
                                                     </div>
                                                 </div>
-                                                <div className="col-1 pl-0 text-muted"><i className="fas fa-angle-right "></i></div>
+                                                <div className="col-1 ps-0 text-muted"><i className="fas fa-angle-right "></i></div>
                                             </Link>
                                         ) 
                                     })}

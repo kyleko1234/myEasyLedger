@@ -35,6 +35,7 @@ import com.easyledger.api.model.Account;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.JournalEntryLog;
 import com.easyledger.api.model.LineItem;
+import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.JournalEntryLogRepository;
 import com.easyledger.api.repository.JournalEntryRepository;
@@ -119,11 +120,13 @@ public class JournalEntryController {
         
     @DeleteMapping("/journalEntry/{id}")
     public Map<String, Boolean> deleteJournalEntry(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
-         throws ResourceNotFoundException, UnauthorizedException, JsonProcessingException {
+         throws ResourceNotFoundException, UnauthorizedException, JsonProcessingException, ConflictException {
         JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
-       .orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
+        		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId));
 
         authorizationService.authorizeEditPermissionsByOrganizationId(authentication, journalEntry.getOrganization().getId());
+        checkLockDateForJournalEntry(journalEntry);
+        
         
         journalEntry.setDeleted(true);
         JournalEntry deletedJournalEntry = journalEntryRepo.save(journalEntry);
@@ -154,12 +157,15 @@ public class JournalEntryController {
     		throw new ConflictException("Entry ID in request body does not match URI.");
     	}
     	
+    	
     	//Assert that an entry for this id exists
     	JournalEntry oldJournalEntry = journalEntryRepo.findById(id)
         	.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + id)); 
     	
     	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, oldJournalEntry.getOrganization().getId());
     	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
+    	
+    	checkLockDateForJournalEntry(oldJournalEntry);
     	
     	//Delete old LineItems.
     	Iterator<LineItem> oldLineItemIterator = oldJournalEntry.getLineItems().iterator();
@@ -233,7 +239,13 @@ public class JournalEntryController {
 
     }
     
-
+    private void checkLockDateForJournalEntry(JournalEntry journalEntry) throws ConflictException {
+    	Organization organization = journalEntry.getOrganization();
+    	//if journal entry date is before organization's lockJournalEntriesBefore date, throw 409
+    	if (journalEntry.getJournalEntryDate().compareTo(organization.getLockJournalEntriesBefore()) < 0) {
+    		throw new ConflictException("This journal entry has been locked by an admin.");
+    	}
+    }
 
 
 }

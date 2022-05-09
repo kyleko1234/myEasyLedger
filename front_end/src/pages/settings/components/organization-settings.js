@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardBody, CardTitle, Alert} from 'reactstrap';
+import { Card, CardBody, CardTitle, Alert, Tooltip} from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import { CURRENCY_OPTIONS, CALENDAR_MONTH_OPTIONS, API_BASE_URL } from '../../../utils/constants';
 import { settingsText } from '../../../utils/i18n/settings-text';
@@ -7,6 +7,7 @@ import Select from 'react-select';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import { validateDate } from '../../../utils/util-fns';
 
 //requiredProps: organizationId
 function OrganizationSettings(props) {
@@ -19,16 +20,30 @@ function OrganizationSettings(props) {
     const [organizationName, setOrganizationName] = React.useState(permissionObject.organization.name);
     const [fiscalYearBeginMonth, setFiscalYearBeginMonth] = React.useState(fiscalYearBegin[1]);
     const [fiscalYearBeginDay, setFiscalYearBeginDay] = React.useState(fiscalYearBegin[2]);
+    const [lockInitialAccountValues, setLockInitialAccountValues] = React.useState(permissionObject.organization.lockInitialAccountValues);
+    const toggleLockInitialAccountValues = () => {
+        setLockInitialAccountValues(!lockInitialAccountValues);
+    }
+    const [lockJournalEntriesBefore, setLockJournalEntriesBefore] = React.useState(permissionObject.organization.lockJournalEntriesBefore);
+
     const [dateOptions, setDateOptions] = React.useState([]);
     const [savedAlert, setSavedAlert] = React.useState(false);
     const [errorAlert, setErrorAlert] = React.useState(false);
+    const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
+
     const [loading, setLoading] = React.useState(false);
 
     const [confirmDeleteOrganizationAlert, setConfirmDeleteOrganizationAlert] = React.useState(false);
     const [cannotDeleteOrganizationAlert, setCannotDeleteOrganizationAlert] = React.useState(false);
     const toggleConfirmDeleteOrganizationAlert = () => setConfirmDeleteOrganizationAlert(!confirmDeleteOrganizationAlert);
     const toggleCannotDeleteOrganizationAlert = () => setCannotDeleteOrganizationAlert(!cannotDeleteOrganizationAlert);
-    
+
+    const [saveButtonTooltip, setSaveButtonTooltip] = React.useState(false);
+    const toggleSaveButtonTooltip = () => setSaveButtonTooltip(!saveButtonTooltip);
+    const [deleteButtonTooltip, setDeleteButtonTooltip] = React.useState(false);
+    const toggleDeleteButtonTooltip = () => setDeleteButtonTooltip(!deleteButtonTooltip);
+
+
     const handleDeleteOrganizationButton = () => {
         setConfirmDeleteOrganizationAlert(true);
     }
@@ -78,10 +93,19 @@ function OrganizationSettings(props) {
     }, [fiscalYearBeginMonth])
 
     const saveSettings = () => {
+        setSavedAlert(false);
+        setErrorAlert(false);
+        setInvalidDateAlert(false);
+        if (!validateDate(lockJournalEntriesBefore)) {
+            setInvalidDateAlert(true);
+            return;
+        }
         let requestBody = {
             id: props.organizationId,
             name: organizationName,
-            fiscalYearBegin: "2020-" + fiscalYearBeginMonth + "-" + fiscalYearBeginDay
+            fiscalYearBegin: "2020-" + fiscalYearBeginMonth + "-" + fiscalYearBeginDay,
+            lockInitialAccountValues: lockInitialAccountValues,
+            lockJournalEntriesBefore: lockJournalEntriesBefore
         }
         axios.put(`${API_BASE_URL}/organization/${props.organizationId}`, requestBody).then(response => {
             appContext.fetchUserInfo(appContext.personId);
@@ -94,35 +118,38 @@ function OrganizationSettings(props) {
     return(
         <Card className="very-rounded shadow-sm mb-3">
             <CardBody>
-                <CardTitle className="font-weight-600">
+                <CardTitle className="fw-semibold">
                     {settingsText[appContext.locale]["EasyLedger Settings"]}
                 </CardTitle>   
                 <div>
-                    {savedAlert? <Alert color="success">{settingsText[appContext.locale]["Settings saved."]}</Alert> : null}
-                    {errorAlert? <Alert color="danger">{settingsText[appContext.locale]["Something went wrong. Please try again later."]}</Alert> : null}
-                    <div className="form-group row mx-0 my-2 align-items-center">
-                        <label className="col-lg-3 col-form-label my-0 px-0">
+                    <Alert color="success" isOpen={savedAlert}>{settingsText[appContext.locale]["Settings saved."]}</Alert>
+                    <Alert color="danger" isOpen={errorAlert}>{settingsText[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
+                    <div className="mb-3 row mx-0 my-2 align-items-center">
+                        <label className="col-lg-3 col-form-label my-0 px-0" htmlFor='easyledger-name-input'>
                             {settingsText[appContext.locale]["Easyledger Name"] + ":"}
                         </label>
-                        <input 
-                            className="form-control col-md-9 "
-                            disabled={permissionObject.permissionType.id < 3? true : false}
-                            type="text" value={organizationName} 
-                            onChange={event => setOrganizationName(event.target.value)}
-                        />
+                        <div className="col-md-9">
+                            <input 
+                                id="easyledger-name-input"
+                                className="form-control"
+                                disabled={permissionObject.permissionType.id < 3? true : false}
+                                type="text" value={organizationName} 
+                                onChange={event => setOrganizationName(event.target.value)}
+                            />
+                        </div>
                     </div>
-                    <div className="form-group row mx-0 my-2 align-items-center">
+                    <div className="mb-3 row mx-0 my-2 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
                             {settingsText[appContext.locale]["Currency"] + ":"}
                         </label>
-                        <div className="col-md-9 px-0">{currencies.find(currency => currency.value === permissionObject.organization.currency).label}</div>
+                        <div className="col-md-9">{currencies.find(currency => currency.value === permissionObject.organization.currency).label}</div>
                     </div>
-                    <div className="form-group row mx-0 align-items-center">
+                    <div className="mb-3 row mx-0 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0">
                             {settingsText[appContext.locale]["Fiscal Year Begin Date"] + ":"}
                         </label>
-                        <div className="col-md-9 d-flex px-0">
-                            <div className="w-50 mr-3">
+                        <div className="col-md-9 d-flex">
+                            <div className="w-50 me-3">
                                 <Select
                                     classNamePrefix="form-control"
                                     options={monthOptions}
@@ -142,35 +169,74 @@ function OrganizationSettings(props) {
                             </div>
                         </div>
                     </div>
-                    <button 
-                        className="btn btn-primary width-175 d-none d-sm-inline-block" 
-                        onClick={saveSettings}
-                        disabled={permissionObject.permissionType.id < 3}
-                    >
-                        {settingsText[appContext.locale]["Save"]}
-                    </button>
-                    <button 
-                        className="btn btn-primary btn-block d-sm-none" 
-                        onClick={saveSettings}
-                        disabled={permissionObject.permissionType.id < 3}
-                    >
-                        {settingsText[appContext.locale]["Save"]}
-                    </button>
-                    <button 
-                        className="btn btn-danger d-none d-sm-inline-block ml-4" 
-                        onClick={handleDeleteOrganizationButton}
-                        disabled={permissionObject.permissionType.id < 4}
-                    >
-                        {settingsText[appContext.locale]["Delete this EasyLedger"]}
-                    </button>
-                    <button 
-                        className="btn btn-danger btn-block d-sm-none mt-4" 
-                        onClick={handleDeleteOrganizationButton}
-                        disabled={permissionObject.permissionType.id < 4}
-                    >
-                        {settingsText[appContext.locale]["Delete this EasyLedger"]}
-                    </button>
-                    
+                    <div className="mb-3 row mx-0 align-items-center">
+                        <div className="form-check form-switch">
+                            <input 
+                                type="checkbox" 
+                                id="lockInitialAccountValueCheckbox" 
+                                className="form-check-input" 
+                                value={lockInitialAccountValues} 
+                                checked={lockInitialAccountValues}
+                                onChange={toggleLockInitialAccountValues} 
+                                disabled={permissionObject.permissionType.id < 3}
+                            />
+                            <label htmlFor="lockInitialAccountValueCheckbox" className="my-0 form-check-label">
+                                {permissionObject.organization.isEnterprise
+                                    ? settingsText[appContext.locale]["Lock initial values for accounts with journal entries"]
+                                    : settingsText[appContext.locale]["Lock initial values for accounts and categories with transactions"]
+                                }
+                            </label>
+                        </div>
+                    </div>
+                    <Alert color="danger" isOpen={invalidDateAlert}>{settingsText[appContext.locale]["Invalid date."]}</Alert>
+                    <div className="mb-3 row mx-0 align-items-center">
+                        <label className="col-lg-3 col-form-label my-0 px-0" htmlFor="lock-entries-before-input">
+                            {settingsText[appContext.locale]["Lock journal entries before"] + ":"}
+                        </label>
+                        <div className="col-md-9">
+                            <input 
+                                id="lock-entries-before-input"
+                                className="form-control"
+                                disabled={permissionObject.permissionType.id < 3}
+                                type="date" value={lockJournalEntriesBefore? lockJournalEntriesBefore : ''} 
+                                onChange={event => setLockJournalEntriesBefore(event.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="d-sm-flex">
+                        <div id="save-button">
+                            <button 
+                                className="btn btn-primary width-175 d-none d-sm-inline-block" 
+                                onClick={saveSettings}
+                                disabled={permissionObject.permissionType.id < 3}
+                            >
+                                {settingsText[appContext.locale]["Save"]}
+                            </button>
+                            <button 
+                                className="btn btn-primary d-block w-100 d-sm-none" 
+                                onClick={saveSettings}
+                                disabled={permissionObject.permissionType.id < 3}
+                            >
+                                {settingsText[appContext.locale]["Save"]}
+                            </button>
+                        </div>
+                        <div id="delete-button" className="ms-sm-4">
+                            <button 
+                                className="btn btn-danger d-none d-sm-inline-block" 
+                                onClick={handleDeleteOrganizationButton}
+                                disabled={permissionObject.permissionType.id < 4}
+                            >
+                                {settingsText[appContext.locale]["Delete this EasyLedger"]}
+                            </button>
+                            <button 
+                                className="btn btn-danger d-block w-100 d-sm-none mt-3" 
+                                onClick={handleDeleteOrganizationButton}
+                                disabled={permissionObject.permissionType.id < 4}
+                            >
+                                {settingsText[appContext.locale]["Delete this EasyLedger"]}
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 {confirmDeleteOrganizationAlert
                     ? <SweetAlert primary showCancel
@@ -196,6 +262,28 @@ function OrganizationSettings(props) {
                     >
                         {settingsText[appContext.locale]["All Journal Entries and Transactions must be deleted before you can delete this EasyLedger."]}
                     </SweetAlert>
+                    : null
+                }
+                {permissionObject.permissionType.id < 3
+                    ? <Tooltip 
+                        target="save-button" 
+                        fade={false}
+                        isOpen={saveButtonTooltip} 
+                        toggle={toggleSaveButtonTooltip}
+                    >
+                        {settingsText[appContext.locale]["This action requires ADMIN permissions for this EasyLedger."]}
+                    </Tooltip>
+                    : null
+                }
+                {permissionObject.permissionType.id < 4
+                    ? <Tooltip 
+                        target="delete-button" 
+                        fade={false}
+                        isOpen={deleteButtonTooltip} 
+                        toggle={toggleDeleteButtonTooltip}
+                    >
+                        {settingsText[appContext.locale]["This action requires OWN permissions for this EasyLedger."]}
+                    </Tooltip>
                     : null
                 }
             </CardBody>

@@ -66,10 +66,10 @@ function ResetPassword(props) {
                 <Link className="alert-link" to="/user/login/forgot/find-email">{loginV3Text[appContext.locale]["Please click here to restart this process."]}</Link>
             </Alert>
             <form onSubmit={event => handleSubmit(event)} className="mb-5 pb-5">
-                <div className="form-group mb-3">
+                <div className="mb-3">
                     <input type="password" required className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Password"]} value={props.newPassword} onChange={event => props.setNewPassword(event.target.value)}/>
                 </div>
-                <div className="form-group mb-3">
+                <div className="mb-3">
                     <input type="password" required className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Confirm Password"]} value={confirmPassword} onChange={event => setConfirmPassword(event.target.value)}/>
                 </div>
                 <div className="d-flex justify-content-between">

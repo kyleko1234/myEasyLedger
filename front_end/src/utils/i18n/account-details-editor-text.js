@@ -34,6 +34,13 @@ export const accountDetailsEditorText = {
         "Initial Account Value": "Initial Account Value",
         "Display Order": "Display Order",
 
+        "Cannot edit the initial value of this category.": "Cannot edit the initial value of this category.",
+        "Cannot edit the initial value of this account.": "Cannot edit the initial value of this account.",
+        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.": "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.",
+        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.": "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.",
+
+        "This action requires EDIT permissions for this EasyLedger.": "This action requires EDIT permissions for this EasyLedger.",
+
         //Account Subtype Names.
         "Cash and cash equivalents": "Cash and cash equivalents", 
         "Current marketable securities": "Current marketable securities", 
@@ -108,7 +115,13 @@ export const accountDetailsEditorText = {
         "Please remove all line items and child categories from this category and try again." : "請删先本類別下所有單行項目及其子類別後再試一次。",
         "Initial Account Value": "科目初始餘額",
 
+        "Cannot edit the initial value of this category.": "TRANSLATION",
+        "Cannot edit the initial value of this account.": "TRANSLATION",
+        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.": "TRANSLATION",
+        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.": "TRANSLATION",
 
+        "This action requires EDIT permissions for this EasyLedger.": "TRANSLATION",
+        
         //Account Subtype Names.
         "Cash and cash equivalents": "現金及約當現金", 
         "Current marketable securities": "流動市場性證劵", 

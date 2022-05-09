@@ -9,8 +9,8 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
         () => [ // accessor is the "key" in the data},
             { header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', className: 'col-6 ' },
             { header: journalEntryViewModeText[appContext.locale]['Account'], accessor: 'accountId', className: 'col-2 ' },
-            { header: journalEntryViewModeText[appContext.locale]['Debit'], accessor: 'debitAmount', className: 'col-2 text-right ' },
-            { header: journalEntryViewModeText[appContext.locale]['Credit'], accessor: 'creditAmount', className: 'col-2 text-right ' },
+            { header: journalEntryViewModeText[appContext.locale]['Debit'], accessor: 'debitAmount', className: 'col-2 text-end ' },
+            { header: journalEntryViewModeText[appContext.locale]['Credit'], accessor: 'creditAmount', className: 'col-2 text-end ' },
         ],
         []
     )
@@ -57,24 +57,24 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
             </div>
 
             <div className="mt-3">
-                <div className="table d-none d-lg-block">
-                    <div className="thead">
-                        <div className="tr bg-light rounded border d-flex">
+                <div className="pseudo-table d-none d-lg-block">
+                    <div className="pseudo-thead">
+                        <div className="pseudo-tr bg-light rounded border d-flex">
                             {columns.map(column => (
-                                <div key={column.accessor} className={"th " + column.className}>
+                                <div key={column.accessor} className={"pseudo-th " + column.className}>
                                     {column.header}
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <div className="tbody">
+                    <div className="pseudo-tbody">
                         {data.map(
                             (row, i) => {
                                 return (
-                                    <div className="tr d-flex" key={i}>
+                                    <div className="pseudo-tr d-flex" key={i}>
                                         {columns.map(column => {
                                             return (
-                                                <div className={"td " + column.className} key={column.accessor}>
+                                                <div className={"pseudo-td " + column.className} key={column.accessor}>
                                                     {formatCell(row[column.accessor], column.accessor)}
                                                 </div>
                                             )
@@ -84,26 +84,26 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                             }
                         )}
                     </div>
-                    <div className="tfoot">
-                        <div className="tr d-flex">
-                            <div className="td col-6">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
-                            <div className="td col-2"></div>
-                            <div className="td col-2 text-right">
+                    <div className="pseudo-tfoot">
+                        <div className="pseudo-tr d-flex">
+                            <div className="pseudo-td col-6">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
+                            <div className="pseudo-td col-2"></div>
+                            <div className="pseudo-td col-2 text-end">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                             </div>
-                            <div className="td col-2 text-right">
+                            <div className="pseudo-td col-2 text-end">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="table d-lg-none">
-                    <div className="tbody border-top">
+                <div className="pseudo-table d-lg-none">
+                    <div className="pseudo-tbody border-top">
                         {data.map((row, i) => { /**Probably refactor this at some point */
                             return(
-                                <div key={i} className="tr d-flex">
+                                <div key={i} className="pseudo-tr d-flex">
                                     <div className="px-2 py-2 w-100">
-                                        <div className="font-weight-600">
+                                        <div className="fw-semibold">
                                             {formatCell(row[columns[1].accessor], columns[1].accessor)}
                                         </div>
                                         <div className="mb-2">
@@ -111,15 +111,15 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                                         </div>
                                         <div className="d-flex justify-content-between ">
                                             <div className="">
-                                                <div className="font-weight-600">
+                                                <div className="fw-semibold">
                                                     {columns[2].header}
                                                 </div>
                                                 <div>
                                                     {formatCell(row[columns[2].accessor], columns[2].accessor)}
                                                 </div>
                                             </div>
-                                            <div className="text-right">
-                                                <div className="font-weight-600">
+                                            <div className="text-end">
+                                                <div className="fw-semibold">
                                                     {columns[3].header}
                                                 </div>
                                                 <div>
@@ -133,22 +133,22 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                             )
                         })}
                     </div>
-                    <div className="tfoot">
-                        <div className="tr d-flex">
+                    <div className="pseudo-tfoot">
+                        <div className="pseudo-tr d-flex">
                             <div className="px-2 py-2 w-100 d-flex justify-content-between">
                                 <div>
                                     <div>
                                         {journalEntryViewModeText[appContext.locale]["Total Debit"]}
                                     </div>
-                                    <div className="font-weight-normal">
+                                    <div className="fw-normal">
                                         {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("debitAmount"))}
                                     </div>
                                 </div>
-                                <div className="text-right">
+                                <div className="text-end">
                                     <div>
                                         {journalEntryViewModeText[appContext.locale]["Total Credit"]}
                                     </div>
-                                    <div className="font-weight-normal">
+                                    <div className="fw-normal">
                                         {formatCurrency(appContext.locale, appContext.currency, sumAmountsInColumn("creditAmount"))}
                                     </div>
                                 </div>

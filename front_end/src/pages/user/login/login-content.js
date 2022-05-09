@@ -85,17 +85,17 @@ function LoginContent(props) {
                 {loginV3Text[appContext.locale]["Verification email sent!"]}
             </Alert>
             <form className="mb-0" onSubmit={event => handleSubmit(event)}>
-                <div className="form-group mb-3">
+                <div className="mb-3">
                     <input type="email" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Email Address"]} required value={emailInput} onChange={event => setEmailInput(event.target.value)}/>
                 </div>
-                <div className="form-group mb-3">
+                <div className="mb-3">
                     <input type="password" className="form-control form-control-lg" placeholder={loginV3Text[appContext.locale]["Password"]} required value={passwordInput} onChange={event => setPasswordInput(event.target.value)} />
                 </div>
                 <div className="mb-3">
                     <Link to="/user/login/forgot/find-email" className="text-primary">{loginV3Text[appContext.locale]["Forgot Password?"]}</Link>
                 </div>
                 <div className="mb-3">
-                    <button type="submit" className="btn btn-primary btn-block btn-lg">
+                    <button type="submit" className="btn btn-primary d-block w-100 btn-lg">
                         {loading
                             ? <LoadingSpinner /> 
                             : loginV3Text[appContext.locale]["Sign me in"]

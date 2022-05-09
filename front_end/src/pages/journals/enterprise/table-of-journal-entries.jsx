@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, Tooltip } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../utils/constants.js';
@@ -49,7 +49,19 @@ function TableOfJournalEntries({
     const [accountOptions, setAccountOptions] = React.useState([]);
 
     const [journalEntryHistoryModal, setJournalEntryHistoryModal] = React.useState(false);
-    const toggleJournalEntryHistoryModal = () => setJournalEntryHistoryModal(!journalEntryHistoryModal);    
+    const toggleJournalEntryHistoryModal = () => setJournalEntryHistoryModal(!journalEntryHistoryModal);  
+    
+    const [addAnEntryTooltip, setAddAnEntryTooltip] = React.useState(false);
+    const toggleAddAnEntryTooltip = () => setAddAnEntryTooltip(!addAnEntryTooltip);
+    const [smallScreenAddAnEntryTooltip, setSmallScreenAddAnEntryTooltip] = React.useState(false);
+    const toggleSmallScreenAddAnEntryTooltip = () => setSmallScreenAddAnEntryTooltip(!smallScreenAddAnEntryTooltip);
+
+    const [editButtonTooltip, setEditButtonTooltip] = React.useState(false);
+    const toggleEditButtonTooltip = () => setEditButtonTooltip(!editButtonTooltip);
+    const [copyButtonTooltip, setCopyButtonTooltip] = React.useState(false);
+    const toggleCopyButtonTooltip = () => setCopyButtonTooltip(!copyButtonTooltip);
+    const [entryLockedTooltip, setEntryLockedTooltip] = React.useState(false);
+    const toggleEntryLockedTooltip = () => setEntryLockedTooltip(!entryLockedTooltip);
 
     const fetchJournalEntry = journalEntryId => {
         axios.get(`${API_BASE_URL}/journalEntry/${journalEntryId}`)
@@ -286,36 +298,38 @@ function TableOfJournalEntries({
         <>
             <div className="d-sm-flex  justify-content-between align-items-center">
                 {tableTitle}
-                {hasAddEntryButton ?
-                    <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
-                        {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
-                    </button>
-                : null}
+                <div id="add-an-entry-button">
+                    {hasAddEntryButton ?
+                        <button type="button" className="btn btn-primary d-none d-sm-inline-block" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
+                            {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
+                        </button>
+                    : null}
+                </div>
             </div>
-            <div className="d-sm-none"> {/**On small screens render button-block */}
-                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
+            <div id="small-screen-add-an-entry-button" className="d-sm-none"> {/**On small screens render button-block */}
+                <button type="button" className="btn btn-primary btn-lg d-block w-100" onClick={() => openEditorForNewEntry()} disabled={appContext.currentPermissionTypeId < 2}>
                     {tableOfJournalEntriesText[appContext.locale]["Add an entry"]}
                 </button>
             </div>
             <div className="my-2">
-                <div className="thead">
-                    <div className="d-none d-md-flex tr bg-light border rounded">
+                <div className="pseudo-thead">
+                    <div className="d-none d-md-flex pseudo-tr bg-light border rounded">
                         {columns.map(column => {
                             return(
-                                <div key={column.accessor} className={"th " + column.className}>
+                                <div key={column.accessor} className={"pseudo-th " + column.className}>
                                     {column.header}
                                 </div>
                             )
                         })}
                     </div>
                 </div>
-                <div className="tbody">
+                <div className="pseudo-tbody">
                     {data.map((row, i) => {
                         return (
-                            <Link replace to="#" className="tr d-none d-md-flex" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
+                            <Link replace to="#" className="pseudo-tr d-none d-md-flex" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
                                 {columns.map(column => {
                                     return(
-                                        <div key={column.accessor} className={"td " + column.className}>
+                                        <div key={column.accessor} className={"pseudo-td " + column.className}>
                                             {formatCell(row[column.accessor], column.accessor)}
                                         </div>
                                     )
@@ -326,9 +340,9 @@ function TableOfJournalEntries({
                     { /**This is not really reuseable and should be refactored. For small screens */}
                     {data.map((row, i) => {
                         return(
-                            <Link replace to="#" className="tr d-flex justify-content-between d-md-none align-items-center td" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
+                            <Link replace to="#" className="pseudo-tr d-flex justify-content-between d-md-none align-items-center pseudo-td" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
                                 <div className="px-0 w-100">
-                                    <div className={"px-0 font-size-compact font-weight-600 " + columns[0].className}>
+                                    <div className={"px-0 font-size-compact fw-semibold " + columns[0].className}>
                                         {formatCell(row[columns[0].accessor], columns[0].accessor)}
                                     </div>
                                     <div className={"px-0 " + columns[1].className}>
@@ -336,7 +350,7 @@ function TableOfJournalEntries({
                                     </div>
                                     <div className="d-flex justify-content-between pt-2">
                                         <div className="font-size-compact">
-                                            <div className="font-weight-600 ">
+                                            <div className="fw-semibold ">
                                                     {columns[2].header}
                                             </div>
                                             <div className={"px-0 " + columns[2].className}>
@@ -344,7 +358,7 @@ function TableOfJournalEntries({
                                             </div>
                                         </div>
                                         <div className="font-size-compact">
-                                            <div className="font-weight-600 text-right">
+                                            <div className="fw-semibold text-end">
                                                     {columns[3].header}
                                             </div>
                                             <div className={"px-0 " + columns[3].className}>
@@ -414,7 +428,7 @@ function TableOfJournalEntries({
                                 <button className="btn btn-primary width-10ch"onClick={() => handleSaveJournalEntryButton()}>
                                     {tableOfJournalEntriesText[appContext.locale]["Save"]}
                                 </button>
-                                <button className="btn btn-white ml-2 width-10ch" onClick={createMode ? cancelCreateMode : cancelEditMode}>
+                                <button className="btn btn-white ms-2 width-10ch" onClick={createMode ? cancelCreateMode : cancelEditMode}>
                                     {tableOfJournalEntriesText[appContext.locale]["Cancel"]}
                                 </button>
                             </div>
@@ -425,21 +439,95 @@ function TableOfJournalEntries({
                                 {/**empty div to push buttons rightwards */}
                             </div>
                             <div>
-                                <button className="btn btn-info width-10ch" onClick={handleCopyJournalEntryButton} disabled={appContext.currentPermissionTypeId < 2}>
-                                    {tableOfJournalEntriesText[appContext.locale]["Copy"]}
-                                </button>
-                                <button className="btn btn-primary ml-2 width-10ch" onClick={handleEditButton} disabled={appContext.currentPermissionTypeId < 2}>
-                                    {tableOfJournalEntriesText[appContext.locale]["Edit"]}
-                                </button>
-                                <button className="btn btn-white ml-2 width-10ch" onClick={handleExitJournalEntryModal}>
-                                    {tableOfJournalEntriesText[appContext.locale]["Close"]}
-                                </button>
+                                <div id="copy-button" className="d-inline-block">
+                                    <button 
+                                        className="btn btn-info width-10ch" 
+                                        onClick={handleCopyJournalEntryButton} 
+                                        disabled={appContext.currentPermissionTypeId < 2}
+                                    >
+                                        {tableOfJournalEntriesText[appContext.locale]["Copy"]}
+                                    </button>
+                                </div>
+                                <div id="edit-button" className="d-inline-block">
+                                    <button 
+                                        className="btn btn-primary ms-2 width-10ch" 
+                                        onClick={handleEditButton} 
+                                        disabled={appContext.currentPermissionTypeId < 2 || journalEntryDate < appContext.lockJournalEntriesBefore}
+                                    >
+                                        {tableOfJournalEntriesText[appContext.locale]["Edit"]}
+                                    </button>
+                                </div>
+                                <div className="d-inline-block">
+                                    <button 
+                                        className="btn btn-white ms-2 width-10ch" 
+                                        onClick={handleExitJournalEntryModal}
+                                    >
+                                        {tableOfJournalEntriesText[appContext.locale]["Close"]}
+                                    </button>
+                                </div>
                             </div>
                         </>
+                    }
+                    {appContext.currentPermissionTypeId < 2
+                        ? <Tooltip
+                            target="copy-button"
+                            isOpen={copyButtonTooltip}
+                            toggle={toggleCopyButtonTooltip}
+                            fade={false}
+                        >
+                            {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                        </Tooltip>
+                        : null
+                    }
+                    {appContext.currentPermissionTypeId < 2 && !(journalEntryDate < appContext.lockJournalEntriesBefore)
+                        ? <Tooltip
+                            target="edit-button"
+                            isOpen={editButtonTooltip}
+                            toggle={toggleEditButtonTooltip}
+                            fade={false}
+                        >
+                            {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                        </Tooltip>
+                        : null
+                    }
+                    {journalEntryDate < appContext.lockJournalEntriesBefore
+                        ? <Tooltip
+                            target="edit-button"
+                            isOpen={entryLockedTooltip}
+                            toggle={toggleEntryLockedTooltip}
+                            fade={false}
+                        >
+                            {tableOfJournalEntriesText[appContext.locale]["This journal entry has been locked by an admin of this EasyLedger."]}
+                        </Tooltip>
+                        : null
                     }
                 </ModalFooter>
             </Modal>
             <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} accountOptions={accountOptions} /> 
+            
+            {appContext.currentPermissionTypeId < 2
+                ? <Tooltip
+                    target="add-an-entry-button"
+                    isOpen={addAnEntryTooltip}
+                    toggle={toggleAddAnEntryTooltip}
+                    fade={false}  
+                    placement="left"
+                >
+                    {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                </Tooltip>
+                : null
+            }
+            {appContext.currentPermissionTypeId < 2
+                ? <Tooltip
+                    target="small-screen-add-an-entry-button"
+                    isOpen={smallScreenAddAnEntryTooltip}
+                    toggle={toggleSmallScreenAddAnEntryTooltip}
+                    fade={false}  
+                >
+                    {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                </Tooltip>
+                : null
+            }
         </>
     )
 

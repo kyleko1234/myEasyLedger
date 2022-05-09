@@ -46,17 +46,33 @@ function ChangeNameModal(props) {
                         ? <Alert color="danger">{settingsText[appContext.locale]["Please provide a first and last name."]}</Alert>
                         : null}
                     <form className="px-3 py-3" onSubmit={event => {event.preventDefault(); handleSaveButton();}}>
-                        <div className="form-group row align-items-center">
-                            <label className="col-4 mb-0">
+                        <div className="mb-3 row align-items-center">
+                            <label className="form-label col-4 mb-0" htmlFor='first-name-input'>
                                 {settingsText[appContext.locale]["First name"]}
                             </label>
-                            <input className="form-control col-8" type="text" value={firstNameInput} onChange={event => setFirstNameInput(event.target.value)}/>
+                            <div className="col-8">
+                                <input 
+                                    className="form-control" 
+                                    id="first-name-input"
+                                    type="text" 
+                                    value={firstNameInput} 
+                                    onChange={event => setFirstNameInput(event.target.value)}
+                                />
+                            </div>
                         </div>
-                        <div className="form-group row align-items-center">
-                            <label className="col-4 mb-0">
+                        <div className="mb-3 row align-items-center">
+                            <label className="form-label col-4 mb-0" htmlFor='last-name-input'>
                                 {settingsText[appContext.locale]["Last name"]}
                             </label>
-                            <input className="form-control col-8 " type="text" value={lastNameInput} onChange={event => setLastNameInput(event.target.value)}/>
+                            <div className="col-8">
+                                <input 
+                                    className="form-control" 
+                                    id="last-name-input"
+                                    type="text" 
+                                    value={lastNameInput} 
+                                    onChange={event => setLastNameInput(event.target.value)}
+                                />
+                            </div>
                         </div>
                         <button style={{display: "none"}}>{/* A hacky solution to force the form to submit when the enter key is pressed. */}</button>
                     </form>

@@ -10,7 +10,7 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
             { header: journalEntryViewModeText[appContext.locale]['Transaction Type'], accessor: 'transactionTypeName', className: 'col-3 ' },
             { header: journalEntryViewModeText[appContext.locale]['Category or Account'], accessor: 'accountName', className: 'col-3' },
             { header: journalEntryViewModeText[appContext.locale]['Memo'], accessor: 'description', className: 'col-4 ' },
-            { header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', className: 'col-2 text-right' },
+            { header: journalEntryViewModeText[appContext.locale]['Amount'], accessor: 'amount', className: 'col-2 text-end' },
         ],
         []
     )
@@ -55,26 +55,26 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
             </div>
 
             <div className="mt-3"> 
-                <div className="table d-none d-lg-block">
-                    <div className="thead">
-                        <div className="tr bg-light rounded border d-flex">
+                <div className="pseudo-table d-none d-lg-block">
+                    <div className="pseudo-thead">
+                        <div className="pseudo-tr bg-light rounded border d-flex">
                             {columns.map(column => {
                                 return(
-                                    <div className={"th " + column.className} key={column.accessor}>
+                                    <div className={"pseudo-th " + column.className} key={column.accessor}>
                                         {column.header}
                                     </div>
                                 )
                             })}
                         </div>
                     </div>
-                    <div className="tbody">
+                    <div className="pseudo-tbody">
                         {data.map(
                             (row, i) => {
                                 return (
-                                    <div className="tr d-flex" key={i}>
+                                    <div className="pseudo-tr d-flex" key={i}>
                                         {columns.map(column => {
                                             return (
-                                                <div className={"td " + column.className} key={column.accessor}>
+                                                <div className={"pseudo-td " + column.className} key={column.accessor}>
                                                     {formatCell(row[column.accessor], column.accessor)}
                                                 </div>
                                             )
@@ -84,31 +84,31 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
                             }
                         )}
                     </div>
-                    <div className="tfoot">
-                        <div className="tr d-flex">
-                            <div className="td col-3">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
-                            <div className="td col-3"></div>
-                            <div className="td col-3"></div>
-                            <div className="td col-3 text-right">
+                    <div className="pseudo-tfoot">
+                        <div className="pseudo-tr d-flex">
+                            <div className="pseudo-td col-3">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
+                            <div className="pseudo-td col-3"></div>
+                            <div className="pseudo-td col-3"></div>
+                            <div className="pseudo-td col-3 text-end">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmounts())}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="table d-lg-none">
-                    <div className="tbody border-top">
+                <div className="pseudo-table d-lg-none">
+                    <div className="pseudo-tbody border-top">
                         {data.map((row, i) => {
                             return(
-                                <div key={i} className="tr d-flex">
+                                <div key={i} className="pseudo-tr d-flex">
                                     <div className="px-2 py-2 w-100">
-                                        <div className="font-weight-600">
+                                        <div className="fw-semibold">
                                             {row[columns[0].accessor] + " - " + row[columns[1].accessor]}
                                         </div>
                                         <div className="d-flex justify-content-between">
-                                            <div className="mr-5">
+                                            <div className="me-5">
                                                 {row[columns[2].accessor]? row[columns[2].accessor]: <em className="text-muted font-weight-light">{journalEntryViewModeText[appContext.locale]["No memo"]}</em> }
                                             </div>
-                                            <div className="text-right">
+                                            <div className="text-end">
                                                 {formatCell(row[columns[3].accessor], columns[3].accessor)}
                                             </div>
                                         </div>
@@ -117,10 +117,10 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
                             )
                         })}
                     </div>
-                    <div className="tfoot">
-                        <div className="tr d-flex justify-content-between">
+                    <div className="pseudo-tfoot">
+                        <div className="pseudo-tr d-flex justify-content-between">
                             <div className="px-2 py-2">{journalEntryViewModeText[appContext.locale]["Total"]}</div>
-                            <div className="px-2 py-2 text-right">
+                            <div className="px-2 py-2 text-end">
                                 {formatCurrency(appContext.locale, appContext.currency, sumAmounts())}
                             </div>
                         </div>

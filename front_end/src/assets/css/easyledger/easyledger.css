@@ -7,13 +7,21 @@
     --compact-font-size: 0.75rem;
     --base-text-color: #000;
     --sidebar-text-color: #555;
-    --dark-mode-text-color: var(--light);
+    --dark-mode-text-color: var(--bs-light);
     --dark-mode-sidebar-text-color: #dddddd;
     --base-gridline-color: rgba(0, 0, 0, 0.1);
     --dark-mode-gridline-color: rgba(255, 255, 255, 0.1);
-    
+
+    /*I guess bootstrap doesn't package these anymore after migrating from v4 to v5*/
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-xxl: 1400px;
+
     /* Override react-toastify defaults */
-    --toastify-color-success: var(--success);
+    --toastify-color-success: var(--bs-success);
     --toastify-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --toastify-toast-min-height: 32px;
 }
@@ -30,6 +38,11 @@ body {
 body.dark-mode{
     color: var(--dark-mode-text-color);
     background-color: #1e1e1e;
+}
+
+/* Override Bootstrap Defaults*/
+a {
+    text-decoration: none;
 }
 
 /* SIDEBAR CLASSES */
@@ -71,7 +84,7 @@ body.dark-mode{
 }
 
 .sidebar-item i {
-    color: var(--primary);
+    color: var(--bs-primary);
     display: inline-block;
     width: 25px;
 }
@@ -83,7 +96,7 @@ body.dark-mode{
 }
 
 .sidebar-item.active {
-    background-color: var(--primary);
+    background-color: var(--bs-primary);
     color: white;
 }
 
@@ -108,7 +121,7 @@ body.dark-mode{
 .dark-mode .sidebar-item.active,
 .dark-mode .sidebar-item.active i {
     color: white;
-    background-color: var(--primary);
+    background-color: var(--bs-primary);
 }
 
 
@@ -269,6 +282,11 @@ body.dark-mode{
 }
 
 /* MODIFICATIONS TO BOOTSTRAP DROPDOWN*/
+
+.dropdown-divider {
+    border-top: 1px solid #e9ecef;
+}
+
 .dropdown-item,
 .dropdown-item-text {
     font-size: var(--base-font-size);
@@ -285,7 +303,7 @@ body.dark-mode{
 }
 
 .dropdown-item:hover {
-    background-color: var(--primary);
+    background-color: var(--bs-primary);
     color: white;
 }
 
@@ -343,7 +361,7 @@ a.nav-link:hover {
 }
 
 .form-control__option--is-selected {
-    background-color: var(--primary);
+    background-color: var(--bs-primary);
 }
 
 /* MODIFICATIONS TO SWEETALERT */
@@ -352,47 +370,47 @@ a.nav-link:hover {
 }
 
 /* PSEUDO-TABLE UTILITIES */
-.table {
+.pseudo-table {
     border-collapse: collapse !important;
 }
 
-.th {
+.pseudo-th {
     font-weight: 600;
     padding: .75rem;
 }
-.td {
+.pseudo-td {
     padding: .75rem;
 }
-.tr {
+.pseudo-tr {
     border-top: #dadada 1px solid;
 }
-.dark-mode .tr{
+.dark-mode .pseudo-tr{
     border-top: #383838 1px solid;
 }
-.tr:first-child {
+.pseudo-tr:first-child {
     border-top: none;
 }
 
-.tfoot{
+.pseudo-tfoot{
     border-top: silver 1px solid;
     font-weight: 600;
 }
-.dark-mode .tfoot {
+.dark-mode .pseudo-tfoot {
     border-top: #484848 1px solid /*TODO check if this actually looks ok*/
 }
 
-a.tr {
+a.pseudo-tr {
     color: var(--base-text-color);
 }
-a.tr:hover {
+a.pseudo-tr:hover {
     text-decoration: none;
     color: var(--base-text-color);
     background-color: #e1e1e1;
 }
-.dark-mode a.tr{
+.dark-mode a.pseudo-tr{
     color: var(--dark-mode-text-color);
 }
-.dark-mode a.tr:hover{
+.dark-mode a.pseudo-tr:hover{
     color: var(--dark-mode-text-color);
     background-color: #2a2a2a;
 }
@@ -402,7 +420,7 @@ a.tr:hover {
     border-radius: 5px;
 }
 .striped-row:nth-child(odd) {
-    background-color: var(--light);
+    background-color: var(--bs-light);
 }
 
 .striped-row:nth-child(even) {
@@ -598,15 +616,15 @@ a.tr:hover {
     min-width: var(--breakpoint-xl);
 }
 
+.min-width-xxl{
+    min-width: var(--breakpoint-xxl);
+}
+
 .overflow-visible {
     overflow: visible;
 }
 
-.font-weight-600 {
-    font-weight: 600 !important;
-}
-
-.font-weight-semibold {
+.font-weight-600, .font-weight-semibold, .fw-600, .fw-semibold {
     font-weight: 600 !important;
 }
 
