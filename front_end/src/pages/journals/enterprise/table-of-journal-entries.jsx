@@ -452,7 +452,7 @@ function TableOfJournalEntries({
                                     <button 
                                         className="btn btn-primary ms-2 width-10ch" 
                                         onClick={handleEditButton} 
-                                        disabled={appContext.currentPermissionTypeId < 2}
+                                        disabled={appContext.currentPermissionTypeId < 2 || journalEntryDate < appContext.lockJournalEntriesBefore}
                                     >
                                         {tableOfJournalEntriesText[appContext.locale]["Edit"]}
                                     </button>
@@ -468,22 +468,39 @@ function TableOfJournalEntries({
                             </div>
                         </>
                     }
-                    <Tooltip
-                        target="copy-button"
-                        isOpen={copyButtonTooltip}
-                        toggle={toggleCopyButtonTooltip}
-                        fade={false}
-                    >
-                        {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
-                    </Tooltip>
-                    <Tooltip
-                        target="edit-button"
-                        isOpen={editButtonTooltip}
-                        toggle={toggleEditButtonTooltip}
-                        fade={false}
-                    >
-                        {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
-                    </Tooltip>
+                    {appContext.currentPermissionTypeId < 2
+                        ? <Tooltip
+                            target="copy-button"
+                            isOpen={copyButtonTooltip}
+                            toggle={toggleCopyButtonTooltip}
+                            fade={false}
+                        >
+                            {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                        </Tooltip>
+                        : null
+                    }
+                    {appContext.currentPermissionTypeId < 2 && !(journalEntryDate < appContext.lockJournalEntriesBefore)
+                        ? <Tooltip
+                            target="edit-button"
+                            isOpen={editButtonTooltip}
+                            toggle={toggleEditButtonTooltip}
+                            fade={false}
+                        >
+                            {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                        </Tooltip>
+                        : null
+                    }
+                    {journalEntryDate < appContext.lockJournalEntriesBefore
+                        ? <Tooltip
+                            target="edit-button"
+                            isOpen={entryLockedTooltip}
+                            toggle={toggleEntryLockedTooltip}
+                            fade={false}
+                        >
+                            {tableOfJournalEntriesText[appContext.locale]["This journal entry has been locked by an admin of this EasyLedger."]}
+                        </Tooltip>
+                        : null
+                    }
                 </ModalFooter>
             </Modal>
             <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} accountOptions={accountOptions} /> 

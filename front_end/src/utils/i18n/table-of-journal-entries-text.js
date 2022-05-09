@@ -44,7 +44,8 @@ export const tableOfJournalEntriesText = {
         "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "Showing " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " of " + totalElements + " results",
 
         "Successfully saved.": "Successfully saved.",
-        "This action requires EDIT permissions for this EasyLedger.": "This action requires EDIT permissions for this EasyLedger."
+        "This action requires EDIT permissions for this EasyLedger.": "This action requires EDIT permissions for this EasyLedger.",
+        "This journal entry has been locked by an admin of this EasyLedger.": "This journal entry has been locked by an admin of this EasyLedger."
 },
     "zh-TW": {
         "Date": "日期",
@@ -90,7 +91,8 @@ export const tableOfJournalEntriesText = {
 
         "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "顯示 " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " 筆" + "（共" + totalElements + "筆）",
         "Successfully saved.": "已成功儲存。",
-        "This action requires EDIT permissions for this EasyLedger.": "TRANSLATION"
+        "This action requires EDIT permissions for this EasyLedger.": "TRANSLATION",
+        "This journal entry has been locked by an admin of this EasyLedger.": "TRANSLATION"
 
     }
 }
