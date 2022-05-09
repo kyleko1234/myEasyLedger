@@ -60,6 +60,13 @@ function TableOfTransactions({
     const [smallScreenAddAnEntryTooltip, setSmallScreenAddAnEntryTooltip] = React.useState(false);
     const toggleSmallScreenAddAnEntryTooltip = () => setSmallScreenAddAnEntryTooltip(!smallScreenAddAnEntryTooltip);
 
+    const [editButtonTooltip, setEditButtonTooltip] = React.useState(false);
+    const toggleEditButtonTooltip = () => setEditButtonTooltip(!editButtonTooltip);
+    const [copyButtonTooltip, setCopyButtonTooltip] = React.useState(false);
+    const toggleCopyButtonTooltip = () => setCopyButtonTooltip(!copyButtonTooltip);
+    const [entryLockedTooltip, setEntryLockedTooltip] = React.useState(false);
+    const toggleEntryLockedTooltip = () => setEntryLockedTooltip(!entryLockedTooltip);
+
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
     const refreshAccounts = () => {
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
@@ -496,17 +503,68 @@ function TableOfTransactions({
                                 {/** empty div, pushes the other buttons to the right */}
                             </div>
                             <div>
-                                <button className="btn btn-info width-10ch" onClick={handleCopyTransactionButton} disabled={appContext.currentPermissionTypeId < 2}>
-                                    {tableOfJournalEntriesText[appContext.locale]["Copy"]}
-                                </button>
-                                <button className="btn btn-primary ms-2 width-10ch" onClick={handleEditTransactionButton} disabled={appContext.currentPermissionTypeId < 2}>
-                                    {tableOfJournalEntriesText[appContext.locale]["Edit"]}
-                                </button>
-                                <button className="btn btn-white ms-2 width-10ch" onClick={handleCloseTransactionButton}>
-                                    {tableOfJournalEntriesText[appContext.locale]["Close"]}
-                                </button>
+                                <div id="copy-button" className="d-inline-block">
+                                    <button 
+                                        className="btn btn-info width-10ch" 
+                                        onClick={handleCopyTransactionButton} 
+                                        disabled={appContext.currentPermissionTypeId < 2}
+                                    >
+                                        {tableOfJournalEntriesText[appContext.locale]["Copy"]}
+                                    </button>
+                                </div>
+                                <div id="edit-button" className="d-inline-block">
+                                    <button 
+                                        className="btn btn-primary ms-2 width-10ch" 
+                                        onClick={handleEditTransactionButton} 
+                                        disabled={appContext.currentPermissionTypeId < 2 || journalEntryDate < appContext.lockJournalEntriesBefore}
+                                    >
+                                        {tableOfJournalEntriesText[appContext.locale]["Edit"]}
+                                    </button>
+                                </div>
+                                <div className="d-inline-block">
+                                    <button 
+                                        className="btn btn-white ms-2 width-10ch" 
+                                        onClick={handleCloseTransactionButton}
+                                    >
+                                        {tableOfJournalEntriesText[appContext.locale]["Close"]}
+                                    </button>
+                                </div>
+
                             </div>
                         </>
+                    }
+                    {appContext.currentPermissionTypeId < 2
+                        ? <Tooltip
+                            target="copy-button"
+                            isOpen={copyButtonTooltip}
+                            toggle={toggleCopyButtonTooltip}
+                            fade={false}
+                        >
+                            {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                        </Tooltip>
+                        : null
+                    }
+                    {appContext.currentPermissionTypeId < 2 && !(journalEntryDate < appContext.lockJournalEntriesBefore)
+                        ? <Tooltip
+                            target="edit-button"
+                            isOpen={editButtonTooltip}
+                            toggle={toggleEditButtonTooltip}
+                            fade={false}
+                        >
+                            {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                        </Tooltip>
+                        : null
+                    }
+                    {journalEntryDate < appContext.lockJournalEntriesBefore
+                        ? <Tooltip
+                            target="edit-button"
+                            isOpen={entryLockedTooltip}
+                            toggle={toggleEntryLockedTooltip}
+                            fade={false}
+                        >
+                            {tableOfJournalEntriesText[appContext.locale]["This transaction has been locked by an admin of this EasyLedger."]}
+                        </Tooltip>
+                        : null
                     }
                 </ModalFooter>
             </Modal>
