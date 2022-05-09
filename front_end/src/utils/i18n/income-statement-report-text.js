@@ -4,7 +4,7 @@ export const incomeStatementReportText = {
         "Reports": "Reports",
         "Income Statement Report": "Income Statement Report",
         "Income and Expense Report": "Income and Expense Report",
-        "Expense Report": "Expense Report"
+        "Expense Report": "Expense Distribution Report"
     },
     "zh-TW": {
         "Home": "首頁",
