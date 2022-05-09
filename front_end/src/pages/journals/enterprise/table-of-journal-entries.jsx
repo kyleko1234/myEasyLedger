@@ -56,6 +56,13 @@ function TableOfJournalEntries({
     const [smallScreenAddAnEntryTooltip, setSmallScreenAddAnEntryTooltip] = React.useState(false);
     const toggleSmallScreenAddAnEntryTooltip = () => setSmallScreenAddAnEntryTooltip(!smallScreenAddAnEntryTooltip);
 
+    const [editButtonTooltip, setEditButtonTooltip] = React.useState(false);
+    const toggleEditButtonTooltip = () => setEditButtonTooltip(!editButtonTooltip);
+    const [copyButtonTooltip, setCopyButtonTooltip] = React.useState(false);
+    const toggleCopyButtonTooltip = () => setCopyButtonTooltip(!copyButtonTooltip);
+    const [entryLockedTooltip, setEntryLockedTooltip] = React.useState(false);
+    const toggleEntryLockedTooltip = () => setEntryLockedTooltip(!entryLockedTooltip);
+
     const fetchJournalEntry = journalEntryId => {
         axios.get(`${API_BASE_URL}/journalEntry/${journalEntryId}`)
             .then(response => {
@@ -432,18 +439,51 @@ function TableOfJournalEntries({
                                 {/**empty div to push buttons rightwards */}
                             </div>
                             <div>
-                                <button className="btn btn-info width-10ch" onClick={handleCopyJournalEntryButton} disabled={appContext.currentPermissionTypeId < 2}>
-                                    {tableOfJournalEntriesText[appContext.locale]["Copy"]}
-                                </button>
-                                <button className="btn btn-primary ms-2 width-10ch" onClick={handleEditButton} disabled={appContext.currentPermissionTypeId < 2}>
-                                    {tableOfJournalEntriesText[appContext.locale]["Edit"]}
-                                </button>
-                                <button className="btn btn-white ms-2 width-10ch" onClick={handleExitJournalEntryModal}>
-                                    {tableOfJournalEntriesText[appContext.locale]["Close"]}
-                                </button>
+                                <div id="copy-button" className="d-inline-block">
+                                    <button 
+                                        className="btn btn-info width-10ch" 
+                                        onClick={handleCopyJournalEntryButton} 
+                                        disabled={appContext.currentPermissionTypeId < 2}
+                                    >
+                                        {tableOfJournalEntriesText[appContext.locale]["Copy"]}
+                                    </button>
+                                </div>
+                                <div id="edit-button" className="d-inline-block">
+                                    <button 
+                                        className="btn btn-primary ms-2 width-10ch" 
+                                        onClick={handleEditButton} 
+                                        disabled={appContext.currentPermissionTypeId < 2}
+                                    >
+                                        {tableOfJournalEntriesText[appContext.locale]["Edit"]}
+                                    </button>
+                                </div>
+                                <div className="d-inline-block">
+                                    <button 
+                                        className="btn btn-white ms-2 width-10ch" 
+                                        onClick={handleExitJournalEntryModal}
+                                    >
+                                        {tableOfJournalEntriesText[appContext.locale]["Close"]}
+                                    </button>
+                                </div>
                             </div>
                         </>
                     }
+                    <Tooltip
+                        target="copy-button"
+                        isOpen={copyButtonTooltip}
+                        toggle={toggleCopyButtonTooltip}
+                        fade={false}
+                    >
+                        {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    </Tooltip>
+                    <Tooltip
+                        target="edit-button"
+                        isOpen={editButtonTooltip}
+                        toggle={toggleEditButtonTooltip}
+                        fade={false}
+                    >
+                        {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    </Tooltip>
                 </ModalFooter>
             </Modal>
             <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} accountOptions={accountOptions} /> 
