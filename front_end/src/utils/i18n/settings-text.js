@@ -157,12 +157,12 @@ export const settingsText = {
         "Results per Page": "更改每頁筆數",
         "Number of results to display per page" : "每頁顯示帳目筆數數量",
 
-        "Lock initial values for accounts with journal entries": "TRANSLATION",
-        "Lock initial values for accounts and categories with transactions": "TRANSLATION",
-        "Lock journal entries before": "TRANSLATION",
-        "Invalid date.": "TRANSLATION",
-        "This action requires ADMIN permissions for this EasyLedger.": "TRANSLATION",
-        "This action requires OWN permissions for this EasyLedger.": "TRANSLATION",
+        "Lock initial values for accounts with journal entries": "鎖定各帳戶和錢包的初始餘額",
+        "Lock initial values for accounts and categories with transactions": "鎖定各科目和類別的初始餘額",
+        "Lock journal entries before": "鎖定此日期之前的交易",
+        "Invalid date.": "日期格式有誤",
+        "This action requires ADMIN permissions for this EasyLedger.": "使用本功能需有管理者權限。",
+        "This action requires OWN permissions for this EasyLedger.": "使用本功能需有擁有者權限。",
 
         //Appearance settings options
         "System": "系統模式",

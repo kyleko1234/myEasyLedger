@@ -93,9 +93,9 @@ export const tableOfJournalEntriesText = {
 
         "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "顯示 " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " 筆" + "（共" + totalElements + "筆）",
         "Successfully saved.": "已成功儲存。",
-        "This action requires EDIT permissions for this EasyLedger.": "TRANSLATION",
-        "This journal entry has been locked by an admin of this EasyLedger.": "TRANSLATION",
-        "This transaction has been locked by an admin of this EasyLedger.": "TRANSLATION"
+        "This action requires EDIT permissions for this EasyLedger.": "使用本功能需有編修者權限。",
+        "This journal entry has been locked by an admin of this EasyLedger.": "本分錄已被帳册管理者鎖定而不能被更改。",
+        "This transaction has been locked by an admin of this EasyLedger.": "本交易記錄已被帳册管理者鎖定而不能被更改。"
 
     }
 }
