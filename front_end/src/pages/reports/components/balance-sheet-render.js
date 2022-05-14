@@ -206,16 +206,19 @@ function BalanceSheetRender(props) {
                                                 placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                                 value={endDatesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == endDatesToRequest[i].label)}
                                             />
-                                            <label className="col-2 px-1 px-sm-2 text-right my-0">
-                                                {balanceSheetRenderText   [appContext.locale]["As of:"]} 
+                                            <label className="col-2 px-1 px-sm-2 text-end my-0" htmlFor={`end-date-${i}`}>
+                                                {balanceSheetRenderText[appContext.locale]["As of:"]} 
                                             </label>
-                                            <input 
-                                                type="date" 
-                                                className=" col-6 form-control align-self-center" 
-                                                placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} 
-                                                value={endDatesToRequest[i].endDate} 
-                                                onChange={event => handleChangeDate(event.target.value, i)} 
-                                            />
+                                            <div className="col-6">
+                                                <input 
+                                                    type="date" 
+                                                    id={`end-date-${i}`}
+                                                    className="form-control align-self-center" 
+                                                    placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                    value={endDatesToRequest[i].endDate} 
+                                                    onChange={event => handleChangeDate(event.target.value, i)} 
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 )
@@ -228,15 +231,16 @@ function BalanceSheetRender(props) {
                             : null
                         }
                         <div className="d-flex align-items-center justify-content-between mt-2">
-                            <div className="custom-control custom-switch">
+                            <div className="form-check form-switch">
                                 <input 
                                     type="checkbox" 
+                                    role="switch"
                                     id="detailedViewCheckbox" 
-                                    className="custom-control-input" 
+                                    className="form-check-input" 
                                     value={detailedView} 
                                     onChange={toggleDetailedView} 
                                 />
-                                <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">
+                                <label htmlFor="detailedViewCheckbox" className="my-0 form-check-label">
                                     {balanceSheetRenderText[appContext.locale]["Detailed View"]}
                                 </label>
                             </div>
@@ -249,12 +253,12 @@ function BalanceSheetRender(props) {
             </Card>
             <PerfectScrollbar>
                 <div className="min-width-md">
-                    <div className="d-flex justify-content-between font-weight-semibold text-right">
+                    <div className="d-flex justify-content-between font-weight-semibold text-end">
                         <div>{/*empty div for spacing*/}</div>
-                        <div className="text-right d-flex">
+                        <div className="text-end d-flex">
                             {columnLabels.map((columnLabel, i) => {
                                 return(
-                                    <div className="td width-175" key={i}>
+                                    <div className="pseudo-td width-175" key={i}>
                                         {columnLabel.label === "Custom"
                                             ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + columnLabel.endDate
                                             : columnLabel.label
@@ -281,7 +285,7 @@ function BalanceSheetRender(props) {
                                             : <React.Fragment key={subtypeBalance.accountSubtypeId}>
                                                 <StripedRow className="justify-content-between indent-2">
                                                     <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div>
-                                                    <div className="text-right d-flex">
+                                                    <div className="text-end d-flex">
                                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                                             return(
                                                                 <div key={i} className="width-175">
@@ -305,7 +309,7 @@ function BalanceSheetRender(props) {
                                                                     : <React.Fragment key={account.accountId}>
                                                                         <StripedRow className="justify-content-between indent-3">
                                                                             <div>{account.accountName}</div>
-                                                                            <div className="text-right d-flex">
+                                                                            <div className="text-end d-flex">
                                                                                 {account.hasChildren 
                                                                                     ? null 
                                                                                     : balanceSheetObjects.map((balanceSheet, i) => {
@@ -331,7 +335,7 @@ function BalanceSheetRender(props) {
                                                                                             <div>
                                                                                                 {childAccount.accountName}
                                                                                             </div>
-                                                                                            <div className="text-right d-flex">
+                                                                                            <div className="text-end d-flex">
                                                                                                 {balanceSheetObjects.map((balanceSheet, i) => {
                                                                                                     return(
                                                                                                         <div key={i} className="width-175">
@@ -360,7 +364,7 @@ function BalanceSheetRender(props) {
                                         <div>
                                             {balanceSheetRenderText[appContext.locale]["Total current assets"]}
                                         </div>
-                                        <div className="text-right d-flex">
+                                        <div className="text-end d-flex">
                                             {balanceSheetObjects.map((balanceSheet, i) => {
                                                 return(
                                                     <div key={i} className="width-175">
@@ -380,7 +384,7 @@ function BalanceSheetRender(props) {
                                                 : <React.Fragment key={subtypeBalance.accountSubtypeId}>
                                                     <StripedRow className="justify-content-between indent-2">
                                                         <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div>
-                                                        <div className="text-right d-flex">
+                                                        <div className="text-end d-flex">
                                                             {balanceSheetObjects.map((balanceSheet, i) => {
                                                                 return(
                                                                     <div key={i} className="width-175">
@@ -402,7 +406,7 @@ function BalanceSheetRender(props) {
                                                                                 <div>
                                                                                     {account.accountName}
                                                                                 </div>
-                                                                                <div className="text-right d-flex">
+                                                                                <div className="text-end d-flex">
                                                                                     {account.hasChildren 
                                                                                     ? null 
                                                                                     : balanceSheetObjects.map((balanceSheet, i) => {
@@ -424,7 +428,7 @@ function BalanceSheetRender(props) {
                                                                                                 <div>
                                                                                                     {childAccount.accountName}
                                                                                                 </div>
-                                                                                                <div className="text-right d-flex">
+                                                                                                <div className="text-end d-flex">
                                                                                                     {balanceSheetObjects.map((balanceSheet, i) => {
                                                                                                         return(
                                                                                                             <div key={i} className="width-175">
@@ -449,7 +453,7 @@ function BalanceSheetRender(props) {
                                         <div>
                                             {balanceSheetRenderText[appContext.locale]["Total non-current assets"]}
                                         </div>
-                                        <div className="text-right d-flex">
+                                        <div className="text-end d-flex">
                                             {balanceSheetObjects.map((balanceSheet, i) => {
                                                 return(
                                                     <div key={i} className="width-175">
@@ -463,7 +467,7 @@ function BalanceSheetRender(props) {
                                         <div>
                                             {balanceSheetRenderText[appContext.locale]["Total assets"]}
                                         </div>
-                                        <div className="text-right d-flex">
+                                        <div className="text-end d-flex">
                                             {balanceSheetObjects.map((balanceSheet, i) => {
                                                 return(
                                                     <div key={i} className="width-175">
@@ -495,7 +499,7 @@ function BalanceSheetRender(props) {
                                             : <React.Fragment key={subtypeBalance.accountSubtypeId}>
                                                 <StripedRow className="justify-content-between indent-2">
                                                     <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div>
-                                                    <div className="text-right d-flex">
+                                                    <div className="text-end d-flex">
                                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                                             return(
                                                                 <div key={i} className="width-175">
@@ -517,7 +521,7 @@ function BalanceSheetRender(props) {
                                                                             <div>
                                                                                 {account.accountName}
                                                                             </div>
-                                                                            <div className="text-right d-flex">
+                                                                            <div className="text-end d-flex">
                                                                                 {account.hasChildren 
                                                                                 ? null 
                                                                                 : balanceSheetObjects.map((balanceSheet, i) => {
@@ -539,7 +543,7 @@ function BalanceSheetRender(props) {
                                                                                             <div>
                                                                                                 {childAccount.accountName}
                                                                                             </div>
-                                                                                            <div className="text-right d-flex">
+                                                                                            <div className="text-end d-flex">
                                                                                                 {balanceSheetObjects.map((balanceSheet, i) => {
                                                                                                     return(
                                                                                                         <div key={i} className="width-175">
@@ -564,7 +568,7 @@ function BalanceSheetRender(props) {
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Total current liabilities"]}
                                     </div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">
@@ -584,7 +588,7 @@ function BalanceSheetRender(props) {
                                             : <React.Fragment key={subtypeBalance.accountSubtypeId}>
                                                 <StripedRow className="justify-content-between indent-2">
                                                     <div>{balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}</div>
-                                                    <div className="text-right d-flex">
+                                                    <div className="text-end d-flex">
                                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                                             return(
                                                                 <div key={i} className="width-175">
@@ -606,7 +610,7 @@ function BalanceSheetRender(props) {
                                                                             <div>
                                                                                 {account.accountName}
                                                                             </div>
-                                                                            <div className="text-right d-flex">
+                                                                            <div className="text-end d-flex">
                                                                                 {account.hasChildren 
                                                                                 ? null 
                                                                                 : balanceSheetObjects.map((balanceSheet, i) => {
@@ -628,7 +632,7 @@ function BalanceSheetRender(props) {
                                                                                             <div>
                                                                                                 {childAccount.accountName}
                                                                                             </div>
-                                                                                            <div className="text-right d-flex">
+                                                                                            <div className="text-end d-flex">
                                                                                                 {balanceSheetObjects.map((balanceSheet, i) => {
                                                                                                     return(
                                                                                                         <div key={i} className="width-175">
@@ -653,7 +657,7 @@ function BalanceSheetRender(props) {
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Total non-current liabilities"]}
                                     </div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">
@@ -667,7 +671,7 @@ function BalanceSheetRender(props) {
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Total liabilities"]}
                                     </div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">
@@ -698,7 +702,7 @@ function BalanceSheetRender(props) {
                                                     <div>
                                                         {balanceSheetRenderText[appContext.locale][subtypeBalance.accountSubtypeName]}
                                                     </div>
-                                                    <div className="text-right d-flex">
+                                                    <div className="text-end d-flex">
                                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                                             return(
                                                                 <div key={i} className="width-175">
@@ -720,7 +724,7 @@ function BalanceSheetRender(props) {
                                                                             <div>
                                                                                 {account.accountName}
                                                                             </div>
-                                                                            <div className="text-right d-flex">
+                                                                            <div className="text-end d-flex">
                                                                                 {account.hasChildren 
                                                                                 ? null 
                                                                                 : balanceSheetObjects.map((balanceSheet, i) => {
@@ -742,7 +746,7 @@ function BalanceSheetRender(props) {
                                                                                             <div>
                                                                                                 {childAccount.accountName}
                                                                                             </div>
-                                                                                            <div className="text-right d-flex">
+                                                                                            <div className="text-end d-flex">
                                                                                                 {balanceSheetObjects.map((balanceSheet, i) => {
                                                                                                     return(
                                                                                                         <div key={i} className="width-175">
@@ -770,7 +774,7 @@ function BalanceSheetRender(props) {
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Beginning balances"]}
                                     </div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">
@@ -784,7 +788,7 @@ function BalanceSheetRender(props) {
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Net income for current fiscal period"]}
                                     </div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">
@@ -798,7 +802,7 @@ function BalanceSheetRender(props) {
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Dividends for current fiscal period"]}
                                     </div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">
@@ -812,7 +816,7 @@ function BalanceSheetRender(props) {
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Ending balances of retained earnings"]}
                                     </div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">
@@ -826,7 +830,7 @@ function BalanceSheetRender(props) {
                                     <div>
                                         {balanceSheetRenderText[appContext.locale]["Total equity"]}
                                     </div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">

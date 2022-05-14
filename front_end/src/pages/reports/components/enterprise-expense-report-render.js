@@ -39,7 +39,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
             return(
                 <StripedRow className={"justify-content-between " + indentClassName}>
                     <div>{incomeStatementRenderText[appContext.locale][rowName]}</div>
-                    <div className="text-right d-flex">
+                    <div className="text-end d-flex">
                         {incomeStatementObjects.map((incomeStatement, i) => {
                             return(
                                 <div key={i} className="width-175">
@@ -70,7 +70,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                                 : <React.Fragment key={account.accountId}>
                                     <StripedRow className={"justify-content-between " + baseIndentClassName}>
                                         <div>{account.accountName}</div>
-                                        <div className="text-right d-flex">
+                                        <div className="text-end d-flex">
                                             {incomeStatementObjects.map((incomeStatement, i) => {
                                                 let accountDebitsMinusCredits = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits;
                                                 return(
@@ -89,7 +89,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                                                     ? null
                                                     : <StripedRow key={childAccount.accountId} className={"justify-content-between " + incrementIndentClassName}>
                                                         <div>{childAccount.accountName}</div>
-                                                        <div className="text-right d-flex">
+                                                        <div className="text-end d-flex">
                                                             {incomeStatementObjects.map((incomeStatement, i) => {
                                                                 let childAccountDebitsMinusCredits = incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits;
                                                                 return(
@@ -113,13 +113,13 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
 
     return(
         <div className="min-width-md">
-            <div className="d-flex justify-content-between font-weight-semibold text-right">
+            <div className="d-flex justify-content-between font-weight-semibold text-end">
                 <div>{/*empty div for spacing*/}</div>
-                <div className="text-right d-flex">
+                <div className="text-end d-flex">
                     {
                         columnLabels.map((columnLabel, i) => {
                             return(
-                                <div className="td width-175" key={i}>
+                                <div className="pseudo-td width-175" key={i}>
                                     {columnLabel.label === "Custom"
                                     ?   <>
                                             <div>
@@ -152,7 +152,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                                         : <React.Fragment key={account.accountId}>
                                             <StripedRow className="justify-content-between indent">
                                                 <div>{account.accountName}</div>
-                                                <div className="text-right d-flex">
+                                                <div className="text-end d-flex">
                                                     {incomeStatementObjects.map((incomeStatement, i) => {
                                                         let specificAccountDebitsMinusCredits = incomeStatement.accountBalances.find(specificAccount => specificAccount.accountId === account.accountId).debitsMinusCredits;
                                                         return(
@@ -172,7 +172,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                                                                 ? null
                                                                 : <StripedRow key={childAccount.accountId} className="justify-content-between indent-2">
                                                                     <div>{childAccount.accountName}</div>
-                                                                    <div className="text-right d-flex">
+                                                                    <div className="text-end d-flex">
                                                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                                                             let specificChildAccountDebitsMinusCredits = incomeStatement.accountBalances.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId).debitsMinusCredits;
                                                                             return(
@@ -193,7 +193,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                         }
                         <StripedRow className="justify-content-between font-weight-semibold ">
                             <div>{incomeStatementRenderText[appContext.locale]["Total cost of sales"]}</div>
-                            <div className="text-right d-flex">
+                            <div className="text-end d-flex">
                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                     return(
                                         <div key={i} className="width-175">
@@ -217,7 +217,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                         {renderDetails(incomeStatementObjects[0].depreciationAmortizationSubtypeId, 5, 2)}
                         <StripedRow className="justify-content-between font-weight-semibold">
                             <div>{incomeStatementRenderText[appContext.locale]["Total operating expenses"]}</div>
-                            <div className="text-right d-flex">
+                            <div className="text-end d-flex">
                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                     return(
                                         <div key={i} className="width-175">
@@ -237,7 +237,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                             ? null 
                             : <StripedRow className="justify-content-between indent">
                                 <div>{incomeStatementRenderText[appContext.locale]["Expense from investing activities"]}</div>
-                                <div className="text-right d-flex">
+                                <div className="text-end d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
                                         return(
                                             <div key={i} className="width-175">
@@ -253,7 +253,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                             ? null 
                             : <StripedRow className="justify-content-between indent">
                                 <div>{incomeStatementRenderText[appContext.locale]["Expense from financing activities"]}</div>
-                                <div className="text-right d-flex">
+                                <div className="text-end d-flex">
                                     {incomeStatementObjects.map((incomeStatement, i) => {
                                         return(
                                             <div key={i} className="width-175">
@@ -267,7 +267,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                         {renderDetails(incomeStatementObjects[0].expenseFromFinancingSubtypeId, 5, 2)}
                         <StripedRow className="justify-content-between font-weight-semibold">
                             <div>{incomeStatementRenderText[appContext.locale]["Total other expense"]}</div>
-                            <div className="text-right d-flex">
+                            <div className="text-end d-flex">
                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                     return(
                                         <div key={i} className="width-175">
@@ -282,7 +282,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                         </StripedRow>
                         <StripedRow className="justify-content-between">
                             <div>{incomeStatementRenderText[appContext.locale]["Interest expense"]}</div>
-                            <div className="text-right d-flex">
+                            <div className="text-end d-flex">
                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                     return(
                                         <div key={i} className="width-175">
@@ -295,7 +295,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                         {renderDetails(incomeStatementObjects[0].interestExpenseSubtypeId, 5, 1)}
                         <StripedRow className="justify-content-between">
                             <div>{incomeStatementRenderText[appContext.locale]["Tax expense"]}</div>
-                            <div className="text-right d-flex">
+                            <div className="text-end d-flex">
                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                     return(
                                         <div key={i} className="width-175">
@@ -314,7 +314,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                             : <>
                                 <StripedRow className=" justify-content-between">
                                     <div>{incomeStatementRenderText[appContext.locale]["Non-recurring and extraordinary items"]}</div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {
                                             return(
                                                 <div key={i} className="width-175">
@@ -332,7 +332,7 @@ function EnterpriseExpenseReportRender({loading, columnLabels, incomeStatementOb
                         }
                         <StripedRow className="justify-content-between font-weight-semibold">
                             <div>{incomeStatementRenderText[appContext.locale]["Total expenses"]}</div>
-                            <div className="text-right d-flex">
+                            <div className="text-end d-flex">
                                 {incomeStatementObjects.map((incomeStatement, i) => {
                                     return(
                                         <div key={i} className="width-175">

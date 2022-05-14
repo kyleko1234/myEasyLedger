@@ -31,19 +31,49 @@ function AppearanceSettingsModal(props) {
                 </ModalHeader>
                 <ModalBody>
                     <div className="px-3 py-3">
-                            <form className="form-group row" onSubmit={handleSaveButton}>
+                            <form className="mb-3 row" onSubmit={handleSaveButton}>
                                 <div className="col-xl-4">
-                                    <div className="radio radio-css">
-                                        <input type="radio" value={"system"} id="appearance-system" name="is-enterprise" checked={selectedAppearance === "system"} onChange={handleChangeAppearance} />
-                                        <label className="mx-2" htmlFor="appearance-system">{settingsText[appContext.locale]["System"]}</label>
+                                    <div className="form-check">
+                                        <input 
+                                            type="radio" 
+                                            className="form-check-input"
+                                            value={"system"} 
+                                            id="appearance-system" 
+                                            name="is-enterprise" 
+                                            checked={selectedAppearance === "system"} 
+                                            onChange={handleChangeAppearance} 
+                                        />
+                                        <label className="form-check-label mx-2" htmlFor="appearance-system">
+                                            {settingsText[appContext.locale]["System"]}
+                                        </label>
                                     </div>
-                                    <div className="radio radio-css">
-                                        <input type="radio" value={"light"} id="appearance-light" name="is-enterprise" checked={selectedAppearance === "light"} onChange={handleChangeAppearance} />
-                                        <label className="mx-2" htmlFor="appearance-light">{settingsText[appContext.locale]["Light"]}</label>
+                                    <div className="form-check">
+                                        <input 
+                                            type="radio" 
+                                            className="form-check-input"
+                                            value={"light"} 
+                                            id="appearance-light" 
+                                            name="is-enterprise" 
+                                            checked={selectedAppearance === "light"} 
+                                            onChange={handleChangeAppearance} 
+                                        />
+                                        <label className="mx-2 form-check-label" htmlFor="appearance-light">
+                                            {settingsText[appContext.locale]["Light"]}
+                                        </label>
                                     </div>
-                                    <div className="radio radio-css">
-                                        <input type="radio" value={"dark"} id="appearance-dark" name="is-enterprise" checked={selectedAppearance === "dark"} onChange={handleChangeAppearance} />
-                                        <label className="mx-2" htmlFor="appearance-dark">{settingsText[appContext.locale]["Dark"]}</label>
+                                    <div className="form-check">
+                                        <input 
+                                            type="radio" 
+                                            value={"dark"} 
+                                            className="form-check-input"
+                                            id="appearance-dark" 
+                                            name="is-enterprise" 
+                                            checked={selectedAppearance === "dark"} 
+                                            onChange={handleChangeAppearance} 
+                                        />
+                                        <label className="mx-2 form-check-label" htmlFor="appearance-dark">
+                                            {settingsText[appContext.locale]["Dark"]}
+                                        </label>
                                     </div>
                                 </div>
                             </form>

@@ -5,7 +5,7 @@
   "dependencies": {
     "apexcharts": "^3.26.0",
     "axios": "^0.21.4",
-    "bootstrap": "^4.5.3",
+    "bootstrap": "^5.1.0",
     "chart.js": "^3.6.0",
     "flag-icon-css": "^3.4.5",
     "jquery": "^3.4.1",
@@ -28,7 +28,7 @@
     "react-select": "^3.2.0",
     "react-table": "^7.6.3",
     "react-toastify": "^8.2.0",
-    "reactstrap": "^8.8.1",
+    "reactstrap": "^9.0.2",
     "simple-line-icons": "^2.5.5",
     "typescript": "^3.9.7"
   },

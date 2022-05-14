@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardBody } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardBody, Tooltip } from 'reactstrap';
 import { API_BASE_URL, ACCOUNT_TYPE_OPTIONS, CATEGORY_ACCOUNT_TYPES} from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
@@ -27,9 +27,11 @@ class Categories extends React.Component {
             editAccountModal: false,
             createMode: true,
             
-            addAnAccountModal: false
+            addAnAccountModal: false,
+            createAnAccountButtonTooltip: false
         };
 
+        this.toggleCreateAnAccountButtonTooltip = this.toggleCreateAnAccountButtonTooltip.bind(this);
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
         this.fetchData = this.fetchData.bind(this);
 
@@ -80,6 +82,12 @@ class Categories extends React.Component {
         })
     }
     /** End utility functions for adding/editing category */
+
+    toggleCreateAnAccountButtonTooltip() {
+        this.setState(state => ({
+            createAnAccountButtonTooltip: !state.createAnAccountButtonTooltip
+        }));
+    }
 
     canAddChildren(account) {
         if (account.parentAccountId != null) {
@@ -135,9 +143,15 @@ class Categories extends React.Component {
                                     <div className="d-sm-none w-50">
                                         {this.renderAccountTypeSelect()}
                                     </div>
-                                    <button className="btn btn-primary my-1 ml-3" onClick={() => this.handleAddAnAccountButton()} disabled={this.context.currentPermissionTypeId < 2}>   
-                                        {chartOfAccountsText[this.context.locale]["Create a category"]} 
-                                    </button>
+                                    <div id="create-an-account-button">
+                                        <button 
+                                            className="btn btn-primary my-1 ms-3" 
+                                            onClick={() => this.handleAddAnAccountButton()} 
+                                            disabled={this.context.currentPermissionTypeId < 2}
+                                        >   
+                                            {chartOfAccountsText[this.context.locale]["Create a category"]} 
+                                        </button>
+                                    </div>
                                 </div>
                             }
                         </Nav>
@@ -154,11 +168,11 @@ class Categories extends React.Component {
                                                 return (
                                                     <React.Fragment key={account.accountId}>
                                                         {account.hasChildren?
-                                                            <div className="tr d-flex justify-content-between align-items-center">
-                                                                <div className="td font-weight-600">
+                                                            <div className="pseudo-tr d-flex justify-content-between align-items-center">
+                                                                <div className="pseudo-td fw-semibold">
                                                                     {account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName}
                                                                 </div>
-                                                                <div className="td py-0 d-flex align-items-center">
+                                                                <div className="pseudo-td py-0 d-flex align-items-center">
                                                                     <button className="btn btn-sm btn-white border-0 text-muted" onClick={() => this.handleEditAccountButton(account)}>
                                                                         <i className="fas fa-edit font-size-compact"></i>
                                                                     </button>
@@ -166,11 +180,11 @@ class Categories extends React.Component {
                                                                 </div>
                                                             </div>
                                                         :
-                                                        <Link className="tr d-flex justify-content-between align-items-center " to={`/category-details/${account.accountId}`}>
-                                                                <div className="td font-weight-600">
+                                                        <Link className="pseudo-tr d-flex justify-content-between align-items-center " to={`/category-details/${account.accountId}`}>
+                                                                <div className="pseudo-td fw-semibold">
                                                                     {account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName}
                                                                 </div>
-                                                                <div className="td py-0 d-flex align-items-center">
+                                                                <div className="pseudo-td py-0 d-flex align-items-center">
                                                                     <button className="btn btn-sm text-muted invisible">
                                                                         <i className="fas fa-edit"></i>
                                                                     </button>
@@ -184,22 +198,22 @@ class Categories extends React.Component {
                                                                 .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                                 .map(childAccount => {
                                                                     return (
-                                                                        <Link className="tr d-flex justify-content-between align-items-center " to={`/category-details/${childAccount.accountId}`} key={childAccount.accountId}>
-                                                                            <div className="td indent">
+                                                                        <Link className="pseudo-tr d-flex justify-content-between align-items-center " to={`/category-details/${childAccount.accountId}`} key={childAccount.accountId}>
+                                                                            <div className="pseudo-td indent">
                                                                                 <div>{childAccount.accountCode ? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
                                                                             </div>
-                                                                            <div className="td">
+                                                                            <div className="pseudo-td">
                                                                                 <i className="fas fa-angle-right text-muted"></i>
                                                                             </div>
                                                                         </Link>
                                                                     );
                                                         })}
                                                         {(this.canAddChildren(account) && this.context.currentPermissionTypeId >= 2) ? 
-                                                            <Link replace className="tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
-                                                                <div className="td indent">
+                                                            <Link replace className="pseudo-tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
+                                                                <div className="pseudo-td indent">
                                                                     <em className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child category..."]}</em>
                                                                 </div>
-                                                                <div className="td"></div>
+                                                                <div className="pseudo-td"></div>
                                                             </Link>
                                                         : null}
                                                     </React.Fragment>
@@ -214,7 +228,17 @@ class Categories extends React.Component {
                 </Card>
 
                 <AccountDetailsEditor isOpen={this.state.editAccountModal} toggle={this.toggleEditAccountModal} selectedAccountId={this.state.selectedAccountId} fetchData={this.fetchData} createMode={this.state.createMode} accountTypeId={this.props.match.params.activeTabId} selectedParentAccount={this.state.selectedParentAccount} category/>
-
+                {this.context.currentPermissionTypeId < 2
+                    ? <Tooltip
+                        target="create-an-account-button"
+                        fade={false}
+                        isOpen={this.state.createAnAccountButtonTooltip}
+                        toggle={this.toggleCreateAnAccountButtonTooltip}
+                    >
+                        {chartOfAccountsText[this.context.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    </Tooltip>
+                    : null
+                }
             </div>
 
 

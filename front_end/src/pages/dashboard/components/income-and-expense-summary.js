@@ -225,7 +225,7 @@ function IncomeAndExpenseSummary(props) {
     return (
         <Card style={{ height: '500px' }} className="shadow-sm very-rounded">
             <CardBody >
-                <CardTitle className="font-weight-600">
+                <CardTitle className="fw-semibold">
                     {incomeAndExpenseSummaryText[appContext.locale]["Income and Expenses"]}
                 </CardTitle>
                 <div style={{height: "90%"}}>

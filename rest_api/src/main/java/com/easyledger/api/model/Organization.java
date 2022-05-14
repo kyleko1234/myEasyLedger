@@ -96,6 +96,12 @@ public class Organization {
 	
 	@Column(name = "fiscal_year_begin")
 	private LocalDate fiscalYearBegin = LocalDate.parse("2020-01-01");
+	
+	@Column(name = "lock_initial_account_values")
+	private boolean lockInitialAccountValues = true;
+	
+	@Column(name = "lock_journal_entries_before")
+	private LocalDate lockJournalEntriesBefore;
 
 	@OneToMany(mappedBy = "organization", cascade = CascadeType.REMOVE)
 	@JsonIgnore
@@ -204,12 +210,23 @@ public class Organization {
 		this.journalEntryLogs = journalEntryLogs;
 	}
 
-	@Override
-	public String toString() {
-		return "Organization [id=" + id + ", name=" + name + ", currency=" + currency + ", isEnterprise=" + isEnterprise
-				+ ", fiscalYearBegin=" + fiscalYearBegin + ", permissions=" + permissions + ", journalEntries="
-				+ journalEntries + ", accounts=" + accounts + ", journalEntryLogs=" + journalEntryLogs + "]";
+	public boolean isLockInitialAccountValues() {
+		return lockInitialAccountValues;
 	}
+
+	public void setLockInitialAccountValues(boolean lockInitialAccountValues) {
+		this.lockInitialAccountValues = lockInitialAccountValues;
+	}
+
+	public LocalDate getLockJournalEntriesBefore() {
+		return lockJournalEntriesBefore;
+	}
+
+	public void setLockJournalEntriesBefore(LocalDate lockJournalEntriesBefore) {
+		this.lockJournalEntriesBefore = lockJournalEntriesBefore;
+	}
+
+
 
 
 }

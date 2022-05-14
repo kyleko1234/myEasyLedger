@@ -11,8 +11,8 @@ function LocaleSwitcher(props) {
             {LOCALE_OPTIONS.map(localeOption => {
                 return (
                     appContext.locale == localeOption.value ?
-                        <b key={localeOption.value} className="mr-3 font-weight-600">{localeOption.label}</b> :
-                        <Link key={localeOption.value} replace to="#" onClick={() => appContext.handleSetLocale(localeOption.value)} className="mr-3">{localeOption.label}</Link>
+                        <b key={localeOption.value} className="me-3 fw-semibold">{localeOption.label}</b> :
+                        <Link key={localeOption.value} replace to="#" onClick={() => appContext.handleSetLocale(localeOption.value)} className="me-3">{localeOption.label}</Link>
                 )
             })}
         </div>

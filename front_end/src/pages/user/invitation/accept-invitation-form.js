@@ -68,32 +68,32 @@ function AcceptInvitationForm({token, setCompleted, email}) {
             <h1>
                 {registerV3Text[appContext.locale]["Sign Up"]}
             </h1>
-            <h2 className="h5 font-weight-normal mb-2">{registerV3Text[appContext.locale]["Finish setting up your account."]}</h2>
+            <h2 className="h5 fw-normal mb-2">{registerV3Text[appContext.locale]["Finish setting up your account."]}</h2>
             <div>
                 <form className="mb-0" onSubmit={event => validateForm(event)}>
-                    <label className="control-label">{registerV3Text[appContext.locale]["Name"]} <span className="text-danger">*</span></label>
+                    <label className="form-label">{registerV3Text[appContext.locale]["Name"]} <span className="text-danger">*</span></label>
                     <div className="row mb-2">
-                        <div className="col-6 pr-1">
+                        <div className="col-6 pe-1">
                             <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["First name"]} required value={firstNameInput} onChange={event => setFirstNameInput(event.target.value)} />
                         </div>
-                        <div className="col-6 pl-1">
+                        <div className="col-6 ps-1">
                             <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["Last name"]} required value={lastNameInput} onChange={event => setLastNameInput(event.target.value)}/>
                         </div>
                     </div>
-                    <label className="control-label">{registerV3Text[appContext.locale]["Email"]}</label>
+                    <label className="form-label">{registerV3Text[appContext.locale]["Email"]}</label>
                     <div className="row mb-2">
                         <div className="col-12">
                             <input disabled type="email" className="form-control" placeholder={registerV3Text[appContext.locale]["Email address"]} value={email}/>
                         </div>
                     </div>
-                    <label className="control-label">{registerV3Text[appContext.locale]["Password"]} <span className="text-danger">*</span></label>
+                    <label className="form-label">{registerV3Text[appContext.locale]["Password"]} <span className="text-danger">*</span></label>
                     <div className="row mb-2">
                         <div className="col-12">
                             <input type="password" className="form-control" placeholder={registerV3Text[appContext.locale]["Password" ]} required value={passwordInput} onChange={event => setPasswordInput(event.target.value)}/>
                         </div>
                     </div>
                     {invalidPasswordAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Password must be 8-32 characters long."]}</Alert> : null}
-                    <label className="control-label">{registerV3Text[appContext.locale]["Re-enter Password"]} <span className="text-danger">*</span></label>
+                    <label className="form-label">{registerV3Text[appContext.locale]["Re-enter Password"]} <span className="text-danger">*</span></label>
                     <div className="row mb-3">
                         <div className="col-12">
                             <input type="password" className="form-control" placeholder={registerV3Text[appContext.locale]["Password"]} required value={reEnterPasswordInput} onChange={event => setReEnterPasswordInput(event.target.value)}/>
@@ -101,7 +101,7 @@ function AcceptInvitationForm({token, setCompleted, email}) {
                     </div>
                     {passwordMatchAlert ? <Alert color="danger">{registerV3Text[appContext.locale]["Password does not match."]}</Alert> : null}
                     <div className="mb-2">
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">
+                        <button type="submit" className="btn btn-primary w-100 d-block btn-lg">
                             {loading
                                 ? <LoadingSpinner /> 
                                 : registerV3Text[appContext.locale]["Finish"]

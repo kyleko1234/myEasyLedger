@@ -14,8 +14,8 @@ function GeneralJournal() {
     const columns = [
         { header: tableOfJournalEntriesText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-md-2" },
         { header: tableOfJournalEntriesText[appContext.locale]['Description'], accessor: 'description', className: " text-truncate col-md-6" },
-        { header: tableOfJournalEntriesText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-right col-md-2" },
-        { header: tableOfJournalEntriesText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-right col-md-2" },
+        { header: tableOfJournalEntriesText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-end col-md-2" },
+        { header: tableOfJournalEntriesText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-end col-md-2" },
     ]
     const [pageSize, setPageSize] = React.useState(appContext.resultsPerPage);
     const [pageIndex, setPageIndex] = React.useState(0);

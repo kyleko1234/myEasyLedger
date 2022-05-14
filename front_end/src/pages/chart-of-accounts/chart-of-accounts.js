@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardBody } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardBody, Tooltip } from 'reactstrap';
 import { API_BASE_URL, ACCOUNT_TYPE_OPTIONS} from '../../utils/constants.js';
 import { PageSettings } from '../../config/page-settings.js';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text.js';
@@ -28,8 +28,10 @@ class ChartOfAccounts extends React.Component {
             createMode: true,
 
             addAnAccountModal: false,
+            createAnAccountButtonTooltip: false
         };
 
+        this.toggleCreateAnAccountButtonTooltip = this.toggleCreateAnAccountButtonTooltip.bind(this);
         this.toggleEditAccountModal = this.toggleEditAccountModal.bind(this);
         this.fetchData = this.fetchData.bind(this);
 
@@ -78,6 +80,12 @@ class ChartOfAccounts extends React.Component {
         })
     }
     /**End utility functions for adding/editing account */
+
+    toggleCreateAnAccountButtonTooltip() {
+        this.setState(state => ({
+            createAnAccountButtonTooltip: !state.createAnAccountButtonTooltip
+        }));
+    }
 
     canAddChildren(account) {
         if (account.parentAccountId != null) {
@@ -132,15 +140,17 @@ class ChartOfAccounts extends React.Component {
                                     <div className="d-lg-none w-50">
                                         {this.renderAccountTypeSelect()}
                                     </div>
-                                    <button
-                                        className="btn font-size-standard btn-primary ml-3 "
-                                        onClick={() => {
-                                            this.handleAddAnAccountButton();
-                                        }}
-                                        disabled={this.context.currentPermissionTypeId < 2}
-                                    > 
-                                        {chartOfAccountsText[this.context.locale]["Create an account"]}
-                                    </button>
+                                    <div id="create-an-account-button">
+                                        <button
+                                            className="btn font-size-standard btn-primary ms-3 "
+                                            onClick={() => {
+                                                this.handleAddAnAccountButton();
+                                            }}
+                                            disabled={this.context.currentPermissionTypeId < 2}
+                                        > 
+                                            {chartOfAccountsText[this.context.locale]["Create an account"]}
+                                        </button>
+                                    </div>
                                 </div>
                             }
                         </Nav>
@@ -160,11 +170,11 @@ class ChartOfAccounts extends React.Component {
                                                     return (
                                                         <React.Fragment key={account.accountId}>
                                                             {account.hasChildren ?
-                                                                <div className="tr d-flex justify-content-between align-items-center">
-                                                                    <div className="td font-weight-600">
+                                                                <div className="pseudo-tr d-flex justify-content-between align-items-center">
+                                                                    <div className="pseudo-td fw-semibold">
                                                                         {account.accountCode? account.accountCode + " - " + account.accountName: account.accountName}
                                                                     </div>
-                                                                    <div className="td py-0 d-flex align-items-center">
+                                                                    <div className="pseudo-td py-0 d-flex align-items-center">
                                                                         <button className="btn btn-sm btn-white border-0 text-muted" onClick={() => this.handleEditAccountButton(account)}>
                                                                             <i className="fas fa-edit font-size-compact"></i>
                                                                         </button>
@@ -172,11 +182,11 @@ class ChartOfAccounts extends React.Component {
                                                                     </div>
                                                                 </div>
                                                             :
-                                                                <Link className="tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
-                                                                    <div className="td font-weight-600">
+                                                                <Link className="pseudo-tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
+                                                                    <div className="pseudo-td fw-semibold">
                                                                         {account.accountCode? account.accountCode + " - " + account.accountName: account.accountName}
                                                                     </div>
-                                                                    <div className="td py-0 d-flex align-items-center">
+                                                                    <div className="pseudo-td py-0 d-flex align-items-center">
                                                                         <button className=" btn btn-sm text-muted invisible">
                                                                             <i className="fas fa-edit"></i>
                                                                         </button>
@@ -190,20 +200,20 @@ class ChartOfAccounts extends React.Component {
                                                                     .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                                     .map(childAccount => {
                                                                         return (
-                                                                            <Link key={childAccount.accountId} className="tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`}>
-                                                                                <div className="td indent">{childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
-                                                                                <div className="td">
+                                                                            <Link key={childAccount.accountId} className="pseudo-tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`}>
+                                                                                <div className="pseudo-td indent">{childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
+                                                                                <div className="pseudo-td">
                                                                                     <i className="fas fa-angle-right text-muted"></i>
                                                                                 </div>
                                                                             </Link>
                                                                         );
                                                             })}
                                                             {(this.canAddChildren(account) && this.context.currentPermissionTypeId >= 2) ? 
-                                                                <Link replace className="tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
-                                                                    <div className="td indent">
+                                                                <Link replace className="pseudo-tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
+                                                                    <div className="pseudo-td indent">
                                                                         <em>{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</em>
                                                                     </div>
-                                                                    <div className="td"></div>
+                                                                    <div className="pseudo-td"></div>
                                                                 </Link>
                                                             : null}
                                                         </React.Fragment>
@@ -218,7 +228,18 @@ class ChartOfAccounts extends React.Component {
                 </Card>
 
                 <AccountDetailsEditor isOpen={this.state.editAccountModal} toggle={this.toggleEditAccountModal} selectedAccountId={this.state.selectedAccountId} fetchData={this.fetchData} createMode={this.state.createMode} accountTypeId={this.props.match.params.activeTabId} selectedParentAccount={this.state.selectedParentAccount}/>
-
+                
+                {this.context.currentPermissionTypeId < 2
+                    ? <Tooltip
+                        target="create-an-account-button"
+                        fade={false}
+                        isOpen={this.state.createAnAccountButtonTooltip}
+                        toggle={this.toggleCreateAnAccountButtonTooltip}
+                    >
+                        {chartOfAccountsText[this.context.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    </Tooltip>
+                    : null
+                }
             </div>
 
         )

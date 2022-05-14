@@ -161,7 +161,7 @@ function CashFlowRender() {
 
     const renderCellsForField = (fieldName, sign) => {
         return(
-            <div className="text-right d-flex">
+            <div className="text-end d-flex">
                 {cashFlowObjects.map((cashFlowObject, i) => {
                     return(
                         <div key={i} className="width-175">
@@ -241,10 +241,30 @@ function CashFlowRender() {
                                                 placeholder={"Custom"}
                                                 value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                             />
-                                            <label className="my-0 text-right col-1 px-2">{cashFlowReportText[appContext.locale]["From:"]} </label>
-                                            <input type="date" placeholder={cashFlowReportText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
-                                            <label className="my-0 text-right col-1 px-2">{cashFlowReportText[appContext.locale]["To:"]} </label>
-                                            <input type="date" placeholder={cashFlowReportText[appContext.locale]["yyyy-mm-dd"]} className="form-control col-3" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                            <label className="my-0 text-end col-1 px-2" htmlFor={`start-date-${i}`}>
+                                                {cashFlowReportText[appContext.locale]["From:"]} 
+                                            </label>
+                                            <div className="col-3">
+                                                <input 
+                                                    type="date" 
+                                                    id={`start-date-${i}`}
+                                                    placeholder={cashFlowReportText[appContext.locale]["yyyy-mm-dd"]} 
+                                                    className="form-control" value={datesToRequest[i].startDate} 
+                                                    onChange={event => handleChangeStartDate(event.target.value, i)} 
+                                                />
+                                            </div>
+                                            <label className="my-0 text-end col-1 px-2" htmlFor={`end-date-${i}`}>
+                                                {cashFlowReportText[appContext.locale]["To:"]} 
+                                            </label>
+                                            <div className="col-3">
+                                                <input 
+                                                    type="date" 
+                                                    id={`end-date-${i}`}
+                                                    placeholder={cashFlowReportText[appContext.locale]["yyyy-mm-dd"]} 
+                                                    className="form-control" value={datesToRequest[i].endDate} 
+                                                    onChange={event => handleChangeEndDate(event.target.value, i)} 
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 )
@@ -273,13 +293,29 @@ function CashFlowRender() {
                                                 value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                             />
                                         </div>
-                                        <div className="d-flex justify-content-between text-left align-items-center my-1">
-                                            <label className="my-0 col-3 px-0">{cashFlowReportText[appContext.locale]["From:"]} </label>
-                                            <input type="date" className="form-control" value={datesToRequest[i].startDate} onChange={event => handleChangeStartDate(event.target.value, i)} />
+                                        <div className="d-flex justify-content-between text-start align-items-center my-1">
+                                            <label className="my-0 col-3 px-0" htmlFor={`small-screen-start-date-${i}`}>
+                                                {cashFlowReportText[appContext.locale]["From:"]} 
+                                            </label>
+                                            <input 
+                                                type="date" 
+                                                id={`small-screen-start-date-${i}`}
+                                                className="form-control" 
+                                                value={datesToRequest[i].startDate} 
+                                                onChange={event => handleChangeStartDate(event.target.value, i)} 
+                                            />
                                         </div>
-                                        <div className="d-flex justify-content-between text-left align-items-center mb-2">
-                                            <label className="my-0 col-3 px-0">{cashFlowReportText[appContext.locale]["To:"]} </label>
-                                            <input type="date" className="form-control" value={datesToRequest[i].endDate} onChange={event => handleChangeEndDate(event.target.value, i)} />
+                                        <div className="d-flex justify-content-between text-start align-items-center mb-2">
+                                            <label className="my-0 col-3 px-0" htmlFor={`small-screen-end-date-${i}`}>
+                                                {cashFlowReportText[appContext.locale]["To:"]} 
+                                            </label>
+                                            <input 
+                                                type="date" 
+                                                id={`small-screen-end-date-${i}`}
+                                                className="form-control" 
+                                                value={datesToRequest[i].endDate} 
+                                                onChange={event => handleChangeEndDate(event.target.value, i)} 
+                                            />
                                         </div>
                                     </div>
                                 )
@@ -307,15 +343,15 @@ function CashFlowRender() {
                         {(loading || !cashFlowObjects.length) 
                             ? <LoadingSpinner big />
                             : <div>
-                                <div className="d-flex justify-content-between font-weight-semibold text-right">
+                                <div className="d-flex justify-content-between font-weight-semibold text-end">
                                     <div>
                                         {/*empty div for spacing*/}
                                     </div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                     {
                                         columnLabels.map((columnLabel, i) => {
                                             return(
-                                                <div className="td width-175" key={i}>
+                                                <div className="pseudo-td width-175" key={i}>
                                                     {columnLabel.label === "Custom"
                                                     ?   <>
                                                             <div>
@@ -337,7 +373,7 @@ function CashFlowRender() {
                                         <div>
                                             {cashFlowReportText[appContext.locale]["Cash and cash equivalents, beginning of period"]}
                                         </div>
-                                        <div className="text-right d-flex">
+                                        <div className="text-end d-flex">
                                             {cashFlowObjects.map((cashFlowObject, i) => {
                                                 let beginningCashSubtype = cashFlowObject.beginningAccountSubtypeBalances.find(accountSubtype => accountSubtype.accountSubtypeId == cashFlowObject.cashAndCashEquivalentsSubtypeId);
                                                 if (beginningCashSubtype) {
@@ -537,7 +573,7 @@ function CashFlowRender() {
                                     </StripedRow>
                                     <StripedRow className="justify-content-between font-weight-semibold">
                                         <div>{cashFlowReportText[appContext.locale]["Cash and cash equivalents, end of period"]}</div>
-                                        <div className="text-right d-flex">
+                                        <div className="text-end d-flex">
                                             {cashFlowObjects.map((cashFlowObject, i) => {
                                                 let endingCashSubtype = cashFlowObject.endingAccountSubtypeBalances.find(accountSubtype => accountSubtype.accountSubtypeId == cashFlowObject.cashAndCashEquivalentsSubtypeId);
                                                 if (endingCashSubtype) {

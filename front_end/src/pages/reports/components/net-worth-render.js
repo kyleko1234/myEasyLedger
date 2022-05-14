@@ -173,16 +173,19 @@ function NetWorthRender(props) {
                                                 placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                                 value={endDatesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == endDatesToRequest[i].label)}
                                             />
-                                            <label className="col-2 px-1 px-sm-2 text-right my-0">
-                                                {balanceSheetRenderText   [appContext.locale]["As of:"]} 
+                                            <label className="col-2 px-1 px-sm-2 text-end my-0" htmlFor={`date-input-${i}`}>
+                                                {balanceSheetRenderText[appContext.locale]["As of:"]} 
                                             </label>
-                                            <input 
-                                                type="date" 
-                                                className=" col-6 form-control align-self-center" 
-                                                placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} 
-                                                value={endDatesToRequest[i].endDate} 
-                                                onChange={event => handleChangeDate(event.target.value, i)} 
-                                            />
+                                            <div className="col-6">
+                                                <input 
+                                                    type="date"
+                                                    id={`date-input-${i}`}
+                                                    className="form-control align-self-center" 
+                                                    placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                    value={endDatesToRequest[i].endDate} 
+                                                    onChange={event => handleChangeDate(event.target.value, i)} 
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 )
@@ -195,15 +198,16 @@ function NetWorthRender(props) {
                             : null
                         }
                         <div className="d-flex align-items-center justify-content-between mt-2">
-                            <div className="custom-control custom-switch">
+                            <div className="form-check form-switch">
                                 <input 
                                     type="checkbox" 
+                                    role="switch"
                                     id="detailedViewCheckbox" 
-                                    className="custom-control-input" 
+                                    className="form-check-input" 
                                     value={detailedView} 
                                     onChange={toggleDetailedView} 
                                 />
-                                <label htmlFor="detailedViewCheckbox" className="my-0 custom-control-label">
+                                <label htmlFor="detailedViewCheckbox" className="my-0 form-check-label">
                                     {balanceSheetRenderText[appContext.locale]["Detailed View"]}
                                 </label>
                             </div>
@@ -216,12 +220,12 @@ function NetWorthRender(props) {
             </Card>
             <PerfectScrollbar>
                 <div className="min-width-md">
-                    <div className="d-flex justify-content-between font-weight-semibold text-right">
+                    <div className="d-flex justify-content-between font-weight-semibold text-end">
                         <div>{/*empty div for spacing*/}</div>
-                        <div className="text-right d-flex">
+                        <div className="text-end d-flex">
                             {columnLabels.map((columnLabel, i) => {
                                 return(
-                                    <div className="td width-175" key={i}>
+                                    <div className="pseudo-td width-175" key={i}>
                                         {columnLabel.label === "Custom"
                                             ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + columnLabel.endDate
                                             : columnLabel.label
@@ -245,11 +249,11 @@ function NetWorthRender(props) {
                                             <React.Fragment key={account.accountId}>
                                                 <StripedRow className="indent d-flex justify-content-between font-weight-semibold">
                                                     <div>{account.accountName}</div>
-                                                    <div className="text-right d-flex">
+                                                    <div className="text-end d-flex">
                                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                                             let specificAccount = balanceSheet.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
                                                             return(
-                                                                <div key = {i} className="width-175">
+                                                                <div key={i} className="width-175">
                                                                     {formatNumber(specificAccount.debitsMinusCredits)}
                                                                 </div>
                                                             )
@@ -263,7 +267,7 @@ function NetWorthRender(props) {
                                                             return(
                                                                 <StripedRow key={childAccount.accountId} className="indent-2 d-flex justify-content-between">
                                                                     <div>{childAccount.accountName}</div>
-                                                                    <div className="text-right d-flex">
+                                                                    <div className="text-end d-flex">
                                                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                                                             let specificChildAccount = balanceSheet.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                             return(
@@ -282,7 +286,7 @@ function NetWorthRender(props) {
                                 })}
                                 <StripedRow className="font-weight-semibold d-flex justify-content-between">
                                     <div>{netWorthReportText[appContext.locale]["Total Assets"]}</div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">
@@ -305,7 +309,7 @@ function NetWorthRender(props) {
                                             <React.Fragment key={account.accountId}>
                                                 <StripedRow className="indent justify-content-between font-weight-semibold">
                                                     <div>{account.accountName}</div>
-                                                    <div className="text-right d-flex">
+                                                    <div className="text-end d-flex">
                                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                                             let specificAccount = balanceSheet.accounts.find(specificAccount => specificAccount.accountId === account.accountId);
                                                             return(
@@ -323,7 +327,7 @@ function NetWorthRender(props) {
                                                                 return(
                                                                     <StripedRow key={childAccount.accountId} className="indent-2 justify-content-between">
                                                                         <div>{childAccount.accountName}</div>
-                                                                        <div className="text-right d-flex">
+                                                                        <div className="text-end d-flex">
                                                                             {balanceSheetObjects.map((balanceSheet, i) => {
                                                                                 let specificChildAccount = balanceSheet.accounts.find(specificChildAccount => specificChildAccount.accountId === childAccount.accountId);
                                                                                 return(
@@ -343,7 +347,7 @@ function NetWorthRender(props) {
                                 })}
                                 <StripedRow className="font-weight-semibold justify-content-between">
                                     <div>{netWorthReportText[appContext.locale]["Total Liabilities"]}</div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">
@@ -358,7 +362,7 @@ function NetWorthRender(props) {
                                 </StripedRow>
                                 <StripedRow className="font-weight-semibold d-flex justify-content-between py-3">
                                     <div>{netWorthReportText[appContext.locale]["Total Net Worth"]}</div>
-                                    <div className="text-right d-flex">
+                                    <div className="text-end d-flex">
                                         {balanceSheetObjects.map((balanceSheet, i) => {
                                             return(
                                                 <div key={i} className="width-175">

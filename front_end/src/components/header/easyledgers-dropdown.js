@@ -36,11 +36,11 @@ function EasyledgersDropdown(props) {
                         }
                     </span>
                 </DropdownToggle>
-                <DropdownMenu className="shadow" right>
+                <DropdownMenu className="shadow" end>
                     {appContext.currentOrganizationId
                         ? <>
                             <DropdownItem text>
-                                <div className="font-weight-600 text-nowrap">
+                                <div className="fw-semibold text-nowrap">
                                     {appContext.currentOrganizationName}
                                 </div>
                                 <div className="small text-muted">

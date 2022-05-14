@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Alert } from 'reactstrap'
+import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Tooltip } from 'reactstrap'
 import axios from 'axios';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants.js';
@@ -30,13 +30,24 @@ function AccountDetailsEditor(props) {
     const [noParentOrSubtypeAlert, setNoParentOrSubtypeAlert] = React.useState(false);
     const [deleteAccountAlert, setDeleteAccountAlert] = React.useState(false);
     const [cannotDeleteAccountAlert, setCannotDeleteAccountAlert] = React.useState(false);
+    const [initialValueLockedAlert, setInitialValueLockedAlert] = React.useState(false);
+    const [saveButtonTooltip, setSaveButtonTooltip] = React.useState(false);
+    const [deleteButtonTooltip, setDeleteButtonTooltip] = React.useState(false);
     const toggleDeleteAccountAlert = () => {
         setDeleteAccountAlert(!deleteAccountAlert);
     }
     const toggleCannotDeleteAccountAlert = () => {
         setCannotDeleteAccountAlert(!cannotDeleteAccountAlert);
     }
-
+    const toggleInitialValueLockedAlert = () => {
+        setInitialValueLockedAlert(!initialValueLockedAlert);
+    }
+    const toggleSaveButtonTooltip = () => {
+        setSaveButtonTooltip(!saveButtonTooltip);
+    }
+    const toggleDeleteButtonTooltip = () => {
+        setDeleteButtonTooltip(!deleteButtonTooltip);
+    }
     const resetToDefaultSubtypeId = () => {
         if (!appContext.isEnterprise) {
             let defaultSubtypeId;
@@ -210,7 +221,9 @@ function AccountDetailsEditor(props) {
             console.log(response);
             props.fetchData();
             props.toggle();
-        }).catch(console.log);
+        }).catch(() => {
+            toggleInitialValueLockedAlert();
+        });
     }
 
     const setInitialAccountValue = initialAccountValue => {
@@ -246,7 +259,7 @@ function AccountDetailsEditor(props) {
                         </Alert>
                         : null}
                     <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
-                        <div className="form-group row">
+                        <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
                                 {props.category? accountDetailsEditorText[appContext.locale]["Category Name"] : accountDetailsEditorText[appContext.locale]["Account Name"]}
                             </label>
@@ -261,7 +274,7 @@ function AccountDetailsEditor(props) {
                                 />
                             </div>
                         </div>
-                        <div className="form-group row">
+                        <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
                                 {appContext.isEnterprise 
                                     ? accountDetailsEditorText[appContext.locale]["Account Code"]
@@ -280,7 +293,7 @@ function AccountDetailsEditor(props) {
                             </div>
                         </div>
                     </form>
-                    <div className="form-group row">
+                    <div className="mb-3 row">
                         <label className="col-form-label col-md-4">
                             {props.category? accountDetailsEditorText[appContext.locale]["Parent Category"] : accountDetailsEditorText[appContext.locale]["Parent Account"]}
                         </label>
@@ -296,7 +309,7 @@ function AccountDetailsEditor(props) {
                         </div>
                     </div>
                     {appContext.isEnterprise?
-                        <div className="form-group row">
+                        <div className="mb-3 row">
                         <label className="col-form-label col-md-4">
                             {accountDetailsEditorText[appContext.locale]["Account Subtype"]}
                         </label>
@@ -315,7 +328,7 @@ function AccountDetailsEditor(props) {
                     <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
                         {appContext.isEnterprise? 
                             <>
-                                <div className="form-group row">
+                                <div className="mb-3 row">
                                     <label className="col-form-label col-md-4">
                                         {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
                                     </label>
@@ -331,7 +344,7 @@ function AccountDetailsEditor(props) {
                                         />
                                     </div>
                                 </div>
-                                <div className="form-group row">
+                                <div className="mb-3 row">
                                     <label className="col-form-label col-md-4">
                                         {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
                                     </label>
@@ -351,7 +364,7 @@ function AccountDetailsEditor(props) {
                             :
                             <>
                                 {(accountTypeId == 1 || accountTypeId == 2) ?
-                                    <div className="form-group row">
+                                    <div className="mb-3 row">
                                         <label className="col-form-label col-md-4">
                                             {accountDetailsEditorText[appContext.locale]["Initial Account Value"]}
                                         </label>
@@ -374,20 +387,48 @@ function AccountDetailsEditor(props) {
                       
                 </ModalBody>
                 <ModalFooter className="justify-content-between">
-                    <div>
-                        {!props.selectedAccountId? null : 
-                            <button className="btn btn-danger width-10ch" onClick={handleDeleteButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
-                                {accountDetailsEditorText[appContext.locale]["Delete"]}
-                            </button>
+                    <div id="delete-button">
+                        {!props.selectedAccountId
+                            ? null 
+                            : <div>
+                                <button className="btn btn-danger width-10ch" onClick={handleDeleteButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                                    {accountDetailsEditorText[appContext.locale]["Delete"]}
+                                </button>
+                            </div>
                         }
                     </div>
                     <div>
-                        <button className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
-                            {accountDetailsEditorText[appContext.locale]["Save"]}
-                        </button>
-                        <button className="btn btn-white width-10ch ml-2" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
+                        <div id="save-button" className="d-inline-block">
+                            <button className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                                {accountDetailsEditorText[appContext.locale]["Save"]}
+                            </button>
+                        </div>
+                        <button className="btn btn-white width-10ch ms-2" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
                     </div>
                 </ModalFooter>
+                {/** Tooltip component must be placed inside the modal component, otherwise react will render the tooltip before the targets and the app will crash.*/}
+                {appContext.currentPermissionTypeId < 2
+                    ? <Tooltip 
+                        target="delete-button" 
+                        isOpen={deleteButtonTooltip} 
+                        toggle={toggleDeleteButtonTooltip}
+                        fade={false}
+                    >
+                        {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    </Tooltip>
+                    : null
+                }
+                {appContext.currentPermissionTypeId < 2
+                    ? <Tooltip 
+                        target="save-button" 
+                        isOpen={saveButtonTooltip} 
+                        toggle={toggleSaveButtonTooltip}
+                        fade={false}
+                    >
+                        {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    </Tooltip>
+                    : null
+                }
             </Modal>
 
             {deleteAccountAlert ?
@@ -416,7 +457,23 @@ function AccountDetailsEditor(props) {
                         : accountDetailsEditorText[appContext.locale]["Please remove all line items and child accounts from this account and try again."]}
                 </SweetAlert>
                 : null}
-
+            {initialValueLockedAlert 
+                ? <SweetAlert danger showConfirm={false} showCancel={true}
+                    cancelBtnBsStyle="default"
+                    cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
+                    title={props.category
+                        ? accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this category."] 
+                        : accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this account."]
+                    }
+                    onConfirm={toggleInitialValueLockedAlert}
+                    onCancel={toggleInitialValueLockedAlert}
+                >
+                    {props.category
+                        ? accountDetailsEditorText[appContext.locale]["Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts."]
+                        : accountDetailsEditorText[appContext.locale]["Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories."]}
+                </SweetAlert>
+                : null
+            }
         </>
     )
 }

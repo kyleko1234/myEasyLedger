@@ -19,14 +19,14 @@ function AccountDetails(props) {
         ?   [ // accessor is the "key" in the data},
                 { header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-md-2 text-nowrap " },
                 { header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', className: "col-md-6 text-truncate " },
-                { header: accountDetailsText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-right col-md-2 text-nowrap" },
-                { header: accountDetailsText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-right col-md-2 text-nowrap" },
+                { header: accountDetailsText[appContext.locale]['Debit'], accessor: 'debitAmount', className: " text-end col-md-2 text-nowrap" },
+                { header: accountDetailsText[appContext.locale]['Credit'], accessor: 'creditAmount', className: " text-end col-md-2 text-nowrap" },
             ]
         :   [ // accessor is the "key" in the data},
                 { header: accountDetailsText[appContext.locale]['Date'], accessor: 'journalEntryDate', className: " col-md-2 text-nowrap " },
                 { header: accountDetailsText[appContext.locale]['Description'], accessor: 'description', className: " col-md-6 text-truncate " },
-                { header: accountDetailsText[appContext.locale]['Inflow'], accessor: 'debitAmount', className: " text-right col-md-2 text-nowrap " },
-                { header: accountDetailsText[appContext.locale]['Outflow'], accessor: 'creditAmount', className: " text-right col-md-2 text-nowrap " },
+                { header: accountDetailsText[appContext.locale]['Inflow'], accessor: 'debitAmount', className: " text-end col-md-2 text-nowrap " },
+                { header: accountDetailsText[appContext.locale]['Outflow'], accessor: 'creditAmount', className: " text-end col-md-2 text-nowrap " },
             ];
 
     //get the selected account ID from URL parameters
@@ -125,7 +125,7 @@ function AccountDetails(props) {
                                             {selectedAccount.accountCode
                                                 ? selectedAccount.accountCode + " - " + selectedAccount.accountName
                                                 : selectedAccount.accountName}
-                                            <Link replace className="icon-link-text-muted ml-3 font-size-larger align-self-center" to="#" onClick={toggleAccountDetailsEditorModal}>
+                                            <Link replace className="icon-link-text-muted ms-3 font-size-larger align-self-center" to="#" onClick={toggleAccountDetailsEditorModal}>
                                                 <i className="fas fa-edit"></i>
                                             </Link>
                                         </h1>
@@ -171,7 +171,7 @@ function AccountDetails(props) {
                                 ?   <>
                                         <h1 className="h2 d-flex">
                                             {selectedAccount.accountName}
-                                            <Link replace className="icon-link-text-muted ml-3 font-size-larger align-self-center" to="#" onClick={toggleAccountDetailsEditorModal}>
+                                            <Link replace className="icon-link-text-muted ms-3 font-size-larger align-self-center" to="#" onClick={toggleAccountDetailsEditorModal}>
                                                 <i className="fas fa-edit"></i>
                                             </Link>
                                         </h1>

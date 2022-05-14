@@ -22,7 +22,7 @@ function AcceptInvitationPageContent({hasCompletedSetup, token, email}) {
         case "false": 
             if (completed) {
                 return (
-                    <div className="mt-5 mb-5 pb-5 text-inverse">
+                    <div className="mt-5 mb-5 pb-5">
                         <p>{registerV3Text[appContext.locale]["You've finished setting up your account!"]}</p>
                         <Link to="/user/login/form" className="text-primary">{registerV3Text[appContext.locale]["Return to login page."]}</Link>
                     </div>

@@ -68,7 +68,7 @@ function AccountSwitcher(props) {
         <Card className="very-rounded shadow-sm">
             <CardBody>
                 <h4>{balanceSummaryText[appContext.locale][props.widgetTitle]}</h4>
-                <div className="font-weight-normal">
+                <div className="fw-normal">
                     <Link replace to="#" onClick={handleExpandAll}>{balanceSummaryText[appContext.locale]["(Expand All)"]}</Link>
                     <span> / </span>
                     <Link replace to="#" onClick={handleCollapseAll}>{balanceSummaryText[appContext.locale]["(Collapse All)"]}</Link>
@@ -101,36 +101,36 @@ function AccountSwitcher(props) {
                                     return (
                                         account.hasChildren
                                             ?   <React.Fragment key={account.accountId}>
-                                                    <Link to="#" className="tr d-flex align-items-center" onClick={() => account.expanded = !account.expanded}>
-                                                        <div className="col-1 pl-2">
+                                                    <Link to="#" className="pseudo-tr d-flex align-items-center" onClick={() => account.expanded = !account.expanded}>
+                                                        <div className="col-1 ps-2">
                                                             <i className={"fas fa-angle-right rotating-caret" + (account.expanded? " expand" : "")}></i>
                                                         </div>
-                                                        <div className= "col-10 td px-0">
-                                                            <div className={"font-weight-600 font-size-compact " + ((account.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
+                                                        <div className= "col-10 pseudo-td px-0">
+                                                            <div className={"fw-semibold font-size-compact " + ((account.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
                                                                 {account.accountCode}
                                                             </div>
                                                             <div className="text-truncate">
                                                                 {account.accountName}
                                                             </div>
                                                         </div>
-                                                        <div className="col-1 pl-0"><i className="fas fa-angle-right invisible"></i></div>
+                                                        <div className="col-1 ps-0"><i className="fas fa-angle-right invisible"></i></div>
                                                     </Link>
                                                     <Collapse isOpen={account.expanded} style={appContext.colorScheme == "dark" ? {borderTop: "1px solid #383838"} : {borderTop: "1px solid #dadada"}}>
                                                         {accounts
                                                             .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                             .map(childAccount => {
                                                                 return(
-                                                                    <Link to={props.category ? `/category-details/${childAccount.accountId}` : `/account-details/${childAccount.accountId}`} key={childAccount.accountId} className="tr d-flex align-items-center">
-                                                                        <div className="col-1 pl-2"></div>
-                                                                        <div className= "col-10 td pl-3 pr-0">
-                                                                            <div className={"font-weight-600 font-size-compact " + ((childAccount.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
+                                                                    <Link to={props.category ? `/category-details/${childAccount.accountId}` : `/account-details/${childAccount.accountId}`} key={childAccount.accountId} className="pseudo-tr d-flex align-items-center">
+                                                                        <div className="col-1 ps-2"></div>
+                                                                        <div className= "col-10 pseudo-td ps-3 pe-0">
+                                                                            <div className={"fw-semibold font-size-compact " + ((childAccount.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
                                                                                 {childAccount.accountCode}
                                                                             </div>
                                                                             <div className="text-truncate">
                                                                                 {childAccount.accountName}
                                                                             </div>
                                                                         </div>
-                                                                        <div className="col-1 pl-0 text-muted"><i className="fas fa-angle-right "></i></div>
+                                                                        <div className="col-1 ps-0 text-muted"><i className="fas fa-angle-right "></i></div>
                                                                     </Link>
                                                                 )
                                                             })
@@ -138,19 +138,19 @@ function AccountSwitcher(props) {
                                                     </Collapse>
                                                     {/**children go here */}
                                                 </React.Fragment>
-                                            :   <Link key={account.accountId} to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`} className="tr d-flex align-items-center">
-                                                    <div className="col-1 pl-2">
+                                            :   <Link key={account.accountId} to={props.category ? `/category-details/${account.accountId}` : `/account-details/${account.accountId}`} className="pseudo-tr d-flex align-items-center">
+                                                    <div className="col-1 ps-2">
                                                         <i className="fas fa-angle-right rotating-caret px-2 invisible"></i>
                                                     </div>
-                                                    <div className= "col-10 td px-0">
-                                                        <div className={"font-weight-600 font-size-compact " + ((account.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
+                                                    <div className= "col-10 pseudo-td px-0">
+                                                        <div className={"fw-semibold font-size-compact " + ((account.accountCode && appContext.isEnterprise) ? "" : "d-none")}>
                                                             {account.accountCode}
                                                         </div>
                                                         <div className="text-truncate">
                                                             {account.accountName}
                                                         </div>
                                                     </div>
-                                                    <div className="col-1 pl-0 text-muted"><i className="fas fa-angle-right "></i></div>
+                                                    <div className="col-1 ps-0 text-muted"><i className="fas fa-angle-right "></i></div>
                                                 </Link>
                                     )
                                 })

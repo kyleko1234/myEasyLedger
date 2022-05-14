@@ -183,13 +183,13 @@ const routes = [
   },
   {
       path: '/reports/expense',
-      title: 'Expense Report',
+      title: 'Expense Distribution Report',
       exact: true,
       component: ExpenseReport
   },
   {
     path: '/reports/expense/:startDate/:endDate',
-    title: 'Expense Report',
+    title: 'Expense Distribution Report',
     component: ExpenseReport
   }
 
