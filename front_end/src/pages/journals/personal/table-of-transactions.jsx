@@ -544,7 +544,7 @@ function TableOfTransactions({
                         </Tooltip>
                         : null
                     }
-                    {appContext.currentPermissionTypeId < 2 && !(journalEntryDate < appContext.lockJournalEntriesBefore)
+                    {appContext.currentPermissionTypeId < 2 && !(journalEntryDate < appContext.lockJournalEntriesBefore) && !editMode
                         ? <Tooltip
                             target="edit-button"
                             isOpen={editButtonTooltip}
@@ -555,7 +555,7 @@ function TableOfTransactions({
                         </Tooltip>
                         : null
                     }
-                    {journalEntryDate < appContext.lockJournalEntriesBefore
+                    {journalEntryDate < appContext.lockJournalEntriesBefore && !editMode
                         ? <Tooltip
                             target="edit-button"
                             isOpen={entryLockedTooltip}
