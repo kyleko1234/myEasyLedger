@@ -16,8 +16,10 @@ import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
+import com.easyledger.api.model.Vendor;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.PersonRepository;
+import com.easyledger.api.repository.VendorRepository;
 import com.easyledger.api.security.UserPrincipal;
 
 @Service
@@ -29,13 +31,18 @@ public class JournalEntryService {
 	@Autowired
 	private OrganizationRepository organizationRepo;
 	
+	@Autowired
+	private VendorRepository vendorRepo;
+	
 	private LineItemService lineItemService;
 	
-	public JournalEntryService(PersonRepository personRepo, LineItemService lineItemService, OrganizationRepository organizationRepo) {
+	public JournalEntryService(PersonRepository personRepo, LineItemService lineItemService,
+			OrganizationRepository organizationRepo, VendorRepository vendorRepo) {
 		super();
 		this.personRepo = personRepo;
 		this.lineItemService = lineItemService;
 		this.organizationRepo = organizationRepo;
+		this.vendorRepo = vendorRepo;
 	}
 
 	// Creates new Entry entity object from EntryDTO. Does not save the entity to the database.
@@ -54,7 +61,11 @@ public class JournalEntryService {
 		    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId())); 
 			product.setOrganization(organization);
 		}
-		
+		if (dto.getVendorId() != null) {
+			Vendor vendor = vendorRepo.findById(dto.getVendorId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Vendor not found for this id :: " + dto.getVendorId())); 
+			product.setVendor(vendor);
+		}
 		//Create Iterator to iterate through the Set<LineItemDTO> contained in dto
 		Iterator<LineItemDTO> lineItemDtoIterator = dto.getLineItems().iterator();
 		//Create LineItem for each LineItemDTO, and insert into set of LineItems
