@@ -30,7 +30,10 @@ public class JournalEntryDTO {
 		this.lineItems = new ArrayList<LineItemDTO>();
 		this.personId = journalEntry.getPerson().getId();
 		this.organizationId = journalEntry.getOrganization().getId();
-		this.vendorId = journalEntry.getVendor().getId();
+		
+		if (journalEntry.getVendor() != null) {
+			this.vendorId = journalEntry.getVendor().getId();
+		}
 		this.deleted = journalEntry.isDeleted();
 		
 		/* Iterates over entry.getLineItems(), converting LineItems into LineItemDTOs and adding them to this.LineItemDTOs */
