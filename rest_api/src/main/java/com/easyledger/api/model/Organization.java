@@ -113,6 +113,10 @@ public class Organization {
 	
 	@OneToMany(mappedBy = "organization", cascade = CascadeType.REMOVE)
 	@JsonIgnore
+	private Set<Vendor> vendors = new HashSet<Vendor>();
+	
+	@OneToMany(mappedBy = "organization", cascade = CascadeType.REMOVE)
+	@JsonIgnore
 	private Set<Account> accounts = new HashSet<Account>();
 	
 	@OneToMany(mappedBy = "organization", cascade = CascadeType.REMOVE)
@@ -192,6 +196,14 @@ public class Organization {
 
 	public void setJournalEntries(Set<JournalEntry> journalEntries) {
 		this.journalEntries = journalEntries;
+	}
+
+	public Set<Vendor> getVendors() {
+		return vendors;
+	}
+
+	public void setVendors(Set<Vendor> vendors) {
+		this.vendors = vendors;
 	}
 
 	public Set<Account> getAccounts() {
