@@ -30,8 +30,8 @@ public class Vendor {
 	@Column(name = "contact_name")
 	private String contactName;
 
-	@Column(name = "contact_email")
-	private String contactEmail;
+	@Column(name = "email")
+	private String email;
 
 	@ManyToOne
 	@JoinColumn(name = "organization_id")
@@ -41,11 +41,11 @@ public class Vendor {
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries = new HashSet<JournalEntry>();
 
-	public Vendor(String vendorName, String contactName, String contactEmail, Organization organization) {
+	public Vendor(String vendorName, String contactName, String email, Organization organization) {
 		super();
 		this.vendorName = vendorName;
 		this.contactName = contactName;
-		this.contactEmail = contactEmail;
+		this.email = email;
 		this.organization = organization;
 	}
 	
@@ -84,12 +84,12 @@ public class Vendor {
 		this.contactName = reduceExcessStringSize(contactName, 64);
 	}
 
-	public String getContactEmail() {
-		return contactEmail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setContactEmail(String contactEmail) {
-		this.contactEmail = reduceExcessStringSize(contactEmail, 64);
+	public void setEmail(String email) {
+		this.email = reduceExcessStringSize(email, 64);
 	}
 
 	public Organization getOrganization() {
