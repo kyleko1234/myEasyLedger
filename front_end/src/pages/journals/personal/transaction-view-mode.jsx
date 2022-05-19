@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js'
-import { formatCurrency } from '../../../utils/util-fns';
+import { formatCurrency, localizeDate } from '../../../utils/util-fns';
 
 function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, fromAccountName }) {
     const appContext = React.useContext(PageSettings);
@@ -44,14 +44,29 @@ function TransactionViewMode({ data, journalEntryDescription, journalEntryDate, 
     return (
         <>
             <div className="row mb-2 px-2 px-lg-0">
-                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["From Account"]}</strong></div> <div className="col-lg-10">{fromAccountName}</div>
+                <div className="col-lg-2">
+                    <strong>{journalEntryViewModeText[appContext.locale]["From Account"]}</strong>
+                </div> 
+                <div className="col-lg-10">
+                    {fromAccountName}
+                </div>
             </div>
 
             <div className="row mb-2 px-2 px-lg-0">
-                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-lg-10">{journalEntryDate}</div>
+                <div className="col-lg-2">
+                    <strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong>
+                </div> 
+                <div className="col-lg-10">
+                    {localizeDate(journalEntryDate)}
+                </div>
             </div>
             <div className="row px-2 px-lg-0">
-                <div className="col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-lg-10">{journalEntryDescription}</div>
+                <div className="col-lg-2">
+                    <strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong>
+                </div> 
+                <div className="col-lg-10">
+                    {journalEntryDescription}
+                </div>
             </div>
 
             <div className="mt-3"> 
