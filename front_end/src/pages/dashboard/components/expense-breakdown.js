@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../../../utils/constants';
 import { Doughnut, getElementAtEvent} from 'react-chartjs-2';
 import { dashboardText } from '../../../utils/i18n/dashboard-text';
 import { Card, CardBody, CardTitle } from 'reactstrap';
-import { formatCurrency, getDateInCurrentYear, getPercentage, getTodayAsDateString } from '../../../utils/util-fns';
+import { formatCurrency, getDateInCurrentYear, getPercentage, getTodayAsDateString, localizeDate } from '../../../utils/util-fns';
 import { useHistory } from 'react-router-dom';
 
 function ExpenseBreakdown(props) {
@@ -145,7 +145,7 @@ function ExpenseBreakdown(props) {
                     <span className="fw-normal">                            
                         {appContext.isLoading
                             ? null
-                            : dashboardText[appContext.locale]["Date range"](startDate, endDate)
+                            : dashboardText[appContext.locale]["Date range"](localizeDate(startDate), localizeDate(endDate))
                         }
                     </span>
                 </CardTitle>
