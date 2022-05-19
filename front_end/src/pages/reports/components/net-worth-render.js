@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../../../utils/constants';
 import {netWorthReportText} from '../../../utils/i18n/net-worth-report-text.js';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
 import { Card, CardBody, Alert } from 'reactstrap';
-import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import { formatCurrency, getTodayAsDateString, localizeDate, validateDate } from '../../../utils/util-fns';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import StripedRow from '../../../components/tables/striped-row';
 import Select from 'react-select';
@@ -227,7 +227,7 @@ function NetWorthRender(props) {
                                 return(
                                     <div className="pseudo-td width-175" key={i}>
                                         {columnLabel.label === "Custom"
-                                            ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + columnLabel.endDate
+                                            ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + localizeDate(columnLabel.endDate)
                                             : columnLabel.label
                                         }
                                     </div>

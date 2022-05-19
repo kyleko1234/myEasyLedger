@@ -6,7 +6,7 @@ import {API_BASE_URL} from '../../../utils/constants.js';
 import {cashFlowReportText} from '../../../utils/i18n/cash-flow-report-text.js';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, localizeDate, validateDate } from '../../../utils/util-fns';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import StripedRow from '../../../components/tables/striped-row';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -355,10 +355,10 @@ function CashFlowRender() {
                                                     {columnLabel.label === "Custom"
                                                     ?   <>
                                                             <div>
-                                                                {cashFlowReportText[appContext.locale]["From:"] + " " + columnLabel.startDate}
+                                                                {cashFlowReportText[appContext.locale]["From:"] + " " + localizeDate(columnLabel.startDate)}
                                                             </div>
                                                             <div>
-                                                                {cashFlowReportText[appContext.locale]["To:"] + " " + columnLabel.endDate}
+                                                                {cashFlowReportText[appContext.locale]["To:"] + " " + localizeDate(columnLabel.endDate)}
                                                             </div>
                                                         </>
                                                     : columnLabel.label}

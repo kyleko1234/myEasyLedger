@@ -3,7 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
-import { formatCurrency, getPercentage } from '../../../utils/util-fns';
+import { formatCurrency, getPercentage, localizeDate } from '../../../utils/util-fns';
 
 function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, loading}) {
     const appContext = React.useContext(PageSettings);
@@ -90,10 +90,10 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
                                     {columnLabels[i].label === "Custom"
                                         ?   <>
                                                 <div>
-                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabels[i].startDate}
+                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(columnLabels[i].startDate)}
                                                 </div>
                                                 <div>
-                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabels[i].endDate}
+                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(columnLabels[i].endDate)}
                                                 </div>
                                             </>
                                         : columnLabels[i].label}

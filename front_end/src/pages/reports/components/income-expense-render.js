@@ -4,7 +4,7 @@ import {API_BASE_URL} from '../../../utils/constants.js';
 import axios from 'axios';
 import {incomeStatementRenderText} from '../../../utils/i18n/income-statement-render-text.js';
 import { Card, CardBody, Alert } from 'reactstrap';
-import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns.js';
+import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, localizeDate, validateDate } from '../../../utils/util-fns.js';
 import LoadingSpinner from '../../../components/misc/loading-spinner.js';
 import StripedRow from '../../../components/tables/striped-row.js';
 import Select from 'react-select';
@@ -308,10 +308,10 @@ function IncomeExpenseRender(props) {
                                             {columnLabel.label === "Custom"
                                             ?   <>
                                                     <div>
-                                                        {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabel.startDate}
+                                                        {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(columnLabel.startDate)}
                                                     </div>
                                                     <div>
-                                                        {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabel.endDate}
+                                                        {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(columnLabel.endDate)}
                                                     </div>
                                                 </>
                                             : columnLabel.label}

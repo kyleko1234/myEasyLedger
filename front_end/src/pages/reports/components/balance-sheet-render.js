@@ -6,7 +6,7 @@ import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render
 import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { formatCurrency, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import { formatCurrency, getTodayAsDateString, localizeDate, validateDate } from '../../../utils/util-fns';
 import StripedRow from '../../../components/tables/striped-row';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -260,7 +260,7 @@ function BalanceSheetRender(props) {
                                 return(
                                     <div className="pseudo-td width-175" key={i}>
                                         {columnLabel.label === "Custom"
-                                            ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + columnLabel.endDate
+                                            ? balanceSheetRenderText[appContext.locale]["As of:"] + " " + localizeDate(columnLabel.endDate)
                                             : columnLabel.label
                                         }
                                     </div>
