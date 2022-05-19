@@ -178,6 +178,9 @@ function TableOfJournalEntries({
         if (lineItemData.length == 0) {
             errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Entry must have line-items."]);
         }
+        if (journalEntryDate < appContext.lockJournalEntriesBefore) {
+            errorMessages.push(tableOfJournalEntriesText[appContext.locale]["Journal entry date must not be before"](appContext.lockJournalEntriesBefore, appContext.locale))
+        }
         let debitSum = 0;
         let creditSum = 0;
         let missingAmount = false;
