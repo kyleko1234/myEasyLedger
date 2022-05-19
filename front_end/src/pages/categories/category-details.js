@@ -8,6 +8,7 @@ import TableOfTransactions from '../journals/personal/table-of-transactions.jsx'
 import AccountSwitcher from '../chart-of-accounts/components/account-switcher';
 import { Card, CardBody } from 'reactstrap';
 import AccountDetailsEditor from '../chart-of-accounts/components/account-details-editor';
+import { localizeDate } from '../../utils/util-fns';
 
 function CategoryDetails(props) {
     const appContext = React.useContext(PageSettings)
@@ -67,6 +68,7 @@ function CategoryDetails(props) {
                         lineItem.creditAmount = 0;
                         lineItem.debitAmount = lineItem.amount;
                     }
+                    lineItem.journalEntryDate = localizeDate(lineItem.journalEntryDate);
                 })
                 setData(dataContent);
                 setTotalPages(response.data.totalPages);
