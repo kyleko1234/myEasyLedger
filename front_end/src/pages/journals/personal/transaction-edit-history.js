@@ -5,6 +5,7 @@ import axios from 'axios';
 import { API_BASE_URL, PERSONAL_TRANSACTION_TYPES } from "../../../utils/constants";
 import TransactionViewMode from "./transaction-view-mode";
 import { journalEntryViewModeText } from "../../../utils/i18n/journal-entry-view-mode-text";
+import { yearMonthDayToDateString } from "../../../utils/util-fns";
 
 function TransactionEditHistory(props) {
 //required props: journalEntryId, isOpen, toggle
@@ -90,7 +91,7 @@ function TransactionEditHistory(props) {
                                         <TransactionViewMode 
                                             fromAccountName={journalEntryLog.snapshot.fromAccountName}
                                             journalEntryDescription={journalEntryLog.snapshot.description}
-                                            journalEntryDate={journalEntryLog.snapshot.journalEntryDate}
+                                            journalEntryDate={yearMonthDayToDateString(...journalEntryLog.snapshot.journalEntryDate)}
                                             data={journalEntryLog.snapshot.lineItems}
                                         />
                                     </CardBody>
