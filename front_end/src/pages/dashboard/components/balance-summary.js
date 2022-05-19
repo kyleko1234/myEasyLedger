@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import {balanceSummaryText} from "../../../utils/i18n/balance-summary-text.js";
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { formatCurrency, getTodayAsDateString } from '../../../utils/util-fns.js';
+import { formatCurrency, getTodayAsDateString, localizeDate } from '../../../utils/util-fns.js';
 import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-entries-text.js';
 
 
@@ -99,7 +99,7 @@ function BalanceSummary(props) {
                     <span className="fw-normal">
                         {loading
                             ? null
-                            : balanceSummaryText[appContext.locale]["Date text"](today)
+                            : balanceSummaryText[appContext.locale]["Date text"](localizeDate(today))
                         }
                     </span>
                 </CardTitle>

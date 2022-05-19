@@ -169,6 +169,9 @@ function TableOfTransactions({
         if (lineItemData.length == 0) {
             newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction must have at least one item."]);
         }
+        if (journalEntryDate < appContext.lockJournalEntriesBefore) {
+            newAlertMessages.push(tableOfJournalEntriesText[appContext.locale]["Transaction date must not be before"](appContext.lockJournalEntriesBefore, appContext.locale))
+        }
         let missingAccount = false;
         let missingAmount = false;
         let missingTransactionType = false;
@@ -483,10 +486,15 @@ function TableOfTransactions({
                     {editMode ?
                         <>
                             <div>
-                                {createMode ? null :
-                                    <button
+                                {createMode 
+                                    ? null 
+                                    : <button
                                         className="btn btn-danger width-10ch"
-                                        onClick={handleDeleteTransactionButton}>{tableOfJournalEntriesText[appContext.locale]["Delete"]}</button>}
+                                        onClick={handleDeleteTransactionButton}
+                                    >
+                                        {tableOfJournalEntriesText[appContext.locale]["Delete"]}
+                                    </button>
+                                }
                             </div>
                             <div>
                                 <button className="btn btn-primary width-10ch"

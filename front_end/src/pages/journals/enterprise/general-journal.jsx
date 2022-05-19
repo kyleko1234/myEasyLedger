@@ -5,6 +5,7 @@ import { PageSettings } from '../../../config/page-settings';
 import TableOfJournalEntries from './table-of-journal-entries';
 import { generalJournalText } from '../../../utils/i18n/general-journal-text.js';
 import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-entries-text.js';
+import { localizeDate } from '../../../utils/util-fns.js';
 
 
 function GeneralJournal() {
@@ -33,6 +34,9 @@ function GeneralJournal() {
     async function fetchData(pageIndex, pageSize) {
         await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/journalEntryViewModel?page=${pageIndex}&size=${pageSize}`)
             .then(response => {
+                response.data.content.forEach(journalEntry => {
+                    journalEntry.journalEntryDate = localizeDate(journalEntry.journalEntryDate);
+                })
                 setData(response.data.content);
                 setTotalPages(response.data.totalPages);
                 setTotalElements(response.data.totalElements);

@@ -6,7 +6,7 @@ import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-
 import { Card, CardBody, Alert } from 'reactstrap';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
-import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, localizeDate, validateDate } from '../../../utils/util-fns';
 import StripedRow from '../../../components/tables/striped-row';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -432,10 +432,10 @@ function IncomeStatementRender(props) {
                                         {columnLabel.label === "Custom"
                                         ?   <>
                                                 <div>
-                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabel.startDate}
+                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(columnLabel.startDate)}
                                                 </div>
                                                 <div>
-                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabel.endDate}
+                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " +  localizeDate(columnLabel.endDate)}
                                                 </div>
                                             </>
                                         : columnLabel.label}

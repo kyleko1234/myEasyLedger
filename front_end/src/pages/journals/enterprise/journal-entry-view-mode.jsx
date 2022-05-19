@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js'
-import { formatCurrency } from '../../../utils/util-fns';
+import { formatCurrency, localizeDate } from '../../../utils/util-fns';
 
 function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate, accountOptions }) {
     const appContext = React.useContext(PageSettings);
@@ -49,10 +49,20 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
         <>
             <div>
                 <div className="row mb-2 px-2 px-lg-0">
-                    <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong></div> <div className="col-md-9 col-lg-10">{journalEntryDate}</div>
+                    <div className="col-md-3 col-lg-2">
+                        <strong>{journalEntryViewModeText[appContext.locale]["Date"]}</strong>
+                    </div> 
+                    <div className="col-md-9 col-lg-10">
+                        {localizeDate(journalEntryDate)}
+                    </div>
                 </div>
                 <div className="row px-2 px-lg-0">
-                    <div className="col-md-3 col-lg-2"><strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong></div> <div className="col-md-9 col-lg-10">{journalEntryDescription}</div>
+                    <div className="col-md-3 col-lg-2">
+                        <strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong>
+                    </div> 
+                    <div className="col-md-9 col-lg-10">
+                        {journalEntryDescription}
+                    </div>
                 </div>
             </div>
 

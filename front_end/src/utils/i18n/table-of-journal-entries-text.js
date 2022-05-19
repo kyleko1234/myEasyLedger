@@ -1,3 +1,5 @@
+import { localizeDate } from "../util-fns";
+
 export const tableOfJournalEntriesText = {
     "en-US": {
         "Date": "Date",
@@ -46,8 +48,9 @@ export const tableOfJournalEntriesText = {
         "Successfully saved.": "Successfully saved.",
         "This action requires EDIT permissions for this EasyLedger.": "This action requires EDIT permissions for this EasyLedger.",
         "This journal entry has been locked by an admin of this EasyLedger.": "This journal entry has been locked by an admin of this EasyLedger.",
-        "This transaction has been locked by an admin of this EasyLedger.": "This transaction has been locked by an admin of this EasyLedger."
-
+        "This transaction has been locked by an admin of this EasyLedger.": "This transaction has been locked by an admin of this EasyLedger.",
+        "Journal entry date must not be before": (lockJournalEntriesBefore, locale) => `Journal entry date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.`,
+        "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `Transaction date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.`
 },
     "zh-TW": {
         "Date": "日期",
@@ -95,7 +98,9 @@ export const tableOfJournalEntriesText = {
         "Successfully saved.": "已成功儲存。",
         "This action requires EDIT permissions for this EasyLedger.": "使用本功能需有編修者權限。",
         "This journal entry has been locked by an admin of this EasyLedger.": "本分錄已被帳册管理者鎖定而不能被更改。",
-        "This transaction has been locked by an admin of this EasyLedger.": "本交易記錄已被帳册管理者鎖定而不能被更改。"
+        "This transaction has been locked by an admin of this EasyLedger.": "本交易記錄已被帳册管理者鎖定而不能被更改。",
+        "Journal entry date must not be before": (lockJournalEntriesBefore, locale) => `Journal entry date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.`, //TRANSLATION
+        "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `Transaction date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.` //TRANSLATION
 
     }
 }

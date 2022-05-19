@@ -178,7 +178,8 @@ public class JournalEntryController {
     	//Must create a new Entry entity object even if updating an existing entry, otherwise
     	//Spring will attempt to map the deleted old LineItems to the updated Entry.
     	JournalEntry updatedJournalEntry = journalEntryService.createJournalEntryFromDTO(dto, (UserPrincipal) authentication.getPrincipal());
-    	
+    	checkLockDateForJournalEntry(updatedJournalEntry);
+
     	//Assert credits and debits are equal in updatedEntry
     	if (!journalEntryService.assertAccountingBalance(updatedJournalEntry)) {
     		throw new ConflictException("Total debits in this entry are not equal to total credits.");
@@ -216,6 +217,8 @@ public class JournalEntryController {
     	
     	//Create Entry entity object from DTO
     	JournalEntry updatedJournalEntry = journalEntryService.createJournalEntryFromDTO(dto, (UserPrincipal) authentication.getPrincipal());
+    	
+    	checkLockDateForJournalEntry(updatedJournalEntry);
     	
     	//Assert credits and debits are equal in updatedEntry
     	if (!journalEntryService.assertAccountingBalance(updatedJournalEntry)) {

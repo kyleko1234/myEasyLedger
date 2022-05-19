@@ -177,3 +177,44 @@ export const getPercentage = (portion, total) => {
     }
     return product.toFixed(2);
 }
+
+/**
+ * Takes a date in YYYY-MM-DD format and a locale string and returns a localized version of that date string.
+ * @param {string} dateString 
+ * @param {string} locale 
+ * @returns {string}
+ */
+export const localizeDate = (dateString, locale) => {
+    let dateArray = dateString.split("-");
+    let year = parseInt(dateArray[0]);
+    let month = parseInt(dateArray[1]) - 1;
+    let day = parseInt(dateArray[2]);
+    let dateObject = new Date(Date.UTC(year, month, day))
+    const options = { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit" };
+    return dateObject.toLocaleDateString(locale, options);
+}
+
+/**
+ * Takes a year, month, day, and returns it in yyyy-mm-dd form. Year, month, and day should be in number form.
+ * Month should be 1=January, NOT the js 0=January
+ * @param {number} year 
+ * @param {number} month 
+ * @param {number} day 
+ * @returns {string}
+ */
+export const yearMonthDayToDateString = (year, month, day) => {
+    let yearString = year.toString();
+    let monthString;
+    let dayString;
+    if (month < 10) {
+        monthString = "0" + month.toString();
+    } else {
+        monthString = month.toString();
+    }
+    if (day < 10) {
+        dayString = "0" + day.toString();
+    } else {
+        dayString = day.toString();
+    }
+    return `${yearString}-${monthString}-${dayString}`;
+}

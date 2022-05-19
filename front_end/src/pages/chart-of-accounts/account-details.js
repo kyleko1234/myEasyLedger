@@ -9,7 +9,7 @@ import TableOfTransactions from '../journals/personal/table-of-transactions';
 import AccountSwitcher from './components/account-switcher';
 import { Card, CardBody } from 'reactstrap';
 import AccountDetailsEditor from './components/account-details-editor';
-import { formatCurrency } from '../../utils/util-fns';
+import { formatCurrency, localizeDate } from '../../utils/util-fns';
 
 function AccountDetails(props) {
 
@@ -97,6 +97,7 @@ function AccountDetails(props) {
                         lineItem.creditAmount = 0;
                         lineItem.debitAmount = lineItem.amount;
                     }
+                    lineItem.journalEntryDate = localizeDate(lineItem.journalEntryDate);
                 })
                 setData(dataContent);
                 setTotalPages(response.data.totalPages);

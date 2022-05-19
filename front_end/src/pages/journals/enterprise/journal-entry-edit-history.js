@@ -5,6 +5,7 @@ import axios from 'axios';
 import { API_BASE_URL } from "../../../utils/constants";
 import JournalEntryViewMode from "./journal-entry-view-mode";
 import { journalEntryViewModeText } from "../../../utils/i18n/journal-entry-view-mode-text";
+import { yearMonthDayToDateString } from "../../../utils/util-fns";
 
 function JournalEntryEditHistory(props) {
 //required props: journalEntryId, isOpen, toggle
@@ -16,7 +17,6 @@ function JournalEntryEditHistory(props) {
     React.useEffect(() => {
         async function fetchData() {
             await axios.get(`${API_BASE_URL}/journalEntry/${props.journalEntryId}/log`).then(response => {
-                console.log(response);
                 response.data.forEach(journalEntryLog => {
                     journalEntryLog.snapshot = JSON.parse(journalEntryLog.snapshot);
                     let formattedLineItems = []
@@ -81,7 +81,7 @@ function JournalEntryEditHistory(props) {
                                         <hr/>
                                         <JournalEntryViewMode 
                                             journalEntryDescription={journalEntryLog.snapshot.description}
-                                            journalEntryDate={journalEntryLog.snapshot.journalEntryDate}
+                                            journalEntryDate={yearMonthDayToDateString(...journalEntryLog.snapshot.journalEntryDate)}
                                             data={journalEntryLog.snapshot.lineItems}
                                             accountOptions={props.accountOptions}
                                         />

@@ -3,7 +3,7 @@ import LoadingSpinner from '../../../components/misc/loading-spinner';
 import StripedRow from '../../../components/tables/striped-row';
 import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
-import { getPercentage } from '../../../utils/util-fns';
+import { getPercentage, localizeDate } from '../../../utils/util-fns';
 
 function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObjects, numberAsCurrency, detailedView}) {
     const appContext = React.useContext(PageSettings);
@@ -19,10 +19,10 @@ function PersonalExpenseReportRender({loading, columnLabels, incomeStatementObje
                                     {columnLabel.label === "Custom"
                                         ?   <>
                                                 <div>
-                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + columnLabel.startDate}
+                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(columnLabel.startDate)}
                                                 </div>
                                                 <div>
-                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + columnLabel.endDate}
+                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(columnLabel.endDate)}
                                                 </div>
                                             </>
                                         : columnLabel.label}
