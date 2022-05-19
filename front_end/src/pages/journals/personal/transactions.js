@@ -4,6 +4,7 @@ import { transactionsText } from '../../../utils/i18n/transactions-text';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
 import TableOfTransactions from './table-of-transactions';
+import { localizeDate } from '../../../utils/util-fns';
 
 function Transactions() {
     const appContext = React.useContext(PageSettings);
@@ -35,7 +36,7 @@ function Transactions() {
         async function fetchTableData () {
             const url = `${API_BASE_URL}/organization/${appContext.currentOrganizationId}/assetAndLiabilityLineItem/?page=${pageIndex}&size=${pageSize}`;
             await axios.get(url).then(response => {
-                var dataContent = response.data.content;
+                let dataContent = response.data.content;
                 dataContent.forEach(lineItem => {
                     if (lineItem.isCredit) {
                         lineItem.debitAmount = 0;
@@ -44,6 +45,7 @@ function Transactions() {
                         lineItem.creditAmount = 0;
                         lineItem.debitAmount = lineItem.amount;
                     }
+                    lineItem.journalEntryDate = localizeDate(lineItem.journalEntryDate);
                 })
                 setData(dataContent);
                 setTotalPages(response.data.totalPages);

@@ -190,7 +190,7 @@ export const localizeDate = (dateString, locale) => {
     let month = parseInt(dateArray[1]) - 1;
     let day = parseInt(dateArray[2]);
     let dateObject = new Date(Date.UTC(year, month, day))
-    const options = { timeZone: "UTC", year: "numeric", month: "numeric", day: "numeric" };
+    const options = { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit" };
     return dateObject.toLocaleDateString(locale, options);
 }
 
