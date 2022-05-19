@@ -177,3 +177,13 @@ export const getPercentage = (portion, total) => {
     }
     return product.toFixed(2);
 }
+
+export const localizeDate = (dateString, locale) => {
+    let dateArray = dateString.split("-");
+    let year = parseInt(dateArray[0]);
+    let month = parseInt(dateArray[1]) - 1;
+    let day = parseInt(dateArray[2]);
+    let dateObject = new Date(Date.UTC(year, month, day))
+    const options = { timeZone: "UTC", year: "numeric", month: "numeric", day: "numeric" };
+    return dateObject.toLocaleDateString(locale, options);
+}
