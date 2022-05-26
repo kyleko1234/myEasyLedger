@@ -34,8 +34,8 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "My EasyLedgers": "我的 EasyLedgers",
         "Create a New EasyLedger": "建立一個全新的帳本",//page title
         "Create a new EasyLedger...": "建立新帳本...", //sidebar text, may or may not be the same as above, just with ... at the end
-        "Account Settings": "設定", //UPDATE TRANSLATION (settings => account settings)
-        "EasyLedger Settings": "TRANSLATION",
+        "Account Settings": "個人設定", //(settings => account settings)
+        "EasyLedger Settings": "帳册設定",
         "Sign Out": "登出",
         "Permission level: ": "權限等級：",
         "Click here!": "點這裡！",

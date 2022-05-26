@@ -87,7 +87,7 @@ export const settingsText = {
     "zh-TW": {
         "Home": "首頁",
         "Settings": "設定",
-        "Account Settings": "個人設定", //TRANSLATION (personal settings => account settings; probably doesn't need to change but make sure it's consistent with whatever's on sidebar-text.js)
+        "Account Settings": "個人設定", // (personal settings => account settings; probably doesn't need to change but make sure it's consistent with whatever's on sidebar-text.js)
         "Language": "語言",
         "Language Settings": "更改語言",
         "Appearance Settings": "更改光亮模式",
