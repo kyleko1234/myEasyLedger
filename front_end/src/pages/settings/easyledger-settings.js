@@ -4,12 +4,12 @@ import {settingsText} from '../../utils/i18n/settings-text';
 import { PageSettings } from '../../config/page-settings';
 import OrganizationSettings from './components/organization-settings';
 
-function ManageEasyLedger(props) {
+function EasyLedgerSettings(props) {
     const appContext = React.useContext(PageSettings);
     return(
         <div>
             <h1 className="page-header">
-                {appContext.permissions.find(permission => permission.organization.id == props.match.params.organizationId).organization.name + " " + settingsText[appContext.locale]["Settings"]}
+                {settingsText[appContext.locale]["EasyLedger Settings"]}
             </h1>
             <OrganizationSettings organizationId={props.match.params.organizationId} />
             <OrganizationRoster organizationId={props.match.params.organizationId}/>
@@ -17,4 +17,4 @@ function ManageEasyLedger(props) {
     )
 }
 
-export default ManageEasyLedger;
+export default EasyLedgerSettings;

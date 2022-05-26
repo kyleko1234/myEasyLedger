@@ -27,8 +27,8 @@ function PersonDropdown(props) {
                         </div>
                     </DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem onClick={() => history.push("/settings")}>
-                        <i className="fas fa-cog me-2"></i>{sidebarText[appContext.locale]["Settings"]}
+                    <DropdownItem onClick={() => history.push("/account-settings")}>
+                        <i className="fas fa-cog me-2"></i>{sidebarText[appContext.locale]["Account Settings"]}
                     </DropdownItem>
                     <DropdownItem onClick={appContext.logout}>
                         <i className="fas fa-sign-out-alt me-2"></i>{sidebarText[appContext.locale]["Sign Out"]}

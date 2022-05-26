@@ -50,6 +50,9 @@ function EasyledgersDropdown(props) {
                                     }
                                 </div>
                             </DropdownItem>
+                            <DropdownItem onClick={() => history.push(`/easyledger-settings/${appContext.currentOrganizationId}`)}>
+                                <i className="fas fa-cog me-2"></i>{sidebarText[appContext.locale]["EasyLedger Settings"]}
+                            </DropdownItem>
                             <DropdownItem divider />
                         </>
                         : null

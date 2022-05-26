@@ -10,8 +10,7 @@ import Reports from './../pages/reports/reports.js';
 import IncomeStatementReport from '../pages/reports/income-statement-report.js';
 import BalanceSheetReport from '../pages/reports/balance-sheet-report.js';
 import AccountDetails from '../pages/chart-of-accounts/account-details.js';
-import Settings from '../pages/settings/settings.js';
-import ManageEasyLedger from '../pages/settings/manage-easyledger';
+import AccountSettingsPage from '../pages/settings/account-settings-page.js';
 import CreateANewOrganization from '../components/sidebar/create-a-new-organization.js';
 import Accounts from '../pages/accounts/accounts.js';
 import Categories from '../pages/categories/categories.js';
@@ -25,6 +24,7 @@ import DefaultLandingPage from '../pages/default/default-landing-page.js';
 import Transactions from '../pages/journals/personal/transactions.js';
 import AcceptInvitationPage from '../pages/user/invitation/accept-invitation-page.js';
 import ExpenseReport from '../pages/reports/expense-report.js';
+import EasyLedgerSettings from '../pages/settings/easyledger-settings';
 
 const routes = [
   {
@@ -98,14 +98,14 @@ const routes = [
     component: IncomeStatementReport
   },
   {
-    path: '/settings',
-    title: 'Settings',
-    component: Settings
+    path: '/account-settings',
+    title: 'Account Settings',
+    component: AccountSettingsPage
   },
   {
-    path: '/manage-easyledger/:organizationId',
-    title: 'Manage EasyLedger',
-    component: ManageEasyLedger
+    path: '/easyledger-settings/:organizationId',
+    title: 'EasyLedgerSettings',
+    component: EasyLedgerSettings
   },
   {
     path: '/create-a-new-easyledger',

@@ -118,15 +118,12 @@ function OrganizationSettings(props) {
     return(
         <Card className="very-rounded shadow-sm mb-3">
             <CardBody>
-                <CardTitle className="fw-semibold">
-                    {settingsText[appContext.locale]["EasyLedger Settings"]}
-                </CardTitle>   
                 <div>
                     <Alert color="success" isOpen={savedAlert}>{settingsText[appContext.locale]["Settings saved."]}</Alert>
                     <Alert color="danger" isOpen={errorAlert}>{settingsText[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
                     <div className="mb-3 row mx-0 my-2 align-items-center">
                         <label className="col-lg-3 col-form-label my-0 px-0" htmlFor='easyledger-name-input'>
-                            {settingsText[appContext.locale]["Easyledger Name"] + ":"}
+                            {settingsText[appContext.locale]["EasyLedger Name"] + ":"}
                         </label>
                         <div className="col-md-9">
                             <input 
