@@ -2,7 +2,7 @@ export const settingsText = {
     "en-US": {
         "Home": "Home",
         "Settings": "Settings",
-        "Personal Settings": "Personal Settings",
+        "Account Settings": "Account Settings",
         "Language Settings": "Language Settings",
         "Appearance Settings": "Appearance Settings",
         "Language": "Language",
@@ -37,7 +37,7 @@ export const settingsText = {
 
         "Settings saved.": "Settings saved.",
         "Something went wrong. Please try again later.": "Something went wrong. Please try again later.",
-        "Easyledger Name": "Easyledger Name",
+        "EasyLedger Name": "EasyLedger Name",
         "Currency": "Currency",
         "Fiscal Year Begin Date": "Fiscal Year Begin Date",
 
@@ -87,7 +87,7 @@ export const settingsText = {
     "zh-TW": {
         "Home": "首頁",
         "Settings": "設定",
-        "Personal Settings": "個人設定",
+        "Account Settings": "個人設定", // (personal settings => account settings; probably doesn't need to change but make sure it's consistent with whatever's on sidebar-text.js)
         "Language": "語言",
         "Language Settings": "更改語言",
         "Appearance Settings": "更改光亮模式",
@@ -121,7 +121,7 @@ export const settingsText = {
         "EasyLedger Settings": "帳本設定",
         "Settings saved.": "設定已儲存。",
         "Something went wrong. Please try again later.": "系統或設定有點問題，請再試一次。",
-        "Easyledger Name": "帳本名稱",
+        "EasyLedger Name": "帳本名稱",
         "Currency": "幣別",
         "Fiscal Year Begin Date": "會計年度起始日",
 
