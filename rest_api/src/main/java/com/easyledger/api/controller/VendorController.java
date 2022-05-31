@@ -70,11 +70,8 @@ public class VendorController {
         if (!vendorId.equals(dto.getVendorId())) {
         	throw new ConflictException("Vendor ID in request body does not match URI.");
         }
-    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
-    	Vendor updatedVendor = vendorService.createVendorFromDTO(dto);
-    	vendorRepo.save(updatedVendor);
+    	Vendor updatedVendor = vendorService.updateVendorFromDTO(dto, authentication);
         return ResponseEntity.ok(new VendorDTO(updatedVendor));
-
     }
     
 }
