@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -39,8 +40,8 @@ public class VendorController {
 		this.authorizationService = authorizationService;
 	}
 	
-    @GetMapping("/vendor/{id}")
-    public ResponseEntity<VendorDTO> getVendorById(@PathVariable(value = "id") Long vendorId, Authentication authentication) 
+    @GetMapping("/vendor/{vendorId}")
+    public ResponseEntity<VendorDTO> getVendorById(@PathVariable(value = "vendorId") Long vendorId, Authentication authentication) 
     		throws UnauthorizedException, ResourceNotFoundException {
     	Vendor vendor = vendorRepo.findById(vendorId)
         		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + vendorId)); 
@@ -61,4 +62,19 @@ public class VendorController {
     	vendorRepo.save(updatedVendor);
     	return new VendorDTO(updatedVendor);
     }
+    
+    @PutMapping("/vendor/{vendorId}")
+    public ResponseEntity<VendorDTO> updateVendor(@PathVariable(value = "vendorId") Long vendorId,
+    		@RequestBody VendorDTO dto, Authentication authentication) 
+    		throws ConflictException, UnauthorizedException, ResourceNotFoundException {
+        if (!vendorId.equals(dto.getVendorId())) {
+        	throw new ConflictException("Vendor ID in request body does not match URI.");
+        }
+    	authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
+    	Vendor updatedVendor = vendorService.createVendorFromDTO(dto);
+    	vendorRepo.save(updatedVendor);
+        return ResponseEntity.ok(new VendorDTO(updatedVendor));
+
+    }
+    
 }
