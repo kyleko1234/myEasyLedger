@@ -3,18 +3,50 @@ package com.easyledger.api.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
+import com.easyledger.api.dto.VendorDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@SqlResultSetMapping( //maps native SQL query to VendorDTO class
+		name = "vendorDTOMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = VendorDTO.class,
+						columns = {
+								@ColumnResult(name = "vendorId"),
+								@ColumnResult(name = "vendorName"),
+								@ColumnResult(name = "contactName"),
+								@ColumnResult(name = "email"),
+								@ColumnResult(name = "organizationId")
+						}
+				)
+		}
+)	
+@NamedNativeQuery( //retrieves all vendors for a given organizationId
+		name = "Vendor.getAllVendorsForOrganization",
+		query = "SELECT  "
+				+ "    vendor.id AS vendorId, vendor.vendor_name AS vendorName,  "
+				+ "    vendor.contact_name AS contactName, vendor.email AS email, "
+				+ "    vendor.organization_id AS organizationId "
+				+ "FROM vendor "
+				+ "WHERE vendor.organization_id = ? "
+				+ "ORDER BY vendor.vendor_name ASC",
+		resultSetMapping = "vendorDTOMapping"
+)
+
 
 @Entity
 @Table(name = "vendor")

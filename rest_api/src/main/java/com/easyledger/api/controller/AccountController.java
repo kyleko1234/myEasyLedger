@@ -126,7 +126,6 @@ public class AccountController {
         return ResponseEntity.ok(updatedDto);
     }
 
-    //TODO: TEST
     @DeleteMapping("/account/{id}")
     public Map<String, Boolean> deleteAccount(@PathVariable(value = "id") Long accountId, Authentication authentication)
         throws ResourceNotFoundException, ConflictException, UnauthorizedException {

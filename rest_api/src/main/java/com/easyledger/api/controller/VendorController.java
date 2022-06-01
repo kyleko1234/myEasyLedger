@@ -1,6 +1,7 @@
 package com.easyledger.api.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,13 @@ public class VendorController {
         return ResponseEntity.ok().body(dto);
     }	
 
+    @GetMapping("/organization/{organizationId}/vendor")
+    public List<VendorDTO> getAllVendorsForOrganization(@PathVariable(value = "organizationId") Long organizationId, 
+    		Authentication authentication) throws UnauthorizedException {
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+    	return vendorRepo.getAllVendorsForOrganization(organizationId);
+    }
+    
     @PostMapping("/vendor")
     @ResponseStatus(HttpStatus.CREATED)
     public VendorDTO createVendor(@RequestBody VendorDTO dto, Authentication authentication) 
