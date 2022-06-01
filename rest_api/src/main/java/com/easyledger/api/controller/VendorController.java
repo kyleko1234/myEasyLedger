@@ -1,5 +1,6 @@
 package com.easyledger.api.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Vendor;
+import com.easyledger.api.repository.JournalEntryRepository;
 import com.easyledger.api.repository.VendorRepository;
 import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.service.VendorService;
@@ -32,15 +34,19 @@ public class VendorController {
 	
 	private VendorRepository vendorRepo;
 	
+	private JournalEntryRepository journalEntryRepo;
+	
 	private VendorService vendorService;
 	
 	private AuthorizationService authorizationService;
 
-	public VendorController(VendorRepository vendorRepo, VendorService vendorService, AuthorizationService authorizationService) {
+	public VendorController(VendorRepository vendorRepo, JournalEntryRepository journalEntryRepo,
+			VendorService vendorService, AuthorizationService authorizationService) {
 		super();
 		this.vendorRepo = vendorRepo;
 		this.vendorService = vendorService;
 		this.authorizationService = authorizationService;
+		this.journalEntryRepo = journalEntryRepo;
 	}
 	
     @GetMapping("/vendor/{vendorId}")
@@ -77,12 +83,19 @@ public class VendorController {
         return ResponseEntity.ok(new VendorDTO(updatedVendor));
     }
     
-    /*@DeleteMapping("/vendor/{vendorId}")
+    @DeleteMapping("/vendor/{vendorId}")
     public Map<String, Boolean> deleteVendor(@PathVariable(value = "vendorId") Long vendorId, Authentication authentication) 
-    		throws ResourceNotFoundException, UnauthorizedException {
+    		throws ResourceNotFoundException, UnauthorizedException, ConflictException {
     	Vendor vendor = vendorRepo.findById(vendorId)
             	.orElseThrow(() -> new ResourceNotFoundException("Vendor not found for this id :: " + vendorId));
         authorizationService.authorizeEditPermissionsByOrganizationId(authentication, vendor.getOrganization().getId());
-        
-    } */
+        boolean vendorContainsJournalEntries = journalEntryRepo.vendorContainsJournalEntries(vendorId);
+        if (vendorContainsJournalEntries) {
+        	throw new ConflictException("Cannot delete a vendor with one or more journal entries.");
+        }
+        vendorRepo.deleteById(vendorId);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
+    }
 }
