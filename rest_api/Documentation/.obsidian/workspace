@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Organization/Contents/The Organization Object.md",
+            "file": "Vendor/Contents/Delete a Vendor.md",
             "mode": "source"
           }
         }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Organization/Contents/The Organization Object.md",
+                "file": "Vendor/Contents/Delete a Vendor.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,15 +88,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "Organization/Contents/The Organization Object.md",
-    "JournalEntry/Contents/Delete a JournalEntry.md",
-    "JournalEntry/Contents/Update a JournalEntry.md",
-    "Organization/Contents/Create an Organization.md",
-    "Organization/Contents/Get Date Range Presets for Generating Reports for Organization Up To Date.md",
-    "Organization/Contents/Retrieve an Organization.md",
-    "Organization/Contents/Update an Organization.md",
-    "Organization/Contents/Retrieve Monthly Net Assets for an Organization.md",
-    "Organization/Contents/List All Organizations.md",
-    "Organization/Organization.md"
+    "Vendor/Contents/Delete a Vendor.md",
+    "Easy Ledger.md",
+    "Vendor/Vendor.md",
+    "Vendor/Contents/The Vendor Object.md",
+    "Vendor/Contents/Update a Vendor.md",
+    "Vendor/Contents/Create a Vendor.md",
+    "Vendor/Contents/Retrieve a Vendor.md",
+    "Account/Contents/The Account Object.md",
+    "Account/Contents/Update an Account.md",
+    "Vendor/Contents/List All Vendors for an Organization.md"
   ]
 }
