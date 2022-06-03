@@ -25,6 +25,7 @@ import Transactions from '../pages/journals/personal/transactions.js';
 import AcceptInvitationPage from '../pages/user/invitation/accept-invitation-page.js';
 import ExpenseReport from '../pages/reports/expense-report.js';
 import EasyLedgerSettings from '../pages/settings/easyledger-settings';
+import VendorsPage from '../pages/vendors/vendors-page.js';
 
 const routes = [
   {
@@ -191,6 +192,11 @@ const routes = [
     path: '/reports/expense/:startDate/:endDate',
     title: 'Expense Distribution Report',
     component: ExpenseReport
+  },
+  {
+    path: '/vendors',
+    title: 'Vendors',
+    component: VendorsPage
   }
 
 ];

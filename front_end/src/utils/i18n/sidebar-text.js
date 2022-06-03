@@ -26,7 +26,8 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Chart of Accounts": "Chart of Accounts",
         "Reports": "Reports",
         "Accounts": "Accounts",
-        "Categories": "Categories"
+        "Categories": "Categories",
+        "Vendors": "Vendors"
     },
     "zh-TW": {
         "Home": "首頁",
@@ -55,7 +56,8 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Chart of Accounts": "維護會計科目",
         "Reports": "財務報告",
         "Accounts": "帳戶／錢包",
-        "Categories": "收支類別"
+        "Categories": "收支類別",
+        "Vendors": "TRANSLATION"
 
     }
 }

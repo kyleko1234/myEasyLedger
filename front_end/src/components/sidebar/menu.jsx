@@ -3,6 +3,8 @@ export const enterpriseMenu = [
   { path: '/journals', icon: 'fas fa-book', title: 'Journals', relevantBasePaths: ["journals"]},
   { path: '/chart-of-accounts', icon: 'far fa-list-alt', title: 'Chart of Accounts', relevantBasePaths: ["chart-of-accounts", "account-details"]},
   { path: '/reports', icon: 'fas fa-envelope-open-text', title: 'Reports', relevantBasePaths: ["reports"]},
+  { path: '/vendors', icon: 'fas fa-store-alt', title: 'Vendors', relevantBasePaths: ["vendors"]},
+
 ]
 
 export const personalMenu = [
