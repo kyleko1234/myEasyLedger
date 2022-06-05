@@ -8,7 +8,6 @@ function VendorsTitleBarStandard(props) {
     const [permissionTooltip, setPermissionTooltip] = React.useState(false);
     const togglePermissionTooltip = () => setPermissionTooltip(!permissionTooltip);
 
-
     return(
         <div className="d-flex justify-content-between align-items-center">
             <div className="h1">
