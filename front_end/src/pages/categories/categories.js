@@ -235,7 +235,7 @@ class Categories extends React.Component {
                         isOpen={this.state.createAnAccountButtonTooltip}
                         toggle={this.toggleCreateAnAccountButtonTooltip}
                     >
-                        {chartOfAccountsText[this.context.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                        {chartOfAccountsText[this.context.locale]["This action requires EDIT permissions for this ledger."]}
                     </Tooltip>
                     : null
                 }

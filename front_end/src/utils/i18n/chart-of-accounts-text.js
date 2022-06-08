@@ -45,7 +45,7 @@ export const chartOfAccountsText = {
         "Initial Credit Value": "Initial Credit Value",
         "Add a new child account...": "Add a new child account...",
         "Add a new child category...": "Add a new child category...",
-        "This action requires EDIT permissions for this EasyLedger.": "This action requires EDIT permissions for this EasyLedger.",
+        "This action requires EDIT permissions for this ledger.": "This action requires EDIT permissions for this ledger.",
 
 
     }, 
@@ -95,7 +95,7 @@ export const chartOfAccountsText = {
         "Initial Credit Value": "貸方初始餘額",
         "Add a new child account...": "建立一個新的子科目",
         "Add a new child category...": "建立一個新的子類別",
-        "This action requires EDIT permissions for this EasyLedger.": "使用本功需有編修者權限。"
+        "This action requires EDIT permissions for this ledger.": "使用本功需有編修者權限。"
 
 
     }

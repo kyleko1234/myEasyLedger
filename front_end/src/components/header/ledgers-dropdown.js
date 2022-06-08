@@ -6,7 +6,7 @@ import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL, PERMISSION_TYPE_OPTIONS } from '../../utils/constants';
 import { sidebarText } from '../../utils/i18n/sidebar-text';
 
-function EasyledgersDropdown(props) {
+function LedgersDropdown(props) {
     const appContext = React.useContext(PageSettings);
     const history = useHistory();
     const permissionTypes = PERMISSION_TYPE_OPTIONS(appContext.locale);
@@ -28,8 +28,8 @@ function EasyledgersDropdown(props) {
     return(
         <div className={props.className}>
             <Dropdown isOpen={isOpen} toggle={toggle}>
-                <DropdownToggle caret color="white" className="font-size-standard border-0 d-flex align-items-center easyledgers-dropdown-toggle">
-                    <span className="easyledgers-dropdown-text text-truncate">
+                <DropdownToggle caret color="white" className="font-size-standard border-0 d-flex align-items-center ledgers-dropdown-toggle">
+                    <span className="ledgers-dropdown-text text-truncate">
                         {appContext.currentOrganizationId 
                             ? appContext.currentOrganizationName
                             : sidebarText[appContext.locale]["Click here!"]
@@ -50,8 +50,8 @@ function EasyledgersDropdown(props) {
                                     }
                                 </div>
                             </DropdownItem>
-                            <DropdownItem onClick={() => history.push(`/easyledger-settings/${appContext.currentOrganizationId}`)}>
-                                <i className="fas fa-cog me-2"></i>{sidebarText[appContext.locale]["EasyLedger Settings"]}
+                            <DropdownItem onClick={() => history.push(`/ledger-settings/${appContext.currentOrganizationId}`)}>
+                                <i className="fas fa-cog me-2"></i>{sidebarText[appContext.locale]["Ledger Settings"]}
                             </DropdownItem>
                             <DropdownItem divider />
                         </>
@@ -76,13 +76,13 @@ function EasyledgersDropdown(props) {
                     </>
                     : null}
                     <DropdownItem 
-                        onClick={() => history.push("/create-a-new-easyledger")}
+                        onClick={() => history.push("/create-a-new-ledger")}
                         className="text-nowrap"
                     >
                         <i className="ion ion-md-add">{/* this may break soon, best to find a replacement for ionicons */}</i>
                         {" "}
                         <em>
-                            {sidebarText[appContext.locale]["Create a new EasyLedger..."]}
+                            {sidebarText[appContext.locale]["Create a new ledger..."]}
                         </em>
                     </DropdownItem>
                 </DropdownMenu>
@@ -91,7 +91,7 @@ function EasyledgersDropdown(props) {
     )
 
 }
-EasyledgersDropdown.defaultProps = {
+LedgersDropdown.defaultProps = {
     className: ""
 }
-export default EasyledgersDropdown;
+export default LedgersDropdown;

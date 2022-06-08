@@ -414,7 +414,7 @@ function AccountDetailsEditor(props) {
                         toggle={toggleDeleteButtonTooltip}
                         fade={false}
                     >
-                        {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                        {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this ledger."]}
                     </Tooltip>
                     : null
                 }
@@ -425,7 +425,7 @@ function AccountDetailsEditor(props) {
                         toggle={toggleSaveButtonTooltip}
                         fade={false}
                     >
-                        {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                        {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this ledger."]}
                     </Tooltip>
                     : null
                 }
@@ -469,8 +469,8 @@ function AccountDetailsEditor(props) {
                     onCancel={toggleInitialValueLockedAlert}
                 >
                     {props.category
-                        ? accountDetailsEditorText[appContext.locale]["Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts."]
-                        : accountDetailsEditorText[appContext.locale]["Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories."]}
+                        ? accountDetailsEditorText[appContext.locale]["Please contact an administrator of this ledger if you wish to change the initial values of non-empty accounts."]
+                        : accountDetailsEditorText[appContext.locale]["Please contact an administrator of this ledger if you wish to change the initial values of non-empty categories."]}
                 </SweetAlert>
                 : null
             }
