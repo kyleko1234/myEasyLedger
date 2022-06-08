@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
-import EasyledgersDropdown from './easyledgers-dropdown.js';
+import LedgersDropdown from './ledgers-dropdown.js';
 import PersonDropdown from './person-dropdown.js';
 
 class Header extends React.Component {
@@ -29,7 +29,7 @@ class Header extends React.Component {
 						</div>
 						<div className="d-flex align-items-center me-3">
 							<PersonDropdown className="me-1"/>
-							<EasyledgersDropdown/>
+							<LedgersDropdown/>
 						</div>
 					</div>
 				)}

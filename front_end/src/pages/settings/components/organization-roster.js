@@ -349,7 +349,7 @@ function OrganizationRoster(props) {
                         onConfirm={handleInvitePersonButton}
                         onCancel={toggleInvitePersonAlert}
                     >
-                        {settingsText[appContext.locale]["This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?"]}
+                        {settingsText[appContext.locale]["This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this ledger?"]}
                     </SweetAlert>
                     : null}
 

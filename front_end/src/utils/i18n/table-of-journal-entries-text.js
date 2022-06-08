@@ -46,9 +46,9 @@ export const tableOfJournalEntriesText = {
         "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "Showing " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " of " + totalElements + " results",
 
         "Successfully saved.": "Successfully saved.",
-        "This action requires EDIT permissions for this EasyLedger.": "This action requires EDIT permissions for this EasyLedger.",
-        "This journal entry has been locked by an admin of this EasyLedger.": "This journal entry has been locked by an admin of this EasyLedger.",
-        "This transaction has been locked by an admin of this EasyLedger.": "This transaction has been locked by an admin of this EasyLedger.",
+        "This action requires EDIT permissions for this ledger.": "This action requires EDIT permissions for this ledger.",
+        "This journal entry has been locked by an admin of this ledger.": "This journal entry has been locked by an admin of this ledger.",
+        "This transaction has been locked by an admin of this ledger.": "This transaction has been locked by an admin of this ledger.",
         "Journal entry date must not be before": (lockJournalEntriesBefore, locale) => `Journal entry date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.`,
         "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `Transaction date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.`
 },
@@ -96,9 +96,9 @@ export const tableOfJournalEntriesText = {
 
         "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "顯示 " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " 筆" + "（共" + totalElements + "筆）",
         "Successfully saved.": "已成功儲存。",
-        "This action requires EDIT permissions for this EasyLedger.": "使用本功能需有編修者權限。",
-        "This journal entry has been locked by an admin of this EasyLedger.": "本分錄已被帳册管理者鎖定而不能被更改。",
-        "This transaction has been locked by an admin of this EasyLedger.": "本交易記錄已被帳册管理者鎖定而不能被更改。",
+        "This action requires EDIT permissions for this ledger.": "使用本功能需有編修者權限。",
+        "This journal entry has been locked by an admin of this ledger.": "本分錄已被帳册管理者鎖定而不能被更改。",
+        "This transaction has been locked by an admin of this ledger.": "本交易記錄已被帳册管理者鎖定而不能被更改。",
         "Journal entry date must not be before": (lockJournalEntriesBefore, locale) => `管理者有鎖定帳册，分錄日期不得早於 ${localizeDate(lockJournalEntriesBefore, locale)}.`, 
         "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `管理者有鎖定帳册，交易記錄日期不得早於 ${localizeDate(lockJournalEntriesBefore, locale)}.` 
 

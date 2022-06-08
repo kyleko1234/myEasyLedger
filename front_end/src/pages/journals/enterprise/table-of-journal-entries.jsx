@@ -478,7 +478,7 @@ function TableOfJournalEntries({
                             toggle={toggleCopyButtonTooltip}
                             fade={false}
                         >
-                            {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                            {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this ledger."]}
                         </Tooltip>
                         : null
                     }
@@ -489,7 +489,7 @@ function TableOfJournalEntries({
                             toggle={toggleEditButtonTooltip}
                             fade={false}
                         >
-                            {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                            {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this ledger."]}
                         </Tooltip>
                         : null
                     }
@@ -500,7 +500,7 @@ function TableOfJournalEntries({
                             toggle={toggleEntryLockedTooltip}
                             fade={false}
                         >
-                            {tableOfJournalEntriesText[appContext.locale]["This journal entry has been locked by an admin of this EasyLedger."]}
+                            {tableOfJournalEntriesText[appContext.locale]["This journal entry has been locked by an admin of this ledger."]}
                         </Tooltip>
                         : null
                     }
@@ -516,7 +516,7 @@ function TableOfJournalEntries({
                     fade={false}  
                     placement="left"
                 >
-                    {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this ledger."]}
                 </Tooltip>
                 : null
             }
@@ -527,7 +527,7 @@ function TableOfJournalEntries({
                     toggle={toggleSmallScreenAddAnEntryTooltip}
                     fade={false}  
                 >
-                    {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this EasyLedger."]}
+                    {tableOfJournalEntriesText[appContext.locale]["This action requires EDIT permissions for this ledger."]}
                 </Tooltip>
                 : null
             }

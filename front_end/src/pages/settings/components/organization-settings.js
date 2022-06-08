@@ -122,12 +122,12 @@ function OrganizationSettings(props) {
                     <Alert color="success" isOpen={savedAlert}>{settingsText[appContext.locale]["Settings saved."]}</Alert>
                     <Alert color="danger" isOpen={errorAlert}>{settingsText[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
                     <div className="mb-3 row mx-0 my-2 align-items-center">
-                        <label className="col-lg-3 col-form-label my-0 px-0" htmlFor='easyledger-name-input'>
-                            {settingsText[appContext.locale]["EasyLedger Name"] + ":"}
+                        <label className="col-lg-3 col-form-label my-0 px-0" htmlFor='ledger-name-input'>
+                            {settingsText[appContext.locale]["Ledger Name"] + ":"}
                         </label>
                         <div className="col-md-9">
                             <input 
-                                id="easyledger-name-input"
+                                id="ledger-name-input"
                                 className="form-control"
                                 disabled={permissionObject.permissionType.id < 3? true : false}
                                 type="text" value={organizationName} 
@@ -223,14 +223,14 @@ function OrganizationSettings(props) {
                                 onClick={handleDeleteOrganizationButton}
                                 disabled={permissionObject.permissionType.id < 4}
                             >
-                                {settingsText[appContext.locale]["Delete this EasyLedger"]}
+                                {settingsText[appContext.locale]["Delete this ledger"]}
                             </button>
                             <button 
                                 className="btn btn-danger d-block w-100 d-sm-none mt-3" 
                                 onClick={handleDeleteOrganizationButton}
                                 disabled={permissionObject.permissionType.id < 4}
                             >
-                                {settingsText[appContext.locale]["Delete this EasyLedger"]}
+                                {settingsText[appContext.locale]["Delete this ledger"]}
                             </button>
                         </div>
                     </div>
@@ -245,7 +245,7 @@ function OrganizationSettings(props) {
                         onConfirm={handleConfirmDeleteOrganizationButton}
                         onCancel={toggleConfirmDeleteOrganizationAlert}
                     >
-                        {settingsText[appContext.locale]["Are you sure you want to delete this EasyLedger? This action cannot be undone."]}
+                        {settingsText[appContext.locale]["Are you sure you want to delete this ledger? This action cannot be undone."]}
                     </SweetAlert>
                     : null
                 }
@@ -253,11 +253,11 @@ function OrganizationSettings(props) {
                     ? <SweetAlert danger showConfirm={false} showCancel={true}
                         cancelBtnBsStyle="default"
                         cancelBtnText={settingsText[appContext.locale]["Cancel"]}
-                        title={settingsText[appContext.locale]["Cannot delete this EasyLedger."]}
+                        title={settingsText[appContext.locale]["Cannot delete this ledger."]}
                         onConfirm={toggleCannotDeleteOrganizationAlert}
                         onCancel={toggleCannotDeleteOrganizationAlert}
                     >
-                        {settingsText[appContext.locale]["All Journal Entries and Transactions must be deleted before you can delete this EasyLedger."]}
+                        {settingsText[appContext.locale]["All Journal Entries and Transactions must be deleted before you can delete this ledger."]}
                     </SweetAlert>
                     : null
                 }
@@ -268,7 +268,7 @@ function OrganizationSettings(props) {
                         isOpen={saveButtonTooltip} 
                         toggle={toggleSaveButtonTooltip}
                     >
-                        {settingsText[appContext.locale]["This action requires ADMIN permissions for this EasyLedger."]}
+                        {settingsText[appContext.locale]["This action requires ADMIN permissions for this ledger."]}
                     </Tooltip>
                     : null
                 }
@@ -279,7 +279,7 @@ function OrganizationSettings(props) {
                         isOpen={deleteButtonTooltip} 
                         toggle={toggleDeleteButtonTooltip}
                     >
-                        {settingsText[appContext.locale]["This action requires OWN permissions for this EasyLedger."]}
+                        {settingsText[appContext.locale]["This action requires OWN permissions for this ledger."]}
                     </Tooltip>
                     : null
                 }

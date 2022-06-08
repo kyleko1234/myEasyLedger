@@ -36,10 +36,10 @@ export const accountDetailsEditorText = {
 
         "Cannot edit the initial value of this category.": "Cannot edit the initial value of this category.",
         "Cannot edit the initial value of this account.": "Cannot edit the initial value of this account.",
-        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.": "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.",
-        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.": "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.",
+        "Please contact an administrator of this ledger if you wish to change the initial values of non-empty accounts.": "Please contact an administrator of this ledger if you wish to change the initial values of non-empty accounts.",
+        "Please contact an administrator of this ledger if you wish to change the initial values of non-empty categories.": "Please contact an administrator of this ledger if you wish to change the initial values of non-empty categories.",
 
-        "This action requires EDIT permissions for this EasyLedger.": "This action requires EDIT permissions for this EasyLedger.",
+        "This action requires EDIT permissions for this ledger.": "This action requires EDIT permissions for this ledger.",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "Cash and cash equivalents", 
@@ -117,10 +117,10 @@ export const accountDetailsEditorText = {
 
         "Cannot edit the initial value of this category.": "本類別的初始餘額不能更改。",
         "Cannot edit the initial value of this account.": "本科目的初始餘額不能更改。",
-        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty accounts.": "如果您需要更改本科目的初始餘額，請連繫有本帳册管理權限的使用者。",
-        "Please contact an administrator of this EasyLedger if you wish to change the initial values of non-empty categories.": "如果您需要更改本類別的初始餘額，請連繫有本帳册管理權限的使用者。",
+        "Please contact an administrator of this ledger if you wish to change the initial values of non-empty accounts.": "如果您需要更改本科目的初始餘額，請連繫有本帳册管理權限的使用者。",
+        "Please contact an administrator of this ledger if you wish to change the initial values of non-empty categories.": "如果您需要更改本類別的初始餘額，請連繫有本帳册管理權限的使用者。",
 
-        "This action requires EDIT permissions for this EasyLedger.": "使用本功能需有編修者權限。",
+        "This action requires EDIT permissions for this ledger.": "使用本功能需有編修者權限。",
         
         //Account Subtype Names.
         "Cash and cash equivalents": "現金及約當現金", 
