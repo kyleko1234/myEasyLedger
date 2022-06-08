@@ -35,13 +35,13 @@ function FirstOrganizationForm(props) {
                 {registerV3Text[appContext.locale]["Sign Up"]}
                 <Alert isOpen={props.somethingWentWrongAlert} color="danger">{registerV3Text[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
             </h1>
-            <h2 className="h5 fw-normal mb-3">{registerV3Text[appContext.locale]["Create your first EasyLedger."]}</h2>
+            <h2 className="h5 fw-normal mb-3">{registerV3Text[appContext.locale]["Create your first ledger."]}</h2>
             <div className="login-content">
                 <form className="mb-0" onSubmit={event => validateForm(event)}>
-                    <label className="form-label">{registerV3Text[appContext.locale]["EasyLedger Name"]} <span className="text-danger">*</span></label>
+                    <label className="form-label">{registerV3Text[appContext.locale]["Ledger Name"]} <span className="text-danger">*</span></label>
                     <div className="row mb-3">
                         <div className="col-12">
-                            <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["EasyLedger Name"]} required value={props.organizationNameInput} onChange={event => props.setOrganizationNameInput(event.target.value)}/>
+                            <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["Ledger Name"]} required value={props.organizationNameInput} onChange={event => props.setOrganizationNameInput(event.target.value)}/>
                         </div>
                     </div>
                     <label className="form-label">{registerV3Text[appContext.locale]["Currency"]}<span className="text-danger">*</span></label>
@@ -58,7 +58,7 @@ function FirstOrganizationForm(props) {
                             />
                         </div>
                     </div>
-                    <label className='form-label'>{registerV3Text[appContext.locale]["Create an EasyLedger using:"]}</label>
+                    <label className='form-label'>{registerV3Text[appContext.locale]["Create a ledger using:"]}</label>
                     <div className="row mb-3 ps-3">
                         <div className="col-12 form-check">
                             <input type="radio" id="is-enterprise-false" name="is-enterprise-radio" value={false} checked={props.isEnterprise === false} onChange={handleIsEnterpriseRadioChange} className="form-check-input"/>

@@ -8,7 +8,7 @@ function CreateANewOrganization(props) {
     return(
         <div>
             <h1>
-                {sidebarText[appContext.locale]["Create a New EasyLedger"]}
+                {sidebarText[appContext.locale]["Create a New Ledger"]}
             </h1>
             <NewOrganizationForm/>
         </div>

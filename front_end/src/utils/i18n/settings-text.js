@@ -7,7 +7,7 @@ export const settingsText = {
         "Appearance Settings": "Appearance Settings",
         "Language": "Language",
         "Save": "Save",
-        "Manage my EasyLedgers...": "Manage my EasyLedgers...",
+        "Manage my ledgers...": "Manage my ledgers...",
 
         "Name": "Name",
         "Email": "Email",
@@ -33,23 +33,23 @@ export const settingsText = {
         "Password successfully changed.": "Password successfully changed.",
         "Please log in again.": "Please log in again.",
 
-        "EasyLedger Settings": "EasyLedger Settings",
+        "Ledger Settings": "Ledger Settings",
 
         "Settings saved.": "Settings saved.",
         "Something went wrong. Please try again later.": "Something went wrong. Please try again later.",
-        "EasyLedger Name": "EasyLedger Name",
+        "Ledger Name": "Ledger Name",
         "Currency": "Currency",
         "Fiscal Year Begin Date": "Fiscal Year Begin Date",
 
         "Add a person": "Add a person",
         "People with access to": (organizationName) => `People with access to ${organizationName}`,
-        "Delete this EasyLedger": "Delete this EasyLedger",
+        "Delete this ledger": "Delete this ledger",
 
         "Yes, delete it!": "Yes, delete it!",
         "Are you sure?": "Are you sure?",
-        "Are you sure you want to delete this EasyLedger? This action cannot be undone.": "Are you sure you want to delete this EasyLedger? This action cannot be undone.",
-        "Cannot delete this EasyLedger.": "Cannot delete this EasyLedger.",
-        "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.",
+        "Are you sure you want to delete this ledger? This action cannot be undone.": "Are you sure you want to delete this ledger? This action cannot be undone.",
+        "Cannot delete this ledger.": "Cannot delete this ledger.",
+        "All Journal Entries and Transactions must be deleted before you can delete this ledger.": "All Journal Entries and Transactions must be deleted before you can delete this ledger.",
 
         "Change Name": "Change Name",
         "Please provide a first and last name.": "Please provide a first and last name.",
@@ -59,7 +59,7 @@ export const settingsText = {
         "Yes, remove this person!": "Yes, remove this person!",
         "Yes, invite this person!": "Yes, invite this person!",
         "Invite this person to myEasyLedger?": "Invite this person to myEasyLedger?",
-        "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?": "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?",
+        "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this ledger?": "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this ledger?",
 
         "parseName": (firstName, lastName) => {
             if (firstName != null && lastName != null) {
@@ -76,8 +76,8 @@ export const settingsText = {
         "Lock initial values for accounts and categories with transactions": "Lock initial values for accounts and categories with transactions",
         "Lock journal entries before": "Lock journal entries before",
         "Invalid date.": "Invalid date.",
-        "This action requires ADMIN permissions for this EasyLedger.": "This action requires ADMIN permissions for this EasyLedger.",
-        "This action requires OWN permissions for this EasyLedger.": "This action requires OWN permissions for this EasyLedger.",
+        "This action requires ADMIN permissions for this ledger.": "This action requires ADMIN permissions for this ledger.",
+        "This action requires OWN permissions for this ledger.": "This action requires OWN permissions for this ledger.",
 
         //Appearance settings options
         "System": "System",
@@ -92,7 +92,7 @@ export const settingsText = {
         "Language Settings": "更改語言",
         "Appearance Settings": "更改光亮模式",
         "Save": "儲存",
-        "Manage my EasyLedgers...": "管理我所有的帳本...",
+        "Manage my ledgers...": "管理我所有的帳本...",
 
         "Name": "姓名",
         "Email": "電郵",
@@ -118,21 +118,21 @@ export const settingsText = {
         "Password successfully changed.": "密碼變更成功。",
         "Please log in again.": "請再次登入。",
 
-        "EasyLedger Settings": "帳本設定",
+        "Ledger Settings": "帳本設定",
         "Settings saved.": "設定已儲存。",
         "Something went wrong. Please try again later.": "系統或設定有點問題，請再試一次。",
-        "EasyLedger Name": "帳本名稱",
+        "Ledger Name": "帳本名稱",
         "Currency": "幣別",
         "Fiscal Year Begin Date": "會計年度起始日",
 
         "Add a person": "加一個用戶",
         "People with access to": (organizationName) => `以下用戶有「${organizationName}」帳本的使用權限：`,
-        "Delete this EasyLedger": "删除此帳本",
+        "Delete this ledger": "删除此帳本",
 
         "Yes, delete it!": "是的，删除它！",
         "Are you sure?": "你確定嗎？",
-        "Are you sure you want to delete this EasyLedger? This action cannot be undone.": "你真的要删除此帳本嗎？",
-        "Cannot delete this EasyLedger.": "這個帳本還不能被删除。",
+        "Are you sure you want to delete this ledger? This action cannot be undone.": "你真的要删除此帳本嗎？",
+        "Cannot delete this ledger.": "這個帳本還不能被删除。",
         "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "所有交易記錄都要先删除後，才能删除此帳本。",
 
 
@@ -144,7 +144,7 @@ export const settingsText = {
         "Yes, remove this person!": "是的，移除此人對本帳本的使用權！",
         "Yes, invite this person!": "是的，確定邀請他（她）！",
         "Invite this person to myEasyLedger?": "邀請此人用 myEasyLedger？",
-        "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this EasyLedger?": "這個電郵從未在 myEasyLedger 註册過，你是否要邀請他（她）一起共同使用這本帳册？",
+        "This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this ledger?": "這個電郵從未在 myEasyLedger 註册過，你是否要邀請他（她）一起共同使用這本帳册？",
 
         "parseName": (firstName, lastName) => {
             if (firstName !== null && lastName !== null) {
@@ -161,8 +161,8 @@ export const settingsText = {
         "Lock initial values for accounts and categories with transactions": "鎖定各科目和類別的初始餘額",
         "Lock journal entries before": "鎖定此日期之前的交易",
         "Invalid date.": "日期格式有誤",
-        "This action requires ADMIN permissions for this EasyLedger.": "使用本功能需有管理者權限。",
-        "This action requires OWN permissions for this EasyLedger.": "使用本功能需有擁有者權限。",
+        "This action requires ADMIN permissions for this ledger.": "使用本功能需有管理者權限。",
+        "This action requires OWN permissions for this ledger.": "使用本功能需有擁有者權限。",
 
         //Appearance settings options
         "System": "系統模式",

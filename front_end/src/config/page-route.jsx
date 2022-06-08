@@ -24,7 +24,7 @@ import DefaultLandingPage from '../pages/default/default-landing-page.js';
 import Transactions from '../pages/journals/personal/transactions.js';
 import AcceptInvitationPage from '../pages/user/invitation/accept-invitation-page.js';
 import ExpenseReport from '../pages/reports/expense-report.js';
-import EasyLedgerSettings from '../pages/settings/easyledger-settings';
+import LedgerSettings from '../pages/settings/ledger-settings';
 
 const routes = [
   {
@@ -103,13 +103,13 @@ const routes = [
     component: AccountSettingsPage
   },
   {
-    path: '/easyledger-settings/:organizationId',
-    title: 'EasyLedgerSettings',
-    component: EasyLedgerSettings
+    path: '/ledger-settings/:organizationId',
+    title: 'LedgerSettings',
+    component: LedgerSettings
   },
   {
-    path: '/create-a-new-easyledger',
-    title: 'Create a New EasyLedger',
+    path: '/create-a-new-ledger',
+    title: 'Create a New Ledger',
     component: CreateANewOrganization
   },
   {

@@ -2,22 +2,22 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
     "en-US": {
         "Home": "Home",
         "Navigation": "Navigation",
-        "My EasyLedgers": "My EasyLedgers",
-        "Create a New EasyLedger": "Create a New EasyLedger",
-        "Create a new EasyLedger...": "Create a new EasyLedger...",
+        "My ledgers": "My ledgers",
+        "Create a New Ledger": "Create a New Ledger",
+        "Create a new ledger...": "Create a new ledger...",
         "Account Settings": "Account Settings",
-        "EasyLedger Settings": "EasyLedger Settings",
+        "Ledger Settings": "Ledger Settings",
         "Sign Out": "Sign Out",
         "Permission level: ": "Permission level: ",
         "Click here!": "Click here!",
 
-        //'create a new easyledger' form
-        "Enter a name for this EasyLedger": "Enter a name for this EasyLedger",
-        "Select a currency for this EasyLedger": "Select a currency for this EasyLedger",
-        "Create an EasyLedger using": "Create an EasyLedger using",
+        //'create a new ledger' form
+        "Enter a name for this ledger": "Enter a name for this ledger",
+        "Select a currency for this ledger": "Select a currency for this ledger",
+        "Create a ledger using": "Create a ledger using",
         "Single-entry accounting": "Single-entry accounting (individual/family version)",
         "Double-entry accounting": "Double-entry accounting (small business version)",
-        "Create this EasyLedger": "Create this EasyLedger",
+        "Create this ledger": "Create this ledger",
 
         //menu items
         "Dashboard": "Dashboard",
@@ -31,22 +31,22 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
     "zh-TW": {
         "Home": "首頁",
         "Navigation": "網站導覽",
-        "My EasyLedgers": "我的 EasyLedgers",
-        "Create a New EasyLedger": "建立一個全新的帳本",//page title
-        "Create a new EasyLedger...": "建立新帳本...", //sidebar text, may or may not be the same as above, just with ... at the end
+        "My ledgers": "我的 EasyLedgers",//TRANSLATION retranslate
+        "Create a New Ledger": "建立一個全新的帳本",//page title
+        "Create a new ledger...": "建立新帳本...", //sidebar text, may or may not be the same as above, just with ... at the end
         "Account Settings": "個人設定", //(settings => account settings)
-        "EasyLedger Settings": "帳册設定",
+        "Ledger Settings": "帳册設定",
         "Sign Out": "登出",
         "Permission level: ": "權限等級：",
         "Click here!": "點這裡！",
 
-        //'create a new easyledger' form
-        "Enter a name for this EasyLedger": "請給帳本取個名稱",
-        "Select a currency for this EasyLedger": "請為帳本指定幣別",
-        "Create an EasyLedger using": "新帳本的簿記方式",
+        //'create a new ledger' form
+        "Enter a name for this ledger": "請給帳本取個名稱",
+        "Select a currency for this ledger": "請為帳本指定幣別",
+        "Create a ledger using": "新帳本的簿記方式",
         "Single-entry accounting": "單式簿記（個人／家庭版）",
         "Double-entry accounting": "複式簿記（公司行號版）",
-        "Create this EasyLedger": "建立帳本",
+        "Create this ledger": "建立帳本",
 
         //menu items
         "Dashboard": "帳目概覽",

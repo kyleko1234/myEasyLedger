@@ -37,7 +37,7 @@ function NewOrganizationForm(props) {
         <div className="my-3">
             <div className="mb-3 row">
                 <label className="col-xl-3 col-form-label">
-                    {sidebarText[appContext.locale]["Enter a name for this EasyLedger"] + ":"}
+                    {sidebarText[appContext.locale]["Enter a name for this ledger"] + ":"}
                 </label>
                 <div className="col-xl-5">
                     <input
@@ -50,7 +50,7 @@ function NewOrganizationForm(props) {
             </div>
             <div className="mb-3 row">
                 <label className="col-xl-3 col-form-label">
-                    {sidebarText[appContext.locale]["Select a currency for this EasyLedger"] + ":"}
+                    {sidebarText[appContext.locale]["Select a currency for this ledger"] + ":"}
                 </label>
                 <div className="col-xl-5">
                     <Select
@@ -67,7 +67,7 @@ function NewOrganizationForm(props) {
             </div>
             <div className="mb-3 row">
                 <div className="col-xl-3 mb-2">
-                    {sidebarText[appContext.locale]["Create an EasyLedger using"] + ":"}
+                    {sidebarText[appContext.locale]["Create a ledger using"] + ":"}
                 </div>
                 <div className="col-xl-6">
                     <div className="form-check">
@@ -100,7 +100,7 @@ function NewOrganizationForm(props) {
                     </div>
                 </div>
             </div>
-            <button className="btn btn-primary" onClick={handleSaveButton}>{sidebarText[appContext.locale]["Create this EasyLedger"]}</button>
+            <button className="btn btn-primary" onClick={handleSaveButton}>{sidebarText[appContext.locale]["Create this ledger"]}</button>
 
         </div>
     )

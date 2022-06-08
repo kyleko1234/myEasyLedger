@@ -158,13 +158,13 @@ a {
 }
 
 @media (max-width: 575.98px) {
-    .easyledgers-dropdown-text{
+    .ledgers-dropdown-text{
         display: inline-block;
         max-width: 125px;
     }
 }
 
-.easyledgers-dropdown-toggle {
+.ledgers-dropdown-toggle {
     max-width: calc(100vw - 275px)
 }
 
