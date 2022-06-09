@@ -101,7 +101,7 @@ public class Organization {
 	private boolean lockInitialAccountValues = true;
 	
 	@Column(name = "lock_journal_entries_before")
-	private LocalDate lockJournalEntriesBefore;
+	private LocalDate lockJournalEntriesBefore = LocalDate.of(1, 1, 1);
 
 	@OneToMany(mappedBy = "organization", cascade = CascadeType.REMOVE)
 	@JsonIgnore
