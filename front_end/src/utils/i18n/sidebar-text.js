@@ -2,7 +2,6 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
     "en-US": {
         "Home": "Home",
         "Navigation": "Navigation",
-        "My ledgers": "My ledgers",
         "Create a New Ledger": "Create a New Ledger",
         "Create a new ledger...": "Create a new ledger...",
         "Account Settings": "Account Settings",
@@ -32,7 +31,6 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
     "zh-TW": {
         "Home": "首頁",
         "Navigation": "網站導覽",
-        "My ledgers": "我的 EasyLedgers",//TRANSLATION retranslate
         "Create a New Ledger": "建立一個全新的帳本",//page title
         "Create a new ledger...": "建立新帳本...", //sidebar text, may or may not be the same as above, just with ... at the end
         "Account Settings": "個人設定", //(settings => account settings)
