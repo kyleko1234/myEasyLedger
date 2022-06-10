@@ -18,10 +18,10 @@ import CategoryDetails from '../pages/categories/category-details.js';
 import NetWorthReport from '../pages/reports/net-worth-report.js';
 import IncomeExpenseReport from '../pages/reports/income-expense-report.js';
 import CashFlowReport from '../pages/reports/cash-flow-report.js';
-import GeneralJournal from '../pages/journals/enterprise/general-journal.jsx';
+import GeneralJournal from '../pages/journal-entries/enterprise/general-journal.jsx';
 import VerificationPage from '../pages/verification/verification-page.js';
 import DefaultLandingPage from '../pages/default/default-landing-page.js';
-import Transactions from '../pages/journals/personal/transactions.js';
+import Transactions from '../pages/journal-entries/personal/transactions.js';
 import AcceptInvitationPage from '../pages/user/invitation/accept-invitation-page.js';
 import ExpenseReport from '../pages/reports/expense-report.js';
 import VendorsPage from '../pages/vendors/vendors-page.js';
@@ -44,8 +44,8 @@ const routes = [
     component: RegisterPage,
   },
   {
-    path: '/journals',
-    title: 'Journals',
+    path: '/journal-entries',
+    title: 'Journal Entries',
     component: GeneralJournal,
   },
   {
