@@ -1,20 +1,24 @@
 import React from 'react';
 import { Card, CardBody } from 'reactstrap';
+import { PageSettings } from '../../config/page-settings';
+import { vendorsText } from '../../utils/i18n/vendors-text';
 
 //required props: vendors [list<vendors>], handleEditVendorButton [func]
 function VendorsListStandard({vendors, handleEditVendorButton, className}) {
+    const appContext = React.useContext(PageSettings);
+
     return(
         <Card className={"mt-4 very-rounded shadow-sm " + className}>
             <CardBody>
                 <div className="d-flex font-size-compact fw-bold">
                     <div className="d-flex pseudo-td py-0 col-4">
-                        Vendor Name
+                        {vendorsText[appContext.locale]["Vendor Name"]}
                     </div>
                     <div className="d-flex pseudo-td py-0 col-3">
-                        Contact Name
+                        {vendorsText[appContext.locale]["Contact Name"]}
                     </div>
                     <div className="d-flex pseudo-td py-0 col-4">
-                        Email
+                        {vendorsText[appContext.locale]["Email"]}
                     </div>
                     <div className="d-flex pseudo-td py-0 col-1">
                         

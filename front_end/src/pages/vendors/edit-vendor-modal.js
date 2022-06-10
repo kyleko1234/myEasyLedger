@@ -5,6 +5,7 @@ import { Modal, ModalBody, ModalFooter, ModalHeader, Tooltip, Alert} from 'react
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
 import { accountDetailsEditorText } from '../../utils/i18n/account-details-editor-text';
+import { vendorsText } from '../../utils/i18n/vendors-text';
 
 function EditVendorModal({
     isOpen, toggle, 
@@ -93,17 +94,17 @@ function EditVendorModal({
                 onClosed={() => setNoVendorNameAlert(false)}
             >
                 <ModalHeader>
-                    Edit Vendor Details
+                    {selectedVendorId ? vendorsText[appContext.locale]["Edit Vendor Details"] : vendorsText[appContext.locale]["Add a Vendor"]}
                 </ModalHeader>
                 <ModalBody>
                     <Alert color="danger" isOpen={noVendorNameAlert}>
-                        Please provide a vendor name.
+                        {vendorsText[appContext.locale]["Please provide a vendor name."]}
                     </Alert>
 
                     <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
                         <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
-                                Vendor Name<span className="text-danger">*</span>
+                                {vendorsText[appContext.locale]["Vendor Name"]}<span className="text-danger">*</span>
                             </label>
                             <div className="col-md-8">
                                 <input
@@ -119,7 +120,7 @@ function EditVendorModal({
                         </div>
                         <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
-                                Contact Name
+                                {vendorsText[appContext.locale]["Contact Name"]}
                             </label>
                             <div className="col-md-8">
                                 <input
@@ -134,7 +135,7 @@ function EditVendorModal({
                         </div>
                         <div className=" row">
                             <label className="col-form-label col-md-4">
-                                Email
+                                {vendorsText[appContext.locale]["Email"]}
                             </label>
                             <div className="col-md-8">
                                 <input
@@ -195,8 +196,8 @@ function EditVendorModal({
                     }
                 </ModalFooter>
             </Modal>
-            {deleteVendorAlert ?
-                <SweetAlert primary showCancel
+            {deleteVendorAlert 
+                ? <SweetAlert primary showCancel
                     confirmBtnText={accountDetailsEditorText[appContext.locale]["Yes, delete it!"]}
                     confirmBtnBsStyle="danger"
                     cancelBtnBsStyle="default"
@@ -205,20 +206,22 @@ function EditVendorModal({
                     onConfirm={handleConfirmDeleteVendorButton}
                     onCancel={toggleDeleteVendorAlert}
                 >
-                    Are you sure you want to delete this vendor?
+                    {vendorsText[appContext.locale]["Are you sure you want to delete this vendor?"]}
                 </SweetAlert>
-                : null}
-            {cannotDeleteVendorAlert ?
-                <SweetAlert danger showConfirm={false} showCancel={true}
+                : null
+            }
+            {cannotDeleteVendorAlert 
+                ? <SweetAlert danger showConfirm={false} showCancel={true}
                     cancelBtnBsStyle="default"
                     cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title="Cannot delete this vendor."
+                    title={vendorsText[appContext.locale]["Cannot delete this vendor."]}
                     onConfirm={toggleCannotDeleteVendorAlert}
                     onCancel={toggleCannotDeleteVendorAlert}
                 >
-                    Please remove all journal entries associated with this vendor and try again.
+                    {vendorsText[appContext.locale]["Please remove all journal entries associated with this vendor and try again."]}
                 </SweetAlert>
-                : null}
+                : null
+            }
 
         </>
     )

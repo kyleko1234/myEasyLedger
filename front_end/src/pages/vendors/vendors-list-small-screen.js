@@ -16,7 +16,7 @@ function VendorsListSmallScreen({vendors, handleEditVendorButton, className}) {
                                 </div>
                                 <div className="font-size-compact fw-light">
                                     <em>
-                                    {vendor.contactName + " - " + vendor.email}
+                                        {vendor.contactName + (vendor.contactName && vendor.email ? " - " : "") + vendor.email}
                                     </em>
                                 </div>
                             </div>
