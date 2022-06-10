@@ -93,6 +93,7 @@ function EditVendorModal({
                 className="very-rounded"
                 onClosed={() => setNoVendorNameAlert(false)}
             >
+                <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
                 <ModalHeader>
                     {selectedVendorId ? vendorsText[appContext.locale]["Edit Vendor Details"] : vendorsText[appContext.locale]["Add a Vendor"]}
                 </ModalHeader>
@@ -101,7 +102,7 @@ function EditVendorModal({
                         {vendorsText[appContext.locale]["Please provide a vendor name."]}
                     </Alert>
 
-                    <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
+                    <div>
                         <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
                                 {vendorsText[appContext.locale]["Vendor Name"]}<span className="text-danger">*</span>
@@ -148,7 +149,7 @@ function EditVendorModal({
                                 />
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </ModalBody>
                 <ModalFooter className="justify-content-between">
                     <div id="delete-button">
@@ -195,6 +196,7 @@ function EditVendorModal({
                         : null
                     }
                 </ModalFooter>
+                </form>
             </Modal>
             {deleteVendorAlert 
                 ? <SweetAlert primary showCancel

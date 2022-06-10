@@ -241,194 +241,198 @@ function AccountDetailsEditor(props) {
     return (
         <>
             <Modal isOpen={props.isOpen} toggle={props.toggle} onClosed={modalOnClose} centered={true} className="very-rounded">
-                <ModalHeader>
-                    {props.createMode
-                        ? (props.category? accountDetailsEditorText[appContext.locale]["Create a New Category"] : accountDetailsEditorText[appContext.locale]["Create a New Account"])
-                        : (props.category? accountDetailsEditorText[appContext.locale]["Edit Category Details"] : accountDetailsEditorText[appContext.locale]["Edit Account Details"])
-                    }
-                </ModalHeader>
-                <ModalBody>
-                    {noAccountNameAlert ?
-                        <Alert color="danger">
-                            {props.category? accountDetailsEditorText[appContext.locale]["Please provide a name for your category."] : accountDetailsEditorText[appContext.locale]["Please provide a name for your account."]}
-                        </Alert>
-                        : null}
-                    {noParentOrSubtypeAlert ?
-                        <Alert color="danger">
-                            {accountDetailsEditorText[appContext.locale]["Account must belong to either a subtype or a parent account."] /* conditional rendering not required; this alert should never appear when isEnterprise is false; i.e. when 'category' exists as a classification */} 
-                        </Alert>
-                        : null}
-                    <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
-                        <div className="mb-3 row">
-                            <label className="col-form-label col-md-4">
-                                {props.category? accountDetailsEditorText[appContext.locale]["Category Name"] : accountDetailsEditorText[appContext.locale]["Account Name"]}
-                            </label>
-                            <div className="col-md-8">
-                                <input
-                                    disabled={appContext.currentPermissionTypeId < 2 ? true : false}
-                                    className="form-control"
-                                    value={accountNameInput}
-                                    onChange={event => {
-                                        setAccountNameInput(event.target.value);
-                                    }}
-                                />
+                <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
+                    <ModalHeader>
+                        {props.createMode
+                            ? (props.category? accountDetailsEditorText[appContext.locale]["Create a New Category"] : accountDetailsEditorText[appContext.locale]["Create a New Account"])
+                            : (props.category? accountDetailsEditorText[appContext.locale]["Edit Category Details"] : accountDetailsEditorText[appContext.locale]["Edit Account Details"])
+                        }
+                    </ModalHeader>
+                    <ModalBody>
+                        {noAccountNameAlert ?
+                            <Alert color="danger">
+                                {props.category? accountDetailsEditorText[appContext.locale]["Please provide a name for your category."] : accountDetailsEditorText[appContext.locale]["Please provide a name for your account."]}
+                            </Alert>
+                            : null}
+                        {noParentOrSubtypeAlert ?
+                            <Alert color="danger">
+                                {accountDetailsEditorText[appContext.locale]["Account must belong to either a subtype or a parent account."] /* conditional rendering not required; this alert should never appear when isEnterprise is false; i.e. when 'category' exists as a classification */} 
+                            </Alert>
+                            : null}
+                        <div>
+                            <div className="mb-3 row">
+                                <label className="col-form-label col-md-4">
+                                    {props.category? accountDetailsEditorText[appContext.locale]["Category Name"] : accountDetailsEditorText[appContext.locale]["Account Name"]}
+                                </label>
+                                <div className="col-md-8">
+                                    <input
+                                        disabled={appContext.currentPermissionTypeId < 2 ? true : false}
+                                        className="form-control"
+                                        value={accountNameInput}
+                                        onChange={event => {
+                                            setAccountNameInput(event.target.value);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="mb-3 row">
+                                <label className="col-form-label col-md-4">
+                                    {appContext.isEnterprise 
+                                        ? accountDetailsEditorText[appContext.locale]["Account Code"]
+                                        : accountDetailsEditorText[appContext.locale]["Display Order"]
+                                    }
+                                </label>
+                                <div className="col-md-8">
+                                    <input
+                                        disabled={appContext.currentPermissionTypeId < 2 ? true : false}
+                                        className="form-control"
+                                        value={accountCodeInput}
+                                        onChange={event => {
+                                            setAccountCodeInput(event.target.value);
+                                        }}
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
-                                {appContext.isEnterprise 
-                                    ? accountDetailsEditorText[appContext.locale]["Account Code"]
-                                    : accountDetailsEditorText[appContext.locale]["Display Order"]
-                                }
+                                {props.category? accountDetailsEditorText[appContext.locale]["Parent Category"] : accountDetailsEditorText[appContext.locale]["Parent Account"]}
                             </label>
                             <div className="col-md-8">
-                                <input
-                                    disabled={appContext.currentPermissionTypeId < 2 ? true : false}
-                                    className="form-control"
-                                    value={accountCodeInput}
-                                    onChange={event => {
-                                        setAccountCodeInput(event.target.value);
-                                    }}
+                                <Select
+                                    classNamePrefix="form-control"
+                                    options={parentAccountOptions.filter(option => (option.object.accountTypeId == accountTypeId && option.object.accountId != props.selectedAccountId))}
+                                    value={parentAccountOptions.find(option => option.object.accountId == selectedParentAccountId)}
+                                    isSearchable={true}
+                                    onChange={handleChangeParentAccountOption}
+                                    isDisabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
                                 />
                             </div>
                         </div>
-                    </form>
-                    <div className="mb-3 row">
-                        <label className="col-form-label col-md-4">
-                            {props.category? accountDetailsEditorText[appContext.locale]["Parent Category"] : accountDetailsEditorText[appContext.locale]["Parent Account"]}
-                        </label>
-                        <div className="col-md-8">
-                            <Select
-                                classNamePrefix="form-control"
-                                options={parentAccountOptions.filter(option => (option.object.accountTypeId == accountTypeId && option.object.accountId != props.selectedAccountId))}
-                                value={parentAccountOptions.find(option => option.object.accountId == selectedParentAccountId)}
-                                isSearchable={true}
-                                onChange={handleChangeParentAccountOption}
-                                isDisabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
-                            />
+                        {appContext.isEnterprise?
+                            <div className="mb-3 row">
+                            <label className="col-form-label col-md-4">
+                                {accountDetailsEditorText[appContext.locale]["Account Subtype"]}
+                            </label>
+                            <div className="col-md-8">
+                                <Select
+                                    classNamePrefix="form-control"
+                                    options={accountSubtypeOptions.filter(option => option.object.accountType.id == accountTypeId)}
+                                    value={accountSubtypeOptions.find(option => option.object.id == selectedAccountSubtypeId)}
+                                    isSearchable={true}
+                                    onChange={handleChangeAccountSubtypeOption}
+                                    isDisabled={appContext.currentPermissionTypeId < 2 ? true : false}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    {appContext.isEnterprise?
-                        <div className="mb-3 row">
-                        <label className="col-form-label col-md-4">
-                            {accountDetailsEditorText[appContext.locale]["Account Subtype"]}
-                        </label>
-                        <div className="col-md-8">
-                            <Select
-                                classNamePrefix="form-control"
-                                options={accountSubtypeOptions.filter(option => option.object.accountType.id == accountTypeId)}
-                                value={accountSubtypeOptions.find(option => option.object.id == selectedAccountSubtypeId)}
-                                isSearchable={true}
-                                onChange={handleChangeAccountSubtypeOption}
-                                isDisabled={appContext.currentPermissionTypeId < 2 ? true : false}
-                            />
-                        </div>
-                    </div>
-                    : null}
-                    <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
-                        {appContext.isEnterprise? 
-                            <>
-                                <div className="mb-3 row">
-                                    <label className="col-form-label col-md-4">
-                                        {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
-                                    </label>
-                                    <div className="col-md-8">
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            value={initialDebitValueInput}
-                                            onChange={event => {
-                                                setInitialDebitValueInput(event.target.value);
-                                            }}
-                                            disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="mb-3 row">
-                                    <label className="col-form-label col-md-4">
-                                        {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
-                                    </label>
-                                    <div className="col-md-8">
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            value={initialCreditValueInput}
-                                            onChange={event => {
-                                                setInitialCreditValueInput(event.target.value);
-                                            }}
-                                            disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
-                                        />
-                                    </div>
-                                </div>
-                            </>
-                            :
-                            <>
-                                {(accountTypeId == 1 || accountTypeId == 2) ?
+                        : null}
+                        <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
+                            {appContext.isEnterprise? 
+                                <>
                                     <div className="mb-3 row">
                                         <label className="col-form-label col-md-4">
-                                            {accountDetailsEditorText[appContext.locale]["Initial Account Value"]}
+                                            {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
                                         </label>
                                         <div className="col-md-8">
                                             <input
                                                 type="number"
                                                 className="form-control"
-                                                value={accountTypeId == 1 ? initialDebitValueInput : initialCreditValueInput}
+                                                value={initialDebitValueInput}
                                                 onChange={event => {
-                                                    setInitialAccountValue(event.target.value);
+                                                    setInitialDebitValueInput(event.target.value);
                                                 }}
                                                 disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
                                             />
                                         </div>
                                     </div>
-                                : null}
-                            </>
+                                    <div className="mb-3 row">
+                                        <label className="col-form-label col-md-4">
+                                            {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
+                                        </label>
+                                        <div className="col-md-8">
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                value={initialCreditValueInput}
+                                                onChange={event => {
+                                                    setInitialCreditValueInput(event.target.value);
+                                                }}
+                                                disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
+                                            />
+                                        </div>
+                                    </div>
+                                </>
+                                :
+                                <>
+                                    {(accountTypeId == 1 || accountTypeId == 2) ?
+                                        <div className="mb-3 row">
+                                            <label className="col-form-label col-md-4">
+                                                {accountDetailsEditorText[appContext.locale]["Initial Account Value"]}
+                                            </label>
+                                            <div className="col-md-8">
+                                                <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    value={accountTypeId == 1 ? initialDebitValueInput : initialCreditValueInput}
+                                                    onChange={event => {
+                                                        setInitialAccountValue(event.target.value);
+                                                    }}
+                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
+                                                />
+                                            </div>
+                                        </div>
+                                    : null}
+                                </>
+                                }
+                        </form> 
+                        
+                    </ModalBody>
+                    <ModalFooter className="justify-content-between">
+                        <div id="delete-button">
+                            {!props.selectedAccountId
+                                ? null 
+                                : <div>
+                                    <button type="button" className="btn btn-danger width-10ch" onClick={handleDeleteButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                                        {accountDetailsEditorText[appContext.locale]["Delete"]}
+                                    </button>
+                                </div>
                             }
-                    </form> 
-                      
-                </ModalBody>
-                <ModalFooter className="justify-content-between">
-                    <div id="delete-button">
-                        {!props.selectedAccountId
-                            ? null 
-                            : <div>
-                                <button className="btn btn-danger width-10ch" onClick={handleDeleteButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
-                                    {accountDetailsEditorText[appContext.locale]["Delete"]}
+                        </div>
+                        <div>
+                            <div id="save-button" className="d-inline-block">
+                                <button type="submit" className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                                    {accountDetailsEditorText[appContext.locale]["Save"]}
                                 </button>
                             </div>
-                        }
-                    </div>
-                    <div>
-                        <div id="save-button" className="d-inline-block">
-                            <button className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
-                                {accountDetailsEditorText[appContext.locale]["Save"]}
+                            <button type="button" className="btn btn-white width-10ch ms-2" onClick={handleCancelButton}>
+                                {accountDetailsEditorText[appContext.locale]["Cancel"]}
                             </button>
                         </div>
-                        <button className="btn btn-white width-10ch ms-2" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
-                    </div>
-                </ModalFooter>
-                {/** Tooltip component must be placed inside the modal component, otherwise react will render the tooltip before the targets and the app will crash.*/}
-                {appContext.currentPermissionTypeId < 2
-                    ? <Tooltip 
-                        target="delete-button" 
-                        isOpen={deleteButtonTooltip} 
-                        toggle={toggleDeleteButtonTooltip}
-                        fade={false}
-                    >
-                        {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this ledger."]}
-                    </Tooltip>
-                    : null
-                }
-                {appContext.currentPermissionTypeId < 2
-                    ? <Tooltip 
-                        target="save-button" 
-                        isOpen={saveButtonTooltip} 
-                        toggle={toggleSaveButtonTooltip}
-                        fade={false}
-                    >
-                        {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this ledger."]}
-                    </Tooltip>
-                    : null
-                }
+                    </ModalFooter>
+                    {/** Tooltip component must be placed inside the modal component, otherwise react will render the tooltip before the targets and the app will crash.*/}
+                    {appContext.currentPermissionTypeId < 2
+                        ? <Tooltip 
+                            target="delete-button" 
+                            isOpen={deleteButtonTooltip} 
+                            toggle={toggleDeleteButtonTooltip}
+                            fade={false}
+                        >
+                            {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this ledger."]}
+                        </Tooltip>
+                        : null
+                    }
+                    {appContext.currentPermissionTypeId < 2
+                        ? <Tooltip 
+                            target="save-button" 
+                            isOpen={saveButtonTooltip} 
+                            toggle={toggleSaveButtonTooltip}
+                            fade={false}
+                        >
+                            {accountDetailsEditorText[appContext.locale]["This action requires EDIT permissions for this ledger."]}
+                        </Tooltip>
+                        : null
+                    }
+                </form>
             </Modal>
 
             {deleteAccountAlert ?
