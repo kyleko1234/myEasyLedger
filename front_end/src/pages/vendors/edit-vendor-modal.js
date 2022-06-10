@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React from 'react';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, ModalHeader, Tooltip, Alert} from 'reactstrap';
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
 import { accountDetailsEditorText } from '../../utils/i18n/account-details-editor-text';
 
 function EditVendorModal({
-    isOpen, toggle, modalOnClose, 
+    isOpen, toggle, 
     selectedVendorId,
     vendorNameInput, setVendorNameInput,
     contactNameInput, setContactNameInput,
@@ -19,6 +19,7 @@ function EditVendorModal({
     const [deleteButtonTooltip, setDeleteButtonTooltip] = React.useState(false);
     const [deleteVendorAlert, setDeleteVendorAlert] = React.useState(false);
     const [cannotDeleteVendorAlert, setCannotDeleteVendorAlert] = React.useState(false);
+    const [noVendorNameAlert, setNoVendorNameAlert] = React.useState(false);
     const toggleDeleteVendorAlert = () => {
         setDeleteVendorAlert(!deleteVendorAlert);
     }
@@ -37,13 +38,18 @@ function EditVendorModal({
             vendorId: selectedVendorId,
             vendorName: vendorNameInput,
             contactName: contactNameInput,
-            email: emailInput
+            email: emailInput,
+            organizationId: appContext.currentOrganizationId
         }
-        /* if (selectedVendorId === null) {
-            postVendorToServer(requestBody);
+        if (!vendorNameInput) {
+            setNoVendorNameAlert(true);
         } else {
-            putVendorToServer(requestBody);
-        } */
+            if (selectedVendorId === null) {
+                postVendorToServer(requestBody);
+            } else {
+                putVendorToServer(requestBody);
+            }
+        }
     }
 
     const handleDeleteButton = () => {
@@ -57,10 +63,10 @@ function EditVendorModal({
         axios.delete(`${API_BASE_URL}/vendor/${selectedVendorId}`).then(response => {
             console.log(response);
             fetchData();
-            toggle();
+            toggleDeleteVendorAlert();
         }).catch(() => {
-            toggleDeleteAccountAlert();
-            toggleCannotDeleteAccountAlert();
+            toggleDeleteVendorAlert();
+            toggleCannotDeleteVendorAlert();
         });
     }
     
@@ -82,18 +88,22 @@ function EditVendorModal({
             <Modal 
                 isOpen={isOpen} 
                 toggle={toggle} 
-                onClosed={modalOnClose} 
                 centered={true} 
                 className="very-rounded"
+                onClosed={() => setNoVendorNameAlert(false)}
             >
                 <ModalHeader>
                     Edit Vendor Details
                 </ModalHeader>
                 <ModalBody>
+                    <Alert color="danger" isOpen={noVendorNameAlert}>
+                        Please provide a vendor name.
+                    </Alert>
+
                     <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
                         <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
-                                Vendor Name <span className="text-red">*</span>
+                                Vendor Name<span className="text-danger">*</span>
                             </label>
                             <div className="col-md-8">
                                 <input
@@ -122,7 +132,7 @@ function EditVendorModal({
                                 />
                             </div>
                         </div>
-                        <div className="mb-3 row">
+                        <div className=" row">
                             <label className="col-form-label col-md-4">
                                 Email
                             </label>

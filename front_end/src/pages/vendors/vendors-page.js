@@ -8,11 +8,20 @@ import { PageSettings } from '../../config/page-settings';
 import { Link } from 'react-router-dom';
 import VendorsListStandard from './vendors-list-standard';
 import VendorsListSmallScreen from './vendors-list-small-screen';
+import EditVendorModal from './edit-vendor-modal';
 
 
 function VendorsPage(props) {
     const appContext = React.useContext(PageSettings);
     const [vendors, setVendors] = React.useState([]);
+
+    const [editVendorModal, setEditVendorModal] = React.useState(false);
+    const toggleEditVendorModal = () => setEditVendorModal(!editVendorModal);
+    const [selectedVendorId, setSelectedVendorId] = React.useState(null);
+    const [vendorNameInput, setVendorNameInput] = React.useState('');
+    const [contactNameInput, setContactNameInput] = React.useState('');
+    const [emailInput, setEmailInput] = React.useState('');
+
 
     const fetchData = () => {
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/vendor`).then(response => {
@@ -25,11 +34,19 @@ function VendorsPage(props) {
     }, [])
 
     const handleAddButton = () => {
-
+        setSelectedVendorId(null);
+        setVendorNameInput('');
+        setContactNameInput('');
+        setEmailInput('');
+        toggleEditVendorModal();
     }
 
     const handleEditVendorButton = vendor => {
-
+        setSelectedVendorId(vendor.vendorId);
+        setVendorNameInput(vendor.vendorName);
+        setContactNameInput(vendor.contactName);
+        setEmailInput(vendor.email);
+        toggleEditVendorModal();
     }
 
     return(
@@ -56,6 +73,15 @@ function VendorsPage(props) {
                     handleEditVendorButton={handleEditVendorButton}
                 />
             </div>
+            <EditVendorModal 
+                isOpen={editVendorModal}
+                toggle={toggleEditVendorModal}
+                selectedVendorId={selectedVendorId} setSelectedVendorId={setSelectedVendorId}
+                vendorNameInput={vendorNameInput} setVendorNameInput={setVendorNameInput}
+                contactNameInput={contactNameInput} setContactNameInput={setContactNameInput}
+                emailInput={emailInput} setEmailInput={setEmailInput}
+                fetchData={fetchData} 
+            />
         </>
     )
 }
