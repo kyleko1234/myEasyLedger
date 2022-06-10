@@ -1,7 +1,9 @@
+import axios from 'axios';
 import React from 'react';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { PageSettings } from '../../config/page-settings';
+import { API_BASE_URL } from '../../utils/constants';
 import { accountDetailsEditorText } from '../../utils/i18n/account-details-editor-text';
 
 function EditVendorModal({
@@ -9,7 +11,8 @@ function EditVendorModal({
     selectedVendorId,
     vendorNameInput, setVendorNameInput,
     contactNameInput, setContactNameInput,
-    emailInput, setEmailInput
+    emailInput, setEmailInput,
+    fetchData
 }) {
     const appContext = React.useContext(PageSettings);
     const [saveButtonTooltip, setSaveButtonTooltip] = React.useState(false);
@@ -30,18 +33,50 @@ function EditVendorModal({
     }
 
     const handleSaveButton = () => {
-
+        let requestBody = {
+            vendorId: selectedVendorId,
+            vendorName: vendorNameInput,
+            contactName: contactNameInput,
+            email: emailInput
+        }
+        /* if (selectedVendorId === null) {
+            postVendorToServer(requestBody);
+        } else {
+            putVendorToServer(requestBody);
+        } */
     }
-    const handleDeleteButton = () => {
 
+    const handleDeleteButton = () => {
+        toggle();
+        setDeleteVendorAlert(true);
     }
     const handleCancelButton = () => {
-
+        toggle();
     }
     const handleConfirmDeleteVendorButton = () => {
-
+        axios.delete(`${API_BASE_URL}/vendor/${selectedVendorId}`).then(response => {
+            console.log(response);
+            fetchData();
+            toggle();
+        }).catch(() => {
+            toggleDeleteAccountAlert();
+            toggleCannotDeleteAccountAlert();
+        });
     }
     
+    const postVendorToServer = (requestBody) => {
+        axios.post(`${API_BASE_URL}/vendor`, requestBody).then(response => {
+            fetchData();
+            toggle();
+        });
+    }
+    const putVendorToServer = (requestBody) => {
+        axios.put(`${API_BASE_URL}/vendor/${selectedVendorId}`, requestBody).then(response => {
+            fetchData();
+            toggle();
+        });
+    }
+
     return(
         <>
             <Modal 
@@ -52,13 +87,13 @@ function EditVendorModal({
                 className="very-rounded"
             >
                 <ModalHeader>
-                    Edit Vendor
+                    Edit Vendor Details
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
                         <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
-                                Vendor Name
+                                Vendor Name <span className="text-red">*</span>
                             </label>
                             <div className="col-md-8">
                                 <input
@@ -68,6 +103,7 @@ function EditVendorModal({
                                     onChange={event => {
                                         setVendorNameInput(event.target.value);
                                     }}
+                                    required
                                 />
                             </div>
                         </div>
@@ -108,7 +144,7 @@ function EditVendorModal({
                         {!selectedVendorId
                             ? null 
                             : <div>
-                                <button className="btn btn-danger width-10ch" onClick={handleDeleteButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                                <button type="button" className="btn btn-danger width-10ch" onClick={handleDeleteButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
                                     {accountDetailsEditorText[appContext.locale]["Delete"]}
                                 </button>
                             </div>
@@ -116,11 +152,13 @@ function EditVendorModal({
                     </div>
                     <div>
                         <div id="save-button" className="d-inline-block">
-                            <button className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                            <button type="submit" className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
                                 {accountDetailsEditorText[appContext.locale]["Save"]}
                             </button>
                         </div>
-                        <button className="btn btn-white width-10ch ms-2" onClick={handleCancelButton}>{accountDetailsEditorText[appContext.locale]["Cancel"]}</button>
+                        <button type="button" className="btn btn-white width-10ch ms-2" onClick={handleCancelButton}>
+                            {accountDetailsEditorText[appContext.locale]["Cancel"]}
+                        </button>
                     </div>
                     {/** Tooltip component must be placed inside the modal component, otherwise react will render the tooltip before the targets and the app will crash.*/}
                     {appContext.currentPermissionTypeId < 2
