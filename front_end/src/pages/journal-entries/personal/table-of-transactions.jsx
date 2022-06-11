@@ -217,14 +217,14 @@ function TableOfTransactions({
         if (totalDebits >= totalCredits) {
             formattedLineItems.unshift({
                 accountId: fromAccountId,
-                amount: totalDebits - totalCredits,
+                amount: parseFloat((totalDebits - totalCredits).toFixed(2)),
                 isCredit: true,
                 description: journalEntryDescription
             })
         } else {
             formattedLineItems.unshift({
                 accountId: fromAccountId,
-                amount: totalCredits - totalDebits,
+                amount: parseFloat((totalDebits - totalCredits).toFixed(2)),
                 isCredit: false,
                 description: journalEntryDescription
             })
