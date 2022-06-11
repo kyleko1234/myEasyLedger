@@ -164,7 +164,7 @@ function EditVendorModal({
                     </div>
                     <div>
                         <div id="save-button" className="d-inline-block">
-                            <button type="submit" className="btn btn-primary width-10ch" onClick={handleSaveButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
+                            <button type="submit" className="btn btn-primary width-10ch" disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
                                 {accountDetailsEditorText[appContext.locale]["Save"]}
                             </button>
                         </div>
