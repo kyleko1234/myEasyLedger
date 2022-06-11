@@ -363,6 +363,10 @@ a.nav-link:hover {
 .form-control__option--is-selected {
     background-color: var(--bs-primary);
 }
+/* MODIFICATIONS TO BOOTSTRAP ALERT*/
+.alert {
+    border-radius: 10px;
+}
 
 /* MODIFICATIONS TO SWEETALERT */
 .dark-mode .sweet-alert {

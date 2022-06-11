@@ -9,6 +9,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../utils/constants';
 import NetAssets from './components/net-assets';
 import LoadingSpinner from '../../components/misc/loading-spinner';
+import EmptyLedgerAlert from './components/empty-ledger-alert';
 
 function Dashboard() {
     const appContext = React.useContext(PageSettings);
@@ -18,6 +19,7 @@ function Dashboard() {
             {appContext.currentOrganizationId
                 ? <div>
                     {/*<button type="button" onClick={populateSampleUserWithSampleData}>POPULATE SAMPLE DATA</button>*/}
+                    <EmptyLedgerAlert/>
                     <div className="row mb-md-3">
                         <div className="col-xl-8 col-lg-6 mb-3 mb-lg-0">
                             {appContext.isLoading ? <LoadingSpinner big /> :
