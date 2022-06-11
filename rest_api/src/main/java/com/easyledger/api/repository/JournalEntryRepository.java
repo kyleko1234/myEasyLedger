@@ -19,5 +19,12 @@ public interface JournalEntryRepository extends JpaRepository<JournalEntry, Long
 	@Query(nativeQuery = true)
 	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganization(Long organizationId, Pageable pageable);
 	
+	@Query(
+			value = "SELECT CASE EXISTS (SELECT 1 from journal_entry "
+					+ "WHERE journal_entry.vendor_id = ? "
+					+ "AND journal_entry.deleted = false) "
+					+ "WHEN true THEN true ELSE false END",
+			nativeQuery = true)
+	public boolean vendorContainsJournalEntries(Long vendorId);
 
 }

@@ -2,7 +2,6 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
     "en-US": {
         "Home": "Home",
         "Navigation": "Navigation",
-        "My ledgers": "My ledgers",
         "Create a New Ledger": "Create a New Ledger",
         "Create a new ledger...": "Create a new ledger...",
         "Account Settings": "Account Settings",
@@ -21,17 +20,17 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
 
         //menu items
         "Dashboard": "Dashboard",
-        "Journals": "Journals",
+        "Journal Entries": "Journal Entries",
         "Transactions": "Transactions",
         "Chart of Accounts": "Chart of Accounts",
         "Reports": "Reports",
         "Accounts": "Accounts",
-        "Categories": "Categories"
+        "Categories": "Categories",
+        "Vendors": "Vendors"
     },
     "zh-TW": {
         "Home": "首頁",
         "Navigation": "網站導覽",
-        "My ledgers": "我的 EasyLedgers",//TRANSLATION retranslate
         "Create a New Ledger": "建立一個全新的帳本",//page title
         "Create a new ledger...": "建立新帳本...", //sidebar text, may or may not be the same as above, just with ... at the end
         "Account Settings": "個人設定", //(settings => account settings)
@@ -50,12 +49,13 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
 
         //menu items
         "Dashboard": "帳目概覽",
-        "Journals": "登錄日記帳",
+        "Journal Entries": "登錄日記帳",
         "Transactions": "輸入交易",
         "Chart of Accounts": "維護會計科目",
         "Reports": "財務報告",
         "Accounts": "帳戶／錢包",
-        "Categories": "收支類別"
+        "Categories": "收支類別",
+        "Vendors": "TRANSLATION"
 
     }
 }

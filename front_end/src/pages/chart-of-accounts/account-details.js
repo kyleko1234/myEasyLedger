@@ -1,11 +1,11 @@
 import React from 'react';
-import TableOfJournalEntries from '../journals/enterprise/table-of-journal-entries';
+import TableOfJournalEntries from '../journal-entries/enterprise/table-of-journal-entries';
 import { API_BASE_URL, DEBIT_ACCOUNT_TYPES } from '../../utils/constants';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { PageSettings } from '../../config/page-settings';
 import { accountDetailsText } from '../../utils/i18n/account-details-text.js';
-import TableOfTransactions from '../journals/personal/table-of-transactions';
+import TableOfTransactions from '../journal-entries/personal/table-of-transactions';
 import AccountSwitcher from './components/account-switcher';
 import { Card, CardBody } from 'reactstrap';
 import AccountDetailsEditor from './components/account-details-editor';

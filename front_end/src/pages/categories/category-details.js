@@ -4,7 +4,7 @@ import {Link, useParams} from 'react-router-dom';
 import {accountDetailsText} from '../../utils/i18n/account-details-text.js';
 import axios from 'axios';
 import {API_BASE_URL} from '../../utils/constants.js';
-import TableOfTransactions from '../journals/personal/table-of-transactions.jsx';
+import TableOfTransactions from '../journal-entries/personal/table-of-transactions.jsx';
 import AccountSwitcher from '../chart-of-accounts/components/account-switcher';
 import { Card, CardBody } from 'reactstrap';
 import AccountDetailsEditor from '../chart-of-accounts/components/account-details-editor';

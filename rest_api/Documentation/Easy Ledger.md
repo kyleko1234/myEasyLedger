@@ -9,10 +9,11 @@ ___
 - [[Account]]
 - [[AccountSubtype]]
 - [[AccountType]]
+- [[Vendor]]
 ___
 ### List of Endpoints
 
-Prefix all endpoints with `http://{host}/v0.6/`
+Prefix all endpoints with `http://{host}/v0.6.1/`
 - [[Sign In | POST /auth/signin]]
 - [[Sign Up| POST /auth/signup]]
 - [[Refresh JWT|GET /auth/refresh]]
@@ -79,6 +80,12 @@ Prefix all endpoints with `http://{host}/v0.6/`
 - [[Create a Permission for an Organization|POST /organization/{organizationId}/permission]]
 - [[Edit a Permission Object|PATCH /permission/{permissionId}]]
 - [[Delete a Permission Object|DELETE /permission/{permissionId}]]
+<br/><br/>
+- [[Create a Vendor|POST /vendor]]
+- [[Retrieve a Vendor|GET /vendor/{vendorId}]]
+- [[List All Vendors for an Organization|GET /organization/{organizationId}/vendor]]
+- [[Update a Vendor|PUT /vendor/{vendorId}]]
+- [[Delete a Vendor|DELETE /vendor/{vendorId}]]
 
 
 

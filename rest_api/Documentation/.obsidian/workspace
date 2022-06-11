@@ -7,8 +7,11 @@
         "id": "e9ecb484239110b1",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "Vendor/Contents/List All Vendors for an Organization.md",
+            "mode": "source"
+          }
         }
       }
     ],
@@ -65,6 +68,10 @@
             "state": {
               "type": "backlink",
               "state": {
+<<<<<<< HEAD
+                "file": "Vendor/Contents/List All Vendors for an Organization.md",
+=======
+>>>>>>> master
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",

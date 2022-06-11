@@ -5,7 +5,7 @@ export const generalJournalText = {
         "Debit": "Debit",
         "Credit": "Credit",
 
-        "Accounting Entries": "Accounting Entries"
+        "Journal Entries": "Journal Entries"
     },
     "zh-TW": {
         "Date": "日期",
@@ -13,6 +13,6 @@ export const generalJournalText = {
         "Debit": "借方",
         "Credit": "貸方",
 
-        "Accounting Entries": "記帳分錄"
+        "Journal Entries": "記帳分錄"
     }
 }

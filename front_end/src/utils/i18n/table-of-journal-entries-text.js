@@ -7,7 +7,7 @@ export const tableOfJournalEntriesText = {
         "Debit": "Debit",
         "Credit": "Credit",
         
-        "Accounting Entries": "Accounting Entries",
+        "Journal Entries": "Journal Entries",
 
         "Invalid date.": "Invalid date.",
         "Please provide a description for this entry.": "Please provide a description for this entry.",
@@ -58,7 +58,7 @@ export const tableOfJournalEntriesText = {
         "Debit": "借方",
         "Credit": "貸方",
 
-        "Accounting Entries": "記帳分錄",
+        "Journal Entries": "記帳分錄",
 
         "Invalid date.": "日期有誤。",
         "Please provide a description for this entry.": "請簡單描述一下這個分錄。",
