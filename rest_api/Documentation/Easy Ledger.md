@@ -51,6 +51,7 @@ Prefix all endpoints with `http://{host}/v0.6.1/`
 - [[Update an Organization| PUT /organization/{id}]]
 - [[Retrieve Monthly Net Assets for an Organization | GET /organization/{organizationId}/monthlyNetAssets/{numberOfMonths}]]
 - [[Get Date Range Presets for Generating Reports for Organization Up To Date | GET /organization/{organizationId}/dateRangePresetsUpToDate/{endDate}/{locale}]]
+- [[Check if Organization Contains Journal Entries|GET /organization/{organizationId}/containsJournalEntries]]
 - [[Delete an Organization | DELETE /organization/{organizationId}]]
 <br/><br/>
 - [[List All Accounts|GET /account]]
