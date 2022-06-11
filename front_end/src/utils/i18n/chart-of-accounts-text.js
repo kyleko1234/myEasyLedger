@@ -59,7 +59,7 @@ export const chartOfAccountsText = {
 
         "Home": "首頁",
         "Chart of Accounts": "會計科目表",
-        "Create an account": "建立科目",
+        "Create an account": "建立新科目",
         "Create a New Account": "建立一個新會計科目",
         "Please provide a name for your account.": "請提供科目名稱。",
         "Please provide an account subtype for your account.": "請提供科目所屬的子類別。",
@@ -77,7 +77,7 @@ export const chartOfAccountsText = {
         "Account Name": "科目名稱",
         "Accounts": "帳戶／錢包",
         "Categories": "收支類別",
-        "Create a category": "建立一個類別",
+        "Create a category": "建立新類別",
         "Create a New Category Group": "建立一個新的類別群",
         "Please provide a name for your category group.": "請給類別群取個名稱",
         "Category Group Name": "科目群名稱",
