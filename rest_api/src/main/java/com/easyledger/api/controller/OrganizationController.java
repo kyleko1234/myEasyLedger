@@ -90,6 +90,15 @@ public class OrganizationController {
 		HashSet<Person> persons = new HashSet<Person>(organization.getPersons());
 		return persons;
 	} */
+	@GetMapping("/organization/{organizationId}/containsJournalEntries")
+	public Map<String, Boolean> organizationContainsJournalEntries(@PathVariable(value = "organizationId") Long organizationId, Authentication authentication) 
+			throws UnauthorizedException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		boolean containsJournalEntries = organizationRepo.organizationContainsJournalEntries(organizationId);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("containsJournalEntries", containsJournalEntries);
+        return response;
+	}
 	
 	@PostMapping("/organization")
     @ResponseStatus(HttpStatus.CREATED)

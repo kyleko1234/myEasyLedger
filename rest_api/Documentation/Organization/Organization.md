@@ -12,6 +12,7 @@ ___
 - [[Retrieve Monthly Net Assets for an Organization]]
 - [[Get Date Range Presets for Generating Reports for Organization Up To Date]]
 - [[Delete an Organization]]
+- [[Check if Organization Contains Journal Entries]]
 
 
 
