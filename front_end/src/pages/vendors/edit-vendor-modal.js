@@ -126,7 +126,7 @@ function EditVendorModal({
                         {vendorsText[appContext.locale]["Please provide a vendor name."]}
                     </Alert>
                     <Alert color="danger" isOpen={duplicateVendorNameAlert}>
-                        A vendor with this name already exists in this ledger.
+                        {vendorsText[appContext.locale]["A vendor with this name already exists in this ledger."]}
                     </Alert>
                     <div>
                         <div className="mb-3 row">
