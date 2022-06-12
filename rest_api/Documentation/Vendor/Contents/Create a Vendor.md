@@ -20,7 +20,7 @@ The id of the organization that this vendor belongs to.
 ___
 
 #### Returns
-Returns HTTP 201 and the created Vendor object. Returns HTTP 409 and an error upon an attempt to manually set an vendor’s id. Returns 404 if an Organization object cannot be found for the specified organizationId.
+Returns HTTP 201 and the created Vendor object. Returns HTTP 409 and an error upon an attempt to manually set an vendor’s id. Returns 409 and the message "Duplicate vendor name." if a user attempts to create two vendors with the same vendorName (leading/trailing whitespace discounted, case-insensitive) for the same organization.  Returns 404 if an Organization object cannot be found for the specified organizationId.
 ___
 #### Sample Request
 `POST /vendor`

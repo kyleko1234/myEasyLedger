@@ -21,6 +21,7 @@ function EditVendorModal({
     const [deleteVendorAlert, setDeleteVendorAlert] = React.useState(false);
     const [cannotDeleteVendorAlert, setCannotDeleteVendorAlert] = React.useState(false);
     const [noVendorNameAlert, setNoVendorNameAlert] = React.useState(false);
+    const [duplicateVendorNameAlert, setDuplicateVendorNameAlert] = React.useState(false);
     const toggleDeleteVendorAlert = () => {
         setDeleteVendorAlert(!deleteVendorAlert);
     }
@@ -75,13 +76,36 @@ function EditVendorModal({
         axios.post(`${API_BASE_URL}/vendor`, requestBody).then(response => {
             fetchData();
             toggle();
+        }).catch(error => {
+            if (error.response) {
+                console.log(error.response);
+                if (error.response.status === 409) {
+                    if (error.response.data.message = "Duplicate vendor name.") {
+                        setDuplicateVendorNameAlert(true);
+                    }
+                }
+            }
         });
     }
     const putVendorToServer = (requestBody) => {
         axios.put(`${API_BASE_URL}/vendor/${selectedVendorId}`, requestBody).then(response => {
             fetchData();
             toggle();
+        }).catch(error => {
+            if (error.response) {
+                console.log(error.response);
+                if (error.response.status === 409) {
+                    if (error.response.data.message = "Duplicate vendor name.") {
+                        setDuplicateVendorNameAlert(true);
+                    }
+                }
+            }
         });
+    }
+
+    const modalOnClosed = () => {
+        setNoVendorNameAlert(false);
+        setDuplicateVendorNameAlert(false);
     }
 
     return(
@@ -91,7 +115,7 @@ function EditVendorModal({
                 toggle={toggle} 
                 centered={true} 
                 className="very-rounded"
-                onClosed={() => setNoVendorNameAlert(false)}
+                onClosed={modalOnClosed}
             >
                 <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
                 <ModalHeader>
@@ -101,7 +125,9 @@ function EditVendorModal({
                     <Alert color="danger" isOpen={noVendorNameAlert}>
                         {vendorsText[appContext.locale]["Please provide a vendor name."]}
                     </Alert>
-
+                    <Alert color="danger" isOpen={duplicateVendorNameAlert}>
+                        {vendorsText[appContext.locale]["A vendor with this name already exists in this ledger."]}
+                    </Alert>
                     <div>
                         <div className="mb-3 row">
                             <label className="col-form-label col-md-4">

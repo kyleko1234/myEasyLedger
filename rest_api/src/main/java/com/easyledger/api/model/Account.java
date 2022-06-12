@@ -21,6 +21,7 @@ import javax.persistence.Table;
 
 import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
+import com.easyledger.api.utility.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SqlResultSetMapping( //maps native SQL query to AccountDTO class
@@ -200,13 +201,13 @@ public class Account {
 	}
 
 	public Account(String name) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 		this.lineItems = new HashSet<LineItem>();
 		this.hasChildren = false;
 	}
 	
 	public Account(String name, Account parentAccount) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 		this.lineItems = new HashSet<LineItem>();
 		this.initialDebitAmount = new BigDecimal(0);
 		this.initialCreditAmount = new BigDecimal(0);
@@ -218,7 +219,7 @@ public class Account {
 	}
 	
 	public Account (String name, AccountSubtype accountSubtype) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 		this.lineItems = new HashSet<LineItem>();
 		this.initialDebitAmount = new BigDecimal(0);
 		this.initialCreditAmount = new BigDecimal(0);
@@ -230,7 +231,7 @@ public class Account {
 	}
 	
 	public Account(String name, Account parentAccount, String accountCode) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 		this.lineItems = new HashSet<LineItem>();
 		this.initialDebitAmount = new BigDecimal(0);
 		this.initialCreditAmount = new BigDecimal(0);
@@ -243,7 +244,7 @@ public class Account {
 	}
 	
 	public Account (String name, AccountSubtype accountSubtype, String accountCode) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 		this.lineItems = new HashSet<LineItem>();
 		this.initialDebitAmount = new BigDecimal(0);
 		this.initialCreditAmount = new BigDecimal(0);
@@ -256,21 +257,13 @@ public class Account {
 	}
 	
 	public Account(String name, BigDecimal initialDebitAmount, BigDecimal initialCreditAmount) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 		this.lineItems = new HashSet<LineItem>();
 		this.initialDebitAmount = initialDebitAmount;
 		this.initialCreditAmount = initialCreditAmount;
 		this.debitTotal = initialDebitAmount;
 		this.creditTotal = initialCreditAmount;
 		this.hasChildren = false;
-	}
-
-	private static String reduceExcessStringSize(String string, int maxLength) {
-		if (string.length() <= maxLength) {
-			return string;
-		} else {
-			return string.substring(0, maxLength);
-		}
 	}
 	
 	public Long getId() {
@@ -286,7 +279,7 @@ public class Account {
 	}
 
 	public void setAccountCode(String accountCode) {
-		this.accountCode = reduceExcessStringSize(accountCode, 16);
+		this.accountCode = Utility.trimString(accountCode, 16);
 	}
 
 	public String getName() {
@@ -294,7 +287,7 @@ public class Account {
 	}
 
 	public void setName(String name) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 	}
 	
 	public boolean isDeleted() {

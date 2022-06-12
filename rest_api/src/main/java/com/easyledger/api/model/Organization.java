@@ -20,6 +20,7 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
 import com.easyledger.api.dto.MonthlyNetAssetsDTO;
+import com.easyledger.api.utility.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -124,20 +125,12 @@ public class Organization {
 	private List<JournalEntryLog> journalEntryLogs = new ArrayList<JournalEntryLog>();
 	
 	public Organization(String name, String currency, boolean isEnterprise) {
-		this.name = reduceExcessStringSize(name, 64);
-		this.currency = reduceExcessStringSize(currency, 64);
+		this.name = Utility.trimString(name, 64);
+		this.currency = Utility.trimString(currency, 64);
 		this.isEnterprise = isEnterprise;
 	}
 	
 	public Organization() {
-	}
-	
-	private static String reduceExcessStringSize(String string, int maxLength) {
-		if (string.length() <= maxLength) {
-			return string;
-		} else {
-			return string.substring(0, maxLength);
-		}
 	}
 	
 	//Getters, Setters, toString
@@ -154,7 +147,7 @@ public class Organization {
 	}
 
 	public void setName(String name) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 	}
 
 	public String getCurrency() {
@@ -162,7 +155,7 @@ public class Organization {
 	}
 
 	public void setCurrency(String currency) {
-		this.currency = reduceExcessStringSize(currency, 64);
+		this.currency = Utility.trimString(currency, 64);
 	}
 
 	public boolean isIsEnterprise() {

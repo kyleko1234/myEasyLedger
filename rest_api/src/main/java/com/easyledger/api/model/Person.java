@@ -25,6 +25,7 @@ import javax.persistence.Table;
 
 import com.easyledger.api.dto.AccountTypeSummaryDTO;
 import com.easyledger.api.dto.PersonInRosterDTO;
+import com.easyledger.api.utility.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -131,22 +132,14 @@ public class Person {
 	}
 	
 	public Person(String firstName, String lastName, String email, String password, boolean enabled, String locale) {
-		this.firstName = reduceExcessStringSize(firstName, 64);
-		this.lastName = reduceExcessStringSize(lastName, 64);
-		this.email = reduceExcessStringSize(email.toLowerCase().trim(), 64);
-		this.password = reduceExcessStringSize(password, 64);
+		this.firstName = Utility.trimString(firstName, 64);
+		this.lastName = Utility.trimString(lastName, 64);
+		this.email = Utility.trimString(email.toLowerCase(), 64);
+		this.password = Utility.trimString(password, 64);
 		this.permissions = new HashSet<Permission>();
 		this.journalEntryLogs = new ArrayList<JournalEntryLog>();
 		this.enabled = enabled;
-		this.locale = reduceExcessStringSize(locale, 64);
-	}
-	
-	private static String reduceExcessStringSize(String string, int maxLength) {
-		if (string.length() <= maxLength) {
-			return string;
-		} else {
-			return string.substring(0, maxLength);
-		}
+		this.locale = Utility.trimString(locale, 64);
 	}
 	
 	//Add and Remove roles
@@ -180,7 +173,7 @@ public class Person {
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = reduceExcessStringSize(firstName, 64);
+		this.firstName = Utility.trimString(firstName, 64);
 	}
 
 	public String getLastName() {
@@ -188,7 +181,7 @@ public class Person {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = reduceExcessStringSize(lastName, 64);
+		this.lastName = Utility.trimString(lastName, 64);
 	}
 
 	public String getEmail() {
@@ -196,7 +189,7 @@ public class Person {
 	}
 
 	public void setEmail(String email) {
-		this.email = reduceExcessStringSize(email.toLowerCase().trim(), 64);
+		this.email = Utility.trimString(email.toLowerCase(), 64);
 	}
 	
 	public String getPassword() {
@@ -204,7 +197,7 @@ public class Person {
 	}
 
 	public void setPassword(String password) {
-		this.password = reduceExcessStringSize(password, 64);
+		this.password = Utility.trimString(password, 64);
 	}
 	
 
@@ -221,7 +214,7 @@ public class Person {
 	}
 
 	public void setLocale(String locale) {
-		this.locale = reduceExcessStringSize(locale, 64);
+		this.locale = Utility.trimString(locale, 64);
 	}
 
 	public Long getCurrentOrganizationId() {
@@ -269,7 +262,7 @@ public class Person {
 	}
 
 	public void setAppearance(String appearance) {
-		this.appearance = reduceExcessStringSize(appearance, 16);
+		this.appearance = Utility.trimString(appearance, 16);
 	}
 
 	public Integer getResultsPerPage() {

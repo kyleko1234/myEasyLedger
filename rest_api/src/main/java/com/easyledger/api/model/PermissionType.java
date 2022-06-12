@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.easyledger.api.utility.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -30,19 +31,11 @@ public class PermissionType {
 
 	public PermissionType(String name) {
 		super();
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 	}
 	
 	public PermissionType() {
 		
-	}
-	
-	private static String reduceExcessStringSize(String string, int maxLength) {
-		if (string.length() <= maxLength) {
-			return string;
-		} else {
-			return string.substring(0, maxLength);
-		}
 	}
 
 	public Long getId() {
@@ -58,7 +51,7 @@ public class PermissionType {
 	}
 
 	public void setName(String name) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 	}
 
 	public Set<Permission> getPermissions() {

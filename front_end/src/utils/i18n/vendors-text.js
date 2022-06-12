@@ -10,6 +10,7 @@ export const vendorsText = {
         "Please remove all journal entries associated with this vendor and try again.": "Please remove all journal entries associated with this vendor and try again.",
         "Cannot delete this vendor.": "Cannot delete this vendor.",
         "Vendors": "Vendors",
+        "A vendor with this name already exists in this ledger.": "A vendor with this name already exists in this ledger.",
     },
     "zh-TW": {
         "Add a Vendor": "建立新供應商",
@@ -22,5 +23,6 @@ export const vendorsText = {
         "Please remove all journal entries associated with this vendor and try again.": "請先删除本供應商的所有相關分錄後，才能删除本供應商。",
         "Cannot delete this vendor.": "無法删除本供應商。",
         "Vendors": "供應商",
+        "A vendor with this name already exists in this ledger.": "TRANSLATION",
     },
 }
