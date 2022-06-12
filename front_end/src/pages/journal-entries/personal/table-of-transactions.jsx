@@ -224,7 +224,7 @@ function TableOfTransactions({
         } else {
             formattedLineItems.unshift({
                 accountId: fromAccountId,
-                amount: parseFloat((totalDebits - totalCredits).toFixed(2)),
+                amount: parseFloat((totalCredits - totalDebits).toFixed(2)),
                 isCredit: false,
                 description: journalEntryDescription
             })
