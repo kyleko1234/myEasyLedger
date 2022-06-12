@@ -15,4 +15,13 @@ public interface VendorRepository extends JpaRepository<Vendor, Long> {
 	@Query(nativeQuery = true)
 	public List<VendorDTO> getAllVendorsForOrganization(Long organizationId);
 
+	@Query(
+			value = "SELECT CASE EXISTS( "
+					+ "	SELECT 1 FROM vendor "
+					+ "	WHERE lower(vendor_name) = lower(:name) "
+					+ "		AND vendor.organization_id = (:organizationId) "
+					+ ") "
+					+ "WHEN true THEN true ELSE false END", 
+			nativeQuery=true)
+	public boolean isDuplicateVendorName(Long organizationId, String name);
 }
