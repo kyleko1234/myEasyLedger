@@ -24,7 +24,7 @@ The id of the organization that this vendor belongs to.
 
 ___
 #### Returns
-Returns HTTP 201 and the updated vendor object upon successful update. Returns HTTP 409 and an error if the vendorId field does not match the request URI. Returns HTTP 404 and an error if an Organization does not exist in the database for the specified organizationId.
+Returns HTTP 201 and the updated vendor object upon successful update. Returns HTTP 409 and an error if the vendorId field does not match the request URI. Returns HTTP 404 and an error if an Organization does not exist in the database for the specified organizationId. Returns 409 and the message "Duplicate vendor name." if a user attempts to create two vendors with the same vendorName (leading/trailing whitespace discounted, case-insensitive) for the same organization.
 ___
 
 

@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Vendor/Contents/Update a Vendor.md",
             "mode": "source"
           }
         }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md",
+                "file": "Vendor/Contents/Update a Vendor.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,6 +88,8 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Vendor/Contents/Update a Vendor.md",
+    "Vendor/Contents/Create a Vendor.md",
     "Easy Ledger.md",
     "Organization/Contents/Check if Organization Contains Journal Entries.md",
     "Organization/Organization.md",
@@ -95,8 +97,6 @@
     "Organization/Contents/Create an Organization.md",
     "Vendor/Contents/List All Vendors for an Organization.md",
     "Vendor/Contents/Delete a Vendor.md",
-    "Vendor/Vendor.md",
-    "Vendor/Contents/The Vendor Object.md",
-    "Vendor/Contents/Update a Vendor.md"
+    "Vendor/Vendor.md"
   ]
 }

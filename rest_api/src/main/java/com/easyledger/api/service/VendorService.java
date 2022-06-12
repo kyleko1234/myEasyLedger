@@ -57,11 +57,15 @@ public class VendorService {
 	public Vendor updateVendorFromDTO(VendorDTO dto, Authentication authentication) 
 			throws ResourceNotFoundException, UnauthorizedException, ConflictException {
 		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, dto.getOrganizationId());
-		if (isDuplicateVendorName(dto.getOrganizationId(), dto.getVendorName())) {
-			throw new ConflictException("Duplicate vendor name.");
-		}
+
 		Vendor vendor = vendorRepo.findById(dto.getVendorId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Vendor not found for this id :: " + dto.getVendorId())); 
+		
+		if (isDuplicateVendorName(dto.getOrganizationId(), dto.getVendorName()) 
+				&& !(vendor.getVendorName().equalsIgnoreCase(dto.getVendorName().trim()))) {
+			throw new ConflictException("Duplicate vendor name.");
+		}
+		
 		authorizationService.authorizeEditPermissionsByOrganizationId(authentication, vendor.getOrganization().getId());
 		Organization organization = organizationRepo.findById(dto.getOrganizationId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId())); 
