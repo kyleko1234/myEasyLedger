@@ -19,6 +19,7 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
+import com.easyledger.api.utility.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SqlResultSetMapping( //maps native SQL query to AccountSubtypeBalanceDTO class
@@ -166,23 +167,15 @@ public class AccountSubtype {
 	}
 
 	public AccountSubtype(String name) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 		this.accounts = new HashSet<Account>();
 	}
 	
 	public AccountSubtype(String name, AccountType accountType) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 		this.accountType = accountType;
 		accountType.getAccountSubtypes().add(this);
 		this.accounts = new HashSet<Account>();
-	}
-
-	private static String reduceExcessStringSize(String string, int maxLength) {
-		if (string.length() <= maxLength) {
-			return string;
-		} else {
-			return string.substring(0, maxLength);
-		}
 	}
 
 	public Long getId() {
@@ -198,7 +191,7 @@ public class AccountSubtype {
 	}
 
 	public void setName(String name) {
-		this.name = reduceExcessStringSize(name, 64);
+		this.name = Utility.trimString(name, 64);
 	}
 
 	public AccountType getAccountType() {

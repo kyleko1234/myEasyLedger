@@ -29,6 +29,7 @@ import javax.persistence.Transient;
 import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.service.LineItemService;
+import com.easyledger.api.utility.Utility;
 import com.easyledger.api.viewmodel.JournalEntryViewModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -127,14 +128,6 @@ public class JournalEntry {
 		this.journalEntryLogs = new ArrayList<JournalEntryLog>();
 	}
 
-	private static String reduceExcessStringSize(String string, int maxLength) {
-		if (string.length() <= maxLength) {
-			return string;
-		} else {
-			return string.substring(0, maxLength);
-		}
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -158,7 +151,7 @@ public class JournalEntry {
 	}
 
 	public void setDescription(String description) {
-		this.description = reduceExcessStringSize(description, 255);
+		this.description = Utility.trimString(description, 255);
 	}
 
 	public boolean isDeleted() {

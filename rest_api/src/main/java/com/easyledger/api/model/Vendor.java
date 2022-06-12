@@ -18,6 +18,7 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
 import com.easyledger.api.dto.VendorDTO;
+import com.easyledger.api.utility.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SqlResultSetMapping( //maps native SQL query to VendorDTO class
@@ -83,14 +84,6 @@ public class Vendor {
 	
 	public Vendor() {
 	}
-	
-	private static String reduceExcessStringSize(String string, int maxLength) {
-		if (string.length() <= maxLength) {
-			return string;
-		} else {
-			return string.substring(0, maxLength);
-		}
-	}
 
 	public Long getId() {
 		return id;
@@ -105,7 +98,7 @@ public class Vendor {
 	}
 
 	public void setVendorName(String vendorName) {
-		this.vendorName = reduceExcessStringSize(vendorName, 64);
+		this.vendorName = Utility.trimString(vendorName, 64);
 	}
 
 	public String getContactName() {
@@ -113,7 +106,7 @@ public class Vendor {
 	}
 
 	public void setContactName(String contactName) {
-		this.contactName = reduceExcessStringSize(contactName, 64);
+		this.contactName = Utility.trimString(contactName, 64);
 	}
 
 	public String getEmail() {
@@ -121,7 +114,7 @@ public class Vendor {
 	}
 
 	public void setEmail(String email) {
-		this.email = reduceExcessStringSize(email, 64);
+		this.email = Utility.trimString(email, 64);
 	}
 
 	public Organization getOrganization() {
