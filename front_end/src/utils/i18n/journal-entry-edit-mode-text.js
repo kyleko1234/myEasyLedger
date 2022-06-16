@@ -13,7 +13,9 @@ export const journalEntryEditModeText = {
         "Copy description to line items": "Copy description to line items",
     
         "Total Debit": "Total Debit",
-        "Total Credit": "Total Credit"
+        "Total Credit": "Total Credit",
+
+        "Vendor": "Vendor"
     },
     "zh-TW" : {
         "Memo": "註記",
@@ -29,7 +31,9 @@ export const journalEntryEditModeText = {
         "Copy description to line items": "複製「描述」到各個單行項目",
 
         "Total Debit": "借方加總",
-        "Total Credit": "貸方加總"
+        "Total Credit": "貸方加總",
+        
+        "Vendor": "供應商／賣主"
 
     }
 }

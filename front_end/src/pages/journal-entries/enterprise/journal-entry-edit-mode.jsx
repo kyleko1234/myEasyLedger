@@ -10,7 +10,9 @@ function JournalEntryEditMode({
     data, setLineItemData,
     journalEntryDate, setJournalEntryDate,
     journalEntryDescription, setJournalEntryDescription,
+    journalEntryVendorId, setJournalEntryVendorId,
     accountOptions,
+    vendorOptions,
     alertMessages,
     handleSaveJournalEntryButton
 }) {
@@ -175,8 +177,9 @@ function JournalEntryEditMode({
                         type="date" 
                         className="form-control"
                         value={journalEntryDate} 
-                        onChange={event => setJournalEntryDate(event.target.value)}/>
-                    </div>
+                        onChange={event => setJournalEntryDate(event.target.value)}
+                    />
+                </div>
             </div>
             <div className="row mb-2 align-items-center">
                 <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Description"]}</strong></div> 
@@ -185,11 +188,30 @@ function JournalEntryEditMode({
                         type="text" 
                         className="form-control"
                         value={journalEntryDescription} 
-                        onChange={event => setJournalEntryDescription(event.target.value)}/>
+                        onChange={event => setJournalEntryDescription(event.target.value)}
+                    />
                 </div>
                 <button className="btn btn-white d-none d-xl-inline-block col-xl-3" onClick={handleCopyDescriptionToLineItemsButton}>
                     {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}
                 </button>
+            </div>
+            <div className="row mb-2 align-items-center">
+                <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Vendor"]}</strong></div> 
+                <div className="col-xl-8">
+                    <Select
+                        classNamePrefix="form-control"
+                        options={vendorOptions}
+                        value={vendorOptions.find(vendorOption => vendorOption.object.vendorId == journalEntryVendorId)}
+                        isSearchable={true}
+                        menuPortalTarget={document.body}
+                        menuShouldScrollIntoView={false}
+                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                        menuPlacement={'auto'}
+                        onChange={(selectedOption) => {
+                            setJournalEntryVendorId(selectedOption.object.vendorId);
+                        }}
+                    />
+                </div>
             </div>
             <button className="btn btn-white my-3 d-block w-100 d-xl-none" onClick={handleCopyDescriptionToLineItemsButton}>
                     {journalEntryEditModeText[appContext.locale]["Copy description to line items"]}

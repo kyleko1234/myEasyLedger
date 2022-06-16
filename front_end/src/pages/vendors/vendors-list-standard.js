@@ -8,23 +8,24 @@ function VendorsListStandard({vendors, handleEditVendorButton, className}) {
     const appContext = React.useContext(PageSettings);
 
     return(
-        <Card className={"mt-4 very-rounded shadow-sm " + className}>
-            <CardBody>
-                <div className="d-flex font-size-compact fw-bold">
-                    <div className="d-flex pseudo-td py-0 col-4">
+        <div className={"mt-2 " + className}>
+            <div className="pseudo-thead">
+                <div className="pseudo-tr fw-semibold bg-light rounded border d-flex">
+                    <div className="d-flex pseudo-td col-4">
                         {vendorsText[appContext.locale]["Vendor Name"]}
                     </div>
-                    <div className="d-flex pseudo-td py-0 col-3">
+                    <div className="d-flex pseudo-td col-3">
                         {vendorsText[appContext.locale]["Contact Name"]}
                     </div>
-                    <div className="d-flex pseudo-td py-0 col-4">
+                    <div className="d-flex pseudo-td col-4">
                         {vendorsText[appContext.locale]["Email"]}
                     </div>
-                    <div className="d-flex pseudo-td py-0 col-1">
+                    <div className="d-flex pseudo-td col-1">
                         
                     </div>
                 </div>
-                <div>
+            </div>
+            <div>
                 {vendors.map(vendor => {
                     return (
                         <div key={vendor.vendorId} className="pseudo-tr d-flex justify-content-between align-items-center">
@@ -45,9 +46,8 @@ function VendorsListStandard({vendors, handleEditVendorButton, className}) {
                         </div>
                     )
                 })}
-                </div>
-            </CardBody>
-        </Card>
+            </div>
+        </div>
     )
 }
 
