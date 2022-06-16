@@ -19,7 +19,10 @@ export const journalEntryViewModeText = {
         
         "Total Debit": "Total Debit",
         "Total Credit": "Total Credit",
-        "No memo": "No memo"
+        "No memo": "No memo",
+
+        "Vendor": "Vendor",
+        "None": "None"
         
     },
     "zh-TW": {
@@ -43,6 +46,10 @@ export const journalEntryViewModeText = {
 
         "Total Debit": "借方加總",
         "Total Credit": "貸方加總",
-        "No memo": "無註記"
+        "No memo": "無註記",
+
+        "Vendor": "TRANSLATION",
+        "None": "TRANSLATION"
+
     }
 }

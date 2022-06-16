@@ -8,7 +8,7 @@ import { journalEntryViewModeText } from "../../../utils/i18n/journal-entry-view
 import { yearMonthDayToDateString } from "../../../utils/util-fns";
 
 function JournalEntryEditHistory(props) {
-//required props: journalEntryId, isOpen, toggle
+//required props: journalEntryId, isOpen, toggle, vendorOptions
 //should be used for enterprise view only; non-enterprise should use TransactionEditHistory
     const appContext = React.useContext(PageSettings);
     const [loading, setLoading] = React.useState(true);
@@ -84,6 +84,8 @@ function JournalEntryEditHistory(props) {
                                             journalEntryDate={yearMonthDayToDateString(...journalEntryLog.snapshot.journalEntryDate)}
                                             data={journalEntryLog.snapshot.lineItems}
                                             accountOptions={props.accountOptions}
+                                            journalEntryVendorId={journalEntryLog.snapshot.vendorId}
+                                            vendorOptions={props.vendorOptions}
                                         />
                                     </CardBody>
                                 </Card>

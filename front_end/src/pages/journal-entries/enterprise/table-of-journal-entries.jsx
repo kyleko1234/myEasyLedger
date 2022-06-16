@@ -326,6 +326,7 @@ function TableOfJournalEntries({
 
     React.useEffect(() => {
         fetchData(pageIndex, pageSize);
+        fetchVendors();
         fetchAccounts();
     }, [pageIndex, pageSize, parentComponentAccountId]);
 
@@ -542,7 +543,13 @@ function TableOfJournalEntries({
                     }
                 </ModalFooter>
             </Modal>
-            <JournalEntryEditHistory journalEntryId={journalEntryId} isOpen={journalEntryHistoryModal} toggle={toggleJournalEntryHistoryModal} accountOptions={accountOptions} /> 
+            <JournalEntryEditHistory   
+                journalEntryId={journalEntryId} 
+                isOpen={journalEntryHistoryModal} 
+                toggle={toggleJournalEntryHistoryModal} 
+                accountOptions={accountOptions} 
+                vendorOptions={vendorOptions}
+            /> 
             
             {appContext.currentPermissionTypeId < 2
                 ? <Tooltip

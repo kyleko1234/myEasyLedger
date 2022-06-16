@@ -3,7 +3,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js'
 import { formatCurrency, localizeDate } from '../../../utils/util-fns';
 
-function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate, accountOptions }) {
+function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate, accountOptions, vendorOptions, journalEntryVendorId }) {
     const appContext = React.useContext(PageSettings);
     const columns = React.useMemo(
         () => [ // accessor is the "key" in the data},
@@ -56,12 +56,27 @@ function JournalEntryViewMode({ data, journalEntryDescription, journalEntryDate,
                         {localizeDate(journalEntryDate)}
                     </div>
                 </div>
-                <div className="row px-2 px-lg-0">
+                <div className="row mb-2 px-2 px-lg-0">
                     <div className="col-md-3 col-lg-2">
                         <strong>{journalEntryViewModeText[appContext.locale]["Description"]}</strong>
                     </div> 
                     <div className="col-md-9 col-lg-10">
                         {journalEntryDescription}
+                    </div>
+                </div>
+                <div className="row px-2 px-lg-0">
+                    <div className="col-md-3 col-lg-2">
+                        <strong>{journalEntryViewModeText[appContext.locale]["Vendor"]}</strong>
+                    </div> 
+                    <div className="col-md-9 col-lg-10">
+                        {journalEntryVendorId
+                            ? vendorOptions
+                                .find(vendorOption => vendorOption.object.vendorId === journalEntryVendorId)
+                                .object.vendorName
+                            : <div className="text-muted fw-light">
+                                {journalEntryViewModeText[appContext.locale]["None"]}
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
