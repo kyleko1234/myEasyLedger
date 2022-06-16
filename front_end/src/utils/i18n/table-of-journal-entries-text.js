@@ -103,7 +103,7 @@ export const tableOfJournalEntriesText = {
         "This transaction has been locked by an admin of this ledger.": "本交易記錄已被帳册管理者鎖定而不能被更改。",
         "Journal entry date must not be before": (lockJournalEntriesBefore, locale) => `管理者有鎖定帳册，分錄日期不得早於 ${localizeDate(lockJournalEntriesBefore, locale)}.`, 
         "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `管理者有鎖定帳册，交易記錄日期不得早於 ${localizeDate(lockJournalEntriesBefore, locale)}.`,
-        "None": "TRANSLATION"
+        "None": "無"
 
     }
 }

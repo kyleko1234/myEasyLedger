@@ -48,8 +48,8 @@ export const journalEntryViewModeText = {
         "Total Credit": "貸方加總",
         "No memo": "無註記",
 
-        "Vendor": "TRANSLATION",
-        "None": "TRANSLATION"
+        "Vendor": "供應商／賣主",
+        "None": "無"
 
     }
 }
