@@ -137,6 +137,7 @@ function TableOfJournalEntries({
     const handleEditButton = () => {
         toggleEditMode();
         fetchAccounts();
+        fetchVendors();
     }
 
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
@@ -163,16 +164,24 @@ function TableOfJournalEntries({
             .catch(console.log);
     }
 
+    //refresh list of vendors, should be called every time the 'edit' button for an entry is clicked
     const fetchVendors = () => {
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/vendor`)
             .then(response => {
-                const formattedVendorOptions = response.data.map(vendor => {
+                let formattedVendorOptions = response.data.map(vendor => {
                     return({
                         value: vendor.vendorId,
                         label: vendor.vendorName,
                         object: vendor
                     });
                 });
+                formattedVendorOptions.unshift({
+                    value: null,
+                    label: tableOfJournalEntriesText[appContext.locale]["None"],
+                    object: {
+                        vendorId: null
+                    }
+                })
                 setVendorOptions(formattedVendorOptions);
             })
             .catch(console.log);
@@ -429,7 +438,9 @@ function TableOfJournalEntries({
                                 data={lineItemData} setLineItemData={setLineItemData}
                                 journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
                                 journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
+                                journalEntryVendorId={journalEntryVendorId} setJournalEntryVendorId={setJournalEntryVendorId}
                                 accountOptions={accountOptions}
+                                vendorOptions={vendorOptions}
                                 alertMessages={alertMessages}
                                 handleSaveJournalEntryButton={handleSaveJournalEntryButton}
                             />
@@ -438,6 +449,8 @@ function TableOfJournalEntries({
                                 journalEntryDate={journalEntryDate}
                                 journalEntryDescription={journalEntryDescription}
                                 accountOptions={accountOptions}
+                                journalEntryVendorId={journalEntryVendorId}
+                                vendorOptions={vendorOptions}
                             />
                     }
                 </ModalBody>

@@ -50,7 +50,9 @@ export const tableOfJournalEntriesText = {
         "This journal entry has been locked by an admin of this ledger.": "This journal entry has been locked by an admin of this ledger.",
         "This transaction has been locked by an admin of this ledger.": "This transaction has been locked by an admin of this ledger.",
         "Journal entry date must not be before": (lockJournalEntriesBefore, locale) => `Journal entry date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.`,
-        "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `Transaction date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.`
+        "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `Transaction date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.`,
+
+        "None": "None"
 },
     "zh-TW": {
         "Date": "日期",
@@ -100,7 +102,8 @@ export const tableOfJournalEntriesText = {
         "This journal entry has been locked by an admin of this ledger.": "本分錄已被帳册管理者鎖定而不能被更改。",
         "This transaction has been locked by an admin of this ledger.": "本交易記錄已被帳册管理者鎖定而不能被更改。",
         "Journal entry date must not be before": (lockJournalEntriesBefore, locale) => `管理者有鎖定帳册，分錄日期不得早於 ${localizeDate(lockJournalEntriesBefore, locale)}.`, 
-        "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `管理者有鎖定帳册，交易記錄日期不得早於 ${localizeDate(lockJournalEntriesBefore, locale)}.` 
+        "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `管理者有鎖定帳册，交易記錄日期不得早於 ${localizeDate(lockJournalEntriesBefore, locale)}.`,
+        "None": "TRANSLATION"
 
     }
 }
