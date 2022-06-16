@@ -45,8 +45,12 @@ function TableOfJournalEntries({
     const [journalEntryId, setJournalEntryId] = React.useState(null);
     const [journalEntryDescription, setJournalEntryDescription] = React.useState('');
     const [journalEntryDate, setJournalEntryDate] = React.useState('');
+    const [journalEntryVendorId, setJournalEntryVendorId] = React.useState(null);
+
+
     const [alertMessages, setAlertMessages] = React.useState([]);
     const [accountOptions, setAccountOptions] = React.useState([]);
+    const [vendorOptions, setVendorOptions] = React.useState([]);
 
     const [journalEntryHistoryModal, setJournalEntryHistoryModal] = React.useState(false);
     const toggleJournalEntryHistoryModal = () => setJournalEntryHistoryModal(!journalEntryHistoryModal);  
@@ -84,6 +88,7 @@ function TableOfJournalEntries({
                 setJournalEntryId(journalEntry.journalEntryId);
                 setJournalEntryDescription(journalEntry.description);
                 setJournalEntryDate(journalEntry.journalEntryDate);
+                setJournalEntryVendorId(journalEntry.vendorId);
                 setAlertMessages([]); //reset alert messages every time an entry is fetched to refresh the page          
             })
             .catch(console.log)
@@ -92,8 +97,10 @@ function TableOfJournalEntries({
     const openEditorForNewEntry = () => {
         setJournalEntryId(null);
         fetchAccounts();
+        fetchVendors();
         setJournalEntryDate(getTodayAsDateString());
         setJournalEntryDescription('');
+        setJournalEntryVendorId(null);
         setLineItemData([{
             lineItemId: "",
             accountName: "",
@@ -149,9 +156,24 @@ function TableOfJournalEntries({
                         label: accountTypePrefixes[account.accountTypeId] + 
                             (account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName),
                         object: account
-                    })
+                    });
                 });
                 setAccountOptions(formattedAccounts);
+            })
+            .catch(console.log);
+    }
+
+    const fetchVendors = () => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/vendor`)
+            .then(response => {
+                const formattedVendorOptions = response.data.map(vendor => {
+                    return({
+                        value: vendor.vendorId,
+                        label: vendor.vendorName,
+                        object: vendor
+                    });
+                });
+                setVendorOptions(formattedVendorOptions);
             })
             .catch(console.log);
     }
@@ -230,6 +252,7 @@ function TableOfJournalEntries({
         return {
             journalEntryId: journalEntryId,
             journalEntryDate: journalEntryDate,
+            vendorId: journalEntryVendorId,
             description: journalEntryDescription,
             organizationId: appContext.currentOrganizationId,
             lineItems: lineItems
