@@ -2,6 +2,7 @@ import React from 'react';
 import { PageSettings } from '../../config/page-settings';
 import ReportTypeList from './components/report-type-list.js';
 import {reportsText} from '../../utils/i18n/reports-text.js';
+import LoadingSpinner from '../../components/misc/loading-spinner';
 function Reports() {
     const appContext = React.useContext(PageSettings);
 
@@ -12,7 +13,7 @@ function Reports() {
                 {reportsText[appContext.locale]["Reports"]}
             </h1>
             <div>
-                {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> : <ReportTypeList />}
+                {appContext.isLoading? <LoadingSpinner big /> : <ReportTypeList />}
             </div>
 		</div>
     )

@@ -374,38 +374,40 @@ function TableOfJournalEntries({
                         )
                     })}
                     { /**This is not really reuseable and should be refactored. For small screens */}
-                    {data.map((row, i) => {
-                        return(
-                            <Link replace to="#" className="pseudo-tr d-flex justify-content-between d-md-none align-items-center pseudo-td" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
-                                <div className="px-0 w-100">
-                                    <div className={"px-0 font-size-compact fw-semibold " + columns[0].className}>
-                                        {formatCell(row[columns[0].accessor], columns[0].accessor)}
-                                    </div>
-                                    <div className={"px-0 " + columns[1].className}>
-                                        {formatCell(row[columns[1].accessor], columns[1].accessor)}
-                                    </div>
-                                    <div className="d-flex justify-content-between pt-2">
-                                        <div className="font-size-compact">
-                                            <div className="fw-semibold ">
-                                                    {columns[2].header}
+                    <div>
+                        {data.map((row, i) => {
+                            return(
+                                <Link replace to="#" className="pseudo-tr d-flex justify-content-between d-md-none align-items-center pseudo-td" key={i} onClick={() => expandJournalEntry(row.journalEntryId)}>
+                                    <div className="px-0 w-100">
+                                        <div className={"px-0 font-size-compact fw-semibold " + columns[0].className}>
+                                            {formatCell(row[columns[0].accessor], columns[0].accessor)}
+                                        </div>
+                                        <div className={"px-0 " + columns[1].className}>
+                                            {formatCell(row[columns[1].accessor], columns[1].accessor)}
+                                        </div>
+                                        <div className="d-flex justify-content-between pt-2">
+                                            <div className="font-size-compact">
+                                                <div className="fw-semibold ">
+                                                        {columns[2].header}
+                                                </div>
+                                                <div className={"px-0 " + columns[2].className}>
+                                                    {formatCell(row[columns[2].accessor], columns[2].accessor)}
+                                                </div>
                                             </div>
-                                            <div className={"px-0 " + columns[2].className}>
-                                                {formatCell(row[columns[2].accessor], columns[2].accessor)}
+                                            <div className="font-size-compact">
+                                                <div className="fw-semibold text-end">
+                                                        {columns[3].header}
+                                                </div>
+                                                <div className={"px-0 " + columns[3].className}>
+                                                    {formatCell(row[columns[3].accessor], columns[3].accessor)}
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="font-size-compact">
-                                            <div className="fw-semibold text-end">
-                                                    {columns[3].header}
-                                            </div>
-                                            <div className={"px-0 " + columns[3].className}>
-                                                {formatCell(row[columns[3].accessor], columns[3].accessor)}
-                                            </div>
-                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        )
-                    })} 
+                                </Link>
+                            )
+                        })} 
+                    </div>
                 </div>
                 <div className="d-flex justify-content-between px-1 py-2 border-top " >
                     <div className={first ? "invisible" : " "}>
