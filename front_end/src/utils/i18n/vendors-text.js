@@ -14,7 +14,7 @@ export const vendorsText = {
     },
     "zh-TW": {
         "Add a Vendor": "建立新供應商",
-        "Edit Vendor Details": "修改供應商（賣主）資訊",
+        "Edit Vendor Details": "修改供應商(賣主)資訊",
         "Please provide a vendor name.": "請提供供應商的名稱。",
         "Vendor Name": "供應商名稱",
         "Contact Name": "連絡人名字",
