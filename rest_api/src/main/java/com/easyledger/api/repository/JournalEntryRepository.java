@@ -27,4 +27,12 @@ public interface JournalEntryRepository extends JpaRepository<JournalEntry, Long
 			nativeQuery = true)
 	public boolean vendorContainsJournalEntries(Long vendorId);
 
+	@Query(
+			value = "SELECT CASE EXISTS (SELECT 1 from journal_entry "
+					+ "WHERE journal_entry.customer_id = ? "
+					+ "AND journal_entry.deleted = false) "
+					+ "WHEN true THEN true ELSE false END",
+			nativeQuery = true)
+	public boolean customerContainsJournalEntries(Long customerId);
+
 }
