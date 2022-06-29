@@ -17,6 +17,7 @@ public class JournalEntryDTO {
 	private Long personId;
 	private Long organizationId;
 	private Long vendorId;
+	private Long customerId;
 	private List<LineItemDTO> lineItems;
 	private boolean deleted;
 	
@@ -34,6 +35,10 @@ public class JournalEntryDTO {
 		if (journalEntry.getVendor() != null) {
 			this.vendorId = journalEntry.getVendor().getId();
 		}
+		if (journalEntry.getCustomer() != null) {
+			this.customerId = journalEntry.getCustomer().getId();
+		}
+
 		this.deleted = journalEntry.isDeleted();
 		
 		/* Iterates over entry.getLineItems(), converting LineItems into LineItemDTOs and adding them to this.LineItemDTOs */
@@ -105,6 +110,15 @@ public class JournalEntryDTO {
 	public void setVendorId(Long vendorId) {
 		this.vendorId = vendorId;
 	}
+	
+	public Long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
+
 
 	public boolean isDeleted() {
 		return deleted;
