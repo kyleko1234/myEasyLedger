@@ -87,6 +87,12 @@ Prefix all endpoints with `http://{host}/v0.6.1/`
 - [[List All Vendors for an Organization|GET /organization/{organizationId}/vendor]]
 - [[Update a Vendor|PUT /vendor/{vendorId}]]
 - [[Delete a Vendor|DELETE /vendor/{vendorId}]]
+- <br/><br/>
+- [[Create a Customer|POST /customer]]
+- [[Retrieve a Customer|GET /customer/{customerId}]]
+- [[List All Customers for an Organization|GET /organization/{organizationId}/customer]]
+- [[Update a Customer|PUT /customer/{customerId}]]
+- [[Delete a Customer|DELETE /customer/{customerId}]]
 
 
 
