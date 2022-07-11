@@ -115,6 +115,11 @@ public class JournalEntry {
 	@ManyToOne
 	@JoinColumn(name = "vendor_id")
 	private Vendor vendor;
+	
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
+
 
 	public JournalEntry() {
 		this.lineItems = new ArrayList<LineItem>();
@@ -212,6 +217,16 @@ public class JournalEntry {
 		this.vendor = vendor;
 		vendor.getJournalEntries().add(this);
 	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+		customer.getJournalEntries().add(this);
+	}
+
 
 	@Override
 	public String toString() {

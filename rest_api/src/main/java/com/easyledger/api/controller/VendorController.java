@@ -54,7 +54,7 @@ public class VendorController {
     public ResponseEntity<VendorDTO> getVendorById(@PathVariable(value = "vendorId") Long vendorId, Authentication authentication) 
     		throws UnauthorizedException, ResourceNotFoundException {
     	Vendor vendor = vendorRepo.findById(vendorId)
-        		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + vendorId)); 
+        		.orElseThrow(() -> new ResourceNotFoundException("Vendor not found for this id :: " + vendorId)); 
     	VendorDTO dto = new VendorDTO(vendor);
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, dto.getOrganizationId());
         return ResponseEntity.ok().body(dto);

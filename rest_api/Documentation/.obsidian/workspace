@@ -7,8 +7,16 @@
         "id": "e9ecb484239110b1",
         "type": "leaf",
         "state": {
+<<<<<<< HEAD
           "type": "empty",
           "state": {}
+=======
+          "type": "markdown",
+          "state": {
+            "file": "Customer/Contents/Delete a Customer.md",
+            "mode": "preview"
+          }
+>>>>>>> customer
         }
       }
     ],
@@ -65,6 +73,10 @@
             "state": {
               "type": "backlink",
               "state": {
+<<<<<<< HEAD
+=======
+                "file": "Customer/Contents/Delete a Customer.md",
+>>>>>>> customer
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
