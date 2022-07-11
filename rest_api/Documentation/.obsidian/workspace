@@ -9,8 +9,8 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Vendor/Contents/Update a Vendor.md",
-            "mode": "source"
+            "file": "Customer/Contents/Delete a Customer.md",
+            "mode": "preview"
           }
         }
       }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Vendor/Contents/Update a Vendor.md",
+                "file": "Customer/Contents/Delete a Customer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,15 +88,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "Vendor/Contents/Update a Vendor.md",
-    "Vendor/Contents/Create a Vendor.md",
+    "Customer/Contents/Delete a Customer.md",
     "Easy Ledger.md",
-    "Organization/Contents/Check if Organization Contains Journal Entries.md",
-    "Organization/Organization.md",
-    "Organization/Contents/Retrieve an Organization.md",
-    "Organization/Contents/Create an Organization.md",
-    "Vendor/Contents/List All Vendors for an Organization.md",
-    "Vendor/Contents/Delete a Vendor.md",
-    "Vendor/Vendor.md"
+    "Customer/Contents/The Customer Object.md",
+    "Customer/Customer.md",
+    "Customer/Contents/Create a Customer.md",
+    "Customer/Contents/List All Customers for an Organization.md",
+    "Customer/Contents/Retrieve a Customer.md",
+    "Customer/Contents/Update a Customer.md",
+    "Vendor/Contents/Create a Vendor.md",
+    "Vendor/Contents/List All Vendors for an Organization.md"
   ]
 }
