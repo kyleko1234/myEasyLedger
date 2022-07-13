@@ -19,6 +19,12 @@ Id of the organization that this entry belongs to.
 - **lineItems (`ArrayList<LineItem>`)**<br/>
 A list of LineItem objects that this entry contains. Each entry’s LineItems must be balanced; that is, total credit amounts must equal total debit amounts.
 
+- **vendorId(`optional Long`)**<br/>
+The id of a vendor that is associated with this JournalEntry.
+
+- **customerId(`optional Long`)**<br/>
+The id of a customer that is associated with this JournalEntry.
+
 - **deleted(`boolean`)** <br/>
 Whether or not this journal entry has been deleted.
 ___
@@ -30,38 +36,32 @@ ___
     "description": "Issued 20,000 shares of common stock at $20 per share",
     "personId": 1,
     "organizationId": 1,
+    "vendorId": null,
+    "customerId": null,
     "lineItems": [
         {
-            "accountId": 1,
-            "accountName": "Cash",
-            "accountGroupId": 1,
-            "accountGroupName": "Cash",
-            "accountSubtypeId": 1,
-            "accountSubtypeName": "Cash and cash equivalents",
-            "accountTypeId": 1,
-            "accountTypeName": "Assets",
-            "amount": 400000,
-            "description": "Cash influx from initial offering",
-            "journalEntryId": 1,
-            "journalEntryDate": "2020-11-01",
-            "isCredit": false,
-            "lineItemId": 1
-        },
-        {
-            "accountId": 9,
-            "accountName": "Capital stock",
-            "accountGroupId": 6,
-            "accountGroupName": "Paid-in Capital",
-            "accountSubtypeId": 19,
-            "accountSubtypeName": "Paid-in capital",
-            "accountTypeId": 3,
-            "accountTypeName": "Owner's Equity",
+            "accountId": 6,
+            "accountName": "Paid-in Capital",
             "amount": 400000,
             "description": "Issued 20000 shares of common at 20 per",
             "journalEntryId": 1,
             "journalEntryDate": "2020-11-01",
             "isCredit": true,
-            "lineItemId": 2
+            "lineItemId": 1,
+            "accountSubtypeId": 20,
+            "accountTypeId": 3
+        },
+        {
+            "accountId": 1,
+            "accountName": "Cash",
+            "amount": 400000,
+            "description": "Cash influx from initial offering",
+            "journalEntryId": 1,
+            "journalEntryDate": "2020-11-01",
+            "isCredit": false,
+            "lineItemId": 2,
+            "accountSubtypeId": 1,
+            "accountTypeId": 1
         }
     ],
     "deleted": false

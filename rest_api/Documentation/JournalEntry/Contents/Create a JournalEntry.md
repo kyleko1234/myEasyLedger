@@ -15,6 +15,12 @@ A description for this entry, up to 255 characters.
 - **organizationId (`Long`)**<br/>
 Id of the organization that this entry belongs to.
 
+- **vendorId(`optional Long`)**<br/>
+The id of a vendor that is associated with this JournalEntry.
+
+- **customerId(`optional Long`)**<br/>
+The id of a customer that is associated with this JournalEntry.
+
 - **lineItems (`ArrayList<LineItem>`)**<br/>
 List of LineItems to be contained in this entry. Each entry’s LineItems must be balanced; that is, total credit amounts must equal total debit amounts. LineItems require the following attributes:
    - **accountId (`Long`)**<br/>
