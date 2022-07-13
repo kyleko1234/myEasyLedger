@@ -211,6 +211,7 @@ function JournalEntryEditMode({
                         menuPlacement={'auto'}
                         onChange={(selectedOption) => {
                             setJournalEntryVendorId(selectedOption.object.vendorId);
+                            setJournalEntryCustomerId(null);
                         }}
                     />
                 </div>
@@ -229,6 +230,7 @@ function JournalEntryEditMode({
                         menuPlacement={'auto'}
                         onChange={(selectedOption) => {
                             setJournalEntryCustomerId(selectedOption.object.customerId);
+                            setJournalEntryVendorId(null);
                         }}
                     />
                 </div>
