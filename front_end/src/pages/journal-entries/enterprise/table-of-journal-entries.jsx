@@ -46,11 +46,12 @@ function TableOfJournalEntries({
     const [journalEntryDescription, setJournalEntryDescription] = React.useState('');
     const [journalEntryDate, setJournalEntryDate] = React.useState('');
     const [journalEntryVendorId, setJournalEntryVendorId] = React.useState(null);
-
+    const [journalEntryCustomerId, setJournalEntryCustomerId] = React.useState(null);
 
     const [alertMessages, setAlertMessages] = React.useState([]);
     const [accountOptions, setAccountOptions] = React.useState([]);
     const [vendorOptions, setVendorOptions] = React.useState([]);
+    const [customerOptions, setCustomerOptions] = React.useState([]);
 
     const [journalEntryHistoryModal, setJournalEntryHistoryModal] = React.useState(false);
     const toggleJournalEntryHistoryModal = () => setJournalEntryHistoryModal(!journalEntryHistoryModal);  
@@ -98,6 +99,7 @@ function TableOfJournalEntries({
         setJournalEntryId(null);
         fetchAccounts();
         fetchVendors();
+        fetchCustomers();
         setJournalEntryDate(getTodayAsDateString());
         setJournalEntryDescription('');
         setJournalEntryVendorId(null);
@@ -138,6 +140,7 @@ function TableOfJournalEntries({
         toggleEditMode();
         fetchAccounts();
         fetchVendors();
+        fetchCustomers();
     }
 
     //refresh lists of accounts and categories, should be called every time the 'edit' button for an entry is clicked
@@ -183,6 +186,29 @@ function TableOfJournalEntries({
                     }
                 })
                 setVendorOptions(formattedVendorOptions);
+            })
+            .catch(console.log);
+    }
+
+    //refresh list of customers, should be called every time the 'edit' button for an entry is clicked
+    const fetchCustomers = () => {
+        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/customer`)
+            .then(response => {
+                let formattedCustomerOptions = response.data.map(customer => {
+                    return({
+                        value: customer.customerId,
+                        label: customer.customerName,
+                        object: customer
+                    });
+                });
+                formattedCustomerOptions.unshift({
+                    value: null,
+                    label: tableOfJournalEntriesText[appContext.locale]["None"],
+                    object: {
+                        customerId: null
+                    }
+                })
+                setCustomerOptions(formattedCustomerOptions);
             })
             .catch(console.log);
     }
@@ -262,6 +288,7 @@ function TableOfJournalEntries({
             journalEntryId: journalEntryId,
             journalEntryDate: journalEntryDate,
             vendorId: journalEntryVendorId,
+            customerId: journalEntryCustomerId,
             description: journalEntryDescription,
             organizationId: appContext.currentOrganizationId,
             lineItems: lineItems
@@ -327,6 +354,7 @@ function TableOfJournalEntries({
     React.useEffect(() => {
         fetchData(pageIndex, pageSize);
         fetchVendors();
+        fetchCustomers();
         fetchAccounts();
     }, [pageIndex, pageSize, parentComponentAccountId]);
 
@@ -442,8 +470,10 @@ function TableOfJournalEntries({
                                 journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
                                 journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
                                 journalEntryVendorId={journalEntryVendorId} setJournalEntryVendorId={setJournalEntryVendorId}
+                                journalEntryCustomerId={journalEntryCustomerId} setJournalEntryCustomerId={setJournalEntryCustomerId}
                                 accountOptions={accountOptions}
                                 vendorOptions={vendorOptions}
+                                customerOptions={customerOptions}
                                 alertMessages={alertMessages}
                                 handleSaveJournalEntryButton={handleSaveJournalEntryButton}
                             />
@@ -453,7 +483,9 @@ function TableOfJournalEntries({
                                 journalEntryDescription={journalEntryDescription}
                                 accountOptions={accountOptions}
                                 journalEntryVendorId={journalEntryVendorId}
+                                journalEntryCustomerId={journalEntryCustomerId}
                                 vendorOptions={vendorOptions}
+                                customerOptions={customerOptions}
                             />
                     }
                 </ModalBody>

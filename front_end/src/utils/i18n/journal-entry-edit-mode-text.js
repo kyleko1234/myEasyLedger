@@ -15,7 +15,8 @@ export const journalEntryEditModeText = {
         "Total Debit": "Total Debit",
         "Total Credit": "Total Credit",
 
-        "Vendor": "Vendor"
+        "Vendor": "Vendor",
+        "Customer": "Customer"
     },
     "zh-TW" : {
         "Memo": "註記",
@@ -33,7 +34,9 @@ export const journalEntryEditModeText = {
         "Total Debit": "借方加總",
         "Total Credit": "貸方加總",
         
-        "Vendor": "供應商(賣主)"
+        "Vendor": "供應商(賣主)",
+        "Customer": "TRANSLATION"
+
 
     }
 }
