@@ -4,6 +4,7 @@ export const enterpriseMenu = [
   { path: '/chart-of-accounts', icon: 'far fa-list-alt', title: 'Chart of Accounts', relevantBasePaths: ["chart-of-accounts", "account-details"]},
   { path: '/reports', icon: 'fas fa-envelope-open-text', title: 'Reports', relevantBasePaths: ["reports"]},
   { path: '/vendors', icon: 'fas fa-store-alt', title: 'Vendors', relevantBasePaths: ["vendors"]},
+  { path: '/customers', icon: 'fas fa-address-card', title: 'Customers', relevantBasePaths: ["customers"]},
 
 ]
 
