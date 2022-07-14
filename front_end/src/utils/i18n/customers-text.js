@@ -12,15 +12,15 @@ export const customersText = {
 
     },
     "zh-TW": {
-        "Customers": "TRANSLATION",
-        "Add a Customer": "TRANSLATION",
-        "Customer Name": "TRANSLATION",
-        "Edit Customer Details": "TRANSLATION",
-        "Please remove all journal entries associated with this customer and try again.": "TRANSLATION",
-        "Are you sure you want to delete this customer?": "TRANSLATION",
-        "Cannot delete this customer.": "TRANSLATION",
-        "Please provide a customer name.": "TRANSLATION",
-        "A customer with this name already exists in this ledger.": "TRANSLATION",
+        "Customers": "客戶名册",
+        "Add a Customer": "建立新客戶",
+        "Customer Name": "客戶名稱",
+        "Edit Customer Details": "修改客戶（買主）資訊",
+        "Please remove all journal entries associated with this customer and try again.": "請先删除這個客戶的所有相關分錄後，才能删除此客戶。",
+        "Are you sure you want to delete this customer?": "你確定要删除這個客戶嗎？",
+        "Cannot delete this customer.": "無法删除本客戶。",
+        "Please provide a customer name.": "請輸入客戶的名稱。",
+        "A customer with this name already exists in this ledger.": "本帳册中已存在這個客戶名稱。",
 
     },
 }

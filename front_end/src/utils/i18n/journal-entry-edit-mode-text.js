@@ -35,8 +35,6 @@ export const journalEntryEditModeText = {
         "Total Credit": "貸方加總",
         
         "Vendor": "供應商(賣主)",
-        "Customer": "TRANSLATION"
-
-
+        "Customer": "客戶(買主)"
     }
 }

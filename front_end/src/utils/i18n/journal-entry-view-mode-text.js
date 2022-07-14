@@ -51,7 +51,7 @@ export const journalEntryViewModeText = {
 
         "Vendor": "供應商(賣主)",
         "None": "無",
-        "Customer": "TRANSLATION"
+        "Customer": "客戶(買主)"
 
     }
 }
