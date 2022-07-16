@@ -19,9 +19,10 @@ class Sidebar extends React.Component {
                             ? (this.context.isEnterprise
                                 ? enterpriseMenu.map(menuItem => {
                                     return (
-                                        <li>
+                                        <li                                                 
+                                            key={menuItem.path} 
+                                        >
                                             <Link 
-                                                key={menuItem.path} 
                                                 to={menuItem.path} 
                                                 className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}
                                                 onClick={(window.innerWidth < 768? (this.context.toggleHiddenSidebar) : null)}
@@ -34,9 +35,10 @@ class Sidebar extends React.Component {
                                 })
                                 : personalMenu.map(menuItem => {
                                     return (
-                                        <li>
+                                        <li
+                                            key={menuItem.path} 
+                                        >
                                             <Link 
-                                                key={menuItem.path} 
                                                 to={menuItem.path} 
                                                 className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}
                                                 onClick={(window.innerWidth < 768? (this.context.toggleHiddenSidebar) : null)}
