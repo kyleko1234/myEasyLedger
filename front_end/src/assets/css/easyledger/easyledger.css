@@ -40,6 +40,13 @@ body.dark-mode{
     background-color: #1e1e1e;
 }
 
+nav ul,
+nav ol {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
 /* Override Bootstrap Defaults*/
 a {
     text-decoration: none;
@@ -270,6 +277,17 @@ a {
     color: var(--dark-mode-text-color) !important;
 }
 
+.nested-btn,
+.dark-mode .nested-btn {
+    background-color: inherit
+}
+.nested-btn.btn-white:hover {
+    background-color: #fff
+}
+.dark-mode .nested-btn.btn-white:hover{
+    background-color: #181818;
+}
+
 /* MODIFICATIONS TO BOOTSTRAP FORMS */
 .form-control {
     font-size: var(--base-font-size);
@@ -403,21 +421,26 @@ a.nav-link:hover {
     border-top: #484848 1px solid /*TODO check if this actually looks ok*/
 }
 
-a.pseudo-tr {
+a.pseudo-tr,
+.clickable.pseudo-tr {
     color: var(--base-text-color);
 }
-a.pseudo-tr:hover {
+a.pseudo-tr:hover,
+.clickable.pseudo-tr:hover {
     text-decoration: none;
     color: var(--base-text-color);
     background-color: #e1e1e1;
 }
-.dark-mode a.pseudo-tr{
+.dark-mode a.pseudo-tr,
+.dark-mode .clickable.pseudo-tr {
     color: var(--dark-mode-text-color);
 }
-.dark-mode a.pseudo-tr:hover{
+.dark-mode a.pseudo-tr:hover,
+.dark-mode .clickable.pseudo-tr:hover {
     color: var(--dark-mode-text-color);
     background-color: #2a2a2a;
 }
+
 .striped-row {
     display: flex;
     padding: .75rem;
@@ -538,6 +561,10 @@ a.pseudo-tr:hover {
 }
 
 /* Utility classes, mostly left from adjusting color admin */
+.clickable:hover {
+    cursor: pointer;
+}
+
 .dark-mode hr {
     color: var(--dark-mode-text-color);
     border-color: var(--dark-mode-gridline-color);
