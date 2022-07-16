@@ -177,7 +177,7 @@ class ChartOfAccounts extends React.Component {
                                                                     </div>
                                                                     <div className="pseudo-td py-0 d-flex align-items-center">
                                                                         <button 
-                                                                            className="btn btn-sm btn-white border-0 text-muted" 
+                                                                            className="btn btn-sm btn-white border-0 text-muted me-2" 
                                                                             onClick={event => this.handleEditAccountButton(event, account)}
                                                                         >
                                                                             <i className="fas fa-edit font-size-compact"></i>
@@ -195,7 +195,7 @@ class ChartOfAccounts extends React.Component {
                                                                     </div>
                                                                     <div className="pseudo-td py-0 d-flex align-items-center">
                                                                         <button 
-                                                                            className=" btn btn-sm btn-white border-0 text-muted"
+                                                                            className="nested-btn btn btn-sm btn-white border-0 text-muted me-2"
                                                                             onClick={event => this.handleEditAccountButton(event, account)}
                                                                         >
                                                                             <i className="fas fa-edit font-size-compact"></i>
@@ -217,12 +217,12 @@ class ChartOfAccounts extends React.Component {
                                                                             >
                                                                                 <div className="pseudo-td indent">{childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
                                                                                 <div className="pseudo-td py-0 d-flex align-items-center">
-                                                                                <button 
-                                                                                    className=" btn btn-sm btn-white border-0 text-muted"
-                                                                                    onClick={event => this.handleEditAccountButton(event, childAccount)}
-                                                                                >
-                                                                                    <i className="fas fa-edit font-size-compact"></i>
-                                                                                </button>
+                                                                                    <button 
+                                                                                        className="nested-btn btn btn-sm btn-white border-0 text-muted me-2"
+                                                                                        onClick={event => this.handleEditAccountButton(event, childAccount)}
+                                                                                    >
+                                                                                        <i className="fas fa-edit font-size-compact"></i>
+                                                                                    </button>
                                                                                     <i className="fas fa-angle-right text-muted"></i>
                                                                                 </div>
                                                                             </div>

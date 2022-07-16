@@ -277,6 +277,17 @@ a {
     color: var(--dark-mode-text-color) !important;
 }
 
+.nested-btn,
+.dark-mode .nested-btn {
+    background-color: inherit
+}
+.nested-btn.btn-white:hover {
+    background-color: #fff
+}
+.dark-mode .nested-btn.btn-white:hover{
+    background-color: #181818;
+}
+
 /* MODIFICATIONS TO BOOTSTRAP FORMS */
 .form-control {
     font-size: var(--base-font-size);
