@@ -6,7 +6,7 @@ import { API_BASE_URL } from '../../../utils/constants.js';
 import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { accountDetailsEditorText } from '../../../utils/i18n/account-details-editor-text.js';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 
 
@@ -15,6 +15,7 @@ function AccountDetailsEditor(props) {
     //optional props: accountTypeId, selectedAccountId, selectedParentAccount, category
     const appContext = React.useContext(PageSettings);
     const history = useHistory();
+    const location = useLocation();
 
     const [accountNameInput, setAccountNameInput] = React.useState('');
     const [accountCodeInput, setAccountCodeInput] = React.useState('');
@@ -179,14 +180,23 @@ function AccountDetailsEditor(props) {
     const handleConfirmDeleteAccountButton = () => {
         axios.delete(`${API_BASE_URL}/account/${props.selectedAccountId}`).then(response => {
             console.log(response);
-            if (appContext.isEnterprise) {
-                history.push("/chart-of-accounts");
-            } else {
-                if (props.category) {
-                    history.push("/categories");
+            const currentUrlBasePath = location.pathname.split("/")[1];
+            const basePathsThatDoNotNeedToBeRedirected = [
+                "chart-of-accounts", "categories", "accounts"
+            ]
+            if (!basePathsThatDoNotNeedToBeRedirected.includes(currentUrlBasePath)) {
+                if (appContext.isEnterprise) {
+                    history.push("/chart-of-accounts");
                 } else {
-                    history.push("/accounts");
+                    if (props.category) {
+                        history.push("/categories");
+                    } else {
+                        history.push("/accounts");
+                    }
                 }
+            } else {
+                props.fetchData();
+                toggleDeleteAccountAlert();
             }
         }).catch(() => {
             toggleDeleteAccountAlert();
