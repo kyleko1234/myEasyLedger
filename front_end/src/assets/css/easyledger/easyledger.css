@@ -40,6 +40,13 @@ body.dark-mode{
     background-color: #1e1e1e;
 }
 
+nav ul,
+nav ol {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
 /* Override Bootstrap Defaults*/
 a {
     text-decoration: none;

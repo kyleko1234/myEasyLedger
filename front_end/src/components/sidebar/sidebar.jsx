@@ -9,48 +9,53 @@ class Sidebar extends React.Component {
 	
 	render() {
 		return (
-			<div id="sidebar" className="sidebar">
+			<nav id="sidebar" className="sidebar">
 				<PerfectScrollbar className="height-full" options={{suppressScrollX: true, wheelPropagation: false}}>
 					<div className="sidebar-header">
 						{sidebarText[this.context.locale]["Navigation"]}
 					</div>
-
-					{this.context.currentOrganizationId 
-                        ? (this.context.isEnterprise
-                            ? enterpriseMenu.map(menuItem => {
-                                return (
-                                    <Link 
-                                        key={menuItem.path} 
-                                        to={menuItem.path} 
-                                        className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}
-                                        onClick={(window.innerWidth < 768? (this.context.toggleHiddenSidebar) : null)}
-                                    >
-                                        <i className={menuItem.icon}></i>
-                                        {sidebarText[this.context.locale][menuItem.title]}
-                                    </Link>
-                                )
-                            })
-                            : personalMenu.map(menuItem => {
-                                return (
-                                    <Link 
-                                        key={menuItem.path} 
-                                        to={menuItem.path} 
-                                        className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}
-                                        onClick={(window.innerWidth < 768? (this.context.toggleHiddenSidebar) : null)}
-                                    >
-                                        <i className={menuItem.icon}></i>
-                                        {sidebarText[this.context.locale][menuItem.title]}
-                                    </Link>
-                                )
-                            })
-                        )
-                        : <div className="sidebar-item active">
-                            <i className="fas fa-grip-horizontal"></i>
-                            {sidebarText[this.context.locale]["Dashboard"]}
-                        </div>
-                    }
+                    <ul>
+                        {this.context.currentOrganizationId 
+                            ? (this.context.isEnterprise
+                                ? enterpriseMenu.map(menuItem => {
+                                    return (
+                                        <li>
+                                            <Link 
+                                                key={menuItem.path} 
+                                                to={menuItem.path} 
+                                                className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}
+                                                onClick={(window.innerWidth < 768? (this.context.toggleHiddenSidebar) : null)}
+                                            >
+                                                <i className={menuItem.icon}></i>
+                                                {sidebarText[this.context.locale][menuItem.title]}
+                                            </Link>
+                                        </li>
+                                    )
+                                })
+                                : personalMenu.map(menuItem => {
+                                    return (
+                                        <li>
+                                            <Link 
+                                                key={menuItem.path} 
+                                                to={menuItem.path} 
+                                                className={"sidebar-item " + (menuItem.relevantBasePaths.includes(this.props.location.pathname.split("/")[1])? " active" : "")}
+                                                onClick={(window.innerWidth < 768? (this.context.toggleHiddenSidebar) : null)}
+                                            >
+                                                <i className={menuItem.icon}></i>
+                                                {sidebarText[this.context.locale][menuItem.title]}
+                                            </Link>
+                                        </li>
+                                    )
+                                })
+                            )
+                            : <div className="sidebar-item active">
+                                <i className="fas fa-grip-horizontal"></i>
+                                {sidebarText[this.context.locale]["Dashboard"]}
+                            </div>
+                        }
+                    </ul>
 				</PerfectScrollbar>
-			</div>
+			</nav>
 		)
 	}
 }
