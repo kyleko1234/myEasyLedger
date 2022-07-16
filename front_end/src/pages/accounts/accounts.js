@@ -73,7 +73,8 @@ class Accounts extends React.Component {
         })
     }
 
-    handleEditAccountButton(account) {
+    handleEditAccountButton(event, account) {
+        event.stopPropagation();
         this.setState(state => ({
             createMode: false,
             selectedAccountId: account.accountId
@@ -172,24 +173,33 @@ class Accounts extends React.Component {
                                                                     {account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName}
                                                                 </div>
                                                                 <div className="pseudo-td py-0 d-flex align-items-center">
-                                                                    <button className="btn btn-sm btn-white border-0 text-muted" onClick={() => this.handleEditAccountButton(account)}>
+                                                                    <button 
+                                                                        className="btn btn-sm btn-white border-0 text-muted me-2" 
+                                                                        onClick={event => this.handleEditAccountButton(event, account)}
+                                                                    >
                                                                         <i className="fas fa-edit font-size-compact"></i>
                                                                     </button>
                                                                     <i className="fas fa-angle-right text-muted invisible"></i>
                                                                 </div>
                                                             </div>
                                                         :
-                                                            <Link className="pseudo-tr d-flex justify-content-between align-items-center " to={`/account-details/${account.accountId}`}>
+                                                            <div 
+                                                                className="clickable pseudo-tr d-flex justify-content-between align-items-center " 
+                                                                onClick={() => this.props.history.push(`/account-details/${account.accountId}`)}
+                                                            >
                                                                     <div className="pseudo-td fw-semibold">
                                                                         {account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName}
                                                                     </div>
                                                                     <div className="pseudo-td py-0 d-flex align-items-center">
-                                                                        <button className="btn btn-sm text-muted invisible">
-                                                                            <i className="fas fa-edit"></i>
+                                                                        <button 
+                                                                            className="nested-btn btn btn-sm btn-white border-0 text-muted me-2"
+                                                                            onClick={event => this.handleEditAccountButton(event, account)}
+                                                                        >
+                                                                            <i className="fas fa-edit font-size-compact"></i>
                                                                         </button>
                                                                         <i className="fas fa-angle-right text-muted"></i>
                                                                     </div>
-                                                            </Link>
+                                                            </div>
                                                         }
                                                         {!this.state.accounts 
                                                             ? null 
@@ -197,23 +207,32 @@ class Accounts extends React.Component {
                                                                 .filter(childAccount => childAccount.parentAccountId == account.accountId)
                                                                 .map(childAccount => {
                                                                     return (
-                                                                        <Link className="pseudo-tr d-flex justify-content-between align-items-center " to={`/account-details/${childAccount.accountId}`} key={childAccount.accountId}>
+                                                                        <div 
+                                                                            className="clickable pseudo-tr d-flex justify-content-between align-items-center " 
+                                                                            onClick={() => this.props.history.push(`/account-details/${childAccount.accountId}`)} key={childAccount.accountId}
+                                                                        >
                                                                             <div className="pseudo-td indent">
                                                                                 <div>{childAccount.accountCode? childAccount.accountCode + " - " + childAccount.accountName : childAccount.accountName}</div>
                                                                             </div>
-                                                                            <div className="pseudo-td">
+                                                                            <div className="pseudo-td py-0 d-flex align-items-center">
+                                                                                <button 
+                                                                                    className="nested-btn btn btn-sm btn-white border-0 text-muted me-2"
+                                                                                    onClick={event => this.handleEditAccountButton(event, childAccount)}
+                                                                                > 
+                                                                                    <i className="fas fa-edit font-size-compact"></i>
+                                                                                </button>
                                                                                 <i className="fas fa-angle-right text-muted"></i>
                                                                             </div>
-                                                                        </Link>
+                                                                        </div>
                                                                     );
                                                         })}
                                                         {(this.canAddChildren(account) && this.context.currentPermissionTypeId >= 2 )? 
-                                                            <Link replace className="pseudo-tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
+                                                            <div className="clickable pseudo-tr d-flex justify-content-between align-items-center" to="#" onClick={() => this.handleAddAChildAccountButton(account)}>
                                                                 <div className="pseudo-td indent">
                                                                     <em className="widget-list-title">{chartOfAccountsText[this.context.locale]["Add a new child account..."]}</em>
                                                                 </div>
                                                                 <div className="pseudo-td"></div>
-                                                            </Link>
+                                                            </div>
                                                         : null}
                                                     </React.Fragment>
                                                 );
