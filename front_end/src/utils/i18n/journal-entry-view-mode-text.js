@@ -22,7 +22,8 @@ export const journalEntryViewModeText = {
         "No memo": "No memo",
 
         "Vendor": "Vendor",
-        "None": "None"
+        "None": "None",
+        "Customer": "Customer"
         
     },
     "zh-TW": {
@@ -49,7 +50,8 @@ export const journalEntryViewModeText = {
         "No memo": "無註記",
 
         "Vendor": "供應商(賣主)",
-        "None": "無"
+        "None": "無",
+        "Customer": "客戶(買主)"
 
     }
 }

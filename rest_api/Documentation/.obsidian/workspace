@@ -7,16 +7,11 @@
         "id": "e9ecb484239110b1",
         "type": "leaf",
         "state": {
-<<<<<<< HEAD
-          "type": "empty",
-          "state": {}
-=======
           "type": "markdown",
           "state": {
-            "file": "Customer/Contents/Delete a Customer.md",
-            "mode": "preview"
+            "file": "JournalEntry/Contents/Update a JournalEntry.md",
+            "mode": "source"
           }
->>>>>>> customer
         }
       }
     ],
@@ -73,10 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-<<<<<<< HEAD
-=======
-                "file": "Customer/Contents/Delete a Customer.md",
->>>>>>> customer
+                "file": "JournalEntry/Contents/Update a JournalEntry.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -96,15 +88,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "Customer/Contents/Delete a Customer.md",
-    "Easy Ledger.md",
-    "Customer/Contents/The Customer Object.md",
-    "Customer/Customer.md",
-    "Customer/Contents/Create a Customer.md",
-    "Customer/Contents/List All Customers for an Organization.md",
-    "Customer/Contents/Retrieve a Customer.md",
-    "Customer/Contents/Update a Customer.md",
-    "Vendor/Contents/Create a Vendor.md",
-    "Vendor/Contents/List All Vendors for an Organization.md"
+    "JournalEntry/Contents/Update a JournalEntry.md",
+    "JournalEntry/Contents/The JournalEntry Object.md",
+    "JournalEntry/Contents/Retrieve a JournalEntry.md",
+    "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
+    "JournalEntry/Contents/List All JournalEntries.md",
+    "JournalEntry/Contents/Delete a JournalEntry.md",
+    "JournalEntry/Contents/Access Edit History of a Journal Entry.md",
+    "JournalEntry/Contents/Access Edit History of Journal Entries for an Organization.md",
+    "JournalEntry/Contents/Create a JournalEntry.md",
+    "JournalEntry/JournalEntry.md"
   ]
 }

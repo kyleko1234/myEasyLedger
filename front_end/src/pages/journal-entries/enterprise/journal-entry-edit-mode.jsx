@@ -11,8 +11,10 @@ function JournalEntryEditMode({
     journalEntryDate, setJournalEntryDate,
     journalEntryDescription, setJournalEntryDescription,
     journalEntryVendorId, setJournalEntryVendorId,
+    journalEntryCustomerId, setJournalEntryCustomerId,
     accountOptions,
     vendorOptions,
+    customerOptions,
     alertMessages,
     handleSaveJournalEntryButton
 }) {
@@ -209,6 +211,30 @@ function JournalEntryEditMode({
                         menuPlacement={'auto'}
                         onChange={(selectedOption) => {
                             setJournalEntryVendorId(selectedOption.object.vendorId);
+                            if (selectedOption.object.vendorId !== null) {
+                                setJournalEntryCustomerId(null);
+                            }
+                        }}
+                    />
+                </div>
+            </div>
+            <div className="row mb-2 align-items-center">
+                <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Customer"]}</strong></div> 
+                <div className="col-xl-8">
+                    <Select
+                        classNamePrefix="form-control"
+                        options={customerOptions}
+                        value={customerOptions.find(customerOption => customerOption.object.customerId == journalEntryCustomerId)}
+                        isSearchable={true}
+                        menuPortalTarget={document.body}
+                        menuShouldScrollIntoView={false}
+                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                        menuPlacement={'auto'}
+                        onChange={(selectedOption) => {
+                            setJournalEntryCustomerId(selectedOption.object.customerId);
+                            if (selectedOption.object.customerId != null) {
+                                setJournalEntryVendorId(null);
+                            }
                         }}
                     />
                 </div>

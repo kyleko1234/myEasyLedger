@@ -12,11 +12,13 @@ import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.model.Customer;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.model.Vendor;
+import com.easyledger.api.repository.CustomerRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.repository.VendorRepository;
@@ -34,15 +36,19 @@ public class JournalEntryService {
 	@Autowired
 	private VendorRepository vendorRepo;
 	
+	@Autowired
+	private CustomerRepository customerRepo;
+	
 	private LineItemService lineItemService;
 	
 	public JournalEntryService(PersonRepository personRepo, LineItemService lineItemService,
-			OrganizationRepository organizationRepo, VendorRepository vendorRepo) {
+			OrganizationRepository organizationRepo, VendorRepository vendorRepo, CustomerRepository customerRepo) {
 		super();
 		this.personRepo = personRepo;
 		this.lineItemService = lineItemService;
 		this.organizationRepo = organizationRepo;
 		this.vendorRepo = vendorRepo;
+		this.customerRepo = customerRepo;
 	}
 
 	// Creates new Entry entity object from EntryDTO. Does not save the entity to the database.
@@ -65,6 +71,11 @@ public class JournalEntryService {
 			Vendor vendor = vendorRepo.findById(dto.getVendorId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("Vendor not found for this id :: " + dto.getVendorId())); 
 			product.setVendor(vendor);
+		}
+		if (dto.getCustomerId() != null) {
+			Customer customer = customerRepo.findById(dto.getCustomerId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Customer not found for this id :: " + dto.getCustomerId())); 
+			product.setCustomer(customer);
 		}
 		//Create Iterator to iterate through the Set<LineItemDTO> contained in dto
 		Iterator<LineItemDTO> lineItemDtoIterator = dto.getLineItems().iterator();

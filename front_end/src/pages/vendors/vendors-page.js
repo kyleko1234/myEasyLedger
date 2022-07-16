@@ -1,11 +1,9 @@
 import React from 'react';
-import { Card, CardBody } from 'reactstrap';
 import VendorsTitleBarSmallScreen from './vendors-title-bar-small-screen';
 import VendorsTitleBarStandard from './vendors-title-bar-standard';
 import { API_BASE_URL } from '../../utils/constants';
 import axios from 'axios';
 import { PageSettings } from '../../config/page-settings';
-import { Link } from 'react-router-dom';
 import VendorsListStandard from './vendors-list-standard';
 import VendorsListSmallScreen from './vendors-list-small-screen';
 import EditVendorModal from './edit-vendor-modal';

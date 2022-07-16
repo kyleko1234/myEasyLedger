@@ -26,6 +26,7 @@ import AcceptInvitationPage from '../pages/user/invitation/accept-invitation-pag
 import ExpenseReport from '../pages/reports/expense-report.js';
 import VendorsPage from '../pages/vendors/vendors-page.js';
 import LedgerSettings from '../pages/settings/ledger-settings';
+import CustomersPage from '../pages/customers/customers-page.js';
 
 const routes = [
   {
@@ -197,8 +198,12 @@ const routes = [
     path: '/vendors',
     title: 'Vendors',
     component: VendorsPage
-  }
-
+  },
+  {
+    path: '/customers',
+    title: 'Customers',
+    component: CustomersPage
+  },
 ];
 
 

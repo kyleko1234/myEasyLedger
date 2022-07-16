@@ -20,6 +20,12 @@ User-supplied description of this entry, up to 255 characters.
 - **organizationId (`Long`)**<br/>
 Id of the organization that this entry belongs to.
 
+- **vendorId(`optional Long`)**<br/>
+The id of a vendor that is associated with this JournalEntry.
+
+- **customerId(`optional Long`)**<br/>
+The id of a customer that is associated with this JournalEntry.
+
 - **lineItems (`ArrayList<LineItem>`)**<br/>
 List of LineItems to be contained in this entry. Each entry’s LineItems must be balanced; that is, total credit amounts must equal total debit amounts. LineItems require the following attributes:
    -  **accountId (`Long`)**<br/>
@@ -65,44 +71,39 @@ Body:
 #### Sample Response
 ```json
 {
-    "journalEntryId": 11,
+    "journalEntryId": 1,
     "journalEntryDate": "2020-11-01",
-    "description": "Issued a whole bunch of shares of common stock at $20 per share",
+    "description": "Issued 20,000 shares of common stock at $20 per share",
     "personId": 1,
     "organizationId": 1,
+    "vendorId": null,
+    "customerId": null,
     "lineItems": [
+        {
+            "accountId": 6,
+            "accountName": "Paid-in Capital",
+            "amount": 400000,
+            "description": "Issued 20000 shares of common at 20 per",
+            "journalEntryId": 1,
+            "journalEntryDate": "2020-11-01",
+            "isCredit": true,
+            "lineItemId": 1,
+            "accountSubtypeId": 20,
+            "accountTypeId": 3
+        },
         {
             "accountId": 1,
             "accountName": "Cash",
-            "accountGroupId": 1,
-            "accountGroupName": "Cash",
-            "accountSubtypeId": 1,
-            "accountSubtypeName": "Cash and cash equivalents",
-            "accountTypeId": 1,
-            "accountTypeName": "Assets",
             "amount": 400000,
             "description": "Cash influx from initial offering",
-            "journalEntryId": 11,
+            "journalEntryId": 1,
             "journalEntryDate": "2020-11-01",
             "isCredit": false,
-            "lineItemId": 24
-        },
-        {
-            "accountId": 9,
-            "accountName": "Capital stock",
-            "accountGroupId": 6,
-            "accountGroupName": "Paid-in Capital",
-            "accountSubtypeId": 19,
-            "accountSubtypeName": "Paid-in capital",
-            "accountTypeId": 3,
-            "accountTypeName": "Owner's Equity",
-            "amount": 400000,
-            "description": "Issued 20000 shares of common at 20 per",
-            "journalEntryId": 11,
-            "journalEntryDate": "2020-11-01",
-            "isCredit": true,
-            "lineItemId": 25
+            "lineItemId": 2,
+            "accountSubtypeId": 1,
+            "accountTypeId": 1
         }
     ],
     "deleted": false
-}```
+}
+```
