@@ -326,7 +326,7 @@ function AccountDetailsEditor(props) {
                             </div>
                         </div>
                         : null}
-                        <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
+                        <div>
                             {appContext.isEnterprise? 
                                 <>
                                     <div className="mb-3 row">
@@ -384,7 +384,7 @@ function AccountDetailsEditor(props) {
                                     : null}
                                 </>
                                 }
-                        </form> 
+                        </div> 
                         
                     </ModalBody>
                     <ModalFooter className="justify-content-between">

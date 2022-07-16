@@ -168,7 +168,7 @@ class Accounts extends React.Component {
                                                     <React.Fragment key={account.accountId}>
                                                         {account.hasChildren ?
                                                             <div className="pseudo-tr d-flex justify-content-between align-items-center">
-                                                                <div className="pseudo-td fw-semibold">
+                                                                <div className="pseudo-td fw-semibold"> 
                                                                     {account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName}
                                                                 </div>
                                                                 <div className="pseudo-td py-0 d-flex align-items-center">
