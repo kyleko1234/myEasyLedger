@@ -583,6 +583,7 @@ function TableOfJournalEntries({
                 toggle={toggleJournalEntryHistoryModal} 
                 accountOptions={accountOptions} 
                 vendorOptions={vendorOptions}
+                customerOptions={customerOptions}
             /> 
             
             {appContext.currentPermissionTypeId < 2
