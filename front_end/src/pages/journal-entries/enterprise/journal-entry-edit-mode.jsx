@@ -67,7 +67,7 @@ function JournalEntryEditMode({
                         <input
                             type="number"
                             className="form-control"
-                            value={(row[columnAccessor] !== null) ? row[columnAccessor] : ''}
+                            value={row[columnAccessor] ? row[columnAccessor] : ''}
                             step="any"
                             onChange={event => {
                                 let updatedLineItemData = data.slice();
@@ -84,7 +84,7 @@ function JournalEntryEditMode({
                         <input
                             type="number"
                             className="form-control"
-                            value={(row[columnAccessor] !== null) ? row[columnAccessor] : ''}
+                            value={row[columnAccessor] ? row[columnAccessor] : ''}
                             step="any"
                             onChange={event => {
                                 let updatedLineItemData = data.slice();
