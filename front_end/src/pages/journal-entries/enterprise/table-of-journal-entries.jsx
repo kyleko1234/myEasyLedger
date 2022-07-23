@@ -90,6 +90,7 @@ function TableOfJournalEntries({
                 setJournalEntryDescription(journalEntry.description);
                 setJournalEntryDate(journalEntry.journalEntryDate);
                 setJournalEntryVendorId(journalEntry.vendorId);
+                setJournalEntryCustomerId(journalEntry.customerId);
                 setAlertMessages([]); //reset alert messages every time an entry is fetched to refresh the page          
             })
             .catch(console.log)
@@ -103,6 +104,7 @@ function TableOfJournalEntries({
         setJournalEntryDate(getTodayAsDateString());
         setJournalEntryDescription('');
         setJournalEntryVendorId(null);
+        setJournalEntryCustomerId(null);
         setLineItemData([{
             lineItemId: "",
             accountName: "",
