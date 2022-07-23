@@ -51,6 +51,9 @@ public class VendorService {
 		if (dto.getEmail() != null) {
 			product.setEmail(dto.getEmail());
 		}
+		if (dto.getPhoneNumber() != null) {
+			product.setPhoneNumber(dto.getPhoneNumber());
+		}
 		return product;
 	}
 	
@@ -78,6 +81,9 @@ public class VendorService {
 		}
 		if (dto.getEmail() != null) {
 			vendor.setEmail(dto.getEmail());
+		}
+		if (dto.getPhoneNumber() != null) {
+			vendor.setPhoneNumber(dto.getPhoneNumber());
 		}
 		return vendorRepo.save(vendor);
 	}
