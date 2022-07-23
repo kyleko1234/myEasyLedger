@@ -51,6 +51,9 @@ public class CustomerService {
 		if (dto.getEmail() != null) {
 			product.setEmail(dto.getEmail());
 		}
+		if (dto.getPhoneNumber() != null) {
+			product.setPhoneNumber(dto.getPhoneNumber());
+		}
 		return product;
 	}
 	
@@ -78,6 +81,9 @@ public class CustomerService {
 		}
 		if (dto.getEmail() != null) {
 			customer.setEmail(dto.getEmail());
+		}
+		if (dto.getPhoneNumber() != null) {
+			customer.setPhoneNumber(dto.getPhoneNumber());
 		}
 		return customerRepo.save(customer);
 	}

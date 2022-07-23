@@ -22,6 +22,7 @@ ___
 	"customerName": "Test Customer",
 	"contactName": "Test"
 	"email": "test@customer.com",
+	"phoneNumber": null,
 	"organizationId": 1
 }
 ```

@@ -19,6 +19,9 @@ The name of the main contact for this customer.
 - **contactEmail (`Optional String` 64)**<br/>
 An email to contact this customer.
 
+- **phoneNumber (`Optional String` 64)**<br/>
+A phone number to contact this customer.
+
 -**organizationId (`Long`)**<br/>
 The id of the organization that this customer belongs to.
 
@@ -51,6 +54,7 @@ Body:
     "customerName": "Test Customer",
     "contactName": "Test",
     "email": "test@customer.com",
+	"phoneNumber": null,
     "organizationId": 1
 }
 ```

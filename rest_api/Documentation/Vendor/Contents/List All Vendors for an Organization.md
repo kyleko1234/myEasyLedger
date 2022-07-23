@@ -23,6 +23,7 @@ ___
         "vendorName": "Best Vendor",
         "contactName": "Kyle",
         "email": "best@vendor.com",
+		"phoneNumber": null,
         "organizationId": 1
     },
     {
@@ -30,6 +31,7 @@ ___
         "vendorName": "Test Vendor",
         "contactName": "Test",
         "email": "test@vendor.com",
+		"phoneNumber": null,
         "organizationId": 1
     },
 	...

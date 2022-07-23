@@ -22,6 +22,7 @@ ___
 	"vendorName": "Test Vendor",
 	"contactName": "Test",
 	"email": "test@vendor.com",
+	"phoneNumber": null,
 	"organizationId": 1
 }
 ```

@@ -31,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 								@ColumnResult(name = "customerName"),
 								@ColumnResult(name = "contactName"),
 								@ColumnResult(name = "email"),
+								@ColumnResult(name = "phoneNumber"),
 								@ColumnResult(name = "organizationId")
 						}
 				)
@@ -41,7 +42,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		query = "SELECT  "
 				+ "    customer.id AS customerId, customer.customer_name AS customerName,  "
 				+ "    customer.contact_name AS contactName, customer.email AS email, "
-				+ "    customer.organization_id AS organizationId "
+				+ "    customer.phone_number AS phoneNumber, customer.organization_id AS organizationId "
 				+ "FROM customer "
 				+ "WHERE customer.organization_id = ? "
 				+ "ORDER BY customer.customer_name ASC",
@@ -66,6 +67,9 @@ public class Customer {
 	@Column(name = "email")
 	private String email;
 
+	@Column(name = "phone_number")
+	private String phoneNumber;
+	
 	@ManyToOne
 	@JoinColumn(name = "organization_id")
 	private Organization organization;
@@ -115,6 +119,14 @@ public class Customer {
 
 	public void setEmail(String email) {
 		this.email = Utility.trimString(email, 64);
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = Utility.trimString(phoneNumber, 64);
 	}
 
 	public Organization getOrganization() {

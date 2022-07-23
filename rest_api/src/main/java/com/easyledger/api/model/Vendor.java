@@ -31,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 								@ColumnResult(name = "vendorName"),
 								@ColumnResult(name = "contactName"),
 								@ColumnResult(name = "email"),
+								@ColumnResult(name = "phoneNumber"),
 								@ColumnResult(name = "organizationId")
 						}
 				)
@@ -41,7 +42,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		query = "SELECT  "
 				+ "    vendor.id AS vendorId, vendor.vendor_name AS vendorName,  "
 				+ "    vendor.contact_name AS contactName, vendor.email AS email, "
-				+ "    vendor.organization_id AS organizationId "
+				+ "    vendor.phone_number AS phoneNumber, vendor.organization_id AS organizationId "
 				+ "FROM vendor "
 				+ "WHERE vendor.organization_id = ? "
 				+ "ORDER BY vendor.vendor_name ASC",
@@ -66,6 +67,9 @@ public class Vendor {
 	@Column(name = "email")
 	private String email;
 
+	@Column(name = "phone_number")
+	private String phoneNumber;
+	
 	@ManyToOne
 	@JoinColumn(name = "organization_id")
 	private Organization organization;
@@ -74,12 +78,13 @@ public class Vendor {
 	@JsonIgnore
 	private Set<JournalEntry> journalEntries = new HashSet<JournalEntry>();
 
-	public Vendor(String vendorName, String contactName, String email, Organization organization) {
+	public Vendor(String vendorName, String contactName, String email, Organization organization, String phoneNumber) {
 		super();
 		this.vendorName = vendorName;
 		this.contactName = contactName;
 		this.email = email;
 		this.organization = organization;
+		this.phoneNumber = phoneNumber;
 	}
 	
 	public Vendor() {
@@ -115,6 +120,14 @@ public class Vendor {
 
 	public void setEmail(String email) {
 		this.email = Utility.trimString(email, 64);
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = Utility.trimString(phoneNumber, 64);
 	}
 
 	public Organization getOrganization() {

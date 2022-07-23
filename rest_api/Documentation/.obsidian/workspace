@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "JournalEntry/Contents/Update a JournalEntry.md",
+            "file": "Vendor/Contents/Update a Vendor.md",
             "mode": "source"
           }
         }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JournalEntry/Contents/Update a JournalEntry.md",
+                "file": "Vendor/Contents/Update a Vendor.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,15 +88,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "JournalEntry/Contents/Update a JournalEntry.md",
-    "JournalEntry/Contents/The JournalEntry Object.md",
-    "JournalEntry/Contents/Retrieve a JournalEntry.md",
-    "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
-    "JournalEntry/Contents/List All JournalEntries.md",
-    "JournalEntry/Contents/Delete a JournalEntry.md",
-    "JournalEntry/Contents/Access Edit History of a Journal Entry.md",
-    "JournalEntry/Contents/Access Edit History of Journal Entries for an Organization.md",
-    "JournalEntry/Contents/Create a JournalEntry.md",
-    "JournalEntry/JournalEntry.md"
+    "Vendor/Contents/Update a Vendor.md",
+    "Vendor/Contents/The Vendor Object.md",
+    "Vendor/Contents/Retrieve a Vendor.md",
+    "Vendor/Contents/List All Vendors for an Organization.md",
+    "Vendor/Contents/Delete a Vendor.md",
+    "Vendor/Contents/Create a Vendor.md",
+    "Customer/Contents/Create a Customer.md",
+    "Customer/Contents/The Customer Object.md",
+    "Customer/Contents/Delete a Customer.md",
+    "Customer/Contents/List All Customers for an Organization.md"
   ]
 }

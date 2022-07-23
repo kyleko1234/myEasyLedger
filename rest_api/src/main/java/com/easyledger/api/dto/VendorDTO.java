@@ -9,9 +9,10 @@ public class VendorDTO {
 	private String vendorName;
 	private String contactName;
 	private String email;
+	private String phoneNumber;
 	private Long organizationId;
 	
-	public VendorDTO(BigInteger vendorId, String vendorName, String contactName, String email, BigInteger organizationId) {
+	public VendorDTO(BigInteger vendorId, String vendorName, String contactName, String email, String phoneNumber, BigInteger organizationId) {
 		this.vendorId = vendorId.longValueExact();
 		if (vendorName != null) {
 			this.vendorName = vendorName;
@@ -21,6 +22,9 @@ public class VendorDTO {
 		}
 		if (email != null) {
 			this.email = email;
+		}
+		if (phoneNumber != null) {
+			this.phoneNumber = phoneNumber;
 		}
 		this.organizationId = organizationId.longValueExact();
 	}
@@ -35,6 +39,9 @@ public class VendorDTO {
 		}
 		if (vendor.getEmail() != null) {
 			this.email = vendor.getEmail();
+		}
+		if (vendor.getPhoneNumber() != null) {
+			this.phoneNumber = vendor.getPhoneNumber();
 		}
 		this.organizationId = vendor.getOrganization().getId();
 	}
@@ -72,6 +79,14 @@ public class VendorDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public Long getOrganizationId() {
