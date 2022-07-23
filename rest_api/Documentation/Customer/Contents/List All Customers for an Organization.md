@@ -23,6 +23,7 @@ ___
         "customerName": "Best customer",
         "contactName": "Kyle",
         "email": "best@customer.com",
+		"phoneNumber": null,
         "organizationId": 1
     },
     {
@@ -30,6 +31,7 @@ ___
         "customerName": "Test customer",
         "contactName": "Test",
         "email": "test@customer.com",
+		"phoneNumber": null,
         "organizationId": 1
     },
 	...

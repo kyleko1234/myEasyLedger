@@ -15,6 +15,9 @@ The name of the main contact for this vendor.
 - **contactEmail (`Optional String` 64)**<br/>
 An email to contact this vendor.
 
+- **phoneNumber (`Optional String` 64)**<br/>
+A phone number to contact this customer.
+
 -**organizationId (`Long`)**<br/>
 The id of the organization that this vendor belongs to.
 ___
@@ -44,6 +47,7 @@ Body:
         "vendorName": "Best Vendor",
         "contactName": "Kyle",
         "email": "best@vendor.com",
+		"phoneNumber": null,
         "organizationId": 1
     }
 ```
