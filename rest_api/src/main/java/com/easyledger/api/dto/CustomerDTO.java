@@ -9,9 +9,10 @@ public class CustomerDTO {
 	private String customerName;
 	private String contactName;
 	private String email;
+	private String phoneNumber;
 	private Long organizationId;
 	
-	public CustomerDTO(BigInteger customerId, String customerName, String contactName, String email, BigInteger organizationId) {
+	public CustomerDTO(BigInteger customerId, String customerName, String contactName, String email, String phoneNumber, BigInteger organizationId) {
 		this.customerId = customerId.longValueExact();
 		if (customerName != null) {
 			this.customerName = customerName;
@@ -21,6 +22,9 @@ public class CustomerDTO {
 		}
 		if (email != null) {
 			this.email = email;
+		}
+		if (phoneNumber != null) {
+			this.phoneNumber = phoneNumber;
 		}
 		this.organizationId = organizationId.longValueExact();
 	}
@@ -35,6 +39,9 @@ public class CustomerDTO {
 		}
 		if (customer.getEmail() != null) {
 			this.email = customer.getEmail();
+		}
+		if (customer.getPhoneNumber() != null) {
+			this.phoneNumber = customer.getPhoneNumber();
 		}
 		this.organizationId = customer.getOrganization().getId();
 	}
@@ -72,6 +79,14 @@ public class CustomerDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public Long getOrganizationId() {
