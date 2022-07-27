@@ -198,8 +198,12 @@ function JournalEntryEditMode({
                 </button>
             </div>
             <div className="row mb-2 align-items-center">
-                <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Vendor"]}</strong></div> 
-                <div className="col-xl-8">
+                <div className="col-xl-1">
+                    <strong>
+                        {journalEntryEditModeText[appContext.locale]["Vendor"]}
+                    </strong>
+                </div> 
+                <div className="col-xl-3 mb-2 mb-xl-0">
                     <Select
                         classNamePrefix="form-control"
                         options={vendorOptions}
@@ -217,10 +221,15 @@ function JournalEntryEditMode({
                         }}
                     />
                 </div>
-            </div>
-            <div className="row mb-2 align-items-center">
-                <div className="col-xl-1"><strong>{journalEntryEditModeText[appContext.locale]["Customer"]}</strong></div> 
-                <div className="col-xl-8">
+                <div className="col-xl-1 d-none d-xl-inline-block text-center fw-semibold">
+                    {journalEntryEditModeText[appContext.locale]["or"]}
+                </div>
+                <div className="col-xl-1">
+                    <strong>
+                        {journalEntryEditModeText[appContext.locale]["Customer"]}
+                    </strong>
+                </div> 
+                <div className="col-xl-3">
                     <Select
                         classNamePrefix="form-control"
                         options={customerOptions}
@@ -276,6 +285,11 @@ function JournalEntryEditMode({
                                 )
                             }
                         )}
+                        <div className="mb-2">
+                            <button type="button" className="btn btn-lg btn-white w-100 d-block" onClick={() => addEmptyLineItem()}>
+                                <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
+                            </button>
+                        </div>
                     </div>
                     <div className="pseudo-tfoot">
                         <div className="pseudo-tr d-flex">
@@ -361,11 +375,6 @@ function JournalEntryEditMode({
                             </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <button className="btn btn-lg btn-white w-100 d-block" onClick={() => addEmptyLineItem()}>
-                        <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
-                    </button>
                 </div>
             </div>
         </>

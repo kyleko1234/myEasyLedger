@@ -16,6 +16,7 @@ export const journalEntryEditModeText = {
         "Total Credit": "Total Credit",
 
         "Vendor": "Vendor",
+        "or": "or",
         "Customer": "Customer"
     },
     "zh-TW" : {
@@ -35,6 +36,7 @@ export const journalEntryEditModeText = {
         "Total Credit": "貸方加總",
         
         "Vendor": "供應商(賣主)",
+        "or": "或",
         "Customer": "客戶(買主)"
     }
 }
