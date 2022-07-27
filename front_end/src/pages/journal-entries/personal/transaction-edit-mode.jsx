@@ -223,6 +223,11 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                                 )
                             }
                         )}
+                        <div className="mb-2">
+                            <button className="btn btn-lg btn-white d-block w-100" onClick={addEmptyLineItem}>
+                                <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
+                            </button>
+                        </div>
                     </div>
                     <div className="pseudo-tfoot">
                         <div className="pseudo-tr d-flex">
@@ -295,11 +300,6 @@ function TransactionEditMode({ data, journalEntryDescription, setJournalEntryDes
                             }
                         )}
                     </div>
-                </div>
-                <div>
-                    <button className="btn btn-lg btn-white d-block w-100" onClick={addEmptyLineItem}>
-                        <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntryEditModeText[appContext.locale]["Add a Line Item"]}
-                    </button>
                 </div>
             </div>
         </>
