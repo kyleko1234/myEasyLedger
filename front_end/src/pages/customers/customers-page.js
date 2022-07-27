@@ -18,6 +18,7 @@ function CustomersPage(props) {
     const [customerNameInput, setCustomerNameInput] = React.useState('');
     const [contactNameInput, setContactNameInput] = React.useState('');
     const [emailInput, setEmailInput] = React.useState('');
+    const [phoneNumberInput, setPhoneNumberInput] = React.useState('');
 
 
     const fetchData = () => {
@@ -35,6 +36,7 @@ function CustomersPage(props) {
         setCustomerNameInput('');
         setContactNameInput('');
         setEmailInput('');
+        setPhoneNumberInput('');
         toggleEditCustomerModal();
     }
 
@@ -43,6 +45,7 @@ function CustomersPage(props) {
         setCustomerNameInput(customer.customerName);
         setContactNameInput(customer.contactName);
         setEmailInput(customer.email);
+        setPhoneNumberInput(customer.phoneNumber);
         toggleEditCustomerModal();
     }
 
@@ -77,6 +80,7 @@ function CustomersPage(props) {
                 customerNameInput={customerNameInput} setCustomerNameInput={setCustomerNameInput}
                 contactNameInput={contactNameInput} setContactNameInput={setContactNameInput}
                 emailInput={emailInput} setEmailInput={setEmailInput}
+                phoneNumberInput={phoneNumberInput} setPhoneNumberInput={setPhoneNumberInput}
                 fetchData={fetchData} 
             />
         </>
