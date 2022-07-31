@@ -12,6 +12,9 @@ function CustomersListSmallScreen({customers, handleEditCustomerButton, classNam
                             <div className="fw-semibold">
                                 {customer.customerName}
                             </div>
+                            <div className="font-size-compact">
+                                {customer.phoneNumber}
+                            </div>
                             <div className="font-size-compact fw-light">
                                 <em>
                                     {customer.contactName + (customer.contactName && customer.email ? " - " : "") + customer.email}

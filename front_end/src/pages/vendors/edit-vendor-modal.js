@@ -13,6 +13,7 @@ function EditVendorModal({
     vendorNameInput, setVendorNameInput,
     contactNameInput, setContactNameInput,
     emailInput, setEmailInput,
+    phoneNumberInput, setPhoneNumberInput,
     fetchData
 }) {
     const appContext = React.useContext(PageSettings);
@@ -41,6 +42,7 @@ function EditVendorModal({
             vendorName: vendorNameInput,
             contactName: contactNameInput,
             email: emailInput,
+            phoneNumber: phoneNumberInput,
             organizationId: appContext.currentOrganizationId
         }
         if (!vendorNameInput) {
@@ -160,7 +162,7 @@ function EditVendorModal({
                                 />
                             </div>
                         </div>
-                        <div className=" row">
+                        <div className="mb-3 row">
                             <label className="col-form-label col-md-4">
                                 {vendorsText[appContext.locale]["Email"]}
                             </label>
@@ -171,6 +173,21 @@ function EditVendorModal({
                                     value={emailInput}
                                     onChange={event => {
                                         setEmailInput(event.target.value);
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className=" row">
+                            <label className="col-form-label col-md-4">
+                                {vendorsText[appContext.locale]["Phone Number"]}
+                            </label>
+                            <div className="col-md-8">
+                                <input
+                                    disabled={appContext.currentPermissionTypeId < 2 ? true : false}
+                                    className="form-control"
+                                    value={phoneNumberInput}
+                                    onChange={event => {
+                                        setPhoneNumberInput(event.target.value);
                                     }}
                                 />
                             </div>

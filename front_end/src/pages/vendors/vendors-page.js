@@ -19,6 +19,7 @@ function VendorsPage(props) {
     const [vendorNameInput, setVendorNameInput] = React.useState('');
     const [contactNameInput, setContactNameInput] = React.useState('');
     const [emailInput, setEmailInput] = React.useState('');
+    const [phoneNumberInput, setPhoneNumberInput] = React.useState('');
 
 
     const fetchData = () => {
@@ -36,6 +37,7 @@ function VendorsPage(props) {
         setVendorNameInput('');
         setContactNameInput('');
         setEmailInput('');
+        setPhoneNumberInput('');
         toggleEditVendorModal();
     }
 
@@ -44,6 +46,7 @@ function VendorsPage(props) {
         setVendorNameInput(vendor.vendorName);
         setContactNameInput(vendor.contactName);
         setEmailInput(vendor.email);
+        setPhoneNumberInput(vendor.phoneNumber);
         toggleEditVendorModal();
     }
 
@@ -78,6 +81,7 @@ function VendorsPage(props) {
                 vendorNameInput={vendorNameInput} setVendorNameInput={setVendorNameInput}
                 contactNameInput={contactNameInput} setContactNameInput={setContactNameInput}
                 emailInput={emailInput} setEmailInput={setEmailInput}
+                phoneNumberInput={phoneNumberInput} setPhoneNumberInput={setPhoneNumberInput}
                 fetchData={fetchData} 
             />
         </>
