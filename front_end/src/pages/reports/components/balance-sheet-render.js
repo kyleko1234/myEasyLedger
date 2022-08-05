@@ -265,7 +265,7 @@ function BalanceSheetRender(props) {
                 </CardBody>
             </Card>
             <Alert isOpen={unbalancedAlert} color="danger">
-                This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly.
+                {balanceSheetRenderText[appContext.locale]["This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly."]}
             </Alert>
             <PerfectScrollbar>
                 <div className="min-width-md">
