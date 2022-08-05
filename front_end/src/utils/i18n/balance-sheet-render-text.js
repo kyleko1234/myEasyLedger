@@ -31,6 +31,8 @@ export const balanceSheetRenderText = {
         "Ending balances of retained earnings": "Ending balances of retained earnings",
         "Total equity": "Total equity",
 
+        "This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly.": "This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly.",
+
         //Account Subtype Names.
         "Cash and cash equivalents": "Cash and cash equivalents", 
         "Current marketable securities": "Current marketable securities", 
@@ -101,6 +103,8 @@ export const balanceSheetRenderText = {
         "Dividends for current fiscal period": "本期股利",
         "Ending balances of retained earnings": "期末保留營餘",
         "Total equity": "權益總計",
+
+        "This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly.": "本資產負債表不符合會計衡等式，請檢查並修正各會計科目的初始值没有錯誤（借貸平衡）且無遺漏。",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "現金及約當現金", 

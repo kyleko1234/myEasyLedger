@@ -10,6 +10,7 @@ import { formatCurrency, getTodayAsDateString, localizeDate, validateDate } from
 import StripedRow from '../../../components/tables/striped-row';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { array } from 'prop-types';
 
 function BalanceSheetRender(props) {
     const appContext = React.useContext(PageSettings);
@@ -30,6 +31,7 @@ function BalanceSheetRender(props) {
     const [columnLabels, setColumnLabels] = React.useState([]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
+    const [unbalancedAlert, setUnbalancedAlert] = React.useState(false);
 
     const handleChangeDate = (date, i) => {
         let newEndDatesToRequestArray = endDatesToRequest.slice();
@@ -47,6 +49,7 @@ function BalanceSheetRender(props) {
     }
 
     const requestBalanceSheetObjects = async arrayToStoreObjects => {
+        setUnbalancedAlert(false);
         let newColumnLabels = [];
         for (const endDateObject of endDatesToRequest) {
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet/${endDateObject.endDate}`).then(response => {
@@ -55,6 +58,16 @@ function BalanceSheetRender(props) {
             }).catch(console.log);
         }
         setColumnLabels(newColumnLabels);
+        //verify accounting equation and set unbalanced alert if needed
+        let satisfiesAccountingEquation = true;
+        arrayToStoreObjects.forEach(balanceSheet => {
+            let totalAssets = balanceSheet.balanceSheetAssets.totalAssets
+            let equityAndLiability = parseFloat((balanceSheet.balanceSheetLiabilities.totalLiabilities + balanceSheet.balanceSheetEquity.totalEquity).toFixed(2))
+            if (totalAssets !== equityAndLiability) {
+                satisfiesAccountingEquation = false;
+            }
+        })
+        setUnbalancedAlert(!satisfiesAccountingEquation);
     }
 
     const validateDatesToRequest = endDatesToRequest => {
@@ -251,6 +264,9 @@ function BalanceSheetRender(props) {
                     </form>
                 </CardBody>
             </Card>
+            <Alert isOpen={unbalancedAlert} color="danger">
+                {balanceSheetRenderText[appContext.locale]["This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly."]}
+            </Alert>
             <PerfectScrollbar>
                 <div className="min-width-md">
                     <div className="d-flex justify-content-between font-weight-semibold text-end">
