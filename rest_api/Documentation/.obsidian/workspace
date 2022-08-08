@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Vendor/Contents/Update a Vendor.md",
+            "file": "LineItem/Contents/The LineItem Object.md",
             "mode": "source"
           }
         }
@@ -68,7 +68,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Vendor/Contents/Update a Vendor.md",
+                "file": "LineItem/Contents/The LineItem Object.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,15 +88,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "Vendor/Contents/Update a Vendor.md",
-    "Vendor/Contents/The Vendor Object.md",
-    "Vendor/Contents/Retrieve a Vendor.md",
-    "Vendor/Contents/List All Vendors for an Organization.md",
-    "Vendor/Contents/Delete a Vendor.md",
-    "Vendor/Contents/Create a Vendor.md",
-    "Customer/Contents/Create a Customer.md",
-    "Customer/Contents/The Customer Object.md",
-    "Customer/Contents/Delete a Customer.md",
-    "Customer/Contents/List All Customers for an Organization.md"
+    "LineItem/Contents/The LineItem Object.md",
+    "LineItem/Contents/List All LineItems.md",
+    "LineItem/Contents/Retrieve a LineItem.md",
+    "LineItem/Contents/Retrieve All LineItems for an Account.md",
+    "LineItem/Contents/Retrieve All Asset and Liability LineItems for an Organization.md",
+    "JournalEntry/Contents/Update a JournalEntry.md",
+    "LineItem/LineItem.md",
+    "The LineItem Object.md",
+    "JournalEntry/Contents/The JournalEntry Object.md",
+    "Vendor/Contents/Update a Vendor.md"
   ]
 }

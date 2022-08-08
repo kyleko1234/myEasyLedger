@@ -5,7 +5,6 @@ Authorization: User must have view permissions for this organization.
 
 Retrieves all LineItems belonging to organization with id {organizationId}, that belong to an account with accountType < 3. Paginated server-side.
 
-**NOTE: The 'description' field returned by this function will reflect the description of the parent JournalEntry of the LineItem, not the description of the LineItem itself. In order to access LineItem.description you will need to either [[Retrieve a LineItem|retrieve the LineItem alone]], or [[Retrieve a JournalEntry|retrieve it as part of a JournalEntry]]. **
 ___
 #### Request Body Parameters
 None
@@ -25,12 +24,13 @@ ___
         {
             "accountId": 1,
             "accountName": "Cash",
-            "amount": 7500,
-            "description": "Paid salary for the month of November $7,500",
+            "amount": 2000,
+            "description": "Paid salary expense for November",
             "journalEntryId": 10,
             "journalEntryDate": "2020-11-30",
+            "journalEntryDescription": "Paid salary for the month of November $7,501",
             "isCredit": true,
-            "lineItemId": 21,
+            "lineItemId": 1350,
             "accountSubtypeId": 1,
             "accountTypeId": 1
         },
@@ -38,11 +38,12 @@ ___
             "accountId": 1,
             "accountName": "Cash",
             "amount": 20000,
-            "description": "Received $20,000 cash from clients billed on November 21.",
+            "description": "Collected cash from clients billed on November 21",
             "journalEntryId": 9,
             "journalEntryDate": "2020-11-29",
+            "journalEntryDescription": "Received $20,000 cash from clients billed on November 21.",
             "isCredit": false,
-            "lineItemId": 19,
+            "lineItemId": 1316,
             "accountSubtypeId": 1,
             "accountTypeId": 1
         }
@@ -63,14 +64,14 @@ ___
     "totalElements": 14,
     "last": false,
     "numberOfElements": 2,
-    "first": true,
+    "size": 2,
+    "number": 0,
     "sort": {
         "sorted": false,
         "unsorted": true,
         "empty": true
     },
-    "number": 0,
-    "size": 2,
+    "first": true,
     "empty": false
 }
 ```

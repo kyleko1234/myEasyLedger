@@ -16,6 +16,7 @@ public class LineItemDTO {
 	private String description;
 	private Long journalEntryId;
 	private LocalDate journalEntryDate;
+	private String journalEntryDescription;
 	private boolean isCredit;
 	private Long lineItemId;
 	private Long accountSubtypeId;
@@ -29,6 +30,7 @@ public class LineItemDTO {
     	this.lineItemId = lineItem.getId();
     	this.journalEntryId = lineItem.getJournalEntry().getId();
     	this.journalEntryDate = lineItem.getJournalEntry().getJournalEntryDate();
+    	this.journalEntryDescription = lineItem.getJournalEntry().getDescription();
     	this.isCredit = lineItem.isIsCredit();
     	this.amount = lineItem.getAmount();
     	this.description = lineItem.getDescription();
@@ -47,7 +49,7 @@ public class LineItemDTO {
 	}
 
 	public LineItemDTO(BigInteger accountId, String accountName, BigDecimal amount, String description, 
-			BigInteger journalEntryId, Date journalEntryDate, boolean isCredit, BigInteger lineItemId,
+			BigInteger journalEntryId, Date journalEntryDate, String journalEntryDescription, boolean isCredit, BigInteger lineItemId,
 			BigInteger accountSubtypeId, BigInteger accountTypeId) {
 		this.accountId = accountId.longValueExact();
 		this.accountName = accountName;
@@ -55,6 +57,7 @@ public class LineItemDTO {
 		this.description = description;
 		this.journalEntryId = journalEntryId.longValueExact();
 		this.journalEntryDate = LocalDate.parse(journalEntryDate.toString());
+		this.journalEntryDescription = journalEntryDescription;
 		this.isCredit = isCredit;
 		this.lineItemId = lineItemId.longValueExact();
 		this.accountSubtypeId = accountSubtypeId.longValueExact();
@@ -107,6 +110,14 @@ public class LineItemDTO {
 
 	public void setJournalEntryDate(LocalDate journalEntryDate) {
 		this.journalEntryDate = journalEntryDate;
+	}
+
+	public String getJournalEntryDescription() {
+		return journalEntryDescription;
+	}
+
+	public void setJournalEntryDescription(String journalEntryDescription) {
+		this.journalEntryDescription = journalEntryDescription;
 	}
 
 	public boolean isIsCredit() {
