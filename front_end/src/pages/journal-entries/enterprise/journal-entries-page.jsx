@@ -1,6 +1,11 @@
+import axios from 'axios';
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
+import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
+import { localizeDate } from '../../../utils/util-fns';
+import JournalEntryTitleBarSmallScreen from './journal-entry-title-bar-small-screen';
+import JournalEntryTitleBarStandard from './journal-entry-title-bar-standard';
 
 function JournalEntriesPage(props) {
     const appContext = React.useContext(PageSettings);
@@ -59,7 +64,7 @@ function JournalEntriesPage(props) {
                 });
                 formattedVendorOptions.unshift({
                     value: null,
-                    label: tableOfJournalEntriesText[appContext.locale]["None"],
+                    label: journalEntriesText[appContext.locale]["None"],
                     object: {
                         vendorId: null
                     }
@@ -81,7 +86,7 @@ function JournalEntriesPage(props) {
                 });
                 formattedCustomerOptions.unshift({
                     value: null,
-                    label: tableOfJournalEntriesText[appContext.locale]["None"],
+                    label: journalEntriesText[appContext.locale]["None"],
                     object: {
                         customerId: null
                     }
@@ -93,11 +98,11 @@ function JournalEntriesPage(props) {
 
     const fetchAccounts = () => {
         let accountTypePrefixes = {
-            1: tableOfJournalEntriesText[appContext.locale]["[A] "],
-            2: tableOfJournalEntriesText[appContext.locale]["[L] "],
-            3: tableOfJournalEntriesText[appContext.locale]["[O] "],
-            4: tableOfJournalEntriesText[appContext.locale]["[I] "],
-            5: tableOfJournalEntriesText[appContext.locale]["[E] "]
+            1: journalEntriesText[appContext.locale]["[A] "],
+            2: journalEntriesText[appContext.locale]["[L] "],
+            3: journalEntriesText[appContext.locale]["[O] "],
+            4: journalEntriesText[appContext.locale]["[I] "],
+            5: journalEntriesText[appContext.locale]["[E] "]
         }
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`)
             .then(response => {
@@ -130,14 +135,14 @@ function JournalEntriesPage(props) {
 
     return(
         <>
-            <div className="d-flex justify-content-between align-items-center">
-                <div className="">
-                    Journal Entries
-                </div>
-                <button onClick={handleCreateAJournalEntryButton}>
-                    Add an entry
-                </button>
-            </div>
+            <JournalEntryTitleBarStandard 
+                handleCreateAJournalEntryButton={handleCreateAJournalEntryButton}
+            />
+            <JournalEntryTitleBarSmallScreen
+                handleCreateAJournalEntryButton={handleCreateAJournalEntryButton}
+            />
+
+            
         </>
     )
 }

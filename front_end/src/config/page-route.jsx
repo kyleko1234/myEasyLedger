@@ -27,6 +27,7 @@ import ExpenseReport from '../pages/reports/expense-report.js';
 import VendorsPage from '../pages/vendors/vendors-page.js';
 import LedgerSettings from '../pages/settings/ledger-settings';
 import CustomersPage from '../pages/customers/customers-page.js';
+import JournalEntriesPage from '../pages/journal-entries/enterprise/journal-entries-page.jsx';
 
 const routes = [
   {
@@ -204,6 +205,12 @@ const routes = [
     title: 'Customers',
     component: CustomersPage
   },
+  {
+    path: '/journal-entries-new',
+    title: 'Journal Entries New',
+    component: JournalEntriesPage
+  },
+
 ];
 
 
