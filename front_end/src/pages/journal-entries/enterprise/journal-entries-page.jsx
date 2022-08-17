@@ -4,8 +4,12 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import { localizeDate } from '../../../utils/util-fns';
+import JournalEntryTableFooter from './journal-entry-table-footer';
+import JournalEntryTableHeader from './journal-entry-table-header';
 import JournalEntryTitleBarSmallScreen from './journal-entry-title-bar-small-screen';
 import JournalEntryTitleBarStandard from './journal-entry-title-bar-standard';
+import JournalEntryViewModelSmallScreen from './journal-entry-view-model-small-screen';
+import JournalEntryViewModelStandard from './journal-entry-view-model-standard';
 
 function JournalEntriesPage(props) {
     const appContext = React.useContext(PageSettings);
@@ -33,7 +37,7 @@ function JournalEntriesPage(props) {
     const [journalEntryModal, setJournalEntryModal] = React.useState(false);
     const toggleJournalEntryModal = () => setJournalEntryModal(!journalEntryModal);
     const [currentJournalEntryId, setCurrentJournalEntryId] = React.useState(0);
-    
+
 
     //functions to fetch data from API
     const fetchJournalEntryData = (pageIndex, pageSize) => {
@@ -56,7 +60,7 @@ function JournalEntriesPage(props) {
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/vendor`)
             .then(response => {
                 let formattedVendorOptions = response.data.map(vendor => {
-                    return({
+                    return ({
                         value: vendor.vendorId,
                         label: vendor.vendorName,
                         object: vendor
@@ -78,7 +82,7 @@ function JournalEntriesPage(props) {
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/customer`)
             .then(response => {
                 let formattedCustomerOptions = response.data.map(customer => {
-                    return({
+                    return ({
                         value: customer.customerId,
                         label: customer.customerName,
                         object: customer
@@ -109,7 +113,7 @@ function JournalEntriesPage(props) {
                 const formattedAccounts = response.data.filter(account => !account.hasChildren).map(account => {
                     return ({
                         value: account.accountId,
-                        label: accountTypePrefixes[account.accountTypeId] + 
+                        label: accountTypePrefixes[account.accountTypeId] +
                             (account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName),
                         object: account
                     });
@@ -118,7 +122,7 @@ function JournalEntriesPage(props) {
             })
             .catch(console.log);
     }
-    
+
     //Fetch data on page load and when pageIndex and pageSize are updated
     React.useEffect(() => {
         fetchJournalEntryData(pageIndex, pageSize);
@@ -133,16 +137,58 @@ function JournalEntriesPage(props) {
         //TODO
     }
 
-    return(
+    const handleClickJournalEntry = (journalEntryId) => {
+        //TODO
+    }
+
+    return (
         <>
-            <JournalEntryTitleBarStandard 
+            <JournalEntryTitleBarStandard
                 handleCreateAJournalEntryButton={handleCreateAJournalEntryButton}
             />
             <JournalEntryTitleBarSmallScreen
                 handleCreateAJournalEntryButton={handleCreateAJournalEntryButton}
             />
+            <JournalEntryTableHeader />
+            <div>
+                {journalEntryViewModels.map(journalEntryViewModel => {
+                    return (
+                        <JournalEntryViewModelStandard
+                            key={journalEntryViewModel.journalEntryId}
+                            journalEntryDate={journalEntryViewModel.journalEntryDate}
+                            description={journalEntryViewModel.description}
+                            debitAmount={journalEntryViewModel.debitAmount}
+                            creditAmount={journalEntryViewModel.creditAmount}
+                            onClick={handleClickJournalEntry(journalEntryViewModel.journalEntryId)}
+                        />
+                    )
+                })}
 
-            
+            </div>
+            <div>
+                {journalEntryViewModels.map(journalEntryViewModel => {
+                    return (
+                        <JournalEntryViewModelSmallScreen
+                            key={journalEntryViewModel.journalEntryId}
+                            journalEntryDate={journalEntryViewModel.journalEntryDate}
+                            description={journalEntryViewModel.description}
+                            debitAmount={journalEntryViewModel.debitAmount}
+                            creditAmount={journalEntryViewModel.creditAmount}
+                            onClick={handleClickJournalEntry(journalEntryViewModel.journalEntryId)}
+                        />
+                    )
+                })}
+            </div>
+            <JournalEntryTableFooter
+                previousPage={previousPage}
+                nextPage={nextPage}
+                pageIndex={pageIndex}
+                pageSize={pageSize}
+                pageLength={pageLength}
+                totalElements={totalElements}
+                first={first}
+                last={last}
+            />
         </>
     )
 }
