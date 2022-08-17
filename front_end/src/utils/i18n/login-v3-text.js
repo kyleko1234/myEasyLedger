@@ -47,7 +47,7 @@ export const loginV3Text = {
         "App description": "簡單來記帳。",
         "Invalid email or password.": "輸入的電郵或密碼有誤。",
         "Email not verified": "您使用的電郵還未經確認，請檢視寄到該電郵的確認信，依指示以完成確認程序。",
-        "Click here to send a new verification email.": "點此可再次寄出一封確認電郵指示到你的電郵箱。",
+        "Click here to send a new verification email.": "如還未收到確認信，請點此要求系統再次寄出一封確認電郵指示到你的電郵箱。",
         "Verification email sent!": "確認電郵已寄出！",
         "Email Address": "電郵",
         "Password": "密碼",
