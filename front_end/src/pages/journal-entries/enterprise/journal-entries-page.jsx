@@ -4,6 +4,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import { localizeDate } from '../../../utils/util-fns';
+import JournalEntryModal from './journal-entry-modal';
 import JournalEntryTableFooter from './journal-entry-table-footer';
 import JournalEntryTableHeader from './journal-entry-table-header';
 import JournalEntryTitleBarSmallScreen from './journal-entry-title-bar-small-screen';
@@ -123,13 +124,16 @@ function JournalEntriesPage(props) {
             .catch(console.log);
     }
 
-    //Fetch data on page load and when pageIndex and pageSize are updated
-    React.useEffect(() => {
+    const fetchData = (pageIndex, pageSize) => {
         fetchJournalEntryData(pageIndex, pageSize);
         fetchVendors();
         fetchCustomers();
         fetchAccounts();
+    }
 
+    //Fetch data on page load and when pageIndex and pageSize are updated
+    React.useEffect(() => {
+        fetchData(pageIndex, pageSize);
     }, [pageIndex, pageSize])
 
     //create a journalEntry
@@ -138,7 +142,8 @@ function JournalEntriesPage(props) {
     }
 
     const handleClickJournalEntry = (journalEntryId) => {
-        //TODO
+        setCurrentJournalEntryId(journalEntryId);
+        toggleJournalEntryModal();
     }
 
     return (
@@ -159,7 +164,7 @@ function JournalEntriesPage(props) {
                             description={journalEntryViewModel.description}
                             debitAmount={journalEntryViewModel.debitAmount}
                             creditAmount={journalEntryViewModel.creditAmount}
-                            onClick={handleClickJournalEntry(journalEntryViewModel.journalEntryId)}
+                            onClick={() => handleClickJournalEntry(journalEntryViewModel.journalEntryId)}
                         />
                     )
                 })}
@@ -174,7 +179,7 @@ function JournalEntriesPage(props) {
                             description={journalEntryViewModel.description}
                             debitAmount={journalEntryViewModel.debitAmount}
                             creditAmount={journalEntryViewModel.creditAmount}
-                            onClick={handleClickJournalEntry(journalEntryViewModel.journalEntryId)}
+                            onClick={() => handleClickJournalEntry(journalEntryViewModel.journalEntryId)}
                         />
                     )
                 })}
@@ -188,6 +193,12 @@ function JournalEntriesPage(props) {
                 totalElements={totalElements}
                 first={first}
                 last={last}
+            />
+            <JournalEntryModal
+                isOpen={journalEntryModal}
+                toggle={toggleJournalEntryModal}
+                refreshParentComponent={() => fetchData(pageIndex, pageSize)}
+                currentJournalEntryId={currentJournalEntryId}
             />
         </>
     )
