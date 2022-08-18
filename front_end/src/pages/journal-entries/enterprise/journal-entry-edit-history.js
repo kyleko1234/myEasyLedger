@@ -6,8 +6,7 @@ import { API_BASE_URL } from "../../../utils/constants";
 import JournalEntryViewMode from "./journal-entry-view-mode";
 import { journalEntryViewModeText } from "../../../utils/i18n/journal-entry-view-mode-text";
 import { yearMonthDayToDateString } from "../../../utils/util-fns";
-import JournalEntryViewStandard from "./journal-entry-view-standard";
-import JournalEntryViewSmallScreen from "./journal-entry-view-small-screen";
+import JournalEntryExpandedView from "./journal-entry-expanded-view";
 
 function JournalEntryEditHistory(props) {
     //required props: journalEntryId, isOpen, toggle, vendorOptions, customerOptions, accountOptions
@@ -81,7 +80,7 @@ function JournalEntryEditHistory(props) {
                                             </div>
                                         </div>
                                         <hr />
-                                        <JournalEntryViewStandard
+                                        <JournalEntryExpandedView
                                             journalEntryDescription={journalEntryLog.snapshot.description}
                                             journalEntryDate={yearMonthDayToDateString(...journalEntryLog.snapshot.journalEntryDate)}
                                             lineItems={journalEntryLog.snapshot.lineItems}
@@ -90,10 +89,6 @@ function JournalEntryEditHistory(props) {
                                             journalEntryCustomerId={journalEntryLog.snapshot.customerId}
                                             vendorOptions={props.vendorOptions}
                                             customerOptions={props.customerOptions}
-                                        />
-                                        <JournalEntryViewSmallScreen
-                                            lineItems={journalEntryLog.snapshot.lineItems}
-                                            accountOptions={props.accountOptions}
                                         />
                                     </CardBody>
                                 </Card>

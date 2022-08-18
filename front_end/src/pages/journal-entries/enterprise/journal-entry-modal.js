@@ -5,10 +5,9 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import { getTodayAsDateString } from '../../../utils/util-fns';
+import JournalEntryExpandedView from './journal-entry-expanded-view';
 import JournalEntryModalFooter from './journal-entry-modal-footer';
 import JournalEntryModalHeader from './journal-entry-modal-header';
-import JournalEntryViewSmallScreen from './journal-entry-view-small-screen';
-import JournalEntryViewStandard from './journal-entry-view-standard';
 
 function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJournalEntryId, accountOptions, vendorOptions, customerOptions }) {
     const appContext = React.useContext(PageSettings);
@@ -109,7 +108,7 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
                 customerOptions={customerOptions}
             />
             <ModalBody>
-                <JournalEntryViewStandard
+                <JournalEntryExpandedView
                     lineItems={lineItems}
                     journalEntryDescription={journalEntryDescription}
                     journalEntryDate={journalEntryDate}
@@ -118,10 +117,6 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
                     customerOptions={customerOptions}
                     journalEntryVendorId={journalEntryVendorId}
                     journalEntryCustomerId={journalEntryCustomerId}
-                />
-                <JournalEntryViewSmallScreen
-                    lineItems={lineItems}
-                    accountOptions={accountOptions}
                 />
             </ModalBody>
             <JournalEntryModalFooter
