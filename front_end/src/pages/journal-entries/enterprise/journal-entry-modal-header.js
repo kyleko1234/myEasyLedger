@@ -1,8 +1,9 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
+import JournalEntryEditHistory from './journal-entry-edit-history';
 
-function JournalEntryModalHeader({editMode}) {
+function JournalEntryModalHeader({editMode, currentJournalEntryId, vendorOptions, customerOptions, accountOptions}) {
     const appContext = React.useContext(PageSettings);
 
     const [journalEntryHistoryModal, setJournalEntryHistoryModal] = React.useState(false);
@@ -24,6 +25,14 @@ function JournalEntryModalHeader({editMode}) {
                 </div>
                 : null
             }
+            <JournalEntryEditHistory
+                journalEntryId={currentJournalEntryId}
+                isOpen={journalEntryHistoryModal}
+                toggle={toggleJournalEntryHistoryModal}
+                accountOptions={accountOptions}
+                vendorOptions={vendorOptions}
+                customerOptions={customerOptions}
+            />
         </div>
     )
 }

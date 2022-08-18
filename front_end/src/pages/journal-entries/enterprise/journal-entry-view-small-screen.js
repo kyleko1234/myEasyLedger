@@ -23,13 +23,13 @@ function JournalEntryViewSmallScreen({ lineItems, accountOptions }) {
             {/**Journal entry date, description, vendor, customer not rendered because it is rendered on JournalEntryViewStandard even on small screens */}
             <div className="pseudo-table d-lg-none">
                 <div className="pseudo-tbody border-top">
-                    {lineItems.map(lineItem => {
+                    {lineItems.map((lineItem, i) => {
                         let accountOption = accountOptions.find(accountOption => accountOption.value === lineItem.accountId);
                         return (
-                            <div key={lineItem.lineItemId} className="pseudo-tr d-flex">
+                            <div key={i} className="pseudo-tr d-flex">
                                 <div className="px-2 py-2 w-100">
                                     <div className="fw-semibold">
-                                        {accountOption.label}
+                                        {accountOption? accountOption.label : null}
                                     </div>
                                     <div className="mb-2">
                                         {lineItem.description 

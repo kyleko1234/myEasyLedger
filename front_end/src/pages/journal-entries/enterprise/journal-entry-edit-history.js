@@ -10,7 +10,7 @@ import JournalEntryViewStandard from "./journal-entry-view-standard";
 import JournalEntryViewSmallScreen from "./journal-entry-view-small-screen";
 
 function JournalEntryEditHistory(props) {
-    //required props: journalEntryId, isOpen, toggle, vendorOptions, customerOptions
+    //required props: journalEntryId, isOpen, toggle, vendorOptions, customerOptions, accountOptions
     //should be used for enterprise view only; non-enterprise should use TransactionEditHistory
     const appContext = React.useContext(PageSettings);
     const [loading, setLoading] = React.useState(true);

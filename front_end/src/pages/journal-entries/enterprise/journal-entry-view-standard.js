@@ -88,15 +88,15 @@ function JournalEntryViewStandard({ lineItems, journalEntryDate, journalEntryDes
                         </div>
                     </div>
                     <div className="pseudo-tbody">
-                        {lineItems.map(lineItem => {
+                        {lineItems.map((lineItem, i) => {
                             let accountOption = accountOptions.find(accountOption => accountOption.value === lineItem.accountId);
                             return (
-                                <div className="pseudo-tr d-flex" key={lineItem.lineItemId}>
+                                <div className="pseudo-tr d-flex" key={i}>
                                     <div className="pseudo-td col-6">
                                         {lineItem.description}
                                     </div>
                                     <div className="pseudo-td col-2">
-                                        {accountOption.label}
+                                        {accountOption? accountOption.label : null}
                                     </div>
                                     <div className="pseudo-td col-2 text-end">
                                         {lineItem.debitAmount? formatCurrency(appContext.locale, appContext.currency, lineItem.debitAmount) : null}

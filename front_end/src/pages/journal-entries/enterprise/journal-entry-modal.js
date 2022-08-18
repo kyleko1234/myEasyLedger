@@ -103,6 +103,10 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
         >
             <JournalEntryModalHeader 
                 editMode={editMode}
+                currentJournalEntryId={currentJournalEntryId}
+                accountOptions={accountOptions}
+                vendorOptions={vendorOptions}
+                customerOptions={customerOptions}
             />
             <ModalBody>
                 <JournalEntryViewStandard
