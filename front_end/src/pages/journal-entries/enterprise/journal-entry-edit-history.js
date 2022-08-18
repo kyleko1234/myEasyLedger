@@ -6,10 +6,12 @@ import { API_BASE_URL } from "../../../utils/constants";
 import JournalEntryViewMode from "./journal-entry-view-mode";
 import { journalEntryViewModeText } from "../../../utils/i18n/journal-entry-view-mode-text";
 import { yearMonthDayToDateString } from "../../../utils/util-fns";
+import JournalEntryViewStandard from "./journal-entry-view-standard";
+import JournalEntryViewSmallScreen from "./journal-entry-view-small-screen";
 
 function JournalEntryEditHistory(props) {
-//required props: journalEntryId, isOpen, toggle, vendorOptions, customerOptions
-//should be used for enterprise view only; non-enterprise should use TransactionEditHistory
+    //required props: journalEntryId, isOpen, toggle, vendorOptions, customerOptions
+    //should be used for enterprise view only; non-enterprise should use TransactionEditHistory
     const appContext = React.useContext(PageSettings);
     const [loading, setLoading] = React.useState(true);
     const [journalEntryLogs, setJournalEntryLogs] = React.useState([]);
@@ -49,7 +51,7 @@ function JournalEntryEditHistory(props) {
         }
     }, [props.isOpen]) //fetch data every time props.isOpen changes from false to true, i.e. when modal is opened. Because this component can only be opened in a JournalEntryViewMode window, props.journalEntryId can be assumed to not be undefined.
 
-    return(
+    return (
         <Modal
             scrollable
             isOpen={props.isOpen}
@@ -62,8 +64,8 @@ function JournalEntryEditHistory(props) {
             </ModalHeader>
             <ModalBody>
                 {loading
-                ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
-                :   <>
+                    ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
+                    : <>
                         {journalEntryLogs.map(journalEntryLog => {
                             return (
                                 <Card className="very-rounded shadow-sm mb-3" key={journalEntryLog.id}>
@@ -78,16 +80,20 @@ function JournalEntryEditHistory(props) {
                                                 <p>{journalEntryLog.personFirstName + " " + journalEntryLog.personLastName}</p>
                                             </div>
                                         </div>
-                                        <hr/>
-                                        <JournalEntryViewMode 
+                                        <hr />
+                                        <JournalEntryViewStandard
                                             journalEntryDescription={journalEntryLog.snapshot.description}
                                             journalEntryDate={yearMonthDayToDateString(...journalEntryLog.snapshot.journalEntryDate)}
-                                            data={journalEntryLog.snapshot.lineItems}
+                                            lineItems={journalEntryLog.snapshot.lineItems}
                                             accountOptions={props.accountOptions}
                                             journalEntryVendorId={journalEntryLog.snapshot.vendorId}
                                             journalEntryCustomerId={journalEntryLog.snapshot.customerId}
                                             vendorOptions={props.vendorOptions}
                                             customerOptions={props.customerOptions}
+                                        />
+                                        <JournalEntryViewSmallScreen
+                                            lineItems={journalEntryLog.snapshot.lineItems}
+                                            accountOptions={props.accountOptions}
                                         />
                                     </CardBody>
                                 </Card>

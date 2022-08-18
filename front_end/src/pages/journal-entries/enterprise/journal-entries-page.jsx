@@ -199,6 +199,9 @@ function JournalEntriesPage(props) {
                 toggle={toggleJournalEntryModal}
                 refreshParentComponent={() => fetchData(pageIndex, pageSize)}
                 currentJournalEntryId={currentJournalEntryId}
+                accountOptions={accountOptions}
+                vendorOptions={vendorOptions}
+                customerOptions={customerOptions}
             />
         </>
     )

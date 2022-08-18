@@ -51,8 +51,27 @@ export const journalEntriesText = {
         "This transaction has been locked by an admin of this ledger.": "This transaction has been locked by an admin of this ledger.",
         "Journal entry date must not be before": (lockJournalEntriesBefore, locale) => `Journal entry date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.`,
         "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `Transaction date must not be before ${localizeDate(lockJournalEntriesBefore, locale)}.`,
+        "None": "None",
 
-        "None": "None"
+        "Memo": "Memo",
+        "Account": "Account",
+        "Total": "Total",
+        "Transaction Type": "Transaction Type",
+        "Category or Account": "Category or Account",
+        "Amount": "Amount",
+        "From Account": "From Account",
+    
+        "Edit History": "Edit History",
+        "TIMESTAMP OF EDIT:": "TIMESTAMP OF EDIT:",
+        "AUTHOR OF EDIT:": "AUTHOR OF EDIT:",
+        
+        "Total Debit": "Total Debit",
+        "Total Credit": "Total Credit",
+        "No memo": "No memo",
+
+        "Vendor": "Vendor",
+        "Customer": "Customer"
+
     },
     "zh-TW": {
         "Date": "日期",
@@ -103,7 +122,29 @@ export const journalEntriesText = {
         "This transaction has been locked by an admin of this ledger.": "本交易記錄已被帳册管理者鎖定而不能被更改。",
         "Journal entry date must not be before": (lockJournalEntriesBefore, locale) => `管理者有鎖定帳册，分錄日期不得早於 ${localizeDate(lockJournalEntriesBefore, locale)}.`, 
         "Transaction date must not be before": (lockJournalEntriesBefore, locale) => `管理者有鎖定帳册，交易記錄日期不得早於 ${localizeDate(lockJournalEntriesBefore, locale)}.`,
-        "None": "無"
+        "None": "無",
+
+        "Memo": "註記",
+        "Account": "科目",
+        "Total": "合計",
+
+        "Transaction Type": "交易類別",
+        "Category or Account": "類別或帳戶",
+        "Amount": "金額",
+        "From Account": "從哪個帳戶",
+
+        "Edit History": "變更史",
+        "TIMESTAMP OF EDIT:": "更動時間點",
+        "AUTHOR OF EDIT:": "更動者",
+
+        "Total Debit": "借方加總",
+        "Total Credit": "貸方加總",
+        "No memo": "無註記",
+
+        "Vendor": "供應商(賣主)",
+        "Customer": "客戶(買主)"
+
+
 
     }
 }

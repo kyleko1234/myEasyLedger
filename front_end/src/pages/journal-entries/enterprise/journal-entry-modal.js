@@ -1,23 +1,39 @@
 import axios from 'axios';
 import React from 'react';
-import { Modal, ModalHeader } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import { getTodayAsDateString } from '../../../utils/util-fns';
 import JournalEntryModalFooter from './journal-entry-modal-footer';
 import JournalEntryModalHeader from './journal-entry-modal-header';
+import JournalEntryViewSmallScreen from './journal-entry-view-small-screen';
+import JournalEntryViewStandard from './journal-entry-view-standard';
 
-function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJournalEntryId }) {
+function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJournalEntryId, accountOptions, vendorOptions, customerOptions }) {
     const appContext = React.useContext(PageSettings);
 
     const [editMode, setEditMode] = React.useState(false);
     const toggleEditMode = () => setEditMode(!editMode);
 
-    const [lineItems, setLineItems] = React.useState([]);
-    const [journalEntryId, setJournalEntryId] = React.useState(null);
+    const [lineItems, setLineItems] = React.useState([{
+        lineItemId: "",
+        accountName: "",
+        accountId: "",
+        description: "",
+        debitAmount: 0,
+        creditAmount: 0
+    },
+    {
+        lineItemId: "",
+        accountName: "",
+        accountId: "",
+        description: "",
+        debitAmount: 0,
+        creditAmount: 0
+    }]);
     const [journalEntryDescription, setJournalEntryDescription] = React.useState('');
-    const [journalEntryDate, setJournalEntryDate] = React.useState('');
+    const [journalEntryDate, setJournalEntryDate] = React.useState(getTodayAsDateString());
     const [journalEntryVendorId, setJournalEntryVendorId] = React.useState(null);
     const [journalEntryCustomerId, setJournalEntryCustomerId] = React.useState(null);
 
@@ -46,28 +62,7 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
     }
 
     const fetchJournalEntry = journalEntryId => {
-        if (journalEntryId == 0) {
-            setJournalEntryDate(getTodayAsDateString());
-            setJournalEntryDescription('');
-            setJournalEntryVendorId(null);
-            setJournalEntryCustomerId(null);
-            setLineItems([{
-                lineItemId: "",
-                accountName: "",
-                accountId: "",
-                description: "",
-                debitAmount: 0,
-                creditAmount: 0
-            },
-            {
-                lineItemId: "",
-                accountName: "",
-                accountId: "",
-                description: "",
-                debitAmount: 0,
-                creditAmount: 0
-            }]);
-        } else {
+        if (journalEntryId !== 0) {
             axios.get(`${API_BASE_URL}/journalEntry/${journalEntryId}`)
                 .then(response => {
                     let formattedLineItems = []
@@ -85,7 +80,6 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
                     })
                     formattedLineItems.sort((a, b) => a.lineItemId > b.lineItemId ? 1 : -1) //sort by LineItemId to preserve insertion order
                     setLineItems(formattedLineItems);
-                    setJournalEntryId(journalEntry.journalEntryId);
                     setJournalEntryDescription(journalEntry.description);
                     setJournalEntryDate(journalEntry.journalEntryDate);
                     setJournalEntryVendorId(journalEntry.vendorId);
@@ -94,6 +88,10 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
                 .catch(console.log)
         }
     }
+
+    React.useEffect(() => {
+        fetchJournalEntry(currentJournalEntryId);
+    }, [currentJournalEntryId])
 
 
     return (
@@ -106,7 +104,22 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
             <JournalEntryModalHeader 
                 editMode={editMode}
             />
-
+            <ModalBody>
+                <JournalEntryViewStandard
+                    lineItems={lineItems}
+                    journalEntryDescription={journalEntryDescription}
+                    journalEntryDate={journalEntryDate}
+                    accountOptions={accountOptions}
+                    vendorOptions={vendorOptions}
+                    customerOptions={customerOptions}
+                    journalEntryVendorId={journalEntryVendorId}
+                    journalEntryCustomerId={journalEntryCustomerId}
+                />
+                <JournalEntryViewSmallScreen
+                    lineItems={lineItems}
+                    accountOptions={accountOptions}
+                />
+            </ModalBody>
             <JournalEntryModalFooter
                 editMode={editMode}
                 currentJournalEntryId={currentJournalEntryId}
