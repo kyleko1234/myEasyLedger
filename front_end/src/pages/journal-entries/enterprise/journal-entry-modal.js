@@ -5,6 +5,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import { getTodayAsDateString } from '../../../utils/util-fns';
+import JournalEntryExpandedEdit from './journal-entry-expanded-edit';
 import JournalEntryExpandedView from './journal-entry-expanded-view';
 import JournalEntryModalFooter from './journal-entry-modal-footer';
 import JournalEntryModalHeader from './journal-entry-modal-header';
@@ -35,9 +36,10 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
     const [journalEntryDate, setJournalEntryDate] = React.useState(getTodayAsDateString());
     const [journalEntryVendorId, setJournalEntryVendorId] = React.useState(null);
     const [journalEntryCustomerId, setJournalEntryCustomerId] = React.useState(null);
+    const [alertMessages, setAlertMessages] = React.useState([]);
 
     const handleModalOnClosed = () => {
-
+        setEditMode(false);
     }
 
     //handle buttons
@@ -54,10 +56,10 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
 
     }
     const handleEditButton = () => {
-
+        toggleEditMode();
     }
     const handleCloseButton = () => {
-        toggle()
+        toggle();
     }
 
     const fetchJournalEntry = journalEntryId => {
@@ -100,7 +102,7 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
             size="xl"
             centered={true}
         >
-            <JournalEntryModalHeader 
+            <JournalEntryModalHeader
                 editMode={editMode}
                 currentJournalEntryId={currentJournalEntryId}
                 accountOptions={accountOptions}
@@ -108,16 +110,30 @@ function JournalEntryModal({ isOpen, toggle, refreshParentComponent, currentJour
                 customerOptions={customerOptions}
             />
             <ModalBody>
-                <JournalEntryExpandedView
-                    lineItems={lineItems}
-                    journalEntryDescription={journalEntryDescription}
-                    journalEntryDate={journalEntryDate}
-                    accountOptions={accountOptions}
-                    vendorOptions={vendorOptions}
-                    customerOptions={customerOptions}
-                    journalEntryVendorId={journalEntryVendorId}
-                    journalEntryCustomerId={journalEntryCustomerId}
-                />
+                {editMode
+                    ? <JournalEntryExpandedEdit
+                        lineItems={lineItems} setLineItems={setLineItems}
+                        journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
+                        journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
+                        accountOptions={accountOptions}
+                        vendorOptions={vendorOptions}
+                        customerOptions={customerOptions}
+                        alertMessages={alertMessages}
+                        journalEntryVendorId={journalEntryVendorId} setJournalEntryVendorId={setJournalEntryVendorId}
+                        journalEntryCustomerId={journalEntryCustomerId} setJournalEntryCustomerId={setJournalEntryCustomerId}
+                    />
+                    : <JournalEntryExpandedView
+                        lineItems={lineItems}
+                        journalEntryDescription={journalEntryDescription}
+                        journalEntryDate={journalEntryDate}
+                        accountOptions={accountOptions}
+                        vendorOptions={vendorOptions}
+                        customerOptions={customerOptions}
+                        journalEntryVendorId={journalEntryVendorId}
+                        journalEntryCustomerId={journalEntryCustomerId}
+                    />
+                }
+
             </ModalBody>
             <JournalEntryModalFooter
                 editMode={editMode}

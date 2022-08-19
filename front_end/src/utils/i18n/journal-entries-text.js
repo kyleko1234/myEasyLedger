@@ -70,7 +70,11 @@ export const journalEntriesText = {
         "No memo": "No memo",
 
         "Vendor": "Vendor",
-        "Customer": "Customer"
+        "Customer": "Customer",
+
+        "Add a Line Item": "Add a Line Item",
+        "Copy description to line items": "Copy description to line items",
+        "or": "or",
 
     },
     "zh-TW": {
@@ -142,9 +146,12 @@ export const journalEntriesText = {
         "No memo": "無註記",
 
         "Vendor": "供應商(賣主)",
-        "Customer": "客戶(買主)"
+        "Customer": "客戶(買主)",
 
 
+        "Add a Line Item": "新增一行",
+        "Copy description to line items": "複製「描述」到各個單行項目",        
+        "or": "或",
 
     }
 }
