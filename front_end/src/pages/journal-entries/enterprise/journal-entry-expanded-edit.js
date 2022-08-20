@@ -98,7 +98,7 @@ function JournalEntryExpandedEdit({
                         />
                     </div>
                     <div className="col-xl-3">
-                        <button className="btn btn-white d-none d-xl-inline-block" onClick={copyDescriptionToLineItems}>
+                        <button className="btn btn-white d-none d-xl-inline-block" onClick={copyDescriptionToLineItems} type="button">
                             {journalEntriesText[appContext.locale]["Copy description to line items"]}
                         </button>
                     </div>
@@ -154,7 +154,7 @@ function JournalEntryExpandedEdit({
                         />
                     </div>
                 </div>
-                <button className="btn btn-white my-3 d-block w-100 d-xl-none" onClick={copyDescriptionToLineItems}>
+                <button className="btn btn-white my-3 d-block w-100 d-xl-none" onClick={copyDescriptionToLineItems} type="button">
                     {journalEntriesText[appContext.locale]["Copy description to line items"]}
                 </button>
             </div>

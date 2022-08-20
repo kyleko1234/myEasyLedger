@@ -19,6 +19,7 @@ function JournalEntryModalHeader({editMode, currentJournalEntryId, vendorOptions
                     <button
                         className="btn btn-white width-175"
                         onClick={toggleJournalEntryHistoryModal}
+                        type="button"
                     >
                         {journalEntriesText[appContext.locale]["View edit history"]}
                     </button>

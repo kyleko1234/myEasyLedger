@@ -38,7 +38,7 @@ function JournalEntriesPage(props) {
     const [journalEntryModal, setJournalEntryModal] = React.useState(false);
     const toggleJournalEntryModal = () => setJournalEntryModal(!journalEntryModal);
     const [currentJournalEntryId, setCurrentJournalEntryId] = React.useState(0);
-
+    const [editMode, setEditMode] = React.useState(false);
 
     //functions to fetch data from API
     const fetchJournalEntryData = (pageIndex, pageSize) => {
@@ -138,7 +138,8 @@ function JournalEntriesPage(props) {
 
     //create a journalEntry
     const handleCreateAJournalEntryButton = () => {
-        //TODO
+        setEditMode(true);
+        toggleJournalEntryModal();
     }
 
     const handleClickJournalEntry = (journalEntryId) => {
@@ -196,9 +197,10 @@ function JournalEntriesPage(props) {
             />
             <JournalEntryModal
                 isOpen={journalEntryModal}
+                editMode={editMode} setEditMode={setEditMode}
                 toggle={toggleJournalEntryModal}
                 refreshParentComponent={() => fetchData(pageIndex, pageSize)}
-                currentJournalEntryId={currentJournalEntryId}
+                currentJournalEntryId={currentJournalEntryId} setCurrentJournalEntryId={setCurrentJournalEntryId}
                 accountOptions={accountOptions}
                 vendorOptions={vendorOptions}
                 customerOptions={customerOptions}

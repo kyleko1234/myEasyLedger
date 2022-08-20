@@ -20,15 +20,15 @@ function JournalEntryModalFooter({editMode, currentJournalEntryId, journalEntryD
                     <div>
                         {currentJournalEntryId == 0 
                             ? null 
-                            : <button className="btn btn-danger width-10ch" onClick={handleDeleteButton}>
+                            : <button className="btn btn-danger width-10ch" onClick={handleDeleteButton} type="button">
                                 {journalEntriesText[appContext.locale]["Delete"]}
                             </button>}
                     </div>
                     <div>
-                        <button className="btn btn-primary width-10ch" onClick={handleSaveButton}>
+                        <button className="btn btn-primary width-10ch" type="submit">
                             {journalEntriesText[appContext.locale]["Save"]}
                         </button>
-                        <button className="btn btn-white ms-2 width-10ch" onClick={handleCancelButton}>
+                        <button className="btn btn-white ms-2 width-10ch" onClick={handleCancelButton} type="button">
                             {journalEntriesText[appContext.locale]["Cancel"]}
                         </button>
                     </div>
@@ -44,6 +44,7 @@ function JournalEntryModalFooter({editMode, currentJournalEntryId, journalEntryD
                                 className="btn btn-info width-10ch"
                                 onClick={handleCopyButton}
                                 disabled={appContext.currentPermissionTypeId < 2}
+                                type="button"
                             >
                                 {journalEntriesText[appContext.locale]["Copy"]}
                             </button>
@@ -53,6 +54,7 @@ function JournalEntryModalFooter({editMode, currentJournalEntryId, journalEntryD
                                 className="btn btn-primary ms-2 width-10ch"
                                 onClick={handleEditButton}
                                 disabled={appContext.currentPermissionTypeId < 2 || journalEntryDate < appContext.lockJournalEntriesBefore}
+                                type="button"
                             >
                                 {journalEntriesText[appContext.locale]["Edit"]}
                             </button>
@@ -61,6 +63,7 @@ function JournalEntryModalFooter({editMode, currentJournalEntryId, journalEntryD
                             <button
                                 className="btn btn-white ms-2 width-10ch"
                                 onClick={handleCloseButton}
+                                type="button"
                             >
                                 {journalEntriesText[appContext.locale]["Close"]}
                             </button>

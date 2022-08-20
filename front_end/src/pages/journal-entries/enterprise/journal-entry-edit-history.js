@@ -15,6 +15,10 @@ function JournalEntryEditHistory(props) {
     const [loading, setLoading] = React.useState(true);
     const [journalEntryLogs, setJournalEntryLogs] = React.useState([]);
 
+    const modalOnClosed = () => {
+        setJournalEntryLogs([]);
+    }
+    
     React.useEffect(() => {
         async function fetchData() {
             await axios.get(`${API_BASE_URL}/journalEntry/${props.journalEntryId}/log`).then(response => {
@@ -57,6 +61,7 @@ function JournalEntryEditHistory(props) {
             toggle={props.toggle}
             size="xl"
             centered={true}
+            onClosed={modalOnClosed}
         >
             <ModalHeader>
                 {journalEntryViewModeText[appContext.locale]["Edit History"]}
