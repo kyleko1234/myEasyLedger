@@ -61,7 +61,7 @@ function JournalEntryExpandedView({ lineItems, journalEntryDate, journalEntryDes
             </div>
 
             <div className="mt-3">
-                <LineItemsHeader />
+                <LineItemsHeader/>
                 <div>
                     {lineItems.map((lineItem, i) => {
                         return (

@@ -4,6 +4,8 @@ import Select from 'react-select';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import LineItemsHeader from './line-items-header';
+import LineItemEdit from './line-item-edit';
+import LineItemsFooterEdit from './line-items-footer-edit';
 
 function JournalEntryExpandedEdit({
     lineItems, setLineItems,
@@ -157,7 +159,32 @@ function JournalEntryExpandedEdit({
                 </button>
             </div>
 
-            <LineItemsHeader />
+            <LineItemsHeader editMode />
+            {lineItems.map((lineItem, i) => {
+                return (
+                    <LineItemEdit
+                        key={i}
+                        lineItems={lineItems}
+                        setLineItems={setLineItems}
+                        i={i}
+                        accountOptions={accountOptions}
+                        removeLineItem={removeLineItem}
+                    />
+                )
+            })}
+            <div className="mb-2 d-none d-lg-block">
+                <button type="button" className="btn btn-lg btn-white w-100" onClick={addEmptyLineItem}>
+                    <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntriesText[appContext.locale]["Add a Line Item"]}
+                </button>
+            </div>
+            <LineItemsFooterEdit
+                lineItems={lineItems}
+            />
+            <div className="mb-2 d-block d-lg-none">
+                <button type="button" className="btn btn-lg btn-white w-100" onClick={addEmptyLineItem}>
+                    <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntriesText[appContext.locale]["Add a Line Item"]}
+                </button>
+            </div>
         </>
     )
 }
