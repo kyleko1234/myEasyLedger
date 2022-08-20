@@ -12,10 +12,10 @@ export const customersText = {
 
     },
     "zh-TW": {
-        "Customers": "客戶名册",
+        "Customers": "客戶（收入來源）名册",
         "Add a Customer": "建立新客戶",
         "Customer Name": "客戶名稱",
-        "Edit Customer Details": "修改客戶（買主）資訊",
+        "Edit Customer Details": "修改客戶（收入來源）資訊",
         "Please remove all journal entries associated with this customer and try again.": "請先删除這個客戶的所有相關分錄後，才能删除此客戶。",
         "Are you sure you want to delete this customer?": "你確定要删除這個客戶嗎？",
         "Cannot delete this customer.": "無法删除本客戶。",

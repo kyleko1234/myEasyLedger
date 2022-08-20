@@ -56,8 +56,8 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Reports": "財務報告",
         "Accounts": "帳戶／錢包",
         "Categories": "收支類別",
-        "Vendors": "供應商(賣主)",
-        "Customers": "客戶(買主)"
+        "Vendors": "供應商(支出對象)",
+        "Customers": "客戶(收入來源)"
 
     }
 }
