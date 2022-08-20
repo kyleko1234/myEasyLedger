@@ -28,6 +28,7 @@ import VendorsPage from '../pages/vendors/vendors-page.js';
 import LedgerSettings from '../pages/settings/ledger-settings';
 import CustomersPage from '../pages/customers/customers-page.js';
 import JournalEntriesPage from '../pages/journal-entries/enterprise/journal-entries-page.jsx';
+import TransactionsPage from '../pages/journal-entries/personal/transactions-page.js';
 
 const routes = [
   {
@@ -209,6 +210,11 @@ const routes = [
     path: '/journal-entries-new',
     title: 'Journal Entries New',
     component: JournalEntriesPage
+  },
+  {
+    path: '/transactions-new',
+    title: 'Transactions',
+    component: TransactionsPage,
   },
 
 ];

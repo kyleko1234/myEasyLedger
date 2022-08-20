@@ -76,6 +76,10 @@ export const journalEntriesText = {
         "Copy description to line items": "Copy description to line items",
         "or": "or",
 
+        "Inflow": "Inflow",
+        "Outflow": "Outflow",
+        "Transactions": "Transactions",
+
     },
     "zh-TW": {
         "Date": "日期",
@@ -152,6 +156,10 @@ export const journalEntriesText = {
         "Add a Line Item": "新增一行",
         "Copy description to line items": "複製「描述」到各個單行項目",        
         "or": "或",
+
+        "Inflow": "流入",
+        "Outflow": "流出",
+        "Transactions": "帳戶交易記錄",
 
     }
 }
