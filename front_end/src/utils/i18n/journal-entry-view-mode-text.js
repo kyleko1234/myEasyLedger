@@ -49,9 +49,9 @@ export const journalEntryViewModeText = {
         "Total Credit": "貸方加總",
         "No memo": "無註記",
 
-        "Vendor": "供應商(賣主)",
+        "Vendor": "供應商(支出對象)",
         "None": "無",
-        "Customer": "客戶(買主)"
+        "Customer": "客戶(收入來源)"
 
     }
 }

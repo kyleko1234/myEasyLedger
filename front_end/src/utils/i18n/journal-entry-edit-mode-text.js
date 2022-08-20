@@ -35,8 +35,8 @@ export const journalEntryEditModeText = {
         "Total Debit": "借方加總",
         "Total Credit": "貸方加總",
         
-        "Vendor": "供應商(賣主)",
+        "Vendor": "供應商(支出對象)",
         "or": "或",
-        "Customer": "客戶(買主)"
+        "Customer": "客戶(收入來源)"
     }
 }

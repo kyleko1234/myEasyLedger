@@ -145,8 +145,8 @@ export const journalEntriesText = {
         "Total Credit": "貸方加總",
         "No memo": "無註記",
 
-        "Vendor": "供應商(賣主)",
-        "Customer": "客戶(買主)",
+        "Vendor": "供應商(支出對象)",
+        "Customer": "客戶(收入來源)",
 
 
         "Add a Line Item": "新增一行",
