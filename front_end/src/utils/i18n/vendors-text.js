@@ -14,7 +14,7 @@ export const vendorsText = {
         "A vendor with this name already exists in this ledger.": "A vendor with this name already exists in this ledger.",
     },
     "zh-TW": {
-        "Add a Vendor": "建立新供應商（支出對象）",
+        "Add a Vendor": "建立新支出對象",
         "Edit Vendor Details": "修改供應商(支出對象)資訊",
         "Please provide a vendor name.": "請輸入供應商的名稱。",
         "Vendor Name": "供應商名稱",
