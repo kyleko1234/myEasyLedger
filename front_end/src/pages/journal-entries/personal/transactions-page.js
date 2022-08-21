@@ -4,6 +4,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
 import { localizeDate } from '../../../utils/util-fns';
 import JournalEntryTableFooter from '../enterprise/journal-entry-table-footer';
+import TransactionModal from './transaction-modal';
 import TransactionViewModelSmallSreen from './transaction-view-model-small-screen';
 import TransactionViewModelStandard from './transaction-view-model-standard';
 import TransactionsTableHeader from './transactions-table-header';
@@ -143,6 +144,14 @@ function TransactionsPage(props) {
                 totalElements={totalElements}
                 first={first}
                 last={last}
+            />
+            <TransactionModal
+                isOpen={transactionModal}
+                editMode={editMode} setEditMode={setEditMode}
+                toggle={toggleTransactionModal}
+                refreshParentComponent={() => fetchData(pageIndex, pageSize)}
+                currentJournalEntryId={currentJournalEntryId} setCurrentJournalEntryId={setCurrentJournalEntryId}
+                accountOptions={accountOptions}
             />
         </>
     )

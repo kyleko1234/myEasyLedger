@@ -6,6 +6,7 @@ import { API_BASE_URL, PERSONAL_TRANSACTION_TYPES } from "../../../utils/constan
 import TransactionViewMode from "./transaction-view-mode";
 import { journalEntryViewModeText } from "../../../utils/i18n/journal-entry-view-mode-text";
 import { yearMonthDayToDateString } from "../../../utils/util-fns";
+import TransactionExpandedView from "./transaction-expanded-view";
 
 function TransactionEditHistory(props) {
 //required props: journalEntryId, isOpen, toggle
@@ -63,7 +64,7 @@ function TransactionEditHistory(props) {
             scrollable
             isOpen={props.isOpen}
             toggle={props.toggle}
-            size="lg" style={{ maxWidth: '1600px', width: '80%', margin: 'auto' }}
+            size="xl"
             centered={true}
         >
             <ModalHeader>
@@ -88,11 +89,11 @@ function TransactionEditHistory(props) {
                                             </div>
                                         </div>
                                         <hr/>
-                                        <TransactionViewMode 
+                                        <TransactionExpandedView 
                                             fromAccountName={journalEntryLog.snapshot.fromAccountName}
                                             journalEntryDescription={journalEntryLog.snapshot.description}
                                             journalEntryDate={yearMonthDayToDateString(...journalEntryLog.snapshot.journalEntryDate)}
-                                            data={journalEntryLog.snapshot.lineItems}
+                                            lineItems={journalEntryLog.snapshot.lineItems}
                                         />
                                     </CardBody>
                                 </Card>

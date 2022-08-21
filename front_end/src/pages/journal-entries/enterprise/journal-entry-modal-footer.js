@@ -3,7 +3,7 @@ import { ModalFooter, Tooltip } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 
-function JournalEntryModalFooter({editMode, currentJournalEntryId, journalEntryDate, handleDeleteButton, handleSaveButton, handleCancelButton, handleCopyButton, handleEditButton, handleCloseButton}) {
+function JournalEntryModalFooter({editMode, currentJournalEntryId, journalEntryDate, handleDeleteButton, handleCancelButton, handleCopyButton, handleEditButton, handleCloseButton}) {
     const appContext = React.useContext(PageSettings);
 
     const [copyButtonTooltip, setCopyButtonTooltip] = React.useState(false);
