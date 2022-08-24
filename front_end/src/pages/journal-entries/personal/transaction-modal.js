@@ -5,6 +5,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL, PERSONAL_TRANSACTION_TYPES } from '../../../utils/constants';
 import { getTodayAsDateString } from '../../../utils/util-fns';
 import JournalEntryModalFooter from '../enterprise/journal-entry-modal-footer';
+import TransactionExpandedEdit from './transaction-expanded-edit';
 import TransactionExpandedView from './transaction-expanded-view';
 import TransactionModalHeader from './transaction-modal-header';
 
@@ -129,7 +130,14 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
                 />
                 <ModalBody>
                     {editMode
-                        ? null
+                        ? <TransactionExpandedEdit
+                            lineItems={lineItems} setLineItems={setLineItems}
+                            journalEntryDescription={journalEntryDescription} setJournalEntryDescription={setJournalEntryDescription}
+                            journalEntryDate={journalEntryDate} setJournalEntryDate={setJournalEntryDate}
+                            fromAccountId={fromAccountId} setFromAccountId={setFromAccountId}
+                            fromAccountName={fromAccountName} setFromAccountName={setFromAccountName}
+                            accountOptions={accountOptions} alertMessages={alertMessages}
+                        />
                         : <TransactionExpandedView
                             lineItems={lineItems}
                             journalEntryDescription={journalEntryDescription}

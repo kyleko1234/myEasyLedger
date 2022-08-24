@@ -214,8 +214,8 @@ function JournalEntryModal({ isOpen, toggle, editMode, setEditMode, refreshParen
                             accountName: lineItem.accountName,
                             accountId: lineItem.accountId,
                             description: lineItem.description,
-                            debitAmount: (lineItem.isCredit ? null : lineItem.amount),
-                            creditAmount: (lineItem.isCredit ? lineItem.amount : null)
+                            debitAmount: (lineItem.isCredit ? 0 : lineItem.amount),
+                            creditAmount: (lineItem.isCredit ? lineItem.amount : 0)
                         }
                         formattedLineItems.push(formattedLineItem);
                     })

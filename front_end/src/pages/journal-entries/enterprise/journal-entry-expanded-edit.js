@@ -45,25 +45,13 @@ function JournalEntryExpandedEdit({
         setLineItems(updatedLineItems);
     }
 
-    const sumAmountsInColumn = columnName => {
-        let sum = 0;
-        lineItems.forEach(lineItem => {
-            sum += lineItem[columnName];
-        });
-        if (isNaN(sum)) {
-            return 0
-        } else {
-            return sum;
-        }
-    }
-
     return (
         <>
             <Alert
                 color="danger"
                 className="m-b-15"
                 style={{ borderStyle: "solid", borderColor: "FireBrick", borderWidth: "1px" }}
-                isOpen={alertMessages.length}
+                isOpen={alertMessages.length? true : false}
             >
                 <div className="d-flex justify-content-center">
                     <ul className="my-0">

@@ -20,13 +20,13 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
     const handleChangeDebitInput = event => {
         let updatedLineItems = lineItems.slice();
         updatedLineItems[i].debitAmount = parseFloat(event.target.value);
-        updatedLineItems[i].creditAmount = null;
+        updatedLineItems[i].creditAmount = 0;
         setLineItems(updatedLineItems);
     }
     const handleChangeCreditInput = event => {
         let updatedLineItems = lineItems.slice();
         updatedLineItems[i].creditAmount = parseFloat(event.target.value);
-        updatedLineItems[i].debitAmount = null;
+        updatedLineItems[i].debitAmount = 0;
         setLineItems(updatedLineItems);
     }
 
@@ -59,7 +59,7 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
                     <input
                         type="number"
                         className="form-control"
-                        value={lineItems[i].debitAmount ? lineItems[i].debitAmount : null}
+                        value={lineItems[i].debitAmount ? lineItems[i].debitAmount : ''}
                         step="any"
                         onChange={handleChangeDebitInput}
                     />
@@ -68,7 +68,7 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
                     <input
                         type="number"
                         className="form-control"
-                        value={lineItems[i].creditAmount ? lineItems[i].creditAmount : null}
+                        value={lineItems[i].creditAmount ? lineItems[i].creditAmount : ''}
                         step="any"
                         onChange={handleChangeCreditInput}
                     />
@@ -130,7 +130,7 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
                                 <input
                                     type="number"
                                     className="form-control"
-                                    value={lineItems[i].debitAmount ? lineItems[i].debitAmount : null}
+                                    value={lineItems[i].debitAmount ? lineItems[i].debitAmount : ''}
                                     step="any"
                                     onChange={handleChangeDebitInput}
                                 />
@@ -144,7 +144,7 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
                                 <input
                                     type="number"
                                     className="form-control"
-                                    value={lineItems[i].creditAmount ? lineItems[i].creditAmount : null}
+                                    value={lineItems[i].creditAmount ? lineItems[i].creditAmount : ''}
                                     step="any"
                                     onChange={handleChangeCreditInput}
                                 />
