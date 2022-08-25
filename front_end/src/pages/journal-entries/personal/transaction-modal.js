@@ -3,7 +3,8 @@ import React from 'react';
 import { Modal, ModalBody } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL, PERSONAL_TRANSACTION_TYPES } from '../../../utils/constants';
-import { getTodayAsDateString } from '../../../utils/util-fns';
+import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
+import { getTodayAsDateString, validateDate } from '../../../utils/util-fns';
 import JournalEntryModalFooter from '../enterprise/journal-entry-modal-footer';
 import TransactionExpandedEdit from './transaction-expanded-edit';
 import TransactionExpandedView from './transaction-expanded-view';
@@ -51,10 +52,23 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
 
     //handle buttons
     const handleDeleteButton = () => {
-
+        axios.delete(`${API_BASE_URL}/journalEntry/${currentJournalEntryId}`)
+            .then(response => {
+                refreshParentComponent();
+                toggle();
+            });
     }
     const handleSubmit = event => {
         event.preventDefault();
+        setAlertMessages([]);
+        if (transactionIsValid()) {
+            let requestBody = prepareRequestBody();
+            if (currentJournalEntryId) {
+                putTransaction(requestBody);
+            } else {
+                postTransaction(requestBody);
+            }
+        }
     }
     const handleCancelButton = () => {
         if (currentJournalEntryId == 0) {
@@ -74,6 +88,119 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
     const handleCloseButton = () => {
         toggle();
     }
+
+    const transactionIsValid = () => {
+        let newAlertMessages = [];
+        if (!fromAccountId) {
+            newAlertMessages.push(journalEntriesText[appContext.locale]["Transaction must be assigned to an account."]);
+        }
+        if (!validateDate(journalEntryDate)) {
+            newAlertMessages.push(journalEntriesText[appContext.locale]["Invalid date."]);
+        }
+        if (!journalEntryDescription) {
+            newAlertMessages.push(journalEntriesText[appContext.locale]["Transaction must be given a description."]);
+        }
+        if (lineItems.length == 0) {
+            newAlertMessages.push(journalEntriesText[appContext.locale]["Transaction must have at least one item."]);
+        }
+        if (journalEntryDate < appContext.lockJournalEntriesBefore) {
+            newAlertMessages.push(journalEntriesText[appContext.locale]["Transaction date must not be before"](appContext.lockJournalEntriesBefore, appContext.locale))
+        }
+        let missingAccount = false;
+        let missingAmount = false;
+        let missingTransactionType = false;
+        lineItems.forEach(lineItem => {
+            if (!lineItem.amount) {
+                missingAmount = true;
+            }
+            if (!lineItem.accountId) {
+                missingAccount = true;
+            }
+            if (!lineItem.transactionType) {
+                missingTransactionType = true;
+            }
+        })
+        if (missingAccount) {
+            newAlertMessages.push(journalEntriesText[appContext.locale]["Line-items must be assigned to an account or category."]);
+        }
+        if (missingAmount) {
+            newAlertMessages.push(journalEntriesText[appContext.locale]["Please provide an amount for each item."]);
+        }
+        if (missingTransactionType) {
+            newAlertMessages.push(journalEntriesText[appContext.locale]["Please specify a transaction type for each item."]);
+        }
+        setAlertMessages(newAlertMessages);
+        if (newAlertMessages.length) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    const prepareRequestBody = () => {
+        let totalDebits = 0;
+        let totalCredits = 0;
+        let formattedLineItems = lineItems.map(lineItem => {
+            if (lineItem.transactionType.isCredit) {
+                totalCredits += lineItem.amount;
+            } else {
+                totalDebits += lineItem.amount;
+            }
+            return ({
+                accountId: lineItem.accountId,
+                amount: lineItem.amount,
+                description: lineItem.description,
+                isCredit: lineItem.transactionType.isCredit
+            });
+        });
+        if (totalDebits >= totalCredits) {
+            formattedLineItems.unshift({
+                accountId: fromAccountId,
+                amount: parseFloat((totalDebits - totalCredits).toFixed(2)),
+                isCredit: true,
+                description: journalEntryDescription
+            })
+        } else {
+            formattedLineItems.unshift({
+                accountId: fromAccountId,
+                amount: parseFloat((totalCredits - totalDebits).toFixed(2)),
+                isCredit: false,
+                description: journalEntryDescription
+            })
+        }
+        let formattedTransaction = {
+            journalEntryId: null,
+            journalEntryDate: journalEntryDate,
+            description: journalEntryDescription,
+            organizationId: appContext.currentOrganizationId,
+            lineItems: formattedLineItems
+        };  
+        if (currentJournalEntryId != 0) {
+            formattedTransaction.journalEntryId = currentJournalEntryId;
+        }
+        return formattedTransaction;
+    }
+
+    const postTransaction = (requestBody) => {
+        axios.post(`${API_BASE_URL}/journalEntry`, requestBody)
+            .then(response => {
+                refreshParentComponent();
+                fetchTransaction(response.data.journalEntryId);
+                toggleEditMode();
+                appContext.createSuccessNotification(journalEntriesText[appContext.locale]["Successfully saved."]);
+            }).catch(console.log);
+    }
+
+    const putTransaction = (requestBody) => {
+        axios.put(`${API_BASE_URL}/journalEntry/${currentJournalEntryId}`, requestBody)
+            .then(response => {
+                refreshParentComponent();
+                fetchTransaction(currentJournalEntryId);
+                toggleEditMode();
+                appContext.createSuccessNotification(journalEntriesText[appContext.locale]["Successfully saved."]);
+            }).catch(console.log);
+    }
+
 
     const fetchTransaction = (journalEntryId) => {
         if (journalEntryId != 0) {

@@ -10,22 +10,6 @@ import LineItemsFooterViewPersonal from './line-items-footer-view-personal';
 function TransactionExpandedView({ lineItems, journalEntryDescription, journalEntryDate, fromAccountName }) {
     const appContext = React.useContext(PageSettings);
 
-    const sumAmounts = () => {
-        let sum = 0;
-        lineItems.forEach(row => {
-            if (row.transactionType.isCredit) {
-                sum += row.amount;
-            } else {
-                sum -= row.amount;
-            }
-        });
-        if (isNaN(sum)) {
-            return 0
-        } else {
-            return sum;
-        }
-    }
-
     return (
         <>
             <div className="row mb-2 px-2 px-lg-0">
