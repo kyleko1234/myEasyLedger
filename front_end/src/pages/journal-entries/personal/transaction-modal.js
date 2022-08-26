@@ -80,6 +80,7 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
     }
     const handleCopyButton = () => {
         setCurrentJournalEntryId(0);
+        setJournalEntryDate(getTodayAsDateString());
         toggleEditMode();
     }
     const handleEditButton = () => {

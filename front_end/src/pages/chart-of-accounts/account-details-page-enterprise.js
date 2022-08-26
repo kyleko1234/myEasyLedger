@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React from 'react';
+import { Card, CardBody } from 'reactstrap';
 import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
-import TableOfLineItemsInAccount from './components/table-of-line-items-in-account';
+import AccountDetailsTableEnterprise from './components/account-details-table-enterprise';
+import AccountSwitcher from './components/account-switcher';
 
 function AccountDetailsPageEnterprise({ selectedAccountId }) {
     const appContext = React.useContext(PageSettings);
@@ -24,7 +26,7 @@ function AccountDetailsPageEnterprise({ selectedAccountId }) {
         return () => {
             isMounted = false;
         }
-    })
+    }, [selectedAccountId])
     
     return (
         <>
@@ -33,8 +35,9 @@ function AccountDetailsPageEnterprise({ selectedAccountId }) {
                     <Card className="shadow-sm very-rounded my-3">
                         <CardBody>
                             {selectedAccount
-                                ? <TableOfLineItemsInAccount 
+                                ? <AccountDetailsTableEnterprise
                                     selectedAccount={selectedAccount}
+                                    selectedAccountId={selectedAccountId}
                                     refreshToken={refreshToken} setRefreshToken={setRefreshToken}
                                     fetchAccount={fetchAccount}
                                 />

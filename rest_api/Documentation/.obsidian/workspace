@@ -7,11 +7,8 @@
         "id": "e9ecb484239110b1",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
-            "mode": "source"
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -68,7 +65,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,6 +84,7 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Untitled.md",
     "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
     "JournalEntry/Contents/The JournalEntry Object.md",
     "JournalEntry/Contents/Update a JournalEntry.md",
@@ -96,7 +93,6 @@
     "JournalEntry/Contents/List All JournalEntries.md",
     "LineItem/Contents/The LineItem Object.md",
     "LineItem/Contents/List All LineItems.md",
-    "LineItem/Contents/Retrieve a LineItem.md",
-    "LineItem/Contents/Retrieve All LineItems for an Account.md"
+    "LineItem/Contents/Retrieve a LineItem.md"
   ]
 }

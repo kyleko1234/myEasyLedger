@@ -93,6 +93,7 @@ function JournalEntryModal({ isOpen, toggle, editMode, setEditMode, refreshParen
     }
     const handleCopyButton = () => {
         setCurrentJournalEntryId(0);
+        setJournalEntryDate(getTodayAsDateString());
         toggleEditMode();
     }
     const handleEditButton = () => {

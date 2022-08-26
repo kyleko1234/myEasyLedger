@@ -1,8 +1,21 @@
+import axios from 'axios';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { PageSettings } from '../../../config/page-settings';
+import { API_BASE_URL } from '../../../utils/constants';
+import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import { localizeDate } from '../../../utils/util-fns';
+import JournalEntryModal from '../../journal-entries/enterprise/journal-entry-modal';
+import JournalEntryTableFooter from '../../journal-entries/enterprise/journal-entry-table-footer';
+import JournalEntryTableHeader from '../../journal-entries/enterprise/journal-entry-table-header';
+import JournalEntryViewModelSmallScreen from '../../journal-entries/enterprise/journal-entry-view-model-small-screen';
+import JournalEntryViewModelStandard from '../../journal-entries/enterprise/journal-entry-view-model-standard';
+import AccountDetailsEditor from './account-details-editor';
+import AccountDetailsTableTitleBarSmallScreen from './account-details-table-title-bar-small-screen';
+import AccountDetailsTableTitleBarStandard from './account-details-table-title-bar-standard';
 
-function TableOfLineItemsInAccount({ selectedAccount, refreshToken, setRefreshToken, fetchAccount }) {
+//using selectedAccountId for react effect update dependencies is noticeably faster than using selectedAccount
+function AccountDetailsTableEnterprise({ selectedAccount, selectedAccountId, setRefreshToken, fetchAccount }) {
     const appContext = React.useContext(PageSettings);
 
     //page data
@@ -30,7 +43,7 @@ function TableOfLineItemsInAccount({ selectedAccount, refreshToken, setRefreshTo
     const toggleAccountDetailsEditorModal = () => setAccountDetailsEditorModal(!accountDetailsEditorModal);
 
     const fetchLineItemViewModels = (pageIndex, pageSize, isMounted) => {
-        const url = `${API_BASE_URL}/account/${selectedAccount.accountId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
+        const url = `${API_BASE_URL}/account/${selectedAccountId}/lineItem/?page=${pageIndex}&size=${pageSize}`;
         axios.get(url).then(response => {
             var fetchedLineItems = response.data.content;
             fetchedLineItems.forEach(lineItem => {
@@ -134,6 +147,7 @@ function TableOfLineItemsInAccount({ selectedAccount, refreshToken, setRefreshTo
         fetchVendors(isMounted);
         fetchCustomers(isMounted);
         fetchAccounts(isMounted);
+        fetchAccount(isMounted);
         setRefreshToken(Math.random());
     }
 
@@ -143,7 +157,7 @@ function TableOfLineItemsInAccount({ selectedAccount, refreshToken, setRefreshTo
         return () => {
             isMounted = false;
         }
-    }, [pageIndex, pageSize])
+    }, [pageIndex, pageSize, selectedAccountId])
 
     //create a journalEntry
     const handleCreateAJournalEntryButton = () => {
@@ -165,31 +179,70 @@ function TableOfLineItemsInAccount({ selectedAccount, refreshToken, setRefreshTo
                     <i className="fas fa-edit"></i>
                 </Link>
             </h1>
-            <TableOfJournalEntries
-                tableTitle={<div className="h4 mb-0">{accountDetailsText[appContext.locale]["Balance"] + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}</div>}
-                hasAddEntryButton={true}
-                parentComponentAccountId={selectedAccountId}
-                fetchData={fetchData}
-                pageSize={pageSize}
-                pageIndex={pageIndex}
-                columns={columns}
-                data={data}
-                totalPages={totalPages}
-                totalElements={totalElements}
-                pageLength={pageLength}
-                first={first}
-                last={last}
-                loading={loading}
+            <AccountDetailsTableTitleBarStandard
+                handleCreateAJournalEntryButton={handleCreateAJournalEntryButton}
+                selectedAccount={selectedAccount}
+            />
+            <AccountDetailsTableTitleBarSmallScreen
+                handleCreateAJournalEntryButton={handleCreateAJournalEntryButton}
+                selectedAccount={selectedAccount}
+            />
+            <JournalEntryTableHeader />
+            <div>
+                {lineItemViewModels.map(lineItemViewModel => {
+                    return (
+                        <JournalEntryViewModelStandard
+                            key={lineItemViewModel.journalEntryId}
+                            journalEntryDate={lineItemViewModel.journalEntryDate}
+                            description={lineItemViewModel.description ? lineItemViewModel.description : lineItemViewModel.journalEntryDescription}
+                            debitAmount={lineItemViewModel.debitAmount}
+                            creditAmount={lineItemViewModel.creditAmount}
+                            onClick={() => handleClickJournalEntry(lineItemViewModel.journalEntryId)}
+                        />
+                    )
+                })}
+            </div>
+            <div>
+                {lineItemViewModels.map(lineItemViewModel => {
+                    return (
+                        <JournalEntryViewModelSmallScreen
+                            key={lineItemViewModel.journalEntryId}
+                            journalEntryDate={lineItemViewModel.journalEntryDate}
+                            description={lineItemViewModel.description ? lineItemViewModel.description : lineItemViewModel.journalEntryDescription}
+                            debitAmount={lineItemViewModel.debitAmount}
+                            creditAmount={lineItemViewModel.creditAmount}
+                            onClick={() => handleClickJournalEntry(lineItemViewModel.journalEntryId)}
+                        />
+                    )
+                })}
+            </div>
+            <JournalEntryTableFooter
                 previousPage={previousPage}
                 nextPage={nextPage}
+                pageIndex={pageIndex}
+                pageSize={pageSize}
+                pageLength={pageLength}
+                totalElements={totalElements}
+                first={first}
+                last={last}
+            />
+            <JournalEntryModal
+                isOpen={journalEntryModal}
+                editMode={editMode} setEditMode={setEditMode}
+                toggle={toggleJournalEntryModal}
+                refreshParentComponent={() => fetchData(pageIndex, pageSize, true)}
+                currentJournalEntryId={currentJournalEntryId} setCurrentJournalEntryId={setCurrentJournalEntryId}
+                accountOptions={accountOptions}
+                vendorOptions={vendorOptions}
+                customerOptions={customerOptions}
             />
             <AccountDetailsEditor
                 isOpen={accountDetailsEditorModal}
                 toggle={toggleAccountDetailsEditorModal}
-                selectedAccountId={selectedAccountId}
-                fetchData={() => fetchData(pageIndex, pageSize)}
+                selectedAccountId={selectedAccount.accountId}
+                fetchData={() => fetchData(pageIndex, pageSize, true)}
             />
         </>
     )
 }
-export default TableOfLineItemsInAccount;
+export default AccountDetailsTableEnterprise;

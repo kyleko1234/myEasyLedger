@@ -10,6 +10,7 @@ import AccountSwitcher from './components/account-switcher';
 import { Card, CardBody } from 'reactstrap';
 import AccountDetailsEditor from './components/account-details-editor';
 import { formatCurrency, localizeDate } from '../../utils/util-fns';
+import AccountDetailsPageEnterprise from './account-details-page-enterprise';
 
 function AccountDetails(props) {
 
@@ -73,7 +74,7 @@ function AccountDetails(props) {
         return () => {
             isMounted = false;
         }
-    }, [])
+    }, [selectedAccountId])
 
     const fetchData = React.useCallback(async ( pageIndex, pageSize ) => {
         // This will get called when the table needs new data
@@ -116,53 +117,7 @@ function AccountDetails(props) {
     return (
         <>
             {appContext.isEnterprise ? /**View for Enterprise Edition */
-                <div className="row">
-                    <div className="col-lg-8">
-                        <Card className="shadow-sm very-rounded my-3">
-                            <CardBody>
-                                {selectedAccount 
-                                ?   <>
-                                        <h1 className="h2 d-flex">
-                                            {selectedAccount.accountCode
-                                                ? selectedAccount.accountCode + " - " + selectedAccount.accountName
-                                                : selectedAccount.accountName}
-                                            <Link replace className="icon-link-text-muted ms-3 font-size-larger align-self-center" to="#" onClick={toggleAccountDetailsEditorModal}>
-                                                <i className="fas fa-edit"></i>
-                                            </Link>
-                                        </h1>
-                                        <TableOfJournalEntries
-                                            tableTitle={ <div className="h4 mb-0">{accountDetailsText[appContext.locale]["Balance"] +  ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}</div>}
-                                            hasAddEntryButton={true}
-                                            parentComponentAccountId={selectedAccountId}
-                                            fetchData={fetchData}
-                                            pageSize={pageSize}
-                                            pageIndex={pageIndex}
-                                            columns={columns}
-                                            data={data}
-                                            totalPages={totalPages}
-                                            totalElements={totalElements}
-                                            pageLength={pageLength}
-                                            first={first}
-                                            last={last}
-                                            loading={loading}
-                                            previousPage={previousPage}
-                                            nextPage={nextPage}                            
-                                        /> 
-                                    </>
-                                :   <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>}
-
-                            </CardBody>
-                        </Card>
-                    </div>
-                    <div className="col-lg-4 my-3">
-                        <div>
-                            {appContext.isLoading? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div> :
-                            <AccountSwitcher widgetTitle="Switch Accounts" isEnterprise={appContext.isEnterprise} category={false} selectedAccountId={selectedAccountId} externalRefreshToken={refreshToken}/>
-                            }
-                        </div>
-                    </div>
-
-                </div>
+                <AccountDetailsPageEnterprise selectedAccountId={selectedAccountId} />
                 : /**View for Personal Edition */
                 <div className="row">
                     <div className="col-lg-8">
