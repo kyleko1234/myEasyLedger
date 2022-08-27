@@ -3,16 +3,20 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody } from "reac
 import { PageSettings } from "../../../config/page-settings";
 import axios from 'axios';
 import { API_BASE_URL } from "../../../utils/constants";
-import JournalEntryViewMode from "./journal-entry-view-mode";
-import { journalEntryViewModeText } from "../../../utils/i18n/journal-entry-view-mode-text";
 import { yearMonthDayToDateString } from "../../../utils/util-fns";
+import JournalEntryExpandedView from "./journal-entry-expanded-view";
+import { journalEntriesText } from "../../../utils/i18n/journal-entries-text";
 
 function JournalEntryEditHistory(props) {
-//required props: journalEntryId, isOpen, toggle, vendorOptions, customerOptions
-//should be used for enterprise view only; non-enterprise should use TransactionEditHistory
+    //required props: journalEntryId, isOpen, toggle, vendorOptions, customerOptions, accountOptions
+    //should be used for enterprise view only; non-enterprise should use TransactionEditHistory
     const appContext = React.useContext(PageSettings);
     const [loading, setLoading] = React.useState(true);
     const [journalEntryLogs, setJournalEntryLogs] = React.useState([]);
+
+    const modalOnClosed = () => {
+        setJournalEntryLogs([]);
+    }
 
     React.useEffect(() => {
         async function fetchData() {
@@ -49,40 +53,41 @@ function JournalEntryEditHistory(props) {
         }
     }, [props.isOpen]) //fetch data every time props.isOpen changes from false to true, i.e. when modal is opened. Because this component can only be opened in a JournalEntryViewMode window, props.journalEntryId can be assumed to not be undefined.
 
-    return(
+    return (
         <Modal
             scrollable
             isOpen={props.isOpen}
             toggle={props.toggle}
             size="xl"
             centered={true}
+            onClosed={modalOnClosed}
         >
             <ModalHeader>
-                {journalEntryViewModeText[appContext.locale]["Edit History"]}
+                {journalEntriesText[appContext.locale]["Edit History"]}
             </ModalHeader>
             <ModalBody>
                 {loading
-                ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
-                :   <>
+                    ? <div className="d-flex justify-content-center fa-3x py-3"><i className="fas fa-circle-notch fa-spin"></i></div>
+                    : <>
                         {journalEntryLogs.map(journalEntryLog => {
                             return (
                                 <Card className="very-rounded shadow-sm mb-3" key={journalEntryLog.id}>
                                     <CardBody>
                                         <div className="row">
                                             <div className="col-sm-6">
-                                                <b>{journalEntryViewModeText[appContext.locale]["TIMESTAMP OF EDIT:"]}</b>
+                                                <b>{journalEntriesText[appContext.locale]["TIMESTAMP OF EDIT:"]}</b>
                                                 <p>{journalEntryLog.datetimeOfEdit}</p>
                                             </div>
                                             <div className="col-sm-6">
-                                                <b>{journalEntryViewModeText[appContext.locale]["AUTHOR OF EDIT:"]}</b>
+                                                <b>{journalEntriesText[appContext.locale]["AUTHOR OF EDIT:"]}</b>
                                                 <p>{journalEntryLog.personFirstName + " " + journalEntryLog.personLastName}</p>
                                             </div>
                                         </div>
-                                        <hr/>
-                                        <JournalEntryViewMode 
+                                        <hr />
+                                        <JournalEntryExpandedView
                                             journalEntryDescription={journalEntryLog.snapshot.description}
                                             journalEntryDate={yearMonthDayToDateString(...journalEntryLog.snapshot.journalEntryDate)}
-                                            data={journalEntryLog.snapshot.lineItems}
+                                            lineItems={journalEntryLog.snapshot.lineItems}
                                             accountOptions={props.accountOptions}
                                             journalEntryVendorId={journalEntryLog.snapshot.vendorId}
                                             journalEntryCustomerId={journalEntryLog.snapshot.customerId}
@@ -99,7 +104,7 @@ function JournalEntryEditHistory(props) {
             </ModalBody>
             <ModalFooter>
                 <button className="btn btn-white width-10ch" onClick={props.toggle}>
-                    {journalEntryViewModeText[appContext.locale]["Close"]}
+                    {journalEntriesText[appContext.locale]["Close"]}
                 </button>
             </ModalFooter>
         </Modal>

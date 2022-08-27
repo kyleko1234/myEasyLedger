@@ -33,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 								@ColumnResult(name = "description"),
 								@ColumnResult(name = "journalEntryId"),
 								@ColumnResult(name = "journalEntryDate"),
+								@ColumnResult(name = "journalEntryDescription"),
 								@ColumnResult(name = "isCredit"),
 								@ColumnResult(name = "lineItemId"),
 								@ColumnResult(name = "accountSubtypeId"),
@@ -45,8 +46,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 		name = "LineItem.getAllLineItemsForAccount",
 		query = "(SELECT       " + 
 				"        account.id AS accountId, account.name AS accountName,       " + 
-				"        line_item.amount AS amount,       " + 
-				"        journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate,       " + 
+				"        line_item.amount AS amount, line_item.description AS description,       " + 
+				"        journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS journalEntryDescription,       " + 
 				"        line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId " + 
 				"    FROM       " + 
 				"        line_item, journal_entry, account, account_subtype, account_type " + 
@@ -61,8 +62,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"UNION " + 
 				"(SELECT       " + 
 				"    child_account.id AS accountId, child_account.name AS accountName,       " + 
-				"    line_item.amount AS amount,       " + 
-				"    journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate,       " + 
+				"    line_item.amount AS amount, line_item.description AS description,       " + 
+				"    journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS journalEntryDescription,       " + 
 				"    line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId " + 
 				"FROM       " + 
 				"    line_item, journal_entry, account AS child_account, account AS parent_account, account_subtype, account_type " + 
@@ -83,8 +84,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 		name = "LineItem.getAllAssetAndLiabilityLineItemsForOrganization",
 		query = " (SELECT            "
 				+ "        account.id AS accountId, account.name AS accountName,            "
-				+ "        line_item.amount AS amount,            "
-				+ "        journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate,            "
+				+ "        line_item.amount AS amount, line_item.description AS description,            "
+				+ "        journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS journalEntryDescription,            "
 				+ "        line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId      "
 				+ "    FROM            "
 				+ "        line_item, journal_entry, account, account_subtype, account_type      "
@@ -100,8 +101,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				+ "UNION      "
 				+ "(SELECT            "
 				+ "    child_account.id AS accountId, child_account.name AS accountName,            "
-				+ "    line_item.amount AS amount,            "
-				+ "    journal_entry.description AS description, journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate,            "
+				+ "    line_item.amount AS amount, line_item.description AS description,           "
+				+ "    journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS journalEntryDescription,            "
 				+ "    line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId      "
 				+ "FROM            "
 				+ "    line_item, journal_entry, account AS child_account, account AS parent_account, account_subtype, account_type      "

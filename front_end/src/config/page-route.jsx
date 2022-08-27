@@ -18,15 +18,15 @@ import CategoryDetails from '../pages/categories/category-details.js';
 import NetWorthReport from '../pages/reports/net-worth-report.js';
 import IncomeExpenseReport from '../pages/reports/income-expense-report.js';
 import CashFlowReport from '../pages/reports/cash-flow-report.js';
-import GeneralJournal from '../pages/journal-entries/enterprise/general-journal.jsx';
 import VerificationPage from '../pages/verification/verification-page.js';
 import DefaultLandingPage from '../pages/default/default-landing-page.js';
-import Transactions from '../pages/journal-entries/personal/transactions.js';
 import AcceptInvitationPage from '../pages/user/invitation/accept-invitation-page.js';
 import ExpenseReport from '../pages/reports/expense-report.js';
 import VendorsPage from '../pages/vendors/vendors-page.js';
 import LedgerSettings from '../pages/settings/ledger-settings';
 import CustomersPage from '../pages/customers/customers-page.js';
+import JournalEntriesPage from '../pages/journal-entries/enterprise/journal-entries-page.js';
+import TransactionsPage from '../pages/journal-entries/personal/transactions-page.js';
 
 const routes = [
   {
@@ -43,11 +43,6 @@ const routes = [
     path: '/user/register',
     title: 'Register',
     component: RegisterPage,
-  },
-  {
-    path: '/journal-entries',
-    title: 'Journal Entries',
-    component: GeneralJournal,
   },
   {
     path: '/chart-of-accounts',
@@ -174,11 +169,6 @@ const routes = [
     component: VerificationPage,
   },
   {
-    path: '/transactions',
-    title: 'Transactions',
-    component: Transactions,
-  },
-  {
     path: '/accept-invitation/:token/:locale',
     title: 'Account Setup',
     component: AcceptInvitationPage
@@ -204,6 +194,17 @@ const routes = [
     title: 'Customers',
     component: CustomersPage
   },
+  {
+    path: '/journal-entries',
+    title: 'Journal Entries New',
+    component: JournalEntriesPage
+  },
+  {
+    path: '/transactions',
+    title: 'Transactions',
+    component: TransactionsPage,
+  },
+
 ];
 
 

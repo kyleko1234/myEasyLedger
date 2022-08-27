@@ -59,7 +59,7 @@ public class AuthorizationService {
 	public void assertHigherPermissionType(Authentication authentication, Long organizationId, Long permissionType) throws UnauthorizedException {
 		Set<Permission> permissions = ((UserPrincipal) authentication.getPrincipal()).getPermissions();
 		for (Permission permission : permissions) {
-			if (permission.getOrganization().getId() == organizationId && permission.getPermissionType().getId() > permissionType) {
+			if (permission.getOrganization().getId().longValue() == organizationId.longValue() && permission.getPermissionType().getId().longValue() > permissionType.longValue()) {
 				return;
 			}
 		}

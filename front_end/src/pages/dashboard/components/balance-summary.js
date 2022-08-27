@@ -7,7 +7,7 @@ import {balanceSummaryText} from "../../../utils/i18n/balance-summary-text.js";
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { formatCurrency, getTodayAsDateString, localizeDate } from '../../../utils/util-fns.js';
-import { tableOfJournalEntriesText } from '../../../utils/i18n/table-of-journal-entries-text.js';
+import { journalEntriesText } from '../../../utils/i18n/journal-entries-text.js';
 
 
 function BalanceSummary(props) {
@@ -21,11 +21,11 @@ function BalanceSummary(props) {
     const filterZeroBalanceAccounts = true;
 
     const accountTypePrefixes = {
-        1: tableOfJournalEntriesText[appContext.locale]["[A] "],
-        2: tableOfJournalEntriesText[appContext.locale]["[L] "],
-        3: tableOfJournalEntriesText[appContext.locale]["[O] "],
-        4: tableOfJournalEntriesText[appContext.locale]["[I] "],
-        5: tableOfJournalEntriesText[appContext.locale]["[E] "]
+        1: journalEntriesText[appContext.locale]["[A] "],
+        2: journalEntriesText[appContext.locale]["[L] "],
+        3: journalEntriesText[appContext.locale]["[O] "],
+        4: journalEntriesText[appContext.locale]["[I] "],
+        5: journalEntriesText[appContext.locale]["[E] "]
     }
 
     //fetch data on component mount

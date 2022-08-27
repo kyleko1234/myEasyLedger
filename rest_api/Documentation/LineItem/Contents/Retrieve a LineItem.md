@@ -20,15 +20,16 @@ ____
 #### Sample Response
 ```json
 {
-    "accountId": 10,
-    "accountName": "Cash",
+    "accountId": 6,
+    "accountName": "Paid-in Capital",
     "amount": 400000,
-    "description": "Cash influx from initial offering",
+    "description": "Issued 20000 shares of common at 20 per",
     "journalEntryId": 1,
     "journalEntryDate": "2020-11-01",
-    "isCredit": false,
+    "journalEntryDescription": "Issued 20,000 shares of common stock at $20 per share",
+    "isCredit": true,
     "lineItemId": 1,
-	"accountSubtypeId": 1,
-	"accountTypeId": 1
+    "accountSubtypeId": 20,
+    "accountTypeId": 3
 }
 ```
