@@ -30,7 +30,10 @@ function AccountDetailsTableTitleBarStandard({ handleCreateAJournalEntryButton, 
                     onClick={handleCreateAJournalEntryButton}
                     disabled={appContext.currentPermissionTypeId < 2}
                 >
-                    {journalEntriesText[appContext.locale]["Add an entry"]}
+                    {appContext.isEnterprise 
+                        ? journalEntriesText[appContext.locale]["Add an entry"]
+                        : journalEntriesText[appContext.locale]["Add a new transaction"]
+                    }
                 </button>
             </div>
             {appContext.currentPermissionTypeId < 2
