@@ -3,10 +3,9 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody } from "reac
 import { PageSettings } from "../../../config/page-settings";
 import axios from 'axios';
 import { API_BASE_URL } from "../../../utils/constants";
-import JournalEntryViewMode from "./journal-entry-view-mode";
-import { journalEntryViewModeText } from "../../../utils/i18n/journal-entry-view-mode-text";
 import { yearMonthDayToDateString } from "../../../utils/util-fns";
 import JournalEntryExpandedView from "./journal-entry-expanded-view";
+import { journalEntriesText } from "../../../utils/i18n/journal-entries-text";
 
 function JournalEntryEditHistory(props) {
     //required props: journalEntryId, isOpen, toggle, vendorOptions, customerOptions, accountOptions
@@ -18,7 +17,7 @@ function JournalEntryEditHistory(props) {
     const modalOnClosed = () => {
         setJournalEntryLogs([]);
     }
-    
+
     React.useEffect(() => {
         async function fetchData() {
             await axios.get(`${API_BASE_URL}/journalEntry/${props.journalEntryId}/log`).then(response => {
@@ -64,7 +63,7 @@ function JournalEntryEditHistory(props) {
             onClosed={modalOnClosed}
         >
             <ModalHeader>
-                {journalEntryViewModeText[appContext.locale]["Edit History"]}
+                {journalEntriesText[appContext.locale]["Edit History"]}
             </ModalHeader>
             <ModalBody>
                 {loading
@@ -76,11 +75,11 @@ function JournalEntryEditHistory(props) {
                                     <CardBody>
                                         <div className="row">
                                             <div className="col-sm-6">
-                                                <b>{journalEntryViewModeText[appContext.locale]["TIMESTAMP OF EDIT:"]}</b>
+                                                <b>{journalEntriesText[appContext.locale]["TIMESTAMP OF EDIT:"]}</b>
                                                 <p>{journalEntryLog.datetimeOfEdit}</p>
                                             </div>
                                             <div className="col-sm-6">
-                                                <b>{journalEntryViewModeText[appContext.locale]["AUTHOR OF EDIT:"]}</b>
+                                                <b>{journalEntriesText[appContext.locale]["AUTHOR OF EDIT:"]}</b>
                                                 <p>{journalEntryLog.personFirstName + " " + journalEntryLog.personLastName}</p>
                                             </div>
                                         </div>
@@ -105,7 +104,7 @@ function JournalEntryEditHistory(props) {
             </ModalBody>
             <ModalFooter>
                 <button className="btn btn-white width-10ch" onClick={props.toggle}>
-                    {journalEntryViewModeText[appContext.locale]["Close"]}
+                    {journalEntriesText[appContext.locale]["Close"]}
                 </button>
             </ModalFooter>
         </Modal>

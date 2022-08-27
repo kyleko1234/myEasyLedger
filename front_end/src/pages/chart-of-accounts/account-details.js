@@ -22,7 +22,4 @@ function AccountDetails(props) {
     )
 }
 
-
-
-
 export default AccountDetails

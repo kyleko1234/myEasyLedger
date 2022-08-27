@@ -1,7 +1,6 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
-import { journalEntryViewModeText } from '../../../utils/i18n/journal-entry-view-mode-text.js'
 import { formatCurrency, localizeDate } from '../../../utils/util-fns';
 import LineItemsHeader from '../enterprise/line-items-header';
 import LineItemViewPersonal from './line-item-view-personal';
