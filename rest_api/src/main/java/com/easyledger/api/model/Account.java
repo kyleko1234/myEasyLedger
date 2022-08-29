@@ -144,6 +144,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		resultSetMapping = "accountBalanceDTOMapping"
 )
 
+@NamedNativeQuery( //takes an accountId as a parameter and returns an AccountBalanceDTO with inital balances and the sum of all lineItems with a journalEntryDate before and not including :endDate
+		name = "Account.getAccountBalanceUpToDateExclusive",
+		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName,      "
+				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,      "
+				+ "    organization.id AS organizationId, organization.name AS organizationName,      "
+				+ "    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date < :endDate THEN line_item.amount END) AS sumOfDebitLineItems,                   "
+				+ "    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date < :endDate THEN line_item.amount END) AS sumOfCreditLineItems,         "
+				+ "    account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount, account.has_children AS hasChildren      "
+				+ "FROM account AS account      "
+				+ "    LEFT JOIN line_item ON line_item.account_id = account.id      "
+				+ "    LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id      "
+				+ "    LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id      "
+				+ "    LEFT JOIN account_subtype ON account_subtype.id = account.account_subtype_id       "
+				+ "    LEFT JOIN account_type ON account_type.id = account_subtype.account_type_id,      "
+				+ "    organization      "
+				+ "WHERE      "
+				+ "    account.id = :accountId AND       "
+				+ "    account.organization_id = organization.id "
+				+ "GROUP BY account.id, parent_account.id, account_subtype.id, account_type.id, organization.id",
+		resultSetMapping = "accountBalanceDTOMapping"
+)
+
 @Entity
 @Table(name = "account")
 public class Account {

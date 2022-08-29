@@ -81,7 +81,7 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
                     />
                 </div>
                 <div className="pseudo-td col-1 px-0">
-                    <button className="btn btn-lg btn-white border-0" onClick={() => removeLineItem(i)}>
+                    <button className="btn btn-lg btn-white border-0" onClick={() => removeLineItem(i)} type="button">
                         <i className="ion ion-md-close fa-fw fa-lg"></i>
                     </button>
                 </div>
@@ -134,7 +134,7 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
                                 space {/**invisible text to align button */}
                             </div>
                             <div>
-                                <button className="btn btn-lg btn-white border-0" onClick={() => removeLineItem(i)}>
+                                <button className="btn btn-lg btn-white border-0" onClick={() => removeLineItem(i)} type="button">
                                     <i className="ion ion-md-close fa-fw fa-lg"></i>
                                 </button>
                             </div>

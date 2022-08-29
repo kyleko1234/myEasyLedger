@@ -133,7 +133,7 @@ export const journalEntriesText = {
         "None": "無",
 
         "Memo": "註記",
-        "Account": "科目",
+        "Account": "科目／類別",
         "Total": "合計",
 
         "Transaction Type": "交易類別",
@@ -149,8 +149,8 @@ export const journalEntriesText = {
         "Total Credit": "貸方加總",
         "No memo": "無註記",
 
-        "Vendor": "供應商(支出對象)",
-        "Customer": "客戶(收入來源)",
+        "Vendor": "供應商（支出對象）",
+        "Customer": "客戶（收入來源）",
 
 
         "Add a Line Item": "新增一行",

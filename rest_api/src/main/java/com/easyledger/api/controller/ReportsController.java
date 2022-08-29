@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
+import com.easyledger.api.model.Account;
+import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.security.AuthorizationService;
 import com.easyledger.api.service.ReportsService;
+import com.easyledger.api.viewmodel.AccountTransactionsReportViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetViewModel;
 import com.easyledger.api.viewmodel.CashFlowStatementViewModel;
 import com.easyledger.api.viewmodel.IncomeStatementViewModel;
@@ -24,12 +27,13 @@ import com.easyledger.api.viewmodel.IncomeStatementViewModel;
 public class ReportsController {
 	private ReportsService reportsService;
 	private AuthorizationService authorizationService;
+	private AccountRepository accountRepo;
 	
-	
-    public ReportsController(ReportsService reportsService, AuthorizationService authorizationService) {
+    public ReportsController(ReportsService reportsService, AuthorizationService authorizationService, AccountRepository accountRepo) {
 		super();
 		this.reportsService = reportsService;
 		this.authorizationService = authorizationService;
+		this.accountRepo = accountRepo;
 	}
 
 	
@@ -59,4 +63,14 @@ public class ReportsController {
 		return reportsService.getCashFlowStatementViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
 	
+	@GetMapping("/reports/accountTransactionsReport/account/{accountId}/{startDate}/{endDate}")
+	public AccountTransactionsReportViewModel getAccountTransactionsReportForAccountBetweenDates(@PathVariable(value = "accountId") Long accountId,
+			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
+			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
+			throws ResourceNotFoundException, UnauthorizedException {
+		Account account = accountRepo.findById(accountId)
+				.orElseThrow(() -> new ResourceNotFoundException("Account not found for this id :: " + accountId));
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, account.getOrganization().getId());
+		return reportsService.getAccountTransactionsReportViewModelForAccountBetweenDates(accountId, startDate, endDate);
+	}
 }

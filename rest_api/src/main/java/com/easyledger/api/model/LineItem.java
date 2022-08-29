@@ -68,7 +68,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"FROM       " + 
 				"    line_item, journal_entry, account AS child_account, account AS parent_account, account_subtype, account_type " + 
 				"WHERE       " + 
-				"    child_account.id = :accountId AND        " + 
+				"    child_account.parent_account_id = :accountId AND        " + 
 				"    line_item.account_id = child_account.id AND       " + 
 				"    line_item.journal_entry_id = journal_entry.id AND       " + 
 				"    journal_entry.deleted = false AND  " + 
@@ -163,6 +163,47 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				+ "    ) "
 				+ ") AS return_table",
 		resultSetMapping = "lineItemDTOMapping.count"
+)
+@NamedNativeQuery( //retrieves all LineItems in undeleted entries between startDate and endDate (inclusive) for an account
+		name = "LineItem.getLineItemsForAccountBetweenDates",
+		query = "(SELECT            "
+				+ "        account.id AS accountId, account.name AS accountName,            "
+				+ "        line_item.amount AS amount, line_item.description AS description,            "
+				+ "        journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS journalEntryDescription,            "
+				+ "        line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId      "
+				+ "    FROM            "
+				+ "        line_item, journal_entry, account, account_subtype, account_type      "
+				+ "    WHERE            "
+				+ "        account.id = :accountId AND             "
+				+ "        line_item.account_id = account.id AND            "
+				+ "        line_item.journal_entry_id = journal_entry.id AND        "
+				+ "        journal_entry.journal_entry_date >= :startDate AND "
+				+ "        journal_entry.journal_entry_date <= :endDate AND "
+				+ "        journal_entry.deleted = false AND       "
+				+ "        account_subtype.id = account.account_subtype_id AND      "
+				+ "        account_type.id = account_subtype.account_type_id      "
+				+ ")     "
+				+ "UNION      "
+				+ "(SELECT            "
+				+ "    child_account.id AS accountId, child_account.name AS accountName,            "
+				+ "    line_item.amount AS amount, line_item.description AS description,            "
+				+ "    journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS journalEntryDescription,            "
+				+ "    line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId      "
+				+ "FROM            "
+				+ "    line_item, journal_entry, account AS child_account, account AS parent_account, account_subtype, account_type      "
+				+ "WHERE            "
+				+ "    child_account.parent_account_id = :accountId AND             "
+				+ "    line_item.account_id = child_account.id AND            "
+				+ "    line_item.journal_entry_id = journal_entry.id AND        "
+				+ "    journal_entry.journal_entry_date >= :startDate AND "
+				+ "    journal_entry.journal_entry_date <= :endDate AND "
+				+ "    journal_entry.deleted = false AND       "
+				+ "    parent_account.id = child_account.parent_account_id AND       "
+				+ "    account_subtype.id = parent_account.account_subtype_id AND      "
+				+ "    account_type.id = account_subtype.account_type_id     "
+				+ ")     "
+				+ "ORDER BY journalEntryDate ASC, journalEntryId ASC, lineItemId ASC ",
+		resultSetMapping = "lineItemDTOMapping"
 )
 
 

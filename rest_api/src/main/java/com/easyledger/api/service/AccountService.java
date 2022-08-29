@@ -1,11 +1,13 @@
 package com.easyledger.api.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -165,5 +167,8 @@ public class AccountService {
 		return returnObject;
 	}
 	
+	public AccountBalanceDTO getAccountBalanceUpToDateExclusive(Long accountId, LocalDate endDate) {
+		return accountRepo.getAccountBalanceUpToDateExclusive(accountId, endDate);
+	}
 	
 }

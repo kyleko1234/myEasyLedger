@@ -1,18 +1,25 @@
 package com.easyledger.api.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
+import com.easyledger.api.dto.AccountTransactionsReportLineItemDTO;
+import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
+import com.easyledger.api.model.Account;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.repository.OrganizationRepository;
+import com.easyledger.api.viewmodel.AccountTransactionsReportViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetAssetsViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetEquityViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetLiabilitiesViewModel;
@@ -31,13 +38,21 @@ public class ReportsService {
 	@Autowired
 	private OrganizationRepository organizationRepo;
 	
+	@Autowired
+	private AccountService accountService;
+	
+	@Autowired 
+	private LineItemService lineItemService;
 	
 	
-	public ReportsService(AccountRepository accountRepo, AccountSubtypeRepository accountSubtypeRepo, OrganizationRepository organizationRepo) {
+	public ReportsService(AccountRepository accountRepo, AccountSubtypeRepository accountSubtypeRepo, 
+			OrganizationRepository organizationRepo, LineItemService lineItemService, AccountService accountService) {
 		super();
 		this.accountRepo = accountRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.organizationRepo = organizationRepo;
+		this.accountService = accountService;
+		this.lineItemService = lineItemService;
 	}
 
 
@@ -88,5 +103,28 @@ public class ReportsService {
 		return new CashFlowStatementViewModel(currPeriodAccountSubtypeBalances, beginningAccountSubtypeBalances, endingAccountSubtypeBalances);
 	}
 	
+	public AccountTransactionsReportViewModel getAccountTransactionsReportViewModelForAccountBetweenDates(Long accountId, LocalDate startDate, LocalDate endDate) {
+		AccountBalanceDTO initialAccountBalance = accountService.getAccountBalanceUpToDateExclusive(accountId, startDate);
+		BigDecimal initialDebitValue = initialAccountBalance.getDebitTotal();
+		BigDecimal initialCreditValue = initialAccountBalance.getCreditTotal();
+		
+		BigDecimal currentDebitValue = initialAccountBalance.getDebitTotal();
+		BigDecimal currentCreditValue = initialAccountBalance.getCreditTotal();
+		List<LineItemDTO> lineItems = lineItemService.getLineItemsForAccountBetweenDates(accountId, startDate, endDate);
+		
+		List<AccountTransactionsReportLineItemDTO> lineItemsWithTotals = new ArrayList<AccountTransactionsReportLineItemDTO>();
+		
+		for (LineItemDTO lineItem : lineItems) {
+			if (lineItem.isIsCredit()) {
+				currentCreditValue = currentCreditValue.add(lineItem.getAmount());
+			} else {
+				currentDebitValue = currentDebitValue.add(lineItem.getAmount());
+			}
+			lineItemsWithTotals.add(new AccountTransactionsReportLineItemDTO(lineItem, currentDebitValue, currentCreditValue));
+		}
+		
+		return new AccountTransactionsReportViewModel(startDate, endDate, initialAccountBalance, initialDebitValue, initialCreditValue, lineItemsWithTotals, currentDebitValue, currentCreditValue);
+
+	}
 
 }
