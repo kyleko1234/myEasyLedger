@@ -73,7 +73,7 @@ function LineItemsHeader({editMode}) {
                     <div className="pseudo-th col-3">
                         {journalEntriesText[appContext.locale]["Memo"]}
                     </div>
-                    <div className="pseudo-th col-2 text-end">
+                    <div className="pseudo-th col-2">
                         {journalEntriesText[appContext.locale]["Amount"]}
                     </div>
                     <div className="pseudo-th col-1">
