@@ -82,5 +82,6 @@ public class LineItemController {
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
     	return lineItemRepo.getAllAssetAndLiabilityLineItemsForOrganization(organizationId, pageable);
     }
+
 }
 

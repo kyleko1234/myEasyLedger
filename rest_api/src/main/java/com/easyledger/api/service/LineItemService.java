@@ -1,6 +1,9 @@
 package com.easyledger.api.service;
 
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +14,7 @@ import com.easyledger.api.model.Account;
 import com.easyledger.api.model.JournalEntry;
 import com.easyledger.api.model.LineItem;
 import com.easyledger.api.repository.AccountRepository;
+import com.easyledger.api.repository.LineItemRepository;
 
 @Service
 public class LineItemService {
@@ -18,8 +22,12 @@ public class LineItemService {
 	@Autowired
 	private AccountRepository accountRepo;	
 	
-	public LineItemService(AccountRepository accountRepo) {
+	@Autowired
+	private LineItemRepository lineItemRepo;
+	
+	public LineItemService(AccountRepository accountRepo, LineItemRepository lineItemRepo) {
 		this.accountRepo = accountRepo;
+		this.lineItemRepo = lineItemRepo;
 	}
 
 	// Creates new LineItem entity object from a LineItemDTO.
@@ -44,6 +52,10 @@ public class LineItemService {
 		product.setJournalEntry(journalEntry);
 		
 		return product;
+	}
+	
+	public List<LineItemDTO> getLineItemsForAccountBetweenDates(Long accountId, LocalDate startDate, LocalDate endDate) {
+		return lineItemRepo.getLineItemsForAccountBetweenDates(accountId, startDate, endDate);
 	}
 	
 }

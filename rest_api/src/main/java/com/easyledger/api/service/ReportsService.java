@@ -31,13 +31,21 @@ public class ReportsService {
 	@Autowired
 	private OrganizationRepository organizationRepo;
 	
+	@Autowired
+	private AccountService accountService;
+	
+	@Autowired 
+	private LineItemService lineItemService;
 	
 	
-	public ReportsService(AccountRepository accountRepo, AccountSubtypeRepository accountSubtypeRepo, OrganizationRepository organizationRepo) {
+	public ReportsService(AccountRepository accountRepo, AccountSubtypeRepository accountSubtypeRepo, 
+			OrganizationRepository organizationRepo, LineItemService lineItemService, AccountService accountService) {
 		super();
 		this.accountRepo = accountRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.organizationRepo = organizationRepo;
+		this.accountService = accountService;
+		this.lineItemService = lineItemService;
 	}
 
 
