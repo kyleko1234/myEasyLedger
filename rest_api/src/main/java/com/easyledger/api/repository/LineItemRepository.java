@@ -1,5 +1,8 @@
 package com.easyledger.api.repository;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,4 +29,6 @@ public interface LineItemRepository extends JpaRepository<LineItem, Long> {
 	@Query(nativeQuery = true)
 	public Page<LineItemDTO> getAllAssetAndLiabilityLineItemsForOrganization(Long organizationId, Pageable pageable);
 	
+	@Query(nativeQuery = true)
+	public List<LineItemDTO> getLineItemsForAccountBetweenDates(Long accountId, LocalDate startDate, LocalDate endDate);
 }

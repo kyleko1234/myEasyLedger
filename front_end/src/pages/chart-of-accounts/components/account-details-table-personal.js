@@ -69,20 +69,12 @@ function AccountDetailsTablePersonal({ selectedAccount, selectedAccountId, setRe
 
 
     const fetchAccounts = (isMounted) => {
-        let accountTypePrefixes = {
-            1: journalEntriesText[appContext.locale]["[A] "],
-            2: journalEntriesText[appContext.locale]["[L] "],
-            3: journalEntriesText[appContext.locale]["[O] "],
-            4: journalEntriesText[appContext.locale]["[I] "],
-            5: journalEntriesText[appContext.locale]["[E] "]
-        }
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`)
             .then(response => {
                 const formattedAccounts = response.data.filter(account => !account.hasChildren).map(account => {
                     return ({
                         value: account.accountId,
-                        label: accountTypePrefixes[account.accountTypeId] +
-                            (account.accountCode ? account.accountCode + " - " + account.accountName : account.accountName),
+                        label: account.accountName,
                         object: account
                     });
                 });

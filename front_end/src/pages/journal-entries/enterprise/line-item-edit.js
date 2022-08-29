@@ -74,7 +74,7 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
                     />
                 </div>
                 <div className="pseudo-td col-1">
-                    <button className="btn btn-lg btn-icon btn-white border-0" onClick={() => removeLineItem(i)}>
+                    <button className="btn btn-lg btn-icon btn-white border-0" onClick={() => removeLineItem(i)} type="button">
                         <i className="ion ion-md-close fa-fw fa-lg"></i>
                     </button>
                 </div>
@@ -102,7 +102,7 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
                                 />
                             </div>
                             <div>
-                                <button className="btn btn-lg btn-white border-0 px-1 ms-2" onClick={() => removeLineItem(i)}>
+                                <button className="btn btn-lg btn-white border-0 px-1 ms-2" onClick={() => removeLineItem(i)} type="button">
                                     <i className="ion ion-md-close fa-fw fa-lg"></i>
                                 </button>
                             </div>
