@@ -4,33 +4,42 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.easyledger.api.dto.AccountDTO;
+import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountTransactionsReportLineItemDTO;
 
 public class AccountTransactionsReportViewModel {
 	private LocalDate startDate;
 	private LocalDate endDate;
-	private AccountDTO account;
-	private BigDecimal beginningBalance;
+	private AccountBalanceDTO account;
+	private BigDecimal initialDebitValue;
+	private BigDecimal initialCreditValue;
+	private BigDecimal initialDebitsMinusCredits;
 	private List<AccountTransactionsReportLineItemDTO> lineItems;
-	private BigDecimal endingBalance;
-	private BigDecimal changeInBalance;
-	
-	public AccountTransactionsReportViewModel() {
-		
-	}
+	private BigDecimal endingDebitValue;
+	private BigDecimal endingCreditValue;
+	private BigDecimal endingDebitsMinusCredits;
+	private BigDecimal changeInDebitValue;
+	private BigDecimal changeInCreditValue;
+	private BigDecimal changeInDebitsMinusCredits;
 
-	public AccountTransactionsReportViewModel(LocalDate startDate, LocalDate endDate, AccountDTO account,
-			BigDecimal beginningBalance, List<AccountTransactionsReportLineItemDTO> lineItems, BigDecimal endingBalance,
-			BigDecimal changeInBalance) {
+	public AccountTransactionsReportViewModel(LocalDate startDate, LocalDate endDate, AccountBalanceDTO account,
+			BigDecimal initialDebitValue, BigDecimal initialCreditValue,
+			List<AccountTransactionsReportLineItemDTO> lineItems, BigDecimal endingDebitValue,
+			BigDecimal endingCreditValue) {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.account = account;
-		this.beginningBalance = beginningBalance;
+		this.initialDebitValue = initialDebitValue;
+		this.initialCreditValue = initialCreditValue;
+		this.initialDebitsMinusCredits = this.initialDebitValue.subtract(this.initialCreditValue);
 		this.lineItems = lineItems;
-		this.endingBalance = endingBalance;
-		this.changeInBalance = changeInBalance;
+		this.endingDebitValue = endingDebitValue;
+		this.endingCreditValue = endingCreditValue;
+		this.endingDebitsMinusCredits = this.endingDebitValue.subtract(this.endingCreditValue);
+		this.changeInDebitValue = this.endingDebitValue.subtract(this.initialDebitValue);
+		this.changeInCreditValue = this.endingCreditValue.subtract(this.initialCreditValue);
+		this.changeInDebitsMinusCredits = this.endingDebitsMinusCredits.subtract(this.initialDebitsMinusCredits);
 	}
 
 	public LocalDate getStartDate() {
@@ -49,20 +58,36 @@ public class AccountTransactionsReportViewModel {
 		this.endDate = endDate;
 	}
 
-	public AccountDTO getAccount() {
+	public AccountBalanceDTO getAccount() {
 		return account;
 	}
 
-	public void setAccount(AccountDTO account) {
+	public void setAccount(AccountBalanceDTO account) {
 		this.account = account;
 	}
 
-	public BigDecimal getBeginningBalance() {
-		return beginningBalance;
+	public BigDecimal getInitialDebitValue() {
+		return initialDebitValue;
 	}
 
-	public void setBeginningBalance(BigDecimal beginningBalance) {
-		this.beginningBalance = beginningBalance;
+	public void setInitialDebitValue(BigDecimal initialDebitValue) {
+		this.initialDebitValue = initialDebitValue;
+	}
+
+	public BigDecimal getInitialCreditValue() {
+		return initialCreditValue;
+	}
+
+	public void setInitialCreditValue(BigDecimal initialCreditValue) {
+		this.initialCreditValue = initialCreditValue;
+	}
+
+	public BigDecimal getInitialDebitsMinusCredits() {
+		return initialDebitsMinusCredits;
+	}
+
+	public void setInitialDebitsMinusCredits(BigDecimal initialDebitsMinusCredits) {
+		this.initialDebitsMinusCredits = initialDebitsMinusCredits;
 	}
 
 	public List<AccountTransactionsReportLineItemDTO> getLineItems() {
@@ -73,19 +98,52 @@ public class AccountTransactionsReportViewModel {
 		this.lineItems = lineItems;
 	}
 
-	public BigDecimal getEndingBalance() {
-		return endingBalance;
+	public BigDecimal getEndingDebitValue() {
+		return endingDebitValue;
 	}
 
-	public void setEndingBalance(BigDecimal endingBalance) {
-		this.endingBalance = endingBalance;
+	public void setEndingDebitValue(BigDecimal endingDebitValue) {
+		this.endingDebitValue = endingDebitValue;
 	}
 
-	public BigDecimal getChangeInBalance() {
-		return changeInBalance;
+	public BigDecimal getEndingCreditValue() {
+		return endingCreditValue;
 	}
 
-	public void setChangeInBalance(BigDecimal changeInBalance) {
-		this.changeInBalance = changeInBalance;
+	public void setEndingCreditValue(BigDecimal endingCreditValue) {
+		this.endingCreditValue = endingCreditValue;
+	}
+
+	public BigDecimal getEndingDebitsMinusCredits() {
+		return endingDebitsMinusCredits;
+	}
+
+	public void setEndingDebitsMinusCredits(BigDecimal endingDebitsMinusCredits) {
+		this.endingDebitsMinusCredits = endingDebitsMinusCredits;
+	}
+
+	public BigDecimal getChangeInDebitValue() {
+		return changeInDebitValue;
+	}
+
+	public void setChangeInDebitValue(BigDecimal changeInDebitValue) {
+		this.changeInDebitValue = changeInDebitValue;
+	}
+
+	public BigDecimal getChangeInCreditValue() {
+		return changeInCreditValue;
+	}
+
+	public void setChangeInCreditValue(BigDecimal changeInCreditValue) {
+		this.changeInCreditValue = changeInCreditValue;
+	}
+
+	public BigDecimal getChangeInDebitsMinusCredits() {
+		return changeInDebitsMinusCredits;
+	}
+
+	public void setChangeInDebitsMinusCredits(BigDecimal changeInDebitsMinusCredits) {
+		this.changeInDebitsMinusCredits = changeInDebitsMinusCredits;
 	}
 }
+
