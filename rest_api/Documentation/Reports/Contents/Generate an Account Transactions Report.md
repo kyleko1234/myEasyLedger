@@ -1,4 +1,4 @@
-### Generate a Balance Sheet
+### Generate an Account Transactions Report
 
 Endpoint: `GET /reports/accountTransactionsReport/account/{accountId}/{startDate}/{endDate}`
 
