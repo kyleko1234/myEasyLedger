@@ -68,7 +68,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				"FROM       " + 
 				"    line_item, journal_entry, account AS child_account, account AS parent_account, account_subtype, account_type " + 
 				"WHERE       " + 
-				"    child_account.parent_account_id = :accountId AND        " + 
+				"    child_account.id = :accountId AND        " + 
 				"    line_item.account_id = child_account.id AND       " + 
 				"    line_item.journal_entry_id = journal_entry.id AND       " + 
 				"    journal_entry.deleted = false AND  " + 
@@ -192,7 +192,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				+ "FROM            "
 				+ "    line_item, journal_entry, account AS child_account, account AS parent_account, account_subtype, account_type      "
 				+ "WHERE            "
-				+ "    child_account.parent_account_id = :accountId AND             "
+				+ "    child_account.id = :accountId AND             "
 				+ "    line_item.account_id = child_account.id AND            "
 				+ "    line_item.journal_entry_id = journal_entry.id AND        "
 				+ "    journal_entry.journal_entry_date >= :startDate AND "
