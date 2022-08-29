@@ -63,7 +63,7 @@ public class ReportsController {
 		return reportsService.getCashFlowStatementViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
 	
-	@GetMapping("/account/{accountId}/reports/accountTransactionsReport/{startDate}/{endDate}")
+	@GetMapping("/reports/accountTransactionsReport/account/{accountId}/{startDate}/{endDate}")
 	public AccountTransactionsReportViewModel getAccountTransactionsReportForAccountBetweenDates(@PathVariable(value = "accountId") Long accountId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
 			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 

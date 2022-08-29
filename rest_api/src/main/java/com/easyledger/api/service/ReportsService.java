@@ -120,7 +120,7 @@ public class ReportsService {
 			} else {
 				currentDebitValue = currentDebitValue.add(lineItem.getAmount());
 			}
-			lineItemsWithTotals.add(new AccountTransactionsReportLineItemDTO(lineItem, currentCreditValue, currentCreditValue));
+			lineItemsWithTotals.add(new AccountTransactionsReportLineItemDTO(lineItem, currentDebitValue, currentCreditValue));
 		}
 		
 		return new AccountTransactionsReportViewModel(startDate, endDate, initialAccountBalance, initialDebitValue, initialCreditValue, lineItemsWithTotals, currentDebitValue, currentCreditValue);
