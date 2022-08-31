@@ -26,6 +26,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 	@Query(nativeQuery = true)
 	public AccountBalanceDTO getAccountBalanceUpToDateExclusive(Long accountId, LocalDate endDate);
 	
+	@Query(nativeQuery = true)
+	public List<AccountDTO> getLeafAccountsWithEntriesForOrganization(Long organizationId);
+	
 	@Query(
 			value = "SELECT CASE EXISTS (SELECT 1 FROM account WHERE account.parent_account_id = ? AND account.deleted = false) " +
 				"WHEN true THEN true ELSE false END",
