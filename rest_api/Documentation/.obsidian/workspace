@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Account/Contents/Delete an Account.md",
+            "file": "Reports/Contents/Generate an Account Transactions Report.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Account/Contents/Delete an Account.md",
+                "file": "Reports/Contents/Generate an Account Transactions Report.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,15 +89,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "Account/Contents/List All Accounts With Entries Belonging to an Organization.md",
+    "Reports/Reports.md",
+    "Easy Ledger.md",
     "Account/Contents/List All Accounts Belonging to an Organization.md",
     "Account/Account.md",
-    "Easy Ledger.md",
+    "Account/Contents/Update an Account.md",
+    "Account/Contents/List All Accounts With Entries Belonging to an Organization.md",
+    "Account/Contents/Delete an Account.md",
     "Reports/Contents/Generate an Account Transactions Report.md",
-    "Reports/Reports.md",
     "Reports/Contents/Generate an Income Statement.md",
-    "LineItem/Contents/The LineItem Object.md",
-    "Reports/Contents/Generate a Balance Sheet.md",
-    "Untitled.md"
+    "LineItem/Contents/The LineItem Object.md"
   ]
 }

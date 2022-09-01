@@ -57,6 +57,7 @@ Prefix all endpoints with `http://{host}/v0.6.1/`
 - [[List All Accounts|GET /account]]
 - [[Retrieve an Account| GET /account/{id}]]
 - [[List All Accounts Belonging to an Organization|GET /organization/{id}/account]]
+- [[List All Accounts With Entries Belonging to an Organization | GET /organization/{id}/account]]
 - [[Find All Account Balances for an Organization For a Certain Date Range|GET /organization/{id}/accountBalance]]
 - [[Find All Account Balances for an Organization For a Certain Date Range|GET /organization/{id}/accountBalance/{endDate}]]
 - [[Find All Account Balances for an Organization For a Certain Date Range|GET /organization/{id}/accountBalance/{startDate}/{endDate}]]

@@ -27,6 +27,7 @@ import LedgerSettings from '../pages/settings/ledger-settings';
 import CustomersPage from '../pages/customers/customers-page.js';
 import JournalEntriesPage from '../pages/journal-entries/enterprise/journal-entries-page.js';
 import TransactionsPage from '../pages/journal-entries/personal/transactions-page.js';
+import AccountTransactionsReportPage from '../pages/reports/account-transactions-report-page.js';
 
 const routes = [
   {
@@ -196,13 +197,18 @@ const routes = [
   },
   {
     path: '/journal-entries',
-    title: 'Journal Entries New',
+    title: 'Journal Entries',
     component: JournalEntriesPage
   },
   {
     path: '/transactions',
     title: 'Transactions',
     component: TransactionsPage,
+  },
+  {
+    path: '/reports/account-transactions-report',
+    title: 'Account Transactions Report',
+    component: AccountTransactionsReportPage,
   },
 
 ];
