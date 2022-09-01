@@ -9,6 +9,7 @@ import Select from 'react-select';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/constants';
 import { journalEntriesText } from '../../utils/i18n/journal-entries-text';
+import AccountTransactionsReport from './components/account-transactions-report';
 
 function AccountTransactionsReportPage(props) {
     const appContext = React.useContext(PageSettings);
@@ -30,7 +31,7 @@ function AccountTransactionsReportPage(props) {
 
     const handleUpdateReportButton = event => {
         event.preventDefault();
-        console.log("UPDATE")
+        fetchReport(selectedAccountId);
     }
     const handleSelectDateRangePreset = selectedOption => {
         if (selectedOption) {
@@ -42,7 +43,7 @@ function AccountTransactionsReportPage(props) {
         }
     }
     const handleChangeStartDate = (date) => {
-        let newDatesToRequest = datesToRequest.slice();
+        let newDatesToRequest = datesToRequest;
         newDatesToRequest = {
             label: "Custom",
             startDate: date,
@@ -51,7 +52,7 @@ function AccountTransactionsReportPage(props) {
         setDatesToRequest(newDatesToRequest)
     }
     const handleChangeEndDate = (date) => {
-        let newDatesToRequest = datesToRequest.slice();
+        let newDatesToRequest = datesToRequest;
         newDatesToRequest = {
             label: "Custom",
             startDate: newDatesToRequest.startDate,
@@ -253,6 +254,12 @@ function AccountTransactionsReportPage(props) {
                     </form>
                 </CardBody>
             </Card>
+            {fetchedReport
+                ? <AccountTransactionsReport
+                    reportData={fetchedReport}
+                />
+                : null
+            }
         </div>
     )
 }
