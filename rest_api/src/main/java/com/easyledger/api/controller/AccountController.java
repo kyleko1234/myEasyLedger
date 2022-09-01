@@ -102,6 +102,13 @@ public class AccountController {
     	return accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, endDate);
     }
 
+    @GetMapping("/organization/{organizationId}/accountsWithEntries")
+    public List<AccountDTO> getLeafAccountsWithEntriesForOrganization(@PathVariable(value = "organizationId") Long organizationId, Authentication authentication)
+    		throws UnauthorizedException {
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+    	return accountRepo.getLeafAccountsWithEntriesForOrganization(organizationId);
+    }
+    
     @PostMapping("/account")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountDTO createAccount(@Valid @RequestBody AccountDTO dto, Authentication authentication) 

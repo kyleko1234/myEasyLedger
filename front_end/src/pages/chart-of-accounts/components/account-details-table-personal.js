@@ -176,8 +176,8 @@ function AccountDetailsTablePersonal({ selectedAccount, selectedAccountId, setRe
                 refreshParentComponent={() => fetchData(pageIndex, pageSize, true)}
                 currentJournalEntryId={currentJournalEntryId} setCurrentJournalEntryId={setCurrentJournalEntryId}
                 accountOptions={accountOptions}
-                defaultFromAccountId={selectedAccountId}
-                defaultFromAccountName={selectedAccount.accountName}
+                defaultFromAccountId={category? null : selectedAccountId}
+                defaultFromAccountName={category? null : selectedAccount.accountName}
             />
             <AccountDetailsEditor
                 isOpen={accountDetailsEditorModal}

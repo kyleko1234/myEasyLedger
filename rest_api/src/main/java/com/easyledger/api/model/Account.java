@@ -166,7 +166,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		resultSetMapping = "accountBalanceDTOMapping"
 )
 
-@NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization for the given time period
+@NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted accounts with entries for that organization
 		name = "Account.getLeafAccountsWithEntriesForOrganization",
 		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName,     "
 				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,     "
