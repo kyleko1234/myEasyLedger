@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Account/Contents/Delete an Account.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md",
+                "file": "Account/Contents/Delete an Account.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,15 +89,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Account/Contents/List All Accounts With Entries Belonging to an Organization.md",
+    "Account/Contents/List All Accounts Belonging to an Organization.md",
+    "Account/Account.md",
+    "Easy Ledger.md",
     "Reports/Contents/Generate an Account Transactions Report.md",
     "Reports/Reports.md",
     "Reports/Contents/Generate an Income Statement.md",
     "LineItem/Contents/The LineItem Object.md",
     "Reports/Contents/Generate a Balance Sheet.md",
-    "Untitled.md",
-    "JournalEntry/Contents/List All JournalEntries Belonging to an Organization as JournalEntryViewModels.md",
-    "JournalEntry/Contents/The JournalEntry Object.md",
-    "JournalEntry/Contents/Update a JournalEntry.md",
-    "JournalEntry/Contents/Access Edit History of a Journal Entry.md"
+    "Untitled.md"
   ]
 }
