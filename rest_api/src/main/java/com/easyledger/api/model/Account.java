@@ -166,6 +166,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		resultSetMapping = "accountBalanceDTOMapping"
 )
 
+@NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted accounts with entries for that organization
+		name = "Account.getLeafAccountsWithEntriesForOrganization",
+		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName,     "
+				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,     "
+				+ "    organization.id AS organizationId, organization.name AS organizationName,      "
+				+ "    account.debit_total AS debitTotal, account.credit_total AS creditTotal, account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount,     "
+				+ "    account.has_children AS hasChildren     "
+				+ "FROM account AS account      "
+				+ "    LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id      "
+				+ "    LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id OR parent_account.account_subtype_id = account_subtype.id     "
+				+ "    LEFT JOIN account_type ON account_subtype.account_type_id = account_type.id,      "
+				+ "    organization     "
+				+ "WHERE      "
+				+ "    organization.id = :organizationId AND     "
+				+ "    account.organization_id = organization.id AND      "
+				+ "    account.deleted = false AND"
+				+ "    (SELECT CASE EXISTS ("
+				+ "        SELECT 1 from line_item, journal_entry"
+				+ "        WHERE line_item.journal_entry_id = journal_entry.id "
+				+ "        AND line_item.account_id = account.id AND journal_entry.deleted = false"
+				+ "    ) WHEN true THEN true ELSE false END)"
+				+ "ORDER BY account_type.id, NULLIF(account.account_code, ''), account.name NULLS LAST ",
+		resultSetMapping = "accountDTOMapping"
+)
+
 @Entity
 @Table(name = "account")
 public class Account {
