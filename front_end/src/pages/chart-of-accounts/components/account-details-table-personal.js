@@ -130,13 +130,23 @@ function AccountDetailsTablePersonal({ selectedAccount, selectedAccountId, setRe
             />
             <TransactionsTableHeader />
             <div>
-                {lineItemViewModels.map(lineItemViewModel => {
+                {lineItemViewModels.map((lineItemViewModel, i) => {
                     return (
                         <TransactionViewModelStandard
-                            key={lineItemViewModel.journalEntryId}
+                            key={i}
                             journalEntryDate={lineItemViewModel.journalEntryDate}
                             accountName={lineItemViewModel.accountName}
-                            description={lineItemViewModel.description ? lineItemViewModel.description : lineItemViewModel.journalEntryDescription}
+                            description={category
+                                ? <>
+                                    <div className={"text-truncate " + (lineItemViewModel.description ? " font-size-compact" : "")}>
+                                        {lineItemViewModel.journalEntryDescription}
+                                    </div>
+                                    <div className="font-size-compact fw-light">
+                                        <em>{lineItemViewModel.description}</em>
+                                    </div>
+                                </>
+                                : lineItemViewModel.description ? lineItemViewModel.description : lineItemViewModel.journalEntryDescription
+                            }
                             debitAmount={lineItemViewModel.debitAmount}
                             creditAmount={lineItemViewModel.creditAmount}
                             onClick={() => handleClickJournalEntry(lineItemViewModel.journalEntryId)}
@@ -145,13 +155,23 @@ function AccountDetailsTablePersonal({ selectedAccount, selectedAccountId, setRe
                 })}
             </div>
             <div>
-                {lineItemViewModels.map(lineItemViewModel => {
+                {lineItemViewModels.map((lineItemViewModel, i) => {
                     return (
                         <TransactionViewModelSmallSreen
-                            key={lineItemViewModel.journalEntryId}
+                            key={i}
                             journalEntryDate={lineItemViewModel.journalEntryDate}
                             accountName={lineItemViewModel.accountName}
-                            description={lineItemViewModel.description ? lineItemViewModel.description : lineItemViewModel.journalEntryDescription}
+                            description={category
+                                ? <>
+                                    <div className={lineItemViewModel.description ? "font-size-compact" : ""}>
+                                        {lineItemViewModel.journalEntryDescription}
+                                    </div>
+                                    <div className="font-size-compact fw-light">
+                                        <em>{lineItemViewModel.description}</em>
+                                    </div>
+                                </>
+                                : lineItemViewModel.description ? lineItemViewModel.description : lineItemViewModel.journalEntryDescription
+                            }
                             debitAmount={lineItemViewModel.debitAmount}
                             creditAmount={lineItemViewModel.creditAmount}
                             onClick={() => handleClickJournalEntry(lineItemViewModel.journalEntryId)}
@@ -176,8 +196,8 @@ function AccountDetailsTablePersonal({ selectedAccount, selectedAccountId, setRe
                 refreshParentComponent={() => fetchData(pageIndex, pageSize, true)}
                 currentJournalEntryId={currentJournalEntryId} setCurrentJournalEntryId={setCurrentJournalEntryId}
                 accountOptions={accountOptions}
-                defaultFromAccountId={category? null : selectedAccountId}
-                defaultFromAccountName={category? null : selectedAccount.accountName}
+                defaultFromAccountId={category ? null : selectedAccountId}
+                defaultFromAccountName={category ? null : selectedAccount.accountName}
             />
             <AccountDetailsEditor
                 isOpen={accountDetailsEditorModal}

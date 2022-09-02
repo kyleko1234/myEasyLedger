@@ -7,7 +7,7 @@ function JournalEntryViewModelStandard({journalEntryDate, description, debitAmou
     const appContext = React.useContext(PageSettings);
 
     return (
-        <Link replace to="#" className="pseudo-tr d-none d-md-flex" onClick={onClick}>
+        <Link replace to="#" className="pseudo-tr d-none d-md-flex align-items-center" onClick={onClick}>
             <div className="pseudo-td col-md-2">
                 {journalEntryDate}
             </div>

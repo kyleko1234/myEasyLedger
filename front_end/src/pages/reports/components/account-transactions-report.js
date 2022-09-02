@@ -5,9 +5,15 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import StripedRow from '../../../components/tables/striped-row';
 import { formatCurrency, localizeDate } from '../../../utils/util-fns';
 import { DEBIT_ACCOUNT_TYPES } from '../../../utils/constants';
+import { reportsText } from '../../../utils/i18n/reports-text';
 
 function AccountTransactionsReport({ reportData }) {
     const appContext = React.useContext(PageSettings);
+    const endOfReport = React.useRef(null);
+
+    React.useEffect(() => {
+        endOfReport.current?.scrollIntoView({behavior: "smooth"});
+    }, [reportData])
 
     return (
         <>
@@ -19,92 +25,101 @@ function AccountTransactionsReport({ reportData }) {
                     }
                 </h3>
                 <Card className="very-rounded shadow-sm">
-                    <CardBody>
+                    <CardBody >
                         <PerfectScrollbar>
                             <div className="min-width-md">
-                                <div className="position-relative pseudo-tr d-flex bg-light border rounded pseudo-th">
+                                <div className="pseudo-tr d-flex bg-light border rounded pseudo-th ">
                                     <div className="col-2">
-                                        Date
+                                        {reportsText[appContext.locale]["Date"]}
                                     </div>
                                     <div className="col-4">
-                                        Description
+                                        {reportsText[appContext.locale]["Description"]}
                                     </div>
                                     <div className="col-2 text-end">
-                                        Debit
+                                        {reportsText[appContext.locale]["Debit"]}
                                     </div>
                                     <div className="col-2 text-end">
-                                        Credit
+                                        {reportsText[appContext.locale]["Credit"]}
                                     </div>
                                     <div className="col-2 text-end">
-                                        Balance
+                                        {reportsText[appContext.locale]["Balance"]}
                                     </div>
                                 </div>
-                                <StripedRow className="fw-semibold">
-                                    <div className=" col-2">
+                                <div className="account-transactions-report-module">
+                                    <StripedRow className="fw-semibold">
+                                        <div className=" col-2">
+                                        </div>
+                                        <div className=" col-4">
+                                            {reportsText[appContext.locale]["Starting balance"]}
+                                        </div>
+                                        <div className=" col-2 text-end">
+                                        </div>
+                                        <div className=" col-2 text-end">
+                                        </div>
+                                        <div className=" col-2 text-end">
+                                            {formatCurrency(appContext.locale, appContext.currency, reportData.initialDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
+                                        </div>
+                                    </StripedRow>
+                                    {reportData.lineItems.map((lineItem, i)=> {
+                                        return (
+                                            <StripedRow key={i} className="align-items-center">
+                                                <div className=" col-2">
+                                                    {localizeDate(lineItem.journalEntryDate)}
+                                                </div>
+                                                <div className=" col-4">
+                                                    <div className="font-size-compact fw-semibold">
+                                                        {lineItem.journalEntryDescription}
+                                                    </div>
+                                                    <div className="font-size-compact fw-light">
+                                                        {lineItem.description}
+                                                    </div>
+                                                </div>
+                                                <div className=" col-2 text-end">
+                                                    {lineItem.isCredit ? null : formatCurrency(appContext.locale, appContext.currency, lineItem.amount)}
+                                                </div>
+                                                <div className=" col-2 text-end">
+                                                    {lineItem.isCredit ? formatCurrency(appContext.locale, appContext.currency, lineItem.amount) : null}
+                                                </div>
+                                                <div className=" col-2 text-end">
+                                                    {formatCurrency(appContext.locale, appContext.currency, lineItem.currentDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
+                                                </div>
+                                            </StripedRow>
+                                        )
+                                    })}
+                                    <StripedRow className="fw-semibold">
+                                        <div className=" col-2">
+                                        </div>
+                                        <div className=" col-4">
+                                            {reportsText[appContext.locale]["Ending balance"]}
+                                        </div>
+                                        <div className=" col-2 text-end">
+                                        </div>
+                                        <div className=" col-2 text-end">
+                                        </div>
+                                        <div className=" col-2 text-end">
+                                            {formatCurrency(appContext.locale, appContext.currency, reportData.endingDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
+                                        </div>
+                                    </StripedRow>
+                                    <StripedRow className="fw-semibold">
+                                        <div className=" col-2">
+                                        </div>
+                                        <div className=" col-4">
+                                            {reportsText[appContext.locale]["Total change"]}
+                                        </div>
+                                        <div className=" col-2 text-end">
+                                            {formatCurrency(appContext.locale, appContext.currency, reportData.changeInDebitValue)}
+                                        </div>
+                                        <div className=" col-2 text-end">
+                                            {formatCurrency(appContext.locale, appContext.currency, reportData.changeInCreditValue)}
+                                        </div>
+                                        <div className=" col-2 text-end">
+                                            {formatCurrency(appContext.locale, appContext.currency, reportData.changeInDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
+                                        </div>
+                                    </StripedRow>
+                                    <div ref={endOfReport}>
+                                        {/**empty div for auto-scrolling */}
                                     </div>
-                                    <div className=" col-4">
-                                        Beginning Balance
-                                    </div>
-                                    <div className=" col-2 text-end">
-                                    </div>
-                                    <div className=" col-2 text-end">
-                                    </div>
-                                    <div className=" col-2 text-end">
-                                        {formatCurrency(appContext.locale, appContext.currency, reportData.initialDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
-                                    </div>
-                                </StripedRow>
-                                {reportData.lineItems.map(lineItem => {
-                                    return (
-                                        <StripedRow>
-                                            <div className=" col-2">
-                                                {localizeDate(lineItem.journalEntryDate)}
-                                            </div>
-                                            <div className=" col-4">
-                                                {lineItem.description ? lineItem.description : lineItem.journalEntryDescription}
-                                            </div>
-                                            <div className=" col-2 text-end">
-                                                {lineItem.isCredit ? null : formatCurrency(appContext.locale, appContext.currency, lineItem.amount)}
-                                            </div>
-                                            <div className=" col-2 text-end">
-                                                {lineItem.isCredit ? formatCurrency(appContext.locale, appContext.currency, lineItem.amount) : null}
-                                            </div>
-                                            <div className=" col-2 text-end">
-                                                {formatCurrency(appContext.locale, appContext.currency, lineItem.currentDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
-                                            </div>
-                                        </StripedRow>
-                                    )
-                                })}
-                                <StripedRow className="fw-semibold">
-                                    <div className=" col-2">
-                                    </div>
-                                    <div className=" col-4">
-                                        Ending Balance
-                                    </div>
-                                    <div className=" col-2 text-end">
-                                    </div>
-                                    <div className=" col-2 text-end">
-                                    </div>
-                                    <div className=" col-2 text-end">
-                                        {formatCurrency(appContext.locale, appContext.currency, reportData.endingDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
-                                    </div>
-                                </StripedRow>
-                                <StripedRow className="fw-semibold">
-                                    <div className=" col-2">
-                                    </div>
-                                    <div className=" col-4">
-                                        Total Change
-                                    </div>
-                                    <div className=" col-2 text-end">
-                                        {formatCurrency(appContext.locale, appContext.currency, reportData.changeInDebitValue)}
-                                    </div>
-                                    <div className=" col-2 text-end">
-                                        {formatCurrency(appContext.locale, appContext.currency, reportData.changeInCreditValue)}
-                                    </div>
-                                    <div className=" col-2 text-end">
-                                        {formatCurrency(appContext.locale, appContext.currency, reportData.changeInDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
-                                    </div>
-                                </StripedRow>
-
+                                </div>
                             </div>
                         </PerfectScrollbar>
                     </CardBody>
@@ -112,7 +127,6 @@ function AccountTransactionsReport({ reportData }) {
             </div>
         </>
     )
-
 }
 
 export default AccountTransactionsReport;

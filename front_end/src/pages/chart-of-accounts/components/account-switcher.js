@@ -41,14 +41,18 @@ function AccountSwitcher(props) {
 
     //fetch data on component mount
     React.useEffect(() => {
+        let isMounted = true
         setLoading(true);
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
-            if (response.data) {
+            if (response.data && isMounted) {
                 setAccounts(response.data);
                 setSelectedAccountTypeOptionId(response.data.find(account => account.accountId == props.selectedAccountId).accountTypeId);
             }
-            setLoading(false);
+            if (isMounted) {
+                setLoading(false);
+            }
         }).catch(console.log);
+        return(() => {isMounted = false});
     }, [appContext.currentOrganizationId, props.externalRefreshToken]) //load fresh data when props.externalRefreshToken changes
 
     const formatBalance = (accountTypeId, amount) => {
@@ -74,10 +78,10 @@ function AccountSwitcher(props) {
                     <Link replace to="#" onClick={handleCollapseAll}>{balanceSummaryText[appContext.locale]["(Collapse All)"]}</Link>
                 </div>
                 <div className="d-flex align-items-center border-top border-bottom py-3 mt-3">
-                    <label className="px-0 my-0 py-2 col-md-6">
+                    <label className="px-0 my-0 py-2 col-6">
                         {props.category? balanceSummaryText[appContext.locale]["Select a category type:"]: balanceSummaryText[appContext.locale]["Select an account type:"]}
                     </label>
-                    <div className="col-md-6">
+                    <div className="col-6">
                         <Select
                             classNamePrefix="form-control"
                             options={props.isEnterprise? accountTypeOptions : 

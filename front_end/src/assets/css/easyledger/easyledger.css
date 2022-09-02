@@ -560,6 +560,14 @@ a.pseudo-tr:hover,
     }
 }
 
+/* Account Transaction Report custom height for report module */
+.account-transactions-report-module {
+    max-height: calc(100vh - 470px);
+    min-height: 250px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
 /* Utility classes, mostly left from adjusting color admin */
 .clickable:hover {
     cursor: pointer;

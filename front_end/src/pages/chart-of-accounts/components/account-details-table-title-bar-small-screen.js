@@ -20,8 +20,8 @@ function AccountDetailsTableTitleBarSmallScreen({ handleCreateAJournalEntryButto
     }
 
     return (
-        <div className={"d-sm-none my-2 "}>
-            <div className="h4 mb-0">
+        <div className={"d-sm-none mb-3 "}>
+            <div className="h4">
                 {accountDetailsText[appContext.locale]["Balance"] + ": " + formatBalance(selectedAccount.debitsMinusCredits, selectedAccount.accountTypeId)}
             </div>
             <div id="add-an-entry-button-small-screen">
