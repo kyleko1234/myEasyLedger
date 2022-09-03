@@ -23,8 +23,8 @@ export const reportsText = {
         "Debit": "借方",
         "Credit": "貸方",
         "Balance": "餘額",
-        "Starting balance": "TRANSLATION",
-        "Ending balance": "TRANSLATION",
-        "Total change": "TRANSLATION"
+        "Starting balance": "期初餘額",
+        "Ending balance": "期末餘額",
+        "Total change": "期間合計"
     }
 }
