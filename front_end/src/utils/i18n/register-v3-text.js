@@ -46,7 +46,7 @@ export const registerV3Text = {
         "Please click here to return to the login page.": <>Please click <Link to="/user/login/form" className="text-primary">here</Link> to return to the login page.</>
     },
     "zh-TW": {
-        "App description": "簡單來記帳。",
+        "App description": "易記帳。",
         "Sign Up": "建立新使用帳號",
         "Create your myEasyLedger Account.": "建立一個新的使用帳號。",
         "Name": "您的名字",
