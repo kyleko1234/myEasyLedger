@@ -194,7 +194,16 @@ function AccountDetailsTableEnterprise({ selectedAccount, selectedAccountId, set
                         <JournalEntryViewModelStandard
                             key={lineItemViewModel.journalEntryId}
                             journalEntryDate={lineItemViewModel.journalEntryDate}
-                            description={lineItemViewModel.description ? lineItemViewModel.description : lineItemViewModel.journalEntryDescription}
+                            description={
+                                <>
+                                    <div className={"text-truncate " + (lineItemViewModel.description ? " font-size-compact" : "")}>
+                                        {lineItemViewModel.journalEntryDescription}
+                                    </div>
+                                    <div className="font-size-compact fw-light">
+                                        <em>{lineItemViewModel.description}</em>
+                                    </div>
+                                </>
+                            }
                             debitAmount={lineItemViewModel.debitAmount}
                             creditAmount={lineItemViewModel.creditAmount}
                             onClick={() => handleClickJournalEntry(lineItemViewModel.journalEntryId)}
@@ -208,7 +217,16 @@ function AccountDetailsTableEnterprise({ selectedAccount, selectedAccountId, set
                         <JournalEntryViewModelSmallScreen
                             key={lineItemViewModel.journalEntryId}
                             journalEntryDate={lineItemViewModel.journalEntryDate}
-                            description={lineItemViewModel.description ? lineItemViewModel.description : lineItemViewModel.journalEntryDescription}
+                            description={
+                                <>
+                                    <div className={lineItemViewModel.description? "font-size-compact" : ""}>
+                                        {lineItemViewModel.journalEntryDescription}
+                                    </div>
+                                    <div className="font-size-compact fw-light">
+                                        <em>{lineItemViewModel.description}</em>
+                                    </div>
+                                </>
+                            }
                             debitAmount={lineItemViewModel.debitAmount}
                             creditAmount={lineItemViewModel.creditAmount}
                             onClick={() => handleClickJournalEntry(lineItemViewModel.journalEntryId)}

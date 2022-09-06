@@ -111,6 +111,24 @@ export const getTodayAsDateString = () => {
 }
 
 /**
+ * Gets the first day of the current month in local time as YYYY-mm-dd
+ * @returns {String}
+ */
+export const getFirstDayOfCurrentMonth = () => {
+    let todayDateObject = new Date();
+    let yearString = todayDateObject.getFullYear().toString();
+    let rawMonth = todayDateObject.getMonth() + 1;
+    let monthString;
+    if (rawMonth >= 10) {
+        monthString = rawMonth.toString();
+    } else {
+        monthString = "0" + rawMonth.toString();
+    }
+    let date = "01";
+    return `${yearString}-${monthString}-${date}`
+}
+
+/**
  * Takes in a date in the format yyyy-mm-dd and returns a date in the same format with the same month and date, but with the year replaced with the current year.
  * @param {String} date 
  * @returns {String}

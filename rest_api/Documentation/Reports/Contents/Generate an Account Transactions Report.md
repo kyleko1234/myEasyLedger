@@ -52,7 +52,7 @@ ___
 	- **isCredit** `boolean`
 	- **currentDebitBalance** `BigDecimal`
 	- **currentCreditBalance** `BigDecimal`
-	- **curentDebitsMinusCredits** `BigDecimal`
+	- **currentDebitsMinusCredits** `BigDecimal`
 - **endingDebitValue** `BigDecimal`
 	Total debit value of this account by the end of endDate.
 - **endingCreditValue** `BigDecimal`

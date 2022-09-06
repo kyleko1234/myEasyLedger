@@ -14,4 +14,5 @@ ___
 - [[Delete an Account]]
 - [[List All Accounts]]
 - [[List All Accounts Belonging to an Organization]]
+- [[List All Accounts With Entries Belonging to an Organization]]
 - [[Find All Account Balances for an Organization For a Certain Date Range]]
