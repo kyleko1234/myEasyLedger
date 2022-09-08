@@ -1,31 +1,32 @@
 import React from 'react'
 import { Alert, Card, CardBody } from 'reactstrap';
-import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings'
 import { incomeStatementRenderText } from '../../utils/i18n/income-statement-render-text';
 import { reportsText } from '../../utils/i18n/reports-text';
-import { getDateInCurrentYear, getFirstDayOfCurrentMonth, getTodayAsDateString, validateDate } from '../../utils/util-fns';
+import { getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../utils/util-fns';
 import Select from 'react-select';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/constants';
 import { journalEntriesText } from '../../utils/i18n/journal-entries-text';
 import AccountTransactionsReport from './components/account-transactions-report';
+import { balanceSheetRenderText } from '../../utils/i18n/balance-sheet-render-text';
 
 function AccountTransactionsReportPage(props) {
     const appContext = React.useContext(PageSettings);
     const today = getTodayAsDateString();
 
-    const beginningOfCurrentMonth = getFirstDayOfCurrentMonth();
+    const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
     const [loading, setLoading] = React.useState(true);
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
     const [accountOptions, setAccountOptions] = React.useState([]);
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
     const [selectedAccountId, setSelectedAccountId] = React.useState(null);
+    const [currentAccountTypeId, setCurrentAccountTypeId] = React.useState(null);
 
     const [fetchedReport, setFetchedReport] = React.useState(null);
     const [datesToRequest, setDatesToRequest] = React.useState({
         label: "Custom",
-        startDate: beginningOfCurrentMonth,
+        startDate: beginningOfCurrentFiscalYear,
         endDate: today
     })
 
@@ -93,9 +94,9 @@ function AccountTransactionsReportPage(props) {
                     });
                 });
                 setAccountOptions(formattedAccounts);
-                if (formattedAccounts.length > 0) {
+                /*if (formattedAccounts.length > 0) {
                     setSelectedAccountId(formattedAccounts[0].value);
-                }
+                }*/
             })
             .catch(console.log);
 
@@ -115,10 +116,19 @@ function AccountTransactionsReportPage(props) {
     }, [])
 
     React.useEffect(() => {
+        let isMounted = true;
         if (selectedAccountId) {
             fetchReport(selectedAccountId)
+            if (isMounted) {
+                let selectedAccount = accountOptions.find(accountOption => accountOption.object.accountId === selectedAccountId).object;
+                setCurrentAccountTypeId(selectedAccount.accountTypeId)
+            }
         }
+        return (() => {
+            isMounted = false;
+        })
     }, [selectedAccountId])
+
 
     return (
         <div>
@@ -145,7 +155,7 @@ function AccountTransactionsReportPage(props) {
                                         menuShouldScrollIntoView={false}
                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                         onChange={selectedOption => handleSelectDateRangePreset(selectedOption)}
-                                        placeholder={"Custom"}
+                                        placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                         value={datesToRequest.label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest.label)}
                                     />
                                     <label className="my-0 text-end col-1 px-2">
@@ -184,7 +194,6 @@ function AccountTransactionsReportPage(props) {
                                             menuShouldScrollIntoView={false}
                                             styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                             onChange={selectedOption => setSelectedAccountId(selectedOption.object.accountId)}
-                                            placeholder={"Account"}
                                             value={accountOptions.find(accountOption => accountOption.object.accountId === selectedAccountId)}
                                         />
                                     </div>
@@ -205,7 +214,7 @@ function AccountTransactionsReportPage(props) {
                                         menuShouldScrollIntoView={false}
                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                         onChange={selectedOption => handleSelectDateRangePreset(selectedOption)}
-                                        placeholder={"Custom"}
+                                        placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                         value={datesToRequest.label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest.label)}
                                     />
                                 </div>
@@ -257,6 +266,7 @@ function AccountTransactionsReportPage(props) {
             {fetchedReport
                 ? <AccountTransactionsReport
                     reportData={fetchedReport}
+                    accountTypeId={currentAccountTypeId}
                 />
                 : null
             }

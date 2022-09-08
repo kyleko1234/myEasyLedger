@@ -7,7 +7,7 @@ import { formatCurrency, localizeDate } from '../../../utils/util-fns';
 import { DEBIT_ACCOUNT_TYPES } from '../../../utils/constants';
 import { reportsText } from '../../../utils/i18n/reports-text';
 
-function AccountTransactionsReport({ reportData }) {
+function AccountTransactionsReport({ reportData, accountTypeId }) {
     const appContext = React.useContext(PageSettings);
     const endOfReport = React.useRef(null);
 
@@ -57,7 +57,7 @@ function AccountTransactionsReport({ reportData }) {
                                         <div className=" col-2 text-end">
                                         </div>
                                         <div className=" col-2 text-end">
-                                            {formatCurrency(appContext.locale, appContext.currency, reportData.initialDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
+                                            {formatCurrency(appContext.locale, appContext.currency, reportData.initialDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(accountTypeId) ? 1 : -1))}
                                         </div>
                                     </StripedRow>
                                     {reportData.lineItems.map((lineItem, i)=> {
@@ -81,7 +81,7 @@ function AccountTransactionsReport({ reportData }) {
                                                     {lineItem.isCredit ? formatCurrency(appContext.locale, appContext.currency, lineItem.amount) : null}
                                                 </div>
                                                 <div className=" col-2 text-end">
-                                                    {formatCurrency(appContext.locale, appContext.currency, lineItem.currentDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
+                                                    {formatCurrency(appContext.locale, appContext.currency, lineItem.currentDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(accountTypeId) ? 1 : -1))}
                                                 </div>
                                             </StripedRow>
                                         )
@@ -97,7 +97,7 @@ function AccountTransactionsReport({ reportData }) {
                                         <div className=" col-2 text-end">
                                         </div>
                                         <div className=" col-2 text-end">
-                                            {formatCurrency(appContext.locale, appContext.currency, reportData.endingDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
+                                            {formatCurrency(appContext.locale, appContext.currency, reportData.endingDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(accountTypeId) ? 1 : -1))}
                                         </div>
                                     </StripedRow>
                                     <StripedRow className="fw-semibold">
@@ -113,7 +113,7 @@ function AccountTransactionsReport({ reportData }) {
                                             {formatCurrency(appContext.locale, appContext.currency, reportData.changeInCreditValue)}
                                         </div>
                                         <div className=" col-2 text-end">
-                                            {formatCurrency(appContext.locale, appContext.currency, reportData.changeInDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(reportData.account.accountTypeId) ? 1 : -1))}
+                                            {formatCurrency(appContext.locale, appContext.currency, reportData.changeInDebitsMinusCredits * (DEBIT_ACCOUNT_TYPES.includes(accountTypeId) ? 1 : -1))}
                                         </div>
                                     </StripedRow>
                                     <div ref={endOfReport}>

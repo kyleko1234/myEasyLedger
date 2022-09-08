@@ -45,7 +45,16 @@ function AccountSwitcher(props) {
         setLoading(true);
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
             if (response.data && isMounted) {
-                setAccounts(response.data);
+                let fetchedAccounts = response.data;
+                if (accounts && accounts.length) {
+                    fetchedAccounts.forEach(fetchedAccount => {
+                        let oldAccount = accounts.find(account => account.accountId === fetchedAccount.accountId);
+                        if (oldAccount.expanded) {
+                            fetchedAccount.expanded = true;
+                        }
+                    })
+                }
+                setAccounts(fetchedAccounts);
                 setSelectedAccountTypeOptionId(response.data.find(account => account.accountId == props.selectedAccountId).accountTypeId);
             }
             if (isMounted) {

@@ -10,6 +10,7 @@ import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, localizeDat
 import StripedRow from '../../../components/tables/striped-row';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -316,7 +317,7 @@ function IncomeStatementRender(props) {
                                                 menuShouldScrollIntoView={false}
                                                 styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                                 onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
-                                                placeholder={"Custom"}
+                                                placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                                 value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                             />
                                             <label className="my-0 text-end col-1 px-2" htmlFor={`start-date=${i}`}>
@@ -367,7 +368,7 @@ function IncomeStatementRender(props) {
                                                 menuShouldScrollIntoView={false}
                                                 styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                                 onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
-                                                placeholder={"Custom"}
+                                                placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                                 value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                             />
                                         </div>
