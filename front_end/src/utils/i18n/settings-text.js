@@ -132,7 +132,7 @@ export const settingsText = {
         "Yes, delete it!": "是的，删除它！",
         "Are you sure?": "你確定嗎？",
         "Are you sure you want to delete this ledger? This action cannot be undone.": "你真的要删除此帳本嗎？",
-        "Cannot delete this ledger.": "這個帳本還不能被删除。",
+        "Cannot delete this ledger.": "這個帳本有分錄資料，不能被删除！",
         "All Journal Entries and Transactions must be deleted before you can delete this EasyLedger.": "所有交易記錄都要先删除後，才能删除此帳本。",
 
 
