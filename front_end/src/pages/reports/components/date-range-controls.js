@@ -4,6 +4,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
+import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
 
 
 function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReportButton, handleRemoveDateRangeButton, dateRangePresets, handleSelectDateRangePreset, handleChangeStartDate, handleChangeEndDate, detailedView, toggleDetailedView, handleCompareButton }) {
@@ -40,7 +41,7 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                             menuShouldScrollIntoView={false}
                                             styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                             onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
-                                            placeholder={"Custom"}
+                                            placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                             value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                         />
                                         <label className="my-0 text-end col-1 px-2">
@@ -89,7 +90,7 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                             menuShouldScrollIntoView={false}
                                             styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                             onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
-                                            placeholder={"Custom"}
+                                            placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                             value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                         />
                                     </div>
