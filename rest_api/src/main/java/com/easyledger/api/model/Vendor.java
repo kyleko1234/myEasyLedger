@@ -18,6 +18,7 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
 import com.easyledger.api.dto.VendorDTO;
+import com.easyledger.api.dto.VendorExpensesDTO;
 import com.easyledger.api.utility.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -49,6 +50,61 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		resultSetMapping = "vendorDTOMapping"
 )
 
+@SqlResultSetMapping( //maps native SQL query to VendorDTO class
+		name = "vendorExpensesDTOMapping",
+		classes = {
+				@ConstructorResult(
+						targetClass = VendorExpensesDTO.class,
+						columns = {
+								@ColumnResult(name = "vendorId"),
+								@ColumnResult(name = "vendorName"),
+								@ColumnResult(name = "debitTotal"),
+								@ColumnResult(name = "creditTotal")
+						}
+				)
+		}
+)	
+
+@NamedNativeQuery( //retrieves all vendors for a given organizationId
+		name = "Vendor.getExpensesByVendorForOrganizationBetweenDates",
+		query = "SELECT  "
+				+ "    vendor.id AS vendorId,  "
+				+ "    vendor.vendor_name AS vendorName, "
+				+ "    SUM( "
+				+ "        CASE WHEN "
+				+ "            line_item.is_credit = false  "
+				+ "            AND journal_entry.deleted = false  "
+				+ "            AND journal_entry.journal_entry_date >= :startDate  "
+				+ "            AND journal_entry.journal_entry_date <= :endDate "
+				+ "            AND account_type.id = 5 "
+				+ "        THEN line_item.amount END "
+				+ "    ) AS debitTotal,                     "
+				+ "    SUM( "
+				+ "        CASE WHEN  "
+				+ "            line_item.is_credit = true  "
+				+ "            AND journal_entry.deleted = false  "
+				+ "            AND journal_entry.journal_entry_date >= :startDate  "
+				+ "            AND journal_entry.journal_entry_date <= :endDate  "
+				+ "            AND account_type.id = 5 "
+				+ "        THEN line_item.amount END "
+				+ "    )  "
+				+ "    AS creditTotal "
+				+ "FROM "
+				+ "    organization, "
+				+ "    vendor, "
+				+ "        LEFT JOIN journal_entry ON journal_entry.vendor_id = vendor.id "
+				+ "        LEFT JOIN line_item ON line_item.journal_entry_id = journal_entry.id "
+				+ "        LEFT JOIN account AS account ON line_item.account_id = account.id "
+				+ "        LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id "
+				+ "        LEFT JOIN account_subtype ON (account.account_subtype_id = account_subtype.id OR parent_account.account_subtype_id = account_subtype.id) "
+				+ "        LEFT JOIN account_type ON account_subtype.account_type_id = account_type.id "
+				+ "WHERE "
+				+ "    vendor.organization_id = organization.id "
+				+ "    AND organization.id = :organizationId "
+				+ "GROUP BY vendor.id "
+				+ "ORDER BY vendor.vendor_name ",
+		resultSetMapping = "vendorExpensesDTOMapping"
+)
 
 @Entity
 @Table(name = "vendor")
