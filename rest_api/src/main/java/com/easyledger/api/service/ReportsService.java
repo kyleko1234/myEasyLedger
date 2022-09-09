@@ -13,18 +13,21 @@ import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 import com.easyledger.api.dto.AccountTransactionsReportLineItemDTO;
 import com.easyledger.api.dto.LineItemDTO;
+import com.easyledger.api.dto.VendorExpensesDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.repository.OrganizationRepository;
+import com.easyledger.api.repository.VendorRepository;
 import com.easyledger.api.viewmodel.AccountTransactionsReportViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetAssetsViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetEquityViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetLiabilitiesViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetViewModel;
 import com.easyledger.api.viewmodel.CashFlowStatementViewModel;
+import com.easyledger.api.viewmodel.ExpensesByVendorReportViewModel;
 import com.easyledger.api.viewmodel.IncomeStatementViewModel;
 
 @Service
@@ -44,15 +47,20 @@ public class ReportsService {
 	@Autowired 
 	private LineItemService lineItemService;
 	
+	@Autowired
+	private VendorRepository vendorRepo;
+	
 	
 	public ReportsService(AccountRepository accountRepo, AccountSubtypeRepository accountSubtypeRepo, 
-			OrganizationRepository organizationRepo, LineItemService lineItemService, AccountService accountService) {
+			OrganizationRepository organizationRepo, LineItemService lineItemService, AccountService accountService, 
+			VendorRepository vendorRepo) {
 		super();
 		this.accountRepo = accountRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.organizationRepo = organizationRepo;
 		this.accountService = accountService;
 		this.lineItemService = lineItemService;
+		this.vendorRepo = vendorRepo;
 	}
 
 
@@ -125,6 +133,12 @@ public class ReportsService {
 		
 		return new AccountTransactionsReportViewModel(startDate, endDate, initialAccountBalance, initialDebitValue, initialCreditValue, lineItemsWithTotals, currentDebitValue, currentCreditValue);
 
+	}
+	
+	public ExpensesByVendorReportViewModel getExpensesByVendorReportViewModelForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate) {
+		List<VendorExpensesDTO> vendorExpensesDTOs = vendorRepo.getExpensesByVendorForOrganizationBetweenDates(organizationId, startDate, endDate);
+		BigDecimal totalExpenses = organizationRepo.getTotalExpensesForOrganizationBetweenDates(organizationId, startDate, endDate);
+		return new ExpensesByVendorReportViewModel(vendorExpensesDTOs, totalExpenses);
 	}
 
 }

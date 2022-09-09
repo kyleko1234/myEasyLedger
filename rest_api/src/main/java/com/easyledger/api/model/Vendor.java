@@ -91,7 +91,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				+ "    AS creditTotal "
 				+ "FROM "
 				+ "    organization, "
-				+ "    vendor, "
+				+ "    vendor "
 				+ "        LEFT JOIN journal_entry ON journal_entry.vendor_id = vendor.id "
 				+ "        LEFT JOIN line_item ON line_item.journal_entry_id = journal_entry.id "
 				+ "        LEFT JOIN account AS account ON line_item.account_id = account.id "
