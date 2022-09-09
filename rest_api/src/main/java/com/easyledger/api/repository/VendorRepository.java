@@ -27,6 +27,6 @@ public interface VendorRepository extends JpaRepository<Vendor, Long> {
 					+ "		AND vendor.organization_id = (:organizationId) "
 					+ ") "
 					+ "WHEN true THEN true ELSE false END", 
-			nativeQuery=true)
+			nativeQuery = true)
 	public boolean isDuplicateVendorName(Long organizationId, String name);
 }
