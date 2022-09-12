@@ -28,6 +28,7 @@ import CustomersPage from '../pages/customers/customers-page.js';
 import JournalEntriesPage from '../pages/journal-entries/enterprise/journal-entries-page.js';
 import TransactionsPage from '../pages/journal-entries/personal/transactions-page.js';
 import AccountTransactionsReportPage from '../pages/reports/account-transactions-report-page.js';
+import ExpensesByVendor from '../pages/reports/expenses-by-vendor.js';
 
 const routes = [
   {
@@ -209,6 +210,11 @@ const routes = [
     path: '/reports/account-transactions-report',
     title: 'Account Transactions Report',
     component: AccountTransactionsReportPage,
+  },
+  {
+    path: '/reports/expenses-by-vendor',
+    title: 'Expense Distribution (by Vendor)',
+    component: ExpensesByVendor,
   },
 
 ];

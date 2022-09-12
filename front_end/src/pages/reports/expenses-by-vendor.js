@@ -1,7 +1,10 @@
+import axios from 'axios';
 import React from 'react';
 import { PageSettings } from '../../config/page-settings';
+import { API_BASE_URL } from '../../utils/constants';
 import { reportTypeListText } from '../../utils/i18n/report-type-list-text';
-import { getDateInCurrentYear, getTodayAsDateString } from '../../utils/util-fns';
+import { reportsText } from '../../utils/i18n/reports-text';
+import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../utils/util-fns';
 import DateRangeControls from './components/date-range-controls';
 
 function ExpensesByVendor(props) {
@@ -11,7 +14,7 @@ function ExpensesByVendor(props) {
     const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
     const [loading, setLoading] = React.useState(true);
 
-    const [vendorExpenseseDTOs, setVendorExpensesDTOs] = React.useState([]);
+    const [vendorExpensesDTOs, setVendorExpensesDTOs] = React.useState([]);
     const [datesToRequest, setDatesToRequest] = React.useState([{
         label: "Custom",
         startDate: beginningOfCurrentFiscalYear, 
@@ -26,7 +29,16 @@ function ExpensesByVendor(props) {
         for (const dateObject of datesToRequest) {
             await axios.get(`${API_BASE_URL}/reports/expensesByVendorReport/organization/${appContext.currentOrganizationId}/${dateObject.startDate}/${dateObject.endDate}`).then(response => {
                 newColumnLabels.push(dateObject);     //column labels are not updated until the report is actually updated
-                fetchedReports.push(response.data);
+                let fetchedReport = response.data;
+                let otherExpenses = fetchedReport.totalExpenses
+                fetchedReport.vendorExpensesDTOs.forEach(dto => {
+                    otherExpenses = otherExpenses - dto.debitsMinusCredits;
+                })
+                fetchedReport.vendorExpensesDTOs.push({
+                    vendorName: reportsText[appContext.locale]["Other"],
+                    debitsMinusCredits: otherExpenses
+                })
+                fetchedReports.push(fetchedReport);
             }).catch(console.log);
         }
         setColumnLabels(newColumnLabels);
@@ -100,6 +112,16 @@ function ExpensesByVendor(props) {
         setDatesToRequest(datesArray);
     }
     
+    const validateDatesToRequest = datesToRequest => {
+        let returnedBoolean = true
+        datesToRequest.forEach(dateToRequestObject => {
+            if (!(validateDate(dateToRequestObject.startDate) && validateDate(dateToRequestObject.endDate))) {
+                returnedBoolean = false;
+            }
+        })
+        return returnedBoolean;
+    }
+
     const handleUpdateReportButton = async (event) => {
         event.preventDefault();
         setInvalidDateAlert(false);

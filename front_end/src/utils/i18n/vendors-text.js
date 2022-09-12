@@ -12,6 +12,7 @@ export const vendorsText = {
         "Cannot delete this vendor.": "Cannot delete this vendor.",
         "Vendors": "Vendors",
         "A vendor with this name already exists in this ledger.": "A vendor with this name already exists in this ledger.",
+        "Other": "Other",
     },
     "zh-TW": {
         "Add a Vendor": "建立新支出對象",
@@ -26,5 +27,6 @@ export const vendorsText = {
         "Cannot delete this vendor.": "無法删除本供應商（支出對象）。",
         "Vendors": "供應商（支出對象）名册",
         "A vendor with this name already exists in this ledger.": "本帳册中已存在這個供應商（支出對象）名稱。",
+        "Other": "TRANSLATION"
     },
 }
