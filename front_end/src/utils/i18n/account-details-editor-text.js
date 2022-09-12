@@ -103,7 +103,7 @@ export const accountDetailsEditorText = {
         "Initial Debit Value": "借方初始餘額",
         "Initial Credit Value": "貸方初始餘額",
         "Create a New Account": "建立一個新科目",
-        "Account must belong to either a subtype or a parent account.": "新建科目必需隸屬於某個已存在的類別或科目之下。",
+        "Account must belong to either a subtype or a parent account.": "新建子科目必需隸屬在一個已存在的「母科目」下；新建母科目則必需有它的「科目類型」。",
         "Account Code": "科目代碼",
         "Create a New Category": "創立一個新類別",
         "Edit Category Details": "修改類別",
