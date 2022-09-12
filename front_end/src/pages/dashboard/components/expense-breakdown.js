@@ -34,7 +34,7 @@ function ExpenseBreakdown(props) {
     const chartOnClick = event => {
         let element = getElementAtEvent(chartRef.current, event);
         if (element[0]) { //this 'element' related code is really just here to make sure the whitespace in the chart isn't clickable 
-            history.push(`/reports/expense/${startDate}/${endDate}`)
+            history.push(`/reports/expenses-by-account/${startDate}/${endDate}`)
         }
     }
 

@@ -168,7 +168,7 @@ function ExpenseReport() {
     return (
         <div>
             <h1 className="page-header">
-                {incomeStatementReportText[appContext.locale]["Expense Report"]} 
+                {incomeStatementReportText[appContext.locale]["Expense Distribution (by Account)"]} 
             </h1>
             <DateRangeControls 
                 datesToRequest={datesToRequest}

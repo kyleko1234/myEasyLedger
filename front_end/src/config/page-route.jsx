@@ -175,14 +175,14 @@ const routes = [
     component: AcceptInvitationPage
   },
   {
-      path: '/reports/expense',
-      title: 'Expense Distribution Report',
+      path: '/reports/expenses-by-account',
+      title: 'Expense Distribution (by Account)',
       exact: true,
       component: ExpenseReport
   },
   {
-    path: '/reports/expense/:startDate/:endDate',
-    title: 'Expense Distribution Report',
+    path: '/reports/expenses-by-account/:startDate/:endDate',
+    title: 'Expense Distribution (by Account)',
     component: ExpenseReport
   },
   {
