@@ -7,6 +7,7 @@ export const reportTypeListText = {
         "Income and Expense Report": "Income and Expense Report",
         "Cash Flow": "Cash Flow",
         "Expense Distribution (by Account)": "Expense Distribution (by Account)",
+        "Expense Distribution (by Vendor)": 'Expense Distribution (by Vendor)',
         "Account Transactions Report": "Account Transactions Report"
     },
     "zh-TW": {
@@ -17,6 +18,7 @@ export const reportTypeListText = {
         "Income and Expense Report": "收入支出報告",
         "Cash Flow": "現金流量表",
         "Expense Distribution (by Account)": "TRANSLATION",
+        "Expense Distribution (by Vendor)": "TRANSLATION",
         "Account Transactions Report": "明細分類帳"
 
     }

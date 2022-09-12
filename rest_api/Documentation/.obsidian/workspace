@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Easy Ledger.md",
+            "file": "Reports/Contents/Generate an Expense Report by Vendor.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy Ledger.md",
+                "file": "Reports/Contents/Generate an Expense Report by Vendor.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,12 +89,12 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Easy Ledger.md",
     "Reports/Contents/Generate an Expense Report by Vendor.md",
     "Reports/Reports.md",
     "Reports/Contents/Generate an Account Transactions Report.md",
     "Reports/Contents/Generate a Cash Flow Statement.md",
     "Reports/Contents/Generate a Balance Sheet.md",
-    "Easy Ledger.md",
     "Account/Contents/List All Accounts Belonging to an Organization.md",
     "Account/Account.md",
     "Account/Contents/Update an Account.md",
