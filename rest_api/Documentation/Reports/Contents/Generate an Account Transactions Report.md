@@ -2,7 +2,7 @@
 
 Endpoint: `GET /reports/accountTransactionsReport/account/{accountId}/{startDate}/{endDate}`
 
-Returns data for buildign an Account Transactions Report for the specified account between the specified dates. Dates should be given in yyyy-mm-dd format.
+Returns data for building an Account Transactions Report for the specified account between the specified dates. Dates should be given in yyyy-mm-dd format.
 
 Authorization: The requesting user must belong to the organization for which this report is being generated.
 
