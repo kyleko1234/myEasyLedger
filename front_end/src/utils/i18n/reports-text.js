@@ -11,7 +11,8 @@ export const reportsText = {
         "Balance": "Balance",
         "Starting balance": "Starting balance",
         "Ending balance": "Ending balance",
-        "Total change": "Total change"
+        "Total change": "Total change",
+        "Other": "Other",
     },
     "zh-TW": {
         "Home": "首頁",
@@ -25,6 +26,7 @@ export const reportsText = {
         "Balance": "餘額",
         "Starting balance": "期初餘額",
         "Ending balance": "期末餘額",
-        "Total change": "期間合計"
+        "Total change": "期間合計",
+        "Other": "TRANSLATION",
     }
 }

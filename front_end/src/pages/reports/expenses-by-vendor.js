@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React from 'react';
+import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
 import { reportTypeListText } from '../../utils/i18n/report-type-list-text';
 import { reportsText } from '../../utils/i18n/reports-text';
 import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../utils/util-fns';
 import DateRangeControls from './components/date-range-controls';
+import ExpensesByVendorPieCharts from './components/expenses-by-vendor-pie-charts';
 
 function ExpensesByVendor(props) {
     const appContext = React.useContext(PageSettings);
@@ -14,7 +16,7 @@ function ExpensesByVendor(props) {
     const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
     const [loading, setLoading] = React.useState(true);
 
-    const [vendorExpensesDTOs, setVendorExpensesDTOs] = React.useState([]);
+    const [expensesByVendorReports, setExpensesByVendorReports] = React.useState([]);
     const [datesToRequest, setDatesToRequest] = React.useState([{
         label: "Custom",
         startDate: beginningOfCurrentFiscalYear, 
@@ -42,7 +44,7 @@ function ExpensesByVendor(props) {
             }).catch(console.log);
         }
         setColumnLabels(newColumnLabels);
-        setVendorExpensesDTOs(fetchedReports);
+        setExpensesByVendorReports(fetchedReports);
     }
 
     React.useEffect(() => {
@@ -151,6 +153,17 @@ function ExpensesByVendor(props) {
                 handleCompareButton={handleCompareButton}
                 noDetailedView
             />
+            <div className="d-none d-lg-block">
+                {(appContext.isLoading)
+                    ? <LoadingSpinner big />
+                    : <ExpensesByVendorPieCharts
+                        columnLabels={columnLabels}
+                        expensesByVendorReports={expensesByVendorReports}
+                        loading={loading}
+                    />
+                }
+                <hr/>
+            </div>
 
         </>
     )
