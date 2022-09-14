@@ -8,6 +8,7 @@ import { reportsText } from '../../utils/i18n/reports-text';
 import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../utils/util-fns';
 import DateRangeControls from './components/date-range-controls';
 import ExpensesByVendorPieCharts from './components/expenses-by-vendor-pie-charts';
+import ExpensesByVendorReport from './components/expenses-by-vendor-report';
 
 function ExpensesByVendor(props) {
     const appContext = React.useContext(PageSettings);
@@ -37,7 +38,7 @@ function ExpensesByVendor(props) {
                     otherExpenses = otherExpenses - dto.debitsMinusCredits;
                 })
                 fetchedReport.vendorExpensesDTOs.push({
-                    vendorName: reportsText[appContext.locale]["Other"],
+                    vendorName: reportsText[appContext.locale]["No vendor"],
                     debitsMinusCredits: otherExpenses
                 })
                 fetchedReports.push(fetchedReport);
@@ -164,7 +165,13 @@ function ExpensesByVendor(props) {
                 }
                 <hr/>
             </div>
-
+            {loading
+                ? <LoadingSpinner big />
+                : <ExpensesByVendorReport
+                    columnLabels={columnLabels}
+                    expensesByVendorReports={expensesByVendorReports}
+                />
+            }
         </>
     )
 }
