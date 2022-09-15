@@ -17,8 +17,8 @@ export const reportTypeListText = {
         "Net Worth": "淨資產報告",
         "Income and Expense Report": "收入支出報告",
         "Cash Flow": "現金流量表",
-        "Expense Distribution (by Account)": "TRANSLATION",
-        "Expense Distribution (by Vendor)": "TRANSLATION",
+        "Expense Distribution (by Account)": "支出分佈報告（依會計科目分）",
+        "Expense Distribution (by Vendor)": "支出分佈報告（依支出對象分）",
         "Account Transactions Report": "明細分類帳"
 
     }

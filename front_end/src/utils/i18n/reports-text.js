@@ -30,7 +30,7 @@ export const reportsText = {
         "Starting balance": "期初餘額",
         "Ending balance": "期末餘額",
         "Total change": "期間合計",
-        "No vendor": "TRANSLATION",
-        "Total Expenses": "TRANSLATION"
+        "No vendor": "無支出對象",
+        "Total Expenses": "支出合計"
     }
 }

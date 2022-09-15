@@ -11,7 +11,7 @@ export const incomeStatementReportText = {
         "Reports": "報表",
         "Income Statement Report": "損益表",
         "Income and Expense Report": "收入支出報告",
-        "Expense Distribution (by Account)": "TRANSLATION"
+        "Expense Distribution (by Account)": "支出分佈報告（依會計科目分）"
 
     }
 }
