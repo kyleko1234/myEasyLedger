@@ -183,7 +183,7 @@ function AccountTransactionsReportPage(props) {
                                 </div>
                                 <div className="d-flex w-100 align-items-center justify-content-between">
                                     <div className="col-6 d-flex align-items-center">
-                                        <label className="my-0 px-2">
+                                        <label className="my-0 px-2 text-nowrap">
                                             {reportsText[appContext.locale]["Account:"]}
                                         </label>
                                         <Select
@@ -251,7 +251,7 @@ function AccountTransactionsReportPage(props) {
                                         menuShouldScrollIntoView={false}
                                         styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                         onChange={selectedOption => setSelectedAccountId(selectedOption.object.accountId)}
-                                        placeholder={"Account"}
+                                        placeholder={reportsText[appContext.locale]["Account"]}
                                         value={accountOptions.find(accountOption => accountOption.object.accountId === selectedAccountId)}
                                     />
                                 </div>

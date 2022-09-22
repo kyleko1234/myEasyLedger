@@ -5,9 +5,10 @@ import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
+import { node } from 'prop-types';
 
 
-function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReportButton, handleRemoveDateRangeButton, dateRangePresets, handleSelectDateRangePreset, handleChangeStartDate, handleChangeEndDate, detailedView, toggleDetailedView, handleCompareButton }) {
+function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReportButton, handleRemoveDateRangeButton, dateRangePresets, handleSelectDateRangePreset, handleChangeStartDate, handleChangeEndDate, detailedView, toggleDetailedView, handleCompareButton, noDetailedView }) {
     const appContext = React.useContext(PageSettings);
     
     return(
@@ -131,9 +132,11 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                         : null
                     }
                     <div className="d-flex align-items-center justify-content-between mt-2">
-                        <div className="form-check form-switch">
-                            <input type="checkbox" role="switch" id="detailedViewCheckbox" className="form-check-input" value={detailedView} onChange={toggleDetailedView} />
-                            <label htmlFor="detailedViewCheckbox" className="my-0 form-check-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
+                        <div>
+                            <div className={"form-check form-switch " + (noDetailedView ? "d-none" : "")}>
+                                <input type="checkbox" role="switch" id="detailedViewCheckbox" className="form-check-input" value={detailedView} onChange={toggleDetailedView} />
+                                <label htmlFor="detailedViewCheckbox" className="my-0 form-check-label">{incomeStatementRenderText[appContext.locale]["Detailed View"]}</label>
+                            </div>
                         </div>
                         <button type="submit" className="btn btn-primary width-200" onClick={handleUpdateReportButton}>
                             {incomeStatementRenderText[appContext.locale]["Update report"]}

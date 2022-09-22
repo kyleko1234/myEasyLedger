@@ -8,6 +8,8 @@ import java.util.List;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 
 public class BalanceSheetEquityViewModel {
+	static final ArrayList<Long> ASSETS_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 1, (long) 2, (long) 3, (long) 4, (long) 5, (long) 6, (long) 7, (long) 8, (long) 9, (long) 10));
+	static final ArrayList<Long> LIABILITIES_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 11, (long) 12, (long) 13, (long) 14, (long) 15, (long) 16, (long) 17, (long) 18, (long) 19));
 	static final ArrayList<Long> EQUITY_ITEMS_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 20, (long) 21, (long) 23));
 	static final ArrayList<Long> DIVIDENDS_AND_EQUIVALENTS_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 22));
 	static final ArrayList<Long> INCOME_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 24, (long) 25, (long) 26));
@@ -32,12 +34,11 @@ public class BalanceSheetEquityViewModel {
 			}
 		}
 		for (AccountSubtypeBalanceDTO subtypeBalance : prevPeriodSubtypeBalances) {
-			if (DIVIDENDS_AND_EQUIVALENTS_SUBTYPE_IDS.contains(subtypeBalance.getAccountSubtypeId())) {
-				prevPeriodRetainedEarnings = prevPeriodRetainedEarnings.subtract(subtypeBalance.getDebitsMinusCredits());
-			} else if (INCOME_SUBTYPE_IDS.contains(subtypeBalance.getAccountSubtypeId())) {
-				prevPeriodRetainedEarnings = prevPeriodRetainedEarnings.subtract(subtypeBalance.getDebitsMinusCredits());
-			} else if (EXPENSES_SUBTYPE_IDS.contains(subtypeBalance.getAccountSubtypeId())) {
-				prevPeriodRetainedEarnings = prevPeriodRetainedEarnings.subtract(subtypeBalance.getDebitsMinusCredits());
+			if (DIVIDENDS_AND_EQUIVALENTS_SUBTYPE_IDS.contains(subtypeBalance.getAccountSubtypeId())
+					|| ASSETS_SUBTYPE_IDS.contains(subtypeBalance.getAccountSubtypeId())
+					|| LIABILITIES_SUBTYPE_IDS.contains(subtypeBalance.getAccountSubtypeId())
+					|| EQUITY_ITEMS_SUBTYPE_IDS.contains(subtypeBalance.getAccountSubtypeId())) {
+				prevPeriodRetainedEarnings = prevPeriodRetainedEarnings.add(subtypeBalance.getDebitsMinusCredits());
 			}
 		}
 		for (AccountSubtypeBalanceDTO subtypeBalance : currPeriodSubtypeBalances) {
@@ -47,7 +48,7 @@ public class BalanceSheetEquityViewModel {
 				currPeriodNetIncome = currPeriodNetIncome.subtract(subtypeBalance.getDebitsMinusCredits());
 			}
 		}
-		totalRetainedEarnings = prevPeriodRetainedEarnings.add(currPeriodNetIncome.add(currPeriodDividendsAndEquivalents));
+		totalRetainedEarnings = prevPeriodRetainedEarnings.add(currPeriodNetIncome).add(currPeriodDividendsAndEquivalents);
 		totalEquity = totalEquityItems.add(totalRetainedEarnings);
 	}
 
