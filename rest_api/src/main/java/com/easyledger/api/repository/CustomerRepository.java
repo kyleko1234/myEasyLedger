@@ -1,5 +1,6 @@
 package com.easyledger.api.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.easyledger.api.dto.CustomerDTO;
+import com.easyledger.api.dto.CustomerIncomeDTO;
 import com.easyledger.api.model.Customer;
 
 @Repository
@@ -24,4 +26,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 					+ "WHEN true THEN true ELSE false END", 
 			nativeQuery=true)
 	public boolean isDuplicateCustomerName(Long organizationId, String name);
+	
+	@Query(nativeQuery = true)
+	public List<CustomerIncomeDTO> getIncomeByCustomerForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate);
 }

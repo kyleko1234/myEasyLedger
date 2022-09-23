@@ -12,6 +12,7 @@ import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 import com.easyledger.api.dto.AccountTransactionsReportLineItemDTO;
+import com.easyledger.api.dto.CustomerIncomeDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.dto.VendorExpensesDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -19,6 +20,7 @@ import com.easyledger.api.model.Account;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
+import com.easyledger.api.repository.CustomerRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.VendorRepository;
 import com.easyledger.api.viewmodel.AccountTransactionsReportViewModel;
@@ -28,6 +30,7 @@ import com.easyledger.api.viewmodel.BalanceSheetLiabilitiesViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetViewModel;
 import com.easyledger.api.viewmodel.CashFlowStatementViewModel;
 import com.easyledger.api.viewmodel.ExpensesByVendorReportViewModel;
+import com.easyledger.api.viewmodel.IncomeByCustomerReportViewModel;
 import com.easyledger.api.viewmodel.IncomeStatementViewModel;
 
 @Service
@@ -50,10 +53,13 @@ public class ReportsService {
 	@Autowired
 	private VendorRepository vendorRepo;
 	
+	@Autowired
+	private CustomerRepository customerRepo;
+	
 	
 	public ReportsService(AccountRepository accountRepo, AccountSubtypeRepository accountSubtypeRepo, 
 			OrganizationRepository organizationRepo, LineItemService lineItemService, AccountService accountService, 
-			VendorRepository vendorRepo) {
+			VendorRepository vendorRepo, CustomerRepository customerRepo) {
 		super();
 		this.accountRepo = accountRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
@@ -61,6 +67,7 @@ public class ReportsService {
 		this.accountService = accountService;
 		this.lineItemService = lineItemService;
 		this.vendorRepo = vendorRepo;
+		this.customerRepo = customerRepo;
 	}
 
 
@@ -139,6 +146,12 @@ public class ReportsService {
 		List<VendorExpensesDTO> vendorExpensesDTOs = vendorRepo.getExpensesByVendorForOrganizationBetweenDates(organizationId, startDate, endDate);
 		BigDecimal totalExpenses = organizationRepo.getTotalExpensesForOrganizationBetweenDates(organizationId, startDate, endDate);
 		return new ExpensesByVendorReportViewModel(vendorExpensesDTOs, totalExpenses);
+	}
+	
+	public IncomeByCustomerReportViewModel getIncomeByCustomerReportViewModelForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate) {
+		List<CustomerIncomeDTO> customerIncomeDTOs = customerRepo.getIncomeByCustomerForOrganizationBetweenDates(organizationId, startDate, endDate);
+		BigDecimal totalIncome = organizationRepo.getTotalIncomeForOrganizationBetweenDates(organizationId, startDate, endDate);
+		return new IncomeByCustomerReportViewModel(customerIncomeDTOs, totalIncome);
 	}
 
 }

@@ -80,6 +80,7 @@ Prefix all endpoints with `http://{host}/v0.6.1/`
 - [[Generate a Cash Flow Statement | GET /organization/{id}/reports/cashFlow/{startDate}/{endDate}]]
 - [[Generate an Account Transactions Report | GET /reports/accountTransactionsReport/account/{accountId}/{startDate}/{endDate}]]
 - [[Generate an Expense Report by Vendor | GET /reports/expensesByVendorReport/organization/{organizationId}/{startDate}/{endDate}]]
+- [[Generate an Income Report by Customer|GET /reports/incomeByCustomerReport/organization/{organizationId}/{startDate}/{endDate}]]
 <br/><br/>
 - [[Create a Permission for an Organization|POST /organization/{organizationId}/permission]]
 - [[Edit a Permission Object|PATCH /permission/{permissionId}]]
