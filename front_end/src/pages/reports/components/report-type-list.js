@@ -39,6 +39,10 @@ function ReportTypeList() {
                             <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Expense Distribution (by Vendor)"]}</div>
                             <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
+                    <Link to="/reports/income-by-customer" className="pseudo-tr d-flex justify-content-between align-items-center">
+                            <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Income Distribution (by Customer)"]}</div>
+                            <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                    </Link>
 
                 </div>
             </div>
