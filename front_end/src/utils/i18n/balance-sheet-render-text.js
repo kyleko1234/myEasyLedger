@@ -134,7 +134,7 @@ export const balanceSheetRenderText = {
         "Income from investing activities": "投資活動之收入",
         "Income from financing activities": "金融活動之收入",
         "Other income": "其他收入", 
-        "Cost of sales": "銷貨成本", 
+        "Cost of sales": "營業成本", 
         "Research and development": "研究發展費用", 
         "Selling, general, and administration": "銷售、總務及管理費用", 
         "Depreciation and amortization": "折舊及攤銷", 

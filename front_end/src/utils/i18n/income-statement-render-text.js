@@ -58,9 +58,9 @@ export const incomeStatementRenderText = {
 
         "Revenue": "收入",
         "Total revenue": "收入合計",
-        "Cost of sales": "銷貨成本",
-        "Total cost of sales": "銷貨成本合計",
-        "Gross profit": "銷貨毛利",
+        "Cost of sales": "營業成本",
+        "Total cost of sales": "營業成本合計",
+        "Gross profit": "營業毛利",
         "Operating expenses": "營業費用",
         "Research and development": "研究發展費用",
         "Sales, general, and administration": "銷售、總務及管理費用",
