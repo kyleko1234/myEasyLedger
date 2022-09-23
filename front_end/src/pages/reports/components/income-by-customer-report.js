@@ -3,7 +3,7 @@ import StripedRow from '../../../components/tables/striped-row';
 import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { reportsText } from '../../../utils/i18n/reports-text';
-import { formatCurrency, localizeDate } from '../../../utils/util-fns';
+import { formatCurrency, getPercentage, localizeDate } from '../../../utils/util-fns';
 
 function IncomeByCustomerReport({ columnLabels, incomeByCustomerReports }) {
     const appContext = React.useContext(PageSettings);
@@ -51,11 +51,12 @@ function IncomeByCustomerReport({ columnLabels, incomeByCustomerReports }) {
                                     </div>
                                     <div className="text-end d-flex">
                                         {incomeByCustomerReports.map((report, i) => {
+                                            let incomeForThisCustomer = report.customerIncomeDTOs
+                                            .find(dto => dto.customerName === customerIncomeDTO.customerName)
+                                            .creditsMinusDebits
                                             return (
                                                 <div key={i} className="width-175">
-                                                    {numberAsCurrency(report.customerIncomeDTOs
-                                                        .find(dto => dto.customerName === customerIncomeDTO.customerName)
-                                                        .creditsMinusDebits)}
+                                                    {numberAsCurrency(incomeForThisCustomer) + " (" + getPercentage(incomeForThisCustomer, report.totalIncome) + "%)"}
                                                 </div>
                                             )
                                         })}

@@ -3,7 +3,7 @@ import StripedRow from '../../../components/tables/striped-row';
 import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { reportsText } from '../../../utils/i18n/reports-text';
-import { formatCurrency, localizeDate } from '../../../utils/util-fns';
+import { formatCurrency, getPercentage, localizeDate } from '../../../utils/util-fns';
 
 function ExpensesByVendorReport({ columnLabels, expensesByVendorReports }) {
     const appContext = React.useContext(PageSettings);
@@ -51,11 +51,12 @@ function ExpensesByVendorReport({ columnLabels, expensesByVendorReports }) {
                                     </div>
                                     <div className="text-end d-flex">
                                         {expensesByVendorReports.map((report, i) => {
+                                            let expensesForThisVendor = report.vendorExpensesDTOs
+                                                .find(dto => dto.vendorName === vendorExpensesDTO.vendorName)
+                                                .debitsMinusCredits
                                             return (
                                                 <div key={i} className="width-175">
-                                                    {numberAsCurrency(report.vendorExpensesDTOs
-                                                        .find(dto => dto.vendorName === vendorExpensesDTO.vendorName)
-                                                        .debitsMinusCredits)}
+                                                    {numberAsCurrency(expensesForThisVendor) + " (" + getPercentage(expensesForThisVendor, report.totalExpenses) + "%)"}
                                                 </div>
                                             )
                                         })}
