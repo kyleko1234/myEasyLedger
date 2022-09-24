@@ -35,8 +35,8 @@ export const reportsText = {
         "Total change": "期間合計",
         "No vendor": "無記載支出對象",
         "Total Expenses": "支出合計",
-        "No customer": "TRANSLATION",
-        "Total Income": "TRANSLATION",
+        "No customer": "無記載收入來源",
+        "Total Income": "收入合計",
 
     }
 }
