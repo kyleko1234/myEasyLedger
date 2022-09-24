@@ -7,3 +7,4 @@ The API allows you to automatically generate reports to use.
 - [[Generate a Cash Flow Statement]]
 - [[Generate an Account Transactions Report]]
 - [[Generate an Expense Report by Vendor]]
+- [[Generate an Income Report by Customer]]

@@ -27,7 +27,5 @@ public class ExpensesByVendorReportViewModel {
 	}
 	public void setTotalExpenses(BigDecimal totalExpenses) {
 		this.totalExpenses = totalExpenses;
-	}
-	
-	
+	}	
 }

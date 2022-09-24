@@ -14,7 +14,10 @@ export const reportsText = {
         "Ending balance": "Ending balance",
         "Total change": "Total change",
         "No vendor": "No vendor",
-        "Total Expenses": "Total Expenses"
+        "Total Expenses": "Total Expenses",
+        "No customer": "No customer",
+        "Total Income": "Total Income",
+
     },
     "zh-TW": {
         "Home": "首頁",
@@ -30,7 +33,10 @@ export const reportsText = {
         "Starting balance": "期初餘額",
         "Ending balance": "期末餘額",
         "Total change": "期間合計",
-        "No vendor": "無支出對象",
-        "Total Expenses": "支出合計"
+        "No vendor": "無記載支出對象",
+        "Total Expenses": "支出合計",
+        "No customer": "無記載收入來源",
+        "Total Income": "收入合計",
+
     }
 }

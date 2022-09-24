@@ -5,7 +5,7 @@ import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-
 import { reportsText } from '../../../utils/i18n/reports-text';
 import { formatCurrency, getPercentage, localizeDate } from '../../../utils/util-fns';
 
-function ExpensesByVendorReport({ columnLabels, expensesByVendorReports }) {
+function IncomeByCustomerReport({ columnLabels, incomeByCustomerReports }) {
     const appContext = React.useContext(PageSettings);
 
     const numberAsCurrency = (number) => {
@@ -41,22 +41,22 @@ function ExpensesByVendorReport({ columnLabels, expensesByVendorReports }) {
                 </div>
             </div>
             <div>
-                {expensesByVendorReports
+                {incomeByCustomerReports
                     ? <>
-                        {expensesByVendorReports[0].vendorExpensesDTOs.map((vendorExpensesDTO, i) => {
+                        {incomeByCustomerReports[0].customerIncomeDTOs.map((customerIncomeDTO, i) => {
                             return (
                                 <StripedRow key={i} className="justify-content-between">
-                                    <div className={vendorExpensesDTO.vendorName === reportsText[appContext.locale]["No vendor"] ? "fw-light fst-italic" : ""}>
-                                        {vendorExpensesDTO.vendorName}
+                                    <div className={customerIncomeDTO.customerName === reportsText[appContext.locale]["No customer"] ? "fw-light fst-italic" : ""}>
+                                        {customerIncomeDTO.customerName}
                                     </div>
                                     <div className="text-end d-flex">
-                                        {expensesByVendorReports.map((report, i) => {
-                                            let expensesForThisVendor = report.vendorExpensesDTOs
-                                                .find(dto => dto.vendorName === vendorExpensesDTO.vendorName)
-                                                .debitsMinusCredits
+                                        {incomeByCustomerReports.map((report, i) => {
+                                            let incomeForThisCustomer = report.customerIncomeDTOs
+                                            .find(dto => dto.customerName === customerIncomeDTO.customerName)
+                                            .creditsMinusDebits
                                             return (
                                                 <div key={i} className="width-175">
-                                                    {numberAsCurrency(expensesForThisVendor) + " (" + getPercentage(expensesForThisVendor, report.totalExpenses) + "%)"}
+                                                    {numberAsCurrency(incomeForThisCustomer) + " (" + getPercentage(incomeForThisCustomer, report.totalIncome) + "%)"}
                                                 </div>
                                             )
                                         })}
@@ -66,13 +66,13 @@ function ExpensesByVendorReport({ columnLabels, expensesByVendorReports }) {
                         })}
                         <StripedRow className="justify-content-between fw-semibold">
                             <div>
-                                {reportsText[appContext.locale]["Total Expenses"]}
+                                {reportsText[appContext.locale]["Total Income"]}
                             </div>
                             <div className="text-end d-flex">
-                                {expensesByVendorReports.map((report, i) => {
+                                {incomeByCustomerReports.map((report, i) => {
                                     return (
                                         <div key={i} className="width-175">
-                                            {numberAsCurrency(report.totalExpenses)}
+                                            {numberAsCurrency(report.totalIncome)}
                                         </div>
                                     )
                                 })}
@@ -86,4 +86,4 @@ function ExpensesByVendorReport({ columnLabels, expensesByVendorReports }) {
     )
 }
 
-export default ExpensesByVendorReport;
+export default IncomeByCustomerReport;

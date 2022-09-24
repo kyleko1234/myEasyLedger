@@ -621,6 +621,12 @@ a.pseudo-tr:hover,
     padding-left: 12em;
 }
 
+.vertical-line {
+    border-right: 5px solid;
+    border-color: rgba(52, 143, 226, .3);
+    align-self: stretch;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }

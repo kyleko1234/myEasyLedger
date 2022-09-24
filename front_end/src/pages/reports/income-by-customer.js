@@ -1,0 +1,178 @@
+import axios from 'axios';
+import React from 'react';
+import LoadingSpinner from '../../components/misc/loading-spinner';
+import { PageSettings } from '../../config/page-settings';
+import { API_BASE_URL } from '../../utils/constants';
+import { reportTypeListText } from '../../utils/i18n/report-type-list-text';
+import { reportsText } from '../../utils/i18n/reports-text';
+import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../utils/util-fns';
+import DateRangeControls from './components/date-range-controls';
+import IncomeByCustomerPieCharts from './components/income-by-customer-pie-charts';
+import IncomeByCustomerReport from './components/income-by-customer-report';
+
+function IncomeByCustomer(props) {
+    const appContext = React.useContext(PageSettings);
+    const today = getTodayAsDateString();
+    const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
+    const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
+    const [loading, setLoading] = React.useState(true);
+
+    const [incomeByCustomerReports, setIncomeByCustomerReports] = React.useState([]);
+    const [datesToRequest, setDatesToRequest] = React.useState([{
+        label: "Custom",
+        startDate: beginningOfCurrentFiscalYear, 
+        endDate: today
+    }]);
+    const [columnLabels, setColumnLabels] = React.useState([]);
+    const [dateRangePresets, setDateRangePresets] = React.useState([]);
+
+    const requestReports = async () => {
+        let newColumnLabels = [];
+        let fetchedReports = [];
+        for (const dateObject of datesToRequest) {
+            await axios.get(`${API_BASE_URL}/reports/incomeByCustomerReport/organization/${appContext.currentOrganizationId}/${dateObject.startDate}/${dateObject.endDate}`).then(response => {
+                newColumnLabels.push(dateObject);     //column labels are not updated until the report is actually updated
+                let fetchedReport = response.data;
+                let otherIncome = fetchedReport.totalIncome
+                fetchedReport.customerIncomeDTOs.forEach(dto => {
+                    otherIncome = otherIncome - dto.creditsMinusDebits;
+                })
+                fetchedReport.customerIncomeDTOs.push({
+                    customerName: reportsText[appContext.locale]["No customer"],
+                    creditsMinusDebits: otherIncome
+                })
+                fetchedReports.push(fetchedReport);
+            }).catch(console.log);
+        }
+        setColumnLabels(newColumnLabels);
+        setIncomeByCustomerReports(fetchedReports);
+    }
+
+    React.useEffect(() => {
+        async function fetchData() {
+            setLoading(true);
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/dateRangePresetsUpToDate/${today}/${appContext.locale}`).then(response => {
+                setDateRangePresets(response.data);
+            })
+            await requestReports();
+            setLoading(false);
+        }
+        fetchData();
+    }, []);
+
+    const handleChangeStartDate = (date, i) => {
+        let newDatesToRequestArray = datesToRequest.slice();
+        newDatesToRequestArray[i] = {
+            label: "Custom", 
+            startDate: date, 
+            endDate: newDatesToRequestArray[i].endDate
+        }
+        setDatesToRequest(newDatesToRequestArray)
+    }
+    const handleChangeEndDate = (date, i) => {
+        let newDatesToRequestArray = datesToRequest.slice();
+        newDatesToRequestArray[i] = {
+            label: "Custom", 
+            startDate: newDatesToRequestArray[i].startDate, 
+            endDate: date
+        }
+        setDatesToRequest(newDatesToRequestArray)
+    }
+
+    const numberAsCurrency = (number) => {
+        if (number == 0) {
+            return formatCurrency(appContext.locale, appContext.currency, 0);
+        }
+        return formatCurrency(appContext.locale, appContext.currency, number);
+    }
+
+    const handleSelectDateRangePreset = (selectedOption, i) => {
+        if (selectedOption) {
+            let dateToRequestObject = {
+                label: selectedOption.label,
+                startDate: selectedOption.object.startDate,
+                endDate: selectedOption.object.endDate
+            };
+            let newDatesToRequestArray = datesToRequest.slice();
+            newDatesToRequestArray[i] = dateToRequestObject;
+            setDatesToRequest(newDatesToRequestArray);
+        }
+    }
+
+    const handleRemoveDateRangeButton = i => {
+        let datesArray = datesToRequest.slice();
+        datesArray.splice(i, 1);
+        setDatesToRequest(datesArray);
+    }
+
+    const handleCompareButton = () => {
+        let datesArray = datesToRequest.slice();
+        datesArray.push({
+            label: "Custom", 
+            startDate: beginningOfCurrentFiscalYear,
+            endDate:today}
+        )
+        setDatesToRequest(datesArray);
+    }
+    
+    const validateDatesToRequest = datesToRequest => {
+        let returnedBoolean = true
+        datesToRequest.forEach(dateToRequestObject => {
+            if (!(validateDate(dateToRequestObject.startDate) && validateDate(dateToRequestObject.endDate))) {
+                returnedBoolean = false;
+            }
+        })
+        return returnedBoolean;
+    }
+
+    const handleUpdateReportButton = async (event) => {
+        event.preventDefault();
+        setInvalidDateAlert(false);
+        setLoading(true);
+        if (validateDatesToRequest(datesToRequest)) {
+            await requestReports();
+        } else {
+            setInvalidDateAlert(true);
+        }
+        setLoading(false);
+    }
+
+    return(
+        <>
+            <h1 className="page-header">
+                {reportTypeListText[appContext.locale]["Income Distribution (by Customer)"]} 
+            </h1>
+            <DateRangeControls 
+                datesToRequest={datesToRequest}
+                invalidDateAlert={invalidDateAlert}
+                handleUpdateReportButton={handleUpdateReportButton}
+                handleRemoveDateRangeButton={handleRemoveDateRangeButton}
+                dateRangePresets={dateRangePresets}
+                handleSelectDateRangePreset={handleSelectDateRangePreset}
+                handleChangeStartDate={handleChangeStartDate}
+                handleChangeEndDate={handleChangeEndDate}
+                handleCompareButton={handleCompareButton}
+                noDetailedView
+            />
+            <div className="d-none d-lg-block">
+                {(appContext.isLoading)
+                    ? <LoadingSpinner big />
+                    : <IncomeByCustomerPieCharts
+                        columnLabels={columnLabels}
+                        incomeByCustomerReports={incomeByCustomerReports}
+                        loading={loading}
+                    />
+                }
+                <hr/>
+            </div>
+            {loading
+                ? <LoadingSpinner big />
+                : <IncomeByCustomerReport
+                    columnLabels={columnLabels}
+                    incomeByCustomerReports={incomeByCustomerReports}
+                />
+            }
+        </>
+    )
+}
+export default IncomeByCustomer;

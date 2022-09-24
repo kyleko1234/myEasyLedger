@@ -20,6 +20,7 @@ import com.easyledger.api.viewmodel.AccountTransactionsReportViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetViewModel;
 import com.easyledger.api.viewmodel.CashFlowStatementViewModel;
 import com.easyledger.api.viewmodel.ExpensesByVendorReportViewModel;
+import com.easyledger.api.viewmodel.IncomeByCustomerReportViewModel;
 import com.easyledger.api.viewmodel.IncomeStatementViewModel;
 
 @RestController
@@ -82,4 +83,13 @@ public class ReportsController {
 		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return reportsService.getExpensesByVendorReportViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
+	
+	@GetMapping("/reports/incomeByCustomerReport/organization/{organizationId}/{startDate}/{endDate}")
+	public IncomeByCustomerReportViewModel getIncomeByCustomerReportForOrganizationBetweenDates(@PathVariable(value = "organizationId") Long organizationId,
+			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
+			@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) throws UnauthorizedException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.getIncomeByCustomerReportViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
+	}
+	
 }

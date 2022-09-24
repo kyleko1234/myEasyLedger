@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "AccountSubtype/AccountSubtype.md",
+            "file": "Reports/Contents/Generate an Expense Report by Vendor.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AccountSubtype/AccountSubtype.md",
+                "file": "Reports/Contents/Generate an Expense Report by Vendor.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,15 +89,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
-    "AccountSubtype/Contents/The AccountSubtype Object.md",
-    "Reports/Contents/Generate an Expense Report by Vendor.md",
     "Easy Ledger.md",
     "Reports/Reports.md",
+    "Reports/Contents/Generate an Income Report by Customer.md",
+    "Reports/Contents/Generate an Income Statement.md",
+    "Reports/Contents/Generate an Expense Report by Vendor.md",
+    "AccountSubtype/AccountSubtype.md",
+    "AccountSubtype/Contents/The AccountSubtype Object.md",
     "Reports/Contents/Generate an Account Transactions Report.md",
     "Reports/Contents/Generate a Cash Flow Statement.md",
-    "Reports/Contents/Generate a Balance Sheet.md",
-    "Account/Contents/List All Accounts Belonging to an Organization.md",
-    "Account/Account.md",
-    "Account/Contents/Update an Account.md"
+    "Reports/Contents/Generate a Balance Sheet.md"
   ]
 }
