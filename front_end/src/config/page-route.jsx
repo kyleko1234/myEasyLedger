@@ -30,6 +30,7 @@ import TransactionsPage from '../pages/journal-entries/personal/transactions-pag
 import AccountTransactionsReportPage from '../pages/reports/account-transactions-report-page.js';
 import ExpensesByVendor from '../pages/reports/expenses-by-vendor.js';
 import IncomeByCustomer from '../pages/reports/income-by-customer.js';
+import ChartOfAccountsV2 from '../pages/chart-of-accounts/chart-of-accounts-v2.js';
 
 const routes = [
   {
@@ -222,7 +223,17 @@ const routes = [
     title: 'Income Distribution (by Customer)',
     component: IncomeByCustomer,
   },
-
+  {
+    path: '/chart-of-accounts-v2',
+    title: 'Chart Of Accounts',
+    exact: true,
+    component: () => <Redirect to="/chart-of-accounts-v2/1" />,
+  },
+  {
+    path: '/chart-of-accounts-v2/:activeTabId',
+    title: 'Chart Of Accounts',
+    component: ChartOfAccountsV2,
+  },
 ];
 
 
