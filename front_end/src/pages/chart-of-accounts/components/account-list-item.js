@@ -27,9 +27,12 @@ function AccountListItem({account, handleEditAccountButton, className}) {
                         {account.accountName}
                     </span>
                 </div>
-                <div className="font-size-compact fw-light text-muted fst-italic">
-                    {account.accountSubtypeName}
-                </div>
+                { account.parentAccountId
+                    ? null
+                    : <div className="font-size-compact fw-light text-muted fst-italic">
+                        {account.accountSubtypeName}
+                    </div>
+                }
             </div>
             <div className="pseudo-td py-0 d-flex align-items-center">
                 <div className="text-right fw-semibold me-2 ">
