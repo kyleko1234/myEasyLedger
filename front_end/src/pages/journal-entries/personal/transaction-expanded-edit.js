@@ -102,6 +102,7 @@ function TransactionExpandedEdit({
                 </div>
             </div>
             <LineItemsHeader editMode />
+            <div>
             {lineItems.map((lineItem, i) => {
                 return (
                     <LineItemEditPersonal
@@ -113,6 +114,7 @@ function TransactionExpandedEdit({
                     />
                 )
             })}
+            </div>
             <div className="mb-2 d-none d-lg-block">
                 <button type="button" className="btn btn-lg btn-white w-100" onClick={addEmptyLineItem}>
                     <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntriesText[appContext.locale]["Add a Line Item"]}
