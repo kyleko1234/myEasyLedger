@@ -167,7 +167,7 @@ function ChartOfAccounts(props) {
                                                                             onClick={() => handleAddAChildAccountButton(account)}
                                                                         >
                                                                             <div className="pseudo-td ">
-                                                                                <em>{chartOfAccountsText[appContext.locale]["Add a new child account..."]}</em>
+                                                                                <i className="ion ion-md-add fa-fw fa-lg"></i> {chartOfAccountsText[appContext.locale]["Add a new child account..."]}
                                                                             </div>
                                                                             <div className="pseudo-td"></div>
                                                                         </div>
@@ -184,8 +184,7 @@ function ChartOfAccounts(props) {
                                                                             onClick={() => handleAddAChildAccountButton(account)}
                                                                         >
                                                                             <div className="pseudo-td ">
-                                                                                
-                                                                                <em>{chartOfAccountsText[appContext.locale]["Add a new child account..."]}</em>
+                                                                                <i className="ion ion-md-add fa-fw fa-lg"></i> {chartOfAccountsText[appContext.locale]["Add a new child account..."]}
                                                                             </div>
                                                                             <div className="pseudo-td"></div>
                                                                         </div>

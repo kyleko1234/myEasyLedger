@@ -27,15 +27,20 @@ function AccountListItem({account, handleEditAccountButton, className}) {
                         {account.accountName}
                     </span>
                 </div>
-                <div className="font-size-compact fw-light text-muted fst-italic">
-                    {account.accountSubtypeName}
-                </div>
+                { account.parentAccountId
+                    ? null
+                    : <div className="font-size-compact fw-light text-muted fst-italic">
+                        {account.accountSubtypeName}
+                    </div>
+                }
             </div>
             <div className="pseudo-td py-0 d-flex align-items-center">
                 <div className="text-right fw-semibold me-2 ">
-                    {debitTypes.includes(account.accountTypeId)
-                        ? formatCurrency(appContext.locale, appContext.currency, account.debitsMinusCredits)
-                        : formatCurrency(appContext.locale, appContext.currency, account.debitsMinusCredits * -1)}
+                    {account.hasChildren 
+                        ? null
+                        : debitTypes.includes(account.accountTypeId)
+                            ? formatCurrency(appContext.locale, appContext.currency, account.debitsMinusCredits)
+                            : formatCurrency(appContext.locale, appContext.currency, account.debitsMinusCredits * -1)}
                 </div>
                 <button 
                     className={"btn btn-sm btn-white border-0 text-muted me-2 " + (account.hasChildren ? "" : "nested-btn")}

@@ -148,18 +148,21 @@ function JournalEntryExpandedEdit({
             </div>
 
             <LineItemsHeader editMode />
-            {lineItems.map((lineItem, i) => {
-                return (
-                    <LineItemEdit
-                        key={i}
-                        lineItems={lineItems}
-                        setLineItems={setLineItems}
-                        i={i}
-                        accountOptions={accountOptions}
-                        removeLineItem={removeLineItem}
-                    />
-                )
-            })}
+
+            <div>
+                {lineItems.map((lineItem, i) => {
+                    return (
+                        <LineItemEdit
+                            key={i}
+                            lineItems={lineItems}
+                            setLineItems={setLineItems}
+                            i={i}
+                            accountOptions={accountOptions}
+                            removeLineItem={removeLineItem}
+                        />
+                    )
+                })}
+            </div>
             <div className="mb-2 d-none d-lg-block">
                 <button type="button" className="btn btn-lg btn-white w-100" onClick={addEmptyLineItem}>
                     <i className="ion ion-md-add fa-fw fa-lg"></i>{journalEntriesText[appContext.locale]["Add a Line Item"]}
