@@ -20,6 +20,7 @@ public class IncomeStatementViewModel {
 	static final Long DEPRECIATION_AMORTIZATION_SUBTYPE_ID = (long) 30;
 	static final Long EXPENSE_FROM_INVESTING_SUBTYPE_ID = (long) 31;
 	static final Long EXPENSE_FROM_FINANCING_SUBTYPE_ID = (long) 32;
+	static final Long INTEREST_INCOME_SUBTYPE_ID = (long) 36;
 	static final Long INTEREST_EXPENSE_SUBTYPE_ID = (long) 33;
 	static final Long TAX_EXPENSE_SUBTYPE_ID = (long) 34;
 	static final Long NON_RECURRING_SUBTYPE_ID = (long) 35;
@@ -45,6 +46,7 @@ public class IncomeStatementViewModel {
 	private BigDecimal totalOtherIncomeExpense = new BigDecimal(0); //income from investing + income from financing + other income - other expenses
 	
 	private BigDecimal ebit = new BigDecimal(0); //operating income + total other income/expense
+	private BigDecimal interestIncome = new BigDecimal(0);
 	private BigDecimal interestExpense = new BigDecimal(0);
 	private BigDecimal earningsBeforeTax = new BigDecimal(0); //ebit - interest expense
 	private BigDecimal taxExpense = new BigDecimal(0); //positive value
@@ -64,6 +66,8 @@ public class IncomeStatementViewModel {
 				totalRevenue = totalRevenue.subtract(subtypeBalance.getDebitsMinusCredits());
 			} else if (subtypeBalance.getAccountSubtypeId() == INCOME_FROM_INVESTING_SUBTYPE_ID) {
 				incomeFromInvesting = incomeFromInvesting.subtract(subtypeBalance.getDebitsMinusCredits());
+			} else if (subtypeBalance.getAccountSubtypeId() == INTEREST_INCOME_SUBTYPE_ID) {
+				interestIncome = interestIncome.subtract(subtypeBalance.getDebitsMinusCredits());
 			} else if (subtypeBalance.getAccountSubtypeId() == INCOME_FROM_FINANCING_SUBTYPE_ID) {
 				incomeFromFinancing = incomeFromFinancing.subtract(subtypeBalance.getDebitsMinusCredits());
 			} else if (subtypeBalance.getAccountSubtypeId() == COST_OF_SALES_SUBTYPE_ID) {
@@ -87,19 +91,21 @@ public class IncomeStatementViewModel {
 			}
 		}
 		grossProfit = totalRevenue.subtract(totalCostOfSales);
-		totalOperatingExpenses = totalResearchAndDevelopment.add(totalSalesGeneralAndAdministration.add(totalDepreciationAndAmortization));
+		totalOperatingExpenses = totalResearchAndDevelopment.add(totalSalesGeneralAndAdministration).add(totalDepreciationAndAmortization);
 		operatingIncome = grossProfit.subtract(totalOperatingExpenses);
 		totalOtherIncomeExpense = incomeFromInvesting
-				.add(incomeFromFinancing
-				.add(expenseFromInvesting.negate()
-				.add(expenseFromFinancing.negate())));
+				.add(incomeFromFinancing)
+				.subtract(expenseFromInvesting)
+				.subtract(expenseFromFinancing);
 		
 		ebit = operatingIncome.add(totalOtherIncomeExpense);
-		earningsBeforeTax = ebit.subtract(interestExpense);
+		earningsBeforeTax = ebit
+				.add(interestIncome)
+				.subtract(interestExpense);
 	
 		netIncome = earningsBeforeTax
-				.add(taxExpense.negate()
-				.add(nonRecurringAndExtraordinaryItems.negate()));
+				.subtract(taxExpense)
+				.subtract(nonRecurringAndExtraordinaryItems);
 	}
 
 	public Long getRevenueSubtypeId() {
@@ -217,6 +223,10 @@ public class IncomeStatementViewModel {
 	public BigDecimal getInterestExpense() {
 		return interestExpense;
 	}
+	
+	public BigDecimal getInterestIncome() {
+		return interestIncome;
+	}
 
 	public BigDecimal getEarningsBeforeTax() {
 		return earningsBeforeTax;
@@ -237,23 +247,6 @@ public class IncomeStatementViewModel {
 	public List<AccountDTO> getAccountBalances() {
 		return accountBalances;
 	}
-
-	@Override
-	public String toString() {
-		return "IncomeStatementViewModel [startDate=" + startDate + ", endDate=" + endDate + ", totalRevenue="
-				+ totalRevenue + ", totalCostOfSales=" + totalCostOfSales + ", grossProfit=" + grossProfit
-				+ ", totalResearchAndDevelopment=" + totalResearchAndDevelopment
-				+ ", totalSalesGeneralAndAdministration=" + totalSalesGeneralAndAdministration
-				+ ", totalDepreciationAndAmortization=" + totalDepreciationAndAmortization + ", totalOperatingExpenses="
-				+ totalOperatingExpenses + ", operatingIncome=" + operatingIncome + ", incomeFromInvesting="
-				+ incomeFromInvesting + ", incomeFromFinancing=" + incomeFromFinancing + ", expenseFromInvesting="
-				+ expenseFromInvesting + ", expenseFromFinancing=" + expenseFromFinancing + ", totalOtherIncomeExpense="
-				+ totalOtherIncomeExpense + ", ebit=" + ebit + ", interestExpense=" + interestExpense
-				+ ", earningsBeforeTax=" + earningsBeforeTax + ", taxExpense=" + taxExpense
-				+ ", nonRecurringAndExtraordinaryItems=" + nonRecurringAndExtraordinaryItems + ", netIncome="
-				+ netIncome + ", accountBalances=" + accountBalances + "]";
-	}
-
 
 	
 }
