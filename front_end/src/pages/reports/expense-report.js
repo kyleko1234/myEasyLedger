@@ -11,6 +11,7 @@ import EnterpriseExpenseReportRender from './components/enterprise-expense-repor
 import PersonalExpenseReportPieChart from './components/personal-expense-report-pie-chart';
 import { incomeStatementReportText } from '../../utils/i18n/income-statement-report-text';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { reportTypeListText } from '../../utils/i18n/report-type-list-text';
 
 
 function ExpenseReport() {
@@ -168,7 +169,9 @@ function ExpenseReport() {
     return (
         <div>
             <h1 className="page-header">
-                {incomeStatementReportText[appContext.locale]["Expense Distribution (by Account)"]} 
+                {appContext.isEnterprise
+                    ? incomeStatementReportText[appContext.locale]["Expense Distribution (by Account)"]
+                    : reportTypeListText[appContext.locale]["Expense Distribution (by Category)"]} 
             </h1>
             <DateRangeControls 
                 datesToRequest={datesToRequest}

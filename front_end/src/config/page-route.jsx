@@ -12,7 +12,6 @@ import BalanceSheetReport from '../pages/reports/balance-sheet-report.js';
 import AccountDetails from '../pages/chart-of-accounts/account-details.js';
 import AccountSettingsPage from '../pages/settings/account-settings-page.js';
 import CreateANewOrganization from '../components/sidebar/create-a-new-organization.js';
-import Accounts from '../pages/accounts/accounts.js';
 import Categories from '../pages/categories/categories.js';
 import CategoryDetails from '../pages/categories/category-details.js';
 import NetWorthReport from '../pages/reports/net-worth-report.js';
@@ -30,6 +29,7 @@ import TransactionsPage from '../pages/journal-entries/personal/transactions-pag
 import AccountTransactionsReportPage from '../pages/reports/account-transactions-report-page.js';
 import ExpensesByVendor from '../pages/reports/expenses-by-vendor.js';
 import IncomeByCustomer from '../pages/reports/income-by-customer.js';
+import AccountsPage from '../pages/accounts/accounts-page.js';
 
 const routes = [
   {
@@ -121,7 +121,7 @@ const routes = [
   {
     path: '/accounts/:activeTabId',
     title: 'Accounts',
-    component: Accounts
+    component: AccountsPage
   },
   {
     path: '/categories',

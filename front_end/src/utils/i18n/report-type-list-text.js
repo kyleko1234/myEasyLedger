@@ -7,6 +7,7 @@ export const reportTypeListText = {
         "Income and Expense Report": "Income and Expense Report",
         "Cash Flow": "Cash Flow",
         "Expense Distribution (by Account)": "Expense Distribution (by Account)",
+        "Expense Distribution (by Category)": "Expense Distribution (by Category)",
         "Expense Distribution (by Vendor)": 'Expense Distribution (by Vendor)',
         "Account Transactions Report": "Account Transactions Report",
         "Income Distribution (by Customer)" : "Income Distribution (by Customer)"
@@ -19,6 +20,7 @@ export const reportTypeListText = {
         "Income and Expense Report": "收入支出報告",
         "Cash Flow": "現金流量表",
         "Expense Distribution (by Account)": "支出分佈報告（依會計科目分）",
+        "Expense Distribution (by Category)": "TRANSLATION",
         "Expense Distribution (by Vendor)": "支出分佈報告（依支出對象分）",
         "Account Transactions Report": "明細分類帳",
         "Income Distribution (by Customer)": "收入分佈報告（依客戶分）"
