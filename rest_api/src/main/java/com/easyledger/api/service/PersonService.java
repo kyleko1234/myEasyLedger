@@ -452,6 +452,8 @@ public class PersonService {
 
 		AccountSubtype costOfSales = accountSubtypeRepo.findById((long) 27)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
+		AccountSubtype sga = accountSubtypeRepo.findById((long) 29)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 27"));
 		Account 直接人工 = new Account("直接人工", costOfSales, "514");
 		topLevelAccounts.add(直接人工);
 		Account 銷貨成本 = new Account("銷貨成本", costOfSales, "511");
@@ -460,7 +462,7 @@ public class PersonService {
 		topLevelAccounts.add(製造費用);
 		Account 進料 = new Account("進料", costOfSales, "513");
 		topLevelAccounts.add(進料);
-		Account 營業費用 = new Account("營業費用", costOfSales, "611 - 613");
+		Account 營業費用 = new Account("營業費用", sga, "611 - 613");
 		topLevelAccounts.add(營業費用);
 		Account 勞務成本 = new Account("勞務成本", costOfSales, "561");
 		topLevelAccounts.add(勞務成本);
