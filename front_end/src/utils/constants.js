@@ -244,7 +244,7 @@ const ACCOUNT_TYPE_OPTIONS_I18N = {
         "Liabilities": "負債",
         "Equity": "權益",
         "Income": "收入",
-        "Expenses": "支出"
+        "Expenses": "費損"
     }
 }
 

@@ -4,18 +4,18 @@ import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { Card, CardBody, Nav, NavItem, TabContent, TabPane, Tooltip } from 'reactstrap';
 import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings';
-import { ACCOUNT_TYPE_OPTIONS, API_BASE_URL } from '../../utils/constants';
+import { ACCOUNT_TYPE_OPTIONS, API_BASE_URL, NON_CATEGORY_ACCOUNT_TYPES } from '../../utils/constants';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text';
 import Select from 'react-select'
-import AccountListItem from './components/account-list-item';
-import AccountDetailsEditor from './components/account-details-editor';
+import AccountListItem from '../chart-of-accounts/components/account-list-item.js';
+import AccountDetailsEditor from '../chart-of-accounts/components/account-details-editor';
 
-function ChartOfAccounts(props) {
+function AccountsPage(props) {
     /** Renders a Chart of Accounts. This component uses pills tabs for the different account types. The url param this.props.match.params.activeTabId indicates the current open tab, in order for tab history to be preserved.
      *  this.props.match.params.activeTabId should always match the accountType.id of the accountType being currently viewed. 
     */
     const appContext = React.useContext(PageSettings);
-    const accountTypeOptions = ACCOUNT_TYPE_OPTIONS(appContext.locale);
+    const accountTypeOptions = ACCOUNT_TYPE_OPTIONS(appContext.locale).filter(accountTypeOption => NON_CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value))
     const currentAccountTypeId = useParams().activeTabId;
     const history = useHistory();
 
@@ -32,7 +32,9 @@ function ChartOfAccounts(props) {
 
     const fetchData = () => {
         axios.get(`${API_BASE_URL}/accountType`).then(response => {
-            setAccountTypes(response.data);
+            let assetsAndLiabilitiesAccountTypeIds = [1, 2];
+            let assetsAndLiabilitiesAccountTypes = response.data.filter(accountType => assetsAndLiabilitiesAccountTypeIds.includes(accountType.id));
+            setAccountTypes(assetsAndLiabilitiesAccountTypes);
         })
         axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
             setAccounts(response.data);
@@ -80,7 +82,7 @@ function ChartOfAccounts(props) {
     return (
         <>
             <h1 className="">
-                {chartOfAccountsText[appContext.locale]["Chart of Accounts"]}
+                {chartOfAccountsText[appContext.locale]["Accounts"]}
             </h1>
             <Card className="very-rounded my-4 shadow-sm bg-light">
                 <CardBody>
@@ -94,7 +96,7 @@ function ChartOfAccounts(props) {
                                             <NavItem key={accountType.id}>
                                                 <NavLink
                                                     className={"nav-link " + (currentAccountTypeId == accountType.id ? "active" : "cursor-pointer")}
-                                                    to={`/chart-of-accounts/${accountType.id}`}
+                                                    to={`/accounts/${accountType.id}`}
                                                 >
                                                     <div className="d-sm-block px-3">
                                                         {chartOfAccountsText[appContext.locale][accountType.name]}
@@ -109,7 +111,7 @@ function ChartOfAccounts(props) {
                                         classNamePrefix="form-control"
                                         options={accountTypeOptions}
                                         value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == currentAccountTypeId)}
-                                        onChange={selectedOption => history.push(`/chart-of-accounts/${selectedOption.value}`)}
+                                        onChange={selectedOption => history.push(`/accounts/${selectedOption.value}`)}
                                     />
                                 </div>
                                 <div id="create-an-account-button">
@@ -229,4 +231,4 @@ function ChartOfAccounts(props) {
     )
 }
 
-export default ChartOfAccounts;
+export default AccountsPage;

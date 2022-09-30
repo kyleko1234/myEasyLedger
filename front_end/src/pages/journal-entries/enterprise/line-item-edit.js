@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
+import { isTreatedAsZero } from '../../../utils/util-fns';
 
 function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineItem }) {
     const appContext=React.useContext(PageSettings);
@@ -19,14 +20,14 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
     }
     const handleChangeDebitInput = event => {
         let updatedLineItems = lineItems.slice();
-        updatedLineItems[i].debitAmount = parseFloat(event.target.value);
         updatedLineItems[i].creditAmount = 0;
+        updatedLineItems[i].debitAmount = event.target.value;
         setLineItems(updatedLineItems);
     }
     const handleChangeCreditInput = event => {
         let updatedLineItems = lineItems.slice();
-        updatedLineItems[i].creditAmount = parseFloat(event.target.value);
         updatedLineItems[i].debitAmount = 0;
+        updatedLineItems[i].creditAmount = event.target.value;
         setLineItems(updatedLineItems);
     }
 
@@ -128,11 +129,12 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
                             </div>
                             <div>
                                 <input
-                                    type="number"
+                                    type="tel"
                                     className="form-control"
-                                    value={lineItems[i].debitAmount ? lineItems[i].debitAmount : ''}
+                                    value={!lineItems[i].debitAmount?  '' : lineItems[i].debitAmount}
                                     step="any"
                                     onChange={handleChangeDebitInput}
+
                                 />
                             </div>
                         </div>
@@ -142,9 +144,9 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
                             </div>
                             <div>
                                 <input
-                                    type="number"
+                                    type="tel"
                                     className="form-control"
-                                    value={lineItems[i].creditAmount ? lineItems[i].creditAmount : ''}
+                                    value={!lineItems[i].creditAmount? '' : lineItems[i].creditAmount}
                                     step="any"
                                     onChange={handleChangeCreditInput}
                                 />

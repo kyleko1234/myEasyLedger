@@ -189,10 +189,10 @@ function AccountDetailsTableEnterprise({ selectedAccount, selectedAccountId, set
             />
             <JournalEntryTableHeader />
             <div>
-                {lineItemViewModels.map(lineItemViewModel => {
+                {lineItemViewModels.map((lineItemViewModel, i) => {
                     return (
                         <JournalEntryViewModelStandard
-                            key={lineItemViewModel.journalEntryId}
+                            key={i}
                             journalEntryDate={lineItemViewModel.journalEntryDate}
                             description={
                                 <>
@@ -212,10 +212,10 @@ function AccountDetailsTableEnterprise({ selectedAccount, selectedAccountId, set
                 })}
             </div>
             <div>
-                {lineItemViewModels.map(lineItemViewModel => {
+                {lineItemViewModels.map((lineItemViewModel, i) => {
                     return (
                         <JournalEntryViewModelSmallScreen
-                            key={lineItemViewModel.journalEntryId}
+                            key={i}
                             journalEntryDate={lineItemViewModel.journalEntryDate}
                             description={
                                 <>

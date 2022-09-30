@@ -236,3 +236,21 @@ export const yearMonthDayToDateString = (year, month, day) => {
     }
     return `${yearString}-${monthString}-${dayString}`;
 }
+
+export const isTreatedAsZero = (value) => {
+    switch(value) {
+        case false:
+        case null:
+        case undefined:
+        case NaN:
+        case '':
+        case 0:
+            return true;
+        default:
+            return false;
+    }
+}
+
+export const returnStringToNearestCentPrecisionNumber = string => {
+    return parseFloat(parseFloat(string).toFixed(2))
+}

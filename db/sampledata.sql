@@ -72,7 +72,8 @@ INSERT INTO account_subtype(name, account_type_id)
         ('Expense from financing activities', 5),
         ('Interest expense', 5),
         ('Tax expense', 5),
-        ('Non-recurring and extraordinary items', 5);
+        ('Non-recurring and extraordinary items', 5),
+        ('Interest income', 4);
 
         /*
 ASSETS

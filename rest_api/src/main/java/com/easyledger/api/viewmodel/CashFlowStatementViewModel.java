@@ -32,8 +32,8 @@ public class CashFlowStatementViewModel {
 	static final Long OTHER_EQUITY_SUBTYPE_ID = (long) 23;
 	static final ArrayList<Long> DEBT_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 14, (long) 17));
 	
-	static final ArrayList<Long> INCOME_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 24, (long) 25, (long) 26, (long) 27));
-	static final ArrayList<Long> EXPENSE_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 28, (long) 29, (long) 30, (long) 31, (long) 32, (long) 33, (long) 34, (long) 35));
+	static final ArrayList<Long> INCOME_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 24, (long) 25, (long) 26, (long) 36));
+	static final ArrayList<Long> EXPENSE_SUBTYPE_IDS = new ArrayList<>(Arrays.asList((long) 27, (long) 28, (long) 29, (long) 30, (long) 31, (long) 32, (long) 33, (long) 34, (long) 35));
 
 	private BigDecimal netIncome = new BigDecimal(0);
 	private BigDecimal depreciationAndAmortization = new BigDecimal(0);

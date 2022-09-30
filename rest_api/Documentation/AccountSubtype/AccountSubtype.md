@@ -36,6 +36,7 @@ INCOME
    24 Revenue
    25 Income from investing activities
    26 Income from financing activities
+   36 Interest income
 EXPENSES
    27 Cost of sales
    28 Research and development

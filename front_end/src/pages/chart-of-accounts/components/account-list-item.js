@@ -4,7 +4,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { DEBIT_ACCOUNT_TYPES } from '../../../utils/constants';
 import { formatCurrency } from '../../../utils/util-fns';
 
-function AccountListItem({account, handleEditAccountButton, className}) {
+function AccountListItem({account, handleEditAccountButton, className, category}) {
     const appContext = React.useContext(PageSettings);
     const debitTypes = DEBIT_ACCOUNT_TYPES;
     const history = useHistory();
@@ -14,7 +14,11 @@ function AccountListItem({account, handleEditAccountButton, className}) {
             className={"pseudo-tr d-flex justify-content-between align-items-center " + (account.hasChildren ? " " : "clickable ") + className}
             onClick={() => {
                 if (!account.hasChildren) {
-                    history.push(`/account-details/${account.accountId}`)
+                    if (!category) {
+                        history.push(`/account-details/${account.accountId}`)
+                    } else {
+                        history.push(`/category-details/${account.accountId}`)
+                    }
                 }
             }}
             >
@@ -27,7 +31,7 @@ function AccountListItem({account, handleEditAccountButton, className}) {
                         {account.accountName}
                     </span>
                 </div>
-                { account.parentAccountId
+                { account.parentAccountId || !appContext.isEnterprise
                     ? null
                     : <div className="font-size-compact fw-light text-muted fst-italic">
                         {account.accountSubtypeName}
@@ -36,7 +40,7 @@ function AccountListItem({account, handleEditAccountButton, className}) {
             </div>
             <div className="pseudo-td py-0 d-flex align-items-center">
                 <div className="text-right fw-semibold me-2 ">
-                    {account.hasChildren 
+                    {account.hasChildren || account.accountTypeId > 3
                         ? null
                         : debitTypes.includes(account.accountTypeId)
                             ? formatCurrency(appContext.locale, appContext.currency, account.debitsMinusCredits)

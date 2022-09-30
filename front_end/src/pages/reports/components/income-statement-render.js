@@ -705,6 +705,18 @@ function IncomeStatementRender(props) {
                                     </div>
                                 </StripedRow>
                                 <StripedRow className="justify-content-between">
+                                    <div>{incomeStatementRenderText[appContext.locale]["Interest income"]}</div>
+                                    <div className="text-end d-flex">
+                                        {incomeStatementObjects.map((incomeStatement, i) => {
+                                            return(
+                                                <div key={i} className="width-175">
+                                                    {numberAsCurrency(incomeStatement.interestIncome)}
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </StripedRow>
+                                <StripedRow className="justify-content-between">
                                     <div>{incomeStatementRenderText[appContext.locale]["Interest expense"]}</div>
                                     <div className="text-end d-flex">
                                         {incomeStatementObjects.map((incomeStatement, i) => {

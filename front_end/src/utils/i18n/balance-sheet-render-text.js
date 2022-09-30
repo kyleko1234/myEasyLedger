@@ -69,7 +69,8 @@ export const balanceSheetRenderText = {
         "Interest expense": "Interest expense",
         "Tax expense": "Tax expense",
         "Non-recurring and extraordinary items": "Non-recurring and extraordinary items",
-        
+        "Interest income": "Interest income",
+
         "Detailed View": "Detailed View"
     },
     "zh-TW": {
@@ -142,6 +143,7 @@ export const balanceSheetRenderText = {
         "Interest expense": "利息費用",
         "Tax expense": "賦稅費用",
         "Non-recurring and extraordinary items": "非經常性項目",
+        "Interest income": "TRANSLATION",
 
         "Detailed View": "細項檢視"
     }

@@ -52,7 +52,7 @@ function AccountDetailsPagePersonal({ selectedAccountId, category }) {
                         {appContext.isLoading
                             ? <LoadingSpinner big />
                             : <AccountSwitcher
-                                widgetTitle="Switch Accounts"
+                                widgetTitle={category ? "Switch Categories" : "Switch Accounts"}
                                 isEnterprise={appContext.isEnterprise}
                                 category={category}
                                 selectedAccountId={selectedAccountId}
