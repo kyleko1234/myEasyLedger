@@ -10,9 +10,9 @@ function LineItemsFooterEditPersonal({lineItems}){
         let sum = 0;
         lineItems.forEach(lineItem => {
             if (lineItem.transactionType.isCredit) {
-                sum += lineItem.amount;
+                sum += parseFloat(lineItem.amount);
             } else {
-                sum -= lineItem.amount;
+                sum -= parseFloat(lineItem.amount);
             }
         });
         if (isNaN(sum)) {

@@ -4,7 +4,7 @@ import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
-import { getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import { getTodayAsDateString, returnStringToNearestCentPrecisionNumber, validateDate } from '../../../utils/util-fns';
 import JournalEntryExpandedEdit from './journal-entry-expanded-edit';
 import JournalEntryExpandedView from './journal-entry-expanded-view';
 import JournalEntryModalFooter from './journal-entry-modal-footer';
@@ -122,7 +122,7 @@ function JournalEntryModal({ isOpen, toggle, editMode, setEditMode, refreshParen
         let missingAmount = false;
         let missingAccount = false;
         lineItems.forEach(lineItem => { // check for missing fields within lineItems, and sum debits and credits.
-            if (!lineItem.creditAmount && !lineItem.debitAmount) {
+            if (!returnStringToNearestCentPrecisionNumber(lineItem.creditAmount) && !returnStringToNearestCentPrecisionNumber(lineItem.debitAmount)) {
                 missingAmount = true;
             }
             if (!lineItem.accountId) {
@@ -131,10 +131,10 @@ function JournalEntryModal({ isOpen, toggle, editMode, setEditMode, refreshParen
 
             // sum debits and credits
             if (lineItem.debitAmount) {
-                debitSum += lineItem.debitAmount;
+                debitSum += returnStringToNearestCentPrecisionNumber(lineItem.debitAmount);
             }
             if (lineItem.creditAmount) {
-                creditSum += lineItem.creditAmount;
+                creditSum += returnStringToNearestCentPrecisionNumber(lineItem.creditAmount);
             }
         })
         //move missing description and missing amount error messages out of the loop to avoid duplicate messages
@@ -162,7 +162,7 @@ function JournalEntryModal({ isOpen, toggle, editMode, setEditMode, refreshParen
         let formattedLineItems = lineItems.map(lineItem => {
             return {
                 accountId: lineItem.accountId,
-                amount: (lineItem.debitAmount ? lineItem.debitAmount : lineItem.creditAmount),
+                amount: (lineItem.debitAmount ? returnStringToNearestCentPrecisionNumber(lineItem.debitAmount) : returnStringToNearestCentPrecisionNumber(lineItem.creditAmount)),
                 description: lineItem.description,
                 isCredit: (lineItem.creditAmount ? true : false)
             }

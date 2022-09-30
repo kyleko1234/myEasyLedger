@@ -9,7 +9,7 @@ function LineItemsFooterEdit({ lineItems }) {
     const sumAmountsInColumn = columnName => {
         let sum = 0;
         lineItems.forEach(lineItem => {
-            sum += lineItem[columnName];
+            sum += parseFloat(lineItem[columnName]);
         });
         if (isNaN(sum)) {
             return 0

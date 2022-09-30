@@ -4,7 +4,7 @@ import { Modal, ModalBody } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL, PERSONAL_TRANSACTION_TYPES } from '../../../utils/constants';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
-import { getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import { getTodayAsDateString, returnStringToNearestCentPrecisionNumber, validateDate } from '../../../utils/util-fns';
 import JournalEntryModalFooter from '../enterprise/journal-entry-modal-footer';
 import TransactionExpandedEdit from './transaction-expanded-edit';
 import TransactionExpandedView from './transaction-expanded-view';
@@ -111,7 +111,7 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
         let missingAmount = false;
         let missingTransactionType = false;
         lineItems.forEach(lineItem => {
-            if (!lineItem.amount) {
+            if (!returnStringToNearestCentPrecisionNumber(lineItem.amount)) {
                 missingAmount = true;
             }
             if (!lineItem.accountId) {
@@ -143,9 +143,9 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
         let totalCredits = 0;
         let formattedLineItems = lineItems.map(lineItem => {
             if (lineItem.transactionType.isCredit) {
-                totalCredits += lineItem.amount;
+                totalCredits += parseFloat(lineItem.amount);
             } else {
-                totalDebits += lineItem.amount;
+                totalDebits += parseFloat(lineItem.amount);
             }
             return ({
                 accountId: lineItem.accountId,
@@ -169,6 +169,9 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
                 description: journalEntryDescription
             })
         }
+        formattedLineItems.forEach(lineItem => {
+            lineItem.amount = returnStringToNearestCentPrecisionNumber(lineItem.amount); //rounds all numbers to two decimal places.
+        })
         let formattedTransaction = {
             journalEntryId: null,
             journalEntryDate: journalEntryDate,

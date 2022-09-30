@@ -2,6 +2,7 @@ import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import Select from 'react-select';
+import { isTreatedAsZero } from '../../../utils/util-fns';
 
 function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, removeLineItem, transactionTypeOptions }) {
     const appContext = React.useContext(PageSettings);
@@ -18,7 +19,7 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
     }
     const handleChangeAmountInput = event => {
         let updatedLineItems = lineItems.slice();
-        updatedLineItems[i].amount = parseFloat(event.target.value);
+        updatedLineItems[i].amount = event.target.value;
         setLineItems(updatedLineItems);
     }
     const handleChangeTransactionType = selectedOption => {
@@ -76,7 +77,7 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
                         type="number"
                         step="any"
                         className="form-control"
-                        value={lineItems[i].amount ? lineItems[i].amount : ''}
+                        value={isTreatedAsZero(lineItems[i].amount) ? '' : lineItems[i].amount}
                         onChange={handleChangeAmountInput}
                     />
                 </div>
@@ -163,7 +164,7 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
                                     type="number"
                                     step="any"
                                     className="form-control"
-                                    value={lineItems[i].amount ? lineItems[i].amount : ''}
+                                    value={lineItems[i].amount}
                                     onChange={handleChangeAmountInput}
                                 />
                             </div>
