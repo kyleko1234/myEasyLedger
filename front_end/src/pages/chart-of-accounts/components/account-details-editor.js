@@ -337,43 +337,44 @@ function AccountDetailsEditor(props) {
                         </div>
                         : null}
                         <div>
-                            {appContext.isEnterprise? 
-                                <>
-                                    <div className="mb-3 row">
-                                        <label className="col-form-label col-md-4">
-                                            {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
-                                        </label>
-                                        <div className="col-md-8">
-                                            <input
-                                                type="number"
-                                                className="form-control"
-                                                value={initialDebitValueInput}
-                                                onChange={event => {
-                                                    setInitialDebitValueInput(event.target.value);
-                                                }}
-                                                disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
-                                            />
+                            {appContext.isEnterprise
+                                ? accountTypeId <= 3
+                                    ? <>
+                                        <div className="mb-3 row">
+                                            <label className="col-form-label col-md-4">
+                                                {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
+                                            </label>
+                                            <div className="col-md-8">
+                                                <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    value={initialDebitValueInput}
+                                                    onChange={event => {
+                                                        setInitialDebitValueInput(event.target.value);
+                                                    }}
+                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="mb-3 row">
-                                        <label className="col-form-label col-md-4">
-                                            {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
-                                        </label>
-                                        <div className="col-md-8">
-                                            <input
-                                                type="number"
-                                                className="form-control"
-                                                value={initialCreditValueInput}
-                                                onChange={event => {
-                                                    setInitialCreditValueInput(event.target.value);
-                                                }}
-                                                disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
-                                            />
+                                        <div className="mb-3 row">
+                                            <label className="col-form-label col-md-4">
+                                                {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
+                                            </label>
+                                            <div className="col-md-8">
+                                                <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    value={initialCreditValueInput}
+                                                    onChange={event => {
+                                                        setInitialCreditValueInput(event.target.value);
+                                                    }}
+                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                </>
-                                :
-                                <>
+                                    </>
+                                    : null
+                                : <>
                                     {(accountTypeId == 1 || accountTypeId == 2) ?
                                         <div className="mb-3 row">
                                             <label className="col-form-label col-md-4">
@@ -393,7 +394,7 @@ function AccountDetailsEditor(props) {
                                         </div>
                                     : null}
                                 </>
-                                }
+                            }
                         </div> 
                         
                     </ModalBody>
