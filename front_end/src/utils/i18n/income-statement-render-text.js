@@ -77,7 +77,7 @@ export const incomeStatementRenderText = {
         "Net income/expense from financing activities": "金融活動之淨收入／支出",
         "Total other income/expense, net": "其他淨 收入／支出 總計",
         "Earnings before interest and tax": "息稅前利潤",
-        "Interest income": "TRANSLATION",
+        "Interest income": "利息收入",
         "Interest expense": "利息費用",
         "Non-recurring and extraordinary items": "非經常性項目",
 
