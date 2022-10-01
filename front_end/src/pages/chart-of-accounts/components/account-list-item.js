@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { PageSettings } from '../../../config/page-settings';
 import { DEBIT_ACCOUNT_TYPES } from '../../../utils/constants';
+import { accountDetailsEditorText } from '../../../utils/i18n/account-details-editor-text';
 import { formatCurrency } from '../../../utils/util-fns';
 
 function AccountListItem({account, handleEditAccountButton, className, category}) {
@@ -34,7 +35,7 @@ function AccountListItem({account, handleEditAccountButton, className, category}
                 { account.parentAccountId || !appContext.isEnterprise
                     ? null
                     : <div className="font-size-compact fw-light text-muted fst-italic">
-                        {account.accountSubtypeName}
+                        {accountDetailsEditorText[appContext.locale][account.accountSubtypeName]}
                     </div>
                 }
             </div>
