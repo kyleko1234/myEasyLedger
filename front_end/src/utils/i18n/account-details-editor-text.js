@@ -161,7 +161,7 @@ export const accountDetailsEditorText = {
         "Interest expense": "利息費用",
         "Tax expense": "賦稅費用",
         "Non-recurring and extraordinary items": "非經常性項目",
-        "Interest income": "TRANSLATION",
+        "Interest income": "利息收入",
 
 
         "Display Order": "顯示順序",
