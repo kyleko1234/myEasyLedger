@@ -52,12 +52,12 @@ export const sidebarText = { //handles i18n for sidebar, sidebar-profile, sideba
         "Dashboard": "帳目概覽",
         "Journal Entries": "登錄日記帳",
         "Transactions": "輸入交易",
-        "Chart of Accounts": "維護會計科目",
+        "Chart of Accounts": "會計科目管理",
         "Reports": "財務報告",
         "Accounts": "帳戶／錢包",
         "Categories": "收支類別",
-        "Vendors": "供應商（支出對象）",
-        "Customers": "客戶（收入來源）"
+        "Vendors": "支出對象管理（供應商）",
+        "Customers": "收入來源管理（客戶）"
 
     }
 }

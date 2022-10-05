@@ -24,7 +24,7 @@ export const vendorsText = {
         "Are you sure you want to delete this vendor?": "你確定要删除這個供應商（支出對象）嗎？",
         "Please remove all journal entries associated with this vendor and try again.": "請先删除這個供應商的所有相關分錄後，才能删除此供應商。",
         "Cannot delete this vendor.": "無法删除本供應商（支出對象）。",
-        "Vendors": "供應商（支出對象）名册",
+        "Vendors": "支出對象（供應商）名册",
         "A vendor with this name already exists in this ledger.": "本帳册中已存在這個供應商（支出對象）名稱。",
     },
 }
