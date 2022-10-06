@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "AccountSubtype/AccountSubtype.md",
+            "file": "Reports/Contents/Generate an Income Statement.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AccountSubtype/AccountSubtype.md",
+                "file": "Reports/Contents/Generate an Income Statement.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,15 +89,15 @@
   },
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
+    "Reports/Contents/Generate an Income Report by Customer.md",
+    "Reports/Contents/Generate an Income Statement.md",
+    "AccountSubtype/AccountSubtype.md",
     "AccountSubtype/Contents/List All AccountSubtypes.md",
     "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md",
     "AccountSubtype/Contents/Retrieve an AccountSubtype.md",
     "AccountSubtype/Contents/The AccountSubtype Object.md",
-    "AccountSubtype/AccountSubtype.md",
     "Reports/Contents/Generate an Expense Report by Vendor.md",
     "Easy Ledger.md",
-    "Reports/Reports.md",
-    "Reports/Contents/Generate an Income Report by Customer.md",
-    "Reports/Contents/Generate an Income Statement.md"
+    "Reports/Reports.md"
   ]
 }
