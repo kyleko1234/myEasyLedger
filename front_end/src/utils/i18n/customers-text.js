@@ -12,7 +12,7 @@ export const customersText = {
 
     },
     "zh-TW": {
-        "Customers": "客戶（收入來源）名册",
+        "Customers": "收入來源（客戶）名册",
         "Add a Customer": "建立新客戶",
         "Customer Name": "客戶名稱",
         "Edit Customer Details": "修改客戶（收入來源）資訊",

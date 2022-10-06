@@ -43,10 +43,10 @@ public class IncomeStatementViewModel {
 	private BigDecimal incomeFromFinancing = new BigDecimal(0);
 	private BigDecimal expenseFromInvesting = new BigDecimal(0);
 	private BigDecimal expenseFromFinancing = new BigDecimal(0);
+	private BigDecimal interestIncome = new BigDecimal(0);
 	private BigDecimal totalOtherIncomeExpense = new BigDecimal(0); //income from investing + income from financing + other income - other expenses
 	
 	private BigDecimal ebit = new BigDecimal(0); //operating income + total other income/expense
-	private BigDecimal interestIncome = new BigDecimal(0);
 	private BigDecimal interestExpense = new BigDecimal(0);
 	private BigDecimal earningsBeforeTax = new BigDecimal(0); //ebit - interest expense
 	private BigDecimal taxExpense = new BigDecimal(0); //positive value
@@ -96,11 +96,11 @@ public class IncomeStatementViewModel {
 		totalOtherIncomeExpense = incomeFromInvesting
 				.add(incomeFromFinancing)
 				.subtract(expenseFromInvesting)
-				.subtract(expenseFromFinancing);
+				.subtract(expenseFromFinancing)
+				.add(interestIncome);
 		
 		ebit = operatingIncome.add(totalOtherIncomeExpense);
 		earningsBeforeTax = ebit
-				.add(interestIncome)
 				.subtract(interestExpense);
 	
 		netIncome = earningsBeforeTax

@@ -23,6 +23,7 @@ ___
     "incomeFromFinancing": BigDecimal,
     "expenseFromInvesting": BigDecimal,
     "expenseFromFinancing": BigDecimal,
+    "interestIncome": BigDecimal,
     "totalOtherIncomeExpense": BigDecimal,
     "ebit": BigDecimal,
     "interestExpense": BigDecimal,

@@ -506,10 +506,10 @@ public class PersonService {
 		childAccounts.add(new Account("製造費用 - 修繕費", 製造費用, "5157"));
 		childAccounts.add(new Account("製造費用 - 職工福利", 製造費用, "5166"));
 		childAccounts.add(new Account("製造費用 - 旅費", 製造費用, "5154"));
-		childAccounts.add(new Account("間接人工", 製造費用, "5151"));
+		childAccounts.add(new Account("製造費用 - 間接人工", 製造費用, "5151"));
 		childAccounts.add(new Account("製造費用 - 文具用品", 製造費用, "5153"));
 		childAccounts.add(new Account("製造費用 - 加工費", 製造費用, "5161"));
-
+		
 		childAccounts.add(new Account("進料退出", 進料, "5133"));
 		childAccounts.add(new Account("進料費用", 進料, "5132"));
 		childAccounts.add(new Account("進料折讓", 進料, "5134"));
@@ -529,8 +529,6 @@ public class PersonService {
 		topLevelAccounts.add(折舊及攤銷);
 		childAccounts.add(new Account("折舊", 折舊及攤銷, "6125"));
 		childAccounts.add(new Account("各項耗竭及攤提", 折舊及攤銷, "6126"));
-		childAccounts.add(new Account("製造費用 - 折舊", 折舊及攤銷, "5163"));
-		childAccounts.add(new Account("製造費用 - 各項耗竭及攤提", 折舊及攤銷, "5164"));
 
 		AccountSubtype expenseFromFinancing = accountSubtypeRepo.findById((long) 32)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 32"));
@@ -564,7 +562,6 @@ public class PersonService {
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 34"));
 		Account 賦稅費用 = new Account("賦稅費用", taxExpense, "821");
 		topLevelAccounts.add(賦稅費用);
-		childAccounts.add(new Account("營業稅金", 賦稅費用));
 		childAccounts.add(new Account("營所稅金", 賦稅費用, "8211"));
 
 		AccountSubtype incomeFromFinancing = accountSubtypeRepo.findById((long) 26)
