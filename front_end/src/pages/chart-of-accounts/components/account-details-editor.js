@@ -79,7 +79,7 @@ function AccountDetailsEditor(props) {
                         setInitialCreditValueInput(response.data.initialCreditAmount);
                         setCurrentAccountHasChildren(response.data.hasChildren);
                     }
-                }).catch(console.log);    
+                }).catch(console.log);
             } else if (props.selectedParentAccount) {
                 setAccountTypeId(props.selectedParentAccount.accountTypeId);
                 setSelectedParentAccountId(props.selectedParentAccount.accountId);
@@ -91,17 +91,17 @@ function AccountDetailsEditor(props) {
             await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/account`).then(response => {
                 if (response.data) {
                     let validParentAccountOptions = response.data
-                            .filter(account => (account.parentAccountId == null && account.debitTotal == 0 && account.creditTotal == 0) || account.hasChildren)
-                            .map(account => {
-                                return ({
-                                    value: account.accountId,
-                                    label: (appContext.isEnterprise && account.accountCode)
-                                            ? account.accountCode + " - " + account.accountName
-                                            : account.accountName,
-                                    object: account
-                                });
+                        .filter(account => (account.parentAccountId == null && account.debitTotal == 0 && account.creditTotal == 0) || account.hasChildren)
+                        .map(account => {
+                            return ({
+                                value: account.accountId,
+                                label: (appContext.isEnterprise && account.accountCode)
+                                    ? account.accountCode + " - " + account.accountName
+                                    : account.accountName,
+                                object: account
                             });
-                    validParentAccountOptions.unshift({value: 0, label: "None", object: {accountTypeId: accountTypeId}});
+                        });
+                    validParentAccountOptions.unshift({ value: 0, label: "None", object: { accountTypeId: accountTypeId } });
                     setParentAccountOptions(validParentAccountOptions);
                 }
             }).catch(console.log);
@@ -131,7 +131,7 @@ function AccountDetailsEditor(props) {
         setInitialCreditValueInput('0');
         setCurrentAccountHasChildren(false);
     }
-    const handleSaveButton = () => { 
+    const handleSaveButton = () => {
         let requestBody;
         if (!selectedParentAccountId) {
             requestBody = {
@@ -142,7 +142,7 @@ function AccountDetailsEditor(props) {
                 organizationId: appContext.currentOrganizationId,
                 initialDebitAmount: Number(initialDebitValueInput),
                 initialCreditAmount: Number(initialCreditValueInput)
-            }  
+            }
         } else {
             requestBody = {
                 accountId: props.selectedAccountId,
@@ -241,7 +241,7 @@ function AccountDetailsEditor(props) {
             setInitialDebitValueInput(initialAccountValue);
             setInitialCreditValueInput(0);
         }
-        if (accountTypeId == 2) { 
+        if (accountTypeId == 2) {
             setInitialCreditValueInput(initialAccountValue);
             setInitialDebitValueInput(0);
         }
@@ -254,25 +254,61 @@ function AccountDetailsEditor(props) {
                 <form onSubmit={event => { event.preventDefault(); handleSaveButton() }}>
                     <ModalHeader>
                         {props.createMode
-                            ? (props.category? accountDetailsEditorText[appContext.locale]["Create a New Category"] : accountDetailsEditorText[appContext.locale]["Create a New Account"])
-                            : (props.category? accountDetailsEditorText[appContext.locale]["Edit Category Details"] : accountDetailsEditorText[appContext.locale]["Edit Account Details"])
+                            ? (props.category ? accountDetailsEditorText[appContext.locale]["Create a New Category"] : accountDetailsEditorText[appContext.locale]["Create a New Account"])
+                            : (props.category ? accountDetailsEditorText[appContext.locale]["Edit Category Details"] : accountDetailsEditorText[appContext.locale]["Edit Account Details"])
                         }
                     </ModalHeader>
                     <ModalBody>
                         {noAccountNameAlert ?
                             <Alert color="danger">
-                                {props.category? accountDetailsEditorText[appContext.locale]["Please provide a name for your category."] : accountDetailsEditorText[appContext.locale]["Please provide a name for your account."]}
+                                {props.category ? accountDetailsEditorText[appContext.locale]["Please provide a name for your category."] : accountDetailsEditorText[appContext.locale]["Please provide a name for your account."]}
                             </Alert>
-                            : null}
+                            : null
+                        }
                         {noParentOrSubtypeAlert ?
                             <Alert color="danger">
-                                {accountDetailsEditorText[appContext.locale]["Account must belong to either a subtype or a parent account."] /* conditional rendering not required; this alert should never appear when isEnterprise is false; i.e. when 'category' exists as a classification */} 
+                                {accountDetailsEditorText[appContext.locale]["Account must belong to either a subtype or a parent account."] /* conditional rendering not required; this alert should never appear when isEnterprise is false; i.e. when 'category' exists as a classification */}
                             </Alert>
-                            : null}
+                            : null
+                        }
+
                         <div>
+                            {appContext.isEnterprise
+                                ? <div className="mb-3 row">
+                                    <label className="col-form-label col-md-4">
+                                        {accountDetailsEditorText[appContext.locale]["Account Subtype"]}
+                                    </label>
+                                    <div className="col-md-8">
+                                        <Select
+                                            classNamePrefix="form-control"
+                                            options={accountSubtypeOptions.filter(option => option.object.accountType.id == accountTypeId)}
+                                            value={accountSubtypeOptions.find(option => option.object.id == selectedAccountSubtypeId)}
+                                            isSearchable={true}
+                                            onChange={handleChangeAccountSubtypeOption}
+                                            isDisabled={appContext.currentPermissionTypeId < 2 ? true : false}
+                                        />
+                                    </div>
+                                </div>
+                                : null
+                            }
                             <div className="mb-3 row">
                                 <label className="col-form-label col-md-4">
-                                    {props.category? accountDetailsEditorText[appContext.locale]["Category Name"] : accountDetailsEditorText[appContext.locale]["Account Name"]}
+                                    {props.category ? accountDetailsEditorText[appContext.locale]["Parent Category"] : accountDetailsEditorText[appContext.locale]["Parent Account"]}
+                                </label>
+                                <div className="col-md-8">
+                                    <Select
+                                        classNamePrefix="form-control"
+                                        options={parentAccountOptions.filter(option => (option.object.accountTypeId == accountTypeId && option.object.accountId != props.selectedAccountId))}
+                                        value={parentAccountOptions.find(option => option.object.accountId == selectedParentAccountId)}
+                                        isSearchable={true}
+                                        onChange={handleChangeParentAccountOption}
+                                        isDisabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) ? true : false}
+                                    />
+                                </div>
+                            </div>
+                            <div className="mb-3 row">
+                                <label className="col-form-label col-md-4">
+                                    {props.category ? accountDetailsEditorText[appContext.locale]["Category Name"] : accountDetailsEditorText[appContext.locale]["Account Name"]}
                                 </label>
                                 <div className="col-md-8">
                                     <input
@@ -287,7 +323,7 @@ function AccountDetailsEditor(props) {
                             </div>
                             <div className="mb-3 row">
                                 <label className="col-form-label col-md-4">
-                                    {appContext.isEnterprise 
+                                    {appContext.isEnterprise
                                         ? accountDetailsEditorText[appContext.locale]["Account Code"]
                                         : accountDetailsEditorText[appContext.locale]["Display Order"]
                                     }
@@ -304,38 +340,7 @@ function AccountDetailsEditor(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="mb-3 row">
-                            <label className="col-form-label col-md-4">
-                                {props.category? accountDetailsEditorText[appContext.locale]["Parent Category"] : accountDetailsEditorText[appContext.locale]["Parent Account"]}
-                            </label>
-                            <div className="col-md-8">
-                                <Select
-                                    classNamePrefix="form-control"
-                                    options={parentAccountOptions.filter(option => (option.object.accountTypeId == accountTypeId && option.object.accountId != props.selectedAccountId))}
-                                    value={parentAccountOptions.find(option => option.object.accountId == selectedParentAccountId)}
-                                    isSearchable={true}
-                                    onChange={handleChangeParentAccountOption}
-                                    isDisabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
-                                />
-                            </div>
-                        </div>
-                        {appContext.isEnterprise?
-                            <div className="mb-3 row">
-                            <label className="col-form-label col-md-4">
-                                {accountDetailsEditorText[appContext.locale]["Account Subtype"]}
-                            </label>
-                            <div className="col-md-8">
-                                <Select
-                                    classNamePrefix="form-control"
-                                    options={accountSubtypeOptions.filter(option => option.object.accountType.id == accountTypeId)}
-                                    value={accountSubtypeOptions.find(option => option.object.id == selectedAccountSubtypeId)}
-                                    isSearchable={true}
-                                    onChange={handleChangeAccountSubtypeOption}
-                                    isDisabled={appContext.currentPermissionTypeId < 2 ? true : false}
-                                />
-                            </div>
-                        </div>
-                        : null}
+
                         <div>
                             {appContext.isEnterprise
                                 ? accountTypeId <= 3
@@ -352,7 +357,7 @@ function AccountDetailsEditor(props) {
                                                     onChange={event => {
                                                         setInitialDebitValueInput(event.target.value);
                                                     }}
-                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
+                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) ? true : false}
                                                 />
                                             </div>
                                         </div>
@@ -368,7 +373,7 @@ function AccountDetailsEditor(props) {
                                                     onChange={event => {
                                                         setInitialCreditValueInput(event.target.value);
                                                     }}
-                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
+                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) ? true : false}
                                                 />
                                             </div>
                                         </div>
@@ -388,20 +393,20 @@ function AccountDetailsEditor(props) {
                                                     onChange={event => {
                                                         setInitialAccountValue(event.target.value);
                                                     }}
-                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2)? true : false}
+                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) ? true : false}
                                                 />
                                             </div>
                                         </div>
-                                    : null}
+                                        : null}
                                 </>
                             }
-                        </div> 
-                        
+                        </div>
+
                     </ModalBody>
                     <ModalFooter className="justify-content-between">
                         <div id="delete-button">
                             {!props.selectedAccountId
-                                ? null 
+                                ? null
                                 : <div>
                                     <button type="button" className="btn btn-danger width-10ch" onClick={handleDeleteButton} disabled={appContext.currentPermissionTypeId < 2 ? true : false}>
                                         {accountDetailsEditorText[appContext.locale]["Delete"]}
@@ -422,9 +427,9 @@ function AccountDetailsEditor(props) {
                     </ModalFooter>
                     {/** Tooltip component must be placed inside the modal component, otherwise react will render the tooltip before the targets and the app will crash.*/}
                     {appContext.currentPermissionTypeId < 2
-                        ? <Tooltip 
-                            target="delete-button" 
-                            isOpen={deleteButtonTooltip} 
+                        ? <Tooltip
+                            target="delete-button"
+                            isOpen={deleteButtonTooltip}
                             toggle={toggleDeleteButtonTooltip}
                             fade={false}
                         >
@@ -433,9 +438,9 @@ function AccountDetailsEditor(props) {
                         : null
                     }
                     {appContext.currentPermissionTypeId < 2
-                        ? <Tooltip 
-                            target="save-button" 
-                            isOpen={saveButtonTooltip} 
+                        ? <Tooltip
+                            target="save-button"
+                            isOpen={saveButtonTooltip}
                             toggle={toggleSaveButtonTooltip}
                             fade={false}
                         >
@@ -456,14 +461,14 @@ function AccountDetailsEditor(props) {
                     onConfirm={handleConfirmDeleteAccountButton}
                     onCancel={toggleDeleteAccountAlert}
                 >
-                    {props.category? accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this category?"] : accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this account?"]}
+                    {props.category ? accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this category?"] : accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this account?"]}
                 </SweetAlert>
                 : null}
             {cannotDeleteAccountAlert ?
                 <SweetAlert danger showConfirm={false} showCancel={true}
                     cancelBtnBsStyle="default"
                     cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title={props.category? accountDetailsEditorText[appContext.locale]["Cannot delete this category."] : accountDetailsEditorText[appContext.locale]["Cannot delete this account."]}
+                    title={props.category ? accountDetailsEditorText[appContext.locale]["Cannot delete this category."] : accountDetailsEditorText[appContext.locale]["Cannot delete this account."]}
                     onConfirm={toggleCannotDeleteAccountAlert}
                     onCancel={toggleCannotDeleteAccountAlert}
                 >
@@ -472,12 +477,12 @@ function AccountDetailsEditor(props) {
                         : accountDetailsEditorText[appContext.locale]["Please remove all line items and child accounts from this account and try again."]}
                 </SweetAlert>
                 : null}
-            {initialValueLockedAlert 
+            {initialValueLockedAlert
                 ? <SweetAlert danger showConfirm={false} showCancel={true}
                     cancelBtnBsStyle="default"
                     cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
                     title={props.category
-                        ? accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this category."] 
+                        ? accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this category."]
                         : accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this account."]
                     }
                     onConfirm={toggleInitialValueLockedAlert}
