@@ -86,11 +86,8 @@ function AccountSwitcher(props) {
                     <span> / </span>
                     <Link replace to="#" onClick={handleCollapseAll}>{balanceSummaryText[appContext.locale]["(Collapse All)"]}</Link>
                 </div>
-                <div className="d-flex align-items-center border-top border-bottom py-3 mt-3">
-                    <label className="px-0 my-0 py-2 col-6">
-                        {props.category? balanceSummaryText[appContext.locale]["Select a category type:"]: balanceSummaryText[appContext.locale]["Select an account type:"]}
-                    </label>
-                    <div className="col-6">
+                <div className="d-flex align-items-center border-bottom py-3">
+                    <div className="col-12">
                         <Select
                             classNamePrefix="form-control"
                             options={props.isEnterprise? accountTypeOptions : 
