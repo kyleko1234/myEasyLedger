@@ -1,12 +1,12 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
-import Select from 'react-select';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import LineItemsHeader from '../enterprise/line-items-header';
 import { PERSONAL_TRANSACTION_TYPES } from '../../../utils/constants';
 import LineItemEditPersonal from './line-item-edit-personal';
 import LineItemsFooterEditPersonal from './line-items-footer-edit-personal';
+import StyledSelect from '../../../components/misc/styled-select';
 
 function TransactionExpandedEdit({
     lineItems, setLineItems,
@@ -61,15 +61,11 @@ function TransactionExpandedEdit({
                     <strong>{journalEntriesText[appContext.locale]["From Account"]}</strong>
                 </div>
                 <div className="col-lg-4">
-                    <Select
-                        classNamePrefix="form-control"
+                    <StyledSelect
                         options={accountOptions.filter(accountOption => transactionTypeOptions[2].accountTypeIds.includes(accountOption.object.accountTypeId))}
                         value={accountOptions.find(accountOption => accountOption.object.accountId == fromAccountId)}
                         isSearchable={true}
-                        menuPortalTarget={document.body}
                         menuShouldScrollIntoView={false}
-                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                        menuPlacement={'auto'}
                         onChange={(selectedOption) => {
                             setFromAccountId(selectedOption.object.accountId);
                             setFromAccountName(selectedOption.object.accountName);

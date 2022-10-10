@@ -4,12 +4,12 @@ import { PageSettings } from '../../config/page-settings'
 import { incomeStatementRenderText } from '../../utils/i18n/income-statement-render-text';
 import { reportsText } from '../../utils/i18n/reports-text';
 import { getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../utils/util-fns';
-import Select from 'react-select';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/constants';
 import { journalEntriesText } from '../../utils/i18n/journal-entries-text';
 import AccountTransactionsReport from './components/account-transactions-report';
 import { balanceSheetRenderText } from '../../utils/i18n/balance-sheet-render-text';
+import StyledSelect from '../../components/misc/styled-select';
 
 function AccountTransactionsReportPage(props) {
     const appContext = React.useContext(PageSettings);
@@ -147,13 +147,10 @@ function AccountTransactionsReportPage(props) {
                         <div className="d-none d-md-block">
                             <div>
                                 <div className="d-flex w-100 align-items-center mb-3">
-                                    <Select
+                                    <StyledSelect
                                         className="col-4 px-0"
-                                        classNamePrefix="form-control"
                                         options={dateRangePresets}
-                                        menuPortalTarget={document.body}
                                         menuShouldScrollIntoView={false}
-                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                         onChange={selectedOption => handleSelectDateRangePreset(selectedOption)}
                                         placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                         value={datesToRequest.label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest.label)}
@@ -186,13 +183,10 @@ function AccountTransactionsReportPage(props) {
                                         <label className="my-0 px-2 text-nowrap">
                                             {reportsText[appContext.locale]["Account:"]}
                                         </label>
-                                        <Select
+                                        <StyledSelect
                                             className="px-0 w-100"
-                                            classNamePrefix="form-control"
                                             options={accountOptions}
-                                            menuPortalTarget={document.body}
                                             menuShouldScrollIntoView={false}
-                                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                             onChange={selectedOption => setSelectedAccountId(selectedOption.object.accountId)}
                                             value={accountOptions.find(accountOption => accountOption.object.accountId === selectedAccountId)}
                                         />
@@ -206,13 +200,10 @@ function AccountTransactionsReportPage(props) {
                         <div className="d-md-none">
                             <div>
                                 <div className="d-flex mb-2 justify-content-between">
-                                    <Select
+                                    <StyledSelect
                                         className="col-12 px-0"
-                                        classNamePrefix="form-control"
                                         options={dateRangePresets}
-                                        menuPortalTarget={document.body}
                                         menuShouldScrollIntoView={false}
-                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                         onChange={selectedOption => handleSelectDateRangePreset(selectedOption)}
                                         placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                         value={datesToRequest.label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest.label)}
@@ -243,13 +234,10 @@ function AccountTransactionsReportPage(props) {
                                     />
                                 </div>
                                 <div className="d-flex mb-2 justify-content-between">
-                                    <Select
+                                    <StyledSelect
                                         className="px-0 w-100"
-                                        classNamePrefix="form-control"
                                         options={accountOptions}
-                                        menuPortalTarget={document.body}
                                         menuShouldScrollIntoView={false}
-                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                         onChange={selectedOption => setSelectedAccountId(selectedOption.object.accountId)}
                                         placeholder={reportsText[appContext.locale]["Account"]}
                                         value={accountOptions.find(accountOption => accountOption.object.accountId === selectedAccountId)}

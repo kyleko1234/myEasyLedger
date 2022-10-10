@@ -4,9 +4,9 @@ import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL, FIRSTNAME_LASTNAME_LOCALES, PERMISSION_TYPE_OPTIONS } from '../../../utils/constants.js';
 import { Link } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Card, CardBody, CardTitle } from 'reactstrap';
-import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { settingsText } from '../../../utils/i18n/settings-text';
+import StyledSelect from '../../../components/misc/styled-select';
 
 
 function OrganizationRoster(props) {
@@ -233,8 +233,7 @@ function OrganizationRoster(props) {
                                 {settingsText[appContext.locale]["Permissions for this user"] + ":"}
                             </label>
                             <div className="col-lg-7">
-                                <Select
-                                    classNamePrefix="form-control"
+                                <StyledSelect
                                     options={permissionTypeOptions.filter(option => option.value < ownPermissionForCurrentOrganization.permissionType.id)}
                                     value={selectedPermissionTypeOption}
                                     isSearchable={true}
@@ -288,8 +287,7 @@ function OrganizationRoster(props) {
                                         {settingsText[appContext.locale]["Permissions for this user"] + ":"}
                                     </label>
                                     <div className="col-lg-6">
-                                        <Select
-                                            classNamePrefix="form-control"
+                                        <StyledSelect
                                             options={permissionTypeOptions.filter(option => option.value < ownPermissionForCurrentOrganization.permissionType.id)}
                                             value={selectedPermissionTypeOption}
                                             isSearchable={true}

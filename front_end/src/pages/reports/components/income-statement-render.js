@@ -4,13 +4,13 @@ import { API_BASE_URL } from '../../../utils/constants';
 import axios from 'axios';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { Card, CardBody, Alert } from 'reactstrap';
-import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { formatCurrency, getDateInCurrentYear, getTodayAsDateString, localizeDate, validateDate } from '../../../utils/util-fns';
 import StripedRow from '../../../components/tables/striped-row';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
+import StyledSelect from '../../../components/misc/styled-select';
 
 /**
  * INCOME STATEMENT FORMAT
@@ -309,13 +309,10 @@ function IncomeStatementRender(props) {
                                             </div>
                                         : null}
                                         <div className="d-flex w-100 align-items-center mb-2">
-                                            <Select
+                                            <StyledSelect
                                                 className="col-4 px-0"
-                                                classNamePrefix="form-control"
                                                 options={dateRangePresets}
-                                                menuPortalTarget={document.body}
                                                 menuShouldScrollIntoView={false}
-                                                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                                 onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
                                                 placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                                 value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
@@ -360,13 +357,10 @@ function IncomeStatementRender(props) {
                                                     <i className="ion ion-md-close fa-fw"></i>
                                                 </button>
                                             </div>
-                                            <Select
+                                            <StyledSelect
                                                 className="col-6 px-0"
-                                                classNamePrefix="form-control"
                                                 options={dateRangePresets}
-                                                menuPortalTarget={document.body}
                                                 menuShouldScrollIntoView={false}
-                                                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                                 onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
                                                 placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                                 value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { PageSettings } from '../../config/page-settings';
 import { settingsText } from '../../utils/i18n/settings-text';
 import { API_BASE_URL, RESULTS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import Select from 'react-select';
+import StyledSelect from '../../components/misc/styled-select';
 
 function ChangeResultsPerPageModal(props) {
 //required props: isOpen, toggle
@@ -39,14 +39,10 @@ function ChangeResultsPerPageModal(props) {
                                     {settingsText[appContext.locale]["Number of results to display per page"]}
                                 </label>
                                 <div className="col-sm-4">
-                                    <Select
-                                        classNamePrefix="form-control"
+                                    <StyledSelect
                                         options={RESULTS_PER_PAGE_OPTIONS}
                                         onChange={handleChangeResultsPerPageOption}
                                         value={RESULTS_PER_PAGE_OPTIONS.find(option => option.value == selectedResultsPerPage)}
-                                        menuPortalTarget={document.body}
-                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                                        menuPlacement={'auto'}
                                     />
                                 </div>
                             </form>

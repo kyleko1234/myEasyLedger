@@ -288,15 +288,25 @@ a {
     background-color: #181818;
 }
 
-/* MODIFICATIONS TO BOOTSTRAP FORMS */
+/* MODIFICATIONS TO BOOTSTRAP FORMS
+ * Remember to update styled-select.js when updating this
+*/
 .form-control {
     font-size: var(--base-font-size);
 }
 
-.dark-mode .form-control {
+.dark-mode .form-control,
+.dark-mode .form-control__control,
+.dark-mode .form-control__menu  {
     background-color: #282828;
     border-color: #373737;
     color: var(--dark-mode-text-color);
+}
+
+.dark-mode .form-control:disabled,
+.dark-mode .form-control.discouraged{
+    background-color: #282828;
+    color: #373737;
 }
 
 /* MODIFICATIONS TO BOOTSTRAP DROPDOWN*/
@@ -369,28 +379,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* MODIFICATIONS TO REACT-SELECT */
-.dark-mode .form-control__control {
-    background-color: #282828;
-    border-color: #373737;
-}
 
-.dark-mode .form-control__input, 
-.dark-mode .form-control__single-value {
-    color: var(--dark-mode-text-color);
-}
-
-.dark-mode .form-control__menu {
-    background-color: #282828;
-}
-
-.dark-mode .form-control__option--is-focused:not(.form-control__option--is-selected){
-    background-color: #003e9b;
-}
-
-.form-control__option--is-selected {
-    background-color: var(--bs-primary);
-}
 /* MODIFICATIONS TO BOOTSTRAP ALERT*/
 .alert {
     border-radius: 10px;

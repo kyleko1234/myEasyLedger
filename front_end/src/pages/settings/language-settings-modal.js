@@ -4,7 +4,7 @@ import axios from 'axios';
 import { PageSettings } from '../../config/page-settings';
 import { settingsText } from '../../utils/i18n/settings-text';
 import { API_BASE_URL, LOCALE_OPTIONS } from '../../utils/constants';
-import Select from 'react-select';
+import StyledSelect from '../../components/misc/styled-select';
 
 function LanguageSettingsModal(props) {
 //required props: isOpen, toggle
@@ -37,14 +37,10 @@ function LanguageSettingsModal(props) {
                                     {settingsText[appContext.locale]["Language"]}
                                 </label>
                                 <div className="col-sm-9">
-                                    <Select
-                                        classNamePrefix="form-control"
+                                    <StyledSelect
                                         options={LOCALE_OPTIONS}
                                         onChange={handleChangeLocaleOption}
                                         value={LOCALE_OPTIONS.find(localeOption => localeOption.value == selectedLocale)}
-                                        menuPortalTarget={document.body}
-                                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                                        menuPlacement={'auto'}
                                     />
                                 </div>
                             </form>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
-import Select from 'react-select';
 import { isTreatedAsZero } from '../../../utils/util-fns';
+import StyledSelect from '../../../components/misc/styled-select';
 
 function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, removeLineItem, transactionTypeOptions }) {
     const appContext = React.useContext(PageSettings);
@@ -36,20 +36,15 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
             {/**Desktop View */}
             <div className="pseudo-tr d-none d-lg-flex">
                 <div className="pseudo-td col-3">
-                    <Select
-                        classNamePrefix="form-control"
+                    <StyledSelect
                         options={transactionTypeOptions}
                         value={transactionTypeOptions.find(transactionType => transactionType.value == lineItems[i].transactionType.value)}
-                        menuPortalTarget={document.body}
                         menuShouldScrollIntoView={false}
-                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                        menuPlacement={'auto'}
                         onChange={handleChangeTransactionType}
                     />
                 </div>
                 <div className="pseudo-td col-3">
-                    <Select
-                        classNamePrefix="form-control"
+                    <StyledSelect
                         options={accountOptions.filter(accountOption => lineItems[i].transactionType.accountTypeIds.includes(accountOption.object.accountTypeId))}
                         value={lineItems[i].accountId == false
                             ? null
@@ -57,10 +52,7 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
                             /**The conditional checking for a false-y accountId is necessary if you want this select dropdown to reset when transactionTypeOption is changed. */
                         }
                         isSearchable={true}
-                        menuPortalTarget={document.body}
                         menuShouldScrollIntoView={false}
-                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                        menuPlacement={'auto'}
                         onChange={handleChangeAccount}
                     />
                 </div>
@@ -96,14 +88,10 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
                                 {journalEntriesText[appContext.locale]["Transaction Type"]}
                             </div>
                             <div>
-                                <Select
-                                    classNamePrefix="form-control"
+                                <StyledSelect
                                     options={transactionTypeOptions}
                                     value={transactionTypeOptions.find(transactionType => transactionType.value == lineItems[i].transactionType.value)}
-                                    menuPortalTarget={document.body}
                                     menuShouldScrollIntoView={false}
-                                    styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                                    menuPlacement={'auto'}
                                     onChange={handleChangeTransactionType}
                                 />
                             </div>
@@ -113,8 +101,7 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
                                 {journalEntriesText[appContext.locale]["Category or Account"]}
                             </div>
                             <div>
-                                <Select
-                                    classNamePrefix="form-control"
+                                <StyledSelect
                                     options={accountOptions.filter(accountOption => lineItems[i].transactionType.accountTypeIds.includes(accountOption.object.accountTypeId))}
                                     value={lineItems[i].accountId == false
                                         ? null
@@ -122,10 +109,7 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
                                         /**The conditional checking for a false-y accountId is necessary if you want this select dropdown to reset when transactionTypeOption is changed. */
                                     }
                                     isSearchable={true}
-                                    menuPortalTarget={document.body}
                                     menuShouldScrollIntoView={false}
-                                    styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                                    menuPlacement={'auto'}
                                     onChange={handleChangeAccount}
                                 />
                             </div>

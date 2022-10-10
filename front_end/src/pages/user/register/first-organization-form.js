@@ -1,9 +1,9 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { registerV3Text } from '../../../utils/i18n/register-v3-text';
-import Select from 'react-select';
 import { Alert } from 'reactstrap';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
+import StyledSelect from '../../../components/misc/styled-select';
 
 
 function FirstOrganizationForm(props) {
@@ -47,8 +47,7 @@ function FirstOrganizationForm(props) {
                     <label className="form-label">{registerV3Text[appContext.locale]["Currency"]}<span className="text-danger">*</span></label>
                     <div className="row mb-3">
                         <div className="col-12">
-                            <Select
-                                classNamePrefix="form-control"
+                            <StyledSelect
                                 options={props.currencyOptions}
                                 value={props.selectedCurrency}
                                 isSearchable={true}

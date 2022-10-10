@@ -1,11 +1,11 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
-import Select from 'react-select';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import LineItemsHeader from './line-items-header';
 import LineItemEdit from './line-item-edit';
 import LineItemsFooterEdit from './line-items-footer-edit';
+import StyledSelect from '../../../components/misc/styled-select';
 
 function JournalEntryExpandedEdit({
     lineItems, setLineItems,
@@ -98,15 +98,11 @@ function JournalEntryExpandedEdit({
                         </strong>
                     </div>
                     <div className="col-xl-3 mb-2 mb-xl-0">
-                        <Select
-                            classNamePrefix="form-control"
+                        <StyledSelect
                             options={vendorOptions}
                             value={vendorOptions.find(vendorOption => vendorOption.object.vendorId == journalEntryVendorId)}
-                            isSearchable={true}
-                            menuPortalTarget={document.body}
                             menuShouldScrollIntoView={false}
-                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                            menuPlacement={'auto'}
+                            isSearchable={true}
                             onChange={(selectedOption) => {
                                 setJournalEntryVendorId(selectedOption.object.vendorId);
                                 if (selectedOption.object.vendorId !== null) {
@@ -124,15 +120,11 @@ function JournalEntryExpandedEdit({
                         </strong>
                     </div>
                     <div className="col-xl-3">
-                        <Select
-                            classNamePrefix="form-control"
+                        <StyledSelect
                             options={customerOptions}
                             value={customerOptions.find(customerOption => customerOption.object.customerId == journalEntryCustomerId)}
                             isSearchable={true}
-                            menuPortalTarget={document.body}
                             menuShouldScrollIntoView={false}
-                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                            menuPlacement={'auto'}
                             onChange={(selectedOption) => {
                                 setJournalEntryCustomerId(selectedOption.object.customerId);
                                 if (selectedOption.object.customerId != null) {

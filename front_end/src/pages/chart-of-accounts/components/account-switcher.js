@@ -5,10 +5,10 @@ import { PageSettings } from '../../../config/page-settings';
 import { useHistory } from "react-router-dom";
 import { balanceSummaryText } from "../../../utils/i18n/balance-summary-text.js";
 import { Link } from 'react-router-dom';
-import Select from 'react-select';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Card, CardBody, Collapse } from 'reactstrap';
 import { formatCurrency } from '../../../utils/util-fns.js';
+import StyledSelect from '../../../components/misc/styled-select.js';
 
 
 function AccountSwitcher(props) {
@@ -88,17 +88,12 @@ function AccountSwitcher(props) {
                 </div>
                 <div className="d-flex align-items-center border-bottom py-3">
                     <div className="col-12">
-                        <Select
-                            classNamePrefix="form-control"
+                        <StyledSelect
                             options={props.isEnterprise? accountTypeOptions : 
                                 (props.category? accountTypeOptions.filter(accountTypeOption => CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value)) : accountTypeOptions.filter(accountTypeOption => NON_CATEGORY_ACCOUNT_TYPES.includes(accountTypeOption.value)))}
                             value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == selectedAccountTypeOptionId)}
                             onChange={selectedOption => setSelectedAccountTypeOptionId(selectedOption.value)}
-                            menuPortalTarget={document.body}
                             menuShouldScrollIntoView={false}
-                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                            menuPlacement={'auto'}
-
                         />
                     </div>
                 </div>

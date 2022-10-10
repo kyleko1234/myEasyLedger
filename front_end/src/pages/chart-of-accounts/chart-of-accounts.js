@@ -6,9 +6,9 @@ import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings';
 import { ACCOUNT_TYPE_OPTIONS, API_BASE_URL } from '../../utils/constants';
 import { chartOfAccountsText } from '../../utils/i18n/chart-of-accounts-text';
-import Select from 'react-select'
 import AccountListItem from './components/account-list-item';
 import AccountDetailsEditor from './components/account-details-editor';
+import StyledSelect from '../../components/misc/styled-select';
 
 function ChartOfAccounts(props) {
     /** Renders a Chart of Accounts. This component uses pills tabs for the different account types. The url param this.props.match.params.activeTabId indicates the current open tab, in order for tab history to be preserved.
@@ -105,8 +105,7 @@ function ChartOfAccounts(props) {
                                     })}
                                 </div>
                                 <div className="d-lg-none w-50">
-                                    <Select
-                                        classNamePrefix="form-control"
+                                    <StyledSelect
                                         options={accountTypeOptions}
                                         value={accountTypeOptions.find(accountTypeOption => accountTypeOption.value == currentAccountTypeId)}
                                         onChange={selectedOption => history.push(`/chart-of-accounts/${selectedOption.value}`)}

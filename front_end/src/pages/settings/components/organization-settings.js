@@ -3,11 +3,11 @@ import { Card, CardBody, CardTitle, Alert, Tooltip} from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import { CURRENCY_OPTIONS, CALENDAR_MONTH_OPTIONS, API_BASE_URL } from '../../../utils/constants';
 import { settingsText } from '../../../utils/i18n/settings-text';
-import Select from 'react-select';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { validateDate } from '../../../utils/util-fns';
+import StyledSelect from '../../../components/misc/styled-select';
 
 //requiredProps: organizationId
 function OrganizationSettings(props) {
@@ -147,8 +147,7 @@ function OrganizationSettings(props) {
                         </label>
                         <div className="col-md-9 d-flex">
                             <div className="w-50 me-3">
-                                <Select
-                                    classNamePrefix="form-control"
+                                <StyledSelect
                                     options={monthOptions}
                                     value={monthOptions.find(option => option.value === fiscalYearBeginMonth)}
                                     onChange={selectedOption => setFiscalYearBeginMonth(selectedOption.value)}
@@ -156,8 +155,7 @@ function OrganizationSettings(props) {
                                 />
                             </div>
                             <div className="w-25">
-                                <Select
-                                    classNamePrefix="form-control"
+                                <StyledSelect
                                     options={dateOptions}
                                     value={dateOptions.find(option => option.value === fiscalYearBeginDay)}
                                     onChange={selectedOption => setFiscalYearBeginDay(selectedOption.value)}

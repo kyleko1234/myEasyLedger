@@ -3,10 +3,10 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Tooltip } from 'reac
 import axios from 'axios';
 import { PageSettings } from '../../../config/page-settings';
 import { API_BASE_URL } from '../../../utils/constants.js';
-import Select from 'react-select';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { accountDetailsEditorText } from '../../../utils/i18n/account-details-editor-text.js';
 import { useHistory, useLocation } from 'react-router-dom';
+import StyledSelect from '../../../components/misc/styled-select';
 
 
 
@@ -279,11 +279,9 @@ function AccountDetailsEditor(props) {
                                         {accountDetailsEditorText[appContext.locale]["Account Subtype"]}
                                     </label>
                                     <div className="col-md-8">
-                                        <Select
-                                            classNamePrefix="form-control"
+                                        <StyledSelect
                                             options={accountSubtypeOptions.filter(option => option.object.accountType.id == accountTypeId)}
                                             value={accountSubtypeOptions.find(option => option.object.id == selectedAccountSubtypeId)}
-                                            isSearchable={true}
                                             onChange={handleChangeAccountSubtypeOption}
                                             isDisabled={appContext.currentPermissionTypeId < 2 ? true : false}
                                         />
@@ -296,11 +294,9 @@ function AccountDetailsEditor(props) {
                                     {props.category ? accountDetailsEditorText[appContext.locale]["Parent Category"] : accountDetailsEditorText[appContext.locale]["Parent Account"]}
                                 </label>
                                 <div className="col-md-8">
-                                    <Select
-                                        classNamePrefix="form-control"
+                                    <StyledSelect
                                         options={parentAccountOptions.filter(option => (option.object.accountTypeId == accountTypeId && option.object.accountId != props.selectedAccountId))}
                                         value={parentAccountOptions.find(option => option.object.accountId == selectedParentAccountId)}
-                                        isSearchable={true}
                                         onChange={handleChangeParentAccountOption}
                                         isDisabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) ? true : false}
                                     />
