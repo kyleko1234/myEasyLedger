@@ -269,6 +269,13 @@ a {
     color: var(--dark-mode-text-color)
 }
 
+.dark-mode .modal-content .btn-white,
+.dark-mode .modal-content .btn-light {
+    background-color: #1e1e1e;
+    border-color: #383838;
+    color: var(--dark-mode-text-color)
+}
+
 .dark-mode .btn-white:hover,
 .dark-mode .btn-light:hover,
 .dark-mode .btn-light:active {
@@ -295,18 +302,23 @@ a {
     font-size: var(--base-font-size);
 }
 
-.dark-mode .form-control,
-.dark-mode .form-control__control,
-.dark-mode .form-control__menu  {
-    background-color: #282828;
+.form-control:disabled,
+.form-control.discouraged {
+    color: hsl(0,0%,60%);
+    background-color: hsl(0,0%,95%);
+    border-color: hsl(0,0%,90%);    
+}
+
+.dark-mode .form-control {
+    background-color: #191919;
     border-color: #373737;
     color: var(--dark-mode-text-color);
 }
 
 .dark-mode .form-control:disabled,
-.dark-mode .form-control.discouraged{
-    background-color: #282828;
-    color: #373737;
+.dark-mode .form-control.discouraged {
+    background-color: #373737;
+    color: hsl(0,0%,50%);
 }
 
 /* MODIFICATIONS TO BOOTSTRAP DROPDOWN*/

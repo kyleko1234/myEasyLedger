@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Tooltip } from 'reactstrap'
 import axios from 'axios';
 import { PageSettings } from '../../../config/page-settings';
-import { API_BASE_URL } from '../../../utils/constants.js';
+import { API_BASE_URL, DEBIT_ACCOUNT_TYPES } from '../../../utils/constants.js';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { accountDetailsEditorText } from '../../../utils/i18n/account-details-editor-text.js';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -23,7 +23,7 @@ function AccountDetailsEditor(props) {
     const [selectedParentAccountId, setSelectedParentAccountId] = React.useState(null);
     const [accountSubtypeOptions, setAccountSubtypeOptions] = React.useState([]);
     const [selectedAccountSubtypeId, setSelectedAccountSubtypeId] = React.useState(null);
-    const [accountTypeId, setAccountTypeId] = React.useState(null);
+    const [accountTypeId, setAccountTypeId] = React.useState(props.accountTypeId ? parseInt(props.accountTypeId) : null);
     const [initialDebitValueInput, setInitialDebitValueInput] = React.useState('0');
     const [initialCreditValueInput, setInitialCreditValueInput] = React.useState('0');
     const [currentAccountHasChildren, setCurrentAccountHasChildren] = React.useState(false);
@@ -271,7 +271,6 @@ function AccountDetailsEditor(props) {
                             </Alert>
                             : null
                         }
-
                         <div>
                             {appContext.isEnterprise
                                 ? <div className="mb-3 row">
@@ -345,10 +344,10 @@ function AccountDetailsEditor(props) {
                                             <label className="col-form-label col-md-4">
                                                 {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
                                             </label>
-                                            <div className="col-md-8">
+                                            <div className="col-md-8 ">
                                                 <input
                                                     type="number"
-                                                    className="form-control"
+                                                    className={"form-control " + (DEBIT_ACCOUNT_TYPES.includes(parseInt(accountTypeId))? "": " discouraged")}
                                                     value={initialDebitValueInput}
                                                     onChange={event => {
                                                         setInitialDebitValueInput(event.target.value);
@@ -364,7 +363,7 @@ function AccountDetailsEditor(props) {
                                             <div className="col-md-8">
                                                 <input
                                                     type="number"
-                                                    className="form-control"
+                                                    className={"form-control " + (DEBIT_ACCOUNT_TYPES.includes(parseInt(accountTypeId))? " discouraged": "")}
                                                     value={initialCreditValueInput}
                                                     onChange={event => {
                                                         setInitialCreditValueInput(event.target.value);
@@ -397,7 +396,6 @@ function AccountDetailsEditor(props) {
                                 </>
                             }
                         </div>
-
                     </ModalBody>
                     <ModalFooter className="justify-content-between">
                         <div id="delete-button">
