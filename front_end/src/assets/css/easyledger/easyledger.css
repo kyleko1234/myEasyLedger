@@ -653,27 +653,27 @@ a.pseudo-tr:hover,
 }
 
 .min-width-xs{
-    min-width: var(--breakpoint-xs);
+    min-width: calc(var(--breakpoint-xs) - 60px);
 }
 
 .min-width-sm{
-    min-width: var(--breakpoint-sm);
+    min-width: calc(var(--breakpoint-sm) - 60px);
 }
 
 .min-width-md{
-    min-width: var(--breakpoint-md);
+    min-width: calc(var(--breakpoint-md) - 60px);
 }
 
 .min-width-lg{
-    min-width: var(--breakpoint-lg);
+    min-width: calc(var(--breakpoint-lg) - 60px);
 }
 
 .min-width-xl{
-    min-width: var(--breakpoint-xl);
+    min-width: calc(var(--breakpoint-xl) - 60px);
 }
 
 .min-width-xxl{
-    min-width: var(--breakpoint-xxl);
+    min-width: calc(var(--breakpoint-xxl) - 60px);
 }
 
 .overflow-visible {
