@@ -2,10 +2,9 @@ import React from 'react';
 import { Alert, Card, CardBody } from 'reactstrap';
 import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
-import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
-import { node } from 'prop-types';
+import StyledSelect from '../../../components/misc/styled-select';
 
 
 function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReportButton, handleRemoveDateRangeButton, dateRangePresets, handleSelectDateRangePreset, handleChangeStartDate, handleChangeEndDate, detailedView, toggleDetailedView, handleCompareButton, noDetailedView }) {
@@ -34,13 +33,10 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                         </div>
                                     : null}
                                     <div className="d-flex w-100 align-items-center mb-2">
-                                        <Select
+                                        <StyledSelect
                                             className="col-4 px-0"
-                                            classNamePrefix="form-control"
                                             options={dateRangePresets}
-                                            menuPortalTarget={document.body}
                                             menuShouldScrollIntoView={false}
-                                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                             onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
                                             placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                             value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
@@ -83,13 +79,10 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                                 <i className="ion ion-md-close fa-fw"></i>
                                             </button>
                                         </div>
-                                        <Select
+                                        <StyledSelect
                                             className="col-6 px-0"
-                                            classNamePrefix="form-control"
                                             options={dateRangePresets}
-                                            menuPortalTarget={document.body}
                                             menuShouldScrollIntoView={false}
-                                            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                             onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
                                             placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                             value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}

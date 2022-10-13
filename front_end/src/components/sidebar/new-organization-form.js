@@ -2,9 +2,9 @@ import React from 'react';
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL, CURRENCY_OPTIONS, LOCALE_OPTIONS } from '../../utils/constants';
 import { sidebarText } from '../../utils/i18n/sidebar-text';
-import Select from 'react-select';
 import {useHistory} from 'react-router-dom';
 import axios from 'axios';
+import StyledSelect from '../misc/styled-select';
 
 function NewOrganizationForm(props) {
     const appContext = React.useContext(PageSettings);
@@ -53,15 +53,10 @@ function NewOrganizationForm(props) {
                     {sidebarText[appContext.locale]["Select a currency for this ledger"] + ":"}
                 </label>
                 <div className="col-xl-5">
-                    <Select
-                        classNamePrefix="form-control"
+                    <StyledSelect
                         options={currencyOptions}
                         onChange={selectedOption => setSelectedCurrency(selectedOption.value)}
                         value={currencyOptions.find(currencyOption => currencyOption.value == selectedCurrency)}
-                        menuPortalTarget={document.body}
-                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                        menuPlacement={'auto'}
-
                     />
                 </div>
             </div>

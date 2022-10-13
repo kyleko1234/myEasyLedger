@@ -53,11 +53,11 @@ function NetAssets(props) {
             labels: labels,
             datasets: [{
                     label: (appContext.isEnterprise? dashboardText[appContext.locale]["Net Assets"] :dashboardText[appContext.locale]["Net Worth"]),
-                    borderColor: '#348fe2',
-                    pointBackgroundColor: '#C4DEF6',
+                    borderColor: 'rgb(55, 173, 242)',
+                    pointBackgroundColor: '#8CD0F8',
                     pointRadius: 2,
                     borderWidth: 2,
-                    backgroundColor: 'rgba(52, 143, 226, 0.3)',
+                    backgroundColor: 'rgba(55, 173, 242, 0.3)',
                     data: netAssetsData,
                     tension: 0
             }]

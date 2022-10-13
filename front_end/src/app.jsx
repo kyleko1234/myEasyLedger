@@ -10,7 +10,10 @@ import interceptors from "./utils/interceptors"; //interceptors for API requests
 import axios from 'axios';
 import NetworkErrorHandler from './components/network-error/network-error-handler.js';
 import { ToastContainer, toast, Flip, Slide, Bounce} from 'react-toastify';
+import { defaults } from 'chart.js';
 
+defaults.plugins.tooltip.caretSize = 0;
+defaults.plugins.tooltip.caretPadding = 15;
 
 class App extends React.Component {
 

@@ -269,6 +269,13 @@ a {
     color: var(--dark-mode-text-color)
 }
 
+.dark-mode .modal-content .btn-white,
+.dark-mode .modal-content .btn-light {
+    background-color: #1e1e1e;
+    border-color: #383838;
+    color: var(--dark-mode-text-color)
+}
+
 .dark-mode .btn-white:hover,
 .dark-mode .btn-light:hover,
 .dark-mode .btn-light:active {
@@ -288,15 +295,30 @@ a {
     background-color: #181818;
 }
 
-/* MODIFICATIONS TO BOOTSTRAP FORMS */
+/* MODIFICATIONS TO BOOTSTRAP FORMS
+ * Remember to update styled-select.js when updating this
+*/
 .form-control {
     font-size: var(--base-font-size);
 }
 
+.form-control:disabled,
+.form-control.discouraged {
+    color: hsl(0,0%,60%);
+    background-color: hsl(0,0%,95%);
+    border-color: hsl(0,0%,90%);    
+}
+
 .dark-mode .form-control {
-    background-color: #282828;
+    background-color: #191919;
     border-color: #373737;
     color: var(--dark-mode-text-color);
+}
+
+.dark-mode .form-control:disabled,
+.dark-mode .form-control.discouraged {
+    background-color: #373737;
+    color: hsl(0,0%,50%);
 }
 
 /* MODIFICATIONS TO BOOTSTRAP DROPDOWN*/
@@ -369,28 +391,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* MODIFICATIONS TO REACT-SELECT */
-.dark-mode .form-control__control {
-    background-color: #282828;
-    border-color: #373737;
-}
 
-.dark-mode .form-control__input, 
-.dark-mode .form-control__single-value {
-    color: var(--dark-mode-text-color);
-}
-
-.dark-mode .form-control__menu {
-    background-color: #282828;
-}
-
-.dark-mode .form-control__option--is-focused:not(.form-control__option--is-selected){
-    background-color: #003e9b;
-}
-
-.form-control__option--is-selected {
-    background-color: var(--bs-primary);
-}
 /* MODIFICATIONS TO BOOTSTRAP ALERT*/
 .alert {
     border-radius: 10px;
@@ -652,27 +653,27 @@ a.pseudo-tr:hover,
 }
 
 .min-width-xs{
-    min-width: var(--breakpoint-xs);
+    min-width: calc(var(--breakpoint-xs) - 60px);
 }
 
 .min-width-sm{
-    min-width: var(--breakpoint-sm);
+    min-width: calc(var(--breakpoint-sm) - 60px);
 }
 
 .min-width-md{
-    min-width: var(--breakpoint-md);
+    min-width: calc(var(--breakpoint-md) - 60px);
 }
 
 .min-width-lg{
-    min-width: var(--breakpoint-lg);
+    min-width: calc(var(--breakpoint-lg) - 60px);
 }
 
 .min-width-xl{
-    min-width: var(--breakpoint-xl);
+    min-width: calc(var(--breakpoint-xl) - 60px);
 }
 
 .min-width-xxl{
-    min-width: var(--breakpoint-xxl);
+    min-width: calc(var(--breakpoint-xxl) - 60px);
 }
 
 .overflow-visible {

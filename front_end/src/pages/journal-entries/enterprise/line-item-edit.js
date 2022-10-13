@@ -1,8 +1,7 @@
 import React from 'react';
-import Select from 'react-select';
+import StyledSelect from '../../../components/misc/styled-select';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
-import { isTreatedAsZero } from '../../../utils/util-fns';
 
 function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineItem }) {
     const appContext=React.useContext(PageSettings);
@@ -44,15 +43,11 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
                     />
                 </div>
                 <div className="pseudo-td col-3">
-                    <Select
-                        classNamePrefix="form-control"
+                    <StyledSelect
                         options={accountOptions}
                         value={accountOptions.find(accountOption => accountOption.object.accountId == lineItems[i].accountId)}
                         isSearchable={true}
-                        menuPortalTarget={document.body}
                         menuShouldScrollIntoView={false}
-                        styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                        menuPlacement={'auto'}
                         onChange={handleChangeAccount}
                     />
                 </div>
@@ -90,15 +85,11 @@ function LineItemEdit({ lineItems, setLineItems, i, accountOptions, removeLineIt
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="w-100">
-                                <Select
-                                    classNamePrefix="form-control"
+                                <StyledSelect
                                     options={accountOptions}
                                     value={accountOptions.find(accountOption => accountOption.object.accountId == lineItems[i].accountId)}
                                     isSearchable={true}
-                                    menuPortalTarget={document.body}
                                     menuShouldScrollIntoView={false}
-                                    styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-                                    menuPlacement={'auto'}
                                     onChange={handleChangeAccount}
                                 />
                             </div>

@@ -4,13 +4,12 @@ import { API_BASE_URL } from '../../../utils/constants';
 import { PageSettings } from '../../../config/page-settings';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text.js';
 import { Card, CardBody, Alert } from 'reactstrap';
-import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { formatCurrency, getTodayAsDateString, localizeDate, validateDate } from '../../../utils/util-fns';
 import StripedRow from '../../../components/tables/striped-row';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { array } from 'prop-types';
+import StyledSelect from '../../../components/misc/styled-select';
 
 function BalanceSheetRender(props) {
     const appContext = React.useContext(PageSettings);
@@ -208,13 +207,10 @@ function BalanceSheetRender(props) {
                                             : null
                                         }
                                         <div className="d-flex w-100 align-items-center" key={i}>
-                                            <Select
+                                            <StyledSelect
                                                 className="col-4 px-0"
-                                                classNamePrefix="form-control"
                                                 options={dateRangePresets}
-                                                menuPortalTarget={document.body}
                                                 menuShouldScrollIntoView={false}
-                                                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                                 onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
                                                 placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                                 value={endDatesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == endDatesToRequest[i].label)}

@@ -8,9 +8,9 @@ import { Card, CardBody, Alert } from 'reactstrap';
 import { formatCurrency, getTodayAsDateString, localizeDate, validateDate } from '../../../utils/util-fns';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import StripedRow from '../../../components/tables/striped-row';
-import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import StyledSelect from '../../../components/misc/styled-select';
 
 function NetWorthRender(props) {
     const appContext = React.useContext(PageSettings);
@@ -162,13 +162,10 @@ function NetWorthRender(props) {
                                             : null
                                         }
                                         <div className="d-flex w-100 align-items-center" key={i}>
-                                            <Select
+                                            <StyledSelect
                                                 className="col-4 px-0"
-                                                classNamePrefix="form-control"
                                                 options={dateRangePresets}
-                                                menuPortalTarget={document.body}
                                                 menuShouldScrollIntoView={false}
-                                                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
                                                 onChange={selectedOption => handleSelectDateRangePreset(selectedOption, i)}
                                                 placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                                 value={endDatesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == endDatesToRequest[i].label)}
