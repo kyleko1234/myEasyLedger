@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import axios from 'axios';
-import { API_BASE_URL, PIE_CHART_BACKGROUND_COLORS, PIE_CHART_BORDER_COLORS } from '../../../utils/constants';
+import { API_BASE_URL, PIE_CHART_BACKGROUND_COLORS, PIE_CHART_BORDER_COLORS, PIE_CHART_HOVER_BACKGROUND_COLORS } from '../../../utils/constants';
 import { Doughnut, getElementAtEvent} from 'react-chartjs-2';
 import { dashboardText } from '../../../utils/i18n/dashboard-text';
 import { Card, CardBody, CardTitle } from 'reactstrap';
@@ -61,7 +61,8 @@ function ExpenseBreakdown(props) {
                 data: data,
                 borderColor: PIE_CHART_BORDER_COLORS,
                 borderWidth: 2,
-                backgroundColor: PIE_CHART_BACKGROUND_COLORS
+                backgroundColor: PIE_CHART_BACKGROUND_COLORS,
+                hoverBorderColor: PIE_CHART_BORDER_COLORS,
             }]
         },
         options: {
