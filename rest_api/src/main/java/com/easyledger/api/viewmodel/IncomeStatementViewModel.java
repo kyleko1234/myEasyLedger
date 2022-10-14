@@ -147,6 +147,10 @@ public class IncomeStatementViewModel {
 	public Long getInterestExpenseSubtypeId() {
 		return INTEREST_EXPENSE_SUBTYPE_ID;
 	}
+	
+	public Long getInterestIncomeSubtypeId() {
+		return INTEREST_INCOME_SUBTYPE_ID;
+	}
 
 	public Long getTaxExpenseSubtypeId() {
 		return TAX_EXPENSE_SUBTYPE_ID;

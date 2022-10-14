@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 
 // axios config
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 15000;
 
 // ========================================
 

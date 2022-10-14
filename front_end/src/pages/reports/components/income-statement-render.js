@@ -673,18 +673,21 @@ function IncomeStatementRender(props) {
                                 {renderDetails(incomeStatementObjects[0].expenseFromFinancingSubtypeId, 4, 2) /** similar reason for using the wrong accountTypeId here as above */}
                                 {hasZeroAmountsForFieldInAllDateRanges("interestIncome") 
                                     ? null
-                                    : <StripedRow className="justify-content-between indent">
-                                        <div>{incomeStatementRenderText[appContext.locale]["Interest income"]}</div>
-                                        <div className="text-end d-flex">
-                                            {incomeStatementObjects.map((incomeStatement, i) => {
-                                                return(
-                                                    <div key={i} className="width-175">
-                                                        {numberAsCurrency(incomeStatement.interestIncome)}
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
-                                    </StripedRow>
+                                    : <>
+                                        <StripedRow className="justify-content-between indent">
+                                            <div>{incomeStatementRenderText[appContext.locale]["Interest income"]}</div>
+                                            <div className="text-end d-flex">
+                                                {incomeStatementObjects.map((incomeStatement, i) => {
+                                                    return(
+                                                        <div key={i} className="width-175">
+                                                            {numberAsCurrency(incomeStatement.interestIncome)}
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </StripedRow>
+                                        {renderDetails(incomeStatementObjects[0].interestIncomeSubtypeId, 4, 2)}
+                                    </>
                                 }
                                 <StripedRow className="justify-content-between font-weight-semibold">
                                     <div>{incomeStatementRenderText[appContext.locale]["Total other income/expense, net"]}</div>
