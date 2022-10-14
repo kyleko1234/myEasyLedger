@@ -43,6 +43,7 @@ ___
     "expenseFromInvestingSubtypeId": 31,
 	"expenseFromFinancingSubtypeId": 32,
     "interestExpenseSubtypeId": 33,
+    "interestIncomeSubtypeId": 36,
     "taxExpenseSubtypeId": 34,
     "nonRecurringSubtypeId": 35
 }
