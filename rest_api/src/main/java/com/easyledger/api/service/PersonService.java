@@ -548,6 +548,11 @@ public class PersonService {
 		Account 利息費用 = new Account("利息費用", interestExpense, "715");
 		topLevelAccounts.add(利息費用);
 		
+		AccountSubtype interestIncome = accountSubtypeRepo.findById((long) 36)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 36"));
+		Account 利息收入 = new Account("利息收入", interestIncome, "7111");
+		topLevelAccounts.add(利息收入);
+
 		AccountSubtype nonRecurringItems = accountSubtypeRepo.findById((long) 35)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 35"));
 		Account 非經常性項目 = new Account("非經常性項目", nonRecurringItems);
@@ -566,10 +571,9 @@ public class PersonService {
 
 		AccountSubtype incomeFromFinancing = accountSubtypeRepo.findById((long) 26)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 26"));
-		Account 金融活動之收入 = new Account("金融活動之收入", incomeFromFinancing, "711, 718");
+		Account 金融活動之收入 = new Account("金融活動之收入", incomeFromFinancing, "718");
 		topLevelAccounts.add(金融活動之收入);
 		childAccounts.add(new Account("兌換利益", 金融活動之收入, "7181"));
-		childAccounts.add(new Account("利息收入", 金融活動之收入, "7111"));
 
 		AccountSubtype incomeFromInvesting = accountSubtypeRepo.findById((long) 25)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 25"));
