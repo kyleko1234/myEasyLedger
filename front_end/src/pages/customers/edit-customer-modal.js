@@ -58,7 +58,6 @@ function EditCustomerModal({
     }
 
     const handleDeleteButton = () => {
-        toggle();
         setDeleteCustomerAlert(true);
     }
     const handleCancelButton = () => {
@@ -68,6 +67,7 @@ function EditCustomerModal({
         axios.delete(`${API_BASE_URL}/customer/${selectedCustomerId}`).then(response => {
             console.log(response);
             fetchData();
+            toggle();
             toggleDeleteCustomerAlert();
         }).catch(() => {
             toggleDeleteCustomerAlert();
@@ -244,33 +244,33 @@ function EditCustomerModal({
                 </ModalFooter>
                 </form>
             </Modal>
-            {deleteCustomerAlert 
-                ? <SweetAlert primary showCancel
-                    confirmBtnText={accountDetailsEditorText[appContext.locale]["Yes, delete it!"]}
-                    confirmBtnBsStyle="danger"
-                    cancelBtnBsStyle="default"
-                    cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title={accountDetailsEditorText[appContext.locale]["Are you sure?"]}
-                    onConfirm={handleConfirmDeleteCustomerButton}
-                    onCancel={toggleDeleteCustomerAlert}
-                >
-                    {customersText[appContext.locale]["Are you sure you want to delete this customer?"]}
-                </SweetAlert>
-                : null
-            }
-            {cannotDeleteCustomerAlert 
-                ? <SweetAlert danger showConfirm={false} showCancel={true}
-                    cancelBtnBsStyle="default"
-                    cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title={customersText[appContext.locale]["Cannot delete this customer."]}
-                    onConfirm={toggleCannotDeleteCustomerAlert}
-                    onCancel={toggleCannotDeleteCustomerAlert}
-                >
-                    {customersText[appContext.locale]["Please remove all journal entries associated with this customer and try again."]}
-                </SweetAlert>
-                : null
-            }
-
+            <SweetAlert 
+                show={deleteCustomerAlert}
+                primary 
+                showCancel
+                confirmBtnText={accountDetailsEditorText[appContext.locale]["Yes, delete it!"]}
+                confirmBtnBsStyle="danger"
+                cancelBtnBsStyle="default"
+                cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
+                title={accountDetailsEditorText[appContext.locale]["Are you sure?"]}
+                onConfirm={handleConfirmDeleteCustomerButton}
+                onCancel={toggleDeleteCustomerAlert}
+            >
+                {customersText[appContext.locale]["Are you sure you want to delete this customer?"]}
+            </SweetAlert>
+            <SweetAlert 
+                danger 
+                show={cannotDeleteCustomerAlert}
+                showConfirm={true} 
+                showCancel={false}
+                confirmBtnBsStyle="default"
+                confirmBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
+                title={customersText[appContext.locale]["Cannot delete this customer."]}
+                onConfirm={toggleCannotDeleteCustomerAlert}
+                onCancel={toggleCannotDeleteCustomerAlert}
+            >
+                {customersText[appContext.locale]["Please remove all journal entries associated with this customer and try again."]}
+            </SweetAlert>
         </>
     )
 }

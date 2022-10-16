@@ -323,34 +323,34 @@ function OrganizationRoster(props) {
                     </ModalFooter>
                 </Modal>
 
-                {removePersonAlert ?
-                    <SweetAlert danger showCancel
-                        confirmBtnText={settingsText[appContext.locale]["Yes, remove this person!"]}
-                        confirmBtnBsStyle="danger"
-                        cancelBtnBsStyle="default"
-                        cancelBtnText={settingsText[appContext.locale]["Cancel"]}
-                        title={settingsText[appContext.locale]["Are you sure?"]}
-                        onConfirm={handleConfirmRemovePersonButton}
-                        onCancel={toggleRemovePersonAlert}
-                    >
-                        {settingsText[appContext.locale]["Are you sure you want to remove this user?"]}
-                    </SweetAlert>
-                    : null}
-
-                {invitePersonAlert ?
-                    <SweetAlert primary showCancel
-                        confirmBtnText={settingsText[appContext.locale]["Yes, invite this person!"]}
-                        confirmBtnBsStyle="primary"
-                        cancelBtnBsStyle="default"
-                        cancelBtnText={settingsText[appContext.locale]["Cancel"]}
-                        title={settingsText[appContext.locale]["Invite this person to myEasyLedger?"]}
-                        onConfirm={handleInvitePersonButton}
-                        onCancel={toggleInvitePersonAlert}
-                    >
-                        {settingsText[appContext.locale]["This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this ledger?"]}
-                    </SweetAlert>
-                    : null}
-
+                <SweetAlert 
+                    danger 
+                    show={removePersonAlert}
+                    showCancel
+                    confirmBtnText={settingsText[appContext.locale]["Yes, remove this person!"]}
+                    confirmBtnBsStyle="danger"
+                    cancelBtnBsStyle="default"
+                    cancelBtnText={settingsText[appContext.locale]["Cancel"]}
+                    title={settingsText[appContext.locale]["Are you sure?"]}
+                    onConfirm={handleConfirmRemovePersonButton}
+                    onCancel={toggleRemovePersonAlert}
+                >
+                    {settingsText[appContext.locale]["Are you sure you want to remove this user?"]}
+                </SweetAlert>
+                <SweetAlert 
+                    primary 
+                    show={invitePersonAlert}
+                    showCancel
+                    confirmBtnText={settingsText[appContext.locale]["Yes, invite this person!"]}
+                    confirmBtnBsStyle="primary"
+                    cancelBtnBsStyle="default"
+                    cancelBtnText={settingsText[appContext.locale]["Cancel"]}
+                    title={settingsText[appContext.locale]["Invite this person to myEasyLedger?"]}
+                    onConfirm={handleInvitePersonButton}
+                    onCancel={toggleInvitePersonAlert}
+                >
+                    {settingsText[appContext.locale]["This email address is not registered with myEasyLedger. Invite this person to use myEasyLedger and collaborate on this ledger?"]}
+                </SweetAlert>
             </CardBody>
         </Card>
 

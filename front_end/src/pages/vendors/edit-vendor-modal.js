@@ -57,7 +57,6 @@ function EditVendorModal({
     }
 
     const handleDeleteButton = () => {
-        toggle();
         setDeleteVendorAlert(true);
     }
     const handleCancelButton = () => {
@@ -67,6 +66,7 @@ function EditVendorModal({
         axios.delete(`${API_BASE_URL}/vendor/${selectedVendorId}`).then(response => {
             console.log(response);
             fetchData();
+            toggle();
             toggleDeleteVendorAlert();
         }).catch(() => {
             toggleDeleteVendorAlert();
@@ -241,33 +241,33 @@ function EditVendorModal({
                 </ModalFooter>
                 </form>
             </Modal>
-            {deleteVendorAlert 
-                ? <SweetAlert primary showCancel
-                    confirmBtnText={accountDetailsEditorText[appContext.locale]["Yes, delete it!"]}
-                    confirmBtnBsStyle="danger"
-                    cancelBtnBsStyle="default"
-                    cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title={accountDetailsEditorText[appContext.locale]["Are you sure?"]}
-                    onConfirm={handleConfirmDeleteVendorButton}
-                    onCancel={toggleDeleteVendorAlert}
-                >
-                    {vendorsText[appContext.locale]["Are you sure you want to delete this vendor?"]}
-                </SweetAlert>
-                : null
-            }
-            {cannotDeleteVendorAlert 
-                ? <SweetAlert danger showConfirm={false} showCancel={true}
-                    cancelBtnBsStyle="default"
-                    cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title={vendorsText[appContext.locale]["Cannot delete this vendor."]}
-                    onConfirm={toggleCannotDeleteVendorAlert}
-                    onCancel={toggleCannotDeleteVendorAlert}
-                >
-                    {vendorsText[appContext.locale]["Please remove all journal entries associated with this vendor and try again."]}
-                </SweetAlert>
-                : null
-            }
-
+            <SweetAlert 
+                primary 
+                show={deleteVendorAlert}
+                showCancel
+                confirmBtnText={accountDetailsEditorText[appContext.locale]["Yes, delete it!"]}
+                confirmBtnBsStyle="danger"
+                cancelBtnBsStyle="default"
+                cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
+                title={accountDetailsEditorText[appContext.locale]["Are you sure?"]}
+                onConfirm={handleConfirmDeleteVendorButton}
+                onCancel={toggleDeleteVendorAlert}
+            >
+                {vendorsText[appContext.locale]["Are you sure you want to delete this vendor?"]}
+            </SweetAlert>
+            <SweetAlert 
+                danger 
+                show={cannotDeleteVendorAlert}
+                showConfirm={true} 
+                showCancel={false}
+                confirmBtnBsStyle="default"
+                confirmBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
+                title={vendorsText[appContext.locale]["Cannot delete this vendor."]}
+                onConfirm={toggleCannotDeleteVendorAlert}
+                onCancel={toggleCannotDeleteVendorAlert}
+            >
+                {vendorsText[appContext.locale]["Please remove all journal entries associated with this vendor and try again."]}
+            </SweetAlert>
         </>
     )
 }

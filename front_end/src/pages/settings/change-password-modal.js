@@ -122,18 +122,18 @@ function ChangePasswordModal(props) {
                     <button className="btn btn-white width-10ch" onClick={props.toggle}>{settingsText[appContext.locale]["Cancel"]}</button>
                 </ModalFooter>
             </Modal>
-            {loginAlert ?
-                <SweetAlert showConfirm 
-                    confirmBtnText={settingsText[appContext.locale]["Take me to the login page!"]}
-                    confirmBtnBsStyle="primary"
-                    title={settingsText[appContext.locale]["Password successfully changed."]}
-                    onConfirm={appContext.logout}
-                    allowEscape={false}
-                    closeOnClickOutside={false}
-                >
-                    {settingsText[appContext.locale]["Please log in again."]}
-                </SweetAlert>
-                : null}
+            <SweetAlert 
+                show={loginAlert}
+                showConfirm 
+                confirmBtnText={settingsText[appContext.locale]["Take me to the login page!"]}
+                confirmBtnBsStyle="primary"
+                title={settingsText[appContext.locale]["Password successfully changed."]}
+                onConfirm={appContext.logout}
+                allowEscape={false}
+                closeOnClickOutside={false}
+            >
+                {settingsText[appContext.locale]["Please log in again."]}
+            </SweetAlert>
             <NetworkErrorHandler axiosInstance={axiosChangePasswordInstance} />
         </>
     )
