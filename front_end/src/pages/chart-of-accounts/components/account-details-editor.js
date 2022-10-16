@@ -171,7 +171,6 @@ function AccountDetailsEditor(props) {
         }
     }
     const handleDeleteButton = () => {
-        props.toggle();
         setDeleteAccountAlert(true);
     }
     const handleCancelButton = () => {
@@ -196,6 +195,7 @@ function AccountDetailsEditor(props) {
                 }
             } else {
                 props.fetchData();
+                props.toggle();
                 toggleDeleteAccountAlert();
             }
         }).catch(() => {
@@ -445,49 +445,53 @@ function AccountDetailsEditor(props) {
                 </form>
             </Modal>
 
-            {deleteAccountAlert ?
-                <SweetAlert primary showCancel
-                    confirmBtnText={accountDetailsEditorText[appContext.locale]["Yes, delete it!"]}
-                    confirmBtnBsStyle="danger"
-                    cancelBtnBsStyle="default"
-                    cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title={accountDetailsEditorText[appContext.locale]["Are you sure?"]}
-                    onConfirm={handleConfirmDeleteAccountButton}
-                    onCancel={toggleDeleteAccountAlert}
-                >
-                    {props.category ? accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this category?"] : accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this account?"]}
-                </SweetAlert>
-                : null}
-            {cannotDeleteAccountAlert ?
-                <SweetAlert danger showConfirm={false} showCancel={true}
-                    cancelBtnBsStyle="default"
-                    cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title={props.category ? accountDetailsEditorText[appContext.locale]["Cannot delete this category."] : accountDetailsEditorText[appContext.locale]["Cannot delete this account."]}
-                    onConfirm={toggleCannotDeleteAccountAlert}
-                    onCancel={toggleCannotDeleteAccountAlert}
-                >
-                    {props.category
-                        ? accountDetailsEditorText[appContext.locale]["Please remove all line items and child categories from this category and try again."]
-                        : accountDetailsEditorText[appContext.locale]["Please remove all line items and child accounts from this account and try again."]}
-                </SweetAlert>
-                : null}
-            {initialValueLockedAlert
-                ? <SweetAlert danger showConfirm={false} showCancel={true}
-                    cancelBtnBsStyle="default"
-                    cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                    title={props.category
-                        ? accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this category."]
-                        : accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this account."]
-                    }
-                    onConfirm={toggleInitialValueLockedAlert}
-                    onCancel={toggleInitialValueLockedAlert}
-                >
-                    {props.category
-                        ? accountDetailsEditorText[appContext.locale]["Please contact an administrator of this ledger if you wish to change the initial values of non-empty accounts."]
-                        : accountDetailsEditorText[appContext.locale]["Please contact an administrator of this ledger if you wish to change the initial values of non-empty categories."]}
-                </SweetAlert>
-                : null
-            }
+            <SweetAlert 
+                primary 
+                show={deleteAccountAlert}
+                showCancel
+                confirmBtnText={accountDetailsEditorText[appContext.locale]["Yes, delete it!"]}
+                confirmBtnBsStyle="danger"
+                cancelBtnBsStyle="default"
+                cancelBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
+                title={accountDetailsEditorText[appContext.locale]["Are you sure?"]}
+                onConfirm={handleConfirmDeleteAccountButton}
+                onCancel={toggleDeleteAccountAlert}
+            >
+                {props.category ? accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this category?"] : accountDetailsEditorText[appContext.locale]["Are you sure you want to delete this account?"]}
+            </SweetAlert>
+            <SweetAlert 
+                danger 
+                show={cannotDeleteAccountAlert}
+                showConfirm={true} 
+                showCancel={false}
+                confirmBtnBsStyle="default"
+                confirmBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
+                title={props.category ? accountDetailsEditorText[appContext.locale]["Cannot delete this category."] : accountDetailsEditorText[appContext.locale]["Cannot delete this account."]}
+                onConfirm={toggleCannotDeleteAccountAlert}
+                onCancel={toggleCannotDeleteAccountAlert}
+            >
+                {props.category
+                    ? accountDetailsEditorText[appContext.locale]["Please remove all line items and child categories from this category and try again."]
+                    : accountDetailsEditorText[appContext.locale]["Please remove all line items and child accounts from this account and try again."]}
+            </SweetAlert>
+            <SweetAlert 
+                danger 
+                show={initialValueLockedAlert}
+                showConfirm={true} 
+                showCancel={false}
+                confirmBtnBsStyle="default"
+                confirmBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
+                title={props.category
+                    ? accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this category."]
+                    : accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this account."]
+                }
+                onConfirm={toggleInitialValueLockedAlert}
+                onCancel={toggleInitialValueLockedAlert}
+            >
+                {props.category
+                    ? accountDetailsEditorText[appContext.locale]["Please contact an administrator of this ledger if you wish to change the initial values of non-empty accounts."]
+                    : accountDetailsEditorText[appContext.locale]["Please contact an administrator of this ledger if you wish to change the initial values of non-empty categories."]}
+            </SweetAlert>
         </>
     )
 }

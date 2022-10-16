@@ -233,32 +233,35 @@ function OrganizationSettings(props) {
                         </div>
                     </div>
                 </div>
-                {confirmDeleteOrganizationAlert
-                    ? <SweetAlert primary showCancel
-                        confirmBtnText={settingsText[appContext.locale]["Yes, delete it!"]}
-                        confirmBtnBsStyle="danger"
-                        cancelBtnBsStyle="default"
-                        cancelBtnText={settingsText[appContext.locale]["Cancel"]}
-                        title={settingsText[appContext.locale]["Are you sure?"]}
-                        onConfirm={handleConfirmDeleteOrganizationButton}
-                        onCancel={toggleConfirmDeleteOrganizationAlert}
-                    >
-                        {settingsText[appContext.locale]["Are you sure you want to delete this ledger? This action cannot be undone."]}
-                    </SweetAlert>
-                    : null
-                }
-                {cannotDeleteOrganizationAlert
-                    ? <SweetAlert danger showConfirm={false} showCancel={true}
-                        cancelBtnBsStyle="default"
-                        cancelBtnText={settingsText[appContext.locale]["Cancel"]}
-                        title={settingsText[appContext.locale]["Cannot delete this ledger."]}
-                        onConfirm={toggleCannotDeleteOrganizationAlert}
-                        onCancel={toggleCannotDeleteOrganizationAlert}
-                    >
-                        {settingsText[appContext.locale]["All Journal Entries and Transactions must be deleted before you can delete this ledger."]}
-                    </SweetAlert>
-                    : null
-                }
+                <SweetAlert 
+                    primary 
+                    showCancel
+                    show={confirmDeleteOrganizationAlert}
+                    confirmBtnText={settingsText[appContext.locale]["Yes, delete it!"]}
+                    confirmBtnBsStyle="danger"
+                    cancelBtnBsStyle="default"
+                    cancelBtnText={settingsText[appContext.locale]["Cancel"]}
+                    title={settingsText[appContext.locale]["Are you sure?"]}
+                    onConfirm={handleConfirmDeleteOrganizationButton}
+                    onCancel={toggleConfirmDeleteOrganizationAlert}
+                >
+                    {settingsText[appContext.locale]["Are you sure you want to delete this ledger? This action cannot be undone."]}
+                </SweetAlert>
+                
+                <SweetAlert 
+                    danger 
+                    show={cannotDeleteOrganizationAlert}
+                    showConfirm={true} 
+                    showCancel={false}
+                    confirmBtnBsStyle="default"
+                    confirmBtnText={settingsText[appContext.locale]["Cancel"]}
+                    title={settingsText[appContext.locale]["Cannot delete this ledger."]}
+                    onConfirm={toggleCannotDeleteOrganizationAlert}
+                    onCancel={toggleCannotDeleteOrganizationAlert}
+                >
+                    {settingsText[appContext.locale]["All Journal Entries and Transactions must be deleted before you can delete this ledger."]}
+                </SweetAlert>
+                    
                 {permissionObject.permissionType.id < 3
                     ? <Tooltip 
                         target="save-button" 
