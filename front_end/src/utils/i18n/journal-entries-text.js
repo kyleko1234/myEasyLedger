@@ -120,7 +120,7 @@ export const journalEntriesText = {
         "[A] ": "[資產] ",
         "[L] ": "[負債] ",
         "[O] ": "[權益] ",
-        "[I] ": "[收入] ",
+        "[I] ": "[收益] ",
         "[E] ": "[費損] ",
 
         "Footer text": (pageIndex, pageSize, pageLength, totalElements) => "顯示 " + ((pageIndex * pageSize) + 1) + "-" + ((pageIndex * pageSize) + pageLength) + " 筆" + "（共" + totalElements + "筆）",

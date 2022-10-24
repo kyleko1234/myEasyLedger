@@ -243,7 +243,7 @@ const ACCOUNT_TYPE_OPTIONS_I18N = {
         "Assets": "資產",
         "Liabilities": "負債",
         "Equity": "權益",
-        "Income": "收入",
+        "Income": "收益",
         "Expenses": "費損"
     }
 }
