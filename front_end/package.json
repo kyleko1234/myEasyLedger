@@ -43,10 +43,7 @@
     "extends": "react-app"
   },
   "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
+    "defaults"
   ],
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",
