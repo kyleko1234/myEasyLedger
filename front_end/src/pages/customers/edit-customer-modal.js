@@ -133,7 +133,7 @@ function EditCustomerModal({
                     </Alert>
                     <div>
                         <div className="mb-3 row">
-                            <label className="col-form-label col-md-4">
+                            <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 ? "disabled " : "")}>
                                 {customersText[appContext.locale]["Customer Name"]}<span className="text-danger">*</span>
                             </label>
                             <div className="col-md-8">
@@ -149,7 +149,7 @@ function EditCustomerModal({
                             </div>
                         </div>
                         <div className="mb-3 row">
-                            <label className="col-form-label col-md-4">
+                            <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 ? "disabled " : "")}>
                                 {vendorsText[appContext.locale]["Contact Name"]}
                             </label>
                             <div className="col-md-8">
@@ -164,7 +164,7 @@ function EditCustomerModal({
                             </div>
                         </div>
                         <div className="mb-3 row">
-                            <label className="col-form-label col-md-4">
+                            <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 ? "disabled " : "")}>
                                 {vendorsText[appContext.locale]["Email"]}
                             </label>
                             <div className="col-md-8">
@@ -180,7 +180,7 @@ function EditCustomerModal({
                             </div>
                         </div>
                         <div className=" row">
-                            <label className="col-form-label col-md-4">
+                            <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 ? "disabled " : "")}>
                                 {vendorsText[appContext.locale]["Phone Number"]}
                             </label>
                             <div className="col-md-8">

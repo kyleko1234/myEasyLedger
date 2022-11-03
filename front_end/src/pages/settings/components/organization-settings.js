@@ -122,7 +122,10 @@ function OrganizationSettings(props) {
                     <Alert color="success" isOpen={savedAlert}>{settingsText[appContext.locale]["Settings saved."]}</Alert>
                     <Alert color="danger" isOpen={errorAlert}>{settingsText[appContext.locale]["Something went wrong. Please try again later."]}</Alert>
                     <div className="mb-3 row mx-0 my-2 align-items-center">
-                        <label className="col-lg-3 col-form-label my-0 px-0" htmlFor='ledger-name-input'>
+                        <label 
+                            className={"col-lg-3 col-form-label my-0 px-0 " + (permissionObject.permissionType.id < 3 ? "disabled " : "")}
+                            htmlFor='ledger-name-input'
+                        >
                             {settingsText[appContext.locale]["Ledger Name"] + ":"}
                         </label>
                         <div className="col-md-9">
@@ -136,13 +139,13 @@ function OrganizationSettings(props) {
                         </div>
                     </div>
                     <div className="mb-3 row mx-0 my-2 align-items-center">
-                        <label className="col-lg-3 col-form-label my-0 px-0">
+                        <label className="col-lg-3 col-form-label my-0 px-0 disabled">
                             {settingsText[appContext.locale]["Currency"] + ":"}
                         </label>
-                        <div className="col-md-9">{currencies.find(currency => currency.value === permissionObject.organization.currency).label}</div>
+                        <div className="col-md-9 col-form-label disabled">{currencies.find(currency => currency.value === permissionObject.organization.currency).label}</div>
                     </div>
                     <div className="mb-3 row mx-0 align-items-center">
-                        <label className="col-lg-3 col-form-label my-0 px-0">
+                        <label className={"col-lg-3 col-form-label my-0 px-0 " + (permissionObject.permissionType.id < 3 ? "disabled " : "")}>
                             {settingsText[appContext.locale]["Fiscal Year Begin Date"] + ":"}
                         </label>
                         <div className="col-md-9 d-flex">
@@ -175,7 +178,10 @@ function OrganizationSettings(props) {
                                 onChange={toggleLockInitialAccountValues} 
                                 disabled={permissionObject.permissionType.id < 3}
                             />
-                            <label htmlFor="lockInitialAccountValueCheckbox" className="my-0 form-check-label">
+                            <label 
+                                htmlFor="lockInitialAccountValueCheckbox" 
+                                className={"my-0 mx-2 form-check-label " + (permissionObject.permissionType.id < 3 ? "disabled " : "")}
+                            >
                                 {permissionObject.organization.isEnterprise
                                     ? settingsText[appContext.locale]["Lock initial values for accounts with journal entries"]
                                     : settingsText[appContext.locale]["Lock initial values for accounts and categories with transactions"]
@@ -185,7 +191,10 @@ function OrganizationSettings(props) {
                     </div>
                     <Alert color="danger" isOpen={invalidDateAlert}>{settingsText[appContext.locale]["Invalid date."]}</Alert>
                     <div className="mb-3 row mx-0 align-items-center">
-                        <label className="col-lg-3 col-form-label my-0 px-0" htmlFor="lock-entries-before-input">
+                        <label 
+                            className={"col-lg-3 col-form-label my-0 px-0 " + (permissionObject.permissionType.id < 3 ? "disabled " : "")}
+                            htmlFor="lock-entries-before-input"
+                        >
                             {settingsText[appContext.locale]["Lock journal entries before"] + ":"}
                         </label>
                         <div className="col-md-9">

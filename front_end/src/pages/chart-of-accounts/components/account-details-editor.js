@@ -274,7 +274,7 @@ function AccountDetailsEditor(props) {
                         <div>
                             {appContext.isEnterprise
                                 ? <div className="mb-3 row">
-                                    <label className="col-form-label col-md-4">
+                                    <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 ? "disabled " : "")}>
                                         {accountDetailsEditorText[appContext.locale]["Account Subtype"]}
                                     </label>
                                     <div className="col-md-8">
@@ -289,7 +289,7 @@ function AccountDetailsEditor(props) {
                                 : null
                             }
                             <div className="mb-3 row">
-                                <label className="col-form-label col-md-4">
+                                <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 || currentAccountHasChildren ? "disabled " : "")}>
                                     {props.category ? accountDetailsEditorText[appContext.locale]["Parent Category"] : accountDetailsEditorText[appContext.locale]["Parent Account"]}
                                 </label>
                                 <div className="col-md-8">
@@ -302,7 +302,7 @@ function AccountDetailsEditor(props) {
                                 </div>
                             </div>
                             <div className="mb-3 row">
-                                <label className="col-form-label col-md-4">
+                                <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 ? "disabled " : "")}>
                                     {props.category ? accountDetailsEditorText[appContext.locale]["Category Name"] : accountDetailsEditorText[appContext.locale]["Account Name"]}
                                 </label>
                                 <div className="col-md-8">
@@ -317,7 +317,7 @@ function AccountDetailsEditor(props) {
                                 </div>
                             </div>
                             <div className="mb-3 row">
-                                <label className="col-form-label col-md-4">
+                                <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 ? "disabled " : "")}>
                                     {appContext.isEnterprise
                                         ? accountDetailsEditorText[appContext.locale]["Account Code"]
                                         : accountDetailsEditorText[appContext.locale]["Display Order"]
@@ -341,7 +341,11 @@ function AccountDetailsEditor(props) {
                                 ? accountTypeId <= 3
                                     ? <>
                                         <div className="mb-3 row">
-                                            <label className="col-form-label col-md-4">
+                                            <label className={
+                                                "col-form-label col-md-4 " 
+                                                + (appContext.currentPermissionTypeId < 2 || currentAccountHasChildren ? "disabled " : "")
+                                                + (DEBIT_ACCOUNT_TYPES.includes(parseInt(accountTypeId))? "": " discouraged")
+                                            }>
                                                 {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
                                             </label>
                                             <div className="col-md-8 ">
@@ -357,7 +361,11 @@ function AccountDetailsEditor(props) {
                                             </div>
                                         </div>
                                         <div className="mb-3 row">
-                                            <label className="col-form-label col-md-4">
+                                            <label className={
+                                                "col-form-label col-md-4 "
+                                                + (appContext.currentPermissionTypeId < 2 || currentAccountHasChildren ? "disabled " : "")
+                                                + (DEBIT_ACCOUNT_TYPES.includes(parseInt(accountTypeId))? " discouraged": "")
+                                            }>
                                                 {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
                                             </label>
                                             <div className="col-md-8">
@@ -377,7 +385,7 @@ function AccountDetailsEditor(props) {
                                 : <>
                                     {(accountTypeId == 1 || accountTypeId == 2) ?
                                         <div className="mb-3 row">
-                                            <label className="col-form-label col-md-4">
+                                            <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 || currentAccountHasChildren ? "disabled " : "")}>
                                                 {accountDetailsEditorText[appContext.locale]["Initial Account Value"]}
                                             </label>
                                             <div className="col-md-8">
