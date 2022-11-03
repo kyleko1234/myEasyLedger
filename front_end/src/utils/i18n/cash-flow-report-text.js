@@ -65,7 +65,7 @@ export const cashFlowReportText = {
         "Depreciation and amortization": "折舊及攤提",
         "Increase (decrease) in deferred taxes": "遞延賦稅增加（減少）",
         "Share-based compensation": "權益奬酬",
-        "Adjustment for non-operating loss (income)": "營業外損失（收益）調整",
+        "Adjustment for non-operating loss (income)": "營業外活動損失（收益）調整",
         "Changes in operating assets and liabilities": "與營業相關之資產／負債變動數",
         "Decrease (increase) in receivables": "應收帳款減少（增加）",
         "Increase (decrease) in payables": "應付帳款增加（減少）",

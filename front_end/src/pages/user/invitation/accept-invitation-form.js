@@ -80,7 +80,7 @@ function AcceptInvitationForm({token, setCompleted, email}) {
                             <input type="text" className="form-control" placeholder={registerV3Text[appContext.locale]["Last name"]} required value={lastNameInput} onChange={event => setLastNameInput(event.target.value)}/>
                         </div>
                     </div>
-                    <label className="form-label">{registerV3Text[appContext.locale]["Email"]}</label>
+                    <label className="form-label disabled">{registerV3Text[appContext.locale]["Email"]}</label>
                     <div className="row mb-2">
                         <div className="col-12">
                             <input disabled type="email" className="form-control" placeholder={registerV3Text[appContext.locale]["Email address"]} value={email}/>

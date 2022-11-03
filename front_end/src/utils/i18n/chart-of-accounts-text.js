@@ -54,8 +54,8 @@ export const chartOfAccountsText = {
         "Assets": "資產",
         "Liabilities": "負債",
         "Owner's Equity": "權益",
-        "Income": "收入",
-        "Expenses": "支出",
+        "Income": "收益",
+        "Expenses": "費損",
 
         "Home": "首頁",
         "Chart of Accounts": "會計科目表",

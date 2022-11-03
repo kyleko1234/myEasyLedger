@@ -309,6 +309,15 @@ a {
     border-color: hsl(0,0%,90%);    
 }
 
+.form-label.disabled,
+.form-label.discouraged,
+.col-form-label.disabled,
+.col-form-label.discouraged,
+.form-check-label.disabled,
+.form-check-label.discouraged {
+    opacity: 0.5;
+}
+
 .dark-mode .form-control {
     background-color: #191919;
     border-color: #373737;
