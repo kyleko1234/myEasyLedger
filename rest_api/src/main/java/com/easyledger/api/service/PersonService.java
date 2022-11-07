@@ -261,6 +261,18 @@ public class PersonService {
 		childAccounts.add(new Account("在途現金", 現金及約當現金, "1114"));
 		childAccounts.add(new Account("約當現金", 現金及約當現金, "1115"));
 		
+		AccountSubtype currentMarketableSecurities = accountSubtypeRepo.findById((long) 2)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 2"));
+		Account 金融資產流動 = new Account("金融資產 - 流動", currentMarketableSecurities, "112 - 117");
+		topLevelAccounts.add(金融資產流動);
+		childAccounts.add(new Account("透過損益按公允價值衡量之金融資產 - 流動", 金融資產流動, "112"));
+		childAccounts.add(new Account("備供出售金融資產 - 流動", 金融資產流動, "113"));
+		childAccounts.add(new Account("以成本衡量之金融資產 - 流動", 金融資產流動, "114"));
+		childAccounts.add(new Account("無活絡市場之債務工具投資 - 流動", 金融資產流動, "115"));
+		childAccounts.add(new Account("持有至到期日金融資產 - 流動", 金融資產流動, "116"));
+		childAccounts.add(new Account("避險之衍生金融資產 - 流動", 金融資產流動, "117"));
+
+		
 		AccountSubtype currentReceivables = accountSubtypeRepo.findById((long) 3)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 3"));
 		Account 應收帳款淨額 = new Account("應收帳款淨額", currentReceivables, "119");
@@ -350,21 +362,15 @@ public class PersonService {
 		Account 其他流動資產 = new Account("其他流動資產", otherCurrentAssets, "128");
 		topLevelAccounts.add(其他流動資產);
 		Account 預付款項 = new Account("預付款項", otherCurrentAssets, "126");
-		topLevelAccounts.add(預付款項);
-		childAccounts.add(new Account("備供出售金融資產 - 流動", 其他流動資產, "113"));
-		childAccounts.add(new Account("無活絡市場之債務工具投資 - 流動", 其他流動資產, "115"));
+		topLevelAccounts.add(預付款項);		
 		childAccounts.add(new Account("本期所得稅資產", 其他流動資產, "122"));
 		childAccounts.add(new Account("生物資產 - 流動", 其他流動資產, "125"));
-		childAccounts.add(new Account("透過損益按公允價值衡量之金融資產 - 流動", 其他流動資產, "112"));
 		childAccounts.add(new Account("應收建造合約款", 其他流動資產, "120"));
 		childAccounts.add(new Account("員工借支", 其他流動資產, "1283"));
-		childAccounts.add(new Account("避險之衍生金融資產 - 流動", 其他流動資產, "117"));
-		childAccounts.add(new Account("以成本衡量之金融資產 - 流動", 其他流動資產, "114"));
 		childAccounts.add(new Account("存出保證金 - 流動", 其他流動資產, "1284"));
 		childAccounts.add(new Account("其他應收款 - 流動", 其他流動資產, "121"));
 		childAccounts.add(new Account("代付款", 其他流動資產, "1282"));
 		childAccounts.add(new Account("暫付款", 其他流動資產, "1281"));
-		childAccounts.add(new Account("持有至到期日金融資產 - 流動", 其他流動資產, "116"));
 		childAccounts.add(new Account("用品盤存", 預付款項, "1264"));
 		childAccounts.add(new Account("預付投資款 - 流動", 預付款項, "1267"));
 		childAccounts.add(new Account("留抵稅額", 預付款項, "1269"));
@@ -376,6 +382,18 @@ public class PersonService {
 		childAccounts.add(new Account("預付款項", 預付款項, "1261"));
 		childAccounts.add(new Account("其他預付費用", 預付款項, "1265"));
 		
+		AccountSubtype nonCurrentMarketableSecurities = accountSubtypeRepo.findById((long) 6)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 6"));
+		Account 金融資產非流動 = new Account("金融資產 - 非流動", nonCurrentMarketableSecurities, "131 - 137");
+		topLevelAccounts.add(金融資產非流動);
+		childAccounts.add(new Account("透過損益按公允價值衡量之金融資產", 金融資產非流動, "131"));
+		childAccounts.add(new Account("備供出售金融資產 - 非流動", 金融資產非流動, "132"));
+		childAccounts.add(new Account("以成本衡量之金融資產 - 非流動", 金融資產非流動, "133"));
+		childAccounts.add(new Account("無活絡市場之債務工具投資 - 非流動", 金融資產非流動, "134"));
+		childAccounts.add(new Account("持有至到期日金融資產 - 非流動", 金融資產非流動, "135"));
+		childAccounts.add(new Account("避險之衍生金融資產 - 非流動", 金融資產非流動, "136"));
+		childAccounts.add(new Account("採用權益法之投資", 金融資產非流動, "137"));
+
 		AccountSubtype otherNonCurrentAssets = accountSubtypeRepo.findById((long) 10)
 				.orElseThrow(() -> new ResourceNotFoundException("Cannot find an account subtype for this id: 10"));
 		Account 其他非流動資產 = new Account("其他非流動資產", otherNonCurrentAssets, "157 - 158");
@@ -383,17 +401,11 @@ public class PersonService {
 		childAccounts.add(new Account("備抵呆帳 - 長期應收關係人票據及款項", 其他非流動資產, "1588"));
 		childAccounts.add(new Account("預付設備款", 其他非流動資產, "1582"));
 		childAccounts.add(new Account("備抵呆帳 - 催收款項", 其他非流動資產, "1575"));
-		childAccounts.add(new Account("持有至到期日金融資產 - 非流動", 其他非流動資產, "135"));
 		childAccounts.add(new Account("同業往來", 其他非流動資產, "1585"));
-		childAccounts.add(new Account("以成本衡量之金融資產 - 非流動", 其他非流動資產, "133"));
 		childAccounts.add(new Account("人壽保險現金解約價值", 其他非流動資產, "1587"));
-		childAccounts.add(new Account("備供出售金融資產 - 非流動", 其他非流動資產, "132"));
-		childAccounts.add(new Account("無活絡市場之債務工具投資 - 非流動", 其他非流動資產, "134"));
 		childAccounts.add(new Account("生物資產 - 非流動", 其他非流動資產, "148"));
 		childAccounts.add(new Account("存出保證金 - 非流動", 其他非流動資產, "1583"));
 		childAccounts.add(new Account("遞延所得稅資產", 其他非流動資產, "156"));
-		childAccounts.add(new Account("採用權益法之投資", 其他非流動資產, "137"));
-		childAccounts.add(new Account("避險之衍生金融資產 - 非流動", 其他非流動資產, "136"));
 		childAccounts.add(new Account("備抵呆帳 - 催收關係人款項", 其他非流動資產, "1589"));
 		childAccounts.add(new Account("預付退休金", 其他非流動資產, "1581"));
 		childAccounts.add(new Account("預付投資款 - 非流動", 其他非流動資產, "1580"));
@@ -401,7 +413,6 @@ public class PersonService {
 		childAccounts.add(new Account("其他非流動資產 - 其他", 其他非流動資產, "1586"));
 		childAccounts.add(new Account("備抵呆帳 - 長期應收票據及款項", 其他非流動資產, "1574"));
 		childAccounts.add(new Account("長期預付保險費", 其他非流動資產, "1579"));
-		childAccounts.add(new Account("透過損益按公允價值衡量之金融資產", 其他非流動資產, "131"));
 		childAccounts.add(new Account("長期預付租金", 其他非流動資產, "1578"));
 		childAccounts.add(new Account("業主 (股東) 往來", 其他非流動資產, "1584"));
 
