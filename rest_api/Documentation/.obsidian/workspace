@@ -40,10 +40,10 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#RequestBodyFormat",
                 "matchingCase": false,
                 "explainSearch": false,
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
               }
@@ -90,14 +90,14 @@
   "active": "e9ecb484239110b1",
   "lastOpenFiles": [
     "Reports/Contents/Generate an Income Statement.md",
-    "Reports/Contents/Generate an Income Report by Customer.md",
+    "*Doc v2/myEasyLedger API.md",
     "AccountSubtype/AccountSubtype.md",
-    "AccountSubtype/Contents/List All AccountSubtypes.md",
-    "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md",
-    "AccountSubtype/Contents/Retrieve an AccountSubtype.md",
-    "AccountSubtype/Contents/The AccountSubtype Object.md",
-    "Reports/Contents/Generate an Expense Report by Vendor.md",
     "Easy Ledger.md",
-    "Reports/Reports.md"
+    "Authentication/Contents/Sign Up.md",
+    "Authentication/Contents/Sign In.md",
+    "Authentication/Authentication.md",
+    "Reports/Contents/Generate an Income Report by Customer.md",
+    "AccountSubtype/Contents/List All AccountSubtypes.md",
+    "AccountSubtype/Contents/List All AccountSubtype Balances for an Organization.md"
   ]
 }
