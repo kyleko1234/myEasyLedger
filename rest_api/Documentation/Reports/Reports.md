@@ -27,6 +27,7 @@ For the income statement, cash flow statement, and balance sheet, the user can c
 |  2 | Operating activities |
 |  3 | Investing activities |
 |  4 | Financing activities |
+|  5 | Cash and cash equivalents |
 #### Balance sheet format positions
 | id | name                      |
 |----|---------------------------|
