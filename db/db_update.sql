@@ -708,8 +708,7 @@ UPDATE account
         relevant_to_depreciation_amortization = false
     WHERE account.account_subtype_id = 10;
 
-/**/
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 4,
@@ -718,9 +717,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 11;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 11;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 4,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 11;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 4,
         balance_sheet_format_position_id = 4,
@@ -729,9 +740,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = true, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 12;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 12;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 4,
+        balance_sheet_format_position_id = 4,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = true, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 12;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 4,
@@ -740,9 +763,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = true, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 37;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 37;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 4,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = true, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 37;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 4,
@@ -751,31 +786,10 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 38;
-
-UPDATE account_subtype
-    SET income_statement_format_position_id = 1,
-        cash_flow_format_position_id = 2,
-        balance_sheet_format_position_id = 4,
-        cash_item = false,
-        relevant_to_taxes_paid = false, 
-        relevant_to_interest_paid = false, 
-        relevant_to_dividends_paid = false, 
-        relevant_to_depreciation_amortization = false
-    WHERE id = 13;
-
-UPDATE account_subtype
-    SET income_statement_format_position_id = 1,
-        cash_flow_format_position_id = 4,
-        balance_sheet_format_position_id = 4,
-        cash_item = false,
-        relevant_to_taxes_paid = false, 
-        relevant_to_interest_paid = false, 
-        relevant_to_dividends_paid = false, 
-        relevant_to_depreciation_amortization = false
-    WHERE id = 14;
-
-UPDATE account_subtype
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 38;
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 4,
@@ -784,9 +798,9 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 15;
+    WHERE account.account_subtype_id = 38;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 4,
@@ -795,9 +809,90 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 16;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 13;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 4,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 13;
 
-UPDATE account_subtype
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 4,
+        balance_sheet_format_position_id = 4,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 14;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 4,
+        balance_sheet_format_position_id = 4,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 14;
+
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 4,
+        cash_item = false,
+        relevant_to_taxes_paid = true, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 15;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 4,
+        cash_item = false,
+        relevant_to_taxes_paid = true, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 15;
+
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 4,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 16;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 4,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 16;
+
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 4,
         balance_sheet_format_position_id = 5,
@@ -806,9 +901,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 17;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 17;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 4,
+        balance_sheet_format_position_id = 5,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 17;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 5,
@@ -817,9 +924,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 18 OR id = 19;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND (parent_account.account_subtype_id = 18 OR parent_account.account_subtype_id = 19);
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 5,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 18 OR account.account_subtype_id = 19;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 4,
         balance_sheet_format_position_id = 6,
@@ -828,9 +947,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 20;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 20;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 4,
+        balance_sheet_format_position_id = 6,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 20;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 7,
@@ -839,9 +970,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 21;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 21;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 7,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 21;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 8,
@@ -850,9 +993,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = true, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 22;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 22;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 8,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = true, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 22;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 1,
         cash_flow_format_position_id = 4,
         balance_sheet_format_position_id = 9,
@@ -861,9 +1016,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 23;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 23;
+UPDATE account
+    SET income_statement_format_position_id = 1,
+        cash_flow_format_position_id = 4,
+        balance_sheet_format_position_id = 9,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 23;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 2,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 1,
@@ -872,9 +1039,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 24;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 24;
+UPDATE account
+    SET income_statement_format_position_id = 2,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 24;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 5,
         cash_flow_format_position_id = 3,
         balance_sheet_format_position_id = 1,
@@ -883,9 +1062,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 25;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 25;
+UPDATE account
+    SET income_statement_format_position_id = 5,
+        cash_flow_format_position_id = 3,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 25;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 6,
         cash_flow_format_position_id = 4,
         balance_sheet_format_position_id = 1,
@@ -894,9 +1085,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 26;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 26;
+UPDATE account
+    SET income_statement_format_position_id = 6,
+        cash_flow_format_position_id = 4,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 26;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 7,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 1,
@@ -905,9 +1108,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 36;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 36;
+UPDATE account
+    SET income_statement_format_position_id = 7,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 36;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 10,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 1,
@@ -916,9 +1131,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 39;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 39;
+UPDATE account
+    SET income_statement_format_position_id = 10,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 39;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 3,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 1,
@@ -927,9 +1154,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 27;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 27;
+UPDATE account
+    SET income_statement_format_position_id = 3,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 27;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 4,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 1,
@@ -938,9 +1177,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 28 OR id = 29;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND (parent_account.account_subtype_id = 28 OR parent_account.account_subtype_id = 29);
+UPDATE account
+    SET income_statement_format_position_id = 4,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 28 OR account.account_subtype_id = 29;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 4,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 1,
@@ -949,9 +1200,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = true
-    WHERE id = 30;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 30;
+UPDATE account
+    SET income_statement_format_position_id = 4,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 1,
+        cash_item = false,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = true
+    WHERE account.account_subtype_id = 30;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 5,
         cash_flow_format_position_id = 3,
         balance_sheet_format_position_id = 1,
@@ -960,9 +1223,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 31;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 31;
+UPDATE account
+    SET income_statement_format_position_id = 5,
+        cash_flow_format_position_id = 3,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 31;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 6,
         cash_flow_format_position_id = 4,
         balance_sheet_format_position_id = 1,
@@ -971,9 +1246,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 32;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 32;
+UPDATE account
+    SET income_statement_format_position_id = 6,
+        cash_flow_format_position_id = 4,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 32;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 8,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 1,
@@ -982,9 +1269,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = true, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 33;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 33;
+UPDATE account
+    SET income_statement_format_position_id = 8,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = true, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 33;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 9,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 1,
@@ -993,9 +1292,21 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 34;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 34;
+UPDATE account
+    SET income_statement_format_position_id = 9,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = true, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 34;
 
-UPDATE account_subtype
+UPDATE account
     SET income_statement_format_position_id = 10,
         cash_flow_format_position_id = 2,
         balance_sheet_format_position_id = 1,
@@ -1004,4 +1315,18 @@ UPDATE account_subtype
         relevant_to_interest_paid = false, 
         relevant_to_dividends_paid = false, 
         relevant_to_depreciation_amortization = false
-    WHERE id = 35;
+    FROM account AS parent_account 
+    WHERE account.parent_account_id = parent_account.id 
+    AND parent_account.account_subtype_id = 35;
+UPDATE account
+    SET income_statement_format_position_id = 10,
+        cash_flow_format_position_id = 2,
+        balance_sheet_format_position_id = 1,
+        cash_item = true,
+        relevant_to_taxes_paid = false, 
+        relevant_to_interest_paid = false, 
+        relevant_to_dividends_paid = false, 
+        relevant_to_depreciation_amortization = false
+    WHERE account.account_subtype_id = 35;
+
+/**/
