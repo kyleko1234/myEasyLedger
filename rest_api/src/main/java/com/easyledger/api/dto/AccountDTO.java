@@ -116,7 +116,7 @@ public class AccountDTO {
 		this.cashFlowFormatPositionId = cashFlowFormatPositionId.longValueExact();
 		this.cashFlowFormatPositionName = cashFlowFormatPositionName;
 		this.balanceSheetFormatPositionId = balanceSheetFormatPositionId.longValueExact();
-		this.balanceSheetFormatPositionName = balanceSheetFormatPositionId;
+		this.balanceSheetFormatPositionName = balanceSheetFormatPositionName;
 		this.cashItem = cashItem;
 		this.relevantToTaxesPaid = relevantToTaxesPaid;
 		this.relevantToInterestPaid = relevantToInterestPaid;
