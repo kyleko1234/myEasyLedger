@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -242,6 +243,33 @@ public class Account {
 	@JsonIgnore
 	private Set<LineItem> lineItems;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "income_statement_format_position_id", nullable = false)
+	private IncomeStatementFormatPosition incomeStatementFormatPosition;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "balance_sheet_format_position_id", nullable = false)
+	private BalanceSheetFormatPosition balanceSheetFormatPosition;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cash_flow_format_position_id", nullable = false)
+	private CashFlowFormatPosition cashFlowFormatPosition;
+	
+	@Column(name = "cash_item")
+	private boolean cashItem;
+	
+	@Column(name = "relevant_to_taxes_paid")
+	private boolean relevantToTaxesPaid;
+	
+	@Column(name = "relevant_to_interest_paid")
+	private boolean relevantToInterestPaid;
+	
+	@Column(name = "relevant_to_dividends_paid")
+	private boolean relevantToDividendsPaid;
+	
+	@Column(name = "relevant_to_depreciation_amortization")
+	private boolean relevantToDepreciationAmortization;
+	
 	public Account() {
 		this.lineItems = new HashSet<LineItem>();
 		this.hasChildren = false;
@@ -426,6 +454,73 @@ public class Account {
 
 	public void setChildAccounts(Set<Account> childAccounts) {
 		this.childAccounts = childAccounts;
+	}
+
+	public IncomeStatementFormatPosition getIncomeStatementFormatPosition() {
+		return incomeStatementFormatPosition;
+	}
+
+	public void setIncomeStatementFormatPosition(IncomeStatementFormatPosition incomeStatementFormatPosition) {
+		this.incomeStatementFormatPosition = incomeStatementFormatPosition;
+		incomeStatementFormatPosition.getAccounts().add(this);
+	}
+
+	public BalanceSheetFormatPosition getBalanceSheetFormatPosition() {
+		return balanceSheetFormatPosition;
+	}
+
+	public void setBalanceSheetFormatPosition(BalanceSheetFormatPosition balanceSheetFormatPosition) {
+		this.balanceSheetFormatPosition = balanceSheetFormatPosition;
+		balanceSheetFormatPosition.getAccounts().add(this);
+	}
+
+	public CashFlowFormatPosition getCashFlowFormatPosition() {
+		return cashFlowFormatPosition;
+	}
+
+	public void setCashFlowFormatPosition(CashFlowFormatPosition cashFlowFormatPosition) {
+		this.cashFlowFormatPosition = cashFlowFormatPosition;
+		cashFlowFormatPosition.getAccounts().add(this);
+	}
+
+	public boolean isCashItem() {
+		return cashItem;
+	}
+
+	public void setCashItem(boolean cashItem) {
+		this.cashItem = cashItem;
+	}
+
+	public boolean isRelevantToTaxesPaid() {
+		return relevantToTaxesPaid;
+	}
+
+	public void setRelevantToTaxesPaid(boolean relevantToTaxesPaid) {
+		this.relevantToTaxesPaid = relevantToTaxesPaid;
+	}
+
+	public boolean isRelevantToInterestPaid() {
+		return relevantToInterestPaid;
+	}
+
+	public void setRelevantToInterestPaid(boolean relevantToInterestPaid) {
+		this.relevantToInterestPaid = relevantToInterestPaid;
+	}
+
+	public boolean isRelevantToDividendsPaid() {
+		return relevantToDividendsPaid;
+	}
+
+	public void setRelevantToDividendsPaid(boolean relevantToDividendsPaid) {
+		this.relevantToDividendsPaid = relevantToDividendsPaid;
+	}
+
+	public boolean isRelevantToDepreciationAmortization() {
+		return relevantToDepreciationAmortization;
+	}
+
+	public void setRelevantToDepreciationAmortization(boolean relevantToDepreciationAmortization) {
+		this.relevantToDepreciationAmortization = relevantToDepreciationAmortization;
 	}
 
 	@Override

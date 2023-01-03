@@ -163,6 +163,33 @@ public class AccountSubtype {
 	@JsonIgnore
 	private Set<Account> accounts;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "income_statement_format_position_id", nullable = false)
+	private IncomeStatementFormatPosition incomeStatementFormatPosition;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "balance_sheet_format_position_id", nullable = false)
+	private BalanceSheetFormatPosition balanceSheetFormatPosition;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cash_flow_format_position_id", nullable = false)
+	private CashFlowFormatPosition cashFlowFormatPosition;
+	
+	@Column(name = "cash_item")
+	private boolean cashItem;
+	
+	@Column(name = "relevant_to_taxes_paid")
+	private boolean relevantToTaxesPaid;
+	
+	@Column(name = "relevant_to_interest_paid")
+	private boolean relevantToInterestPaid;
+	
+	@Column(name = "relevant_to_dividends_paid")
+	private boolean relevantToDividendsPaid;
+	
+	@Column(name = "relevant_to_depreciation_amortization")
+	private boolean relevantToDepreciationAmortization;
+	
 	public AccountSubtype() {
 		this.accounts = new HashSet<Account>();
 	}
@@ -210,6 +237,73 @@ public class AccountSubtype {
 
 	public void setAccounts(Set<Account> accounts) {
 		this.accounts = accounts;
+	}
+
+	public IncomeStatementFormatPosition getIncomeStatementFormatPosition() {
+		return incomeStatementFormatPosition;
+	}
+
+	public void setIncomeStatementFormatPosition(IncomeStatementFormatPosition incomeStatementFormatPosition) {
+		this.incomeStatementFormatPosition = incomeStatementFormatPosition;
+		incomeStatementFormatPosition.getAccountSubtypes().add(this);
+	}
+
+	public BalanceSheetFormatPosition getBalanceSheetFormatPosition() {
+		return balanceSheetFormatPosition;
+	}
+
+	public void setBalanceSheetFormatPosition(BalanceSheetFormatPosition balanceSheetFormatPosition) {
+		this.balanceSheetFormatPosition = balanceSheetFormatPosition;
+		balanceSheetFormatPosition.getAccountSubtypes().add(this);
+	}
+
+	public CashFlowFormatPosition getCashFlowFormatPosition() {
+		return cashFlowFormatPosition;
+	}
+
+	public void setCashFlowFormatPosition(CashFlowFormatPosition cashFlowFormatPosition) {
+		this.cashFlowFormatPosition = cashFlowFormatPosition;
+		cashFlowFormatPosition.getAccountSubtypes().add(this);
+	}
+
+	public boolean isCashItem() {
+		return cashItem;
+	}
+
+	public void setCashItem(boolean cashItem) {
+		this.cashItem = cashItem;
+	}
+
+	public boolean isRelevantToTaxesPaid() {
+		return relevantToTaxesPaid;
+	}
+
+	public void setRelevantToTaxesPaid(boolean relevantToTaxesPaid) {
+		this.relevantToTaxesPaid = relevantToTaxesPaid;
+	}
+
+	public boolean isRelevantToInterestPaid() {
+		return relevantToInterestPaid;
+	}
+
+	public void setRelevantToInterestPaid(boolean relevantToInterestPaid) {
+		this.relevantToInterestPaid = relevantToInterestPaid;
+	}
+
+	public boolean isRelevantToDividendsPaid() {
+		return relevantToDividendsPaid;
+	}
+
+	public void setRelevantToDividendsPaid(boolean relevantToDividendsPaid) {
+		this.relevantToDividendsPaid = relevantToDividendsPaid;
+	}
+
+	public boolean isRelevantToDepreciationAmortization() {
+		return relevantToDepreciationAmortization;
+	}
+
+	public void setRelevantToDepreciationAmortization(boolean relevantToDepreciationAmortization) {
+		this.relevantToDepreciationAmortization = relevantToDepreciationAmortization;
 	}
 
 	@Override
