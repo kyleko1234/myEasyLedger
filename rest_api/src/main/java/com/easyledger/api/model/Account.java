@@ -244,15 +244,15 @@ public class Account {
 	private Set<LineItem> lineItems;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "income_statement_format_position_id", nullable = false)
+	@JoinColumn(name = "income_statement_format_position_id")
 	private IncomeStatementFormatPosition incomeStatementFormatPosition;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "balance_sheet_format_position_id", nullable = false)
+	@JoinColumn(name = "balance_sheet_format_position_id")
 	private BalanceSheetFormatPosition balanceSheetFormatPosition;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "cash_flow_format_position_id", nullable = false)
+	@JoinColumn(name = "cash_flow_format_position_id")
 	private CashFlowFormatPosition cashFlowFormatPosition;
 	
 	@Column(name = "cash_item")
