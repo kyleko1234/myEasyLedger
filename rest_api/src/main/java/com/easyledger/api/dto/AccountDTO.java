@@ -78,7 +78,10 @@ public class AccountDTO {
 	public AccountDTO(BigInteger accountId, String accountCode, String accountName, BigInteger parentAccountId, String parentAccountName,
 			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
 			BigInteger organizationId, String organizationName, BigDecimal debitTotal, BigDecimal creditTotal, 
-			BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean hasChildren) {
+			BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean hasChildren, BigInteger incomeStatementFormatPositionId,
+			String incomeStatementFormatPositionName, BigInteger cashFlowFormatPositionId, String cashFlowFormatPositionName,
+			BigInteger balanceSheetFormatPositionId, String balanceSheetFormatPositionName, boolean cashItem, boolean relevantToTaxesPaid,
+			boolean relevantToInterestPaid, boolean relevantToDividendsPaid, boolean relevantToDepreciationAmortization) {
 		this.accountId = accountId.longValueExact();
 		this.accountCode = accountCode;
 		this.accountName = accountName;
@@ -108,6 +111,17 @@ public class AccountDTO {
 		this.initialCreditAmount = initialCreditAmount;
 		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
 		this.hasChildren = hasChildren;
+		this.incomeStatementFormatPositionId = incomeStatementFormatPositionId.longValueExact();
+		this.incomeStatementFormatPositionName = incomeStatementFormatPositionName;
+		this.cashFlowFormatPositionId = cashFlowFormatPositionId.longValueExact();
+		this.cashFlowFormatPositionName = cashFlowFormatPositionName;
+		this.balanceSheetFormatPositionId = balanceSheetFormatPositionId.longValueExact();
+		this.balanceSheetFormatPositionName = balanceSheetFormatPositionId;
+		this.cashItem = cashItem;
+		this.relevantToTaxesPaid = relevantToTaxesPaid;
+		this.relevantToInterestPaid = relevantToInterestPaid;
+		this.relevantToDividendsPaid = relevantToDividendsPaid;
+		this.relevantToDepreciationAmortization = relevantToDepreciationAmortization;
 	}
 
 	public AccountDTO() {
