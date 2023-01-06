@@ -162,71 +162,95 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )	
 @NamedNativeQuery( //takes an organization ID as a parameter and returns all undeleted accounts with balances for that organization up until the given date
 		name = "Account.getAllAccountBalancesForOrganizationUpToDate",
-		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName, " + 
-				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
-				"    organization.id AS organizationId, organization.name AS organizationName, " + 
-				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfDebitLineItems,              " + 
-				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfCreditLineItems,    " + 
-				"    account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount, account.has_children AS hasChildren " + 
-				"FROM account AS account " + 
-				"    LEFT JOIN line_item ON line_item.account_id = account.id " + 
-				"    LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id " + 
-				"    LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id " + 
-				"    LEFT JOIN account_subtype ON account_subtype.id = account.account_subtype_id  " + 
-				"    LEFT JOIN account_type ON account_type.id = account_subtype.account_type_id, " + 
-				"    organization " + 
-				"WHERE " + 
-				"    organization.id = :organizationId AND  " + 
-				"    account.organization_id = organization.id AND  " + 
-				"    account.deleted = false " + 
-				"GROUP BY account.id, parent_account.id, account_subtype.id, account_type.id, organization.id " + 
-				"ORDER BY account_type.id, NULLIF(account.account_code, ''), account.name NULLS LAST",
-		resultSetMapping = "accountBalanceDTOMapping"
-)
-
-@NamedNativeQuery( //takes an accountId as a parameter and returns an AccountBalanceDTO with inital balances and the sum of all lineItems with a journalEntryDate before and not including :endDate
-		name = "Account.getAccountBalanceUpToDateExclusive",
 		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName,      "
 				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,      "
 				+ "    organization.id AS organizationId, organization.name AS organizationName,      "
-				+ "    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date < :endDate THEN line_item.amount END) AS sumOfDebitLineItems,                   "
-				+ "    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date < :endDate THEN line_item.amount END) AS sumOfCreditLineItems,         "
-				+ "    account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount, account.has_children AS hasChildren      "
+				+ "    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfDebitLineItems,                   "
+				+ "    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfCreditLineItems,         "
+				+ "    account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount, account.has_children AS hasChildren, "
+				+ "    account.income_statement_format_position_id AS incomeStatementFormatPositionId, income_statement_format_position.name AS incomeStatementFormatPositionName, "
+				+ "    account.cash_flow_format_position_id AS cashFlowFormatPositionId, cash_flow_format_position.name AS cashFlowFormatPositionName, "
+				+ "    account.balance_sheet_format_position_id AS balanceSheetFormatPositionId, balance_sheet_format_position.name AS balanceSheetFormatPositionName, "
+				+ "    account.cash_item AS cashItem, account.relevant_to_taxes_paid AS relevantToTaxesPaid, account.relevant_to_interest_paid AS relevantToInterestPaid, "
+				+ "    account.relevant_to_dividends_paid AS relevantToDividendsPaid, account.relevant_to_depreciation_amortization AS relevant_to_depreciation_amortization "
 				+ "FROM account AS account      "
 				+ "    LEFT JOIN line_item ON line_item.account_id = account.id      "
 				+ "    LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id      "
 				+ "    LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id      "
 				+ "    LEFT JOIN account_subtype ON account_subtype.id = account.account_subtype_id       "
 				+ "    LEFT JOIN account_type ON account_type.id = account_subtype.account_type_id,      "
-				+ "    organization      "
+				+ "    income_statement_format_position, cash_flow_format_position, balance_sheet_format_position, organization  "
 				+ "WHERE      "
-				+ "    account.id = :accountId AND       "
-				+ "    account.organization_id = organization.id "
-				+ "GROUP BY account.id, parent_account.id, account_subtype.id, account_type.id, organization.id",
+				+ "    organization.id = :organizationId AND       "
+				+ "    account.organization_id = organization.id AND       "
+				+ "    account.income_statement_format_position_id = income_statement_format_position.id AND "
+				+ "    account.cash_flow_format_position_id = cash_flow_format_position.id AND  "
+				+ "    account.balance_sheet_format_position_id = balance_sheet_format_position.id AND     "
+				+ "    account.deleted = false      "
+				+ "GROUP BY account.id, parent_account.id, account_subtype.id, account_type.id, organization.id, income_statement_format_position.name, cash_flow_format_position.name, balance_sheet_format_position.name "
+				+ "ORDER BY account_type.id, NULLIF(account.account_code, ''), account.name NULLS LAST ",
+		resultSetMapping = "accountBalanceDTOMapping"
+)
+
+@NamedNativeQuery( //takes an accountId as a parameter and returns an AccountBalanceDTO with inital balances and the sum of all lineItems with a journalEntryDate before and not including :endDate
+		name = "Account.getAccountBalanceUpToDateExclusive",
+		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName,        "
+				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,        "
+				+ "    organization.id AS organizationId, organization.name AS organizationName,        "
+				+ "    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date < :endDate THEN line_item.amount END) AS sumOfDebitLineItems,                     "
+				+ "    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date < :endDate THEN line_item.amount END) AS sumOfCreditLineItems,           "
+				+ "    account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount, account.has_children AS hasChildren, "
+				+ "    account.income_statement_format_position_id AS incomeStatementFormatPositionId, income_statement_format_position.name AS incomeStatementFormatPositionName, "
+				+ "    account.cash_flow_format_position_id AS cashFlowFormatPositionId, cash_flow_format_position.name AS cashFlowFormatPositionName, "
+				+ "    account.balance_sheet_format_position_id AS balanceSheetFormatPositionId, balance_sheet_format_position.name AS balanceSheetFormatPositionName, "
+				+ "    account.cash_item AS cashItem, account.relevant_to_taxes_paid AS relevantToTaxesPaid, account.relevant_to_interest_paid AS relevantToInterestPaid, "
+				+ "    account.relevant_to_dividends_paid AS relevantToDividendsPaid, account.relevant_to_depreciation_amortization AS relevant_to_depreciation_amortization   "
+				+ "FROM account AS account        "
+				+ "    LEFT JOIN line_item ON line_item.account_id = account.id        "
+				+ "    LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id        "
+				+ "    LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id        "
+				+ "    LEFT JOIN account_subtype ON account_subtype.id = account.account_subtype_id         "
+				+ "    LEFT JOIN account_type ON account_type.id = account_subtype.account_type_id,        "
+				+ "    income_statement_format_position, cash_flow_format_position, balance_sheet_format_position, organization  "
+				+ "WHERE        "
+				+ "    account.id = :accountId AND         "
+				+ "    account.organization_id = organization.id AND "
+				+ "    account.income_statement_format_position_id = income_statement_format_position.id AND "
+				+ "    account.cash_flow_format_position_id = cash_flow_format_position.id AND  "
+				+ "    account.balance_sheet_format_position_id = balance_sheet_format_position.id     "
+				+ "GROUP BY account.id, parent_account.id, account_subtype.id, account_type.id, organization.id, income_statement_format_position.name, cash_flow_format_position.name, balance_sheet_format_position.name",
 		resultSetMapping = "accountBalanceDTOMapping"
 )
 
 @NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted accounts with entries for that organization
 		name = "Account.getLeafAccountsWithEntriesForOrganization",
-		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName,     "
-				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,     "
-				+ "    organization.id AS organizationId, organization.name AS organizationName,      "
-				+ "    account.debit_total AS debitTotal, account.credit_total AS creditTotal, account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount,     "
-				+ "    account.has_children AS hasChildren     "
-				+ "FROM account AS account      "
-				+ "    LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id      "
-				+ "    LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id OR parent_account.account_subtype_id = account_subtype.id     "
-				+ "    LEFT JOIN account_type ON account_subtype.account_type_id = account_type.id,      "
-				+ "    organization     "
-				+ "WHERE      "
-				+ "    organization.id = :organizationId AND     "
-				+ "    account.organization_id = organization.id AND      "
-				+ "    account.deleted = false AND"
-				+ "    (SELECT CASE EXISTS ("
-				+ "        SELECT 1 from line_item, journal_entry"
-				+ "        WHERE line_item.journal_entry_id = journal_entry.id "
-				+ "        AND line_item.account_id = account.id AND journal_entry.deleted = false"
-				+ "    ) WHEN true THEN true ELSE false END)"
+		query = "SELECT account.id AS accountId, account.account_code AS accountCode, account.name AS accountName, parent_account.id AS parentAccountId, parent_account.name AS parentAccountName,        "
+				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, account_type.id AS accountTypeId, account_type.name AS accountTypeName,        "
+				+ "    organization.id AS organizationId, organization.name AS organizationName,         "
+				+ "    account.debit_total AS debitTotal, account.credit_total AS creditTotal, account.initial_debit_amount AS initialDebitAmount, account.initial_credit_amount AS initialCreditAmount,        "
+				+ "    account.has_children AS hasChildren, "
+				+ "    account.income_statement_format_position_id AS incomeStatementFormatPositionId, income_statement_format_position.name AS incomeStatementFormatPositionName, "
+				+ "    account.cash_flow_format_position_id AS cashFlowFormatPositionId, cash_flow_format_position.name AS cashFlowFormatPositionName, "
+				+ "    account.balance_sheet_format_position_id AS balanceSheetFormatPositionId, balance_sheet_format_position.name AS balanceSheetFormatPositionName, "
+				+ "    account.cash_item AS cashItem, account.relevant_to_taxes_paid AS relevantToTaxesPaid, account.relevant_to_interest_paid AS relevantToInterestPaid, "
+				+ "    account.relevant_to_dividends_paid AS relevantToDividendsPaid, account.relevant_to_depreciation_amortization AS relevant_to_depreciation_amortization   "
+				+ "FROM account AS account         "
+				+ "    LEFT JOIN account AS parent_account ON account.parent_account_id = parent_account.id         "
+				+ "    LEFT JOIN account_subtype ON account.account_subtype_id = account_subtype.id OR parent_account.account_subtype_id = account_subtype.id        "
+				+ "    LEFT JOIN account_type ON account_subtype.account_type_id = account_type.id,         "
+				+ "    income_statement_format_position, cash_flow_format_position, balance_sheet_format_position, organization  "
+				+ "WHERE         "
+				+ "    organization.id = :organizationId AND        "
+				+ "    account.organization_id = organization.id AND    "
+				+ "    account.income_statement_format_position_id = income_statement_format_position.id AND "
+				+ "    account.cash_flow_format_position_id = cash_flow_format_position.id AND  "
+				+ "    account.balance_sheet_format_position_id = balance_sheet_format_position.id AND       "
+				+ "    account.deleted = false AND   "
+				+ "    (SELECT CASE EXISTS (   "
+				+ "        SELECT 1 from line_item, journal_entry   "
+				+ "        WHERE line_item.journal_entry_id = journal_entry.id    "
+				+ "        AND line_item.account_id = account.id AND journal_entry.deleted = false   "
+				+ "    ) WHEN true THEN true ELSE false END)   "
 				+ "ORDER BY account_type.id, NULLIF(account.account_code, ''), account.name NULLS LAST ",
 		resultSetMapping = "accountDTOMapping"
 )
