@@ -35,7 +35,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 								@ColumnResult(name = "organizationId"),
 								@ColumnResult(name = "organizationName"),
 								@ColumnResult(name = "debitTotal"),
-								@ColumnResult(name = "creditTotal")
+								@ColumnResult(name = "creditTotal"),
+								@ColumnResult(name = "incomeStatementFormatPositionId"),
+								@ColumnResult(name = "incomeStatementFormatPositionName"),
+								@ColumnResult(name = "cashFlowFormatPositionId"),
+								@ColumnResult(name = "cashFlowFormatPositionName"),
+								@ColumnResult(name = "balanceSheetFormatPositionId"),
+								@ColumnResult(name = "balanceSheetFormatPositionName"),
+								@ColumnResult(name = "cashItem"),
+								@ColumnResult(name = "relevantToTaxesPaid"),
+								@ColumnResult(name = "relevantToInterestPaid"),
+								@ColumnResult(name = "relevantToDividendsPaid"),
+								@ColumnResult(name = "relevantToDepreciationAmortization")
+
 						}
 				)
 		}
@@ -55,92 +67,131 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 								@ColumnResult(name = "sumOfDebitLineItems"),
 								@ColumnResult(name = "sumOfCreditLineItems"),
 								@ColumnResult(name = "sumOfInitialDebitAmounts"),
-								@ColumnResult(name = "sumOfInitialCreditAmounts")
+								@ColumnResult(name = "sumOfInitialCreditAmounts"),
+								@ColumnResult(name = "incomeStatementFormatPositionId"),
+								@ColumnResult(name = "incomeStatementFormatPositionName"),
+								@ColumnResult(name = "cashFlowFormatPositionId"),
+								@ColumnResult(name = "cashFlowFormatPositionName"),
+								@ColumnResult(name = "balanceSheetFormatPositionId"),
+								@ColumnResult(name = "balanceSheetFormatPositionName"),
+								@ColumnResult(name = "cashItem"),
+								@ColumnResult(name = "relevantToTaxesPaid"),
+								@ColumnResult(name = "relevantToInterestPaid"),
+								@ColumnResult(name = "relevantToDividendsPaid"),
+								@ColumnResult(name = "relevantToDepreciationAmortization")
 						}
 				)
 		}
 )	
 @NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted account subtypes with balances for that organization
 		name = "AccountSubtype.getAllAccountSubtypeBalancesForOrganization",
-		query = "SELECT " + 
-				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, " + 
-				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
-				"    organization.id AS organizationId, organization.name AS organizationName, " + 
-				"    SUM(account.debit_total) AS debitTotal, " + 
-				"    SUM(account.credit_total) AS creditTotal " + 
-				"FROM " + 
-				"    account_subtype, account_type, organization, account " + 
-				"WHERE  " + 
-				"    organization.id = ? AND " + 
-				"    account.organization_id = organization.id AND " + 
-				"    account.account_subtype_id = account_subtype.id AND " + 
-				"    account_subtype.account_type_id = account_type.id AND " + 
-				"    account.deleted = false " + 
-				"GROUP BY account_subtype.id, account_type.id, organization.id " + 
-				"ORDER BY account_type.id ASC, account_subtype.id ASC ",
+		query = "SELECT        "
+				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,        "
+				+ "    account_type.id AS accountTypeId, account_type.name AS accountTypeName,        "
+				+ "    organization.id AS organizationId, organization.name AS organizationName,        "
+				+ "    SUM(account.debit_total) AS debitTotal,        "
+				+ "    SUM(account.credit_total) AS creditTotal, "
+				+ "    account_subtype.income_statement_format_position_id AS incomeStatementFormatPositionId, income_statement_format_position.name AS incomeStatementFormatPositionName, "
+				+ "    account_subtype.cash_flow_format_position_id AS cashFlowFormatPositionId, cash_flow_format_position.name AS cashFlowFormatPositionName, "
+				+ "    account_subtype.balance_sheet_format_position_id AS balanceSheetFormatPositionId, balance_sheet_format_position.name AS balanceSheetFormatPositionName, "
+				+ "    account_subtype.cash_item AS cashItem, "
+				+ "    account_subtype.relevant_to_taxes_paid AS relevantToTaxesPaid, account_subtype.relevant_to_interest_paid AS relevantToInterestPaid, "
+				+ "    account_subtype.relevant_to_dividends_paid AS relevantToDividendsPaid, account_subtype.relevant_to_depreciation_amortization AS relevantToDepreciationAmortization "
+				+ "FROM        "
+				+ "    account_subtype, account_type, organization, account, income_statement_format_position, cash_flow_format_position, balance_sheet_format_position      "
+				+ "WHERE         "
+				+ "    organization.id = ? AND        "
+				+ "    account.organization_id = organization.id AND        "
+				+ "    account.account_subtype_id = account_subtype.id AND        "
+				+ "    account_subtype.account_type_id = account_type.id AND    "
+				+ "    account_subtype.income_statement_format_position_id = income_statement_format_position.id AND "
+				+ "    account_subtype.cash_flow_format_position_id = cash_flow_format_position.id AND "
+				+ "    account_subtype.balance_sheet_format_position_id = balance_sheet_format_position.id AND      "
+				+ "    account.deleted = false        "
+				+ "GROUP BY account_subtype.id, account_type.id, organization.id, income_statement_format_position.name, cash_flow_format_position.name, balance_sheet_format_position.name  "
+				+ "ORDER BY account_type.id ASC, account_subtype.id ASC ",
 		resultSetMapping = "accountSubtypeBalanceDTOMapping"
 )
 
 @NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted account subtypes with balances for that organization
 		name = "AccountSubtype.getAllAccountSubtypeBalancesForOrganizationUpToDate",
-		query = " SELECT      "
-				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,      "
-				+ "    account_type.id AS accountTypeId, account_type.name AS accountTypeName,      "
-				+ "    organization.id AS organizationId, organization.name AS organizationName,      "
-				+ "    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfDebitLineItems,             "
-				+ "    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfCreditLineItems,      "
-				+ "    sum_of_initial_amounts.sum_of_initial_debit_amounts AS sumOfInitialDebitAmounts, sum_of_initial_amounts.sum_of_initial_credit_amounts AS sumOfInitialCreditAmounts      "
-				+ "FROM       "
-				+ "    (SELECT      "
-				+ "        account_subtype.id AS account_subtype_id, SUM(account.initial_debit_amount) AS sum_of_initial_debit_amounts, SUM(account.initial_credit_amount) AS sum_of_initial_credit_amounts       "
-				+ "    FROM        "
-				+ "        account, organization, account_subtype      "
-				+ "    WHERE organization.id = :organizationId AND       "
-				+ "        account.organization_id = organization.id AND       "
-				+ "        account.account_subtype_id = account_subtype.id AND "
-				+ "        account.deleted = false "
-				+ "    GROUP BY account_subtype.id, organization.id      "
-				+ "    ORDER BY account_subtype.id)      "
-				+ "        AS sum_of_initial_amounts,      "
-				+ "    account AS parent_account      "
-				+ "        LEFT JOIN account AS child_account ON child_account.parent_account_id = parent_account.id AND child_account.deleted = false      "
-				+ "        LEFT JOIN line_item ON (line_item.account_id = parent_account.id OR line_item.account_id = child_account.id)      "
-				+ "        LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id,      "
-				+ "    account_subtype, account_type, organization      "
-				+ "WHERE       "
-				+ "    organization.id = :organizationId AND      "
-				+ "    parent_account.organization_id = organization.id AND       "
-				+ "    parent_account.account_subtype_id = account_subtype.id AND       "
-				+ "    account_subtype.account_type_id = account_type.id AND       "
-				+ "    parent_account.deleted = false AND      "
-				+ "    sum_of_initial_amounts.account_subtype_id = account_subtype.id      "
-				+ "GROUP BY account_subtype.id, account_type.id, organization.id, sum_of_initial_amounts.sum_of_initial_debit_amounts, sum_of_initial_amounts.sum_of_initial_credit_amounts      "
-				+ "ORDER BY account_type.id ASC, account_subtype.id ASC ",
+		query = "SELECT         "
+				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,         "
+				+ "    account_type.id AS accountTypeId, account_type.name AS accountTypeName,         "
+				+ "    organization.id AS organizationId, organization.name AS organizationName,         "
+				+ "    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfDebitLineItems,                "
+				+ "    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS sumOfCreditLineItems,         "
+				+ "    sum_of_initial_amounts.sum_of_initial_debit_amounts AS sumOfInitialDebitAmounts, sum_of_initial_amounts.sum_of_initial_credit_amounts AS sumOfInitialCreditAmounts, "
+				+ "    account_subtype.income_statement_format_position_id AS incomeStatementFormatPositionId, income_statement_format_position.name AS incomeStatementFormatPositionName, "
+				+ "    account_subtype.cash_flow_format_position_id AS cashFlowFormatPositionId, cash_flow_format_position.name AS cashFlowFormatPositionName, "
+				+ "    account_subtype.balance_sheet_format_position_id AS balanceSheetFormatPositionId, balance_sheet_format_position.name AS balanceSheetFormatPositionName, "
+				+ "    account_subtype.cash_item AS cashItem, "
+				+ "    account_subtype.relevant_to_taxes_paid AS relevantToTaxesPaid, account_subtype.relevant_to_interest_paid AS relevantToInterestPaid, "
+				+ "    account_subtype.relevant_to_dividends_paid AS relevantToDividendsPaid, account_subtype.relevant_to_depreciation_amortization AS relevantToDepreciationAmortization    "
+				+ "FROM          "
+				+ "    (SELECT         "
+				+ "        account_subtype.id AS account_subtype_id, SUM(account.initial_debit_amount) AS sum_of_initial_debit_amounts, SUM(account.initial_credit_amount) AS sum_of_initial_credit_amounts          "
+				+ "    FROM           "
+				+ "        account, organization, account_subtype         "
+				+ "    WHERE organization.id = :organizationId AND          "
+				+ "        account.organization_id = organization.id AND          "
+				+ "        account.account_subtype_id = account_subtype.id AND    "
+				+ "        account.deleted = false    "
+				+ "    GROUP BY account_subtype.id, organization.id         "
+				+ "    ORDER BY account_subtype.id)         "
+				+ "        AS sum_of_initial_amounts,         "
+				+ "    account AS parent_account         "
+				+ "        LEFT JOIN account AS child_account ON child_account.parent_account_id = parent_account.id AND child_account.deleted = false         "
+				+ "        LEFT JOIN line_item ON (line_item.account_id = parent_account.id OR line_item.account_id = child_account.id)         "
+				+ "        LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id,         "
+				+ "    account_subtype, account_type, organization, income_statement_format_position, cash_flow_format_position, balance_sheet_format_position "
+				+ "WHERE          "
+				+ "    organization.id = :organizationId AND         "
+				+ "    parent_account.organization_id = organization.id AND          "
+				+ "    parent_account.account_subtype_id = account_subtype.id AND          "
+				+ "    account_subtype.account_type_id = account_type.id AND          "
+				+ "    parent_account.deleted = false AND         "
+				+ "    sum_of_initial_amounts.account_subtype_id = account_subtype.id AND  "
+				+ "    account_subtype.income_statement_format_position_id = income_statement_format_position.id AND "
+				+ "    account_subtype.cash_flow_format_position_id = cash_flow_format_position.id AND "
+				+ "    account_subtype.balance_sheet_format_position_id = balance_sheet_format_position.id   "
+				+ "GROUP BY account_subtype.id, account_type.id, organization.id, sum_of_initial_amounts.sum_of_initial_debit_amounts, sum_of_initial_amounts.sum_of_initial_credit_amounts,  "
+				+ "    income_statement_format_position.name, cash_flow_format_position.name, balance_sheet_format_position.name  "
+				+ "ORDER BY account_type.id ASC, account_subtype.id ASC",
 		resultSetMapping = "accountSubtypeBalanceDTOAlternateMapping"
 )
 
 @NamedNativeQuery( // takes an organization ID as a parameter and returns all undeleted account subtypes with balances for that organization
 		name = "AccountSubtype.getAllAccountSubtypeBalancesForOrganizationBetweenDates",
-		query = "SELECT " + 
-				"    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName, " + 
-				"    account_type.id AS accountTypeId, account_type.name AS accountTypeName, " + 
-				"    organization.id AS organizationId, organization.name AS organizationName, " + 
-				"    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS debitTotal,     " + 
-				"    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= :startDate AND journal_entry.journal_entry_date <= :endDate THEN line_item.amount END) AS creditTotal    " + 
-				"FROM  " + 
-				"    account AS parent_account " + 
-				"        LEFT JOIN account AS child_account ON child_account.parent_account_id = parent_account.id AND child_account.deleted = false " + 
-				"        LEFT JOIN line_item ON (line_item.account_id = parent_account.id OR line_item.account_id = child_account.id) " + 
-				"        LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id, " + 
-				"    account_subtype, account_type, organization " + 
-				"WHERE  " + 
-				"    organization.id = :organizationId AND " + 
-				"    parent_account.organization_id = organization.id AND  " + 
-				"    parent_account.account_subtype_id = account_subtype.id AND  " + 
-				"    account_subtype.account_type_id = account_type.id AND  " + 
-				"    parent_account.deleted = false " + 
-				"GROUP BY account_subtype.id, account_type.id, organization.id " + 
-				"ORDER BY account_type.id ASC, account_subtype.id ASC ",
+		query = "SELECT        "
+				+ "    account_subtype.id AS accountSubtypeId, account_subtype.name AS accountSubtypeName,        "
+				+ "    account_type.id AS accountTypeId, account_type.name AS accountTypeName,        "
+				+ "    organization.id AS organizationId, organization.name AS organizationName,        "
+				+ "    SUM(CASE WHEN line_item.is_credit = false AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= '2000-01-01' AND journal_entry.journal_entry_date <= '2023-01-01' THEN line_item.amount END) AS debitTotal,            "
+				+ "    SUM(CASE WHEN line_item.is_credit = true AND journal_entry.deleted = false AND journal_entry.journal_entry_date >= '2000-01-01' AND journal_entry.journal_entry_date <= '2023-01-01' THEN line_item.amount END) AS creditTotal, "
+				+ "    account_subtype.income_statement_format_position_id AS incomeStatementFormatPositionId, income_statement_format_position.name AS incomeStatementFormatPositionName, "
+				+ "    account_subtype.cash_flow_format_position_id AS cashFlowFormatPositionId, cash_flow_format_position.name AS cashFlowFormatPositionName, "
+				+ "    account_subtype.balance_sheet_format_position_id AS balanceSheetFormatPositionId, balance_sheet_format_position.name AS balanceSheetFormatPositionName, "
+				+ "    account_subtype.cash_item AS cashItem, "
+				+ "    account_subtype.relevant_to_taxes_paid AS relevantToTaxesPaid, account_subtype.relevant_to_interest_paid AS relevantToInterestPaid, "
+				+ "    account_subtype.relevant_to_dividends_paid AS relevantToDividendsPaid, account_subtype.relevant_to_depreciation_amortization AS relevantToDepreciationAmortization "
+				+ "FROM         "
+				+ "    account AS parent_account        "
+				+ "        LEFT JOIN account AS child_account ON child_account.parent_account_id = parent_account.id AND child_account.deleted = false        "
+				+ "        LEFT JOIN line_item ON (line_item.account_id = parent_account.id OR line_item.account_id = child_account.id)        "
+				+ "        LEFT JOIN journal_entry ON line_item.journal_entry_id = journal_entry.id,        "
+				+ "    account_subtype, account_type, organization, income_statement_format_position, cash_flow_format_position, balance_sheet_format_position  "
+				+ "WHERE         "
+				+ "    organization.id = 1 AND        "
+				+ "    parent_account.organization_id = organization.id AND         "
+				+ "    parent_account.account_subtype_id = account_subtype.id AND         "
+				+ "    account_subtype.account_type_id = account_type.id AND         "
+				+ "    parent_account.deleted = false AND     "
+				+ "    account_subtype.income_statement_format_position_id = income_statement_format_position.id AND "
+				+ "    account_subtype.cash_flow_format_position_id = cash_flow_format_position.id AND "
+				+ "    account_subtype.balance_sheet_format_position_id = balance_sheet_format_position.id "
+				+ "GROUP BY account_subtype.id, account_type.id, organization.id, income_statement_format_position.name, cash_flow_format_position.name, balance_sheet_format_position.name        "
+				+ "ORDER BY account_type.id ASC, account_subtype.id ASC ",
 		resultSetMapping = "accountSubtypeBalanceDTOMapping"
 )
 
