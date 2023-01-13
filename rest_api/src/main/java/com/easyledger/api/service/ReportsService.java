@@ -12,7 +12,9 @@ import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 import com.easyledger.api.dto.AccountTransactionsReportLineItemDTO;
+import com.easyledger.api.dto.BalanceSheetDTO;
 import com.easyledger.api.dto.CustomerIncomeDTO;
+import com.easyledger.api.dto.DateRangeDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.dto.VendorExpensesDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -154,4 +156,13 @@ public class ReportsService {
 		return new IncomeByCustomerReportViewModel(customerIncomeDTOs, totalIncome);
 	}
 
+	public BalanceSheetDTO generateBalanceSheet(Long organizationId, List<DateRangeDTO> dates) {
+		BalanceSheetDTO generatedBalanceSheet = new BalanceSheetDTO();
+		//fetch a list of accounts for each date range
+		//convert list of list of accounts into list of AccountInReportDTO
+		//rearrange list of AccountInReportDTO to put children where they belong
+		//put accounts into correct lists in balance sheet
+		//calculate retained earnings
+		return generatedBalanceSheet;
+	}
 }
