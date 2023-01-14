@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
+import com.easyledger.api.dto.AccountInReportDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 import com.easyledger.api.dto.AccountTransactionsReportLineItemDTO;
 import com.easyledger.api.dto.BalanceSheetDTO;
@@ -158,11 +159,45 @@ public class ReportsService {
 
 	public BalanceSheetDTO generateBalanceSheet(Long organizationId, List<DateRangeDTO> dates) {
 		BalanceSheetDTO generatedBalanceSheet = new BalanceSheetDTO();
+		List<List<AccountBalanceDTO>> listsOfAccountBalancesForDates = new ArrayList<List<AccountBalanceDTO>>();
 		//fetch a list of accounts for each date range
+		for (DateRangeDTO dateRange : dates) {
+			List<AccountBalanceDTO> accountBalancesUpToDate = accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, dateRange.getEndDate());
+			listsOfAccountBalancesForDates.add(accountBalancesUpToDate);
+		}
 		//convert list of list of accounts into list of AccountInReportDTO
+		List<AccountInReportDTO> convertedList = convertListOfListOfAccountBalanceDTOsToListOfAccountInReportDTO(listsOfAccountBalancesForDates);
 		//rearrange list of AccountInReportDTO to put children where they belong
 		//put accounts into correct lists in balance sheet
 		//calculate retained earnings
 		return generatedBalanceSheet;
+	}
+	/* 
+	 * Takes a list of list of AccountBalanceDTOs as an argument.
+	 * This method assumes that the input list only contains lists where the contents differ only by AccountBalanceDTO.debitsMinusCredits
+	 * In other words, each list must contain the same number of accounts, in the same order, with the same accountIds.
+	 * This method consolidates these lists into a single list of AccountInReportDTOs,
+	 * where AccountInReportDTO.amounts is a list of the respective amounts for that account.
+	 * In other words, this method takes in multiple lists of accounts, each with one debitsMinusCredits value,
+	 * and returns a single list of accounts, with multiple 'amounts' values.
+	 * Each amount in AccountInReportDTO.amounts is equivalent to Account.debitsMinusCredits. 
+	 * CAUTION: This method does not validate inputs.*/
+	public List<AccountInReportDTO> convertListOfListOfAccountBalanceDTOsToListOfAccountInReportDTO(List<List<AccountBalanceDTO>> lists) {
+		List<AccountInReportDTO> returnedList = new ArrayList<AccountInReportDTO>();
+		//if the input list of lists is not empty, use the first list to populate returnedList with the correct number of AccountInReportDTO.
+		if (lists.size() > 0) {
+			for (AccountBalanceDTO account : lists.get(0)) {
+				AccountInReportDTO createdAccountInReportDTO = new AccountInReportDTO(account);
+				returnedList.add(createdAccountInReportDTO);
+			}
+		}
+		//iterate through lists in order to add amount values to AccountInReportDTOs
+		for (List<AccountBalanceDTO> list : lists) {
+			for (int i = 0; i < list.size(); i++) {
+				//this is ugly, sorry. takes the AccountBalanceDTO at index i in list, and appends its debitsMinusCredits to 'amounts' list in the AccountInReportDTO at index i in returnedList
+				returnedList.get(i).getAmounts().add(list.get(i).getDebitsMinusCredits());
+			}
+		}
+		return returnedList;
 	}
 }
