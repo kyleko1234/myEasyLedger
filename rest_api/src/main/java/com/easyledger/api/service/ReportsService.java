@@ -168,10 +168,21 @@ public class ReportsService {
 		//convert list of list of accounts into list of AccountInReportDTO
 		List<AccountInReportDTO> convertedList = convertListOfListOfAccountBalanceDTOsToListOfAccountInReportDTO(listsOfAccountBalancesForDates);
 		//rearrange list of AccountInReportDTO to put children where they belong
+		for (AccountInReportDTO potentialParentAccount : convertedList) {
+			if (potentialParentAccount.isHasChildren()) {
+				for (AccountInReportDTO potentialChildAccount : convertedList) {
+					if (potentialChildAccount.getParentAccountId() != null && potentialChildAccount.getParentAccountId() == potentialParentAccount.getAccountId()) {
+						potentialParentAccount.getChildren().add(potentialChildAccount);
+						convertedList.remove(potentialChildAccount);
+					}
+				}
+			}
+		}
 		//put accounts into correct lists in balance sheet
 		//calculate retained earnings
 		return generatedBalanceSheet;
 	}
+	
 	/* 
 	 * Takes a list of list of AccountBalanceDTOs as an argument.
 	 * This method assumes that the input list only contains lists where the contents differ only by AccountBalanceDTO.debitsMinusCredits
