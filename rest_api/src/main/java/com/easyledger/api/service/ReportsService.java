@@ -179,6 +179,10 @@ public class ReportsService {
 			}
 		}
 		//put accounts into correct lists in balance sheet
+		for (AccountInReportDTO account : convertedList) {
+			//use legacy accountSubtype for formatting first
+			//then use balanceSheetFormatPosition
+		}
 		//calculate retained earnings
 		return generatedBalanceSheet;
 	}
