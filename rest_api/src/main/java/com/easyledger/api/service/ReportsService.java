@@ -180,15 +180,34 @@ public class ReportsService {
 	}
 	
 	public List<AccountSubtypeInReportDTO> sortListOfAccountsIntoSubtypes(List<AccountInReportDTO> listOfAccounts) {
-		List<AccountSubtypeInReportDTO> returnedList = new ArrayList<AccountSubtypeInReportDTO>();
+		List<AccountSubtypeInReportDTO> returnList = new ArrayList<AccountSubtypeInReportDTO>();
 		for (AccountInReportDTO account : listOfAccounts) {
-			
+			int indexOfAccountSubtypeId = findIndexOfAccountSubtypeByIdInListOfDtos(account.getAccountSubtypeId(), returnList);
+			if (indexOfAccountSubtypeId == -1) {
+				AccountSubtypeInReportDTO newSubtype = new AccountSubtypeInReportDTO(account.getAccountSubtypeId(), account.getAccountSubtypeName());
+				newSubtype.getAccounts().add(account);
+			} else {
+				returnList.get(indexOfAccountSubtypeId).getAccounts().add(account);
+			}
 		}
+		//sum accounts for each subtype
+		for (AccountSubtypeInReportDTO subtype : returnList) {
+			subtype.setTotalDebitsMinusCredits(AccountInReportDTO.sumAmountsOfAccounts(subtype.getAccounts()));
+		}
+		//sort by accountsubtypeid?
+		return returnList;
+	}
+	//takes an accountSubtypeId and a list of AccountSubtypeReportDTOs. If any AccountSubtypeDTOs exist for this accountSubtypeId,
+	//return the index of that AccountSubtypeDTO in the list. If none are found, return 0.
+	public int findIndexOfAccountSubtypeByIdInListOfDtos(Long accountSubtypeId, List<AccountSubtypeInReportDTO> list) {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getAccountSubtypeId().equals(accountSubtypeId)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	
-	public boolean findAccountSubtypeByIdInListOfDtos(Long accountSubtypeId) {
-		
-	}
 	//rearrange list of AccountInReportDTO to put children where they belong
 	public void organizeChildAccountsInListOfAccounts(List<AccountInReportDTO> list) {
 		for (AccountInReportDTO potentialParentAccount : list) {
