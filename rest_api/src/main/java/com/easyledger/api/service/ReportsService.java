@@ -12,6 +12,7 @@ import com.easyledger.api.dto.AccountBalanceDTO;
 import com.easyledger.api.dto.AccountDTO;
 import com.easyledger.api.dto.AccountInReportDTO;
 import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
+import com.easyledger.api.dto.AccountSubtypeInReportDTO;
 import com.easyledger.api.dto.AccountTransactionsReportLineItemDTO;
 import com.easyledger.api.dto.BalanceSheetDTO;
 import com.easyledger.api.dto.CustomerIncomeDTO;
@@ -168,16 +169,7 @@ public class ReportsService {
 		//convert list of list of accounts into list of AccountInReportDTO
 		List<AccountInReportDTO> convertedList = convertListOfListOfAccountBalanceDTOsToListOfAccountInReportDTO(listsOfAccountBalancesForDates);
 		//rearrange list of AccountInReportDTO to put children where they belong
-		for (AccountInReportDTO potentialParentAccount : convertedList) {
-			if (potentialParentAccount.isHasChildren()) {
-				for (AccountInReportDTO potentialChildAccount : convertedList) {
-					if (potentialChildAccount.getParentAccountId() != null && potentialChildAccount.getParentAccountId() == potentialParentAccount.getAccountId()) {
-						potentialParentAccount.getChildren().add(potentialChildAccount);
-						convertedList.remove(potentialChildAccount);
-					}
-				}
-			}
-		}
+		organizeChildAccountsInListOfAccounts(convertedList);
 		//put accounts into correct lists in balance sheet
 		for (AccountInReportDTO account : convertedList) {
 			//use legacy accountSubtype for formatting first
@@ -185,6 +177,30 @@ public class ReportsService {
 		}
 		//calculate retained earnings
 		return generatedBalanceSheet;
+	}
+	
+	public List<AccountSubtypeInReportDTO> sortListOfAccountsIntoSubtypes(List<AccountInReportDTO> listOfAccounts) {
+		List<AccountSubtypeInReportDTO> returnedList = new ArrayList<AccountSubtypeInReportDTO>();
+		for (AccountInReportDTO account : listOfAccounts) {
+			
+		}
+	}
+	
+	public boolean findAccountSubtypeByIdInListOfDtos(Long accountSubtypeId) {
+		
+	}
+	//rearrange list of AccountInReportDTO to put children where they belong
+	public void organizeChildAccountsInListOfAccounts(List<AccountInReportDTO> list) {
+		for (AccountInReportDTO potentialParentAccount : list) {
+			if (potentialParentAccount.isHasChildren()) {
+				for (AccountInReportDTO potentialChildAccount : list) {
+					if (potentialChildAccount.getParentAccountId() != null && potentialChildAccount.getParentAccountId() == potentialParentAccount.getAccountId()) {
+						potentialParentAccount.getChildren().add(potentialChildAccount);
+						list.remove(potentialChildAccount);
+					}
+				}
+			}
+		}
 	}
 	
 	/* 

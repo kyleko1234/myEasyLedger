@@ -9,6 +9,7 @@ public class AccountSubtypeInReportDTO {
 	private Long accountSubtypeId;
 	private String accountSubtypeName;
 	private List<AccountInReportDTO> accounts = new ArrayList<AccountInReportDTO>();
+	private List<BigDecimal> totalDebitsMinusCredits = new ArrayList<BigDecimal>();
 	
 	public AccountSubtypeInReportDTO(Long accountSubtypeId, String accountSubtypeName) {
 		super();
@@ -56,6 +57,14 @@ public class AccountSubtypeInReportDTO {
 
 	public void setAccounts(List<AccountInReportDTO> accounts) {
 		this.accounts = accounts;
+	}
+
+	public List<BigDecimal> getTotalDebitsMinusCredits() {
+		return totalDebitsMinusCredits;
+	}
+
+	public void setTotalDebitsMinusCredits(List<BigDecimal> totalDebitsMinusCredits) {
+		this.totalDebitsMinusCredits = totalDebitsMinusCredits;
 	}
 	
 }
