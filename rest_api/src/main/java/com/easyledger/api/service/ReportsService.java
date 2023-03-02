@@ -171,10 +171,51 @@ public class ReportsService {
 		//rearrange list of AccountInReportDTO to put children where they belong
 		organizeChildAccountsInListOfAccounts(convertedList);
 		//put accounts into correct lists in balance sheet
+		List<AccountInReportDTO> currentAssetsAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> nonCurrentAssetsAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> currentLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> nonCurrentLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> paidInCapitalAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> shareBasedCompensationAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> otherEquityItemsAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> dividendsAndEquivalentsAccounts = new ArrayList<AccountInReportDTO>();
+		
 		for (AccountInReportDTO account : convertedList) {
-			//use legacy accountSubtype for formatting first
-			//then use balanceSheetFormatPosition00000
+			if (account.getBalanceSheetFormatPositionId().equals((long)2)) {
+				currentAssetsAccounts.add(account);
+			} else if (account.getBalanceSheetFormatPositionId().equals((long)3)) {
+				nonCurrentAssetsAccounts.add(account);
+			} else if (account.getBalanceSheetFormatPositionId().equals((long)4)) {
+				currentLiabilitiesAccounts.add(account);
+			} else if (account.getBalanceSheetFormatPositionId().equals((long)5)) {
+				nonCurrentLiabilitiesAccounts.add(account);
+			} else if (account.getBalanceSheetFormatPositionId().equals((long)6)) {
+				paidInCapitalAccounts.add(account);
+			} else if (account.getBalanceSheetFormatPositionId().equals((long)7)) {
+				shareBasedCompensationAccounts.add(account);
+			} else if (account.getBalanceSheetFormatPositionId().equals((long)8)) {
+				dividendsAndEquivalentsAccounts.add(account);
+			} else if (account.getBalanceSheetFormatPositionId().equals((long)9)) {
+				otherEquityItemsAccounts.add(account);
+			}
 		}
+		generatedBalanceSheet.setDateRanges(dates);
+		generatedBalanceSheet.setCurrentAssetsSubtypes(sortListOfAccountsIntoSubtypes(currentAssetsAccounts));
+		generatedBalanceSheet.setTotalCurrentAssets(AccountSubtypeInReportDTO.sumSubtypes(generatedBalanceSheet.getCurrentAssetsSubtypes()));
+		generatedBalanceSheet.setNonCurrentAssetsSubtypes(sortListOfAccountsIntoSubtypes(nonCurrentAssetsAccounts));
+		generatedBalanceSheet.setTotalNonCurrentAssets(AccountSubtypeInReportDTO.sumSubtypes(generatedBalanceSheet.getNonCurrentAssetsSubtypes()));
+		generatedBalanceSheet.setCurrentLiabilitiesSubtypes(sortListOfAccountsIntoSubtypes(currentLiabilitiesAccounts));
+		generatedBalanceSheet.setTotalCurrentLiabilities(AccountSubtypeInReportDTO.sumSubtypes(generatedBalanceSheet.getCurrentLiabilitiesSubtypes()));
+		generatedBalanceSheet.setNonCurrentLiabilitiesSubtypes(sortListOfAccountsIntoSubtypes(nonCurrentLiabilitiesAccounts));
+		generatedBalanceSheet.setTotalNonCurrentLiabilities(AccountSubtypeInReportDTO.sumSubtypes(generatedBalanceSheet.getNonCurrentLiabilitiesSubtypes()));
+		generatedBalanceSheet.setPaidInCapitalAccounts(paidInCapitalAccounts);
+		generatedBalanceSheet.setTotalPaidInCapital(AccountInReportDTO.sumAmountsOfAccounts(paidInCapitalAccounts));
+		generatedBalanceSheet.setShareBasedCompensationAccounts(shareBasedCompensationAccounts);
+		generatedBalanceSheet.setTotalShareBasedCompensation(AccountInReportDTO.sumAmountsOfAccounts(shareBasedCompensationAccounts));
+		generatedBalanceSheet.setOtherEquityItemsAccounts(otherEquityItemsAccounts);
+		generatedBalanceSheet.setTotalOtherEquityItems(AccountInReportDTO.sumAmountsOfAccounts(otherEquityItemsAccounts));
+		generatedBalanceSheet.setDividendsAndEquivalentsAccounts(dividendsAndEquivalentsAccounts);
+		generatedBalanceSheet.setTotalDividendsAndEquivalents(AccountInReportDTO.sumAmountsOfAccounts(dividendsAndEquivalentsAccounts));
 		//calculate retained earnings
 		return generatedBalanceSheet;
 	}
