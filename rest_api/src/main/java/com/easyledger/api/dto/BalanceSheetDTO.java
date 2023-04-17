@@ -1,6 +1,7 @@
 package com.easyledger.api.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,15 @@ public class BalanceSheetDTO {
 	private List<BigDecimal> totalShareBasedCompensation = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> otherEquityItemsAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalOtherEquityItems = new ArrayList<BigDecimal>();
+	private List<LocalDate> previousPeriodEndDates = new ArrayList<LocalDate>();
+	private List<LocalDate> currentPeriodStartDates = new ArrayList<LocalDate>();
 	private List<BigDecimal> retainedEarningsBeginningBalances = new ArrayList<BigDecimal>();
-	private List<AccountInReportDTO> dividendsAndEquivalentsAccounts = new ArrayList<AccountInReportDTO>();
-	private List<BigDecimal> totalDividendsAndEquivalents = new ArrayList<BigDecimal>();
+	private List<AccountInReportDTO> dividendsAndEquivalentsAccountsPreviousPeriod = new ArrayList<AccountInReportDTO>();
+	private List<BigDecimal> totalDividendsAndEquivalentsPreviousPeriod = new ArrayList<BigDecimal>();
+	private List<BigDecimal> netIncomePreviousPeriod = new ArrayList<BigDecimal>();
+	private List<AccountInReportDTO> dividendsAndEquivalentsAccountsCurrentPeriod = new ArrayList<AccountInReportDTO>();
+	private List<BigDecimal> netIncomeCurrentPeriod = new ArrayList<BigDecimal>();
+	private List<BigDecimal> totalDividendsAndEquivalentsCurrentPeriod = new ArrayList<BigDecimal>();
 	private List<BigDecimal> retainedEarningsEndingBalances = new ArrayList<BigDecimal>();
 	
 	
@@ -116,8 +123,8 @@ public class BalanceSheetDTO {
 	}
 
 
-	public void setTotalNonCurrentLiabilities(List<BigDecimal> tptalNonCurrentLiabilities) {
-		this.totalNonCurrentLiabilities = tptalNonCurrentLiabilities;
+	public void setTotalNonCurrentLiabilities(List<BigDecimal> totalNonCurrentLiabilities) {
+		this.totalNonCurrentLiabilities = totalNonCurrentLiabilities;
 	}
 
 
@@ -181,6 +188,26 @@ public class BalanceSheetDTO {
 	}
 
 
+	public List<LocalDate> getPreviousPeriodEndDates() {
+		return previousPeriodEndDates;
+	}
+
+
+	public void setPreviousPeriodEndDates(List<LocalDate> previousPeriodEndDates) {
+		this.previousPeriodEndDates = previousPeriodEndDates;
+	}
+
+
+	public List<LocalDate> getCurrentPeriodStartDates() {
+		return currentPeriodStartDates;
+	}
+
+
+	public void setCurrentPeriodStartDates(List<LocalDate> currentPeriodStartDates) {
+		this.currentPeriodStartDates = currentPeriodStartDates;
+	}
+
+
 	public List<BigDecimal> getRetainedEarningsBeginningBalances() {
 		return retainedEarningsBeginningBalances;
 	}
@@ -191,23 +218,65 @@ public class BalanceSheetDTO {
 	}
 
 
-	public List<AccountInReportDTO> getDividendsAndEquivalentsAccounts() {
-		return dividendsAndEquivalentsAccounts;
+	public List<AccountInReportDTO> getDividendsAndEquivalentsAccountsPreviousPeriod() {
+		return dividendsAndEquivalentsAccountsPreviousPeriod;
 	}
 
 
-	public void setDividendsAndEquivalentsAccounts(List<AccountInReportDTO> dividendsAndEquivalentsAccounts) {
-		this.dividendsAndEquivalentsAccounts = dividendsAndEquivalentsAccounts;
+	public void setDividendsAndEquivalentsAccountsPreviousPeriod(
+			List<AccountInReportDTO> dividendsAndEquivalentsAccountsPreviousPeriod) {
+		this.dividendsAndEquivalentsAccountsPreviousPeriod = dividendsAndEquivalentsAccountsPreviousPeriod;
 	}
 
 
-	public List<BigDecimal> getTotalDividendsAndEquivalents() {
-		return totalDividendsAndEquivalents;
+	public List<BigDecimal> getTotalDividendsAndEquivalentsPreviousPeriod() {
+		return totalDividendsAndEquivalentsPreviousPeriod;
 	}
 
 
-	public void setTotalDividendsAndEquivalents(List<BigDecimal> totalDividendsAndEquivalents) {
-		this.totalDividendsAndEquivalents = totalDividendsAndEquivalents;
+	public void setTotalDividendsAndEquivalentsPreviousPeriod(List<BigDecimal> totalDividendsAndEquivalentsPreviousPeriod) {
+		this.totalDividendsAndEquivalentsPreviousPeriod = totalDividendsAndEquivalentsPreviousPeriod;
+	}
+
+
+	public List<BigDecimal> getNetIncomePreviousPeriod() {
+		return netIncomePreviousPeriod;
+	}
+
+
+	public void setNetIncomePreviousPeriod(List<BigDecimal> netIncomePreviousPeriod) {
+		this.netIncomePreviousPeriod = netIncomePreviousPeriod;
+	}
+
+
+	public List<AccountInReportDTO> getDividendsAndEquivalentsAccountsCurrentPeriod() {
+		return dividendsAndEquivalentsAccountsCurrentPeriod;
+	}
+
+
+	public void setDividendsAndEquivalentsAccountsCurrentPeriod(
+			List<AccountInReportDTO> dividendsAndEquivalentsAccountsCurrentPeriod) {
+		this.dividendsAndEquivalentsAccountsCurrentPeriod = dividendsAndEquivalentsAccountsCurrentPeriod;
+	}
+
+
+	public List<BigDecimal> getNetIncomeCurrentPeriod() {
+		return netIncomeCurrentPeriod;
+	}
+
+
+	public void setNetIncomeCurrentPeriod(List<BigDecimal> netIncomeCurrentPeriod) {
+		this.netIncomeCurrentPeriod = netIncomeCurrentPeriod;
+	}
+
+
+	public List<BigDecimal> getTotalDividendsAndEquivalentsCurrentPeriod() {
+		return totalDividendsAndEquivalentsCurrentPeriod;
+	}
+
+
+	public void setTotalDividendsAndEquivalentsCurrentPeriod(List<BigDecimal> totalDividendsAndEquivalentsCurrentPeriod) {
+		this.totalDividendsAndEquivalentsCurrentPeriod = totalDividendsAndEquivalentsCurrentPeriod;
 	}
 
 
@@ -219,7 +288,6 @@ public class BalanceSheetDTO {
 	public void setRetainedEarningsEndingBalances(List<BigDecimal> retainedEarningsEndingBalances) {
 		this.retainedEarningsEndingBalances = retainedEarningsEndingBalances;
 	}
-	
 
-	
+
 }

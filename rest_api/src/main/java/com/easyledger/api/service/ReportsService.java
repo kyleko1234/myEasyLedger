@@ -158,8 +158,11 @@ public class ReportsService {
 		return new IncomeByCustomerReportViewModel(customerIncomeDTOs, totalIncome);
 	}
 
-	public BalanceSheetDTO generateBalanceSheet(Long organizationId, List<DateRangeDTO> dates) {
+	public BalanceSheetDTO generateBalanceSheet(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException {
 		BalanceSheetDTO generatedBalanceSheet = new BalanceSheetDTO();
+		Organization organization = organizationRepo.findById(organizationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+
 		List<List<AccountBalanceDTO>> listsOfAccountBalancesForDates = new ArrayList<List<AccountBalanceDTO>>();
 		//fetch a list of accounts for each date range
 		for (DateRangeDTO dateRange : dates) {
@@ -214,9 +217,30 @@ public class ReportsService {
 		generatedBalanceSheet.setTotalShareBasedCompensation(AccountInReportDTO.sumAmountsOfAccounts(shareBasedCompensationAccounts));
 		generatedBalanceSheet.setOtherEquityItemsAccounts(otherEquityItemsAccounts);
 		generatedBalanceSheet.setTotalOtherEquityItems(AccountInReportDTO.sumAmountsOfAccounts(otherEquityItemsAccounts));
-		generatedBalanceSheet.setDividendsAndEquivalentsAccounts(dividendsAndEquivalentsAccounts);
-		generatedBalanceSheet.setTotalDividendsAndEquivalents(AccountInReportDTO.sumAmountsOfAccounts(dividendsAndEquivalentsAccounts));
+		//get end dates for prev periods and start dates for curr periods using fiscal year begin date
+		List<LocalDate> previousPeriodEndDates = new ArrayList<LocalDate>();
+		List<LocalDate> currentPeriodStartDates = new ArrayList<LocalDate>();
+		
+		LocalDate fiscalYearEnd = organization.getFiscalYearBegin().minusDays(1);
+		
+		for (DateRangeDTO dateRangeDto : dates) {
+			LocalDate previousFiscalYearEnd;
+			if (fiscalYearEnd.withYear(dateRangeDto.getEndDate().getYear()).compareTo(dateRangeDto.getEndDate()) >= 0) {
+				previousFiscalYearEnd = fiscalYearEnd.withYear(dateRangeDto.getEndDate().getYear() -1);
+			} else {
+				previousFiscalYearEnd = fiscalYearEnd.withYear(dateRangeDto.getEndDate().getYear());
+			}
+			LocalDate currentFiscalYearBegin = previousFiscalYearEnd.plusDays(1);
+			previousPeriodEndDates.add(previousFiscalYearEnd);
+			currentPeriodStartDates.add(currentFiscalYearBegin);
+		}
+		generatedBalanceSheet.setPreviousPeriodEndDates(previousPeriodEndDates);
+		generatedBalanceSheet.setCurrentPeriodStartDates(currentPeriodStartDates);
 		//calculate retained earnings
+		//get previous period net income
+		//generatedBalanceSheet.setDividendsAndEquivalentsAccountsCurent(dividendsAndEquivalentsAccounts);
+		//generatedBalanceSheet.setTotalDividendsAndEquivalents(AccountInReportDTO.sumAmountsOfAccounts(dividendsAndEquivalentsAccounts));
+		
 		return generatedBalanceSheet;
 	}
 	
