@@ -3,6 +3,7 @@ package com.easyledger.api.service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -237,6 +238,9 @@ public class ReportsService {
 		generatedBalanceSheet.setPreviousPeriodEndDates(previousPeriodEndDates);
 		generatedBalanceSheet.setCurrentPeriodStartDates(currentPeriodStartDates);
 		//calculate retained earnings
+		BigDecimal[] initialRetainedEarningsArray = {organization.getInitialRetainedEarnings(), organization.getInitialRetainedEarnings(), organization.getInitialRetainedEarnings()};
+		List<BigDecimal> initialRetainedEarnings = Arrays.asList(initialRetainedEarningsArray);
+		
 		//get previous period net income
 		//generatedBalanceSheet.setDividendsAndEquivalentsAccountsCurent(dividendsAndEquivalentsAccounts);
 		//generatedBalanceSheet.setTotalDividendsAndEquivalents(AccountInReportDTO.sumAmountsOfAccounts(dividendsAndEquivalentsAccounts));

@@ -38,4 +38,25 @@ public final class Utility {
 		}
 		return returnedList;
 	}
+	
+	public static List<BigDecimal> subtractLists(List<BigDecimal> list1, List<BigDecimal> list2) {
+		ArrayList<BigDecimal> returnedList = new ArrayList<BigDecimal>();
+		List<BigDecimal> largerList;
+		List<BigDecimal> smallerList;
+		if (list1.size() >= list2.size()) {
+			largerList = list1;
+			smallerList = list2;
+		} else {
+			largerList = list2;
+			smallerList = list1;
+		}
+		for (int i = 0; i < largerList.size(); i++) {
+			if (i >= smallerList.size()) {
+				returnedList.add(largerList.get(i).negate());
+			} else {
+				returnedList.add(largerList.get(i).subtract(smallerList.get(i)));
+			}
+		}
+		return returnedList;
+	}
 }
