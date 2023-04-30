@@ -182,7 +182,6 @@ public class ReportsService {
 		List<AccountInReportDTO> paidInCapitalAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> shareBasedCompensationAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> otherEquityItemsAccounts = new ArrayList<AccountInReportDTO>();
-		List<AccountInReportDTO> dividendsAndEquivalentsAccounts = new ArrayList<AccountInReportDTO>();
 		
 		for (AccountInReportDTO account : convertedList) {
 			if (account.getBalanceSheetFormatPositionId().equals((long)2)) {
@@ -197,8 +196,6 @@ public class ReportsService {
 				paidInCapitalAccounts.add(account);
 			} else if (account.getBalanceSheetFormatPositionId().equals((long)7)) {
 				shareBasedCompensationAccounts.add(account);
-			} else if (account.getBalanceSheetFormatPositionId().equals((long)8)) {
-				dividendsAndEquivalentsAccounts.add(account);
 			} else if (account.getBalanceSheetFormatPositionId().equals((long)9)) {
 				otherEquityItemsAccounts.add(account);
 			}
@@ -237,15 +234,67 @@ public class ReportsService {
 		}
 		generatedBalanceSheet.setPreviousPeriodEndDates(previousPeriodEndDates);
 		generatedBalanceSheet.setCurrentPeriodStartDates(currentPeriodStartDates);
+		
 		//calculate retained earnings
 		BigDecimal[] initialRetainedEarningsArray = {organization.getInitialRetainedEarnings(), organization.getInitialRetainedEarnings(), organization.getInitialRetainedEarnings()};
 		List<BigDecimal> initialRetainedEarnings = Arrays.asList(initialRetainedEarningsArray);
-		
 		//get previous period net income
-		//generatedBalanceSheet.setDividendsAndEquivalentsAccountsCurent(dividendsAndEquivalentsAccounts);
-		//generatedBalanceSheet.setTotalDividendsAndEquivalents(AccountInReportDTO.sumAmountsOfAccounts(dividendsAndEquivalentsAccounts));
+		List<BigDecimal> previousPeriodNetIncome = new ArrayList<BigDecimal>();
+		for (LocalDate endDate : previousPeriodEndDates) {
+			previousPeriodNetIncome.add(getNetIncomeForOrganizationBetweenDates(organizationId, LocalDate.parse("0000-01-01"), endDate));
+		}
+		generatedBalanceSheet.setNetIncomePreviousPeriod(previousPeriodNetIncome);
+		
+		//get previous period dividends
+		List<List<AccountBalanceDTO>> listsOfPrevPeriodAccountBalancesForDates = new ArrayList<List<AccountBalanceDTO>>();
+		for (LocalDate date : previousPeriodEndDates) {
+			List<AccountBalanceDTO> accountBalancesUpToDate = accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, date);
+			listsOfPrevPeriodAccountBalancesForDates.add(accountBalancesUpToDate);
+		}
+		List<AccountInReportDTO> convertedListOfPrevPeriodAccounts = convertListOfListOfAccountBalanceDTOsToListOfAccountInReportDTO(listsOfPrevPeriodAccountBalancesForDates);
+		organizeChildAccountsInListOfAccounts(convertedListOfPrevPeriodAccounts);
+		List<AccountInReportDTO> dividendsAndEquivalentsAccountsPreviousPeriod = new ArrayList<AccountInReportDTO>();
+		for (AccountInReportDTO account : convertedListOfPrevPeriodAccounts) {
+			if (account.getBalanceSheetFormatPositionId().equals((long)8)) {
+				dividendsAndEquivalentsAccountsPreviousPeriod.add(account);
+			}
+		}
+		generatedBalanceSheet.setDividendsAndEquivalentsAccountsPreviousPeriod(dividendsAndEquivalentsAccountsPreviousPeriod);
+		List<BigDecimal> totalDividendsAndEquivalentsPreviousPeriod = AccountInReportDTO.sumAmountsOfAccounts(dividendsAndEquivalentsAccountsPreviousPeriod);
+		generatedBalanceSheet.setTotalDividendsAndEquivalentsPreviousPeriod(totalDividendsAndEquivalentsPreviousPeriod);
+		
+		//get current Period Net Income
+		List<BigDecimal> currentPeriodNetIncome = new ArrayList<BigDecimal>();
+		for (int i = 0; i < dates.size(); i++) {
+			currentPeriodNetIncome.add(getNetIncomeForOrganizationBetweenDates(organizationId, currentPeriodStartDates.get(i), dates.get(i).getEndDate()));
+		}
+		generatedBalanceSheet.setNetIncomeCurrentPeriod(currentPeriodNetIncome);
+		
+		//get current period dividends
+		List<List<AccountDTO>> listsOfCurrPeriodAccountBalancesForDates = new ArrayList<List<AccountDTO>>();
+		for (int i = 0; i < dates.size(); i++) {
+			List<AccountDTO> accountBalancesUpToDate = accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, currentPeriodStartDates.get(i), dates.get(i).getEndDate());
+			listsOfCurrPeriodAccountBalancesForDates.add(accountBalancesUpToDate);
+		}
+		List<AccountInReportDTO> convertedListOfCurrPeriodAccounts = convertListOfListOfAccountDTOsToListOfAccountInReportDTO(listsOfCurrPeriodAccountBalancesForDates);
+		organizeChildAccountsInListOfAccounts(convertedListOfCurrPeriodAccounts);
+		List<AccountInReportDTO> dividendsAndEquivalentsAccountsCurrentPeriod = new ArrayList<AccountInReportDTO>();
+		for (AccountInReportDTO account : convertedListOfCurrPeriodAccounts) {
+			if (account.getBalanceSheetFormatPositionId().equals((long)8)) {
+				dividendsAndEquivalentsAccountsCurrentPeriod.add(account);
+			}
+		}
+		generatedBalanceSheet.setDividendsAndEquivalentsAccountsCurrentPeriod(dividendsAndEquivalentsAccountsCurrentPeriod);
+		List<BigDecimal> totalDividendsAndEquivalentsCurrentPeriod = AccountInReportDTO.sumAmountsOfAccounts(dividendsAndEquivalentsAccountsCurrentPeriod);
+		generatedBalanceSheet.setTotalDividendsAndEquivalentsCurrentPeriod(totalDividendsAndEquivalentsCurrentPeriod);
+
 		
 		return generatedBalanceSheet;
+	}
+	
+	public BigDecimal getNetIncomeForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate) {
+		return organizationRepo.getTotalIncomeForOrganizationBetweenDates(organizationId, startDate, endDate)
+				.subtract(organizationRepo.getTotalExpensesForOrganizationBetweenDates(organizationId, startDate, endDate));
 	}
 	
 	public List<AccountSubtypeInReportDTO> sortListOfAccountsIntoSubtypes(List<AccountInReportDTO> listOfAccounts) {
@@ -284,11 +333,16 @@ public class ReportsService {
 				for (AccountInReportDTO potentialChildAccount : list) {
 					if (potentialChildAccount.getParentAccountId() != null && potentialChildAccount.getParentAccountId() == potentialParentAccount.getAccountId()) {
 						potentialParentAccount.getChildren().add(potentialChildAccount);
-						list.remove(potentialChildAccount);
 					}
 				}
 			}
 		}
+		for (int i = list.size() - 1; i >= 0; --i) {
+	        if(list.get(i).getParentAccountId() != null) {
+	        	list.remove(i);
+	        }
+		}
+
 	}
 	
 	/* 
@@ -314,6 +368,25 @@ public class ReportsService {
 		for (List<AccountBalanceDTO> list : lists) {
 			for (int i = 0; i < list.size(); i++) {
 				//this is ugly, sorry. takes the AccountBalanceDTO at index i in list, and appends its debitsMinusCredits to 'amounts' list in the AccountInReportDTO at index i in returnedList
+				returnedList.get(i).getAmounts().add(list.get(i).getDebitsMinusCredits());
+			}
+		}
+		return returnedList;
+	}
+	// same as above, but for AccountDTO
+	public List<AccountInReportDTO> convertListOfListOfAccountDTOsToListOfAccountInReportDTO(List<List<AccountDTO>> lists) {
+		List<AccountInReportDTO> returnedList = new ArrayList<AccountInReportDTO>();
+		//if the input list of lists is not empty, use the first list to populate returnedList with the correct number of AccountInReportDTO.
+		if (lists.size() > 0) {
+			for (AccountDTO account : lists.get(0)) {
+				AccountInReportDTO createdAccountInReportDTO = new AccountInReportDTO(account);
+				returnedList.add(createdAccountInReportDTO);
+			}
+		}
+		//iterate through lists in order to add amount values to AccountInReportDTOs
+		for (List<AccountDTO> list : lists) {
+			for (int i = 0; i < list.size(); i++) {
+				//this is ugly, sorry. takes the AccountDTO at index i in list, and appends its debitsMinusCredits to 'amounts' list in the AccountInReportDTO at index i in returnedList
 				returnedList.get(i).getAmounts().add(list.get(i).getDebitsMinusCredits());
 			}
 		}

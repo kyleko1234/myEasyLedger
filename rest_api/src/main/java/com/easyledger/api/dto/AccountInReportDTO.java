@@ -52,6 +52,26 @@ public class AccountInReportDTO {
 		this.relevantToDepreciationAmortization = accountBalanceDTO.isRelevantToDepreciationAmortization();
 		this.hasChildren = accountBalanceDTO.isHasChildren();
 	}
+	public AccountInReportDTO(AccountDTO accountDTO) {
+		this.accountId = accountDTO.getAccountId();
+		this.accountName = accountDTO.getAccountName();
+		this.accountCode = accountDTO.getAccountCode();
+		this.accountSubtypeId = accountDTO.getAccountSubtypeId();
+		this.accountSubtypeName = accountDTO.getAccountSubtypeName();
+		this.accountTypeId = accountDTO.getAccountTypeId();
+		this.accountTypeName = accountDTO.getAccountTypeName();
+		this.parentAccountId = accountDTO.getParentAccountId();
+		this.parentAccountName = accountDTO.getParentAccountName();
+		this.incomeStatementFormatPositionId = accountDTO.getIncomeStatementFormatPositionId();
+		this.cashFlowFormatPositionId = accountDTO.getCashFlowFormatPositionId();
+		this.balanceSheetFormatPositionId = accountDTO.getBalanceSheetFormatPositionId();
+		this.cashItem = accountDTO.isCashItem();
+		this.relevantToTaxesPaid = accountDTO.isRelevantToTaxesPaid();
+		this.relevantToInterestPaid = accountDTO.isRelevantToInterestPaid();
+		this.relevantToDividendsPaid = accountDTO.isRelevantToDividendsPaid();
+		this.relevantToDepreciationAmortization = accountDTO.isRelevantToDepreciationAmortization();
+		this.hasChildren = accountDTO.isHasChildren();
+	}
 	/*
 	 * Takes a collection of AccountInReportDTOs.
 	 * Returns a list of the sums of amounts. 
