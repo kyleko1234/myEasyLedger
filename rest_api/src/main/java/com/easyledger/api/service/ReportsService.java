@@ -304,6 +304,7 @@ public class ReportsService {
 			if (indexOfAccountSubtypeId == -1) {
 				AccountSubtypeInReportDTO newSubtype = new AccountSubtypeInReportDTO(account.getAccountSubtypeId(), account.getAccountSubtypeName());
 				newSubtype.getAccounts().add(account);
+				returnList.add(newSubtype);
 			} else {
 				returnList.get(indexOfAccountSubtypeId).getAccounts().add(account);
 			}
