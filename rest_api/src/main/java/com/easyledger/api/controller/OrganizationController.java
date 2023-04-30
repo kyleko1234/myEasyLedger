@@ -140,6 +140,7 @@ public class OrganizationController {
 		//only allow users to change certain fields, see below
 		oldOrganization.setName(organization.getName()); 
 		oldOrganization.setFiscalYearBegin(organization.getFiscalYearBegin());
+		oldOrganization.setInitialRetainedEarnings(organization.getInitialRetainedEarnings());
 		oldOrganization.setLockInitialAccountValues(organization.isLockInitialAccountValues());
 		oldOrganization.setLockJournalEntriesBefore(organization.getLockJournalEntriesBefore());
 		return organizationRepo.save(oldOrganization);

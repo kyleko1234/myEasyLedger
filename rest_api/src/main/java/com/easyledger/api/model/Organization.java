@@ -1,5 +1,6 @@
 package com.easyledger.api.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -94,6 +95,9 @@ public class Organization {
 	
 	@Column(name = "is_enterprise")
 	private boolean isEnterprise;
+	
+	@Column(name = "initial_retained_earnings")
+	private BigDecimal initialRetainedEarnings = new BigDecimal(0);
 	
 	@Column(name = "fiscal_year_begin")
 	private LocalDate fiscalYearBegin = LocalDate.parse("2020-01-01");
@@ -242,6 +246,14 @@ public class Organization {
 
 	public void setLockJournalEntriesBefore(LocalDate lockJournalEntriesBefore) {
 		this.lockJournalEntriesBefore = lockJournalEntriesBefore;
+	}
+
+	public BigDecimal getInitialRetainedEarnings() {
+		return initialRetainedEarnings;
+	}
+
+	public void setInitialRetainedEarnings(BigDecimal initialRetainedEarnings) {
+		this.initialRetainedEarnings = initialRetainedEarnings;
 	}
 
 
