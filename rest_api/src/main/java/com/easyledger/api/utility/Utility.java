@@ -59,4 +59,12 @@ public final class Utility {
 		}
 		return returnedList;
 	}
+	
+	public static List<BigDecimal> negateList(List<BigDecimal> list) {
+		List<BigDecimal> returnedList = new ArrayList<BigDecimal>();
+		for (BigDecimal bigDecimal : list) {
+			returnedList.add(bigDecimal.negate());
+		}
+		return returnedList;
+	}
 }

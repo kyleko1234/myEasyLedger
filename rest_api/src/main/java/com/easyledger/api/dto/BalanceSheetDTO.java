@@ -312,7 +312,6 @@ public class BalanceSheetDTO {
 		this.retainedEarningsEndingBalances = retainedEarningsEndingBalances;
 	}
 
-
 	public List<BigDecimal> getTotalEquity() {
 		return totalEquity;
 	}
