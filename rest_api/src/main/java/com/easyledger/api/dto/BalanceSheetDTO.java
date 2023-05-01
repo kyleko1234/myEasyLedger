@@ -12,10 +12,12 @@ public class BalanceSheetDTO {
 	private List<BigDecimal> totalCurrentAssets = new ArrayList<BigDecimal>();
 	private List<AccountSubtypeInReportDTO> nonCurrentAssetsSubtypes = new ArrayList<AccountSubtypeInReportDTO>();
 	private List<BigDecimal> totalNonCurrentAssets = new ArrayList<BigDecimal>();
+	private List<BigDecimal> totalAssets = new ArrayList<BigDecimal>();
 	private List<AccountSubtypeInReportDTO> currentLiabilitiesSubtypes = new ArrayList<AccountSubtypeInReportDTO>();
 	private List<BigDecimal> totalCurrentLiabilities = new ArrayList<BigDecimal>();
 	private List<AccountSubtypeInReportDTO> nonCurrentLiabilitiesSubtypes = new ArrayList<AccountSubtypeInReportDTO>();
 	private List<BigDecimal> totalNonCurrentLiabilities = new ArrayList<BigDecimal>();
+	private List<BigDecimal> totalLiabilities = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> paidInCapitalAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalPaidInCapital = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> shareBasedCompensationAccounts = new ArrayList<AccountInReportDTO>();
@@ -32,6 +34,7 @@ public class BalanceSheetDTO {
 	private List<BigDecimal> netIncomeCurrentPeriod = new ArrayList<BigDecimal>();
 	private List<BigDecimal> totalDividendsAndEquivalentsCurrentPeriod = new ArrayList<BigDecimal>();
 	private List<BigDecimal> retainedEarningsEndingBalances = new ArrayList<BigDecimal>();
+	private List<BigDecimal> totalEquity = new ArrayList<BigDecimal>();
 	
 	
 	public BalanceSheetDTO() {
@@ -88,6 +91,16 @@ public class BalanceSheetDTO {
 	}
 
 
+	public List<BigDecimal> getTotalAssets() {
+		return totalAssets;
+	}
+
+
+	public void setTotalAssets(List<BigDecimal> totalAssets) {
+		this.totalAssets = totalAssets;
+	}
+
+
 	public List<AccountSubtypeInReportDTO> getCurrentLiabilitiesSubtypes() {
 		return currentLiabilitiesSubtypes;
 	}
@@ -125,6 +138,16 @@ public class BalanceSheetDTO {
 
 	public void setTotalNonCurrentLiabilities(List<BigDecimal> totalNonCurrentLiabilities) {
 		this.totalNonCurrentLiabilities = totalNonCurrentLiabilities;
+	}
+
+
+	public List<BigDecimal> getTotalLiabilities() {
+		return totalLiabilities;
+	}
+
+
+	public void setTotalLiabilities(List<BigDecimal> totalLiabilities) {
+		this.totalLiabilities = totalLiabilities;
 	}
 
 
@@ -287,6 +310,16 @@ public class BalanceSheetDTO {
 
 	public void setRetainedEarningsEndingBalances(List<BigDecimal> retainedEarningsEndingBalances) {
 		this.retainedEarningsEndingBalances = retainedEarningsEndingBalances;
+	}
+
+
+	public List<BigDecimal> getTotalEquity() {
+		return totalEquity;
+	}
+
+
+	public void setTotalEquity(List<BigDecimal> totalEquity) {
+		this.totalEquity = totalEquity;
 	}
 
 

@@ -316,6 +316,7 @@ public class ReportsService {
 		//sort by accountsubtypeid?
 		return returnList;
 	}
+	
 	//takes an accountSubtypeId and a list of AccountSubtypeReportDTOs. If any AccountSubtypeDTOs exist for this accountSubtypeId,
 	//return the index of that AccountSubtypeDTO in the list. If none are found, return 0.
 	public int findIndexOfAccountSubtypeByIdInListOfDtos(Long accountSubtypeId, List<AccountSubtypeInReportDTO> list) {
@@ -343,7 +344,11 @@ public class ReportsService {
 	        	list.remove(i);
 	        }
 		}
-
+		for (AccountInReportDTO topLevelAccount : list) {
+			if (topLevelAccount.isHasChildren()) {
+				topLevelAccount.setAmounts(AccountInReportDTO.sumAmountsOfAccounts(topLevelAccount.getChildren()));
+			}
+		}
 	}
 	
 	/* 
