@@ -94,6 +94,19 @@ public class AccountInReportDTO {
 		}
 		return summedAmounts;
 	}
+	
+	public static void negateAmountsOfAccounts(Collection<AccountInReportDTO> accounts) {
+		for (AccountInReportDTO account : accounts) {
+			List<BigDecimal> newAmounts = new ArrayList<BigDecimal>();
+			for (BigDecimal amount : account.getAmounts()) {
+				newAmounts.add(amount.negate());
+			}
+			account.setAmounts(newAmounts);
+			if (account.children.size() != 0) {
+				negateAmountsOfAccounts(account.getChildren());
+			}
+		}
+	}
 
 	public Long getAccountId() {
 		return accountId;

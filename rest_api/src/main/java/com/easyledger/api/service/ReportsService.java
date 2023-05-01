@@ -28,6 +28,7 @@ import com.easyledger.api.repository.AccountSubtypeRepository;
 import com.easyledger.api.repository.CustomerRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.VendorRepository;
+import com.easyledger.api.utility.Utility;
 import com.easyledger.api.viewmodel.AccountTransactionsReportViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetAssetsViewModel;
 import com.easyledger.api.viewmodel.BalanceSheetEquityViewModel;
@@ -200,6 +201,12 @@ public class ReportsService {
 				otherEquityItemsAccounts.add(account);
 			}
 		}
+		AccountInReportDTO.negateAmountsOfAccounts(currentLiabilitiesAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(nonCurrentLiabilitiesAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(paidInCapitalAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(shareBasedCompensationAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(otherEquityItemsAccounts);
+		
 		generatedBalanceSheet.setDateRanges(dates);
 		generatedBalanceSheet.setCurrentAssetsSubtypes(sortListOfAccountsIntoSubtypes(currentAssetsAccounts));
 		generatedBalanceSheet.setTotalCurrentAssets(AccountSubtypeInReportDTO.sumSubtypes(generatedBalanceSheet.getCurrentAssetsSubtypes()));
@@ -236,8 +243,10 @@ public class ReportsService {
 		generatedBalanceSheet.setCurrentPeriodStartDates(currentPeriodStartDates);
 		
 		//calculate retained earnings
-		BigDecimal[] initialRetainedEarningsArray = {organization.getInitialRetainedEarnings(), organization.getInitialRetainedEarnings(), organization.getInitialRetainedEarnings()};
-		List<BigDecimal> initialRetainedEarnings = Arrays.asList(initialRetainedEarningsArray);
+		List<BigDecimal> initialRetainedEarnings = new ArrayList<BigDecimal>();
+		for (DateRangeDTO date : dates) {
+			initialRetainedEarnings.add(organization.getInitialRetainedEarnings());
+		}
 		//get previous period net income
 		List<BigDecimal> previousPeriodNetIncome = new ArrayList<BigDecimal>();
 		for (LocalDate endDate : previousPeriodEndDates) {
@@ -287,7 +296,17 @@ public class ReportsService {
 		generatedBalanceSheet.setDividendsAndEquivalentsAccountsCurrentPeriod(dividendsAndEquivalentsAccountsCurrentPeriod);
 		List<BigDecimal> totalDividendsAndEquivalentsCurrentPeriod = AccountInReportDTO.sumAmountsOfAccounts(dividendsAndEquivalentsAccountsCurrentPeriod);
 		generatedBalanceSheet.setTotalDividendsAndEquivalentsCurrentPeriod(totalDividendsAndEquivalentsCurrentPeriod);
-
+		
+		//calculate retained earnings
+		List<BigDecimal> retainedEarningsBeginningBalances = Utility.addLists(initialRetainedEarnings, Utility.subtractLists(previousPeriodNetIncome, totalDividendsAndEquivalentsPreviousPeriod));
+		generatedBalanceSheet.setRetainedEarningsBeginningBalances(retainedEarningsBeginningBalances);
+		List<BigDecimal> retainedEarningsEndingBalances = Utility.addLists(retainedEarningsBeginningBalances, Utility.subtractLists(currentPeriodNetIncome, totalDividendsAndEquivalentsCurrentPeriod));
+		generatedBalanceSheet.setRetainedEarningsEndingBalances(retainedEarningsEndingBalances);
+		
+		List<BigDecimal> capitalPlusShareCompensation = Utility.addLists(generatedBalanceSheet.getTotalPaidInCapital(), generatedBalanceSheet.getTotalShareBasedCompensation());
+		List<BigDecimal> equityBeforeRetainedEarnings = Utility.addLists(generatedBalanceSheet.getTotalOtherEquityItems(), capitalPlusShareCompensation);
+		List<BigDecimal> totalEquity = Utility.addLists(retainedEarningsEndingBalances, equityBeforeRetainedEarnings);
+		generatedBalanceSheet.setTotalEquity(totalEquity);
 		
 		return generatedBalanceSheet;
 	}
@@ -333,7 +352,7 @@ public class ReportsService {
 		for (AccountInReportDTO potentialParentAccount : list) {
 			if (potentialParentAccount.isHasChildren()) {
 				for (AccountInReportDTO potentialChildAccount : list) {
-					if (potentialChildAccount.getParentAccountId() != null && potentialChildAccount.getParentAccountId() == potentialParentAccount.getAccountId()) {
+					if (potentialChildAccount.getParentAccountId() != null && potentialChildAccount.getParentAccountId().equals(potentialParentAccount.getAccountId())) {
 						potentialParentAccount.getChildren().add(potentialChildAccount);
 					}
 				}
