@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.dto.BalanceSheetDTO;
 import com.easyledger.api.dto.DateRangeDTO;
+import com.easyledger.api.dto.IncomeStatementDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
@@ -52,13 +53,20 @@ public class ReportsController {
 	}
 	
 	@GetMapping("/organization/{id}/reports/balanceSheet") 
-	public BalanceSheetDTO getBalanceSheetDtoForOrganizationUpToDate(@PathVariable(value = "id") Long organizationId, 
+	public BalanceSheetDTO getBalanceSheetDtoForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
     		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
     		throws UnauthorizedException, ResourceNotFoundException {
 		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return reportsService.generateBalanceSheet(organizationId, dates);
 	}
-
+	
+	@GetMapping("/organization/{id}/reports/incomeStatement") 
+	public IncomeStatementDTO getIncomeStatementDtoForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateIncomeStatement(organizationId, dates);
+	}
 	
 	@GetMapping("/organization/{id}/reports/incomeStatement/{startDate}/{endDate}") 
 	public IncomeStatementViewModel getIncomeStatementViewModelForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId,

@@ -3,7 +3,6 @@
 The API allows you to automatically generate reports to use.
 
 ## Report formatting
-### Income Statement Format
 
 ### Custom report format positions
 For the income statement, cash flow statement, and balance sheet, the user can customize where certain accounts appear in each report. The placement of an account within a report is determined by the `account.income_statement_format_position_id`, `account.cash_flow_format_position_id`, and `account.balance_sheet_format_position_id` fields. By default, an account should inherit these fields from its parent account (or from its account subtype if it has no parent account). These fields refer to the static tables below: 

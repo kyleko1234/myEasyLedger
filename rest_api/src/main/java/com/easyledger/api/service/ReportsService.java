@@ -18,6 +18,7 @@ import com.easyledger.api.dto.AccountTransactionsReportLineItemDTO;
 import com.easyledger.api.dto.BalanceSheetDTO;
 import com.easyledger.api.dto.CustomerIncomeDTO;
 import com.easyledger.api.dto.DateRangeDTO;
+import com.easyledger.api.dto.IncomeStatementDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.dto.VendorExpensesDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -159,14 +160,78 @@ public class ReportsService {
 		BigDecimal totalIncome = organizationRepo.getTotalIncomeForOrganizationBetweenDates(organizationId, startDate, endDate);
 		return new IncomeByCustomerReportViewModel(customerIncomeDTOs, totalIncome);
 	}
+	public IncomeStatementDTO generateIncomeStatement(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException {
+		IncomeStatementDTO generatedIncomeStatement = new IncomeStatementDTO();
+		Organization organization = organizationRepo.findById(organizationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+		List<AccountInReportDTO> listOfAllAccountInReportDTOs = getListOfAccountInReportDTOBetweenDates(organizationId, dates);
+		
+		List<AccountInReportDTO> revenueAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> costOfSalesAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> operatingExpensesAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> nonOperatingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> interestAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> taxAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> nonRecurringAccounts = new ArrayList<AccountInReportDTO>();
 
+		for (AccountInReportDTO account : listOfAllAccountInReportDTOs) {
+			if (account.getIncomeStatementFormatPositionId().equals((long) 2)) {
+				revenueAccounts.add(account);
+			} else if (account.getIncomeStatementFormatPositionId().equals((long) 3)) {
+				costOfSalesAccounts.add(account);
+			} else if (account.getIncomeStatementFormatPositionId().equals((long) 4)) {
+				operatingExpensesAccounts.add(account);
+			} else if (account.getIncomeStatementFormatPositionId().equals((long) 5) || account.getIncomeStatementFormatPositionId().equals((long) 6) || account.getIncomeStatementFormatPositionId().equals((long) 7)) {
+				nonOperatingIncomeExpenseAccounts.add(account);
+			} else if (account.getIncomeStatementFormatPositionId().equals((long) 8)) {
+				interestAccounts.add(account);
+			} else if (account.getIncomeStatementFormatPositionId().equals((long) 9)) {
+				taxAccounts.add(account);
+			} else if (account.getIncomeStatementFormatPositionId().equals((long) 10)) {
+				nonRecurringAccounts.add(account);
+			}
+		}
+		
+		//TODO IMPORTANT document which accounts have amounts that are debits vs which are credits
+		AccountInReportDTO.negateAmountsOfAccounts(revenueAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(nonOperatingIncomeExpenseAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(nonRecurringAccounts);
+		
+		List<AccountSubtypeInReportDTO> operatingExpensesSubtypes = sortListOfAccountsIntoSubtypes(operatingExpensesAccounts);
+		List<AccountSubtypeInReportDTO> nonOperatingIncomeExpenseSubtypes = sortListOfAccountsIntoSubtypes(nonOperatingIncomeExpenseAccounts);
+
+		generatedIncomeStatement.setDateRanges(dates);
+		generatedIncomeStatement.setRevenueAccounts(revenueAccounts);
+		generatedIncomeStatement.setTotalRevenue(AccountInReportDTO.sumAmountsOfAccounts(revenueAccounts));
+		generatedIncomeStatement.setCostOfSalesAccounts(costOfSalesAccounts);
+		generatedIncomeStatement.setTotalCostOfSales(AccountInReportDTO.sumAmountsOfAccounts(costOfSalesAccounts));
+		generatedIncomeStatement.setTotalGrossProfit(Utility.subtractLists(generatedIncomeStatement.getTotalRevenue(), generatedIncomeStatement.getTotalCostOfSales()));
+		generatedIncomeStatement.setOperatingExpensesSubtypes(operatingExpensesSubtypes);
+		generatedIncomeStatement.setTotalOperatingExpenses(AccountSubtypeInReportDTO.sumSubtypes(operatingExpensesSubtypes));
+		generatedIncomeStatement.setTotalOperatingIncome(Utility.subtractLists(generatedIncomeStatement.getTotalGrossProfit(), generatedIncomeStatement.getTotalOperatingExpenses()));
+		generatedIncomeStatement.setNonOperatingIncomeAndExpenseSubtypes(nonOperatingIncomeExpenseSubtypes);
+		generatedIncomeStatement.setTotalNonOperatingIncomeAndExpenseSubtypesNet(AccountSubtypeInReportDTO.sumSubtypes(nonOperatingIncomeExpenseSubtypes));
+		generatedIncomeStatement.setTotalEbit(Utility.addLists(generatedIncomeStatement.getTotalOperatingIncome(), generatedIncomeStatement.getTotalNonOperatingIncomeAndExpenseSubtypesNet()));
+		generatedIncomeStatement.setInterestAccounts(interestAccounts);
+		generatedIncomeStatement.setTotalInterest(AccountInReportDTO.sumAmountsOfAccounts(interestAccounts));
+		List<BigDecimal> ebt = Utility.subtractLists(generatedIncomeStatement.getTotalEbit(), generatedIncomeStatement.getTotalInterest());
+		generatedIncomeStatement.setTaxAccounts(taxAccounts);
+		generatedIncomeStatement.setTotalTaxes(AccountInReportDTO.sumAmountsOfAccounts(taxAccounts));
+		List<BigDecimal> earningsBeforeNonRecurring = Utility.subtractLists(ebt, generatedIncomeStatement.getTotalTaxes());
+		generatedIncomeStatement.setNonRecurringAccounts(nonRecurringAccounts);
+		generatedIncomeStatement.setTotalNonRecurringNet(AccountInReportDTO.sumAmountsOfAccounts(nonRecurringAccounts));
+		generatedIncomeStatement.setNetIncome(Utility.addLists(earningsBeforeNonRecurring, generatedIncomeStatement.getTotalNonRecurringNet()));
+		
+		return generatedIncomeStatement;
+	}
+	
 	public BalanceSheetDTO generateBalanceSheet(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException {
 		BalanceSheetDTO generatedBalanceSheet = new BalanceSheetDTO();
 		Organization organization = organizationRepo.findById(organizationId)
 				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
 
-		List<List<AccountBalanceDTO>> listsOfAccountBalancesForDates = new ArrayList<List<AccountBalanceDTO>>();
 		//fetch a list of accounts for each date range
+		List<List<AccountBalanceDTO>> listsOfAccountBalancesForDates = new ArrayList<List<AccountBalanceDTO>>();
 		for (DateRangeDTO dateRange : dates) {
 			List<AccountBalanceDTO> accountBalancesUpToDate = accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, dateRange.getEndDate());
 			listsOfAccountBalancesForDates.add(accountBalancesUpToDate);
@@ -346,6 +411,42 @@ public class ReportsService {
 		}
 		return -1;
 	}
+	
+	/* Takes an organizationId and a list of DateRangeDTOs. Returns a list of AccountInReportDTO, with amounts that reflect the cumulative
+	 * activity of the account up until the endDate of the provided DateRangeDTOs, including account initial values.
+	 * Same as the below method, but only uses the endDate of the DateRangeDTOs, and includes account initial values. */
+	public List<AccountInReportDTO> getListOfAccountInReportDTOUpToDate(Long organizationId, List<DateRangeDTO> dates) {
+		//fetch a list of accounts for each date range
+		List<List<AccountBalanceDTO>> listsOfAccountBalancesForDates = new ArrayList<List<AccountBalanceDTO>>();
+		for (DateRangeDTO dateRange : dates) {
+			List<AccountBalanceDTO> accountBalancesUpToDate = accountRepo.getAllAccountBalancesForOrganizationUpToDate(organizationId, dateRange.getEndDate());
+			listsOfAccountBalancesForDates.add(accountBalancesUpToDate);
+		}
+		//convert list of list of accounts into list of AccountInReportDTO
+		List<AccountInReportDTO> convertedList = convertListOfListOfAccountBalanceDTOsToListOfAccountInReportDTO(listsOfAccountBalancesForDates);
+		//rearrange list of AccountInReportDTO to put children where they belong
+		organizeChildAccountsInListOfAccounts(convertedList);
+		return convertedList;
+	}
+	
+	/* Takes an organizationId and a list of DateRangeDTOs. Returns a list of AccountInReportDTO, with amounts that reflect the startDate and endDate
+	 * of the provided DateRangeDTOs. Same as the above method, but uses both the startDate and endDate of the provided DateRangeDTOs, and does NOT
+	 * include account initial values. */
+	public List<AccountInReportDTO> getListOfAccountInReportDTOBetweenDates(Long organizationId, List<DateRangeDTO> dates) {
+		//fetch a list of accounts for each date range
+		List<List<AccountDTO>> listsOfAccountBalancesForDates = new ArrayList<List<AccountDTO>>();
+		for (DateRangeDTO dateRange : dates) {
+			List<AccountDTO> accountBalancesBetweenDates = accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, dateRange.getStartDate(), dateRange.getEndDate());
+			listsOfAccountBalancesForDates.add(accountBalancesBetweenDates);
+		}
+		//convert list of list of accounts into list of AccountInReportDTO
+		List<AccountInReportDTO> convertedList = convertListOfListOfAccountDTOsToListOfAccountInReportDTO(listsOfAccountBalancesForDates);
+		//rearrange list of AccountInReportDTO to put children where they belong
+		organizeChildAccountsInListOfAccounts(convertedList);
+		return convertedList;
+	}
+	
+	
 	
 	//rearrange list of AccountInReportDTO to put children where they belong
 	public void organizeChildAccountsInListOfAccounts(List<AccountInReportDTO> list) {

@@ -52,10 +52,10 @@ public final class Utility {
 		}
 		for (int i = 0; i < largerList.size(); i++) {
 			if (i >= smallerList.size()) {
-				returnedList.add(largerList.get(i).negate());
-			} else {
-				returnedList.add(largerList.get(i).subtract(smallerList.get(i)));
+				smallerList.add(new BigDecimal(0));
 			}
+			returnedList.add(list1.get(i).subtract(list2.get(i)));
+			
 		}
 		return returnedList;
 	}

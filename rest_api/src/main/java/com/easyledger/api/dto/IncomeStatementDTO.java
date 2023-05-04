@@ -12,16 +12,17 @@ public class IncomeStatementDTO {
 	private List<BigDecimal> totalCostOfSales = new ArrayList<BigDecimal>();
 	private List<BigDecimal> totalGrossProfit = new ArrayList<BigDecimal>();
 	private List<AccountSubtypeInReportDTO> operatingExpensesSubtypes = new ArrayList<AccountSubtypeInReportDTO>();
+	private List<BigDecimal> totalOperatingExpenses = new ArrayList<BigDecimal>();
 	private List<BigDecimal> totalOperatingIncome = new ArrayList<BigDecimal>();
 	private List<AccountSubtypeInReportDTO> nonOperatingIncomeAndExpenseSubtypes = new ArrayList<AccountSubtypeInReportDTO>();
+	private List<BigDecimal> totalNonOperatingIncomeAndExpenseSubtypesNet = new ArrayList<BigDecimal>();
 	private List<BigDecimal> totalEbit = new ArrayList<BigDecimal>();
-	private List<AccountSubtypeInReportDTO> interestAccounts = new ArrayList<AccountSubtypeInReportDTO>();
+	private List<AccountInReportDTO> interestAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalInterest = new ArrayList<BigDecimal>();
-
-	private List<AccountSubtypeInReportDTO> taxAccounts = new ArrayList<AccountSubtypeInReportDTO>();
+	private List<AccountInReportDTO> taxAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalTaxes = new ArrayList<BigDecimal>();
-	private List<AccountSubtypeInReportDTO> nonRecurringAccounts = new ArrayList<AccountSubtypeInReportDTO>();
-	private List<BigDecimal> totalNonRecurring = new ArrayList<BigDecimal>();
+	private List<AccountInReportDTO> nonRecurringAccounts = new ArrayList<AccountInReportDTO>();
+	private List<BigDecimal> totalNonRecurringNet = new ArrayList<BigDecimal>();
 	private List<BigDecimal> netIncome = new ArrayList<BigDecimal>();
 
 	public IncomeStatementDTO() {
@@ -109,11 +110,11 @@ public class IncomeStatementDTO {
 		this.totalEbit = totalEbit;
 	}
 
-	public List<AccountSubtypeInReportDTO> getInterestAccounts() {
+	public List<AccountInReportDTO> getInterestAccounts() {
 		return interestAccounts;
 	}
 
-	public void setInterestAccounts(List<AccountSubtypeInReportDTO> interestAccounts) {
+	public void setInterestAccounts(List<AccountInReportDTO> interestAccounts) {
 		this.interestAccounts = interestAccounts;
 	}
 
@@ -125,11 +126,11 @@ public class IncomeStatementDTO {
 		this.totalInterest = totalInterest;
 	}
 
-	public List<AccountSubtypeInReportDTO> getTaxAccounts() {
+	public List<AccountInReportDTO> getTaxAccounts() {
 		return taxAccounts;
 	}
 
-	public void setTaxAccounts(List<AccountSubtypeInReportDTO> taxAccounts) {
+	public void setTaxAccounts(List<AccountInReportDTO> taxAccounts) {
 		this.taxAccounts = taxAccounts;
 	}
 
@@ -141,20 +142,20 @@ public class IncomeStatementDTO {
 		this.totalTaxes = totalTaxes;
 	}
 
-	public List<AccountSubtypeInReportDTO> getNonRecurringAccounts() {
+	public List<AccountInReportDTO> getNonRecurringAccounts() {
 		return nonRecurringAccounts;
 	}
 
-	public void setNonRecurringAccounts(List<AccountSubtypeInReportDTO> nonRecurringAccounts) {
+	public void setNonRecurringAccounts(List<AccountInReportDTO> nonRecurringAccounts) {
 		this.nonRecurringAccounts = nonRecurringAccounts;
 	}
 
-	public List<BigDecimal> getTotalNonRecurring() {
-		return totalNonRecurring;
+	public List<BigDecimal> getTotalNonRecurringNet() {
+		return totalNonRecurringNet;
 	}
 
-	public void setTotalNonRecurring(List<BigDecimal> totalNonRecurring) {
-		this.totalNonRecurring = totalNonRecurring;
+	public void setTotalNonRecurringNet(List<BigDecimal> totalNonRecurringNet) {
+		this.totalNonRecurringNet = totalNonRecurringNet;
 	}
 
 	public List<BigDecimal> getNetIncome() {
@@ -164,6 +165,22 @@ public class IncomeStatementDTO {
 	public void setNetIncome(List<BigDecimal> netIncome) {
 		this.netIncome = netIncome;
 	}
-	
+
+	public List<BigDecimal> getTotalOperatingExpenses() {
+		return totalOperatingExpenses;
+	}
+
+	public void setTotalOperatingExpenses(List<BigDecimal> totalOperatingExpenses) {
+		this.totalOperatingExpenses = totalOperatingExpenses;
+	}
+
+	public List<BigDecimal> getTotalNonOperatingIncomeAndExpenseSubtypesNet() {
+		return totalNonOperatingIncomeAndExpenseSubtypesNet;
+	}
+
+	public void setTotalNonOperatingIncomeAndExpenseSubtypesNet(
+			List<BigDecimal> totalNonOperatingIncomeAndExpenseSubtypesNet) {
+		this.totalNonOperatingIncomeAndExpenseSubtypesNet = totalNonOperatingIncomeAndExpenseSubtypesNet;
+	}
 
 }
