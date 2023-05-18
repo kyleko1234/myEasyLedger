@@ -16,11 +16,13 @@ import com.easyledger.api.dto.AccountSubtypeBalanceDTO;
 import com.easyledger.api.dto.AccountSubtypeInReportDTO;
 import com.easyledger.api.dto.AccountTransactionsReportLineItemDTO;
 import com.easyledger.api.dto.BalanceSheetDTO;
+import com.easyledger.api.dto.CashFlowStatementDTO;
 import com.easyledger.api.dto.CustomerIncomeDTO;
 import com.easyledger.api.dto.DateRangeDTO;
 import com.easyledger.api.dto.IncomeStatementDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.dto.VendorExpensesDTO;
+import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.Organization;
@@ -160,7 +162,108 @@ public class ReportsService {
 		BigDecimal totalIncome = organizationRepo.getTotalIncomeForOrganizationBetweenDates(organizationId, startDate, endDate);
 		return new IncomeByCustomerReportViewModel(customerIncomeDTOs, totalIncome);
 	}
-	public IncomeStatementDTO generateIncomeStatement(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException {
+	
+	public CashFlowStatementDTO generateCashFlowStatement(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException, ConflictException {
+		CashFlowStatementDTO generatedCashFlowStatement = new CashFlowStatementDTO();
+		Organization organization = organizationRepo.findById(organizationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+		List<DateRangeDTO> prevPeriodDates = new ArrayList<DateRangeDTO>();
+		for (DateRangeDTO dateRange : dates) {
+			prevPeriodDates.add(new DateRangeDTO(dateRange.getStartDate().minusDays(1)));
+		}
+		List<AccountInReportDTO> accountsUpToPreviousPeriodEndDate = getListOfAccountInReportDTOUpToDate(organizationId, prevPeriodDates);
+		List<AccountInReportDTO> accountsUpToCurrentPeriodEndDate = getListOfAccountInReportDTOUpToDate(organizationId, dates);
+		List<AccountInReportDTO> accountsForCurrentPeriod = getListOfAccountInReportDTOBetweenDates(organizationId, dates);
+		
+		List<AccountInReportDTO> cashAndCashEquivalentsAccountsBeginning = new ArrayList<AccountInReportDTO>();
+		for (AccountInReportDTO account : accountsUpToPreviousPeriodEndDate) {
+			if (account.getCashFlowFormatPositionId().equals((long) 5)) {
+				cashAndCashEquivalentsAccountsBeginning.add(account);
+			}
+		}
+		generatedCashFlowStatement.setCashAndCashEquivalentsAccountsBeginning(cashAndCashEquivalentsAccountsBeginning);
+		generatedCashFlowStatement.setTotalCashAndCashEquivalentsBeginning(AccountInReportDTO.sumAmountsOfAccounts(cashAndCashEquivalentsAccountsBeginning));
+		
+		List<AccountInReportDTO> cashAndCashEquivalentsAccountsEnding = new ArrayList<AccountInReportDTO>();
+		for (AccountInReportDTO account : accountsUpToCurrentPeriodEndDate) {
+			if (account.getCashFlowFormatPositionId().equals((long) 5)) {
+				cashAndCashEquivalentsAccountsEnding.add(account);
+			}
+		}
+		generatedCashFlowStatement.setCashAndCashEquivalentsAccountsEnding(cashAndCashEquivalentsAccountsEnding);
+		generatedCashFlowStatement.setTotalCashAndCashEquivalentsEnding(AccountInReportDTO.sumAmountsOfAccounts(cashAndCashEquivalentsAccountsEnding));
+
+		List<AccountInReportDTO> adjustmentsToIncomeAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInOperatingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInOperatingEquityAccounts = new ArrayList<AccountInReportDTO>();
+
+		List<AccountInReportDTO> incomeExpenseFromInvestingAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInInvestingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
+
+		List<AccountInReportDTO> incomeExpenseFromFinancingAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInNonDividendEquityAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInNonDividendAssetLiabilityAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> dividendEquityAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> dividendLiabilityAccounts = new ArrayList<AccountInReportDTO>();
+		
+		List<AccountInReportDTO> interestExpenseAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> interestLiabilityAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> taxExpenseAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> taxLiabilityAccounts = new ArrayList<AccountInReportDTO>();
+		
+		for (AccountInReportDTO account : accountsForCurrentPeriod) {
+			if (account.getCashFlowFormatPositionId().equals((long) 2)) {
+				if (account.getAccountTypeId().equals((long) 4) || account.getAccountTypeId().equals((long) 5)) {
+					adjustmentsToIncomeAccounts.add(account);
+				} else if (account.getAccountTypeId().equals((long) 1) || account.getAccountTypeId().equals((long) 2)) {
+					changesInOperatingAssetsLiabilitiesAccounts.add(account);
+				} else if (account.getAccountTypeId().equals((long) 3)) {
+					changesInOperatingEquityAccounts.add(account);
+				}
+			} else if (account.getCashFlowFormatPositionId().equals((long) 3)) {
+				if (account.getAccountTypeId().equals((long) 4) || account.getAccountTypeId().equals((long) 5)) {
+					incomeExpenseFromInvestingAccounts.add(account);
+				} else if (account.getAccountTypeId().equals((long) 1) || account.getAccountTypeId().equals((long) 2)) {
+					changesInInvestingAssetsLiabilitiesAccounts.add(account);
+				}
+			} else if (account.getCashFlowFormatPositionId().equals((long) 4)) {
+				if (account.getAccountTypeId().equals((long) 4) || account.getAccountTypeId().equals((long) 5)) {
+					incomeExpenseFromFinancingAccounts.add(account);
+				} else {
+					if (account.isRelevantToDividendsPaid()) {
+						if (account.getAccountTypeId().equals((long) 3)) {
+							dividendEquityAccounts.add(account);
+						} else {
+							dividendLiabilityAccounts.add(account);
+						}
+					} else {
+						if (account.getAccountTypeId().equals((long) 3)) {
+							changesInNonDividendEquityAccounts.add(account);
+						} else {
+							changesInNonDividendAssetLiabilityAccounts.add(account);
+						}
+					}
+				}
+			}	
+			if (account.isRelevantToInterestPaid()) {
+				if (account.getAccountTypeId().equals((long) 5)) {
+					interestExpenseAccounts.add(account);
+				} else if (account.getAccountTypeId().equals((long) 2)) {
+					interestLiabilityAccounts.add(account);
+				}
+			} else if (account.isRelevantToTaxesPaid()) {
+				if (account.getAccountTypeId().equals((long) 5)) {
+					taxExpenseAccounts.add(account);
+				} else if (account.getAccountTypeId().equals((long) 2)) {
+					taxLiabilityAccounts.add(account);
+				}
+			}
+		}
+
+
+	}
+	
+	public IncomeStatementDTO generateIncomeStatement(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException, ConflictException {
 		IncomeStatementDTO generatedIncomeStatement = new IncomeStatementDTO();
 		Organization organization = organizationRepo.findById(organizationId)
 				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
@@ -432,10 +535,13 @@ public class ReportsService {
 	/* Takes an organizationId and a list of DateRangeDTOs. Returns a list of AccountInReportDTO, with amounts that reflect the startDate and endDate
 	 * of the provided DateRangeDTOs. Same as the above method, but uses both the startDate and endDate of the provided DateRangeDTOs, and does NOT
 	 * include account initial values. */
-	public List<AccountInReportDTO> getListOfAccountInReportDTOBetweenDates(Long organizationId, List<DateRangeDTO> dates) {
+	public List<AccountInReportDTO> getListOfAccountInReportDTOBetweenDates(Long organizationId, List<DateRangeDTO> dates) throws ConflictException {
 		//fetch a list of accounts for each date range
 		List<List<AccountDTO>> listsOfAccountBalancesForDates = new ArrayList<List<AccountDTO>>();
 		for (DateRangeDTO dateRange : dates) {
+			if (dateRange.getStartDate() == null) {
+				throw new ConflictException("StartDate is required.");
+			}
 			List<AccountDTO> accountBalancesBetweenDates = accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, dateRange.getStartDate(), dateRange.getEndDate());
 			listsOfAccountBalancesForDates.add(accountBalancesBetweenDates);
 		}

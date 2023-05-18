@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easyledger.api.dto.BalanceSheetDTO;
 import com.easyledger.api.dto.DateRangeDTO;
 import com.easyledger.api.dto.IncomeStatementDTO;
+import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
@@ -63,7 +64,7 @@ public class ReportsController {
 	@GetMapping("/organization/{id}/reports/incomeStatement") 
 	public IncomeStatementDTO getIncomeStatementDtoForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
     		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
-    		throws UnauthorizedException, ResourceNotFoundException {
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
 		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return reportsService.generateIncomeStatement(organizationId, dates);
 	}
