@@ -193,18 +193,17 @@ public class ReportsService {
 		generatedCashFlowStatement.setCashAndCashEquivalentsAccountsEnding(cashAndCashEquivalentsAccountsEnding);
 		generatedCashFlowStatement.setTotalCashAndCashEquivalentsEnding(AccountInReportDTO.sumAmountsOfAccounts(cashAndCashEquivalentsAccountsEnding));
 
-		List<AccountInReportDTO> adjustmentsToIncomeAccounts = new ArrayList<AccountInReportDTO>();
-		List<AccountInReportDTO> changesInNonCashOperatingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> nonCashOperatingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInOperatingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInOperatingEquityAccounts = new ArrayList<AccountInReportDTO>();
 
 		List<AccountInReportDTO> incomeExpenseFromInvestingAccounts = new ArrayList<AccountInReportDTO>();
-		List<AccountInReportDTO> changesInNonCashInvestingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> nonCashInvestingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInInvestingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInInvestingEquityAccounts = new ArrayList<AccountInReportDTO>();
 
 		List<AccountInReportDTO> incomeExpenseFromFinancingAccounts = new ArrayList<AccountInReportDTO>();
-		List<AccountInReportDTO> changesInNonCashFinancingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> nonCashFinancingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInNonDividendEquityAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInNonDividendAssetLiabilityAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> dividendEquityAccounts = new ArrayList<AccountInReportDTO>();
@@ -216,9 +215,11 @@ public class ReportsService {
 		List<AccountInReportDTO> taxLiabilityAccounts = new ArrayList<AccountInReportDTO>();
 		
 		for (AccountInReportDTO account : accountsForCurrentPeriod) {
-			if (account.getCashFlowFormatPositionId().equals((long) 2)) {//is this calculated correctly?
+			if (account.getCashFlowFormatPositionId().equals((long) 2)) {//note when writing front end, not all options can be exposed to the consumer
 				if (account.getAccountTypeId().equals((long) 4) || account.getAccountTypeId().equals((long) 5)) {
-					adjustmentsToIncomeAccounts.add(account);
+					if (!account.isCashItem()) {
+						nonCashOperatingIncomeExpenseAccounts.add(account);
+					}
 				} else if (account.getAccountTypeId().equals((long) 1) || account.getAccountTypeId().equals((long) 2)) {
 					changesInOperatingAssetsLiabilitiesAccounts.add(account);
 				} else if (account.getAccountTypeId().equals((long) 3)) {
@@ -227,12 +228,20 @@ public class ReportsService {
 			} else if (account.getCashFlowFormatPositionId().equals((long) 3)) {
 				if (account.getAccountTypeId().equals((long) 4) || account.getAccountTypeId().equals((long) 5)) {
 					incomeExpenseFromInvestingAccounts.add(account);
+					if (!account.isCashItem()) {
+						nonCashInvestingIncomeExpenseAccounts.add(account);
+					}
 				} else if (account.getAccountTypeId().equals((long) 1) || account.getAccountTypeId().equals((long) 2)) {
 					changesInInvestingAssetsLiabilitiesAccounts.add(account);
+				} else if (account.getAccountTypeId().equals((long) 3)) {
+					changesInInvestingEquityAccounts.add(account);
 				}
 			} else if (account.getCashFlowFormatPositionId().equals((long) 4)) {
 				if (account.getAccountTypeId().equals((long) 4) || account.getAccountTypeId().equals((long) 5)) {
 					incomeExpenseFromFinancingAccounts.add(account);
+					if (!account.isCashItem()) {
+						nonCashFinancingIncomeExpenseAccounts.add(account);
+					}
 				} else {
 					if (account.isRelevantToDividendsPaid()) {
 						if (account.getAccountTypeId().equals((long) 3)) {
@@ -263,7 +272,7 @@ public class ReportsService {
 				}
 			}
 		}
-
+//
 		generatedCashFlowStatement.setAdjustmentsToIncomeAccounts(adjustmentsToIncomeAccounts);
 		generatedCashFlowStatement.setChangesInOperatingAssetsLiabilitiesAccounts(changesInOperatingAssetsLiabilitiesAccounts);
 		generatedCashFlowStatement.setChangesInOperatingEquityAccounts(changesInOperatingEquityAccounts);
