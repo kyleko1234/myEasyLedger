@@ -194,13 +194,17 @@ public class ReportsService {
 		generatedCashFlowStatement.setTotalCashAndCashEquivalentsEnding(AccountInReportDTO.sumAmountsOfAccounts(cashAndCashEquivalentsAccountsEnding));
 
 		List<AccountInReportDTO> adjustmentsToIncomeAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInNonCashOperatingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInOperatingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInOperatingEquityAccounts = new ArrayList<AccountInReportDTO>();
 
 		List<AccountInReportDTO> incomeExpenseFromInvestingAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInNonCashInvestingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInInvestingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInInvestingEquityAccounts = new ArrayList<AccountInReportDTO>();
 
 		List<AccountInReportDTO> incomeExpenseFromFinancingAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInNonCashFinancingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInNonDividendEquityAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInNonDividendAssetLiabilityAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> dividendEquityAccounts = new ArrayList<AccountInReportDTO>();
@@ -212,7 +216,7 @@ public class ReportsService {
 		List<AccountInReportDTO> taxLiabilityAccounts = new ArrayList<AccountInReportDTO>();
 		
 		for (AccountInReportDTO account : accountsForCurrentPeriod) {
-			if (account.getCashFlowFormatPositionId().equals((long) 2)) {
+			if (account.getCashFlowFormatPositionId().equals((long) 2)) {//is this calculated correctly?
 				if (account.getAccountTypeId().equals((long) 4) || account.getAccountTypeId().equals((long) 5)) {
 					adjustmentsToIncomeAccounts.add(account);
 				} else if (account.getAccountTypeId().equals((long) 1) || account.getAccountTypeId().equals((long) 2)) {
