@@ -260,6 +260,24 @@ public class ReportsService {
 			}
 		}
 
+		generatedCashFlowStatement.setAdjustmentsToIncomeAccounts(adjustmentsToIncomeAccounts);
+		generatedCashFlowStatement.setChangesInOperatingAssetsLiabilitiesAccounts(changesInOperatingAssetsLiabilitiesAccounts);
+		generatedCashFlowStatement.setChangesInOperatingEquityAccounts(changesInOperatingEquityAccounts);
+
+		generatedCashFlowStatement.setIncomeExpenseFromInvestingAccounts(incomeExpenseFromInvestingAccounts);
+		generatedCashFlowStatement.setChangesInInvestingAssetsLiabilitiesAccounts(changesInInvestingAssetsLiabilitiesAccounts);
+
+		generatedCashFlowStatement.setIncomeExpenseFromFinancingAccounts(incomeExpenseFromFinancingAccounts);
+		generatedCashFlowStatement.setChangesInNonDividendEquityAccounts(changesInNonDividendEquityAccounts);
+		generatedCashFlowStatement.setChangesInNonDividendAssetLiabilityAccounts(changesInNonDividendAssetLiabilityAccounts);
+		generatedCashFlowStatement.setDividendEquityAccounts(dividendEquityAccounts);
+		generatedCashFlowStatement.setDividendLiabilityAccounts(dividendLiabilityAccounts);
+		
+		generatedCashFlowStatement.setInterestExpenseAccounts(interestExpenseAccounts);
+		generatedCashFlowStatement.setInterestLiabilityAccounts(interestLiabilityAccounts);
+		generatedCashFlowStatement.setTaxExpenseAccounts(taxExpenseAccounts);
+		generatedCashFlowStatement.setTaxLiabilityAccounts(taxLiabilityAccounts);
+
 
 	}
 	

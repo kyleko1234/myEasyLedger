@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CashFlowStatementDTO {
-	private List<AccountInReportDTO> cashAndCashEquivalentsAccountsBeginning = new ArrayList<AccountInReportDTO>();
-	private List<BigDecimal> totalCashAndCashEquivalentsBeginning = new ArrayList<BigDecimal>();
+	private List<AccountInReportDTO> cashAndCashEquivalentsAccountsBeginning = new ArrayList<AccountInReportDTO>();//
+	private List<BigDecimal> totalCashAndCashEquivalentsBeginning = new ArrayList<BigDecimal>();//
 	
 	private List<BigDecimal> totalNetIncome = new ArrayList<BigDecimal>();
-	private List<AccountInReportDTO> adjustmentsToIncomeAccounts = new ArrayList<AccountInReportDTO>();
+	private List<AccountInReportDTO> changesInNonCashOperatingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
+	private List<BigDecimal> totalChangesInNonCashOperatingIncomeExpense = new ArrayList<BigDecimal>();
+	private List<BigDecimal> totalAdjustmentForNonOperatingIncomeExpenseNet = new ArrayList<BigDecimal>();
 	private List<BigDecimal> totalAdjustmentsToIncome = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> changesInOperatingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalChangesInOperatingAssetsLiabilities = new ArrayList<BigDecimal>();
@@ -19,12 +21,18 @@ public class CashFlowStatementDTO {
 	
 	private List<AccountInReportDTO> incomeExpenseFromInvestingAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalIncomeExpenseFromInvestingNet = new ArrayList<BigDecimal>();
+	private List<AccountInReportDTO> changesInNonCashInvestingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
+	private List<BigDecimal> totalChangesInNonCashInvestingIncomeExpense = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> changesInInvestingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalChangesInInvestingAssetsLiabilities = new ArrayList<BigDecimal>();
+	private List<AccountInReportDTO> changesInInvestingEquityAccounts = new ArrayList<AccountInReportDTO>();
+	private List<BigDecimal> totalChangesInInvestingEquity = new ArrayList<BigDecimal>();
 	private List<BigDecimal> cashFlowFromInvesting = new ArrayList<BigDecimal>();
 	
 	private List<AccountInReportDTO> incomeExpenseFromFinancingAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalIncomeExpenseFromFinancingNet = new ArrayList<BigDecimal>();
+	private List<AccountInReportDTO> changesInNonCashFinancingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
+	private List<BigDecimal> totalChangesInNonCashFinancingIncomeExpense = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> changesInNonDividendEquityAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalChangesInNonDividendEquity = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> changesInNonDividendAssetLiabilityAccounts = new ArrayList<AccountInReportDTO>();
@@ -36,8 +44,8 @@ public class CashFlowStatementDTO {
 	private List<BigDecimal> totalDividendsPaid = new ArrayList<BigDecimal>();
 	private List<BigDecimal> cashFlowFromFinancing = new ArrayList<BigDecimal>();
 	
-	private List<AccountInReportDTO> cashAndCashEquivalentsAccountsEnding = new ArrayList<AccountInReportDTO>();
-	private List<BigDecimal> totalCashAndCashEquivalentsEnding = new ArrayList<BigDecimal>();
+	private List<AccountInReportDTO> cashAndCashEquivalentsAccountsEnding = new ArrayList<AccountInReportDTO>();//
+	private List<BigDecimal> totalCashAndCashEquivalentsEnding = new ArrayList<BigDecimal>();//
 	
 	private List<AccountInReportDTO> interestExpenseAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalInterestExpense = new ArrayList<BigDecimal>();
@@ -87,13 +95,36 @@ public class CashFlowStatementDTO {
 	}
 
 
-	public List<AccountInReportDTO> getAdjustmentsToIncomeAccounts() {
-		return adjustmentsToIncomeAccounts;
+	public List<AccountInReportDTO> getChangesInNonCashOperatingIncomeExpenseAccounts() {
+		return changesInNonCashOperatingIncomeExpenseAccounts;
 	}
 
 
-	public void setAdjustmentsToIncomeAccounts(List<AccountInReportDTO> adjustmentsToIncomeAccounts) {
-		this.adjustmentsToIncomeAccounts = adjustmentsToIncomeAccounts;
+	public void setChangesInNonCashOperatingIncomeExpenseAccounts(
+			List<AccountInReportDTO> changesInNonCashOperatingIncomeExpenseAccounts) {
+		this.changesInNonCashOperatingIncomeExpenseAccounts = changesInNonCashOperatingIncomeExpenseAccounts;
+	}
+
+
+	public List<BigDecimal> getTotalChangesInNonCashOperatingIncomeExpense() {
+		return totalChangesInNonCashOperatingIncomeExpense;
+	}
+
+
+	public void setTotalChangesInNonCashOperatingIncomeExpense(
+			List<BigDecimal> totalChangesInNonCashOperatingIncomeExpense) {
+		this.totalChangesInNonCashOperatingIncomeExpense = totalChangesInNonCashOperatingIncomeExpense;
+	}
+
+
+	public List<BigDecimal> getTotalAdjustmentForNonOperatingIncomeExpenseNet() {
+		return totalAdjustmentForNonOperatingIncomeExpenseNet;
+	}
+
+
+	public void setTotalAdjustmentForNonOperatingIncomeExpenseNet(
+			List<BigDecimal> totalAdjustmentForNonOperatingIncomeExpenseNet) {
+		this.totalAdjustmentForNonOperatingIncomeExpenseNet = totalAdjustmentForNonOperatingIncomeExpenseNet;
 	}
 
 
@@ -178,6 +209,28 @@ public class CashFlowStatementDTO {
 	}
 
 
+	public List<AccountInReportDTO> getChangesInNonCashInvestingIncomeExpenseAccounts() {
+		return changesInNonCashInvestingIncomeExpenseAccounts;
+	}
+
+
+	public void setChangesInNonCashInvestingIncomeExpenseAccounts(
+			List<AccountInReportDTO> changesInNonCashInvestingIncomeExpenseAccounts) {
+		this.changesInNonCashInvestingIncomeExpenseAccounts = changesInNonCashInvestingIncomeExpenseAccounts;
+	}
+
+
+	public List<BigDecimal> getTotalChangesInNonCashInvestingIncomeExpense() {
+		return totalChangesInNonCashInvestingIncomeExpense;
+	}
+
+
+	public void setTotalChangesInNonCashInvestingIncomeExpense(
+			List<BigDecimal> totalChangesInNonCashInvestingIncomeExpense) {
+		this.totalChangesInNonCashInvestingIncomeExpense = totalChangesInNonCashInvestingIncomeExpense;
+	}
+
+
 	public List<AccountInReportDTO> getChangesInInvestingAssetsLiabilitiesAccounts() {
 		return changesInInvestingAssetsLiabilitiesAccounts;
 	}
@@ -196,6 +249,26 @@ public class CashFlowStatementDTO {
 
 	public void setTotalChangesInInvestingAssetsLiabilities(List<BigDecimal> totalChangesInInvestingAssetsLiabilities) {
 		this.totalChangesInInvestingAssetsLiabilities = totalChangesInInvestingAssetsLiabilities;
+	}
+
+
+	public List<AccountInReportDTO> getChangesInInvestingEquityAccounts() {
+		return changesInInvestingEquityAccounts;
+	}
+
+
+	public void setChangesInInvestingEquityAccounts(List<AccountInReportDTO> changesInInvestingEquityAccounts) {
+		this.changesInInvestingEquityAccounts = changesInInvestingEquityAccounts;
+	}
+
+
+	public List<BigDecimal> getTotalChangesInInvestingEquity() {
+		return totalChangesInInvestingEquity;
+	}
+
+
+	public void setTotalChangesInInvestingEquity(List<BigDecimal> totalChangesInInvestingEquity) {
+		this.totalChangesInInvestingEquity = totalChangesInInvestingEquity;
 	}
 
 
@@ -229,6 +302,28 @@ public class CashFlowStatementDTO {
 	}
 
 
+	public List<AccountInReportDTO> getChangesInNonCashFinancingIncomeExpenseAccounts() {
+		return changesInNonCashFinancingIncomeExpenseAccounts;
+	}
+
+
+	public void setChangesInNonCashFinancingIncomeExpenseAccounts(
+			List<AccountInReportDTO> changesInNonCashFinancingIncomeExpenseAccounts) {
+		this.changesInNonCashFinancingIncomeExpenseAccounts = changesInNonCashFinancingIncomeExpenseAccounts;
+	}
+
+
+	public List<BigDecimal> getTotalChangesInNonCashFinancingIncomeExpense() {
+		return totalChangesInNonCashFinancingIncomeExpense;
+	}
+
+
+	public void setTotalChangesInNonCashFinancingIncomeExpense(
+			List<BigDecimal> totalChangesInNonCashFinancingIncomeExpense) {
+		this.totalChangesInNonCashFinancingIncomeExpense = totalChangesInNonCashFinancingIncomeExpense;
+	}
+
+
 	public List<AccountInReportDTO> getChangesInNonDividendEquityAccounts() {
 		return changesInNonDividendEquityAccounts;
 	}
@@ -254,7 +349,8 @@ public class CashFlowStatementDTO {
 	}
 
 
-	public void setChangesInNonDividendAssetLiabilityAccounts(List<AccountInReportDTO> changesInNonDividendAssetLiabilityAccounts) {
+	public void setChangesInNonDividendAssetLiabilityAccounts(
+			List<AccountInReportDTO> changesInNonDividendAssetLiabilityAccounts) {
 		this.changesInNonDividendAssetLiabilityAccounts = changesInNonDividendAssetLiabilityAccounts;
 	}
 
@@ -447,6 +543,5 @@ public class CashFlowStatementDTO {
 	public void setTotalPaymentsForTaxesPaid(List<BigDecimal> totalPaymentsForTaxesPaid) {
 		this.totalPaymentsForTaxesPaid = totalPaymentsForTaxesPaid;
 	}
-	
 	
 }
