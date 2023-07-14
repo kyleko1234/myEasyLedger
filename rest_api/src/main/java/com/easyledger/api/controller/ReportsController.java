@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.dto.BalanceSheetDTO;
+import com.easyledger.api.dto.CashFlowStatementDTO;
 import com.easyledger.api.dto.DateRangeDTO;
 import com.easyledger.api.dto.IncomeStatementDTO;
 import com.easyledger.api.exception.ConflictException;
@@ -85,6 +86,14 @@ public class ReportsController {
 			throws UnauthorizedException {
 		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return reportsService.getCashFlowStatementViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
+	}
+	
+	@GetMapping("/organization/{id}/reports/cashFlowStatement") 
+	public CashFlowStatementDTO getCashFlowStatementDtoForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateCashFlowStatement(organizationId, dates);
 	}
 	
 	@GetMapping("/reports/accountTransactionsReport/account/{accountId}/{startDate}/{endDate}")
