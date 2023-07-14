@@ -163,6 +163,7 @@ public class ReportsService {
 		return new IncomeByCustomerReportViewModel(customerIncomeDTOs, totalIncome);
 	}
 	
+	//By default, AccountInReportDTO.amounts are represented as debits minus credits, but see note on com.easyledger.api.dto.CashFlowStatementDTO.
 	public CashFlowStatementDTO generateCashFlowStatement(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException, ConflictException {
 		CashFlowStatementDTO generatedCashFlowStatement = new CashFlowStatementDTO();
 		Organization organization = organizationRepo.findById(organizationId)
@@ -193,6 +194,7 @@ public class ReportsService {
 		generatedCashFlowStatement.setCashAndCashEquivalentsAccountsEnding(cashAndCashEquivalentsAccountsEnding);
 		generatedCashFlowStatement.setTotalCashAndCashEquivalentsEnding(AccountInReportDTO.sumAmountsOfAccounts(cashAndCashEquivalentsAccountsEnding));
 
+		List<AccountInReportDTO> incomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> nonCashOperatingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInOperatingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInOperatingEquityAccounts = new ArrayList<AccountInReportDTO>();
@@ -204,8 +206,8 @@ public class ReportsService {
 
 		List<AccountInReportDTO> incomeExpenseFromFinancingAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> nonCashFinancingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
-		List<AccountInReportDTO> changesInNonDividendEquityAccounts = new ArrayList<AccountInReportDTO>();
-		List<AccountInReportDTO> changesInNonDividendAssetLiabilityAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInNonDividendFinancingEquityAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> changesInNonDividendFinancingAssetLiabilityAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> dividendEquityAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> dividendLiabilityAccounts = new ArrayList<AccountInReportDTO>();
 		
@@ -217,6 +219,7 @@ public class ReportsService {
 		for (AccountInReportDTO account : accountsForCurrentPeriod) {
 			if (account.getCashFlowFormatPositionId().equals((long) 2)) {//note when writing front end, not all options can be exposed to the consumer
 				if (account.getAccountTypeId().equals((long) 4) || account.getAccountTypeId().equals((long) 5)) {
+					incomeExpenseAccounts.add(account);
 					if (!account.isCashItem()) {
 						nonCashOperatingIncomeExpenseAccounts.add(account);
 					}
@@ -227,6 +230,7 @@ public class ReportsService {
 				}
 			} else if (account.getCashFlowFormatPositionId().equals((long) 3)) {
 				if (account.getAccountTypeId().equals((long) 4) || account.getAccountTypeId().equals((long) 5)) {
+					incomeExpenseAccounts.add(account);
 					incomeExpenseFromInvestingAccounts.add(account);
 					if (!account.isCashItem()) {
 						nonCashInvestingIncomeExpenseAccounts.add(account);
@@ -238,6 +242,7 @@ public class ReportsService {
 				}
 			} else if (account.getCashFlowFormatPositionId().equals((long) 4)) {
 				if (account.getAccountTypeId().equals((long) 4) || account.getAccountTypeId().equals((long) 5)) {
+					incomeExpenseAccounts.add(account);
 					incomeExpenseFromFinancingAccounts.add(account);
 					if (!account.isCashItem()) {
 						nonCashFinancingIncomeExpenseAccounts.add(account);
@@ -251,9 +256,9 @@ public class ReportsService {
 						}
 					} else {
 						if (account.getAccountTypeId().equals((long) 3)) {
-							changesInNonDividendEquityAccounts.add(account);
+							changesInNonDividendFinancingEquityAccounts.add(account);
 						} else {
-							changesInNonDividendAssetLiabilityAccounts.add(account);
+							changesInNonDividendFinancingAssetLiabilityAccounts.add(account);
 						}
 					}
 				}
@@ -272,26 +277,105 @@ public class ReportsService {
 				}
 			}
 		}
-//
-		generatedCashFlowStatement.setAdjustmentsToIncomeAccounts(adjustmentsToIncomeAccounts);
+		
+		AccountInReportDTO.negateAmountsOfAccounts(incomeExpenseAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(changesInOperatingAssetsLiabilitiesAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(changesInOperatingEquityAccounts);
+
+		AccountInReportDTO.negateAmountsOfAccounts(incomeExpenseFromInvestingAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(changesInInvestingAssetsLiabilitiesAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(changesInInvestingEquityAccounts);
+
+		AccountInReportDTO.negateAmountsOfAccounts(incomeExpenseFromFinancingAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(changesInNonDividendFinancingEquityAccounts);
+		AccountInReportDTO.negateAmountsOfAccounts(changesInNonDividendFinancingAssetLiabilityAccounts);
+
+		generatedCashFlowStatement.setIncomeExpenseAccounts(incomeExpenseAccounts);
+		List<BigDecimal> totalNetIncome = AccountInReportDTO.sumAmountsOfAccounts(incomeExpenseAccounts);
+		generatedCashFlowStatement.setTotalNetIncome(totalNetIncome);
+		generatedCashFlowStatement.setNonCashOperatingIncomeExpenseAccounts(nonCashOperatingIncomeExpenseAccounts);
+		List<BigDecimal> totalNonCashOperatingIncomeExpense = AccountInReportDTO.sumAmountsOfAccounts(nonCashOperatingIncomeExpenseAccounts);
+		generatedCashFlowStatement.setTotalNonCashOperatingIncomeExpense(totalNonCashOperatingIncomeExpense);
 		generatedCashFlowStatement.setChangesInOperatingAssetsLiabilitiesAccounts(changesInOperatingAssetsLiabilitiesAccounts);
+		List<BigDecimal> totalChangesInOperatingAssetsLiabilities = AccountInReportDTO.sumAmountsOfAccounts(changesInOperatingAssetsLiabilitiesAccounts);
+		generatedCashFlowStatement.setTotalChangesInOperatingAssetsLiabilities(totalChangesInOperatingAssetsLiabilities);
 		generatedCashFlowStatement.setChangesInOperatingEquityAccounts(changesInOperatingEquityAccounts);
+		List<BigDecimal> totalChangesInOperatingEquity = AccountInReportDTO.sumAmountsOfAccounts(changesInOperatingEquityAccounts);
+		generatedCashFlowStatement.setTotalChangesInOperatingEquity(totalChangesInOperatingEquity);
 
 		generatedCashFlowStatement.setIncomeExpenseFromInvestingAccounts(incomeExpenseFromInvestingAccounts);
+		List<BigDecimal> totalIncomeExpenseFromInvestingNet = AccountInReportDTO.sumAmountsOfAccounts(incomeExpenseFromInvestingAccounts);
+		generatedCashFlowStatement.setTotalIncomeExpenseFromInvestingNet(totalIncomeExpenseFromInvestingNet);
+		generatedCashFlowStatement.setNonCashInvestingIncomeExpenseAccounts(nonCashInvestingIncomeExpenseAccounts);
+		List<BigDecimal> totalNonCashInvestingIncomeExpense = AccountInReportDTO.sumAmountsOfAccounts(nonCashInvestingIncomeExpenseAccounts);
+		generatedCashFlowStatement.setTotalNonCashInvestingIncomeExpense(totalNonCashInvestingIncomeExpense);
 		generatedCashFlowStatement.setChangesInInvestingAssetsLiabilitiesAccounts(changesInInvestingAssetsLiabilitiesAccounts);
+		List<BigDecimal> totalChangesInInvestingAssetsLiabilities = AccountInReportDTO.sumAmountsOfAccounts(changesInInvestingAssetsLiabilitiesAccounts);
+		generatedCashFlowStatement.setTotalChangesInInvestingAssetsLiabilities(totalChangesInInvestingAssetsLiabilities);
+		generatedCashFlowStatement.setChangesInInvestingEquityAccounts(changesInInvestingEquityAccounts);
+		List<BigDecimal> totalChangesInInvestingEquity = AccountInReportDTO.sumAmountsOfAccounts(changesInInvestingEquityAccounts);
+		generatedCashFlowStatement.setTotalChangesInInvestingEquity(totalChangesInInvestingEquity);
 
 		generatedCashFlowStatement.setIncomeExpenseFromFinancingAccounts(incomeExpenseFromFinancingAccounts);
-		generatedCashFlowStatement.setChangesInNonDividendEquityAccounts(changesInNonDividendEquityAccounts);
-		generatedCashFlowStatement.setChangesInNonDividendAssetLiabilityAccounts(changesInNonDividendAssetLiabilityAccounts);
+		List<BigDecimal> totalIncomeExpenseFromFinancingNet = AccountInReportDTO.sumAmountsOfAccounts(incomeExpenseFromFinancingAccounts);
+		generatedCashFlowStatement.setTotalIncomeExpenseFromFinancingNet(totalIncomeExpenseFromFinancingNet);
+		generatedCashFlowStatement.setNonCashFinancingIncomeExpenseAccounts(nonCashFinancingIncomeExpenseAccounts);
+		List<BigDecimal> totalNonCashFinancingIncomeExpense = AccountInReportDTO.sumAmountsOfAccounts(nonCashFinancingIncomeExpenseAccounts);
+		generatedCashFlowStatement.setTotalNonCashFinancingIncomeExpense(totalNonCashFinancingIncomeExpense);
+		generatedCashFlowStatement.setChangesInNonDividendFinancingEquityAccounts(changesInNonDividendFinancingEquityAccounts);
+		List<BigDecimal> totalChangesInNonDividendFinancingEquity = AccountInReportDTO.sumAmountsOfAccounts(changesInNonDividendFinancingEquityAccounts);
+		generatedCashFlowStatement.setTotalChangesInNonDividendFinancingEquity(totalChangesInNonDividendFinancingEquity);
+		generatedCashFlowStatement.setChangesInNonDividendFinancingAssetLiabilityAccounts(changesInNonDividendFinancingAssetLiabilityAccounts);
+		List<BigDecimal> totalChangesInNonDividendFinancingAssetLiabilities = AccountInReportDTO.sumAmountsOfAccounts(changesInNonDividendFinancingAssetLiabilityAccounts);
+		generatedCashFlowStatement.setTotalChangesInNonDividendFinancingAssetLiabilities(totalChangesInNonDividendFinancingAssetLiabilities);
 		generatedCashFlowStatement.setDividendEquityAccounts(dividendEquityAccounts);
+		List<BigDecimal> totalDividendEquity = AccountInReportDTO.sumAmountsOfAccounts(dividendEquityAccounts);
+		generatedCashFlowStatement.setTotalDividendEquity(totalDividendEquity);
 		generatedCashFlowStatement.setDividendLiabilityAccounts(dividendLiabilityAccounts);
-		
+		List<BigDecimal> totalDividendLiabilities = AccountInReportDTO.sumAmountsOfAccounts(dividendLiabilityAccounts);
+		generatedCashFlowStatement.setTotalDividendLiabilities(totalDividendLiabilities);
+
 		generatedCashFlowStatement.setInterestExpenseAccounts(interestExpenseAccounts);
+		List<BigDecimal> totalInterestExpense = AccountInReportDTO.sumAmountsOfAccounts(interestExpenseAccounts);
+		generatedCashFlowStatement.setTotalInterestExpense(totalInterestExpense);
 		generatedCashFlowStatement.setInterestLiabilityAccounts(interestLiabilityAccounts);
+		List<BigDecimal> totalInterestLiabilities = AccountInReportDTO.sumAmountsOfAccounts(interestLiabilityAccounts);
+		generatedCashFlowStatement.setTotalInterestLiabilities(totalInterestLiabilities);
 		generatedCashFlowStatement.setTaxExpenseAccounts(taxExpenseAccounts);
+		List<BigDecimal> totalTaxExpense = AccountInReportDTO.sumAmountsOfAccounts(taxExpenseAccounts);
+		generatedCashFlowStatement.setTotalTaxExpense(totalTaxExpense);
 		generatedCashFlowStatement.setTaxLiabilityAccounts(taxLiabilityAccounts);
-
-
+		List<BigDecimal> totalTaxLiabilities = AccountInReportDTO.sumAmountsOfAccounts(taxLiabilityAccounts);
+		generatedCashFlowStatement.setTotalTaxLiabilities(totalTaxLiabilities);
+		
+		List<BigDecimal> totalAdjustmentForNonOperatingIncomeExpenseNet = Utility.negateList(Utility.addLists(totalIncomeExpenseFromInvestingNet, totalIncomeExpenseFromFinancingNet));
+		generatedCashFlowStatement.setTotalAdjustmentForNonOperatingIncomeExpenseNet(totalAdjustmentForNonOperatingIncomeExpenseNet);
+		List<BigDecimal> totalAdjustmentToNetIncomeForCashOperatingIncome = Utility.addLists(totalAdjustmentForNonOperatingIncomeExpenseNet, totalNonCashOperatingIncomeExpense);
+		List<BigDecimal> totalAdjustmentForChangesInOperatingAssetsLiabilitiesEquity = Utility.addLists(totalChangesInOperatingAssetsLiabilities, totalChangesInOperatingEquity);
+		List<BigDecimal> totalAdjustmentToNetIncomeForOperatingCashFlow = Utility.addLists(totalAdjustmentToNetIncomeForCashOperatingIncome, totalAdjustmentForChangesInOperatingAssetsLiabilitiesEquity);
+		List<BigDecimal> cashFlowFromOperations = Utility.addLists(totalNetIncome, totalAdjustmentToNetIncomeForOperatingCashFlow);
+		generatedCashFlowStatement.setCashFlowFromOperations(cashFlowFromOperations);
+		
+		List<BigDecimal> totalAdjustmentForChangesInInvestingAssetsLiabilitiesEquity = Utility.addLists(totalChangesInInvestingAssetsLiabilities, totalChangesInInvestingEquity);
+		List<BigDecimal> totalAdjustmentToInvestingIncomeForInvestingCashFlow = Utility.addLists(totalNonCashInvestingIncomeExpense, totalAdjustmentForChangesInInvestingAssetsLiabilitiesEquity);
+		List<BigDecimal> cashFlowFromInvesting = Utility.addLists(totalIncomeExpenseFromInvestingNet, totalAdjustmentToInvestingIncomeForInvestingCashFlow);
+		generatedCashFlowStatement.setCashFlowFromInvesting(cashFlowFromInvesting);
+		
+		List<BigDecimal> totalAdjustmentForChangesInNonDividendFinancingAssetLiabilityEquity = Utility.addLists(totalChangesInNonDividendFinancingEquity, totalChangesInNonDividendFinancingAssetLiabilities);
+		List<BigDecimal> adjustmentToFinancingIncomeForFinancingCashFlowBeforeDividends = Utility.addLists(totalNonCashFinancingIncomeExpense, totalAdjustmentForChangesInNonDividendFinancingAssetLiabilityEquity);
+		List<BigDecimal> totalDividendsPaid = Utility.addLists(totalDividendEquity, totalDividendLiabilities);
+		generatedCashFlowStatement.setTotalDividendsPaid(totalDividendsPaid);
+		List<BigDecimal> cashFlowFromFinancingExcludingDividends = Utility.addLists(totalIncomeExpenseFromFinancingNet, adjustmentToFinancingIncomeForFinancingCashFlowBeforeDividends);
+		List<BigDecimal> cashFlowFromFinancing = Utility.subtractLists(cashFlowFromFinancingExcludingDividends, totalDividendsPaid);
+		generatedCashFlowStatement.setCashFlowFromFinancing(cashFlowFromFinancing);
+		
+		List<BigDecimal> totalInterestPaid = Utility.addLists(totalInterestExpense, totalInterestLiabilities);
+		List<BigDecimal> totalTaxesPaid = Utility.addLists(totalTaxExpense, totalTaxLiabilities);
+		generatedCashFlowStatement.setTotalInterestPaid(totalInterestPaid);
+		generatedCashFlowStatement.setTotalTaxesPaid(totalTaxesPaid);
+		
+		return generatedCashFlowStatement;
+		
 	}
 	
 	public IncomeStatementDTO generateIncomeStatement(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException, ConflictException {
