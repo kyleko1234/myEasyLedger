@@ -5,15 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
- * Note: Amounts for accounts and for totals should be as they would be on a cash flow statement.
+ * Note: Amounts for accounts will always be debits minus credits, but totals should be as they would be on a cash flow statement.
  * Cash and equivalents should be represented as net debits
  * Net income is net credits.
- * adjustments for non-cash income/expense are net debits, as is adjustment for non-operating income/expense.
+ * adjustments for non-cash income/expense are net debits (non-cash expenses are added back, income is subtracted), as is adjustment for non-operating income/expense.
  * Adjustments for changes in assets/liabilities/equity are net credits.
  * Dividends paid will be represented as a positive number, therefore dividend equity and liability will be represented as net debit numbers.
  * Same goes for tax and interest paid calculations: expenses and liabilities will be expressed as net debits.
  */
 public class CashFlowStatementDTO {
+	private List<DateRangeDTO> dateRanges = new ArrayList<DateRangeDTO>();
+
 	private List<AccountInReportDTO> cashAndCashEquivalentsAccountsBeginning = new ArrayList<AccountInReportDTO>(); 
 	private List<BigDecimal> totalCashAndCashEquivalentsBeginning = new ArrayList<BigDecimal>(); 
 	
@@ -70,6 +72,15 @@ public class CashFlowStatementDTO {
 	
 	public CashFlowStatementDTO() {
 		
+	}
+
+	public List<DateRangeDTO> getDateRanges() {
+		return dateRanges;
+	}
+
+
+	public void setDateRanges(List<DateRangeDTO> dateRanges) {
+		this.dateRanges = dateRanges;
 	}
 
 
