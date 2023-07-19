@@ -30,6 +30,7 @@ import AccountTransactionsReportPage from '../pages/reports/account-transactions
 import ExpensesByVendor from '../pages/reports/expenses-by-vendor.js';
 import IncomeByCustomer from '../pages/reports/income-by-customer.js';
 import AccountsPage from '../pages/accounts/accounts-page.js';
+import BalanceSheetPageV2 from '../pages/reports/balance-sheet-page-v2.js';
 
 const routes = [
   {
@@ -85,6 +86,17 @@ const routes = [
     path: '/reports/balance-sheet/:endDate',
     title: 'Balance Sheet Report',
     component: BalanceSheetReport
+  },
+  {
+    path: '/reports/balance-sheet-v2',
+    title: 'Balance Sheet Report',
+    exact: true,
+    component: BalanceSheetPageV2
+  },
+  {
+    path: '/reports/balance-sheet-v2/:endDate',
+    title: 'Balance Sheet Report',
+    component: BalanceSheetPageV2
   },
   {
     path: '/reports/income-statement',
