@@ -7,7 +7,9 @@ import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render
 import StyledSelect from '../../../components/misc/styled-select';
 
 
-function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReportButton, handleRemoveDateRangeButton, dateRangePresets, handleSelectDateRangePreset, handleChangeStartDate, handleChangeEndDate, detailedView, toggleDetailedView, handleCompareButton, noDetailedView }) {
+function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReportButton, handleRemoveDateRangeButton, 
+    dateRangePresets, handleSelectDateRangePreset, handleChangeStartDate, handleChangeEndDate, detailedView, 
+    toggleDetailedView, handleCompareButton, noDetailedView, singleDate }) {
     const appContext = React.useContext(PageSettings);
     
     return(
@@ -41,28 +43,47 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                             placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                             value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                         />
-                                        <label className="my-0 text-end col-1 px-2">
-                                            {incomeStatementRenderText[appContext.locale]["From:"]} 
-                                        </label>
-                                        <div className="col-3">
-                                            <input 
-                                                type="date" 
-                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
-                                                className="form-control" value={datesToRequest[i].startDate} 
-                                                onChange={event => handleChangeStartDate(event.target.value, i)} 
-                                            />
-                                        </div>
-                                        <label className="my-0 text-end col-1 px-2">
-                                            {incomeStatementRenderText[appContext.locale]["To:"]} 
-                                        </label>
-                                        <div className="col-3">
-                                            <input 
-                                                type="date" 
-                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
-                                                className="form-control" value={datesToRequest[i].endDate} 
-                                                onChange={event => handleChangeEndDate(event.target.value, i)}
-                                            />
-                                        </div>
+                                        {singleDate
+                                            ? <>
+                                                <label className="col-2 px-1 px-sm-2 text-end my-0" htmlFor={`end-date-${i}`}>
+                                                    {balanceSheetRenderText[appContext.locale]["As of:"]} 
+                                                </label>
+                                                <div className="col-6">
+                                                    <input 
+                                                        type="date" 
+                                                        id={`end-date-${i}`}
+                                                        className="form-control align-self-center" 
+                                                        placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                        value={datesToRequest[i].endDate} 
+                                                        onChange={event => handleChangeEndDate(event.target.value, i)} 
+                                                    />
+                                                </div>
+                                            </>
+                                            : <>
+                                                <label className="my-0 text-end col-1 px-2">
+                                                    {incomeStatementRenderText[appContext.locale]["From:"]} 
+                                                </label>
+                                                <div className="col-3">
+                                                    <input 
+                                                        type="date" 
+                                                        placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                        className="form-control" value={datesToRequest[i].startDate} 
+                                                        onChange={event => handleChangeStartDate(event.target.value, i)} 
+                                                    />
+                                                </div>
+                                                <label className="my-0 text-end col-1 px-2">
+                                                    {incomeStatementRenderText[appContext.locale]["To:"]} 
+                                                </label>
+                                                <div className="col-3">
+                                                    <input 
+                                                        type="date" 
+                                                        placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                        className="form-control" value={datesToRequest[i].endDate} 
+                                                        onChange={event => handleChangeEndDate(event.target.value, i)}
+                                                    />
+                                                </div>
+                                            </>
+                                        }
                                     </div>
                                 </div>
                             )
@@ -75,7 +96,11 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                     <div className="d-flex my-1 justify-content-between">
                                         <div className="font-weight-semibold d-flex align-items-center">
                                             {incomeStatementRenderText[appContext.locale]["Date range"] + (datesToRequest.length > 1? (" " + (i + 1)) : "" )}
-                                            <button className={"btn btn-light py-0 px-1 mx-1 border-0 " + (datesToRequest.length > 1 ? "" : " invisible")} onClick={() => handleRemoveDateRangeButton(i)}>
+                                            <button 
+                                                className={"btn btn-light py-0 px-1 mx-1 border-0 " + (datesToRequest.length > 1 ? "" : " invisible")} 
+                                                onClick={() => handleRemoveDateRangeButton(i)}
+                                                type="button"
+                                            >
                                                 <i className="ion ion-md-close fa-fw"></i>
                                             </button>
                                         </div>
