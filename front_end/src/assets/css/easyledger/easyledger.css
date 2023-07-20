@@ -621,7 +621,7 @@ a.pseudo-tr:hover,
     font-size: var(--compact-font-size);
 }
 
-.indent {
+.indent, .indent-1 {
     padding-left: 3em;
 }
 .indent-2 {
