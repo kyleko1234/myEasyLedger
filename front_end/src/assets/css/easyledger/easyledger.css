@@ -432,6 +432,9 @@ input[type=number] {
 .pseudo-tr:first-child {
     border-top: none;
 }
+.dark-mode .pseudo-tr:first-child{
+    border-top: none;
+}
 
 .pseudo-tfoot{
     border-top: silver 1px solid;

@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,7 +55,8 @@ public class ReportsController {
 		return reportsService.getBalanceSheetViewModelForOrganizationUpToDate(organizationId, endDate);
 	}
 	
-	@GetMapping("/organization/{id}/reports/balanceSheet") 
+	//We use post just to make life a little easier when dealing with arrays of dates in the request body
+	@PostMapping("/organization/{id}/reports/balanceSheet") 
 	public BalanceSheetDTO getBalanceSheetDtoForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
     		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
     		throws UnauthorizedException, ResourceNotFoundException {
@@ -62,7 +64,7 @@ public class ReportsController {
 		return reportsService.generateBalanceSheet(organizationId, dates);
 	}
 	
-	@GetMapping("/organization/{id}/reports/incomeStatement") 
+	@PostMapping("/organization/{id}/reports/incomeStatement") 
 	public IncomeStatementDTO getIncomeStatementDtoForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
     		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
     		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
@@ -88,7 +90,7 @@ public class ReportsController {
 		return reportsService.getCashFlowStatementViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
 	
-	@GetMapping("/organization/{id}/reports/cashFlowStatement") 
+	@PostMapping("/organization/{id}/reports/cashFlowStatement") 
 	public CashFlowStatementDTO getCashFlowStatementDtoForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
     		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
     		throws UnauthorizedException, ResourceNotFoundException, ConflictException {

@@ -6,6 +6,7 @@ import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
 import { balanceSheetReportText } from '../../utils/i18n/balance-sheet-report-text';
 import { getTodayAsDateString, validateDate } from '../../utils/util-fns';
+import BalanceSheetStandard from './components/balance-sheet-standard';
 import DateRangeControls from './components/date-range-controls';
 
 function BalanceSheetPageV2() {
@@ -23,10 +24,20 @@ function BalanceSheetPageV2() {
     const [dateRangePresets, setDateRangePresets] = React.useState([]);
     const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
     const [unbalancedAlert, setUnbalancedAlert] = React.useState(false);
-    const [balanceSheets, setBalanceSheets] = React.useState([]);
+    const [balanceSheetDto, setBalanceSheetDto] = React.useState();
 
     const fetchBalanceSheets = async () => {
-        
+        setLoading(true);
+        axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet`, datesToRequest)
+            .then(response => {
+                console.log(response.data);
+                setBalanceSheetDto(response.data);
+                setLoading(false);
+            })
+            .catch(response => {
+                console.log(response);
+                setLoading(false);
+            })
     }
 
     React.useEffect(() => {
@@ -119,6 +130,9 @@ function BalanceSheetPageV2() {
                             toggleDetailedView={toggleDetailedView}
                             handleCompareButton={handleCompareButton}
                             singleDate
+                        />
+                        <BalanceSheetStandard
+                            balanceSheetDto={balanceSheetDto}
                         />
                     </div>
 
