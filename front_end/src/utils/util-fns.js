@@ -289,3 +289,4 @@ export const subtypeIsEmpty = accountSubtypeInReportDto => {
     }
     return true;
 }
+

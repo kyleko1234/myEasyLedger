@@ -31,6 +31,7 @@ import ExpensesByVendor from '../pages/reports/expenses-by-vendor.js';
 import IncomeByCustomer from '../pages/reports/income-by-customer.js';
 import AccountsPage from '../pages/accounts/accounts-page.js';
 import BalanceSheetPageV2 from '../pages/reports/balance-sheet-page-v2.js';
+import IncomeStatementPageV2 from '../pages/reports/income-statement-page-v2.js';
 
 const routes = [
   {
@@ -108,6 +109,17 @@ const routes = [
     path: '/reports/income-statement/:startDate/:endDate',
     title: 'Income Statement Report',
     component: IncomeStatementReport
+  },
+  {
+    path: '/reports/income-statement',
+    exact: true,
+    title: 'Income Statement Report',
+    component: IncomeStatementPageV2
+  },
+  {
+    path: '/reports/income-statement/:startDate/:endDate',
+    title: 'Income Statement Report',
+    component: IncomeStatementPageV2
   },
   {
     path: '/account-settings',

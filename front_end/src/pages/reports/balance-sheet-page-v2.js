@@ -30,7 +30,6 @@ function BalanceSheetPageV2() {
         setLoading(true);
         axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/balanceSheet`, datesToRequest)
             .then(response => {
-                console.log(response.data);
                 setBalanceSheetDto(response.data);
                 setLoading(false);
             })

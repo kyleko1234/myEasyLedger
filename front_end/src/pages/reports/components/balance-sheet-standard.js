@@ -1,9 +1,13 @@
 import React from 'react';
+import { Alert } from 'reactstrap';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
+import { PageSettings } from '../../../config/page-settings';
+import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
 import { accountIsEmpty, arrayIsAllZeroes, subtypeIsEmpty } from '../../../utils/util-fns';
 import ReportRow from './report-row';
 
 function BalanceSheetStandard({balanceSheetDto, detailedView}) {
+    const appContext = React.useContext(PageSettings);
     const dateLabels = () => {
         let labels = []
         balanceSheetDto.dateRanges.map(dateRange => {
@@ -11,9 +15,16 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
         })
         return labels;
     }
+    const [unbalancedAlert, setUnbalancedAlert] = React.useState(false);
 
+    React.useEffect(() => {
+        //TODO: check for unbalanced balance sheets
+    }, [])
     return(
         <>
+            <Alert isOpen={unbalancedAlert} color="danger">
+                {balanceSheetRenderText[appContext.locale]["This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly."]}
+            </Alert>
             {balanceSheetDto
                 ? <div>
                     {/** Report Header */}
