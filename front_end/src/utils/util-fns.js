@@ -254,3 +254,38 @@ export const isTreatedAsZero = (value) => {
 export const returnStringToNearestCentPrecisionNumber = string => {
     return parseFloat(parseFloat(string).toFixed(2))
 }
+
+export const arrayIsAllZeroes = array => {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] !== 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+export const accountIsEmpty = accountInReportDto => {
+    if (!arrayIsAllZeroes(accountInReportDto.amounts)) {
+        return false;
+    }
+    if (accountInReportDto.hasChildren) {
+        for (let i = 0; i < accountInReportDto.children.length; i++) {
+            if (!accountIsEmpty(accountInReportDto.children[i])) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+export const subtypeIsEmpty = accountSubtypeInReportDto => {
+    if (!arrayIsAllZeroes(accountSubtypeInReportDto.totalDebitsMinusCredits)) {
+        return false;
+    }
+    for (let i = 0; i < accountSubtypeInReportDto.accounts.length; i++) {
+        if (!accountIsEmpty(accountSubtypeInReportDto.accounts[i])) {
+            return false;
+        }
+    }
+    return true;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
+import { arrayIsAllZeroes, subtypeIsEmpty } from '../../../utils/util-fns';
 import ReportRow from './report-row';
 
 function BalanceSheetStandard({balanceSheetDto, detailedView}) {
@@ -10,6 +11,7 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
         })
         return labels;
     }
+
     return(
         <>
             {balanceSheetDto
@@ -34,15 +36,17 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                     />
                     {balanceSheetDto.currentAssetsSubtypes
                         ? balanceSheetDto.currentAssetsSubtypes.map((subtype, i)=> {
-                            return(
-                                <ReportRow
-                                    label={subtype.accountSubtypeName /**remember to translate */}
-                                    values={subtype.totalDebitsMinusCredits}
-                                    isCurrency
-                                    indentLevel={2}
-                                    key={i}
-                                />
-                            )
+                            if (!subtypeIsEmpty(subtype)) {
+                                return(
+                                    <ReportRow
+                                        label={subtype.accountSubtypeName /**remember to translate */}
+                                        values={subtype.totalDebitsMinusCredits}
+                                        isCurrency
+                                        indentLevel={2}
+                                        key={i}
+                                    />
+                                )
+                            }
                         })
                         : null
                     }
@@ -55,15 +59,17 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                     />
                     {balanceSheetDto.nonCurrentAssetsSubtypes
                         ? balanceSheetDto.nonCurrentAssetsSubtypes.map((subtype, i) => {
-                            return(
-                                <ReportRow
-                                    label={subtype.accountSubtypeName}
-                                    values={subtype.totalDebitsMinusCredits}
-                                    isCurrency
-                                    indentLevel={2}
-                                    key={i}
-                                />
-                            )
+                            if (!subtypeIsEmpty(subtype)) {
+                                return(
+                                    <ReportRow
+                                        label={subtype.accountSubtypeName}
+                                        values={subtype.totalDebitsMinusCredits}
+                                        isCurrency
+                                        indentLevel={2}
+                                        key={i}
+                                    />
+                                )
+                            }
                         })
                         : null
                     }
