@@ -133,6 +133,7 @@ function BalanceSheetPageV2() {
                         />
                         <BalanceSheetStandard
                             balanceSheetDto={balanceSheetDto}
+                            detailedView={detailedView}
                         />
                     </div>
 

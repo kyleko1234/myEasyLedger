@@ -494,6 +494,9 @@ public class ReportsService {
 		generatedBalanceSheet.setTotalShareBasedCompensation(AccountInReportDTO.sumAmountsOfAccounts(shareBasedCompensationAccounts));
 		generatedBalanceSheet.setOtherEquityItemsAccounts(otherEquityItemsAccounts);
 		generatedBalanceSheet.setTotalOtherEquityItems(AccountInReportDTO.sumAmountsOfAccounts(otherEquityItemsAccounts));
+		generatedBalanceSheet.setTotalAssets(Utility.addLists(generatedBalanceSheet.getTotalCurrentAssets(), generatedBalanceSheet.getTotalNonCurrentAssets()));
+		generatedBalanceSheet.setTotalLiabilities(Utility.addLists(generatedBalanceSheet.getTotalCurrentLiabilities(), generatedBalanceSheet.getTotalNonCurrentLiabilities()));
+		
 		//get end dates for prev periods and start dates for curr periods using fiscal year begin date
 		List<LocalDate> previousPeriodEndDates = new ArrayList<LocalDate>();
 		List<LocalDate> currentPeriodStartDates = new ArrayList<LocalDate>();
