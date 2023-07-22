@@ -32,6 +32,7 @@ import IncomeByCustomer from '../pages/reports/income-by-customer.js';
 import AccountsPage from '../pages/accounts/accounts-page.js';
 import BalanceSheetPageV2 from '../pages/reports/balance-sheet-page-v2.js';
 import IncomeStatementPageV2 from '../pages/reports/income-statement-page-v2.js';
+import CashFlowPageV2 from '../pages/reports/cash-flow-page-v2.js';
 
 const routes = [
   {
@@ -189,6 +190,11 @@ const routes = [
     path: '/reports/cash-flow',
     title: 'Cash Flow Report',
     component: CashFlowReport,
+  },
+  {
+    path: '/reports/cash-flow-v2',
+    title: 'Cash Flow Report',
+    component: CashFlowPageV2,
   },
   {
     path: '/verification/:verificationToken/:locale',
