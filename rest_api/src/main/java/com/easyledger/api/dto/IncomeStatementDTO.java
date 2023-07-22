@@ -19,6 +19,7 @@ public class IncomeStatementDTO {
 	private List<BigDecimal> totalEbit = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> interestAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalInterest = new ArrayList<BigDecimal>();
+	private List<BigDecimal> totalEarningsBeforeTax = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> taxAccounts = new ArrayList<AccountInReportDTO>();
 	private List<BigDecimal> totalTaxes = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> nonRecurringAccounts = new ArrayList<AccountInReportDTO>();
@@ -182,5 +183,14 @@ public class IncomeStatementDTO {
 			List<BigDecimal> totalNonOperatingIncomeAndExpenseSubtypesNet) {
 		this.totalNonOperatingIncomeAndExpenseSubtypesNet = totalNonOperatingIncomeAndExpenseSubtypesNet;
 	}
+
+	public List<BigDecimal> getTotalEarningsBeforeTax() {
+		return totalEarningsBeforeTax;
+	}
+
+	public void setTotalEarningsBeforeTax(List<BigDecimal> totalEarningsBeforeTax) {
+		this.totalEarningsBeforeTax = totalEarningsBeforeTax;
+	}
+
 
 }

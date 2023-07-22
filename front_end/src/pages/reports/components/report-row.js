@@ -9,7 +9,7 @@ function ReportRow({label, values, className, indentLevel, isCurrency}) {
     const indentClassNames = ["", "indent", "indent-2", "indent-3", "indent-4"]
     return(
         <>
-            <div className={"pseudo-tr d-flex justify-content-between " + (className? className : "") + " " + (indentLevel? indentClassNames[indentLevel] : "")}>
+            <div className={"pseudo-tr d-flex justify-content-between align-items-center " + (className? className : "") + " " + (indentLevel? indentClassNames[indentLevel] : "")}>
                 <div className="pseudo-td">
                     {label}
                 </div>

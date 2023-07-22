@@ -2,6 +2,7 @@
 
 
 AccountSubtypes represent subgroups of each AccountType. These are hardcoded into the server for the purposes of generating accurate reports. Each AccountGroup must belong to exactly one AccountSubtype. **For the purposes of generating cash flow statements,  "Other current/noncurrent assets/liabilities" are treated as operating assets and liabilities. "Other equity" is treated as a cash adjustment when calculating cash flows.**
+Non-recurring items should be recorded net of tax.
 
 The account subtypes are provided as follows:
 
@@ -101,3 +102,4 @@ ___
 - [[Retrieve an AccountSubtype]]
 - [[List All AccountSubtypes]]
 - [[List All AccountSubtype Balances for an Organization]]
+-

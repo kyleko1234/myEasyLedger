@@ -422,6 +422,7 @@ public class ReportsService {
 		generatedIncomeStatement.setInterestAccounts(interestAccounts);
 		generatedIncomeStatement.setTotalInterest(AccountInReportDTO.sumAmountsOfAccounts(interestAccounts));
 		List<BigDecimal> ebt = Utility.subtractLists(generatedIncomeStatement.getTotalEbit(), generatedIncomeStatement.getTotalInterest());
+		generatedIncomeStatement.setTotalEarningsBeforeTax(ebt);
 		generatedIncomeStatement.setTaxAccounts(taxAccounts);
 		generatedIncomeStatement.setTotalTaxes(AccountInReportDTO.sumAmountsOfAccounts(taxAccounts));
 		List<BigDecimal> earningsBeforeNonRecurring = Utility.subtractLists(ebt, generatedIncomeStatement.getTotalTaxes());

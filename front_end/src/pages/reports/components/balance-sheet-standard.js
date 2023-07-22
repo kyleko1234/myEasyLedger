@@ -3,15 +3,15 @@ import { Alert } from 'reactstrap';
 import LoadingSpinner from '../../../components/misc/loading-spinner';
 import { PageSettings } from '../../../config/page-settings';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
-import { accountIsEmpty, arrayIsAllZeroes, subtypeIsEmpty } from '../../../utils/util-fns';
+import { accountIsEmpty, arrayIsAllZeroes, localizeDate, subtypeIsEmpty } from '../../../utils/util-fns';
 import ReportRow from './report-row';
 
 function BalanceSheetStandard({balanceSheetDto, detailedView}) {
     const appContext = React.useContext(PageSettings);
     const dateLabels = () => {
-        let labels = []
+        let labels = [];
         balanceSheetDto.dateRanges.map(dateRange => {
-            labels.push(dateRange.endDate)
+            labels.push(localizeDate(dateRange.endDate));
         })
         return labels;
     }

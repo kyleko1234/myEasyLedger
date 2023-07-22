@@ -7,27 +7,21 @@ import { API_BASE_URL } from '../../utils/constants';
 import { incomeStatementReportText } from '../../utils/i18n/income-statement-report-text';
 import { getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../utils/util-fns';
 import DateRangeControls from './components/date-range-controls';
+import IncomeStatementStandard from './components/income-statement-standard';
 
 function IncomeStatementPageV2() {
     const appContext = React.useContext(PageSettings);
     const params = useParams();
-    const today = getTodayAsDateString();
-    const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
     const [loading, setLoading] = React.useState(true);
     const [incomeStatementDto, setIncomeStatementDto] = React.useState();
-    const [dateRangePresets, setDateRangePresets] = React.useState([]);
+    const [detailedView, setDetailedView] = React.useState(false);
+    const toggleDetailedView = () => setDetailedView(!detailedView);
 
-    const [datesToRequest, setDatesToRequest] = React.useState([{
-        label: "Custom",
-        startDate: params.startDate ? params.startDate : beginningOfCurrentFiscalYear, //cannot use defaultProps here because we would need to call appContext at the top level, so conditional is used here instead
-        endDate: params.endDate ? params.endDate : today
-    }]);
-    const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
-    
-    const fetchIncomeStatements = async () => {
+    const fetchIncomeStatements = async (datesToRequest) => {
         setLoading(true);
         axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement`, datesToRequest)
             .then(response => {
+                console.log(response.data)
                 setIncomeStatementDto(response.data);
                 setLoading(false);
             })
@@ -36,88 +30,6 @@ function IncomeStatementPageV2() {
                 setLoading(false);
             })
     }
-
-    const validateDatesToRequest = dateRangeObjects => {
-        let returnedBoolean = true
-        dateRangeObjects.forEach(dateRangeObject => {
-            if (!validateDate(dateRangeObject.endDate) || !validateDate(dateRangeObject.startDate)) {
-                returnedBoolean = false;
-            }
-        })
-        return returnedBoolean;
-    }
-    
-    const handleUpdateReportButton = async (event) => {
-        event.preventDefault();
-        setLoading(true);
-        setInvalidDateAlert(false);
-        if (validateDatesToRequest(datesToRequest)) {
-            fetchIncomeStatements()
-        } else {
-            setInvalidDateAlert(true);
-        }
-        setLoading(false);
-    }
-
-    const handleRemoveDateRangeButton = i => {
-        let datesArray = datesToRequest.slice();
-        datesArray.splice(i, 1);
-        setDatesToRequest(datesArray);
-    }
-
-    const handleSelectDateRangePreset = (selectedOption, i) => {
-        if (selectedOption) {
-            let dateToRequestObject = {
-                label: selectedOption.label,
-                startDate: selectedOption.object.startDate,
-                endDate: selectedOption.object.endDate
-            };
-            let newDatesToRequestArray = datesToRequest.slice();
-            newDatesToRequestArray[i] = dateToRequestObject;
-            setDatesToRequest(newDatesToRequestArray);
-        }
-    }
-
-    const handleChangeStartDate = (date, i) => {
-        let newDatesToRequestArray = datesToRequest.slice();
-        newDatesToRequestArray[i] = {
-            label: "Custom", 
-            startDate: date, 
-            endDate: newDatesToRequestArray[i].endDate
-        }
-        setDatesToRequest(newDatesToRequestArray)
-    }
-
-    const handleChangeEndDate = (date, i) => {
-        let newDatesToRequestArray = datesToRequest.slice();
-        newDatesToRequestArray[i] = {
-            label: "Custom", 
-            startDate: newDatesToRequestArray[i].startDate, 
-            endDate: date
-        }
-        setDatesToRequest(newDatesToRequestArray)
-    }
-
-    const handleCompareButton = () => {
-        let endDatesArray = datesToRequest.slice();
-        endDatesArray.push({
-            label: "Custom", 
-            endDate: today}
-        )
-        setDatesToRequest(endDatesArray);
-    }
-
-    React.useEffect(() => {
-        async function fetchData() {
-            setLoading(true);
-            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/dateRangePresetsUpToDate/${today}/${appContext.locale}`).then(response => {
-                setDateRangePresets(response.data);
-            })
-            await fetchIncomeStatements();
-            setLoading(false);
-        }
-        fetchData();
-    }, [])
 
     return (
         <div>
@@ -129,8 +41,15 @@ function IncomeStatementPageV2() {
                     ? <LoadingSpinner big/>
                     : <div>
                         <DateRangeControls
-                            datesToRequest={datesToRequest}
-                            invalidDateAlert={invalidDateAlert}
+                            parentComponentDataFetchFunction={fetchIncomeStatements}
+                            detailedView={detailedView}
+                            toggleDetailedView={toggleDetailedView}
+                            defaultStartDate={params.startDate? params.startDate: null}
+                            defaultEndDate={params.endDate? params.endDate: null}
+                        />
+                        <IncomeStatementStandard
+                            incomeStatementDto={incomeStatementDto}
+                            detailedView={detailedView}
                         />
                     </div>
                 }
