@@ -111,13 +111,13 @@ const routes = [
     component: IncomeStatementReport
   },
   {
-    path: '/reports/income-statement',
+    path: '/reports/income-statement-v2',
     exact: true,
     title: 'Income Statement Report',
     component: IncomeStatementPageV2
   },
   {
-    path: '/reports/income-statement/:startDate/:endDate',
+    path: '/reports/income-statement-v2/:startDate/:endDate',
     title: 'Income Statement Report',
     component: IncomeStatementPageV2
   },
