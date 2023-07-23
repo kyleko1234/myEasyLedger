@@ -79,8 +79,13 @@ export const accountDetailsEditorText = {
         "Interest expense": "Interest expense",
         "Tax expense": "Tax expense",
         "Non-recurring and extraordinary items": "Non-recurring and extraordinary items",
-        "Interest income": "Interest income"
-        
+        "Interest income": "Interest income",
+        "Interest payable": "Interest payable",
+        "Taxes payable": "Taxes payable",
+        "Interest income": "Interest income",
+        "Expense from investing activities": "Expense from investing activities",
+        "Expense from financing activities": "Expense from financing activities",
+
     },
     "zh-TW": {
         "Account Details": "科目說明",
@@ -162,6 +167,11 @@ export const accountDetailsEditorText = {
         "Tax expense": "賦稅費用",
         "Non-recurring and extraordinary items": "非經常性項目",
         "Interest income": "利息收入",
+        "Interest payable": "TRANSLATION",
+        "Taxes payable": "TRANSLATION",
+        "Interest income": "TRANSLATION",
+        "Expense from investing activities": "TRANSLATION",
+        "Expense from financing activities": "TRANSLATION",
 
 
         "Display Order": "顯示順序",

@@ -30,7 +30,7 @@ function CashFlowPageV2() {
     return(
         <div>
             <h1>
-                {cashFlowReportText[appContext.locale]["Cash Flow Report"]} (v2)
+                {cashFlowReportText[appContext.locale]["Cash Flow Statement"]}
             </h1>
             <div>
                 {appContext.isLoading

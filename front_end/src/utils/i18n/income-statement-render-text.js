@@ -46,6 +46,9 @@ export const incomeStatementRenderText = {
         "Expense from investing activities" : "Expense from investing activities",
         "Expense from financing activities": "Expense from financing activities",
         "Total other expense": "Total other expense",
+        "Non-operating income and expenses": "Non-operating income and expenses",
+        "Total non-operating income and expenses, net": "Total non-operating income and expenses, net",
+
     },
     "zh-TW": {
         "Options": "設定選項",
@@ -87,7 +90,14 @@ export const incomeStatementRenderText = {
         "Expenses": "費用",
         "Total expenses": "合計費用",
         "Total Income less Expenses": "總收益 減 總費用",
-        "Detailed View": "細項檢視"
+        "Detailed View": "細項檢視",
+
+        "Other expense": "TRANSLATION",
+        "Expense from investing activities" : "TRANSLATION",
+        "Expense from financing activities": "TRANSLATION",
+        "Total other expense": "TRANSLATION",
+        "Non-operating income and expenses": "TRANSLATION",
+        "Total non-operating income and expenses, net": "TRANSLATION",
 
     }
 }

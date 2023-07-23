@@ -25,6 +25,7 @@ export const balanceSheetRenderText = {
 
         "Equity": "Equity",
         "Retained Earnings": "Retained Earnings",
+        "Retained earnings": "Retained earnings",
         "Beginning balances": "Beginning balances",
         "Net income for current fiscal period": "Net income for current fiscal period",  
         "Dividends for current fiscal period": "Less dividends and equivalents for current fiscal period",
@@ -71,6 +72,12 @@ export const balanceSheetRenderText = {
         "Non-recurring and extraordinary items": "Non-recurring and extraordinary items",
         "Interest income": "Interest income",
 
+        "Interest payable": "Interest payable",
+        "Taxes payable": "Taxes payable",
+        "Interest income": "Interest income",
+        "Expense from investing activities": "Expense from investing activities",
+        "Expense from financing activities": "Expense from financing activities",
+
         "Detailed View": "Detailed View"
     },
     "zh-TW": {
@@ -99,6 +106,7 @@ export const balanceSheetRenderText = {
 
         "Equity": "權益",
         "Retained Earnings": "保留盈餘",
+        "Retained earnings": "保留盈餘",
         "Beginning balances": "初始餘額",
         "Net income for current fiscal period": "本期淨收入",  
         "Dividends for current fiscal period": "本期股利",
@@ -144,6 +152,11 @@ export const balanceSheetRenderText = {
         "Tax expense": "賦稅費用",
         "Non-recurring and extraordinary items": "非經常性項目",
         "Interest income": "利息收入",
+        "Interest payable": "TRANSLATION",
+        "Taxes payable": "TRANSLATION",
+        "Interest income": "TRANSLATION",
+        "Expense from investing activities": "TRANSLATION",
+        "Expense from financing activities": "TRANSLATION",
 
         "Detailed View": "細項檢視"
     }

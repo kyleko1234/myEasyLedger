@@ -585,6 +585,7 @@ public class ReportsService {
 				dividendsAndEquivalentsAccountsCurrentPeriod.add(account);
 			}
 		}
+		AccountInReportDTO.negateAmountsOfAccounts(dividendsAndEquivalentsAccountsCurrentPeriod);
 		generatedBalanceSheet.setDividendsAndEquivalentsAccountsCurrentPeriod(dividendsAndEquivalentsAccountsCurrentPeriod);
 		List<BigDecimal> totalDividendsAndEquivalentsCurrentPeriod = AccountInReportDTO.sumAmountsOfAccounts(dividendsAndEquivalentsAccountsCurrentPeriod);
 		generatedBalanceSheet.setTotalDividendsAndEquivalentsCurrentPeriod(totalDividendsAndEquivalentsCurrentPeriod);
@@ -592,7 +593,7 @@ public class ReportsService {
 		//calculate retained earnings
 		List<BigDecimal> retainedEarningsBeginningBalances = Utility.addLists(initialRetainedEarnings, Utility.subtractLists(previousPeriodNetIncome, totalDividendsAndEquivalentsPreviousPeriod));
 		generatedBalanceSheet.setRetainedEarningsBeginningBalances(retainedEarningsBeginningBalances);
-		List<BigDecimal> retainedEarningsEndingBalances = Utility.addLists(retainedEarningsBeginningBalances, Utility.subtractLists(currentPeriodNetIncome, totalDividendsAndEquivalentsCurrentPeriod));
+		List<BigDecimal> retainedEarningsEndingBalances = Utility.addLists(retainedEarningsBeginningBalances, Utility.addLists(currentPeriodNetIncome, totalDividendsAndEquivalentsCurrentPeriod));
 		generatedBalanceSheet.setRetainedEarningsEndingBalances(retainedEarningsEndingBalances);
 		
 		List<BigDecimal> capitalPlusShareCompensation = Utility.addLists(generatedBalanceSheet.getTotalPaidInCapital(), generatedBalanceSheet.getTotalShareBasedCompensation());

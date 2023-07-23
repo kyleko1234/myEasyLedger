@@ -8,10 +8,15 @@ import ReportRow from './report-row';
 
 function BalanceSheetStandard({balanceSheetDto, detailedView}) {
     const appContext = React.useContext(PageSettings);
+    const translate = text => balanceSheetRenderText[appContext.locale][text];
     const dateLabels = () => {
         let labels = [];
         balanceSheetDto.dateRanges.map(dateRange => {
-            labels.push(localizeDate(dateRange.endDate));
+            if (!dateRange.name || dateRange.name === "Custom") {
+                labels.push(translate("As of:") + " " + localizeDate(dateRange.endDate));
+            } else {
+                labels.push(dateRange.name);
+            }
         })
         return labels;
     }
@@ -29,17 +34,16 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                 ? <div>
                     {/** Report Header */}
                     <ReportRow
-                        label={"Balance sheet as of:"}
                         values={dateLabels()}
                         className="fw-semibold"
                     />
                     {/** Assets */}
                     <ReportRow
-                        label={"Assets"}
+                        label={translate("Assets")}
                         className="fw-semibold"
                     />
                     <ReportRow
-                        label={"Current assets"}
+                        label={translate("Current assets")}
                         values={balanceSheetDto.totalCurrentAssets}
                         isCurrency
                         indentLevel={1}
@@ -51,7 +55,7 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                                 return(
                                     <React.Fragment key={i}>
                                         <ReportRow
-                                            label={subtype.accountSubtypeName /**remember to translate */}
+                                            label={translate(subtype.accountSubtypeName)}
                                             values={subtype.totalDebitsMinusCredits}
                                             isCurrency
                                             indentLevel={2}
@@ -93,7 +97,7 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                         : null
                     }
                     <ReportRow
-                        label={"Non-current assets"}
+                        label={translate("Non-current assets")}
                         values={balanceSheetDto.totalNonCurrentAssets}
                         isCurrency
                         indentLevel={1}
@@ -105,7 +109,7 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                                 return(
                                     <React.Fragment key={i}>
                                         <ReportRow
-                                            label={subtype.accountSubtypeName}
+                                            label={translate(subtype.accountSubtypeName)}
                                             values={subtype.totalDebitsMinusCredits}
                                             isCurrency
                                             indentLevel={2}
@@ -147,18 +151,18 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                         : null
                     }
                     <ReportRow
-                        label={"Total assets"}
+                        label={translate("Total assets")}
                         className="fw-semibold"
                         isCurrency
                         values={balanceSheetDto.totalAssets}
                     />
                     {/** Liabilities */}
                     <ReportRow
-                        label={"Liabilities"}
+                        label={translate("Liabilities")}
                         className="fw-semibold border-top-0 mt-3"
                     />
                     <ReportRow
-                        label={"Current liabilities"}
+                        label={translate("Current liabilities")}
                         values={balanceSheetDto.totalCurrentLiabilities}
                         isCurrency
                         indentLevel={1}
@@ -170,7 +174,7 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                                 return(
                                     <React.Fragment key={i}>
                                         <ReportRow
-                                            label={subtype.accountSubtypeName /**remember to translate */}
+                                            label={translate(subtype.accountSubtypeName)}
                                             values={subtype.totalDebitsMinusCredits}
                                             isCurrency
                                             indentLevel={2}
@@ -212,7 +216,7 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                         : null
                     }
                     <ReportRow
-                        label={"Non-current liabilities"}
+                        label={translate("Non-current liabilities")}
                         values={balanceSheetDto.totalNonCurrentLiabilities}
                         isCurrency
                         indentLevel={1}
@@ -224,7 +228,7 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                                 return(
                                     <React.Fragment key={i}>
                                         <ReportRow
-                                            label={subtype.accountSubtypeName}
+                                            label={translate(subtype.accountSubtypeName)}
                                             values={subtype.totalDebitsMinusCredits}
                                             isCurrency
                                             indentLevel={2}
@@ -266,18 +270,18 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                         : null
                     }
                     <ReportRow
-                        label={"Total liabilities"}
+                        label={translate("Total liabilities")}
                         className="fw-semibold"
                         isCurrency
                         values={balanceSheetDto.totalLiabilities}
                     />
                     {/** Equity */}
                     <ReportRow
-                        label={"Equity"}
+                        label={translate("Equity")}
                         className="fw-semibold border-top-0 mt-3"
                     />
                     <ReportRow
-                        label={"Paid-in capital"}
+                        label={translate("Paid-in capital")}
                         values={balanceSheetDto.totalPaidInCapital}
                         isCurrency
                         indentLevel={1}
@@ -314,7 +318,7 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                         : null
                     }
                     <ReportRow
-                        label={"Share-based compensation"}
+                        label={translate("Share-based compensation")}
                         values={balanceSheetDto.totalShareBasedCompensation}
                         isCurrency
                         indentLevel={1}
@@ -351,7 +355,7 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                         : null
                     }
                     <ReportRow
-                        label={"Other equity items"}
+                        label={translate("Other equity items")}
                         values={balanceSheetDto.totalOtherEquityItems}
                         isCurrency
                         indentLevel={1}
@@ -388,43 +392,37 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
                         : null
                     }
                     <ReportRow
-                        label={"Retained earnings"}
+                        label={translate("Retained earnings")}
                         indentLevel={1}
                         className="fw-semibold"
                     />
                     <ReportRow
-                        label={"Beginning balances"}
+                        label={translate("Beginning balances")}
                         values={balanceSheetDto.retainedEarningsBeginningBalances}
                         isCurrency
                         indentLevel={2}
                     />
                     <ReportRow
-                        label={"Net income for current fiscal period"}
+                        label={translate("Net income for current fiscal period")}
                         values={balanceSheetDto.netIncomeCurrentPeriod}
                         isCurrency
                         indentLevel={2}
                     />
                     <ReportRow
-                        label={"Less dividends and equivalents for current fiscal period"}
+                        label={translate("Dividends for current fiscal period")}
                         values={balanceSheetDto.totalDividendsAndEquivalentsCurrentPeriod}
                         isCurrency
                         indentLevel={2}
                     />
                     <ReportRow
-                        label={"Net income for current fiscal period"}
-                        values={balanceSheetDto.netIncomeCurrentPeriod}
-                        isCurrency
-                        indentLevel={2}
-                    />
-                    <ReportRow
-                        label={"Ending balances of retained earnings"}
+                        label={translate("Ending balances of retained earnings")}
                         values={balanceSheetDto.retainedEarningsEndingBalances}
                         isCurrency
                         indentLevel={2}
                         className="fw-semibold"
                     />
                     <ReportRow
-                        label={"Total equity"}
+                        label={translate("Total equity")}
                         values={balanceSheetDto.totalEquity}
                         isCurrency
                         className="fw-semibold"

@@ -2,7 +2,7 @@ export const incomeStatementReportText = {
     "en-US": {
         "Home": "Home",
         "Reports": "Reports",
-        "Income Statement Report": "Income Statement Report",
+        "Income Statement Report": "Income Statement",
         "Income and Expense Report": "Income and Expense Report",
         "Expense Distribution (by Account)": "Expense Distribution (by Account)"
     },

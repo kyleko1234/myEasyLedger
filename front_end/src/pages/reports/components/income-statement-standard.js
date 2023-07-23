@@ -1,5 +1,6 @@
 import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
+import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { accountIsEmpty, localizeDate, subtypeIsEmpty } from '../../../utils/util-fns';
 import ReportRow from './report-row';
@@ -9,14 +10,18 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
     const dateLabels = () => {
         let labels = [];
         incomeStatementDto.dateRanges.map(dateRange => {
-            labels.push(<>
-                <div>
-                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(dateRange.startDate)}
-                </div>
-                <div>
-                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(dateRange.endDate)}
-                </div>
-            </>)
+            if (!dateRange.name || dateRange.name === "Custom") {
+                labels.push(<>
+                    <div>
+                        {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(dateRange.startDate)}
+                    </div>
+                    <div>
+                        {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(dateRange.endDate)}
+                    </div>
+                </>)
+            } else {
+                labels.push(dateRange.name);
+            }
         })
         return labels;
     }
@@ -28,19 +33,20 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
         }
         return true;
     }
+    const translate = text => incomeStatementRenderText[appContext.locale][text];
+
     return (
         <>
             {incomeStatementDto
                 ? <div>
                     {/** Report Header */}
                     <ReportRow
-                        label={"Income Statement"}
                         values={dateLabels()}
                         className="fw-semibold"
                     />
                     {/** Revenue */}
                     <ReportRow
-                        label={"Revenue"}
+                        label={translate("Revenue")}
                         className="fw-semibold"
                     />
                     {incomeStatementDto.revenueAccounts.map(account => {
@@ -74,14 +80,14 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
                         }
                     })}
                     <ReportRow
-                        label={"Total revenue"}
+                        label={translate("Total revenue")}
                         values={incomeStatementDto.totalRevenue}
                         className="fw-semibold"
                         isCurrency
                     />
                     {/** Cost of sales */}
                     <ReportRow
-                        label={"Cost of sales"}
+                        label={translate("Cost of sales")}
                         className="fw-semibold mt-3 border-top-0"
                     />
                     {incomeStatementDto.costOfSalesAccounts.map(account => {
@@ -115,21 +121,21 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
                         }
                     })}
                     <ReportRow
-                        label={"Total cost of sales"}
+                        label={translate("Total cost of sales")}
                         values={incomeStatementDto.totalCostOfSales}
                         className="fw-semibold"
                         isCurrency
                     />
                     {/** Gross Profit */}
                     <ReportRow
-                        label={"Gross profit"}
+                        label={translate("Gross profit")}
                         values={incomeStatementDto.totalGrossProfit}
                         className="fw-semibold border-top-0 mt-3"
                         isCurrency
                     />
                     {/** Operating expenses */}
                     <ReportRow
-                        label={"Operating expenses"}
+                        label={translate("Operating expenses")}
                         className="fw-semibold mt-3 border-top-0"
                     />
                     {incomeStatementDto.operatingExpensesSubtypes.map((subtype, i) => {
@@ -137,7 +143,7 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
                             return (
                                 <React.Fragment key={i}>
                                     <ReportRow
-                                        label={subtype.accountSubtypeName /**remember to translate */}
+                                        label={balanceSheetRenderText[appContext.locale][subtype.accountSubtypeName] /**remember to translate */}
                                         values={subtype.totalDebitsMinusCredits}
                                         isCurrency
                                         indentLevel={1}
@@ -176,21 +182,21 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
                         }
                     })}
                     <ReportRow
-                        label={"Total operating expenses"}
+                        label={translate("Total operating expenses")}
                         values={incomeStatementDto.totalOperatingExpenses}
                         className="fw-semibold"
                         isCurrency
                     />
                     {/** Operating Income */}
                     <ReportRow
-                        label={"Operating income"}
+                        label={translate("Operating income")}
                         values={incomeStatementDto.totalOperatingIncome}
                         className="fw-semibold border-top-0 mt-3"
                         isCurrency
                     />
                     {/** Non-operating income/expenses */}
                     <ReportRow
-                        label={"Non-operating income and expenses"}
+                        label={translate("Non-operating income and expenses")}
                         className="fw-semibold mt-3 border-top-0"
                     />
                     {incomeStatementDto.nonOperatingIncomeAndExpenseSubtypes.map((subtype, i) => {
@@ -198,7 +204,7 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
                             return (
                                 <React.Fragment key={i}>
                                     <ReportRow
-                                        label={subtype.accountSubtypeName /**remember to translate */}
+                                        label={balanceSheetRenderText[appContext.locale][subtype.accountSubtypeName] /**remember to translate */}
                                         values={subtype.totalDebitsMinusCredits}
                                         isCurrency
                                         indentLevel={1}
@@ -237,21 +243,21 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
                         }
                     })}
                     <ReportRow
-                        label={"Total non-operating income and expenses, net"}
+                        label={translate("Total non-operating income and expenses, net")}
                         values={incomeStatementDto.totalNonOperatingIncomeAndExpenseSubtypesNet}
                         className="fw-semibold"
                         isCurrency
                     />
                     {/** EBIT */}
                     <ReportRow
-                        label={"Earnings before interest and tax"}
+                        label={translate("Earnings before interest and tax")}
                         values={incomeStatementDto.totalEbit}
                         className="fw-semibold border-top-0 mt-3"
                         isCurrency
                     />
                     {/** Interest */}
                     <ReportRow
-                        label={"Interest expense"}
+                        label={translate("Interest expense")}
                         className="fw-semibold"
                         isCurrency
                         values={incomeStatementDto.totalInterest}
@@ -289,14 +295,14 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
                     }
                     {/**EBT */}
                     <ReportRow
-                        label={"Earnings before tax"}
+                        label={translate("Earnings before tax")}
                         values={incomeStatementDto.totalEarningsBeforeTax}
                         className="fw-semibold"
                         isCurrency
                     />
                     {/** Tax */}
                     <ReportRow
-                        label={"Tax expense"}
+                        label={translate("Tax expense")}
                         className="fw-semibold"
                         isCurrency
                         values={incomeStatementDto.totalTaxes}
@@ -335,7 +341,7 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
                     {/** Non-recurring and extraordinary */}
                     {!accountsAreEmpty(incomeStatementDto.nonRecurringAccounts)
                         ? <ReportRow
-                            label={"Non-recurring and extraordinary items"}
+                            label={translate("Non-recurring and extraordinary items")}
                             className="fw-semibold border-top-0 mt-3"
                             isCurrency
                             values={incomeStatementDto.totalNonRecurringNet}
@@ -375,7 +381,7 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
                     }
                     {/**Net income */}
                     <ReportRow
-                        label={"Net income"}
+                        label={translate("Net income")}
                         values={incomeStatementDto.netIncome}
                         className="fw-semibold border-top-0 mt-3"
                         isCurrency

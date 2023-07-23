@@ -32,7 +32,7 @@ function IncomeStatementPageV2() {
     return (
         <div>
             <h1>
-                {incomeStatementReportText[appContext.locale]["Income Statement Report"]} (v2)
+                {incomeStatementReportText[appContext.locale]["Income Statement Report"]}
             </h1>
             <div>
                 {appContext.isLoading

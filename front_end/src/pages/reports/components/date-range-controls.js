@@ -65,6 +65,7 @@ function DateRangeControls({parentComponentDataFetchFunction, detailedView,
         if (selectedOption) {
             let dateToRequestObject = {
                 label: selectedOption.label,
+                name: selectedOption.label,
                 startDate: selectedOption.object.startDate,
                 endDate: selectedOption.object.endDate
             };
@@ -78,6 +79,7 @@ function DateRangeControls({parentComponentDataFetchFunction, detailedView,
         let newDatesToRequestArray = datesToRequest.slice();
         newDatesToRequestArray[i] = {
             label: "Custom", 
+            name: "Custom", 
             startDate: date, 
             endDate: newDatesToRequestArray[i].endDate
         }
@@ -88,6 +90,7 @@ function DateRangeControls({parentComponentDataFetchFunction, detailedView,
         let newDatesToRequestArray = datesToRequest.slice();
         newDatesToRequestArray[i] = {
             label: "Custom", 
+            name: "Custom", 
             startDate: newDatesToRequestArray[i].startDate, 
             endDate: date
         }
@@ -98,6 +101,7 @@ function DateRangeControls({parentComponentDataFetchFunction, detailedView,
         let endDatesArray = datesToRequest.slice();
         endDatesArray.push({
             label: "Custom", 
+            name: "Custom", 
             startDate: beginningOfCurrentFiscalYear,
             endDate: today}
         )

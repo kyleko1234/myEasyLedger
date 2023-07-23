@@ -34,7 +34,7 @@ function BalanceSheetPageV2() {
     return (
         <div>
             <h1>
-                {balanceSheetReportText[appContext.locale]["Balance Sheet Report"]} (v2)
+                {balanceSheetReportText[appContext.locale]["Balance Sheet"]}
             </h1>
             <div>
                 {appContext.isLoading
