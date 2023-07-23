@@ -21,9 +21,10 @@ public class CashFlowStatementDTO {
 	
 	private List<AccountInReportDTO> incomeExpenseAccounts = new ArrayList<AccountInReportDTO>(); 
 	private List<BigDecimal> totalNetIncome = new ArrayList<BigDecimal>(); 
+	private List<BigDecimal> totalAdjustmentForNonOperatingIncomeExpenseNet = new ArrayList<BigDecimal>(); 
+	private List<BigDecimal> totalIncomeExpenseFromOperatingNet = new ArrayList<BigDecimal>(); 
 	private List<AccountInReportDTO> nonCashOperatingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>(); 
 	private List<BigDecimal> totalNonCashOperatingIncomeExpense = new ArrayList<BigDecimal>(); 
-	private List<BigDecimal> totalAdjustmentForNonOperatingIncomeExpenseNet = new ArrayList<BigDecimal>(); 
 	private List<AccountInReportDTO> changesInOperatingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>(); 
 	private List<BigDecimal> totalChangesInOperatingAssetsLiabilities = new ArrayList<BigDecimal>(); 
 	private List<AccountInReportDTO> changesInOperatingEquityAccounts = new ArrayList<AccountInReportDTO>(); 
@@ -36,6 +37,8 @@ public class CashFlowStatementDTO {
 	private List<BigDecimal> totalNonCashInvestingIncomeExpense = new ArrayList<BigDecimal>(); 
 	private List<AccountInReportDTO> changesInInvestingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>(); 
 	private List<BigDecimal> totalChangesInInvestingAssetsLiabilities = new ArrayList<BigDecimal>(); 
+	private List<AccountInReportDTO> depreciationAdjustmentAccounts = new ArrayList<AccountInReportDTO>();
+	private List<BigDecimal> totalAdjustmentForDepreciationAmortization = new ArrayList<BigDecimal>();
 	private List<AccountInReportDTO> changesInInvestingEquityAccounts = new ArrayList<AccountInReportDTO>(); 
 	private List<BigDecimal> totalChangesInInvestingEquity = new ArrayList<BigDecimal>(); 
 	private List<BigDecimal> cashFlowFromInvesting = new ArrayList<BigDecimal>(); 
@@ -560,8 +563,28 @@ public class CashFlowStatementDTO {
 		this.totalTaxesPaid = totalTaxesPaid;
 	}
 
+	public List<BigDecimal> getTotalIncomeExpenseFromOperatingNet() {
+		return totalIncomeExpenseFromOperatingNet;
+	}
 
+	public void setTotalIncomeExpenseFromOperatingNet(List<BigDecimal> totalIncomeExpenseFromOperatingNet) {
+		this.totalIncomeExpenseFromOperatingNet = totalIncomeExpenseFromOperatingNet;
+	}
 
+	public List<AccountInReportDTO> getDepreciationAdjustmentAccounts() {
+		return depreciationAdjustmentAccounts;
+	}
 
+	public void setDepreciationAdjustmentAccounts(List<AccountInReportDTO> depreciationAdjustmentAccounts) {
+		this.depreciationAdjustmentAccounts = depreciationAdjustmentAccounts;
+	}
+
+	public List<BigDecimal> getTotalAdjustmentForDepreciationAmortization() {
+		return totalAdjustmentForDepreciationAmortization;
+	}
+
+	public void setTotalAdjustmentForDepreciationAmortization(List<BigDecimal> totalAdjustmentForDepreciationAmortization) {
+		this.totalAdjustmentForDepreciationAmortization = totalAdjustmentForDepreciationAmortization;
+	}
 	
 }

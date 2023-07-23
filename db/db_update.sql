@@ -383,7 +383,7 @@ UPDATE account_subtype
 
 UPDATE account_subtype
     SET income_statement_format_position_id = 1,
-        cash_flow_format_position_id = 2,
+        cash_flow_format_position_id = 4,
         balance_sheet_format_position_id = 8,
         cash_item = false,
         relevant_to_taxes_paid = false, 
@@ -986,7 +986,7 @@ UPDATE account
 
 UPDATE account
     SET income_statement_format_position_id = 1,
-        cash_flow_format_position_id = 2,
+        cash_flow_format_position_id = 4,
         balance_sheet_format_position_id = 8,
         cash_item = false,
         relevant_to_taxes_paid = false, 
@@ -998,7 +998,7 @@ UPDATE account
     AND parent_account.account_subtype_id = 22;
 UPDATE account
     SET income_statement_format_position_id = 1,
-        cash_flow_format_position_id = 2,
+        cash_flow_format_position_id = 4,
         balance_sheet_format_position_id = 8,
         cash_item = false,
         relevant_to_taxes_paid = false, 

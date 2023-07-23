@@ -204,7 +204,8 @@ public class ReportsService {
 		List<AccountInReportDTO> nonCashInvestingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInInvestingAssetsLiabilitiesAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInInvestingEquityAccounts = new ArrayList<AccountInReportDTO>();
-
+		List<AccountInReportDTO> depreciationAdjustmentAccounts = new ArrayList<AccountInReportDTO>();
+		
 		List<AccountInReportDTO> incomeExpenseFromFinancingAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> nonCashFinancingIncomeExpenseAccounts = new ArrayList<AccountInReportDTO>();
 		List<AccountInReportDTO> changesInNonDividendFinancingEquityAccounts = new ArrayList<AccountInReportDTO>();
@@ -224,6 +225,9 @@ public class ReportsService {
 					if (!account.isCashItem()) {
 						nonCashOperatingIncomeExpenseAccounts.add(account);
 					}
+					if (account.isRelevantToDepreciationAmortization()) {
+						depreciationAdjustmentAccounts.add(account);
+					}
 				} else if (account.getAccountTypeId().equals((long) 1) || account.getAccountTypeId().equals((long) 2)) {
 					changesInOperatingAssetsLiabilitiesAccounts.add(account);
 				} else if (account.getAccountTypeId().equals((long) 3)) {
@@ -236,6 +240,9 @@ public class ReportsService {
 					if (!account.isCashItem()) {
 						nonCashInvestingIncomeExpenseAccounts.add(account);
 					}
+					if (account.isRelevantToDepreciationAmortization()) {
+						depreciationAdjustmentAccounts.add(account);
+					}
 				} else if (account.getAccountTypeId().equals((long) 1) || account.getAccountTypeId().equals((long) 2)) {
 					changesInInvestingAssetsLiabilitiesAccounts.add(account);
 				} else if (account.getAccountTypeId().equals((long) 3)) {
@@ -247,6 +254,9 @@ public class ReportsService {
 					incomeExpenseFromFinancingAccounts.add(account);
 					if (!account.isCashItem()) {
 						nonCashFinancingIncomeExpenseAccounts.add(account);
+					}
+					if (account.isRelevantToDepreciationAmortization()) {
+						depreciationAdjustmentAccounts.add(account);
 					}
 				} else {
 					if (account.isRelevantToDividendsPaid()) {
@@ -304,7 +314,10 @@ public class ReportsService {
 		generatedCashFlowStatement.setChangesInInvestingEquityAccounts(changesInInvestingEquityAccounts);
 		List<BigDecimal> totalChangesInInvestingEquity = Utility.negateList(AccountInReportDTO.sumAmountsOfAccounts(changesInInvestingEquityAccounts));
 		generatedCashFlowStatement.setTotalChangesInInvestingEquity(totalChangesInInvestingEquity);
-
+		generatedCashFlowStatement.setDepreciationAdjustmentAccounts(depreciationAdjustmentAccounts);
+		List<BigDecimal> totalAdjustmentForDepreciationAmortization = Utility.negateList(AccountInReportDTO.sumAmountsOfAccounts(depreciationAdjustmentAccounts));
+		generatedCashFlowStatement.setTotalAdjustmentForDepreciationAmortization(totalAdjustmentForDepreciationAmortization);
+		
 		generatedCashFlowStatement.setIncomeExpenseFromFinancingAccounts(incomeExpenseFromFinancingAccounts);
 		List<BigDecimal> totalIncomeExpenseFromFinancingNet = Utility.negateList(AccountInReportDTO.sumAmountsOfAccounts(incomeExpenseFromFinancingAccounts));
 		generatedCashFlowStatement.setTotalIncomeExpenseFromFinancingNet(totalIncomeExpenseFromFinancingNet);
@@ -339,13 +352,16 @@ public class ReportsService {
 		
 		List<BigDecimal> totalAdjustmentForNonOperatingIncomeExpenseNet = Utility.negateList(Utility.addLists(totalIncomeExpenseFromInvestingNet, totalIncomeExpenseFromFinancingNet));
 		generatedCashFlowStatement.setTotalAdjustmentForNonOperatingIncomeExpenseNet(totalAdjustmentForNonOperatingIncomeExpenseNet);
+		List<BigDecimal> totalIncomeExpenseFromOperatingNet = Utility.addLists(totalNetIncome, totalAdjustmentForNonOperatingIncomeExpenseNet);
+		generatedCashFlowStatement.setTotalIncomeExpenseFromOperatingNet(totalIncomeExpenseFromOperatingNet);
 		List<BigDecimal> totalAdjustmentToNetIncomeForCashOperatingIncome = Utility.addLists(totalAdjustmentForNonOperatingIncomeExpenseNet, totalNonCashOperatingIncomeExpense);
 		List<BigDecimal> totalAdjustmentForChangesInOperatingAssetsLiabilitiesEquity = Utility.addLists(totalChangesInOperatingAssetsLiabilities, totalChangesInOperatingEquity);
 		List<BigDecimal> totalAdjustmentToNetIncomeForOperatingCashFlow = Utility.addLists(totalAdjustmentToNetIncomeForCashOperatingIncome, totalAdjustmentForChangesInOperatingAssetsLiabilitiesEquity);
 		List<BigDecimal> cashFlowFromOperations = Utility.addLists(totalNetIncome, totalAdjustmentToNetIncomeForOperatingCashFlow);
 		generatedCashFlowStatement.setCashFlowFromOperations(cashFlowFromOperations);
 		
-		List<BigDecimal> totalAdjustmentForChangesInInvestingAssetsLiabilitiesEquity = Utility.addLists(totalChangesInInvestingAssetsLiabilities, totalChangesInInvestingEquity);
+		List<BigDecimal> totalAdjustmenForAssetsLiabilitiesDepreciation = Utility.addLists(totalChangesInInvestingAssetsLiabilities, totalAdjustmentForDepreciationAmortization);
+		List<BigDecimal> totalAdjustmentForChangesInInvestingAssetsLiabilitiesEquity = Utility.addLists(totalAdjustmenForAssetsLiabilitiesDepreciation, totalChangesInInvestingEquity);
 		List<BigDecimal> totalAdjustmentToInvestingIncomeForInvestingCashFlow = Utility.addLists(totalNonCashInvestingIncomeExpense, totalAdjustmentForChangesInInvestingAssetsLiabilitiesEquity);
 		List<BigDecimal> cashFlowFromInvesting = Utility.addLists(totalIncomeExpenseFromInvestingNet, totalAdjustmentToInvestingIncomeForInvestingCashFlow);
 		generatedCashFlowStatement.setCashFlowFromInvesting(cashFlowFromInvesting);
