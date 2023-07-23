@@ -5,7 +5,6 @@ import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
 import { incomeStatementReportText } from '../../utils/i18n/income-statement-report-text';
-import { getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../utils/util-fns';
 import DateRangeControls from './components/date-range-controls';
 import IncomeStatementStandard from './components/income-statement-standard';
 
@@ -21,7 +20,6 @@ function IncomeStatementPageV2() {
         setLoading(true);
         axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement`, datesToRequest)
             .then(response => {
-                console.log(response.data)
                 setIncomeStatementDto(response.data);
                 setLoading(false);
             })

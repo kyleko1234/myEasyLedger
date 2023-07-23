@@ -264,6 +264,10 @@ export const arrayIsAllZeroes = array => {
     return true;
 }
 
+export const negateArrayOfNumbers = array => {
+    return array.map(number => number * -1);
+}
+
 export const accountIsEmpty = accountInReportDto => {
     if (!arrayIsAllZeroes(accountInReportDto.amounts)) {
         return false;
