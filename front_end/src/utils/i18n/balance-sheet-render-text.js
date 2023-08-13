@@ -71,10 +71,8 @@ export const balanceSheetRenderText = {
         "Tax expense": "Tax expense",
         "Non-recurring and extraordinary items": "Non-recurring and extraordinary items",
         "Interest income": "Interest income",
-
         "Interest payable": "Interest payable",
         "Taxes payable": "Taxes payable",
-        "Interest income": "Interest income",
         "Expense from investing activities": "Expense from investing activities",
         "Expense from financing activities": "Expense from financing activities",
 
@@ -141,7 +139,7 @@ export const balanceSheetRenderText = {
         "Other equity items": "其他業主權益", 
         "Revenue": "收入", 
         "Income from investing activities": "投資活動之收入",
-        "Income from financing activities": "金融活動之收入",
+        "Income from financing activities": "籌資活動之收入",
         "Other income": "其他收入", 
         "Cost of sales": "營業成本", 
         "Research and development": "研究發展費用", 
@@ -152,11 +150,10 @@ export const balanceSheetRenderText = {
         "Tax expense": "賦稅費用",
         "Non-recurring and extraordinary items": "非經常性項目",
         "Interest income": "利息收入",
-        "Interest payable": "TRANSLATION",
-        "Taxes payable": "TRANSLATION",
-        "Interest income": "TRANSLATION",
-        "Expense from investing activities": "TRANSLATION",
-        "Expense from financing activities": "TRANSLATION",
+        "Interest payable": "應付利息",
+        "Taxes payable": "應付稅款",
+        "Expense from investing activities": "投資活動之費用",
+        "Expense from financing activities": "籌資活動之費用",
 
         "Detailed View": "細項檢視"
     }
