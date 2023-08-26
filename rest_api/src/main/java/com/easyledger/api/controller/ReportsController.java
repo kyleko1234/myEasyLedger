@@ -46,7 +46,7 @@ public class ReportsController {
 		this.accountRepo = accountRepo;
 	}
 
-	
+	@Deprecated
 	@GetMapping("/organization/{id}/reports/balanceSheet/{endDate}") 
 	public BalanceSheetViewModel getBalanceSheetViewModelForOrganizationUpToDate(@PathVariable(value = "id") Long organizationId, 
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
@@ -72,6 +72,7 @@ public class ReportsController {
 		return reportsService.generateIncomeStatement(organizationId, dates);
 	}
 	
+	@Deprecated
 	@GetMapping("/organization/{id}/reports/incomeStatement/{startDate}/{endDate}") 
 	public IncomeStatementViewModel getIncomeStatementViewModelForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
@@ -81,6 +82,7 @@ public class ReportsController {
 		return reportsService.getIncomeStatementViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
 
+	@Deprecated
 	@GetMapping("/organization/{id}/reports/cashFlow/{startDate}/{endDate}")
 	public CashFlowStatementViewModel getCashFlowStatementViewModelForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 

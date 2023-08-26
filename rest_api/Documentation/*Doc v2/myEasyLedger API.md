@@ -1,4 +1,6 @@
 
+This document is a work in progress.
+
 # Getting Started
 Prefix all endpoints with `{host}/v0.6.1/`. The public host is `https://myeasyledger.com:8443`. If you are using Spring Tools to run your own version of the server, your local host is likely to be `localhost:8080`.
 
