@@ -35,24 +35,16 @@ function ReportTypeList() {
                             <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Expense Distribution (by Account)"]}</div>
                             <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
+                    <Link to="/reports/expenses-by-account-v2" className="pseudo-tr d-flex justify-content-between align-items-center">
+                            <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Expense Distribution (by Account)"]} V2</div>
+                            <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                    </Link>
                     <Link to="/reports/expenses-by-vendor" className="pseudo-tr d-flex justify-content-between align-items-center">
                             <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Expense Distribution (by Vendor)"]}</div>
                             <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
                     <Link to="/reports/income-by-customer" className="pseudo-tr d-flex justify-content-between align-items-center">
                             <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Income Distribution (by Customer)"]}</div>
-                            <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
-                    </Link>
-                    <Link to="/reports/balance-sheet-v2" className="pseudo-tr d-flex justify-content-between align-items-center">
-                            <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Balance Sheet"]}</div>
-                            <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
-                    </Link>
-                    <Link to="/reports/income-statement-v2" className="pseudo-tr d-flex justify-content-between align-items-center">
-                            <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Income Statement"]}</div>
-                            <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
-                    </Link>
-                    <Link to="/reports/cash-flow-v2" className="pseudo-tr d-flex justify-content-between align-items-center">
-                            <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Cash Flow"]}</div>
                             <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
                 </div>

@@ -33,6 +33,7 @@ import AccountsPage from '../pages/accounts/accounts-page.js';
 import BalanceSheetPageV2 from '../pages/reports/balance-sheet-page-v2.js';
 import IncomeStatementPageV2 from '../pages/reports/income-statement-page-v2.js';
 import CashFlowPageV2 from '../pages/reports/cash-flow-page-v2.js';
+import ExpensesByAccountPageV2 from '../pages/reports/expenses-by-account-page-v2.js';
 
 const routes = [
   {
@@ -82,21 +83,10 @@ const routes = [
     path: '/reports/balance-sheet',
     title: 'Balance Sheet Report',
     exact: true,
-    component: BalanceSheetReport
-  },
-  {
-    path: '/reports/balance-sheet/:endDate',
-    title: 'Balance Sheet Report',
-    component: BalanceSheetReport
-  },
-  {
-    path: '/reports/balance-sheet-v2',
-    title: 'Balance Sheet Report',
-    exact: true,
     component: BalanceSheetPageV2
   },
   {
-    path: '/reports/balance-sheet-v2/:endDate',
+    path: '/reports/balance-sheet/:endDate',
     title: 'Balance Sheet Report',
     component: BalanceSheetPageV2
   },
@@ -104,21 +94,10 @@ const routes = [
     path: '/reports/income-statement',
     exact: true,
     title: 'Income Statement Report',
-    component: IncomeStatementReport
-  },
-  {
-    path: '/reports/income-statement/:startDate/:endDate',
-    title: 'Income Statement Report',
-    component: IncomeStatementReport
-  },
-  {
-    path: '/reports/income-statement-v2',
-    exact: true,
-    title: 'Income Statement Report',
     component: IncomeStatementPageV2
   },
   {
-    path: '/reports/income-statement-v2/:startDate/:endDate',
+    path: '/reports/income-statement/:startDate/:endDate',
     title: 'Income Statement Report',
     component: IncomeStatementPageV2
   },
@@ -189,11 +168,6 @@ const routes = [
   {
     path: '/reports/cash-flow',
     title: 'Cash Flow Report',
-    component: CashFlowReport,
-  },
-  {
-    path: '/reports/cash-flow-v2',
-    title: 'Cash Flow Report',
     component: CashFlowPageV2,
   },
   {
@@ -216,6 +190,17 @@ const routes = [
     path: '/reports/expenses-by-account/:startDate/:endDate',
     title: 'Expense Distribution (by Account)',
     component: ExpenseReport
+  },
+  {
+    path: '/reports/expenses-by-account-v2',
+    title: 'Expense Distribution (by Account)',
+    exact: true,
+    component: ExpensesByAccountPageV2
+  },
+  {
+    path: '/reports/expenses-by-account-v2/:startDate/:endDate',
+    title: 'Expense Distribution (by Account)',
+    component: ExpensesByAccountPageV2
   },
   {
     path: '/vendors',
