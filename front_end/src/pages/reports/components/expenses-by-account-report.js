@@ -44,47 +44,6 @@ function ExpensesByAccountReport({ incomeStatementDto, detailedView }) {
                         values={dateLabels()}
                         className="fw-semibold"
                     />
-                    {/** Revenue */}
-                    <ReportRow
-                        label={translate("Revenue")}
-                        className="fw-semibold"
-                    />
-                    {incomeStatementDto.revenueAccounts.map(account => {
-                        if (!accountIsEmpty(account)) {
-                            return (
-                                <React.Fragment key={account.accountId}>
-                                    <ReportRow
-                                        label={account.accountName}
-                                        values={account.amounts}
-                                        isCurrency
-                                        indentLevel={1}
-                                    />
-                                    {detailedView
-                                        ? account.children.map(child => {
-                                            if (!accountIsEmpty(child)) {
-                                                return (
-                                                    <ReportRow
-                                                        key={child.accountId}
-                                                        label={child.accountName}
-                                                        values={child.amounts}
-                                                        isCurrency
-                                                        indentLevel={2}
-                                                    />
-                                                )
-                                            }
-                                        })
-                                        : null
-                                    }
-                                </React.Fragment>
-                            )
-                        }
-                    })}
-                    <ReportRow
-                        label={translate("Total revenue")}
-                        values={incomeStatementDto.totalRevenue}
-                        className="fw-semibold"
-                        isCurrency
-                    />
                     {/** Cost of sales */}
                     <ReportRow
                         label={translate("Cost of sales")}
@@ -126,13 +85,7 @@ function ExpensesByAccountReport({ incomeStatementDto, detailedView }) {
                         className="fw-semibold"
                         isCurrency
                     />
-                    {/** Gross Profit */}
-                    <ReportRow
-                        label={translate("Gross profit")}
-                        values={incomeStatementDto.totalGrossProfit}
-                        className="fw-semibold border-top-0 mt-3"
-                        isCurrency
-                    />
+
                     {/** Operating expenses */}
                     <ReportRow
                         label={translate("Operating expenses")}
@@ -185,13 +138,6 @@ function ExpensesByAccountReport({ incomeStatementDto, detailedView }) {
                         label={translate("Total operating expenses")}
                         values={incomeStatementDto.totalOperatingExpenses}
                         className="fw-semibold"
-                        isCurrency
-                    />
-                    {/** Operating Income */}
-                    <ReportRow
-                        label={translate("Operating income")}
-                        values={incomeStatementDto.totalOperatingIncome}
-                        className="fw-semibold border-top-0 mt-3"
                         isCurrency
                     />
                     {/** Non-operating income/expenses */}

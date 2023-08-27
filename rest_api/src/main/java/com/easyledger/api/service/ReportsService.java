@@ -21,6 +21,7 @@ import com.easyledger.api.dto.CustomerIncomeDTO;
 import com.easyledger.api.dto.DateRangeDTO;
 import com.easyledger.api.dto.IncomeStatementDTO;
 import com.easyledger.api.dto.LineItemDTO;
+import com.easyledger.api.dto.NetWorthReportDTO;
 import com.easyledger.api.dto.VendorExpensesDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
@@ -161,6 +162,36 @@ public class ReportsService {
 		List<CustomerIncomeDTO> customerIncomeDTOs = customerRepo.getIncomeByCustomerForOrganizationBetweenDates(organizationId, startDate, endDate);
 		BigDecimal totalIncome = organizationRepo.getTotalIncomeForOrganizationBetweenDates(organizationId, startDate, endDate);
 		return new IncomeByCustomerReportViewModel(customerIncomeDTOs, totalIncome);
+	}
+	
+	public NetWorthReportDTO generateNetWorthReport(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException {
+		NetWorthReportDTO generatedNetWorthReport = new NetWorthReportDTO();
+		Organization organization = organizationRepo.findById(organizationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+		List<AccountInReportDTO> allAccounts = getListOfAccountInReportDTOUpToDate(organizationId, dates);
+		
+		List<AccountInReportDTO> assetAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> liabilityAccounts = new ArrayList<AccountInReportDTO>();
+		
+		for (AccountInReportDTO account : allAccounts) {
+			if (account.getAccountTypeId().equals((long) 1)) {
+				assetAccounts.add(account);
+			} else if (account.getAccountTypeId().equals((long) 2)) {
+				liabilityAccounts.add(account);
+			}
+		}
+
+		AccountInReportDTO.negateAmountsOfAccounts(liabilityAccounts);
+		List<BigDecimal> totalAssets = AccountInReportDTO.sumAmountsOfAccounts(assetAccounts);
+		List<BigDecimal> totalLiabilities = AccountInReportDTO.sumAmountsOfAccounts(liabilityAccounts);
+		List<BigDecimal> totalNetWorth = Utility.subtractLists(totalAssets, totalLiabilities);
+		generatedNetWorthReport.setDateRanges(dates);
+		generatedNetWorthReport.setAssetAccounts(assetAccounts);
+		generatedNetWorthReport.setLiabilityAccounts(liabilityAccounts);
+		generatedNetWorthReport.setTotalAssets(totalAssets);
+		generatedNetWorthReport.setTotalLiabilities(totalLiabilities);
+		generatedNetWorthReport.setTotalNetWorth(totalNetWorth);
+		return generatedNetWorthReport;
 	}
 	
 	//By default, AccountInReportDTO.amounts are represented as debits minus credits, but see note on com.easyledger.api.dto.CashFlowStatementDTO.

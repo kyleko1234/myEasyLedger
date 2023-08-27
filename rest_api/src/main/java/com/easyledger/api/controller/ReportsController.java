@@ -17,6 +17,7 @@ import com.easyledger.api.dto.BalanceSheetDTO;
 import com.easyledger.api.dto.CashFlowStatementDTO;
 import com.easyledger.api.dto.DateRangeDTO;
 import com.easyledger.api.dto.IncomeStatementDTO;
+import com.easyledger.api.dto.NetWorthReportDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
@@ -98,6 +99,14 @@ public class ReportsController {
     		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
 		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
 		return reportsService.generateCashFlowStatement(organizationId, dates);
+	}
+	
+	@PostMapping("/organization/{id}/reports/netWorthReport") 
+	public NetWorthReportDTO getNetWorthReportForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateNetWorthReport(organizationId, dates);
 	}
 	
 	@GetMapping("/reports/accountTransactionsReport/account/{accountId}/{startDate}/{endDate}")
