@@ -111,7 +111,7 @@ public class ReportsController {
 	}
 	
 	@PostMapping("/organization/{id}/reports/incomeExpenseReport") 
-	public IncomeExpenseReportDTO getINcomeExpenseReportForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId, 
+	public IncomeExpenseReportDTO getIncomeExpenseReportForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId, 
     		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
     		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
 		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);

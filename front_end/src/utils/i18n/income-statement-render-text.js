@@ -36,10 +36,10 @@ export const incomeStatementRenderText = {
 
         "Income and Expense Report": "Income and Expense Report",
         "Income": "Income",
-        "Total Income": "Total Income",
+        "Total Income": "Total income",
         "Expenses": "Expenses",
         "Total expenses": "Total expenses",
-        "Total Income less Expenses": "Total Income less Expenses",
+        "Total Income less Expenses": "Total income less expenses",
         "Detailed View": "Detailed View",
 
         "Other expense": "Other expense",
