@@ -6,6 +6,7 @@ import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
 import { netWorthReportText } from '../../utils/i18n/net-worth-report-text';
 import DateRangeControls from './components/date-range-controls';
+import NetWorthReport from './components/net-worth-report';
 
 function NetWorthReportPageV2() {
     const appContext = React.useContext(PageSettings); 
@@ -44,6 +45,10 @@ function NetWorthReportPageV2() {
                             toggleDetailedView={toggleDetailedView}
                             singleDate
                             defaultEndDate={params.endDate? params.endDate : null}
+                        />
+                        <NetWorthReport
+                            netWorthReportDto={netWorthReportDto}
+                            detailedView={detailedView}
                         />
                     </div>
                 }
