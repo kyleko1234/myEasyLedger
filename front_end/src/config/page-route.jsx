@@ -34,6 +34,7 @@ import BalanceSheetPageV2 from '../pages/reports/balance-sheet-page-v2.js';
 import IncomeStatementPageV2 from '../pages/reports/income-statement-page-v2.js';
 import CashFlowPageV2 from '../pages/reports/cash-flow-page-v2.js';
 import ExpensesByAccountPageV2 from '../pages/reports/expenses-by-account-page-v2.js';
+import NetWorthReportPageV2 from '../pages/reports/net-worth-report-page-v2.js';
 
 const routes = [
   {
@@ -153,6 +154,17 @@ const routes = [
     path: '/reports/net-worth/:endDate',
     title: 'Net Worth Report',
     component: NetWorthReport,
+  },
+  {
+    path: '/reports/net-worth-v2',
+    title: 'Net Worth Report',
+    exact: true,
+    component: NetWorthReportPageV2,
+  },
+  {
+    path: '/reports/net-worth-v2/:endDate',
+    title: 'Net Worth Report',
+    component: NetWorthReportPageV2,
   },
   {
     path: '/reports/income-expense',

@@ -64,6 +64,10 @@ function ReportTypeList() {
                         <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Net Worth"]}</div>
                         <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
                     </Link>
+                    <Link to="/reports/net-worth-v2" className="pseudo-tr d-flex justify-content-between align-items-center">
+                        <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Net Worth"]} V2</div>
+                        <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>
+                    </Link>
                     <Link to="/reports/income-expense" className="pseudo-tr d-flex justify-content-between align-items-center">
                         <div className="pseudo-td indent">{reportTypeListText[appContext.locale]["Income and Expense Report"]}</div>
                         <div className="pe-2 text-muted"><i className="fas fa-angle-right "></i></div>

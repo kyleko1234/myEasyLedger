@@ -19,7 +19,8 @@ function NetWorthReport() {
                     ? <LoadingSpinner big/> 
                     : <NetWorthRender
                         endDate={params.endDate}
-                    />}
+                    />
+                }
             </div>
 		</div>
     )
