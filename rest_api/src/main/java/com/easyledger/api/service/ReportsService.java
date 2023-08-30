@@ -19,6 +19,7 @@ import com.easyledger.api.dto.BalanceSheetDTO;
 import com.easyledger.api.dto.CashFlowStatementDTO;
 import com.easyledger.api.dto.CustomerIncomeDTO;
 import com.easyledger.api.dto.DateRangeDTO;
+import com.easyledger.api.dto.IncomeExpenseReportDTO;
 import com.easyledger.api.dto.IncomeStatementDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.dto.NetWorthReportDTO;
@@ -194,6 +195,35 @@ public class ReportsService {
 		return generatedNetWorthReport;
 	}
 	
+	public IncomeExpenseReportDTO generateIncomeExpenseReport(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException, ConflictException {
+		IncomeExpenseReportDTO generatedReport = new IncomeExpenseReportDTO();
+		Organization organization = organizationRepo.findById(organizationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+		List<AccountInReportDTO> allAccounts = getListOfAccountInReportDTOBetweenDates(organizationId, dates);
+		
+		List<AccountInReportDTO> incomeAccounts = new ArrayList<AccountInReportDTO>();
+		List<AccountInReportDTO> expenseAccounts = new ArrayList<AccountInReportDTO>();
+		
+		for (AccountInReportDTO account : allAccounts) {
+			if (account.getAccountTypeId().equals((long) 4)) {
+				incomeAccounts.add(account);
+			} else if (account.getAccountTypeId().equals((long) 5)) {
+				expenseAccounts.add(account);
+			}
+		}
+		
+		AccountInReportDTO.negateAmountsOfAccounts(incomeAccounts);
+		List<BigDecimal> totalIncome = AccountInReportDTO.sumAmountsOfAccounts(incomeAccounts);
+		List<BigDecimal> totalExpenses = AccountInReportDTO.sumAmountsOfAccounts(expenseAccounts);
+		List<BigDecimal> totalIncomeMinusExpenses = Utility.subtractLists(totalIncome, totalExpenses);
+		generatedReport.setDateRanges(dates);
+		generatedReport.setIncomeAccounts(incomeAccounts);
+		generatedReport.setTotalIncome(totalIncome);
+		generatedReport.setExpenseAccounts(expenseAccounts);
+		generatedReport.setTotalExpenses(totalExpenses);
+		generatedReport.setTotalIncomeMinusExpenses(totalIncomeMinusExpenses);
+		return generatedReport;
+	}
 	//By default, AccountInReportDTO.amounts are represented as debits minus credits, but see note on com.easyledger.api.dto.CashFlowStatementDTO.
 	public CashFlowStatementDTO generateCashFlowStatement(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException, ConflictException {
 		CashFlowStatementDTO generatedCashFlowStatement = new CashFlowStatementDTO();

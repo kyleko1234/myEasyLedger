@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easyledger.api.dto.BalanceSheetDTO;
 import com.easyledger.api.dto.CashFlowStatementDTO;
 import com.easyledger.api.dto.DateRangeDTO;
+import com.easyledger.api.dto.IncomeExpenseReportDTO;
 import com.easyledger.api.dto.IncomeStatementDTO;
 import com.easyledger.api.dto.NetWorthReportDTO;
 import com.easyledger.api.exception.ConflictException;
@@ -109,6 +110,14 @@ public class ReportsController {
 		return reportsService.generateNetWorthReport(organizationId, dates);
 	}
 	
+	@PostMapping("/organization/{id}/reports/incomeExpenseReport") 
+	public IncomeExpenseReportDTO getINcomeExpenseReportForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateIncomeExpenseReport(organizationId, dates);
+	}
+
 	@GetMapping("/reports/accountTransactionsReport/account/{accountId}/{startDate}/{endDate}")
 	public AccountTransactionsReportViewModel getAccountTransactionsReportForAccountBetweenDates(@PathVariable(value = "accountId") Long accountId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
