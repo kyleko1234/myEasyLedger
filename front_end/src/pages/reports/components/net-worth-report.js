@@ -44,7 +44,7 @@ function NetWorthReport({netWorthReportDto, detailedView}) {
                                             indentLevel={1}
                                         />
                                         {account.children.map(child => {
-                                            if (!accountIsEmpty(child)) {
+                                            if (!accountIsEmpty(child) && detailedView) {
                                                 return(
                                                     <ReportRow
                                                         label={child.accountName}
@@ -86,7 +86,7 @@ function NetWorthReport({netWorthReportDto, detailedView}) {
                                             indentLevel={1}
                                         />
                                         {account.children.map(child => {
-                                            if (!accountIsEmpty(child)) {
+                                            if (!accountIsEmpty(child) && detailedView) {
                                                 return(
                                                     <ReportRow
                                                         label={child.accountName}

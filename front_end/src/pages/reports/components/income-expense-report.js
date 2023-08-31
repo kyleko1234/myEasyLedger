@@ -53,7 +53,7 @@ function IncomeExpenseReport({incomeExpenseReportDto, detailedView}) {
                                             indentLevel={1}
                                         />
                                         {account.children.map(child => {
-                                            if (!accountIsEmpty(child)) {
+                                            if (!accountIsEmpty(child) && detailedView) {
                                                 return(
                                                     <ReportRow
                                                         label={child.accountName}
@@ -94,7 +94,7 @@ function IncomeExpenseReport({incomeExpenseReportDto, detailedView}) {
                                             indentLevel={1}
                                         />
                                         {account.children.map(child => {
-                                            if (!accountIsEmpty(child)) {
+                                            if (!accountIsEmpty(child) && detailedView) {
                                                 return(
                                                     <ReportRow
                                                         label={child.accountName}
