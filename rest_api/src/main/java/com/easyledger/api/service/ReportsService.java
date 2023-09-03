@@ -18,12 +18,14 @@ import com.easyledger.api.dto.AccountTransactionsReportLineItemDTO;
 import com.easyledger.api.dto.BalanceSheetDTO;
 import com.easyledger.api.dto.CashFlowStatementDTO;
 import com.easyledger.api.dto.CustomerIncomeDTO;
+import com.easyledger.api.dto.CustomerIncomeInReportDTO;
 import com.easyledger.api.dto.DateRangeDTO;
 import com.easyledger.api.dto.IncomeExpenseReportDTO;
 import com.easyledger.api.dto.IncomeStatementDTO;
 import com.easyledger.api.dto.LineItemDTO;
 import com.easyledger.api.dto.NetWorthReportDTO;
 import com.easyledger.api.dto.VendorExpensesDTO;
+import com.easyledger.api.dto.VendorExpensesInReportDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
@@ -810,4 +812,65 @@ public class ReportsService {
 		}
 		return returnedList;
 	}
+	
+	//similar to above
+	public List<VendorExpensesInReportDTO> getListOfVendorExpensesInReportDTOBetweenDates(Long organizationId, List<DateRangeDTO> dates) throws ConflictException {
+		//fetch a list of accounts for each date range
+		List<List<VendorExpensesDTO>> listsOfVendorExpensesDTOs = new ArrayList<List<VendorExpensesDTO>>();
+		for (DateRangeDTO dateRange : dates) {
+			if (dateRange.getStartDate() == null) {
+				throw new ConflictException("StartDate is required.");
+			}
+			List<VendorExpensesDTO> vendorExpensesBetweenDates = vendorRepo.getExpensesByVendorForOrganizationBetweenDates(organizationId, dateRange.getStartDate(), dateRange.getEndDate());
+			listsOfVendorExpensesDTOs.add(vendorExpensesBetweenDates);
+		}
+		//convert list of list of accounts into list of AccountInReportDTO
+		List<VendorExpensesInReportDTO> convertedList = convertListOfListOfVendorExpensesDTOsToListOfVendorExpensesInReportDTO(listsOfVendorExpensesDTOs);
+		return convertedList;
+	}
+	public List<VendorExpensesInReportDTO> convertListOfListOfVendorExpensesDTOsToListOfVendorExpensesInReportDTO(List<List<VendorExpensesDTO>> lists) {
+		List<VendorExpensesInReportDTO> returnedList = new ArrayList<VendorExpensesInReportDTO>();
+		if (lists.size() > 0) {
+			for (VendorExpensesDTO vendor : lists.get(0)) {
+				VendorExpensesInReportDTO createdVendorExpensesInReportDTO = new VendorExpensesInReportDTO(vendor);
+				returnedList.add(createdVendorExpensesInReportDTO);
+			}
+		}
+		for (List<VendorExpensesDTO> list : lists) {
+			for (int i = 0; i < list.size(); i++) {
+				returnedList.get(i).getAmounts().add(list.get(i).getDebitsMinusCredits());
+			}
+		}
+		return returnedList;
+	}
+	public List<CustomerIncomeInReportDTO> getListOfCustomerIncomeInReportDTOBetweenDates(Long organizationId, List<DateRangeDTO> dates) throws ConflictException {
+		//fetch a list of accounts for each date range
+		List<List<CustomerIncomeDTO>> listsOfCustomerIncomeDTOs = new ArrayList<List<CustomerIncomeDTO>>();
+		for (DateRangeDTO dateRange : dates) {
+			if (dateRange.getStartDate() == null) {
+				throw new ConflictException("StartDate is required.");
+			}
+			List<CustomerIncomeDTO> customerIncomeBetweenDates = customerRepo.getIncomeByCustomerForOrganizationBetweenDates(organizationId, dateRange.getStartDate(), dateRange.getEndDate());
+			listsOfCustomerIncomeDTOs.add(customerIncomeBetweenDates);
+		}
+		//convert list of list of accounts into list of AccountInReportDTO
+		List<CustomerIncomeInReportDTO> convertedList = convertListOfListOfCustomerIncomeDTOsToListOfCustomerIncomeInReportDTO(listsOfCustomerIncomeDTOs);
+		return convertedList;
+	}
+	public List<CustomerIncomeInReportDTO> convertListOfListOfCustomerIncomeDTOsToListOfCustomerIncomeInReportDTO(List<List<CustomerIncomeDTO>> lists) {
+		List<CustomerIncomeInReportDTO> returnedList = new ArrayList<CustomerIncomeInReportDTO>();
+		if (lists.size() > 0) {
+			for (CustomerIncomeDTO customer : lists.get(0)) {
+				CustomerIncomeInReportDTO createdDTO = new CustomerIncomeInReportDTO(customer);
+				returnedList.add(createdDTO);
+			}
+		}
+		for (List<CustomerIncomeDTO> list : lists) {
+			for (int i = 0; i < list.size(); i++) {
+				returnedList.get(i).getAmounts().add(list.get(i).getCreditsMinusDebits());
+			}
+		}
+		return returnedList;
+	}
+
 }
