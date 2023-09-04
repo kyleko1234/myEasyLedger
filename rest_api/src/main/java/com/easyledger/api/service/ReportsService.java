@@ -20,6 +20,8 @@ import com.easyledger.api.dto.CashFlowStatementDTO;
 import com.easyledger.api.dto.CustomerIncomeDTO;
 import com.easyledger.api.dto.CustomerIncomeInReportDTO;
 import com.easyledger.api.dto.DateRangeDTO;
+import com.easyledger.api.dto.ExpensesByVendorReportDTO;
+import com.easyledger.api.dto.IncomeByCustomerReportDTO;
 import com.easyledger.api.dto.IncomeExpenseReportDTO;
 import com.easyledger.api.dto.IncomeStatementDTO;
 import com.easyledger.api.dto.LineItemDTO;
@@ -84,7 +86,7 @@ public class ReportsService {
 	}
 
 
-//TODO test leap day
+	@Deprecated
 	public BalanceSheetViewModel getBalanceSheetViewModelForOrganizationUpToDate(Long organizationId, LocalDate endDate) 
 			throws ResourceNotFoundException {
 		BalanceSheetViewModel generatedBalanceSheet = new BalanceSheetViewModel();
@@ -117,6 +119,7 @@ public class ReportsService {
 		return generatedBalanceSheet;
 	}
 	
+	@Deprecated
 	public IncomeStatementViewModel getIncomeStatementViewModelForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate) {
 		List<AccountSubtypeBalanceDTO> accountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
 		List<AccountDTO> accountBalances = accountRepo.getAllAccountBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
@@ -124,6 +127,7 @@ public class ReportsService {
 		return new IncomeStatementViewModel(accountSubtypeBalances, accountBalances, startDate, endDate);
 	}
 	
+	@Deprecated
 	public CashFlowStatementViewModel getCashFlowStatementViewModelForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate) {
 		List<AccountSubtypeBalanceDTO> currPeriodAccountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationBetweenDates(organizationId, startDate, endDate);
 		List<AccountSubtypeBalanceDTO> beginningAccountSubtypeBalances = accountSubtypeRepo.getAllAccountSubtypeBalancesForOrganizationUpToDate(organizationId, startDate.minusDays(1));
@@ -155,18 +159,65 @@ public class ReportsService {
 
 	}
 	
+	@Deprecated
 	public ExpensesByVendorReportViewModel getExpensesByVendorReportViewModelForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate) {
 		List<VendorExpensesDTO> vendorExpensesDTOs = vendorRepo.getExpensesByVendorForOrganizationBetweenDates(organizationId, startDate, endDate);
 		BigDecimal totalExpenses = organizationRepo.getTotalExpensesForOrganizationBetweenDates(organizationId, startDate, endDate);
 		return new ExpensesByVendorReportViewModel(vendorExpensesDTOs, totalExpenses);
 	}
 	
+	@Deprecated
 	public IncomeByCustomerReportViewModel getIncomeByCustomerReportViewModelForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate) {
 		List<CustomerIncomeDTO> customerIncomeDTOs = customerRepo.getIncomeByCustomerForOrganizationBetweenDates(organizationId, startDate, endDate);
 		BigDecimal totalIncome = organizationRepo.getTotalIncomeForOrganizationBetweenDates(organizationId, startDate, endDate);
 		return new IncomeByCustomerReportViewModel(customerIncomeDTOs, totalIncome);
 	}
 	
+	public ExpensesByVendorReportDTO generateExpensesByVendorReport(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException, ConflictException {
+		ExpensesByVendorReportDTO generatedReport = new ExpensesByVendorReportDTO();
+		Organization organization = organizationRepo.findById(organizationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+		List<VendorExpensesInReportDTO> vendors = getListOfVendorExpensesInReportDTOBetweenDates(organizationId, dates);
+		List<BigDecimal> totalExpensesWithNamedVendors = new ArrayList<BigDecimal>();
+		for (VendorExpensesInReportDTO vendor : vendors) {
+			totalExpensesWithNamedVendors = Utility.addLists(totalExpensesWithNamedVendors, vendor.getAmounts());
+		}
+		List<BigDecimal> totalExpenses = new ArrayList<BigDecimal>();
+		for (DateRangeDTO date : dates) {
+			totalExpenses.add(organizationRepo.getTotalExpensesForOrganizationBetweenDates(organizationId, date.getStartDate(), date.getEndDate()));
+		}
+		VendorExpensesInReportDTO vendorlessExpenses = new VendorExpensesInReportDTO();
+		vendorlessExpenses.setAmounts(Utility.subtractLists(totalExpenses, totalExpensesWithNamedVendors));
+		vendors.add(vendorlessExpenses);
+		
+ 		generatedReport.setDateRanges(dates);
+		generatedReport.setVendors(vendors);
+		generatedReport.setTotalExpenses(totalExpenses);
+		return generatedReport;
+	}
+	public IncomeByCustomerReportDTO generateIncomeByCustomerReport(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException, ConflictException {
+		IncomeByCustomerReportDTO generatedReport = new IncomeByCustomerReportDTO();
+		Organization organization = organizationRepo.findById(organizationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+		List<CustomerIncomeInReportDTO> customers = getListOfCustomerIncomeInReportDTOBetweenDates(organizationId, dates);
+		List<BigDecimal> totalIncomeWithNamedCustomers = new ArrayList<BigDecimal>();
+		for (CustomerIncomeInReportDTO customer : customers) {
+			totalIncomeWithNamedCustomers = Utility.addLists(totalIncomeWithNamedCustomers, customer.getAmounts());
+		}
+		List<BigDecimal> totalIncome = new ArrayList<BigDecimal>();
+		for (DateRangeDTO date : dates) {
+			totalIncome.add(organizationRepo.getTotalIncomeForOrganizationBetweenDates(organizationId, date.getStartDate(), date.getEndDate()));
+		}
+		CustomerIncomeInReportDTO customerlessIncome = new CustomerIncomeInReportDTO();
+		customerlessIncome.setAmounts(Utility.subtractLists(totalIncome, totalIncomeWithNamedCustomers));
+		customers.add(customerlessIncome);
+		
+ 		generatedReport.setDateRanges(dates);
+		generatedReport.setCustomers(customers);
+		generatedReport.setTotalIncome(totalIncome);
+		return generatedReport;
+	}
+
 	public NetWorthReportDTO generateNetWorthReport(Long organizationId, List<DateRangeDTO> dates) throws ResourceNotFoundException {
 		NetWorthReportDTO generatedNetWorthReport = new NetWorthReportDTO();
 		Organization organization = organizationRepo.findById(organizationId)
@@ -872,5 +923,4 @@ public class ReportsService {
 		}
 		return returnedList;
 	}
-
 }

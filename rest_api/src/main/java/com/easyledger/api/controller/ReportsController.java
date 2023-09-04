@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easyledger.api.dto.BalanceSheetDTO;
 import com.easyledger.api.dto.CashFlowStatementDTO;
 import com.easyledger.api.dto.DateRangeDTO;
+import com.easyledger.api.dto.ExpensesByVendorReportDTO;
+import com.easyledger.api.dto.IncomeByCustomerReportDTO;
 import com.easyledger.api.dto.IncomeExpenseReportDTO;
 import com.easyledger.api.dto.IncomeStatementDTO;
 import com.easyledger.api.dto.NetWorthReportDTO;
@@ -129,6 +131,23 @@ public class ReportsController {
 		return reportsService.getAccountTransactionsReportViewModelForAccountBetweenDates(accountId, startDate, endDate);
 	}
 	
+	@PostMapping("/organization/{id}/reports/expensesByVendorReport") 
+	public ExpensesByVendorReportDTO getExpensesByVendorForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateExpensesByVendorReport(organizationId, dates);
+	}
+	
+	@PostMapping("/organization/{id}/reports/incomeByCustomerReport") 
+	public IncomeByCustomerReportDTO getIncomeByCustomerForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateIncomeByCustomerReport(organizationId, dates);
+	}
+
+	@Deprecated
 	@GetMapping("/reports/expensesByVendorReport/organization/{organizationId}/{startDate}/{endDate}")
 	public ExpensesByVendorReportViewModel getExpensesByVendorReportForOrganizationBetweenDates(@PathVariable(value = "organizationId") Long organizationId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
@@ -137,6 +156,7 @@ public class ReportsController {
 		return reportsService.getExpensesByVendorReportViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
 	
+	@Deprecated
 	@GetMapping("/reports/incomeByCustomerReport/organization/{organizationId}/{startDate}/{endDate}")
 	public IncomeByCustomerReportViewModel getIncomeByCustomerReportForOrganizationBetweenDates(@PathVariable(value = "organizationId") Long organizationId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
