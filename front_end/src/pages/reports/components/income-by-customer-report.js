@@ -1,89 +1,66 @@
 import React from 'react';
-import StripedRow from '../../../components/tables/striped-row';
+import LoadingSpinner from '../../../components/misc/loading-spinner';
 import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { reportsText } from '../../../utils/i18n/reports-text';
-import { formatCurrency, getPercentage, localizeDate } from '../../../utils/util-fns';
+import { localizeDate } from '../../../utils/util-fns';
+import ReportRow from './report-row';
 
-function IncomeByCustomerReport({ columnLabels, incomeByCustomerReports }) {
+function IncomeByCustomerReport({ incomeByCustomerReportDto }) {
     const appContext = React.useContext(PageSettings);
-
-    const numberAsCurrency = (number) => {
-        if (number == 0) {
-            return formatCurrency(appContext.locale, appContext.currency, 0);
-        }
-        return formatCurrency(appContext.locale, appContext.currency, number);
+    const dateLabels = () => {
+        let labels = [];
+        incomeByCustomerReportDto.dateRanges.map(dateRange => {
+            if (!dateRange.name || dateRange.name === "Custom") {
+                labels.push(<>
+                    <div>
+                        {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(dateRange.startDate)}
+                    </div>
+                    <div>
+                        {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(dateRange.endDate)}
+                    </div>
+                </>)
+            } else {
+                labels.push(dateRange.name);
+            }
+        })
+        return labels;
     }
+    const translate = text => reportsText[appContext.locale][text];
 
-    return (
+    return(
         <>
-            <div className="d-flex justify-content-between font-weight-semibold text-end">
-                <div>{/*empty div for spacing*/}</div>
-                <div className="text-end d-flex">
-                    {
-                        columnLabels.map((columnLabel, i) => {
-                            return (
-                                <div className="pseudo-td width-175" key={i}>
-                                    {columnLabel.label === "Custom"
-                                        ? <>
-                                            <div>
-                                                {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(columnLabel.startDate)}
-                                            </div>
-                                            <div>
-                                                {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(columnLabel.endDate)}
-                                            </div>
-                                        </>
-                                        : columnLabel.label}
-                                </div>
+            {incomeByCustomerReportDto
+                ? <div>
+                    <ReportRow
+                        values={dateLabels()}
+                        className="fw-semibold"
+                    />
+                    {incomeByCustomerReportDto.customers
+                        ? incomeByCustomerReportDto.customers.map((customer, i) => {
+                            return(
+                                <ReportRow
+                                    key={i}
+                                    label={customer.customerName ? customer.customerName : <span className="fw-light fst-italic">{translate("No customer")}</span>}
+                                    values={customer.amounts}
+                                />
                             )
                         })
+                        : null
                     }
+                    <ReportRow
+                        label={translate("Total Income")}
+                        values={incomeByCustomerReportDto.totalIncome}
+                        isCurrency
+                        className="fw-semibold"
+                    />
+
                 </div>
-            </div>
-            <div>
-                {incomeByCustomerReports
-                    ? <>
-                        {incomeByCustomerReports[0].customerIncomeDTOs.map((customerIncomeDTO, i) => {
-                            return (
-                                <StripedRow key={i} className="justify-content-between">
-                                    <div className={customerIncomeDTO.customerName === reportsText[appContext.locale]["No customer"] ? "fw-light fst-italic" : ""}>
-                                        {customerIncomeDTO.customerName}
-                                    </div>
-                                    <div className="text-end d-flex">
-                                        {incomeByCustomerReports.map((report, i) => {
-                                            let incomeForThisCustomer = report.customerIncomeDTOs
-                                            .find(dto => dto.customerName === customerIncomeDTO.customerName)
-                                            .creditsMinusDebits
-                                            return (
-                                                <div key={i} className="width-175">
-                                                    {numberAsCurrency(incomeForThisCustomer) + " (" + getPercentage(incomeForThisCustomer, report.totalIncome) + "%)"}
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                </StripedRow>
-                            )
-                        })}
-                        <StripedRow className="justify-content-between fw-semibold">
-                            <div>
-                                {reportsText[appContext.locale]["Total Income"]}
-                            </div>
-                            <div className="text-end d-flex">
-                                {incomeByCustomerReports.map((report, i) => {
-                                    return (
-                                        <div key={i} className="width-175">
-                                            {numberAsCurrency(report.totalIncome)}
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </StripedRow>
-                    </>
-                    : null
-                }
-            </div>
+                : <LoadingSpinner big/>
+            }
         </>
     )
+
 }
 
 export default IncomeByCustomerReport;

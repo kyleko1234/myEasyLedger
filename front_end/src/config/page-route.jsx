@@ -36,6 +36,8 @@ import CashFlowPageV2 from '../pages/reports/cash-flow-page-v2.js';
 import ExpensesByAccountPageV2 from '../pages/reports/expenses-by-account-page-v2.js';
 import NetWorthReportPageV2 from '../pages/reports/net-worth-report-page-v2.js';
 import IncomeExpenseReportPageV2 from '../pages/reports/income-expense-report-page-v2.js';
+import ExpensesByVendorPage from '../pages/reports/expenses-by-vendor-page.js';
+import IncomeByCustomerPage from '../pages/reports/income-by-customer-page.js';
 
 const routes = [
   {
@@ -260,6 +262,16 @@ const routes = [
     path: '/reports/income-by-customer',
     title: 'Income Distribution (by Customer)',
     component: IncomeByCustomer,
+  },
+  {
+    path: '/reports/expenses-by-vendor-v2',
+    title: 'Expense Distribution (by Vendor)',
+    component: ExpensesByVendorPage,
+  },
+  {
+    path: '/reports/income-by-customer-v2',
+    title: 'Income Distribution (by Customer)',
+    component: IncomeByCustomerPage,
   }
 ];
 
