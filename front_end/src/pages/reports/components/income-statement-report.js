@@ -69,6 +69,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                         values={child.amounts}
                                                         isCurrency
                                                         indentLevel={2}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }
@@ -110,6 +111,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                         values={child.amounts}
                                                         isCurrency
                                                         indentLevel={2}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }
@@ -158,6 +160,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                             values={account.amounts}
                                                             isCurrency
                                                             indentLevel={2}
+                                                            className="report-row-detailed"
                                                         />
                                                         {account.children.map(child => {
                                                             if (!accountIsEmpty(child)) {
@@ -167,6 +170,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                                         values={child.amounts}
                                                                         isCurrency
                                                                         indentLevel={3}
+                                                                        className="report-row-detailed"
                                                                     />
                                                                 )
                                                             }
@@ -219,6 +223,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                             values={account.amounts}
                                                             isCurrency
                                                             indentLevel={2}
+                                                            className="report-row-detailed"
                                                         />
                                                         {account.children.map(child => {
                                                             if (!accountIsEmpty(child)) {
@@ -228,6 +233,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                                         values={child.amounts}
                                                                         isCurrency
                                                                         indentLevel={3}
+                                                                        className="report-row-detailed"
                                                                     />
                                                                 )
                                                             }
@@ -272,6 +278,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                             values={account.amounts}
                                             isCurrency
                                             indentLevel={1}
+                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
@@ -282,6 +289,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                             values={child.amounts}
                                                             isCurrency
                                                             indentLevel={2}
+                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }
@@ -317,6 +325,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                             values={account.amounts}
                                             isCurrency
                                             indentLevel={1}
+                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
@@ -327,6 +336,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                             values={child.amounts}
                                                             isCurrency
                                                             indentLevel={2}
+                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }
@@ -358,6 +368,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                             values={account.amounts}
                                             isCurrency
                                             indentLevel={1}
+                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
@@ -368,6 +379,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                             values={child.amounts}
                                                             isCurrency
                                                             indentLevel={2}
+                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }

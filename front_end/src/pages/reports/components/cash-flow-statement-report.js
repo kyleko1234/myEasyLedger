@@ -72,6 +72,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                             values={negateArrayOfNumbers(account.amounts)}
                                             isCurrency
                                             indentLevel={2}
+                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
@@ -82,6 +83,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                         values={negateArrayOfNumbers(child.amounts)}
                                                         isCurrency
                                                         indentLevel={3}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }
@@ -133,6 +135,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                     values={account.amounts}
                                                     isCurrency
                                                     indentLevel={3}
+                                                    className="report-row-detailed"
                                                 />
                                                 {account.children.map(child => {
                                                     if (!accountIsEmpty(child)) {
@@ -143,6 +146,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                                 values={child.amounts}
                                                                 isCurrency
                                                                 indentLevel={4}
+                                                                className="report-row-detailed"
                                                             />
                                                         )
                                                     }
@@ -174,6 +178,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                     values={negateArrayOfNumbers(account.amounts)}
                                                     isCurrency
                                                     indentLevel={3}
+                                                    className="report-row-detailed"
                                                 />
                                                 {account.children.map(child => {
                                                     if (!accountIsEmpty(child)) {
@@ -184,6 +189,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                                 values={negateArrayOfNumbers(child.amounts)}
                                                                 isCurrency
                                                                 indentLevel={4}
+                                                                className="report-row-detailed"
                                                             />
                                                         )
                                                     }
@@ -215,6 +221,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                     values={negateArrayOfNumbers(account.amounts)}
                                                     isCurrency
                                                     indentLevel={3}
+                                                    className="report-row-detailed"
                                                 />
                                                 {account.children.map(child => {
                                                     if (!accountIsEmpty(child)) {
@@ -225,6 +232,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                                 values={negateArrayOfNumbers(child.amounts)}
                                                                 isCurrency
                                                                 indentLevel={4}
+                                                                className="report-row-detailed"
                                                             />
                                                         )
                                                     }
@@ -265,6 +273,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                             values={negateArrayOfNumbers(account.amounts)}
                                             isCurrency
                                             indentLevel={2}
+                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
@@ -275,6 +284,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                         values={negateArrayOfNumbers(child.amounts)}
                                                         isCurrency
                                                         indentLevel={3}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }
@@ -316,6 +326,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                     values={account.amounts}
                                                     isCurrency
                                                     indentLevel={2}
+                                                    className="report-row-detailed"
                                                 />
                                                 {account.children.map(child => {
                                                     if (!accountIsEmpty(child)) {
@@ -326,6 +337,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                                 values={child.amounts}
                                                                 isCurrency
                                                                 indentLevel={3}
+                                                                className="report-row-detailed"
                                                             />
                                                         )
                                                     }
@@ -357,6 +369,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                     values={negateArrayOfNumbers(account.amounts)}
                                                     isCurrency
                                                     indentLevel={3}
+                                                    className="report-row-detailed"
                                                 />
                                                 {account.children.map(child => {
                                                     if (!accountIsEmpty(child)) {
@@ -367,6 +380,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                                 values={negateArrayOfNumbers(child.amounts)}
                                                                 isCurrency
                                                                 indentLevel={4}
+                                                                className="report-row-detailed"
                                                             />
                                                         )
                                                     }
@@ -398,6 +412,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                     values={negateArrayOfNumbers(account.amounts)}
                                                     isCurrency
                                                     indentLevel={3}
+                                                    className="report-row-detailed"
                                                 />
                                                 {account.children.map(child => {
                                                     if (!accountIsEmpty(child)) {
@@ -408,6 +423,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                                 values={negateArrayOfNumbers(child.amounts)}
                                                                 isCurrency
                                                                 indentLevel={4}
+                                                                className="report-row-detailed"
                                                             />
                                                         )
                                                     }
@@ -440,6 +456,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                     values={negateArrayOfNumbers(account.amounts)}
                                                     isCurrency
                                                     indentLevel={3}
+                                                    className="report-row-detailed"
                                                 />
                                                 {account.children.map(child => {
                                                     if (!accountIsEmpty(child)) {
@@ -450,6 +467,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                                 values={negateArrayOfNumbers(child.amounts)}
                                                                 isCurrency
                                                                 indentLevel={4}
+                                                                className="report-row-detailed"
                                                             />
                                                         )
                                                     }
@@ -490,6 +508,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                             values={negateArrayOfNumbers(account.amounts)}
                                             isCurrency
                                             indentLevel={2}
+                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
@@ -500,6 +519,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                         values={negateArrayOfNumbers(child.amounts)}
                                                         isCurrency
                                                         indentLevel={3}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }
@@ -538,6 +558,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                     values={account.amounts}
                                                     isCurrency
                                                     indentLevel={2}
+                                                    className="report-row-detailed"
                                                 />
                                                 {account.children.map(child => {
                                                     if (!accountIsEmpty(child)) {
@@ -548,6 +569,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                                 values={child.amounts}
                                                                 isCurrency
                                                                 indentLevel={3}
+                                                                className="report-row-detailed"
                                                             />
                                                         )
                                                     }
@@ -579,6 +601,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                     values={negateArrayOfNumbers(account.amounts)}
                                                     isCurrency
                                                     indentLevel={3}
+                                                    className="report-row-detailed"
                                                 />
                                                 {account.children.map(child => {
                                                     if (!accountIsEmpty(child)) {
@@ -589,6 +612,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                                 values={negateArrayOfNumbers(child.amounts)}
                                                                 isCurrency
                                                                 indentLevel={4}
+                                                                className="report-row-detailed"
                                                             />
                                                         )
                                                     }
@@ -620,6 +644,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                     values={negateArrayOfNumbers(account.amounts)}
                                                     isCurrency
                                                     indentLevel={3}
+                                                    className="report-row-detailed"
                                                 />
                                                 {account.children.map(child => {
                                                     if (!accountIsEmpty(child)) {
@@ -630,6 +655,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                                 values={negateArrayOfNumbers(child.amounts)}
                                                                 isCurrency
                                                                 indentLevel={4}
+                                                                className="report-row-detailed"
                                                             />
                                                         )
                                                     }
@@ -667,6 +693,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                 values={negateArrayOfNumbers(account.amounts)}
                                                 isCurrency
                                                 indentLevel={3}
+                                                className="report-row-detailed"
                                             />
                                             {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
@@ -677,6 +704,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                             values={negateArrayOfNumbers(child.amounts)}
                                                             isCurrency
                                                             indentLevel={4}
+                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }
@@ -705,6 +733,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                 values={negateArrayOfNumbers(account.amounts)}
                                                 isCurrency
                                                 indentLevel={3}
+                                                className="report-row-detailed"
                                             />
                                             {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
@@ -715,6 +744,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                             values={negateArrayOfNumbers(child.amounts)}
                                                             isCurrency
                                                             indentLevel={4}
+                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }
@@ -763,6 +793,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                 values={account.amounts}
                                                 isCurrency
                                                 indentLevel={2}
+                                                className="report-row-detailed"
                                             />
                                             {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
@@ -773,6 +804,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                             values={child.amounts}
                                                             isCurrency
                                                             indentLevel={3}
+                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }
@@ -801,6 +833,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                 values={account.amounts}
                                                 isCurrency
                                                 indentLevel={3}
+                                                className="report-row-detailed"
                                             />
                                             {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
@@ -811,6 +844,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                             values={child.amounts}
                                                             isCurrency
                                                             indentLevel={4}
+                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }
@@ -846,6 +880,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                 values={account.amounts}
                                                 isCurrency
                                                 indentLevel={2}
+                                                className="report-row-detailed"
                                             />
                                             {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
@@ -856,6 +891,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                             values={child.amounts}
                                                             isCurrency
                                                             indentLevel={3}
+                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }
@@ -884,6 +920,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                 values={account.amounts}
                                                 isCurrency
                                                 indentLevel={3}
+                                                className="report-row-detailed"
                                             />
                                             {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
@@ -894,6 +931,7 @@ function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
                                                             values={child.amounts}
                                                             isCurrency
                                                             indentLevel={4}
+                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }

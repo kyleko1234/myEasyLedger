@@ -52,6 +52,7 @@ function NetWorthReport({netWorthReportDto, detailedView}) {
                                                         isCurrency
                                                         indentLevel={2}
                                                         key={child.accountId}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }
@@ -94,6 +95,7 @@ function NetWorthReport({netWorthReportDto, detailedView}) {
                                                         isCurrency
                                                         indentLevel={2}
                                                         key={child.accountId}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }

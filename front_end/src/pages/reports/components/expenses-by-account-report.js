@@ -57,9 +57,9 @@ function ExpensesByAccountReport({ incomeExpenseReportDto, detailedView }) {
                                                     <ReportRow
                                                         label={child.accountName}
                                                         values={child.amounts}
-
                                                         indentLevel={2}
                                                         key={child.accountId}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }

@@ -70,6 +70,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                                 values={account.amounts}
                                                                 isCurrency
                                                                 indentLevel={3}
+                                                                className="report-row-detailed"
                                                             />
                                                             {account.children.map(child => {
                                                                 if (!accountIsEmpty(child)) {
@@ -80,6 +81,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                                             isCurrency
                                                                             key={child.accountId}
                                                                             indentLevel={4}
+                                                                            className="report-row-detailed"
                                                                         />
                                                                     )
                                                                 }
@@ -124,6 +126,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                                 values={account.amounts}
                                                                 isCurrency
                                                                 indentLevel={3}
+                                                                className="report-row-detailed"
                                                             />
                                                             {account.children.map(child => {
                                                                 if (!accountIsEmpty(child)) {
@@ -134,6 +137,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                                             isCurrency
                                                                             key={child.accountId}
                                                                             indentLevel={4}
+                                                                            className="report-row-detailed"
                                                                         />
                                                                     )
                                                                 }
@@ -189,6 +193,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                                 values={account.amounts}
                                                                 isCurrency
                                                                 indentLevel={3}
+                                                                className="report-row-detailed"
                                                             />
                                                             {account.children.map(child => {
                                                                 if (!accountIsEmpty(child)) {
@@ -199,6 +204,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                                             isCurrency
                                                                             key={child.accountId}
                                                                             indentLevel={4}
+                                                                            className="report-row-detailed"
                                                                         />
                                                                     )
                                                                 }
@@ -243,6 +249,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                                 values={account.amounts}
                                                                 isCurrency
                                                                 indentLevel={3}
+                                                                className="report-row-detailed"
                                                             />
                                                             {account.children.map(child => {
                                                                 if (!accountIsEmpty(child)) {
@@ -253,6 +260,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                                             isCurrency
                                                                             key={child.accountId}
                                                                             indentLevel={4}
+                                                                            className="report-row-detailed"
                                                                         />
                                                                     )
                                                                 }
@@ -297,6 +305,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                             values={account.amounts}
                                             isCurrency
                                             indentLevel={2}
+                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
@@ -307,6 +316,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                         isCurrency
                                                         key={child.accountId}
                                                         indentLevel={3}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }
@@ -334,6 +344,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                             values={account.amounts}
                                             isCurrency
                                             indentLevel={2}
+                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
@@ -344,6 +355,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                         isCurrency
                                                         key={child.accountId}
                                                         indentLevel={3}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }
@@ -371,6 +383,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                             values={account.amounts}
                                             isCurrency
                                             indentLevel={2}
+                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
@@ -381,6 +394,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                         isCurrency
                                                         key={child.accountId}
                                                         indentLevel={3}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }

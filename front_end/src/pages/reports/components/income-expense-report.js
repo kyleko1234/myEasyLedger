@@ -61,6 +61,7 @@ function IncomeExpenseReport({incomeExpenseReportDto, detailedView}) {
                                                         isCurrency
                                                         indentLevel={2}
                                                         key={child.accountId}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }
@@ -102,6 +103,7 @@ function IncomeExpenseReport({incomeExpenseReportDto, detailedView}) {
                                                         isCurrency
                                                         indentLevel={2}
                                                         key={child.accountId}
+                                                        className="report-row-detailed"
                                                     />
                                                 )
                                             }

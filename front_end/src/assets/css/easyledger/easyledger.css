@@ -485,6 +485,13 @@ a.pseudo-tr:hover,
     background-color: #1e1e1e;
 }
 
+.report-row-detailed {
+    background-color: #ececec;
+}
+.dark-mode .report-row-detailed {
+    background-color: #282828;
+}
+
 /* LOGIN AND REGISTRATION PAGES */
 .login-page {
     display: flex;
