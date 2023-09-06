@@ -1,25 +1,27 @@
 import axios from 'axios';
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
-import { cashFlowReportText } from '../../utils/i18n/cash-flow-report-text';
-import CashFlowStatementStandard from './components/cash-flow-statement-standard';
+import { netWorthReportText } from '../../utils/i18n/net-worth-report-text';
 import DateRangeControls from './components/date-range-controls';
+import NetWorthReport from './components/net-worth-report';
 
-function CashFlowPageV2() {
-    const appContext = React.useContext(PageSettings);
-    const [loading, setLoading] = React.useState(true);
-    const [cashFlowStatementDto, setCashFlowStatementDto] = React.useState();
+function NetWorthReportPage() {
+    const appContext = React.useContext(PageSettings); 
+    const params = useParams();
+
+    const [netWorthReportDto, setNetWorthReportDto] = React.useState();
     const [detailedView, setDetailedView] = React.useState(false);
     const toggleDetailedView = () => setDetailedView(!detailedView);
+    const [loading, setLoading] = React.useState(true);
 
-    const fetchCashFlowStatementDto = async (datesToRequest) => {
+    const fetchNetWorthReports = async (datesToRequest) => {
         setLoading(true);
-        axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/cashFlowStatement`, datesToRequest)
+        axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/netWorthReport`, datesToRequest)
             .then(response => {
-                console.log(response.data)
-                setCashFlowStatementDto(response.data);
+                setNetWorthReportDto(response.data)
                 setLoading(false);
             })
             .catch(response => {
@@ -27,22 +29,25 @@ function CashFlowPageV2() {
                 setLoading(false);
             })
     }
-    return(
+
+    return (
         <div>
-            <h1>
-                {cashFlowReportText[appContext.locale]["Cash Flow Statement"]}
+            <h1 className="page-header">
+                {netWorthReportText[appContext.locale]["Net Worth Report"]} 
             </h1>
             <div>
                 {appContext.isLoading
                     ? <LoadingSpinner big/>
                     : <div>
                         <DateRangeControls
-                            parentComponentDataFetchFunction={fetchCashFlowStatementDto}
+                            parentComponentDataFetchFunction={fetchNetWorthReports}
                             detailedView={detailedView}
                             toggleDetailedView={toggleDetailedView}
+                            singleDate
+                            defaultEndDate={params.endDate? params.endDate : null}
                         />
-                        <CashFlowStatementStandard
-                            cashFlowStatementDto={cashFlowStatementDto}
+                        <NetWorthReport
+                            netWorthReportDto={netWorthReportDto}
                             detailedView={detailedView}
                         />
                     </div>
@@ -50,6 +55,6 @@ function CashFlowPageV2() {
             </div>
         </div>
     )
-}
 
-export default CashFlowPageV2;
+}
+export default NetWorthReportPage;

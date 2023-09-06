@@ -8,7 +8,7 @@ import { incomeStatementReportText } from '../../utils/i18n/income-statement-rep
 import DateRangeControls from './components/date-range-controls';
 import IncomeExpenseReport from './components/income-expense-report';
 
-function IncomeExpenseReportPageV2() {
+function IncomeExpenseReportPage() {
     const appContext = React.useContext(PageSettings); 
     const params = useParams();
 
@@ -57,4 +57,4 @@ function IncomeExpenseReportPageV2() {
     )
 
 }
-export default IncomeExpenseReportPageV2;
+export default IncomeExpenseReportPage;

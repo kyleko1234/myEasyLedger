@@ -2,10 +2,10 @@ import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { cashFlowReportText } from '../../../utils/i18n/cash-flow-report-text';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
-import { accountIsEmpty, arrayIsAllZeroes, localizeDate, negateArrayOfNumbers } from '../../../utils/util-fns';
+import { accountIsEmpty, localizeDate, negateArrayOfNumbers } from '../../../utils/util-fns';
 import ReportRow from './report-row';
 
-function CashFlowStatementStandard({ cashFlowStatementDto, detailedView }) {
+function CashFlowStatementReport({ cashFlowStatementDto, detailedView }) {
     const appContext = React.useContext(PageSettings);
     const dateLabels = () => {
         let labels = [];
@@ -911,4 +911,4 @@ function CashFlowStatementStandard({ cashFlowStatementDto, detailedView }) {
     )
 }
 
-export default CashFlowStatementStandard;
+export default CashFlowStatementReport;

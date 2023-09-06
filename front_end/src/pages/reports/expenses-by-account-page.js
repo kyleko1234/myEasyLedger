@@ -11,7 +11,7 @@ import DateRangeControls from './components/date-range-controls';
 import ExpensesByAccountPieCharts from './components/expenses-by-account-pie-charts';
 import ExpensesByAccountReport from './components/expenses-by-account-report';
 
-function ExpensesByAccountPageV2() {
+function ExpensesByAccountPage() {
     const appContext = React.useContext(PageSettings);
     const params = useParams();
     const [loading, setLoading] = React.useState(true);
@@ -102,4 +102,4 @@ function ExpensesByAccountPageV2() {
         </div>
     )
 }
-export default ExpensesByAccountPageV2;
+export default ExpensesByAccountPage;

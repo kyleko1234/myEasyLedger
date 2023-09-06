@@ -5,10 +5,10 @@ import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
 import { balanceSheetReportText } from '../../utils/i18n/balance-sheet-report-text';
-import BalanceSheetStandard from './components/balance-sheet-standard';
+import BalanceSheetReport from './components/balance-sheet-report';
 import DateRangeControls from './components/date-range-controls';
 
-function BalanceSheetPageV2() {
+function BalanceSheetPage() {
     const appContext = React.useContext(PageSettings);
     const params = useParams();
 
@@ -47,7 +47,7 @@ function BalanceSheetPageV2() {
                             singleDate
                             defaultEndDate={params.endDate? params.endDate : null}
                         />
-                        <BalanceSheetStandard
+                        <BalanceSheetReport
                             balanceSheetDto={balanceSheetDto}
                             detailedView={detailedView}
                         />
@@ -59,4 +59,4 @@ function BalanceSheetPageV2() {
     )
 }
 
-export default BalanceSheetPageV2;
+export default BalanceSheetPage;

@@ -1,26 +1,25 @@
 import axios from 'axios';
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
-import { incomeStatementReportText } from '../../utils/i18n/income-statement-report-text';
+import { cashFlowReportText } from '../../utils/i18n/cash-flow-report-text';
+import CashFlowStatementReport from './components/cash-flow-statement-report';
 import DateRangeControls from './components/date-range-controls';
-import IncomeStatementStandard from './components/income-statement-standard';
 
-function IncomeStatementPageV2() {
+function CashFlowPage() {
     const appContext = React.useContext(PageSettings);
-    const params = useParams();
     const [loading, setLoading] = React.useState(true);
-    const [incomeStatementDto, setIncomeStatementDto] = React.useState();
+    const [cashFlowStatementDto, setCashFlowStatementDto] = React.useState();
     const [detailedView, setDetailedView] = React.useState(false);
     const toggleDetailedView = () => setDetailedView(!detailedView);
 
-    const fetchIncomeStatements = async (datesToRequest) => {
+    const fetchCashFlowStatementDto = async (datesToRequest) => {
         setLoading(true);
-        axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement`, datesToRequest)
+        axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/cashFlowStatement`, datesToRequest)
             .then(response => {
-                setIncomeStatementDto(response.data);
+                console.log(response.data)
+                setCashFlowStatementDto(response.data);
                 setLoading(false);
             })
             .catch(response => {
@@ -28,25 +27,22 @@ function IncomeStatementPageV2() {
                 setLoading(false);
             })
     }
-
-    return (
+    return(
         <div>
             <h1>
-                {incomeStatementReportText[appContext.locale]["Income Statement Report"]}
+                {cashFlowReportText[appContext.locale]["Cash Flow Statement"]}
             </h1>
             <div>
                 {appContext.isLoading
                     ? <LoadingSpinner big/>
                     : <div>
                         <DateRangeControls
-                            parentComponentDataFetchFunction={fetchIncomeStatements}
+                            parentComponentDataFetchFunction={fetchCashFlowStatementDto}
                             detailedView={detailedView}
                             toggleDetailedView={toggleDetailedView}
-                            defaultStartDate={params.startDate? params.startDate: null}
-                            defaultEndDate={params.endDate? params.endDate: null}
                         />
-                        <IncomeStatementStandard
-                            incomeStatementDto={incomeStatementDto}
+                        <CashFlowStatementReport
+                            cashFlowStatementDto={cashFlowStatementDto}
                             detailedView={detailedView}
                         />
                     </div>
@@ -55,4 +51,5 @@ function IncomeStatementPageV2() {
         </div>
     )
 }
-export default IncomeStatementPageV2;
+
+export default CashFlowPage;

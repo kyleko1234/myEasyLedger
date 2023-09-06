@@ -22,12 +22,12 @@ import JournalEntriesPage from '../pages/journal-entries/enterprise/journal-entr
 import TransactionsPage from '../pages/journal-entries/personal/transactions-page.js';
 import AccountTransactionsReportPage from '../pages/reports/account-transactions-report-page.js';
 import AccountsPage from '../pages/accounts/accounts-page.js';
-import BalanceSheetPageV2 from '../pages/reports/balance-sheet-page-v2.js';
-import IncomeStatementPageV2 from '../pages/reports/income-statement-page-v2.js';
-import CashFlowPageV2 from '../pages/reports/cash-flow-page-v2.js';
-import ExpensesByAccountPageV2 from '../pages/reports/expenses-by-account-page-v2.js';
-import NetWorthReportPageV2 from '../pages/reports/net-worth-report-page-v2.js';
-import IncomeExpenseReportPageV2 from '../pages/reports/income-expense-report-page-v2.js';
+import BalanceSheetPage from '../pages/reports/balance-sheet-page.js';
+import IncomeStatementPage from '../pages/reports/income-statement-page.js';
+import CashFlowPageV2 from '../pages/reports/cash-flow-page.js';
+import ExpensesByAccountPage from '../pages/reports/expenses-by-account-page.js';
+import NetWorthReportPage from '../pages/reports/net-worth-report-page.js';
+import IncomeExpenseReportPage from '../pages/reports/income-expense-report-page.js';
 import ExpensesByVendorPage from '../pages/reports/expenses-by-vendor-page.js';
 import IncomeByCustomerPage from '../pages/reports/income-by-customer-page.js';
 
@@ -79,23 +79,23 @@ const routes = [
     path: '/reports/balance-sheet',
     title: 'Balance Sheet Report',
     exact: true,
-    component: BalanceSheetPageV2
+    component: BalanceSheetPage
   },
   {
     path: '/reports/balance-sheet/:endDate',
     title: 'Balance Sheet Report',
-    component: BalanceSheetPageV2
+    component: BalanceSheetPage
   },
   {
     path: '/reports/income-statement',
     exact: true,
     title: 'Income Statement Report',
-    component: IncomeStatementPageV2
+    component: IncomeStatementPage
   },
   {
     path: '/reports/income-statement/:startDate/:endDate',
     title: 'Income Statement Report',
-    component: IncomeStatementPageV2
+    component: IncomeStatementPage
   },
   {
     path: '/account-settings',
@@ -143,23 +143,23 @@ const routes = [
     path: '/reports/net-worth',
     title: 'Net Worth Report',
     exact: true,
-    component: NetWorthReportPageV2,
+    component: NetWorthReportPage,
   },
   {
     path: '/reports/net-worth/:endDate',
     title: 'Net Worth Report',
-    component: NetWorthReportPageV2,
+    component: NetWorthReportPage,
   },
   {
     path: '/reports/income-expense',
     title: 'Income and Expense Report',
     exact: true,
-    component: IncomeExpenseReportPageV2,
+    component: IncomeExpenseReportPage,
   },
   {
     path: '/reports/income-expense/:startDate/:endDate',
     title: 'Income and Expense Report',
-    component: IncomeExpenseReportPageV2,
+    component: IncomeExpenseReportPage,
   },
   {
     path: '/reports/cash-flow',
@@ -180,12 +180,12 @@ const routes = [
       path: '/reports/expenses-by-account',
       title: 'Expense Distribution (by Account)',
       exact: true,
-      component: ExpensesByAccountPageV2
+      component: ExpensesByAccountPage
   },
   {
     path: '/reports/expenses-by-account/:startDate/:endDate',
     title: 'Expense Distribution (by Account)',
-    component: ExpensesByAccountPageV2
+    component: ExpensesByAccountPage
   },
   {
     path: '/vendors',

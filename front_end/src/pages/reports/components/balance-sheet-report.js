@@ -6,7 +6,7 @@ import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render
 import { accountIsEmpty, arrayIsAllZeroes, localizeDate, subtypeIsEmpty } from '../../../utils/util-fns';
 import ReportRow from './report-row';
 
-function BalanceSheetStandard({balanceSheetDto, detailedView}) {
+function BalanceSheetReport({balanceSheetDto, detailedView}) {
     const appContext = React.useContext(PageSettings);
     const translate = text => balanceSheetRenderText[appContext.locale][text];
     const dateLabels = () => {
@@ -436,4 +436,4 @@ function BalanceSheetStandard({balanceSheetDto, detailedView}) {
     )
 }
 
-export default BalanceSheetStandard;
+export default BalanceSheetReport;

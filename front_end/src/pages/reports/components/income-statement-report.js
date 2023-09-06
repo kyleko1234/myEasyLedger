@@ -5,7 +5,7 @@ import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-
 import { accountIsEmpty, localizeDate, subtypeIsEmpty } from '../../../utils/util-fns';
 import ReportRow from './report-row';
 
-function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
+function IncomeStatementReport({ incomeStatementDto, detailedView }) {
     const appContext = React.useContext(PageSettings);
     const dateLabels = () => {
         let labels = [];
@@ -393,4 +393,4 @@ function IncomeStatementStandard({ incomeStatementDto, detailedView }) {
     )
 }
 
-export default IncomeStatementStandard;
+export default IncomeStatementReport;

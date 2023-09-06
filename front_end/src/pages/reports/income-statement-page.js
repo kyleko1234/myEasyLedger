@@ -4,24 +4,23 @@ import { useParams } from 'react-router-dom';
 import LoadingSpinner from '../../components/misc/loading-spinner';
 import { PageSettings } from '../../config/page-settings';
 import { API_BASE_URL } from '../../utils/constants';
-import { netWorthReportText } from '../../utils/i18n/net-worth-report-text';
+import { incomeStatementReportText } from '../../utils/i18n/income-statement-report-text';
 import DateRangeControls from './components/date-range-controls';
-import NetWorthReport from './components/net-worth-report';
+import IncomeStatementReport from './components/income-statement-report';
 
-function NetWorthReportPageV2() {
-    const appContext = React.useContext(PageSettings); 
+function IncomeStatementPage() {
+    const appContext = React.useContext(PageSettings);
     const params = useParams();
-
-    const [netWorthReportDto, setNetWorthReportDto] = React.useState();
+    const [loading, setLoading] = React.useState(true);
+    const [incomeStatementDto, setIncomeStatementDto] = React.useState();
     const [detailedView, setDetailedView] = React.useState(false);
     const toggleDetailedView = () => setDetailedView(!detailedView);
-    const [loading, setLoading] = React.useState(true);
 
-    const fetchNetWorthReports = async (datesToRequest) => {
+    const fetchIncomeStatements = async (datesToRequest) => {
         setLoading(true);
-        axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/netWorthReport`, datesToRequest)
+        axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/reports/incomeStatement`, datesToRequest)
             .then(response => {
-                setNetWorthReportDto(response.data)
+                setIncomeStatementDto(response.data);
                 setLoading(false);
             })
             .catch(response => {
@@ -32,22 +31,22 @@ function NetWorthReportPageV2() {
 
     return (
         <div>
-            <h1 className="page-header">
-                {netWorthReportText[appContext.locale]["Net Worth Report"]} 
+            <h1>
+                {incomeStatementReportText[appContext.locale]["Income Statement Report"]}
             </h1>
             <div>
                 {appContext.isLoading
                     ? <LoadingSpinner big/>
                     : <div>
                         <DateRangeControls
-                            parentComponentDataFetchFunction={fetchNetWorthReports}
+                            parentComponentDataFetchFunction={fetchIncomeStatements}
                             detailedView={detailedView}
                             toggleDetailedView={toggleDetailedView}
-                            singleDate
-                            defaultEndDate={params.endDate? params.endDate : null}
+                            defaultStartDate={params.startDate? params.startDate: null}
+                            defaultEndDate={params.endDate? params.endDate: null}
                         />
-                        <NetWorthReport
-                            netWorthReportDto={netWorthReportDto}
+                        <IncomeStatementReport
+                            incomeStatementDto={incomeStatementDto}
                             detailedView={detailedView}
                         />
                     </div>
@@ -55,6 +54,5 @@ function NetWorthReportPageV2() {
             </div>
         </div>
     )
-
 }
-export default NetWorthReportPageV2;
+export default IncomeStatementPage;
