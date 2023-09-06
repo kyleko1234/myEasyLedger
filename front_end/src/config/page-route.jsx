@@ -151,21 +151,10 @@ const routes = [
     path: '/reports/net-worth',
     title: 'Net Worth Report',
     exact: true,
-    component: NetWorthReport,
-  },
-  {
-    path: '/reports/net-worth/:endDate',
-    title: 'Net Worth Report',
-    component: NetWorthReport,
-  },
-  {
-    path: '/reports/net-worth-v2',
-    title: 'Net Worth Report',
-    exact: true,
     component: NetWorthReportPageV2,
   },
   {
-    path: '/reports/net-worth-v2/:endDate',
+    path: '/reports/net-worth/:endDate',
     title: 'Net Worth Report',
     component: NetWorthReportPageV2,
   },
@@ -173,21 +162,10 @@ const routes = [
     path: '/reports/income-expense',
     title: 'Income and Expense Report',
     exact: true,
-    component: IncomeExpenseReport,
-  },
-  {
-    path: '/reports/income-expense/:startDate/:endDate',
-    title: 'Income and Expense Report',
-    component: IncomeExpenseReport,
-  },
-  {
-    path: '/reports/income-expense-v2',
-    title: 'Income and Expense Report',
-    exact: true,
     component: IncomeExpenseReportPageV2,
   },
   {
-    path: '/reports/income-expense-v2/:startDate/:endDate',
+    path: '/reports/income-expense/:startDate/:endDate',
     title: 'Income and Expense Report',
     component: IncomeExpenseReportPageV2,
   },
@@ -210,21 +188,10 @@ const routes = [
       path: '/reports/expenses-by-account',
       title: 'Expense Distribution (by Account)',
       exact: true,
-      component: ExpenseReport
+      component: ExpensesByAccountPageV2
   },
   {
     path: '/reports/expenses-by-account/:startDate/:endDate',
-    title: 'Expense Distribution (by Account)',
-    component: ExpenseReport
-  },
-  {
-    path: '/reports/expenses-by-account-v2',
-    title: 'Expense Distribution (by Account)',
-    exact: true,
-    component: ExpensesByAccountPageV2
-  },
-  {
-    path: '/reports/expenses-by-account-v2/:startDate/:endDate',
     title: 'Expense Distribution (by Account)',
     component: ExpensesByAccountPageV2
   },
@@ -256,20 +223,10 @@ const routes = [
   {
     path: '/reports/expenses-by-vendor',
     title: 'Expense Distribution (by Vendor)',
-    component: ExpensesByVendor,
-  },
-  {
-    path: '/reports/income-by-customer',
-    title: 'Income Distribution (by Customer)',
-    component: IncomeByCustomer,
-  },
-  {
-    path: '/reports/expenses-by-vendor-v2',
-    title: 'Expense Distribution (by Vendor)',
     component: ExpensesByVendorPage,
   },
   {
-    path: '/reports/income-by-customer-v2',
+    path: '/reports/income-by-customer',
     title: 'Income Distribution (by Customer)',
     component: IncomeByCustomerPage,
   }
