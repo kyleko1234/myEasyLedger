@@ -72,7 +72,7 @@ function IncomeByCustomerPieCharts({dateRanges, customerData, loading}) {
     }, [customerData, fontColor]);
 
     return(
-        <div className="d-flex justify-content-center">
+        <div className="d-none d-lg-flex justify-content-center">
             {loading
                 ? <LoadingSpinner big />
                 : pieChartObjects.map((pieChart, i) => {
