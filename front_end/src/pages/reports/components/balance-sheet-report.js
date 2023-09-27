@@ -20,14 +20,14 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
         })
         return labels;
     }
-    const [unbalancedAlert, setUnbalancedAlert] = React.useState(false);
+    const [unbalancedAlert, setUnbalancedAlert] = React.useState(true);
 
     React.useEffect(() => {
         //TODO: check for unbalanced balance sheets
     }, [])
     return(
         <>
-            <Alert isOpen={unbalancedAlert} color="danger">
+            <Alert isOpen={balanceSheetDto? balanceSheetDto.unbalanced: false} color="danger">
                 {balanceSheetRenderText[appContext.locale]["This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly."]}
             </Alert>
             {balanceSheetDto

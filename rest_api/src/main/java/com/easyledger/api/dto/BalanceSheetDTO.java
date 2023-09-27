@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.easyledger.api.utility.Utility;
+
 public class BalanceSheetDTO {
 	private List<DateRangeDTO> dateRanges = new ArrayList<DateRangeDTO>();
 	//list of all assets with BalanceSheetFormatPositionId 1
@@ -321,5 +323,14 @@ public class BalanceSheetDTO {
 		this.totalEquity = totalEquity;
 	}
 
+	public boolean isUnbalanced() {
+		List<BigDecimal> liabilitiesPlusEquity = Utility.addLists(this.totalLiabilities, this.totalEquity);
+		for (int i = 0; i < liabilitiesPlusEquity.size(); i++) {
+			if (this.totalAssets.get(i).compareTo(liabilitiesPlusEquity.get(i)) != 0) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

@@ -31,11 +31,11 @@ public class AccountDTO {
 	private String cashFlowFormatPositionName;
 	private Long balanceSheetFormatPositionId;
 	private String balanceSheetFormatPositionName;
-	private boolean cashItem;
-	private boolean relevantToTaxesPaid;
-	private boolean relevantToInterestPaid;
-	private boolean relevantToDividendsPaid;
-	private boolean relevantToDepreciationAmortization;
+	private Boolean cashItem;
+	private Boolean relevantToTaxesPaid;
+	private Boolean relevantToInterestPaid;
+	private Boolean relevantToDividendsPaid;
+	private Boolean relevantToDepreciationAmortization;
 	
 	public AccountDTO(Account account) {
 		this.accountId = account.getId();
@@ -311,7 +311,7 @@ public class AccountDTO {
 		this.balanceSheetFormatPositionName = balanceSheetFormatPositionName;
 	}
 
-	public boolean isCashItem() {
+	public Boolean isCashItem() {
 		return cashItem;
 	}
 
@@ -319,7 +319,7 @@ public class AccountDTO {
 		this.cashItem = cashItem;
 	}
 
-	public boolean isRelevantToTaxesPaid() {
+	public Boolean isRelevantToTaxesPaid() {
 		return relevantToTaxesPaid;
 	}
 
@@ -327,7 +327,7 @@ public class AccountDTO {
 		this.relevantToTaxesPaid = relevantToTaxesPaid;
 	}
 
-	public boolean isRelevantToInterestPaid() {
+	public Boolean isRelevantToInterestPaid() {
 		return relevantToInterestPaid;
 	}
 
@@ -335,7 +335,7 @@ public class AccountDTO {
 		this.relevantToInterestPaid = relevantToInterestPaid;
 	}
 
-	public boolean isRelevantToDividendsPaid() {
+	public Boolean isRelevantToDividendsPaid() {
 		return relevantToDividendsPaid;
 	}
 
@@ -343,7 +343,7 @@ public class AccountDTO {
 		this.relevantToDividendsPaid = relevantToDividendsPaid;
 	}
 
-	public boolean isRelevantToDepreciationAmortization() {
+	public Boolean isRelevantToDepreciationAmortization() {
 		return relevantToDepreciationAmortization;
 	}
 
