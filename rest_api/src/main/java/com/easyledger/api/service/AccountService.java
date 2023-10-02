@@ -288,27 +288,27 @@ public class AccountService {
 		if (dto.isRelevantToTaxesPaid() != null) {
 			updatedAccount.setRelevantToTaxesPaid(dto.isRelevantToTaxesPaid());;
 		} else {
-			updatedAccount.setRelevantToTaxesPaid(dto.isRelevantToTaxesPaid());;
+			updatedAccount.setRelevantToTaxesPaid(oldAccount.isRelevantToTaxesPaid());;
 		}
 		
 		if (dto.isRelevantToInterestPaid() != null) {
 			updatedAccount.setRelevantToInterestPaid(dto.isRelevantToInterestPaid());
 		} else {
-			updatedAccount.setRelevantToInterestPaid(dto.isRelevantToInterestPaid());
+			updatedAccount.setRelevantToInterestPaid(oldAccount.isRelevantToInterestPaid());
 		}
 		
 		
 		if (dto.isRelevantToDividendsPaid() != null) {
 			updatedAccount.setRelevantToDividendsPaid(dto.isRelevantToDividendsPaid());
 		} else {
-			updatedAccount.setRelevantToDividendsPaid(dto.isRelevantToDividendsPaid());
+			updatedAccount.setRelevantToDividendsPaid(oldAccount.isRelevantToDividendsPaid());
 		}
 		
 		
 		if (dto.isRelevantToDepreciationAmortization() != null) {
 			updatedAccount.setRelevantToDepreciationAmortization(dto.isRelevantToDepreciationAmortization());
 		} else {
-			updatedAccount.setRelevantToDepreciationAmortization(dto.isRelevantToDepreciationAmortization());
+			updatedAccount.setRelevantToDepreciationAmortization(oldAccount.isRelevantToDepreciationAmortization());
 		}
 		
 		Organization organization = organizationRepo.findById(dto.getOrganizationId())
