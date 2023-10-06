@@ -270,7 +270,7 @@ public class AccountService {
 		} else {
 			updatedAccount.setCashFlowFormatPosition(oldAccount.getCashFlowFormatPosition());
 		}
-
+ 
 		if (dto.getBalanceSheetFormatPositionId() != null) {
 			BalanceSheetFormatPosition position = balanceSheetFormatPositionRepo.findById(dto.getBalanceSheetFormatPositionId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("Balance sheet format position not found for this id :: " + dto.getBalanceSheetFormatPositionId()));

@@ -490,7 +490,7 @@ public class Account {
 
 	public void setAccountSubtype(AccountSubtype accountSubtype) {
 		this.accountSubtype = accountSubtype;
-		accountSubtype.getAccounts().add(this);
+		//accountSubtype.getAccounts().add(this);
 	}
 
 	public Organization getOrganization() {
@@ -525,7 +525,6 @@ public class Account {
 
 	public void setIncomeStatementFormatPosition(IncomeStatementFormatPosition incomeStatementFormatPosition) {
 		this.incomeStatementFormatPosition = incomeStatementFormatPosition;
-		incomeStatementFormatPosition.getAccounts().add(this);
 	}
 
 	public BalanceSheetFormatPosition getBalanceSheetFormatPosition() {
@@ -534,7 +533,6 @@ public class Account {
 
 	public void setBalanceSheetFormatPosition(BalanceSheetFormatPosition balanceSheetFormatPosition) {
 		this.balanceSheetFormatPosition = balanceSheetFormatPosition;
-		balanceSheetFormatPosition.getAccounts().add(this);
 	}
 
 	public CashFlowFormatPosition getCashFlowFormatPosition() {
@@ -543,7 +541,6 @@ public class Account {
 
 	public void setCashFlowFormatPosition(CashFlowFormatPosition cashFlowFormatPosition) {
 		this.cashFlowFormatPosition = cashFlowFormatPosition;
-		cashFlowFormatPosition.getAccounts().add(this);
 	}
 
 	public boolean isCashItem() {
