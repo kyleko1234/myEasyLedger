@@ -162,6 +162,7 @@ public class PersonService {
     	
     	//create and persist organization from signUpRequest
     	Organization organization = new Organization(signUpRequest.getOrganizationName(), signUpRequest.getCurrency(), signUpRequest.isIsEnterprise());
+    	organization.setInitialRetainedEarnings(signUpRequest.getInitialRetainedEarnings());
     	organizationRepo.save(organization);
     	
     	//create a person from signUpRequest, with enabled=false

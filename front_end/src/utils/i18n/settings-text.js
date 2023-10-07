@@ -37,9 +37,10 @@ export const settingsText = {
 
         "Settings saved.": "Settings saved.",
         "Something went wrong. Please try again later.": "Something went wrong. Please try again later.",
-        "Ledger Name": "Ledger Name",
+        "Ledger name": "Ledger name",
         "Currency": "Currency",
-        "Fiscal Year Begin Date": "Fiscal Year Begin Date",
+        "Fiscal year begin date": "Fiscal year begin date",
+        "Initial value of retained earnings" : "Initial value of retained earnings",
 
         "Add a person": "Add a person",
         "People with access to": (organizationName) => `People with access to ${organizationName}`,
@@ -121,9 +122,10 @@ export const settingsText = {
         "Ledger Settings": "帳本設定",
         "Settings saved.": "設定已儲存。",
         "Something went wrong. Please try again later.": "系統或設定有點問題，請再試一次。",
-        "Ledger Name": "帳本名稱",
+        "Ledger name": "帳本名稱",
         "Currency": "幣別",
-        "Fiscal Year Begin Date": "會計年度起始日",
+        "Fiscal year begin date": "會計年度起始日",
+        "Initial value of retained earnings" : "TRANSLATION",
 
         "Add a person": "加一個用戶",
         "People with access to": (organizationName) => `以下用戶有「${organizationName}」帳本的使用權限：`,

@@ -253,7 +253,9 @@ public class Organization {
 	}
 
 	public void setInitialRetainedEarnings(BigDecimal initialRetainedEarnings) {
-		this.initialRetainedEarnings = initialRetainedEarnings;
+		if (initialRetainedEarnings != null) {
+			this.initialRetainedEarnings = initialRetainedEarnings;
+		}
 	}
 
 

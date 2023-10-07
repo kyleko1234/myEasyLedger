@@ -25,6 +25,7 @@ function OrganizationSettings(props) {
         setLockInitialAccountValues(!lockInitialAccountValues);
     }
     const [lockJournalEntriesBefore, setLockJournalEntriesBefore] = React.useState(permissionObject.organization.lockJournalEntriesBefore);
+    const [initialRetainedEarnings, setInitialRetainedEarnings] = React.useState(permissionObject.organization.initialRetainedEarnings);
 
     const [dateOptions, setDateOptions] = React.useState([]);
     const [savedAlert, setSavedAlert] = React.useState(false);
@@ -105,7 +106,8 @@ function OrganizationSettings(props) {
             name: organizationName,
             fiscalYearBegin: "2020-" + fiscalYearBeginMonth + "-" + fiscalYearBeginDay,
             lockInitialAccountValues: lockInitialAccountValues,
-            lockJournalEntriesBefore: lockJournalEntriesBefore
+            lockJournalEntriesBefore: lockJournalEntriesBefore,
+            initialRetainedEarnings: initialRetainedEarnings
         }
         axios.put(`${API_BASE_URL}/organization/${props.organizationId}`, requestBody).then(response => {
             appContext.fetchUserInfo(appContext.personId);
@@ -126,7 +128,7 @@ function OrganizationSettings(props) {
                             className={"col-lg-3 col-form-label my-0 px-0 " + (permissionObject.permissionType.id < 3 ? "disabled " : "")}
                             htmlFor='ledger-name-input'
                         >
-                            {settingsText[appContext.locale]["Ledger Name"] + ":"}
+                            {settingsText[appContext.locale]["Ledger name"] + ":"}
                         </label>
                         <div className="col-md-9">
                             <input 
@@ -144,9 +146,26 @@ function OrganizationSettings(props) {
                         </label>
                         <div className="col-md-9 col-form-label disabled">{currencies.find(currency => currency.value === permissionObject.organization.currency).label}</div>
                     </div>
+                    <div className="mb-3 row mx-0 my-2 align-items-center">
+                        <label 
+                            className={"col-lg-3 col-form-label my-0 px-0 " + (permissionObject.permissionType.id < 3 ? "disabled " : "")}
+                            htmlFor='initial-retained-earnings'
+                        >
+                            {settingsText[appContext.locale]["Initial value of retained earnings"] + ":"}
+                        </label>
+                        <div className="col-md-9">
+                            <input 
+                                id="initial-retained-earnings"
+                                className="form-control"
+                                disabled={permissionObject.permissionType.id < 3? true : false}
+                                type="number" value={initialRetainedEarnings} 
+                                onChange={event => setInitialRetainedEarnings(event.target.value)}
+                            />
+                        </div>
+                    </div>
                     <div className="mb-3 row mx-0 align-items-center">
                         <label className={"col-lg-3 col-form-label my-0 px-0 " + (permissionObject.permissionType.id < 3 ? "disabled " : "")}>
-                            {settingsText[appContext.locale]["Fiscal Year Begin Date"] + ":"}
+                            {settingsText[appContext.locale]["Fiscal year begin date"] + ":"}
                         </label>
                         <div className="col-md-9 d-flex">
                             <div className="w-50 me-3">
