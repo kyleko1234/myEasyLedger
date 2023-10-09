@@ -976,6 +976,28 @@ public class PersonService {
 
 	}
 	
+	private void inheritFormatProperties(Account childAccount, Account parentAccount) {
+		childAccount.setIncomeStatementFormatPosition(parentAccount.getIncomeStatementFormatPosition());
+		childAccount.setCashFlowFormatPosition(parentAccount.getCashFlowFormatPosition());
+		childAccount.setBalanceSheetFormatPosition(parentAccount.getBalanceSheetFormatPosition());
+		childAccount.setCashItem(parentAccount.isCashItem());
+		childAccount.setRelevantToTaxesPaid(parentAccount.isRelevantToTaxesPaid());
+		childAccount.setRelevantToInterestPaid(parentAccount.isRelevantToInterestPaid());
+		childAccount.setRelevantToDividendsPaid(parentAccount.isRelevantToDividendsPaid());
+		childAccount.setRelevantToDepreciationAmortization(parentAccount.isRelevantToDepreciationAmortization());
+	}
+	
+	private void inheritFormatProperties(Account account, AccountSubtype accountSubtype) {
+		account.setIncomeStatementFormatPosition(accountSubtype.getIncomeStatementFormatPosition());
+		account.setCashFlowFormatPosition(accountSubtype.getCashFlowFormatPosition());
+		account.setBalanceSheetFormatPosition(accountSubtype.getBalanceSheetFormatPosition());
+		account.setCashItem(accountSubtype.isCashItem());
+		account.setRelevantToTaxesPaid(accountSubtype.isRelevantToTaxesPaid());
+		account.setRelevantToInterestPaid(accountSubtype.isRelevantToInterestPaid());
+		account.setRelevantToDividendsPaid(accountSubtype.isRelevantToDividendsPaid());
+		account.setRelevantToDepreciationAmortization(accountSubtype.isRelevantToDepreciationAmortization());
+	}
+	
 	public void assertCompletePerson(Person person) 
 			throws ConflictException {
 		if (person.getEmail() == null) {
