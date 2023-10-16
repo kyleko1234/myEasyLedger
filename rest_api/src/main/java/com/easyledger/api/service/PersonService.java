@@ -238,6 +238,7 @@ public class PersonService {
 		ArrayList<Account> defaultAccounts = new ArrayList<Account>();
 		for (AccountSubtype accountSubtype : accountSubtypes) {
 			Account account = new Account(accountSubtype.getName(), accountSubtype);
+			inheritFormatProperties(account, accountSubtype);
 			defaultAccounts.add(account);
 		}
 		for (Account account : defaultAccounts) {
@@ -802,9 +803,11 @@ public class PersonService {
 		//save accounts
 		for (Account account : topLevelAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getAccountSubtype());
 		}
 		for (Account account : childAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getParentAccount());
 		}
 		accountRepo.saveAll(topLevelAccounts);
 		accountRepo.saveAll(childAccounts);
@@ -917,10 +920,12 @@ public class PersonService {
 
 		for (Account account : topLevelAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getAccountSubtype());
 		}
 		accountRepo.saveAll(topLevelAccounts);
 		for (Account account : childAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getParentAccount());
 		}
 		accountRepo.saveAll(childAccounts);
 	}
@@ -949,6 +954,7 @@ public class PersonService {
 		};
 		for (Account account : topLevelAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getAccountSubtype());
 		}
 		accountRepo.saveAll(Arrays.asList(topLevelAccounts));
 		
@@ -971,6 +977,7 @@ public class PersonService {
 		};
 		for (Account account : childAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getParentAccount());
 		}
 		accountRepo.saveAll(Arrays.asList(childAccounts));
 
