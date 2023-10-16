@@ -125,7 +125,7 @@ export const settingsText = {
         "Ledger name": "帳本名稱",
         "Currency": "幣別",
         "Fiscal year begin date": "會計年度起始日",
-        "Initial value of retained earnings" : "TRANSLATION",
+        "Initial value of retained earnings" : "保留盈餘的初始值",
 
         "Add a person": "加一個用戶",
         "People with access to": (organizationName) => `以下用戶有「${organizationName}」帳本的使用權限：`,
