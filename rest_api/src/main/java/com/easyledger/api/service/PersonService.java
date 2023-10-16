@@ -162,6 +162,7 @@ public class PersonService {
     	
     	//create and persist organization from signUpRequest
     	Organization organization = new Organization(signUpRequest.getOrganizationName(), signUpRequest.getCurrency(), signUpRequest.isIsEnterprise());
+    	organization.setInitialRetainedEarnings(signUpRequest.getInitialRetainedEarnings());
     	organizationRepo.save(organization);
     	
     	//create a person from signUpRequest, with enabled=false
@@ -237,6 +238,7 @@ public class PersonService {
 		ArrayList<Account> defaultAccounts = new ArrayList<Account>();
 		for (AccountSubtype accountSubtype : accountSubtypes) {
 			Account account = new Account(accountSubtype.getName(), accountSubtype);
+			inheritFormatProperties(account, accountSubtype);
 			defaultAccounts.add(account);
 		}
 		for (Account account : defaultAccounts) {
@@ -481,25 +483,25 @@ public class PersonService {
 		topLevelAccounts.add(進貨);
 
 		childAccounts.add(new Account("捐贈", 營業費用, "6122"));
-		childAccounts.add(new Account("薪資支出", 營業費用, "6111"));
-		childAccounts.add(new Account("研究發展費用", 營業費用, "6130"));
+		childAccounts.add(new Account("營業費用 - 薪資支出", 營業費用, "6111"));
+		childAccounts.add(new Account("營業費用 - 研究發展費用", 營業費用, "6130"));
 		childAccounts.add(new Account("其他營業費用", 營業費用, "6134"));
 		childAccounts.add(new Account("勞務費", 營業費用, "6133"));
-		childAccounts.add(new Account("稅捐", 營業費用, "6123"));
-		childAccounts.add(new Account("訓練費", 營業費用, "6132"));
+		childAccounts.add(new Account("營業費用 - 稅捐", 營業費用, "6123"));
+		childAccounts.add(new Account("營業費用 - 訓練費", 營業費用, "6132"));
 		childAccounts.add(new Account("廣告費", 營業費用, "6118"));
-		childAccounts.add(new Account("文具用品", 營業費用, "6113"));
-		childAccounts.add(new Account("修繕費", 營業費用, "6117"));
+		childAccounts.add(new Account("營業費用 - 文具用品", 營業費用, "6113"));
+		childAccounts.add(new Account("營業費用 - 修繕費", 營業費用, "6117"));
 		childAccounts.add(new Account("呆帳損失", 營業費用, "6124"));
-		childAccounts.add(new Account("租金支出", 營業費用, "6112"));
-		childAccounts.add(new Account("伙食費", 營業費用, "6128"));
-		childAccounts.add(new Account("水電瓦斯費", 營業費用, "6119"));
+		childAccounts.add(new Account("營業費用 - 租金支出", 營業費用, "6112"));
+		childAccounts.add(new Account("營業費用 - 伙食費", 營業費用, "6128"));
+		childAccounts.add(new Account("營業費用 - 水電瓦斯費", 營業費用, "6119"));
 		childAccounts.add(new Account("外銷損失", 營業費用, "6127"));
-		childAccounts.add(new Account("郵電費", 營業費用, "6116"));
-		childAccounts.add(new Account("保險費", 營業費用, "6120"));
-		childAccounts.add(new Account("職工福利", 營業費用, "6129"));
-		childAccounts.add(new Account("運費", 營業費用, "6115"));
-		childAccounts.add(new Account("旅費", 營業費用, "6114"));
+		childAccounts.add(new Account("營業費用 - 郵電費", 營業費用, "6116"));
+		childAccounts.add(new Account("營業費用 - 保險費", 營業費用, "6120"));
+		childAccounts.add(new Account("營業費用 - 職工福利", 營業費用, "6129"));
+		childAccounts.add(new Account("營業費用 - 運費", 營業費用, "6115"));
+		childAccounts.add(new Account("營業費用 - 旅費", 營業費用, "6114"));
 		childAccounts.add(new Account("交際費", 營業費用, "6121"));
 		childAccounts.add(new Account("佣金支出", 營業費用, "6131"));
 
@@ -801,9 +803,11 @@ public class PersonService {
 		//save accounts
 		for (Account account : topLevelAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getAccountSubtype());
 		}
 		for (Account account : childAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getParentAccount());
 		}
 		accountRepo.saveAll(topLevelAccounts);
 		accountRepo.saveAll(childAccounts);
@@ -916,10 +920,12 @@ public class PersonService {
 
 		for (Account account : topLevelAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getAccountSubtype());
 		}
 		accountRepo.saveAll(topLevelAccounts);
 		for (Account account : childAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getParentAccount());
 		}
 		accountRepo.saveAll(childAccounts);
 	}
@@ -948,6 +954,7 @@ public class PersonService {
 		};
 		for (Account account : topLevelAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getAccountSubtype());
 		}
 		accountRepo.saveAll(Arrays.asList(topLevelAccounts));
 		
@@ -970,9 +977,32 @@ public class PersonService {
 		};
 		for (Account account : childAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getParentAccount());
 		}
 		accountRepo.saveAll(Arrays.asList(childAccounts));
 
+	}
+	
+	private void inheritFormatProperties(Account childAccount, Account parentAccount) {
+		childAccount.setIncomeStatementFormatPosition(parentAccount.getIncomeStatementFormatPosition());
+		childAccount.setCashFlowFormatPosition(parentAccount.getCashFlowFormatPosition());
+		childAccount.setBalanceSheetFormatPosition(parentAccount.getBalanceSheetFormatPosition());
+		childAccount.setCashItem(parentAccount.isCashItem());
+		childAccount.setRelevantToTaxesPaid(parentAccount.isRelevantToTaxesPaid());
+		childAccount.setRelevantToInterestPaid(parentAccount.isRelevantToInterestPaid());
+		childAccount.setRelevantToDividendsPaid(parentAccount.isRelevantToDividendsPaid());
+		childAccount.setRelevantToDepreciationAmortization(parentAccount.isRelevantToDepreciationAmortization());
+	}
+	
+	private void inheritFormatProperties(Account account, AccountSubtype accountSubtype) {
+		account.setIncomeStatementFormatPosition(accountSubtype.getIncomeStatementFormatPosition());
+		account.setCashFlowFormatPosition(accountSubtype.getCashFlowFormatPosition());
+		account.setBalanceSheetFormatPosition(accountSubtype.getBalanceSheetFormatPosition());
+		account.setCashItem(accountSubtype.isCashItem());
+		account.setRelevantToTaxesPaid(accountSubtype.isRelevantToTaxesPaid());
+		account.setRelevantToInterestPaid(accountSubtype.isRelevantToInterestPaid());
+		account.setRelevantToDividendsPaid(accountSubtype.isRelevantToDividendsPaid());
+		account.setRelevantToDepreciationAmortization(accountSubtype.isRelevantToDepreciationAmortization());
 	}
 	
 	public void assertCompletePerson(Person person) 

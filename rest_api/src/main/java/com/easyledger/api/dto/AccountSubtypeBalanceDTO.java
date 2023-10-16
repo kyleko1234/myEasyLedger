@@ -18,9 +18,24 @@ public class AccountSubtypeBalanceDTO {
 	private BigDecimal creditTotal;
 	private BigDecimal debitsMinusCredits;
 	
+	private Long incomeStatementFormatPositionId;
+	private String incomeStatementFormatPositionName;
+	private Long cashFlowFormatPositionId;
+	private String cashFlowFormatPositionName;
+	private Long balanceSheetFormatPositionId;
+	private String balanceSheetFormatPositionName;
+	private boolean cashItem;
+	private boolean relevantToTaxesPaid;
+	private boolean relevantToInterestPaid;
+	private boolean relevantToDividendsPaid;
+	private boolean relevantToDepreciationAmortization;
+
 	public AccountSubtypeBalanceDTO(BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId,
 			String accountTypeName, BigInteger organizationId, String organizationName, BigDecimal debitTotal,
-			BigDecimal creditTotal) {
+			BigDecimal creditTotal, BigInteger incomeStatementFormatPositionId, String incomeStatementFormatPositionName, BigInteger cashFlowFormatPositionId,
+			String cashFlowFormatPositionName, BigInteger balanceSheetFormatPositionId, String balanceSheetFormatPositionName,
+			boolean cashItem, boolean relevantToTaxesPaid, boolean relevantToInterestPaid, boolean relevantToDividendsPaid,
+			boolean relevantToDepreciationAmortization) {
 		super();
 		this.accountSubtypeId = accountSubtypeId.longValueExact();
 		this.accountSubtypeName = accountSubtypeName;
@@ -39,11 +54,27 @@ public class AccountSubtypeBalanceDTO {
 			this.creditTotal = new BigDecimal(0);
 		}
 		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
+		this.incomeStatementFormatPositionId = incomeStatementFormatPositionId.longValueExact();
+		this.incomeStatementFormatPositionName = incomeStatementFormatPositionName;
+		this.cashFlowFormatPositionId = cashFlowFormatPositionId.longValueExact();
+		this.cashFlowFormatPositionName = cashFlowFormatPositionName;
+		this.balanceSheetFormatPositionId = balanceSheetFormatPositionId.longValueExact();
+		this.balanceSheetFormatPositionName = balanceSheetFormatPositionName;
+		this.cashItem = cashItem;
+		this.relevantToTaxesPaid = relevantToTaxesPaid;
+		this.relevantToInterestPaid = relevantToInterestPaid;
+		this.relevantToDividendsPaid = relevantToDividendsPaid;
+		this.relevantToDepreciationAmortization = relevantToDepreciationAmortization;
+
 	}
 
 	public AccountSubtypeBalanceDTO(BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId,
 			String accountTypeName, BigInteger organizationId, String organizationName, BigDecimal sumOfDebitLineItems,
-			BigDecimal sumOfCreditLineItems, BigDecimal sumOfInitialDebitAmounts, BigDecimal sumOfInitialCreditAmounts) {
+			BigDecimal sumOfCreditLineItems, BigDecimal sumOfInitialDebitAmounts, BigDecimal sumOfInitialCreditAmounts,
+			BigInteger incomeStatementFormatPositionId, String incomeStatementFormatPositionName, BigInteger cashFlowFormatPositionId,
+			String cashFlowFormatPositionName, BigInteger balanceSheetFormatPositionId, String balanceSheetFormatPositionName,
+			boolean cashItem, boolean relevantToTaxesPaid, boolean relevantToInterestPaid, boolean relevantToDividendsPaid,
+			boolean relevantToDepreciationAmortization) {
 		super();
 		this.accountSubtypeId = accountSubtypeId.longValueExact();
 		this.accountSubtypeName = accountSubtypeName;
@@ -74,6 +105,17 @@ public class AccountSubtypeBalanceDTO {
 		this.debitTotal = this.sumOfDebitLineItems.add(this.sumOfInitialDebitAmounts);
 		this.creditTotal = this.sumOfCreditLineItems.add(this.sumOfInitialCreditAmounts);
 		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
+		this.incomeStatementFormatPositionId = incomeStatementFormatPositionId.longValueExact();
+		this.incomeStatementFormatPositionName = incomeStatementFormatPositionName;
+		this.cashFlowFormatPositionId = cashFlowFormatPositionId.longValueExact();
+		this.cashFlowFormatPositionName = cashFlowFormatPositionName;
+		this.balanceSheetFormatPositionId = balanceSheetFormatPositionId.longValueExact();
+		this.balanceSheetFormatPositionName = balanceSheetFormatPositionName;
+		this.cashItem = cashItem;
+		this.relevantToTaxesPaid = relevantToTaxesPaid;
+		this.relevantToInterestPaid = relevantToInterestPaid;
+		this.relevantToDividendsPaid = relevantToDividendsPaid;
+		this.relevantToDepreciationAmortization = relevantToDepreciationAmortization;
 	}
 	
 	public Long getAccountSubtypeId() {
@@ -178,6 +220,94 @@ public class AccountSubtypeBalanceDTO {
 	
 	public void setDebitsMinusCredits(BigDecimal debitsMinusCredits) {
 		this.debitsMinusCredits = debitsMinusCredits;
+	}
+
+	public Long getIncomeStatementFormatPositionId() {
+		return incomeStatementFormatPositionId;
+	}
+
+	public void setIncomeStatementFormatPositionId(Long incomeStatementFormatPositionId) {
+		this.incomeStatementFormatPositionId = incomeStatementFormatPositionId;
+	}
+
+	public String getIncomeStatementFormatPositionName() {
+		return incomeStatementFormatPositionName;
+	}
+
+	public void setIncomeStatementFormatPositionName(String incomeStatementFormatPositionName) {
+		this.incomeStatementFormatPositionName = incomeStatementFormatPositionName;
+	}
+
+	public Long getCashFlowFormatPositionId() {
+		return cashFlowFormatPositionId;
+	}
+
+	public void setCashFlowFormatPositionId(Long cashFlowFormatPositionId) {
+		this.cashFlowFormatPositionId = cashFlowFormatPositionId;
+	}
+
+	public String getCashFlowFormatPositionName() {
+		return cashFlowFormatPositionName;
+	}
+
+	public void setCashFlowFormatPositionName(String cashFlowFormatPositionName) {
+		this.cashFlowFormatPositionName = cashFlowFormatPositionName;
+	}
+
+	public Long getBalanceSheetFormatPositionId() {
+		return balanceSheetFormatPositionId;
+	}
+
+	public void setBalanceSheetFormatPositionId(Long balanceSheetFormatPositionId) {
+		this.balanceSheetFormatPositionId = balanceSheetFormatPositionId;
+	}
+
+	public String getBalanceSheetFormatPositionName() {
+		return balanceSheetFormatPositionName;
+	}
+
+	public void setBalanceSheetFormatPositionName(String balanceSheetFormatPositionName) {
+		this.balanceSheetFormatPositionName = balanceSheetFormatPositionName;
+	}
+
+	public boolean isCashItem() {
+		return cashItem;
+	}
+
+	public void setCashItem(boolean cashItem) {
+		this.cashItem = cashItem;
+	}
+
+	public boolean isRelevantToTaxesPaid() {
+		return relevantToTaxesPaid;
+	}
+
+	public void setRelevantToTaxesPaid(boolean relevantToTaxesPaid) {
+		this.relevantToTaxesPaid = relevantToTaxesPaid;
+	}
+
+	public boolean isRelevantToInterestPaid() {
+		return relevantToInterestPaid;
+	}
+
+	public void setRelevantToInterestPaid(boolean relevantToInterestPaid) {
+		this.relevantToInterestPaid = relevantToInterestPaid;
+	}
+
+	public boolean isRelevantToDividendsPaid() {
+		return relevantToDividendsPaid;
+	}
+
+	public void setRelevantToDividendsPaid(boolean relevantToDividendsPaid) {
+		this.relevantToDividendsPaid = relevantToDividendsPaid;
+	}
+
+	public boolean isRelevantToDepreciationAmortization() {
+		return relevantToDepreciationAmortization;
+	}
+
+	public void setRelevantToDepreciationAmortization(boolean relevantToDepreciationAmortization) {
+		this.relevantToDepreciationAmortization = relevantToDepreciationAmortization;
 	}
 
 	@Override

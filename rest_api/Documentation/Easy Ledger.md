@@ -75,9 +75,9 @@ Prefix all endpoints with `http://{host}/v0.6.1/`
 - [[List All AccountSubtype Balances for an Organization|GET /organization/{id}/accountSubtypeBalance/{endDate}]]
 - [[List All AccountSubtype Balances for an Organization|GET /organization/{id}/accountSubtypeBalance/{startDate}/{endDate}]]
 <br/><br/>
-- [[Generate a Balance Sheet|GET /organization/{id}/reports/balanceSheet/{endDate}]]
-- [[Generate an Income Statement|GET /organization/{id}/reports/incomeStatement/{startDate}/{endDate}]]
-- [[Generate a Cash Flow Statement | GET /organization/{id}/reports/cashFlow/{startDate}/{endDate}]]
+- [[(Deprecated) Generate a Balance Sheet|GET /organization/{id}/reports/balanceSheet/{endDate}]]
+- [[(Deprecated) Generate an Income Statement|GET /organization/{id}/reports/incomeStatement/{startDate}/{endDate}]]
+- [[(Deprecated) Generate a Cash Flow Statement| GET /organization/{id}/reports/cashFlow/{startDate}/{endDate}]]
 - [[Generate an Account Transactions Report | GET /reports/accountTransactionsReport/account/{accountId}/{startDate}/{endDate}]]
 - [[Generate an Expense Report by Vendor | GET /reports/expensesByVendorReport/organization/{organizationId}/{startDate}/{endDate}]]
 - [[Generate an Income Report by Customer|GET /reports/incomeByCustomerReport/organization/{organizationId}/{startDate}/{endDate}]]

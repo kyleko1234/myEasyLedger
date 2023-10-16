@@ -432,6 +432,9 @@ input[type=number] {
 .pseudo-tr:first-child {
     border-top: none;
 }
+.dark-mode .pseudo-tr:first-child{
+    border-top: none;
+}
 
 .pseudo-tfoot{
     border-top: silver 1px solid;
@@ -480,6 +483,13 @@ a.pseudo-tr:hover,
 
 .dark-mode .striped-row:nth-child(even) {
     background-color: #1e1e1e;
+}
+
+.report-row-detailed {
+    background-color: #ececec;
+}
+.dark-mode .report-row-detailed {
+    background-color: #282828;
 }
 
 /* LOGIN AND REGISTRATION PAGES */
@@ -618,7 +628,7 @@ a.pseudo-tr:hover,
     font-size: var(--compact-font-size);
 }
 
-.indent {
+.indent, .indent-1 {
     padding-left: 3em;
 }
 .indent-2 {

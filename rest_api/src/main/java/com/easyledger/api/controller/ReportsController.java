@@ -1,15 +1,27 @@
 package com.easyledger.api.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyledger.api.dto.BalanceSheetDTO;
+import com.easyledger.api.dto.CashFlowStatementDTO;
+import com.easyledger.api.dto.DateRangeDTO;
+import com.easyledger.api.dto.ExpensesByVendorReportDTO;
+import com.easyledger.api.dto.IncomeByCustomerReportDTO;
+import com.easyledger.api.dto.IncomeExpenseReportDTO;
+import com.easyledger.api.dto.IncomeStatementDTO;
+import com.easyledger.api.dto.NetWorthReportDTO;
+import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
@@ -38,7 +50,7 @@ public class ReportsController {
 		this.accountRepo = accountRepo;
 	}
 
-	
+	@Deprecated
 	@GetMapping("/organization/{id}/reports/balanceSheet/{endDate}") 
 	public BalanceSheetViewModel getBalanceSheetViewModelForOrganizationUpToDate(@PathVariable(value = "id") Long organizationId, 
     		@PathVariable(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, Authentication authentication) 
@@ -47,6 +59,24 @@ public class ReportsController {
 		return reportsService.getBalanceSheetViewModelForOrganizationUpToDate(organizationId, endDate);
 	}
 	
+	//We use post just to make life a little easier when dealing with arrays of dates in the request body
+	@PostMapping("/organization/{id}/reports/balanceSheet") 
+	public BalanceSheetDTO getBalanceSheetDtoForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateBalanceSheet(organizationId, dates);
+	}
+	
+	@PostMapping("/organization/{id}/reports/incomeStatement") 
+	public IncomeStatementDTO getIncomeStatementDtoForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateIncomeStatement(organizationId, dates);
+	}
+	
+	@Deprecated
 	@GetMapping("/organization/{id}/reports/incomeStatement/{startDate}/{endDate}") 
 	public IncomeStatementViewModel getIncomeStatementViewModelForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
@@ -56,6 +86,7 @@ public class ReportsController {
 		return reportsService.getIncomeStatementViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
 
+	@Deprecated
 	@GetMapping("/organization/{id}/reports/cashFlow/{startDate}/{endDate}")
 	public CashFlowStatementViewModel getCashFlowStatementViewModelForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
@@ -65,6 +96,30 @@ public class ReportsController {
 		return reportsService.getCashFlowStatementViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
 	
+	@PostMapping("/organization/{id}/reports/cashFlowStatement") 
+	public CashFlowStatementDTO getCashFlowStatementDtoForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateCashFlowStatement(organizationId, dates);
+	}
+	
+	@PostMapping("/organization/{id}/reports/netWorthReport") 
+	public NetWorthReportDTO getNetWorthReportForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateNetWorthReport(organizationId, dates);
+	}
+	
+	@PostMapping("/organization/{id}/reports/incomeExpenseReport") 
+	public IncomeExpenseReportDTO getIncomeExpenseReportForOrganizationBetweenDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateIncomeExpenseReport(organizationId, dates);
+	}
+
 	@GetMapping("/reports/accountTransactionsReport/account/{accountId}/{startDate}/{endDate}")
 	public AccountTransactionsReportViewModel getAccountTransactionsReportForAccountBetweenDates(@PathVariable(value = "accountId") Long accountId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
@@ -76,6 +131,23 @@ public class ReportsController {
 		return reportsService.getAccountTransactionsReportViewModelForAccountBetweenDates(accountId, startDate, endDate);
 	}
 	
+	@PostMapping("/organization/{id}/reports/expensesByVendorReport") 
+	public ExpensesByVendorReportDTO getExpensesByVendorForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateExpensesByVendorReport(organizationId, dates);
+	}
+	
+	@PostMapping("/organization/{id}/reports/incomeByCustomerReport") 
+	public IncomeByCustomerReportDTO getIncomeByCustomerForOrganizationWithDates(@PathVariable(value = "id") Long organizationId, 
+    		@RequestBody List<DateRangeDTO> dates, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException, ConflictException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		return reportsService.generateIncomeByCustomerReport(organizationId, dates);
+	}
+
+	@Deprecated
 	@GetMapping("/reports/expensesByVendorReport/organization/{organizationId}/{startDate}/{endDate}")
 	public ExpensesByVendorReportViewModel getExpensesByVendorReportForOrganizationBetweenDates(@PathVariable(value = "organizationId") Long organizationId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
@@ -84,6 +156,7 @@ public class ReportsController {
 		return reportsService.getExpensesByVendorReportViewModelForOrganizationBetweenDates(organizationId, startDate, endDate);
 	}
 	
+	@Deprecated
 	@GetMapping("/reports/incomeByCustomerReport/organization/{organizationId}/{startDate}/{endDate}")
 	public IncomeByCustomerReportViewModel getIncomeByCustomerReportForOrganizationBetweenDates(@PathVariable(value = "organizationId") Long organizationId,
 			@PathVariable(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 

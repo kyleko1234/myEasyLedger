@@ -25,13 +25,14 @@ export const balanceSheetRenderText = {
 
         "Equity": "Equity",
         "Retained Earnings": "Retained Earnings",
+        "Retained earnings": "Retained earnings",
         "Beginning balances": "Beginning balances",
         "Net income for current fiscal period": "Net income for current fiscal period",  
         "Dividends for current fiscal period": "Less dividends and equivalents for current fiscal period",
         "Ending balances of retained earnings": "Ending balances of retained earnings",
         "Total equity": "Total equity",
 
-        "This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly.": "This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly.",
+        "This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly.": "This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly, and that initial values of retained earnings are set up correctly.",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "Cash and cash equivalents", 
@@ -70,6 +71,10 @@ export const balanceSheetRenderText = {
         "Tax expense": "Tax expense",
         "Non-recurring and extraordinary items": "Non-recurring and extraordinary items",
         "Interest income": "Interest income",
+        "Interest payable": "Interest payable",
+        "Taxes payable": "Taxes payable",
+        "Expense from investing activities": "Expense from investing activities",
+        "Expense from financing activities": "Expense from financing activities",
 
         "Detailed View": "Detailed View"
     },
@@ -99,13 +104,14 @@ export const balanceSheetRenderText = {
 
         "Equity": "權益",
         "Retained Earnings": "保留盈餘",
+        "Retained earnings": "保留盈餘",
         "Beginning balances": "初始餘額",
         "Net income for current fiscal period": "本期淨收入",  
         "Dividends for current fiscal period": "本期股利",
         "Ending balances of retained earnings": "期末保留營餘",
         "Total equity": "權益總計",
 
-        "This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly.": "本資產負債表不符合會計衡等式，請檢查並修正各會計科目的初始值没有錯誤（借貸平衡）且無遺漏。",
+        "This balance sheet does not satisfy the accounting equation. Please check that the initial debit and credit values of all accounts are set up correctly.": "本資產負債表不符合會計衡等式，請檢查各會計科目的初始值和保留盈餘的初始值没有錯誤（必需借貸平衡）且無遺漏。",
 
         //Account Subtype Names.
         "Cash and cash equivalents": "現金及約當現金", 
@@ -133,7 +139,7 @@ export const balanceSheetRenderText = {
         "Other equity items": "其他業主權益", 
         "Revenue": "收入", 
         "Income from investing activities": "投資活動之收入",
-        "Income from financing activities": "金融活動之收入",
+        "Income from financing activities": "籌資活動之收入",
         "Other income": "其他收入", 
         "Cost of sales": "營業成本", 
         "Research and development": "研究發展費用", 
@@ -144,6 +150,10 @@ export const balanceSheetRenderText = {
         "Tax expense": "賦稅費用",
         "Non-recurring and extraordinary items": "非經常性項目",
         "Interest income": "利息收入",
+        "Interest payable": "應付利息",
+        "Taxes payable": "應付稅款",
+        "Expense from investing activities": "投資活動之費用",
+        "Expense from financing activities": "籌資活動之費用",
 
         "Detailed View": "細項檢視"
     }

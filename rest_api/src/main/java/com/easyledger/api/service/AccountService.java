@@ -14,9 +14,15 @@ import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
 import com.easyledger.api.model.AccountSubtype;
+import com.easyledger.api.model.BalanceSheetFormatPosition;
+import com.easyledger.api.model.CashFlowFormatPosition;
+import com.easyledger.api.model.IncomeStatementFormatPosition;
 import com.easyledger.api.model.Organization;
 import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.AccountSubtypeRepository;
+import com.easyledger.api.repository.BalanceSheetFormatPositionRepository;
+import com.easyledger.api.repository.CashFlowFormatPositionRepository;
+import com.easyledger.api.repository.IncomeStatementFormatPositionRepository;
 import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.security.AuthorizationService;
@@ -39,16 +45,34 @@ public class AccountService {
 	@Autowired
 	private LineItemRepository lineItemRepo;
 	
-	public AccountService(AccountRepository accountRepo, OrganizationRepository organizationRepo, LineItemRepository lineItemRepo,
-				AccountSubtypeRepository accountSubtypeRepo, AuthorizationService authorizationService) {
+	@Autowired
+	private IncomeStatementFormatPositionRepository incomeStatementFormatPositionRepo;
+	
+	@Autowired
+	private BalanceSheetFormatPositionRepository balanceSheetFormatPositionRepo;
+	
+	@Autowired
+	private CashFlowFormatPositionRepository cashFlowFormatPositionRepo;
+
+	
+
+	
+	public AccountService(OrganizationRepository organizationRepo, AccountRepository accountRepo,
+			AccountSubtypeRepository accountSubtypeRepo, AuthorizationService authorizationService,
+			LineItemRepository lineItemRepo, IncomeStatementFormatPositionRepository incomeStatementFormatPositionRepo,
+			BalanceSheetFormatPositionRepository balanceSheetFormatPositionRepo,
+			CashFlowFormatPositionRepository cashFlowFormatPositionRepo) {
 		super();
-		this.accountRepo = accountRepo;
 		this.organizationRepo = organizationRepo;
+		this.accountRepo = accountRepo;
 		this.accountSubtypeRepo = accountSubtypeRepo;
 		this.authorizationService = authorizationService;
 		this.lineItemRepo = lineItemRepo;
+		this.incomeStatementFormatPositionRepo = incomeStatementFormatPositionRepo;
+		this.balanceSheetFormatPositionRepo = balanceSheetFormatPositionRepo;
+		this.cashFlowFormatPositionRepo = cashFlowFormatPositionRepo;
 	}
-	
+
 	//sets debitTotal and creditTotal to initialDebitAmount and initialCreditAmount
 	public Account createNewAccountFromDTO(AccountDTO dto, Authentication authentication) 
 			throws ResourceNotFoundException, ConflictException, UnauthorizedException {
@@ -94,6 +118,78 @@ public class AccountService {
 		    		.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + dto.getAccountSubtypeId()));
 			product.setAccountSubtype(accountSubtype);
 		}
+		
+		
+		if (dto.getIncomeStatementFormatPositionId() != null) {
+			IncomeStatementFormatPosition position = incomeStatementFormatPositionRepo.findById(dto.getIncomeStatementFormatPositionId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Income statement format position not found for this id :: " + dto.getIncomeStatementFormatPositionId()));
+			product.setIncomeStatementFormatPosition(position);
+		} else if (product.getParentAccount() != null) {
+			product.setIncomeStatementFormatPosition(product.getParentAccount().getIncomeStatementFormatPosition());
+		} else if (product.getAccountSubtype() != null) {
+			product.setIncomeStatementFormatPosition(product.getAccountSubtype().getIncomeStatementFormatPosition());
+		}
+		
+		if (dto.getCashFlowFormatPositionId() != null) {
+			CashFlowFormatPosition position = cashFlowFormatPositionRepo.findById(dto.getCashFlowFormatPositionId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Cash flow format position not found for this id :: " + dto.getCashFlowFormatPositionId()));
+			product.setCashFlowFormatPosition(position);
+		} else if (product.getParentAccount() != null) {
+			product.setCashFlowFormatPosition(product.getParentAccount().getCashFlowFormatPosition());
+		} else if (product.getAccountSubtype() != null) {
+			product.setCashFlowFormatPosition(product.getAccountSubtype().getCashFlowFormatPosition());
+		}
+
+		if (dto.getBalanceSheetFormatPositionId() != null) {
+			BalanceSheetFormatPosition position = balanceSheetFormatPositionRepo.findById(dto.getBalanceSheetFormatPositionId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Balance sheet format position not found for this id :: " + dto.getBalanceSheetFormatPositionId()));
+			product.setBalanceSheetFormatPosition(position);
+		} else if (product.getParentAccount() != null) {
+			product.setBalanceSheetFormatPosition(product.getParentAccount().getBalanceSheetFormatPosition());
+		} else if (product.getAccountSubtype() != null) {
+			product.setBalanceSheetFormatPosition(product.getAccountSubtype().getBalanceSheetFormatPosition());
+		}
+		
+		if (dto.isCashItem() != null) {
+			product.setCashItem(dto.isCashItem());
+		} else if (product.getParentAccount() != null) {
+			product.setCashItem(product.getParentAccount().isCashItem());
+		} else if (product.getAccountSubtype() != null) {
+			product.setCashItem(product.getAccountSubtype().isCashItem());
+		}
+		
+		if (dto.isRelevantToTaxesPaid() != null) {
+			product.setRelevantToTaxesPaid(dto.isRelevantToTaxesPaid());;
+		} else if (product.getParentAccount() != null) {
+			product.setRelevantToTaxesPaid(product.getParentAccount().isRelevantToTaxesPaid());
+		} else if (product.getAccountSubtype() != null) {
+			product.setRelevantToTaxesPaid(product.getAccountSubtype().isRelevantToTaxesPaid());
+		}
+		
+		if (dto.isRelevantToInterestPaid() != null) {
+			product.setRelevantToInterestPaid(dto.isRelevantToInterestPaid());
+		} else if (product.getParentAccount() != null) {
+			product.setRelevantToInterestPaid(product.getParentAccount().isRelevantToInterestPaid());
+		} else if (product.getAccountSubtype() != null) {
+			product.setRelevantToInterestPaid(product.getAccountSubtype().isRelevantToInterestPaid());
+		}
+		
+		if (dto.isRelevantToDividendsPaid() != null) {
+			product.setRelevantToDividendsPaid(dto.isRelevantToDividendsPaid());
+		} else if (product.getParentAccount() != null) {
+			product.setRelevantToDividendsPaid(product.getParentAccount().isRelevantToDividendsPaid());
+		} else if (product.getAccountSubtype() != null) {
+			product.setRelevantToDividendsPaid(product.getAccountSubtype().isRelevantToDividendsPaid());
+		}
+		
+		if (dto.isRelevantToDepreciationAmortization() != null) {
+			product.setRelevantToDepreciationAmortization(dto.isRelevantToDepreciationAmortization());
+		} else if (product.getParentAccount() != null) {
+			product.setRelevantToDepreciationAmortization(product.getParentAccount().isRelevantToDepreciationAmortization());
+		} else if (product.getAccountSubtype() != null) {
+			product.setRelevantToDepreciationAmortization(product.getAccountSubtype().isRelevantToDepreciationAmortization());
+		}
+		
 		
 		Organization organization = organizationRepo.findById(dto.getOrganizationId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId()));
@@ -158,6 +254,63 @@ public class AccountService {
 		    		.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + dto.getAccountSubtypeId()));
 			updatedAccount.setAccountSubtype(accountSubtype);
 		}
+		
+		if (dto.getIncomeStatementFormatPositionId() != null) {
+			IncomeStatementFormatPosition position = incomeStatementFormatPositionRepo.findById(dto.getIncomeStatementFormatPositionId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Income statement format position not found for this id :: " + dto.getIncomeStatementFormatPositionId()));
+			updatedAccount.setIncomeStatementFormatPosition(position);
+		} else {
+			updatedAccount.setIncomeStatementFormatPosition(oldAccount.getIncomeStatementFormatPosition());
+		}
+		
+		if (dto.getCashFlowFormatPositionId() != null) {
+			CashFlowFormatPosition position = cashFlowFormatPositionRepo.findById(dto.getCashFlowFormatPositionId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Cash flow format position not found for this id :: " + dto.getCashFlowFormatPositionId()));
+			updatedAccount.setCashFlowFormatPosition(position);
+		} else {
+			updatedAccount.setCashFlowFormatPosition(oldAccount.getCashFlowFormatPosition());
+		}
+ 
+		if (dto.getBalanceSheetFormatPositionId() != null) {
+			BalanceSheetFormatPosition position = balanceSheetFormatPositionRepo.findById(dto.getBalanceSheetFormatPositionId())
+		    		.orElseThrow(() -> new ResourceNotFoundException("Balance sheet format position not found for this id :: " + dto.getBalanceSheetFormatPositionId()));
+			updatedAccount.setBalanceSheetFormatPosition(position);
+		} else {
+			updatedAccount.setBalanceSheetFormatPosition(oldAccount.getBalanceSheetFormatPosition());
+		}
+		
+		if (dto.isCashItem() != null) {
+			updatedAccount.setCashItem(dto.isCashItem());
+		} else {
+			updatedAccount.setCashItem(oldAccount.isCashItem());
+		}
+		
+		if (dto.isRelevantToTaxesPaid() != null) {
+			updatedAccount.setRelevantToTaxesPaid(dto.isRelevantToTaxesPaid());;
+		} else {
+			updatedAccount.setRelevantToTaxesPaid(oldAccount.isRelevantToTaxesPaid());;
+		}
+		
+		if (dto.isRelevantToInterestPaid() != null) {
+			updatedAccount.setRelevantToInterestPaid(dto.isRelevantToInterestPaid());
+		} else {
+			updatedAccount.setRelevantToInterestPaid(oldAccount.isRelevantToInterestPaid());
+		}
+		
+		
+		if (dto.isRelevantToDividendsPaid() != null) {
+			updatedAccount.setRelevantToDividendsPaid(dto.isRelevantToDividendsPaid());
+		} else {
+			updatedAccount.setRelevantToDividendsPaid(oldAccount.isRelevantToDividendsPaid());
+		}
+		
+		
+		if (dto.isRelevantToDepreciationAmortization() != null) {
+			updatedAccount.setRelevantToDepreciationAmortization(dto.isRelevantToDepreciationAmortization());
+		} else {
+			updatedAccount.setRelevantToDepreciationAmortization(oldAccount.isRelevantToDepreciationAmortization());
+		}
+		
 		Organization organization = organizationRepo.findById(dto.getOrganizationId())
 	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + dto.getOrganizationId()));
 		updatedAccount.setOrganization(organization);

@@ -36,16 +36,19 @@ export const incomeStatementRenderText = {
 
         "Income and Expense Report": "Income and Expense Report",
         "Income": "Income",
-        "Total Income": "Total Income",
+        "Total Income": "Total income",
         "Expenses": "Expenses",
         "Total expenses": "Total expenses",
-        "Total Income less Expenses": "Total Income less Expenses",
+        "Total Income less Expenses": "Total income less expenses",
         "Detailed View": "Detailed View",
 
         "Other expense": "Other expense",
         "Expense from investing activities" : "Expense from investing activities",
         "Expense from financing activities": "Expense from financing activities",
         "Total other expense": "Total other expense",
+        "Non-operating income and expenses": "Non-operating income and expenses",
+        "Total non-operating income and expenses, net": "Total non-operating income and expenses, net",
+
     },
     "zh-TW": {
         "Options": "設定選項",
@@ -74,7 +77,7 @@ export const incomeStatementRenderText = {
         "Net income": "稅後淨利",
 
         "Net income/expense from investing activities": "投資活動之淨收入／支出",
-        "Net income/expense from financing activities": "金融活動之淨收入／支出",
+        "Net income/expense from financing activities": "籌資活動之淨收入／支出",
         "Total other income/expense, net": "業外 收入／支出 合計",
         "Earnings before interest and tax": "息稅前淨利",
         "Interest income": "利息收入",
@@ -87,7 +90,14 @@ export const incomeStatementRenderText = {
         "Expenses": "費用",
         "Total expenses": "合計費用",
         "Total Income less Expenses": "總收益 減 總費用",
-        "Detailed View": "細項檢視"
+        "Detailed View": "細項檢視",
+
+        "Other expense": "其他費用",
+        "Expense from investing activities" : "投資活動之費用",
+        "Expense from financing activities": "籌資活動之費用",
+        "Total other expense": "合計費用",
+        "Non-operating income and expenses": "營業外收入和費用",
+        "Total non-operating income and expenses, net": "合計營業外收入和費用淨額",
 
     }
 }

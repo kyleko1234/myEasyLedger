@@ -5,8 +5,13 @@ import { PageSettings } from '../../../config/page-settings';
 import { PIE_CHART_BACKGROUND_COLORS, PIE_CHART_BORDER_COLORS, PIE_CHART_HOVER_BACKGROUND_COLORS } from '../../../utils/constants';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { formatCurrency, getPercentage, localizeDate } from '../../../utils/util-fns';
-
-function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, loading}) {
+/**
+ * dateRanges should have the format of a DateRangeDTO object. Optional name field, required startDate and endDate fields.
+ * accountData should be an array of objects. accountData[i] should correspond with dateRange[i].
+ * Objects within accountData should have the format {accountNames: Array<String>, amounts: Array<Number, totalExpenses: Number}.
+ * accountData.accountNames[i] should correspond with accountData.amounts[i].
+ */
+function ExpensesByAccountPieCharts({dateRanges, accountData, loading}) {
     const appContext = React.useContext(PageSettings);
 
     const [pieChartObjects, setPieChartObjects] = React.useState([]);
@@ -22,13 +27,13 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
     }, [appContext.colorScheme]) //detects color scheme and changes the color of the chart text accordingly
 
     React.useEffect(() => {
-        let newDataObjectArray = [];
-        incomeStatementObjects.forEach(incomeStatement => {
-            let pieChartObject = {
+        let pieCharts = [];
+        accountData.forEach((accountDataObject) => {
+            let pieChart = {
                 data: {
-                    labels: [],
+                    labels: accountDataObject.accountNames,
                     datasets: [{
-                        data: [],
+                        data: accountDataObject.amounts,
                         borderColor: PIE_CHART_BORDER_COLORS,
                         borderWidth: 2,
                         backgroundColor: PIE_CHART_BACKGROUND_COLORS,
@@ -49,50 +54,49 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
                         tooltip: {
                             callbacks: {
                                 label: (toolTipItem) => {
-                                    return ` ${toolTipItem.label}: ${formatCurrency(appContext.locale, appContext.currency, toolTipItem.raw)} (${getPercentage(toolTipItem.raw, incomeStatement.totalExpenses)}%)`
+                                    return ` ${toolTipItem.label}: ${formatCurrency(appContext.locale, appContext.currency, toolTipItem.raw)} (${getPercentage(toolTipItem.raw, accountDataObject.totalExpenses)}%)`
                                 },
-                            }
-                        }
+                            },
+                        },
                     },
-                    
+                    layout: {
+                        padding: {
+                            x: 80,
+                        }
+                    }    
                 }
             }
-            let expenseParentLevelAccounts = incomeStatement.accountBalances.filter(account => account.accountTypeId === 5);
-            expenseParentLevelAccounts.forEach(account => {
-                pieChartObject.data.labels.push(account.accountName);
-                pieChartObject.data.datasets[0].data.push(account.debitsMinusCredits);
-            })
-            newDataObjectArray.push(pieChartObject);
+            pieCharts.push(pieChart);
         })
-        setPieChartObjects(newDataObjectArray);
-    }, [incomeStatementObjects, fontColor]);
+        setPieChartObjects(pieCharts);
+    }, [accountData, fontColor]);
 
     return(
-        <div className="d-flex justify-content-center">
+        <div className="d-none d-lg-flex justify-content-center">
             {loading
                 ? <LoadingSpinner big />
-                : pieChartObjects.map((pieChartObject, i) => {
+                : pieChartObjects.map((pieChart, i) => {
                     return(
                         <div key={i} className="mx-4 d-flex flex-column align-items-center">
                             <div style={{height: "260px"}} >
                                 <Doughnut
                                     key={i}
-                                    data={pieChartObject.data}
-                                    options={pieChartObject.options}
+                                    data={pieChart.data}
+                                    options={pieChart.options}
                                 />
                             </div>
                             <div className="my-3">
                                 <div className="font-weight-semibold text-center" key={i}>
-                                    {columnLabels[i].label === "Custom"
+                                    {dateRanges[i].name === "Custom" || !dateRanges[i].name
                                         ?   <>
                                                 <div>
-                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(columnLabels[i].startDate)}
+                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(dateRanges[i].startDate)}
                                                 </div>
                                                 <div>
-                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(columnLabels[i].endDate)}
+                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(dateRanges[i].endDate)}
                                                 </div>
                                             </>
-                                        : columnLabels[i].label}
+                                        : dateRanges[i].name}
                                 </div>
                             </div>
                         </div>
@@ -103,4 +107,4 @@ function PersonalExpenseReportPieChart({columnLabels, incomeStatementObjects, lo
     )
 }
 
-export default PersonalExpenseReportPieChart;
+export default ExpensesByAccountPieCharts;

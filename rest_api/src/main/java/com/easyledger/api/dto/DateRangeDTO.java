@@ -15,6 +15,16 @@ public class DateRangeDTO {
 		this.prevPeriodEndDate = startDate.minusDays(1);
 	}
 	
+	public DateRangeDTO(LocalDate startDate, LocalDate endDate) {
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.prevPeriodEndDate = startDate.minusDays(1);
+	}
+	
+	public DateRangeDTO(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+	
 	public DateRangeDTO() {
 	}
 
