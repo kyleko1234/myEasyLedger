@@ -102,3 +102,5 @@ public interface OrganizationRepository extends JpaRepository<Organization, Long
 			nativeQuery = true)
 	public BigDecimal getTotalIncomeForOrganizationBetweenDates(Long organizationId, LocalDate startDate, LocalDate endDate);
 }
+
+

@@ -25,6 +25,18 @@ public class AccountDTO {
 	private BigDecimal debitsMinusCredits;
 	private boolean hasChildren;
 	
+	private Long incomeStatementFormatPositionId;
+	private String incomeStatementFormatPositionName;
+	private Long cashFlowFormatPositionId;
+	private String cashFlowFormatPositionName;
+	private Long balanceSheetFormatPositionId;
+	private String balanceSheetFormatPositionName;
+	private Boolean cashItem;
+	private Boolean relevantToTaxesPaid;
+	private Boolean relevantToInterestPaid;
+	private Boolean relevantToDividendsPaid;
+	private Boolean relevantToDepreciationAmortization;
+	
 	public AccountDTO(Account account) {
 		this.accountId = account.getId();
 		this.accountCode = account.getAccountCode();
@@ -50,12 +62,26 @@ public class AccountDTO {
 		this.initialCreditAmount = account.getInitialCreditAmount();
 		this.debitsMinusCredits = this.getDebitTotal().subtract(this.getCreditTotal());
 		this.hasChildren = account.isHasChildren();
+		this.incomeStatementFormatPositionId = account.getIncomeStatementFormatPosition().getId();
+		this.incomeStatementFormatPositionName = account.getIncomeStatementFormatPosition().getName();
+		this.cashFlowFormatPositionId = account.getCashFlowFormatPosition().getId();
+		this.cashFlowFormatPositionName = account.getCashFlowFormatPosition().getName();
+		this.balanceSheetFormatPositionId = account.getBalanceSheetFormatPosition().getId();
+		this.balanceSheetFormatPositionName = account.getBalanceSheetFormatPosition().getName();
+		this.cashItem = account.isCashItem();
+		this.relevantToTaxesPaid = account.isRelevantToTaxesPaid();
+		this.relevantToInterestPaid = account.isRelevantToInterestPaid();
+		this.relevantToDividendsPaid = account.isRelevantToDividendsPaid();
+		this.relevantToDepreciationAmortization = account.isRelevantToDepreciationAmortization();
 	}
 	
 	public AccountDTO(BigInteger accountId, String accountCode, String accountName, BigInteger parentAccountId, String parentAccountName,
 			BigInteger accountSubtypeId, String accountSubtypeName, BigInteger accountTypeId, String accountTypeName,
 			BigInteger organizationId, String organizationName, BigDecimal debitTotal, BigDecimal creditTotal, 
-			BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean hasChildren) {
+			BigDecimal initialDebitAmount, BigDecimal initialCreditAmount, boolean hasChildren, BigInteger incomeStatementFormatPositionId,
+			String incomeStatementFormatPositionName, BigInteger cashFlowFormatPositionId, String cashFlowFormatPositionName,
+			BigInteger balanceSheetFormatPositionId, String balanceSheetFormatPositionName, boolean cashItem, boolean relevantToTaxesPaid,
+			boolean relevantToInterestPaid, boolean relevantToDividendsPaid, boolean relevantToDepreciationAmortization) {
 		this.accountId = accountId.longValueExact();
 		this.accountCode = accountCode;
 		this.accountName = accountName;
@@ -85,6 +111,17 @@ public class AccountDTO {
 		this.initialCreditAmount = initialCreditAmount;
 		this.debitsMinusCredits = this.debitTotal.subtract(this.creditTotal);
 		this.hasChildren = hasChildren;
+		this.incomeStatementFormatPositionId = incomeStatementFormatPositionId.longValueExact();
+		this.incomeStatementFormatPositionName = incomeStatementFormatPositionName;
+		this.cashFlowFormatPositionId = cashFlowFormatPositionId.longValueExact();
+		this.cashFlowFormatPositionName = cashFlowFormatPositionName;
+		this.balanceSheetFormatPositionId = balanceSheetFormatPositionId.longValueExact();
+		this.balanceSheetFormatPositionName = balanceSheetFormatPositionName;
+		this.cashItem = cashItem;
+		this.relevantToTaxesPaid = relevantToTaxesPaid;
+		this.relevantToInterestPaid = relevantToInterestPaid;
+		this.relevantToDividendsPaid = relevantToDividendsPaid;
+		this.relevantToDepreciationAmortization = relevantToDepreciationAmortization;
 	}
 
 	public AccountDTO() {
@@ -224,6 +261,94 @@ public class AccountDTO {
 
 	public void setHasChildren(boolean hasChildren) {
 		this.hasChildren = hasChildren;
+	}
+
+	public Long getIncomeStatementFormatPositionId() {
+		return incomeStatementFormatPositionId;
+	}
+
+	public void setIncomeStatementFormatPositionId(Long incomeStatementFormatPositionId) {
+		this.incomeStatementFormatPositionId = incomeStatementFormatPositionId;
+	}
+
+	public String getIncomeStatementFormatPositionName() {
+		return incomeStatementFormatPositionName;
+	}
+
+	public void setIncomeStatementFormatPositionName(String incomeStatementFormatPositionName) {
+		this.incomeStatementFormatPositionName = incomeStatementFormatPositionName;
+	}
+
+	public Long getCashFlowFormatPositionId() {
+		return cashFlowFormatPositionId;
+	}
+
+	public void setCashFlowFormatPositionId(Long cashFlowFormatPositionId) {
+		this.cashFlowFormatPositionId = cashFlowFormatPositionId;
+	}
+
+	public String getCashFlowFormatPositionName() {
+		return cashFlowFormatPositionName;
+	}
+
+	public void setCashFlowFormatPositionName(String cashFlowFormatPositionName) {
+		this.cashFlowFormatPositionName = cashFlowFormatPositionName;
+	}
+
+	public Long getBalanceSheetFormatPositionId() {
+		return balanceSheetFormatPositionId;
+	}
+
+	public void setBalanceSheetFormatPositionId(Long balanceSheetFormatPositionId) {
+		this.balanceSheetFormatPositionId = balanceSheetFormatPositionId;
+	}
+
+	public String getBalanceSheetFormatPositionName() {
+		return balanceSheetFormatPositionName;
+	}
+
+	public void setBalanceSheetFormatPositionName(String balanceSheetFormatPositionName) {
+		this.balanceSheetFormatPositionName = balanceSheetFormatPositionName;
+	}
+
+	public Boolean isCashItem() {
+		return cashItem;
+	}
+
+	public void setCashItem(boolean cashItem) {
+		this.cashItem = cashItem;
+	}
+
+	public Boolean isRelevantToTaxesPaid() {
+		return relevantToTaxesPaid;
+	}
+
+	public void setRelevantToTaxesPaid(boolean relevantToTaxesPaid) {
+		this.relevantToTaxesPaid = relevantToTaxesPaid;
+	}
+
+	public Boolean isRelevantToInterestPaid() {
+		return relevantToInterestPaid;
+	}
+
+	public void setRelevantToInterestPaid(boolean relevantToInterestPaid) {
+		this.relevantToInterestPaid = relevantToInterestPaid;
+	}
+
+	public Boolean isRelevantToDividendsPaid() {
+		return relevantToDividendsPaid;
+	}
+
+	public void setRelevantToDividendsPaid(boolean relevantToDividendsPaid) {
+		this.relevantToDividendsPaid = relevantToDividendsPaid;
+	}
+
+	public Boolean isRelevantToDepreciationAmortization() {
+		return relevantToDepreciationAmortization;
+	}
+
+	public void setRelevantToDepreciationAmortization(boolean relevantToDepreciationAmortization) {
+		this.relevantToDepreciationAmortization = relevantToDepreciationAmortization;
 	}
 
 	@Override

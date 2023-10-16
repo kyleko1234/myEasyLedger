@@ -6,10 +6,10 @@ export const netWorthReportText = {
 
         "As of:": "As of:",
         "Assets": "Assets",
-        "Total Assets": "Total Assets",
+        "Total Assets": "Total assets",
         "Liabilities": "Liabilities",
-        "Total Liabilities": "Total Liabilities",
-        "Total Net Worth": "Total Net Worth",
+        "Total Liabilities": "Total liabilities",
+        "Total Net Worth": "Total net worth",
 
     },
     "zh-TW": {

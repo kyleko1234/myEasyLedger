@@ -162,6 +162,7 @@ public class PersonService {
     	
     	//create and persist organization from signUpRequest
     	Organization organization = new Organization(signUpRequest.getOrganizationName(), signUpRequest.getCurrency(), signUpRequest.isIsEnterprise());
+    	organization.setInitialRetainedEarnings(signUpRequest.getInitialRetainedEarnings());
     	organizationRepo.save(organization);
     	
     	//create a person from signUpRequest, with enabled=false
@@ -237,6 +238,7 @@ public class PersonService {
 		ArrayList<Account> defaultAccounts = new ArrayList<Account>();
 		for (AccountSubtype accountSubtype : accountSubtypes) {
 			Account account = new Account(accountSubtype.getName(), accountSubtype);
+			inheritFormatProperties(account, accountSubtype);
 			defaultAccounts.add(account);
 		}
 		for (Account account : defaultAccounts) {
@@ -801,9 +803,11 @@ public class PersonService {
 		//save accounts
 		for (Account account : topLevelAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getAccountSubtype());
 		}
 		for (Account account : childAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getParentAccount());
 		}
 		accountRepo.saveAll(topLevelAccounts);
 		accountRepo.saveAll(childAccounts);
@@ -916,10 +920,12 @@ public class PersonService {
 
 		for (Account account : topLevelAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getAccountSubtype());
 		}
 		accountRepo.saveAll(topLevelAccounts);
 		for (Account account : childAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getParentAccount());
 		}
 		accountRepo.saveAll(childAccounts);
 	}
@@ -948,6 +954,7 @@ public class PersonService {
 		};
 		for (Account account : topLevelAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getAccountSubtype());
 		}
 		accountRepo.saveAll(Arrays.asList(topLevelAccounts));
 		
@@ -970,9 +977,32 @@ public class PersonService {
 		};
 		for (Account account : childAccounts) {
 			account.setOrganization(organization);
+			inheritFormatProperties(account, account.getParentAccount());
 		}
 		accountRepo.saveAll(Arrays.asList(childAccounts));
 
+	}
+	
+	private void inheritFormatProperties(Account childAccount, Account parentAccount) {
+		childAccount.setIncomeStatementFormatPosition(parentAccount.getIncomeStatementFormatPosition());
+		childAccount.setCashFlowFormatPosition(parentAccount.getCashFlowFormatPosition());
+		childAccount.setBalanceSheetFormatPosition(parentAccount.getBalanceSheetFormatPosition());
+		childAccount.setCashItem(parentAccount.isCashItem());
+		childAccount.setRelevantToTaxesPaid(parentAccount.isRelevantToTaxesPaid());
+		childAccount.setRelevantToInterestPaid(parentAccount.isRelevantToInterestPaid());
+		childAccount.setRelevantToDividendsPaid(parentAccount.isRelevantToDividendsPaid());
+		childAccount.setRelevantToDepreciationAmortization(parentAccount.isRelevantToDepreciationAmortization());
+	}
+	
+	private void inheritFormatProperties(Account account, AccountSubtype accountSubtype) {
+		account.setIncomeStatementFormatPosition(accountSubtype.getIncomeStatementFormatPosition());
+		account.setCashFlowFormatPosition(accountSubtype.getCashFlowFormatPosition());
+		account.setBalanceSheetFormatPosition(accountSubtype.getBalanceSheetFormatPosition());
+		account.setCashItem(accountSubtype.isCashItem());
+		account.setRelevantToTaxesPaid(accountSubtype.isRelevantToTaxesPaid());
+		account.setRelevantToInterestPaid(accountSubtype.isRelevantToInterestPaid());
+		account.setRelevantToDividendsPaid(accountSubtype.isRelevantToDividendsPaid());
+		account.setRelevantToDepreciationAmortization(accountSubtype.isRelevantToDepreciationAmortization());
 	}
 	
 	public void assertCompletePerson(Person person) 

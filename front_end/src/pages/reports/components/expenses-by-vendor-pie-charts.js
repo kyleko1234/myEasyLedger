@@ -5,8 +5,13 @@ import { PageSettings } from '../../../config/page-settings';
 import { PIE_CHART_BACKGROUND_COLORS, PIE_CHART_BORDER_COLORS, PIE_CHART_HOVER_BACKGROUND_COLORS } from '../../../utils/constants';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { formatCurrency, getPercentage, localizeDate } from '../../../utils/util-fns';
-
-function ExpensesByVendorPieCharts({columnLabels, expensesByVendorReports, loading}) {
+/**
+ * dateRanges should have the format of a DateRangeDTO object. Optional name field, required startDate and endDate fields.
+ * vendorData should be an array of objects. vendorData[i] should correspond with dateRange[i].
+ * Objects within vendorData should have the format {vendorNames: Array<String>, amounts: Array<Number, totalExpenses: Number}.
+ * vendorData.vendorNames[i] should correspond with vendorData.amounts[i].
+ */
+function ExpensesByVendorPieCharts({dateRanges, vendorData, loading}) {
     const appContext = React.useContext(PageSettings);
 
     const [pieChartObjects, setPieChartObjects] = React.useState([]);
@@ -22,16 +27,16 @@ function ExpensesByVendorPieCharts({columnLabels, expensesByVendorReports, loadi
     }, [appContext.colorScheme]) //detects color scheme and changes the color of the chart text accordingly
 
     React.useEffect(() => {
-        let newDataObjectArray = [];
-        expensesByVendorReports.forEach(dto => {
-            let pieChartObject = {
+        let pieCharts = [];
+        vendorData.forEach((vendorDataObject) => {
+            let pieChart = {
                 data: {
-                    labels: [],
+                    labels: vendorDataObject.vendorNames,
                     datasets: [{
-                        data: [],
+                        data: vendorDataObject.amounts,
                         borderColor: PIE_CHART_BORDER_COLORS,
                         borderWidth: 2,
-                        backgroundColor: PIE_CHART_BACKGROUND_COLORS  ,
+                        backgroundColor: PIE_CHART_BACKGROUND_COLORS,
                         hoverBorderColor: PIE_CHART_BORDER_COLORS,
                     }]
                 },
@@ -49,50 +54,49 @@ function ExpensesByVendorPieCharts({columnLabels, expensesByVendorReports, loadi
                         tooltip: {
                             callbacks: {
                                 label: (toolTipItem) => {
-                                    return ` ${toolTipItem.label}: ${formatCurrency(appContext.locale, appContext.currency, toolTipItem.raw)} (${getPercentage(toolTipItem.raw, dto.totalExpenses)}%)`
+                                    return ` ${toolTipItem.label}: ${formatCurrency(appContext.locale, appContext.currency, toolTipItem.raw)} (${getPercentage(toolTipItem.raw, vendorDataObject.totalExpenses)}%)`
                                 },
-                            }
-                        }
+                            },
+                        },
                     },
-                    
+                    layout: {
+                        padding: {
+                            x: 80,
+                        }
+                    }    
                 }
             }
-            let vendors = dto.vendorExpensesDTOs;
-            vendors.forEach(vendor => {
-                pieChartObject.data.labels.push(vendor.vendorName);
-                pieChartObject.data.datasets[0].data.push(vendor.debitsMinusCredits);
-            })
-            newDataObjectArray.push(pieChartObject);
+            pieCharts.push(pieChart);
         })
-        setPieChartObjects(newDataObjectArray);
-    }, [expensesByVendorReports, fontColor]);
+        setPieChartObjects(pieCharts);
+    }, [vendorData, fontColor]);
 
     return(
-        <div className="d-flex justify-content-center">
+        <div className="d-none d-lg-flex justify-content-center">
             {loading
                 ? <LoadingSpinner big />
-                : pieChartObjects.map((pieChartObject, i) => {
+                : pieChartObjects.map((pieChart, i) => {
                     return(
                         <div key={i} className="mx-4 d-flex flex-column align-items-center">
                             <div style={{height: "260px"}} >
                                 <Doughnut
                                     key={i}
-                                    data={pieChartObject.data}
-                                    options={pieChartObject.options}
+                                    data={pieChart.data}
+                                    options={pieChart.options}
                                 />
                             </div>
                             <div className="my-3">
                                 <div className="font-weight-semibold text-center" key={i}>
-                                    {columnLabels[i].label === "Custom"
+                                    {dateRanges[i].name === "Custom" || !dateRanges[i].name
                                         ?   <>
                                                 <div>
-                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(columnLabels[i].startDate)}
+                                                    {incomeStatementRenderText[appContext.locale]["From:"] + " " + localizeDate(dateRanges[i].startDate)}
                                                 </div>
                                                 <div>
-                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(columnLabels[i].endDate)}
+                                                    {incomeStatementRenderText[appContext.locale]["To:"] + " " + localizeDate(dateRanges[i].endDate)}
                                                 </div>
                                             </>
-                                        : columnLabels[i].label}
+                                        : dateRanges[i].name}
                                 </div>
                             </div>
                         </div>

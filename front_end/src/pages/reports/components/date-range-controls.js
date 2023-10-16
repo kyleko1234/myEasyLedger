@@ -5,11 +5,119 @@ import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-
 import { Link } from 'react-router-dom';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
 import StyledSelect from '../../../components/misc/styled-select';
+import { getDateInCurrentYear, getTodayAsDateString, validateDate } from '../../../utils/util-fns';
+import axios from 'axios';
+import { API_BASE_URL } from '../../../utils/constants';
 
-
-function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReportButton, handleRemoveDateRangeButton, dateRangePresets, handleSelectDateRangePreset, handleChangeStartDate, handleChangeEndDate, detailedView, toggleDetailedView, handleCompareButton, noDetailedView }) {
+//parentComponentDataFetchFunction should be an async function that takes a 'datesToRequest' argument. This will be the dateRangeDto array that is sent as the request body.
+//noDetailedView and singleDate should be booleans.
+//noDetailedView hides the detailedView toggle. singleDate makes this component only display endDates: no startDates.
+function DateRangeControls({parentComponentDataFetchFunction, detailedView, 
+    toggleDetailedView, noDetailedView, singleDate, defaultStartDate, defaultEndDate}) {
     const appContext = React.useContext(PageSettings);
-    
+    const today = getTodayAsDateString();
+    const beginningOfCurrentFiscalYear = getDateInCurrentYear(appContext.permissions.find(permission => permission.organization.id === appContext.currentOrganizationId).organization.fiscalYearBegin);
+
+    const [datesToRequest, setDatesToRequest] = React.useState([{
+        label: "Custom",
+        startDate: defaultStartDate ? defaultStartDate : beginningOfCurrentFiscalYear,
+        endDate: defaultEndDate ? defaultEndDate : today
+    }]);
+    const [dateRangePresets, setDateRangePresets] = React.useState([]);
+
+    const [invalidDateAlert, setInvalidDateAlert] = React.useState(false);
+    const fetchData = async () => {
+        await parentComponentDataFetchFunction(datesToRequest);
+    }
+
+    const handleUpdateReportButton = async (event) => {
+        event.preventDefault();
+        setInvalidDateAlert(false);
+        if (validateDatesToRequest(datesToRequest)) {
+            fetchData()
+        } else {
+            setInvalidDateAlert(true);
+        }
+    }
+
+    const validateDatesToRequest = dateRangeObjects => {
+        let returnedBoolean = true
+        dateRangeObjects.forEach(dateRangeObject => {
+            if (!validateDate(dateRangeObject.endDate)) {
+                returnedBoolean = false;
+            }
+            if (!singleDate) {
+                if (!validateDate(dateRangeObject.startDate)) {
+                    returnedBoolean = false;
+                }
+            }
+        })
+        return returnedBoolean;
+    }
+
+    const handleRemoveDateRangeButton = i => {
+        let datesArray = datesToRequest.slice();
+        datesArray.splice(i, 1);
+        setDatesToRequest(datesArray);
+    }
+
+    const handleSelectDateRangePreset = (selectedOption, i) => {
+        if (selectedOption) {
+            let dateToRequestObject = {
+                label: selectedOption.label,
+                name: selectedOption.label,
+                startDate: selectedOption.object.startDate,
+                endDate: selectedOption.object.endDate
+            };
+            let newDatesToRequestArray = datesToRequest.slice();
+            newDatesToRequestArray[i] = dateToRequestObject;
+            setDatesToRequest(newDatesToRequestArray);
+        }
+    }
+
+    const handleChangeStartDate = (date, i) => {
+        let newDatesToRequestArray = datesToRequest.slice();
+        newDatesToRequestArray[i] = {
+            label: "Custom", 
+            name: "Custom", 
+            startDate: date, 
+            endDate: newDatesToRequestArray[i].endDate
+        }
+        setDatesToRequest(newDatesToRequestArray)
+    }
+
+    const handleChangeEndDate = (date, i) => {
+        let newDatesToRequestArray = datesToRequest.slice();
+        newDatesToRequestArray[i] = {
+            label: "Custom", 
+            name: "Custom", 
+            startDate: newDatesToRequestArray[i].startDate, 
+            endDate: date
+        }
+        setDatesToRequest(newDatesToRequestArray)
+    }
+
+    const handleCompareButton = () => {
+        let endDatesArray = datesToRequest.slice();
+        endDatesArray.push({
+            label: "Custom", 
+            name: "Custom", 
+            startDate: beginningOfCurrentFiscalYear,
+            endDate: today}
+        )
+        setDatesToRequest(endDatesArray);
+    }
+
+    React.useEffect(() => {
+        async function fetchDatePresetsAndData() {
+            await axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/dateRangePresetsUpToDate/${today}/${appContext.locale}`).then(response => {
+                setDateRangePresets(response.data);
+            })
+            await fetchData();
+        }
+        fetchDatePresetsAndData();
+    }, [])
+
     return(
         <Card className="very-rounded shadow-sm bg-light my-4">
             <CardBody className="">
@@ -41,28 +149,47 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                             placeholder={balanceSheetRenderText[appContext.locale]["Custom"]}
                                             value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                         />
-                                        <label className="my-0 text-end col-1 px-2">
-                                            {incomeStatementRenderText[appContext.locale]["From:"]} 
-                                        </label>
-                                        <div className="col-3">
-                                            <input 
-                                                type="date" 
-                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
-                                                className="form-control" value={datesToRequest[i].startDate} 
-                                                onChange={event => handleChangeStartDate(event.target.value, i)} 
-                                            />
-                                        </div>
-                                        <label className="my-0 text-end col-1 px-2">
-                                            {incomeStatementRenderText[appContext.locale]["To:"]} 
-                                        </label>
-                                        <div className="col-3">
-                                            <input 
-                                                type="date" 
-                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
-                                                className="form-control" value={datesToRequest[i].endDate} 
-                                                onChange={event => handleChangeEndDate(event.target.value, i)}
-                                            />
-                                        </div>
+                                        {singleDate
+                                            ? <>
+                                                <label className="col-2 px-1 px-sm-2 text-end my-0" htmlFor={`end-date-${i}`}>
+                                                    {balanceSheetRenderText[appContext.locale]["As of:"]} 
+                                                </label>
+                                                <div className="col-6">
+                                                    <input 
+                                                        type="date" 
+                                                        id={`end-date-${i}`}
+                                                        className="form-control align-self-center" 
+                                                        placeholder={balanceSheetRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                        value={datesToRequest[i].endDate} 
+                                                        onChange={event => handleChangeEndDate(event.target.value, i)} 
+                                                    />
+                                                </div>
+                                            </>
+                                            : <>
+                                                <label className="my-0 text-end col-1 px-2">
+                                                    {incomeStatementRenderText[appContext.locale]["From:"]} 
+                                                </label>
+                                                <div className="col-3">
+                                                    <input 
+                                                        type="date" 
+                                                        placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                        className="form-control" value={datesToRequest[i].startDate} 
+                                                        onChange={event => handleChangeStartDate(event.target.value, i)} 
+                                                    />
+                                                </div>
+                                                <label className="my-0 text-end col-1 px-2">
+                                                    {incomeStatementRenderText[appContext.locale]["To:"]} 
+                                                </label>
+                                                <div className="col-3">
+                                                    <input 
+                                                        type="date" 
+                                                        placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]} 
+                                                        className="form-control" value={datesToRequest[i].endDate} 
+                                                        onChange={event => handleChangeEndDate(event.target.value, i)}
+                                                    />
+                                                </div>
+                                            </>
+                                        }
                                     </div>
                                 </div>
                             )
@@ -75,7 +202,11 @@ function DateRangeControls({datesToRequest, invalidDateAlert, handleUpdateReport
                                     <div className="d-flex my-1 justify-content-between">
                                         <div className="font-weight-semibold d-flex align-items-center">
                                             {incomeStatementRenderText[appContext.locale]["Date range"] + (datesToRequest.length > 1? (" " + (i + 1)) : "" )}
-                                            <button className={"btn btn-light py-0 px-1 mx-1 border-0 " + (datesToRequest.length > 1 ? "" : " invisible")} onClick={() => handleRemoveDateRangeButton(i)}>
+                                            <button 
+                                                className={"btn btn-light py-0 px-1 mx-1 border-0 " + (datesToRequest.length > 1 ? "" : " invisible")} 
+                                                onClick={() => handleRemoveDateRangeButton(i)}
+                                                type="button"
+                                            >
                                                 <i className="ion ion-md-close fa-fw"></i>
                                             </button>
                                         </div>

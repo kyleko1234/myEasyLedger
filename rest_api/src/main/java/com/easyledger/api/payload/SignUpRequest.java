@@ -1,5 +1,6 @@
 package com.easyledger.api.payload;
 
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,6 +42,8 @@ public class SignUpRequest {
 	private String organizationName;
 	
 	private String currency;
+	
+	private BigDecimal initialRetainedEarnings;
 	
 	private boolean isEnterprise;
 
@@ -130,6 +133,14 @@ public class SignUpRequest {
 
 	public void setIsEnterprise(boolean isEnterprise) {
 		this.isEnterprise = isEnterprise;
+	}
+
+	public BigDecimal getInitialRetainedEarnings() {
+		return initialRetainedEarnings;
+	}
+
+	public void setInitialRetainedEarnings(BigDecimal initialRetainedEarnings) {
+		this.initialRetainedEarnings = initialRetainedEarnings;
 	}
 
 	//TODO: write confirmValidEmail to perform a regex check for a properly formatted email

@@ -14,9 +14,9 @@ export const reportsText = {
         "Ending balance": "Ending balance",
         "Total change": "Total change",
         "No vendor": "No vendor",
-        "Total Expenses": "Total Expenses",
+        "Total Expenses": "Total expenses",
         "No customer": "No customer",
-        "Total Income": "Total Income",
+        "Total Income": "Total income",
 
     },
     "zh-TW": {
