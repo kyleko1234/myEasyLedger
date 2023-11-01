@@ -52,29 +52,38 @@ For utility's sake we provide debitTotal-creditTotal as totalDebitsMinusCredits.
 - **deleted (`boolean`)** <br/>
 Whether or not this account has been deleted. This field is generally ignored in API response bodies but it exists - accounts are soft-deleted.
 
-- **incomeStatementFormatPosition** <br/>
-An object that defines the position on the income statement that accounts with this AccountSubtype should appear in. Contains a numerical id and a name for this position object. Accounts should inherit this from their AccountSubtype by default, but users should be able to override this if they wish. 
+- **incomeStatementFormatPositionId** <br/>
+The id for an object that defines the position on the income statement that accounts with this account should appear in. By default, accounts should inherit this field from their parent account if they have one, or from their account subtype if they have no parent account, but users should be able to override this if they wish. See [[Reports#Custom report format positions]]
 
-- **balanceSheetFormatPosition** <br/>
-An object that defines the position on the balance sheet statement that accounts with this AccountSubtype should appear in. Contains a numerical id and a name for this position object. Accounts should inherit this from their AccountSubtype by default, but users should be able to override this if they wish. 
+- **incomeStatementFormatPositionName** <br/>
+The name for the above object.
 
-- **cashFlowFormatPosition** <br/>
-An object that defines the position on the cash flow statement that accounts with this AccountSubtype should appear in. Contains a numerical id and a name for this position object. Accounts should inherit this from their AccountSubtype by default, but users should be able to override this if they wish. 
+- **balanceSheetFormatPositionId** <br/>
+The id for an object that defines the position on the balance sheet statement that accounts with this AccountSubtype should appear in.  By default, accounts should inherit this field from their parent account if they have one, or from their account subtype if they have no parent account, but users should be able to override this if they wish. See [[Reports#Custom report format positions]]
+
+- **balanceSheetFormatPositionName** <br/>
+The name for the above object.
+
+- **cashFlowFormatPositionId** <br/>
+The id for an object that defines the position on the cash flow statement that accounts with this AccountSubtype should appear in. By default, accounts should inherit this field from their parent account if they have one, or from their account subtype if they have no parent account, but users should be able to override this if they wish. See [[Reports#Custom report format positions]]
+
+- **cashFlowFormatPositionName** <br/>
+The name for the above object.
 
 - **cashItem** (boolean) <br/>
-Boolean flag determining whether this account should be treated as a cash item on the cash flow statement. Accounts should inherit this from their AccountSubtype by default, but users should be able to override this if they wish. 
+Boolean flag determining whether this account should be treated as a cash item on the cash flow statement. By default, accounts should inherit this field from their parent account if they have one, or from their account subtype if they have no parent account, but users should be able to override this if they wish. See [[Reports#Custom report format positions]]
 
 - **relevantToTaxesPaid** (boolean) <br/>
-Boolean flag determining whether this account should be treated as relevant to taxes paid on the cash flow statement. Liabilities with this flag are treated as 'taxes payable', and expenses with this flag are treated as 'tax expense' items. 'Taxes paid' is calculated by total tax expense minus total taxes payable. Accounts should inherit this from their AccountSubtype by default, but users should be able to override this if they wish. 
+Boolean flag determining whether this account should be treated as relevant to taxes paid on the cash flow statement. Liabilities with this flag are treated as 'taxes payable', and expenses with this flag are treated as 'tax expense' items. 'Taxes paid' is calculated by total tax expense minus total taxes payable.  By default, accounts should inherit this field from their parent account if they have one, or from their account subtype if they have no parent account, but users should be able to override this if they wish. See [[Reports#Custom report format positions]]
 
 - **relevantToInterestPaid** (boolean) <br/>
-Boolean flag determining whether this account should be treated as relevant to interest paid on the cash flow statement. Liabilities with this flag are treated as 'interest payable', and expenses with this flag are treated as 'interest expense' items. 'Interest paid' is calculated by total interest expense minus total interest payable. Accounts should inherit this from their AccountSubtype by default, but users should be able to override this if they wish. 
+Boolean flag determining whether this account should be treated as relevant to interest paid on the cash flow statement. Liabilities with this flag are treated as 'interest payable', and expenses with this flag are treated as 'interest expense' items. 'Interest paid' is calculated by total interest expense minus total interest payable.  By default, accounts should inherit this field from their parent account if they have one, or from their account subtype if they have no parent account, but users should be able to override this if they wish. See [[Reports#Custom report format positions]]
 
 - **relevantToDividendsPaid** (boolean) <br/>
-Boolean flag determining whether this account should be treated as relevant to dividends paid on the cash flow statement and balance sheet. Liabilities with this flag are treated as 'dividends payable', and equity items with this flag are treated as 'dividends expense' items. 'Dividends paid' is calculated by total dividends equity itemds minus total dividends payable. Accounts should inherit this from their AccountSubtype by default, but users should be able to override this if they wish. 
+Boolean flag determining whether this account should be treated as relevant to dividends paid on the cash flow statement and balance sheet. Liabilities with this flag are treated as 'dividends payable', and equity items with this flag are treated as 'dividends expense' items. 'Dividends paid' is calculated by total dividends equity items minus total dividends payable.  By default, accounts should inherit this field from their parent account if they have one, or from their account subtype if they have no parent account, but users should be able to override this if they wish. See [[Reports#Custom report format positions]]
 
 - **relevantToDepreciationAmortization** (boolean) <br/>
-Boolean flag determining whether this account should be treated as relevant to depreciation/amortization on the cash flow statement, balance sheet, and income statement. Assets with this flag are treated as depreciable assets, and expense items with this flag are treated as depreciation expense items. Accounts should inherit this from their AccountSubtype by default, but users should be able to override this if they wish. 
+Boolean flag determining whether this account should be treated as relevant to depreciation/amortization on the cash flow statement, balance sheet, and income statement. Assets with this flag are treated as depreciable assets, and expense items with this flag are treated as depreciation expense items.  By default, accounts should inherit this field from their parent account if they have one, or from their account subtype if they have no parent account, but users should be able to override this if they wish. See [[Reports#Custom report format positions]]
 ___
 #### Sample Object
 ```json
