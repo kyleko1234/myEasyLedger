@@ -74,7 +74,7 @@ function IncomeExpenseReport({incomeExpenseReportDto, detailedView}) {
                     }
                     <ReportRow
                         label={translate("Total Income")}
-                        values={incomeExpenseReportDto.totalExpenses}
+                        values={incomeExpenseReportDto.totalIncome}
                         isCurrency
                         className="fw-semibold"
                     />
