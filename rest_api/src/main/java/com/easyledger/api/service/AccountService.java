@@ -243,66 +243,72 @@ public class AccountService {
 				throw new ConflictException("Accounts with LineItems written to them may not contain children.");
 			}
 			updatedAccount.setParentAccount(parentAccount);
+			updatedAccount.setIncomeStatementFormatPosition(parentAccount.getIncomeStatementFormatPosition());
+			updatedAccount.setBalanceSheetFormatPosition(parentAccount.getBalanceSheetFormatPosition());
+			updatedAccount.setCashFlowFormatPosition(parentAccount.getCashFlowFormatPosition());
+			updatedAccount.setCashItem(parentAccount.isCashItem());
+			updatedAccount.setRelevantToTaxesPaid(parentAccount.isRelevantToTaxesPaid());
+			updatedAccount.setRelevantToInterestPaid(parentAccount.isRelevantToInterestPaid());
+			updatedAccount.setRelevantToDividendsPaid(parentAccount.isRelevantToDividendsPaid());
+			updatedAccount.setRelevantToDepreciationAmortization(parentAccount.isRelevantToDepreciationAmortization());
 		} else {
 			AccountSubtype accountSubtype = accountSubtypeRepo.findById(dto.getAccountSubtypeId())
 		    		.orElseThrow(() -> new ResourceNotFoundException("AccountSubtype not found for this id :: " + dto.getAccountSubtypeId()));
 			updatedAccount.setAccountSubtype(accountSubtype);
-		}
 		
-		if (dto.getIncomeStatementFormatPositionId() != null) {
-			IncomeStatementFormatPosition position = incomeStatementFormatPositionRepo.findById(dto.getIncomeStatementFormatPositionId())
-		    		.orElseThrow(() -> new ResourceNotFoundException("Income statement format position not found for this id :: " + dto.getIncomeStatementFormatPositionId()));
-			updatedAccount.setIncomeStatementFormatPosition(position);
-		} else {
-			updatedAccount.setIncomeStatementFormatPosition(oldAccount.getIncomeStatementFormatPosition());
-		}
-		
-		if (dto.getCashFlowFormatPositionId() != null) {
-			CashFlowFormatPosition position = cashFlowFormatPositionRepo.findById(dto.getCashFlowFormatPositionId())
-		    		.orElseThrow(() -> new ResourceNotFoundException("Cash flow format position not found for this id :: " + dto.getCashFlowFormatPositionId()));
-			updatedAccount.setCashFlowFormatPosition(position);
-		} else {
-			updatedAccount.setCashFlowFormatPosition(oldAccount.getCashFlowFormatPosition());
-		}
- 
-		if (dto.getBalanceSheetFormatPositionId() != null) {
-			BalanceSheetFormatPosition position = balanceSheetFormatPositionRepo.findById(dto.getBalanceSheetFormatPositionId())
-		    		.orElseThrow(() -> new ResourceNotFoundException("Balance sheet format position not found for this id :: " + dto.getBalanceSheetFormatPositionId()));
-			updatedAccount.setBalanceSheetFormatPosition(position);
-		} else {
-			updatedAccount.setBalanceSheetFormatPosition(oldAccount.getBalanceSheetFormatPosition());
-		}
-		
-		if (dto.isCashItem() != null) {
-			updatedAccount.setCashItem(dto.isCashItem());
-		} else {
-			updatedAccount.setCashItem(oldAccount.isCashItem());
-		}
-		
-		if (dto.isRelevantToTaxesPaid() != null) {
-			updatedAccount.setRelevantToTaxesPaid(dto.isRelevantToTaxesPaid());;
-		} else {
-			updatedAccount.setRelevantToTaxesPaid(oldAccount.isRelevantToTaxesPaid());;
-		}
-		
-		if (dto.isRelevantToInterestPaid() != null) {
-			updatedAccount.setRelevantToInterestPaid(dto.isRelevantToInterestPaid());
-		} else {
-			updatedAccount.setRelevantToInterestPaid(oldAccount.isRelevantToInterestPaid());
-		}
-		
-		
-		if (dto.isRelevantToDividendsPaid() != null) {
-			updatedAccount.setRelevantToDividendsPaid(dto.isRelevantToDividendsPaid());
-		} else {
-			updatedAccount.setRelevantToDividendsPaid(oldAccount.isRelevantToDividendsPaid());
-		}
-		
-		
-		if (dto.isRelevantToDepreciationAmortization() != null) {
-			updatedAccount.setRelevantToDepreciationAmortization(dto.isRelevantToDepreciationAmortization());
-		} else {
-			updatedAccount.setRelevantToDepreciationAmortization(oldAccount.isRelevantToDepreciationAmortization());
+			if (dto.getIncomeStatementFormatPositionId() != null) {
+				IncomeStatementFormatPosition position = incomeStatementFormatPositionRepo.findById(dto.getIncomeStatementFormatPositionId())
+			    		.orElseThrow(() -> new ResourceNotFoundException("Income statement format position not found for this id :: " + dto.getIncomeStatementFormatPositionId()));
+				updatedAccount.setIncomeStatementFormatPosition(position);
+			} else {
+				updatedAccount.setIncomeStatementFormatPosition(oldAccount.getIncomeStatementFormatPosition());
+			}
+			
+			if (dto.getCashFlowFormatPositionId() != null) {
+				CashFlowFormatPosition position = cashFlowFormatPositionRepo.findById(dto.getCashFlowFormatPositionId())
+			    		.orElseThrow(() -> new ResourceNotFoundException("Cash flow format position not found for this id :: " + dto.getCashFlowFormatPositionId()));
+				updatedAccount.setCashFlowFormatPosition(position);
+			} else {
+				updatedAccount.setCashFlowFormatPosition(oldAccount.getCashFlowFormatPosition());
+			}
+	 
+			if (dto.getBalanceSheetFormatPositionId() != null) {
+				BalanceSheetFormatPosition position = balanceSheetFormatPositionRepo.findById(dto.getBalanceSheetFormatPositionId())
+			    		.orElseThrow(() -> new ResourceNotFoundException("Balance sheet format position not found for this id :: " + dto.getBalanceSheetFormatPositionId()));
+				updatedAccount.setBalanceSheetFormatPosition(position);
+			} else {
+				updatedAccount.setBalanceSheetFormatPosition(oldAccount.getBalanceSheetFormatPosition());
+			}
+			
+			if (dto.isCashItem() != null) {
+				updatedAccount.setCashItem(dto.isCashItem());
+			} else {
+				updatedAccount.setCashItem(oldAccount.isCashItem());
+			}
+			
+			if (dto.isRelevantToTaxesPaid() != null) {
+				updatedAccount.setRelevantToTaxesPaid(dto.isRelevantToTaxesPaid());;
+			} else {
+				updatedAccount.setRelevantToTaxesPaid(oldAccount.isRelevantToTaxesPaid());;
+			}
+			
+			if (dto.isRelevantToInterestPaid() != null) {
+				updatedAccount.setRelevantToInterestPaid(dto.isRelevantToInterestPaid());
+			} else {
+				updatedAccount.setRelevantToInterestPaid(oldAccount.isRelevantToInterestPaid());
+			}
+			
+			if (dto.isRelevantToDividendsPaid() != null) {
+				updatedAccount.setRelevantToDividendsPaid(dto.isRelevantToDividendsPaid());
+			} else {
+				updatedAccount.setRelevantToDividendsPaid(oldAccount.isRelevantToDividendsPaid());
+			}
+			
+			if (dto.isRelevantToDepreciationAmortization() != null) {
+				updatedAccount.setRelevantToDepreciationAmortization(dto.isRelevantToDepreciationAmortization());
+			} else {
+				updatedAccount.setRelevantToDepreciationAmortization(oldAccount.isRelevantToDepreciationAmortization());
+			}
 		}
 		
 		Organization organization = organizationRepo.findById(dto.getOrganizationId())
@@ -311,6 +317,17 @@ public class AccountService {
 
 		updatedAccount.setHasChildren(oldAccount.isHasChildren());
 		Account returnObject = accountRepo.save(updatedAccount);
+		for (Account childAccount : oldAccount.getChildAccounts()) {
+			childAccount.setIncomeStatementFormatPosition(updatedAccount.getIncomeStatementFormatPosition());
+			childAccount.setBalanceSheetFormatPosition(updatedAccount.getBalanceSheetFormatPosition());
+			childAccount.setCashFlowFormatPosition(updatedAccount.getCashFlowFormatPosition());
+			childAccount.setCashItem(updatedAccount.isCashItem());
+			childAccount.setRelevantToTaxesPaid(updatedAccount.isRelevantToTaxesPaid());
+			childAccount.setRelevantToInterestPaid(updatedAccount.isRelevantToInterestPaid());
+			childAccount.setRelevantToDividendsPaid(updatedAccount.isRelevantToDividendsPaid());
+			childAccount.setRelevantToDepreciationAmortization(updatedAccount.isRelevantToDepreciationAmortization());
+			accountRepo.save(childAccount);
+		}
 		return returnObject;
 	}
 	
