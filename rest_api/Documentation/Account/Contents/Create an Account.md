@@ -27,7 +27,7 @@ The debit value that this account is initialized at.
 - **initialCreditAmount ( `BigDecimal`)**<br/>
 The credit value that this account is initialized at. 
 
-**The following fields are optional. If not supplied in the request body, these fields will be inherited from either the parent account or the account subtype of the account being edited.**
+**The following fields are optional. If the account being created has a parent account, these fields are disregarded and will be inherited from the parent account. Otherwise, if left blank, these fields will be inherited from the account subtype.**
 
 - **incomeStatementFormatPositionId** <br/>
 The id for an object that defines the position on the income statement that accounts with this account should appear in. By default, accounts should inherit this field from their parent account if they have one, or from their account subtype if they have no parent account, but users should be able to override this if they wish. See [[Reports#Custom report format positions]]

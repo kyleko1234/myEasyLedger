@@ -5,6 +5,7 @@ Authorization: User must have EDIT permissions for all associated accounts.
 
 Updates an account with the values of the parameters passed. Cannot be used to soft-delete an account; use `DELETE /account/{id}` instead. All parameters must be passed in the request body unless otherwise indicated, otherwise the corresponding fields of the account will be updated to `null`.
 
+
 ___
 
 #### Request Body Parameters
@@ -29,7 +30,7 @@ The debit value that this account is initialized at.
 - **initialCreditAmount ( `BigDecimal`)**<br/>
 The credit value that this account is initialized at. 
 
-**The following fields are optional. If not supplied in the request body, these fields will be inherited from either the parent account or the account subtype of the account being edited.**
+**The following fields are optional. If not supplied in the request body, these fields will be inherited from either the parent account or the account subtype of the account being edited. When an account is updated, these fields will be updated for all of its children, if it has any. These fields will also be updated for its parent and all the other children of its parent.**
 
 - **incomeStatementFormatPositionId** <br/>
 The id for an object that defines the position on the income statement that accounts with this account should appear in. By default, accounts should inherit this field from their parent account if they have one, or from their account subtype if they have no parent account, but users should be able to override this if they wish. See [[Reports#Custom report format positions]]
