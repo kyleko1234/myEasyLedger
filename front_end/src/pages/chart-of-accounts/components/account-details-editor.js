@@ -27,6 +27,16 @@ function AccountDetailsEditor(props) {
     const [initialDebitValueInput, setInitialDebitValueInput] = React.useState('0');
     const [initialCreditValueInput, setInitialCreditValueInput] = React.useState('0');
     const [currentAccountHasChildren, setCurrentAccountHasChildren] = React.useState(false);
+
+    const [incomeStatementFormatPositionId, setIncomeStatementFormatPositionId] = React.useState(null);
+    const [balanceSheetFormatPositionId, setBalanceSheetFormatPositionId] = React.useState(null);
+    const [cashFlowFormatPositionId, setCashFlowFormatPositionId] = React.useState(null);
+    const [cashItem, setCashItem] = React.useState(null);
+    const [relevantToTaxesPaid, setRelevantToTaxesPaid] = React.useState(null);
+    const [relevantToInterestPaid, setRelevantToInterestPaid] = React.useState(null);
+    const [relevantToDividendsPaid, setRelevantToDividendsPaid] = React.useState(null);
+    const [relevantToDepreciationAmortization, setRelativeToDepreciationAmortization] = React.useState(null);
+
     const [noAccountNameAlert, setNoAccountNameAlert] = React.useState(false);
     const [noParentOrSubtypeAlert, setNoParentOrSubtypeAlert] = React.useState(false);
     const [deleteAccountAlert, setDeleteAccountAlert] = React.useState(false);
@@ -62,6 +72,7 @@ function AccountDetailsEditor(props) {
                 defaultSubtypeId = 27;
             }
             setSelectedAccountSubtypeId(defaultSubtypeId);
+            //do format positions need to be set here?
         }
     }
 
@@ -78,12 +89,29 @@ function AccountDetailsEditor(props) {
                         setInitialDebitValueInput(response.data.initialDebitAmount);
                         setInitialCreditValueInput(response.data.initialCreditAmount);
                         setCurrentAccountHasChildren(response.data.hasChildren);
+                        setIncomeStatementFormatPositionId(response.data.incomeStatementFormatPositionId);
+                        setBalanceSheetFormatPositionId(response.data.balanceSheetFormatPositionId);
+                        setCashFlowFormatPositionId(response.data.cashFlowFormatPositionId);
+                        setCashItem(response.data.cashItem);
+                        setRelevantToTaxesPaid(response.data.relevantToTaxesPaid);
+                        setRelevantToInterestPaid(response.data.relevantToInterestPaid);
+                        setRelevantToDividendsPaid(response.data.relevantToDividendsPaid);
+                        setRelativeToDepreciationAmortization(response.data.relevantToDepreciationAmortization);
                     }
                 }).catch(console.log);
             } else if (props.selectedParentAccount) {
                 setAccountTypeId(props.selectedParentAccount.accountTypeId);
                 setSelectedParentAccountId(props.selectedParentAccount.accountId);
                 setSelectedAccountSubtypeId(props.selectedParentAccount.accountSubtypeId);
+                setIncomeStatementFormatPositionId(props.selectedParentAccount.incomeStatementFormatPositionId);
+                setBalanceSheetFormatPositionId(props.selectedParentAccount.balanceSheetFormatPositionId);
+                setCashFlowFormatPositionId(props.selectedParentAccount.cashFlowFormatPositionId);
+                setCashItem(props.selectedParentAccount.cashItem);
+                setRelevantToTaxesPaid(props.selectedParentAccount.relevantToTaxesPaid);
+                setRelevantToInterestPaid(props.selectedParentAccount.relevantToInterestPaid);
+                setRelevantToDividendsPaid(props.selectedParentAccount.relevantToDividendsPaid);
+                setRelativeToDepreciationAmortization(props.selectedParentAccount.relevantToDepreciationAmortization);
+
             } else if (props.accountTypeId) {
                 setAccountTypeId(props.accountTypeId);
             }
@@ -130,6 +158,15 @@ function AccountDetailsEditor(props) {
         setInitialDebitValueInput('0');
         setInitialCreditValueInput('0');
         setCurrentAccountHasChildren(false);
+        setIncomeStatementFormatPositionId(null);
+        setBalanceSheetFormatPositionId(null);
+        setCashFlowFormatPositionId(null);
+        setCashItem(null);
+        setRelevantToTaxesPaid(null);
+        setRelevantToInterestPaid(null);
+        setRelevantToDividendsPaid(null);
+        setRelativeToDepreciationAmortization(null);
+
     }
     const handleSaveButton = () => {
         let requestBody;
@@ -141,7 +178,15 @@ function AccountDetailsEditor(props) {
                 accountSubtypeId: selectedAccountSubtypeId,
                 organizationId: appContext.currentOrganizationId,
                 initialDebitAmount: Number(initialDebitValueInput),
-                initialCreditAmount: Number(initialCreditValueInput)
+                initialCreditAmount: Number(initialCreditValueInput),
+                incomeStatementFormatPositionId: incomeStatementFormatPositionId,
+                balanceSheetFormatPositionId: balanceSheetFormatPositionId,
+                cashFlowFormatPositionId: cashFlowFormatPositionId,
+                cashItem: cashItem,
+                relevantToTaxesPaid: relevantToTaxesPaid,
+                relevantToInterestPaid: relevantToInterestPaid,
+                relevantToDividendsPaid: relevantToDividendsPaid,
+                relevantToDepreciationAmortization: relevantToDepreciationAmortization
             }
         } else {
             requestBody = {
@@ -151,7 +196,15 @@ function AccountDetailsEditor(props) {
                 parentAccountId: selectedParentAccountId,
                 organizationId: appContext.currentOrganizationId,
                 initialDebitAmount: Number(initialDebitValueInput),
-                initialCreditAmount: Number(initialCreditValueInput)
+                initialCreditAmount: Number(initialCreditValueInput),
+                incomeStatementFormatPositionId: incomeStatementFormatPositionId,
+                balanceSheetFormatPositionId: balanceSheetFormatPositionId,
+                cashFlowFormatPositionId: cashFlowFormatPositionId,
+                cashItem: cashItem,
+                relevantToTaxesPaid: relevantToTaxesPaid,
+                relevantToInterestPaid: relevantToInterestPaid,
+                relevantToDividendsPaid: relevantToDividendsPaid,
+                relevantToDepreciationAmortization: relevantToDepreciationAmortization
             }
         }
         if (!accountNameInput || (!selectedParentAccountId && !selectedAccountSubtypeId)) {
@@ -205,6 +258,15 @@ function AccountDetailsEditor(props) {
     }
     const handleChangeParentAccountOption = selectedOption => {
         setSelectedParentAccountId(selectedOption.object.accountId);
+        setIncomeStatementFormatPositionId(selectedOption.object.incomeStatementFormatPositionId);
+        setBalanceSheetFormatPositionId(selectedOption.object.balanceSheetFormatPositionId);
+        setCashFlowFormatPositionId(selectedOption.object.cashFlowFormatPositionId);
+        setCashItem(selectedOption.object.cashItem);
+        setRelevantToTaxesPaid(selectedOption.object.relevantToTaxesPaid);
+        setRelevantToInterestPaid(selectedOption.object.relevantToInterestPaid);
+        setRelevantToDividendsPaid(selectedOption.object.relevantToDividendsPaid);
+        setRelativeToDepreciationAmortization(selectedOption.object.relevantToDepreciationAmortization);
+
         if (selectedOption.object.accountSubtypeId) {
             setSelectedAccountSubtypeId(selectedOption.object.accountSubtypeId);
         }
@@ -215,6 +277,15 @@ function AccountDetailsEditor(props) {
     const handleChangeAccountSubtypeOption = selectedOption => {
         setSelectedAccountSubtypeId(selectedOption.object.id);
         setSelectedParentAccountId(null);
+        setIncomeStatementFormatPositionId(selectedOption.object.incomeStatementFormatPosition.id);
+        setBalanceSheetFormatPositionId(selectedOption.object.balanceSheetFormatPosition.id);
+        setCashFlowFormatPositionId(selectedOption.object.cashFlowFormatPosition.id);
+        setCashItem(selectedOption.object.cashItem);
+        setRelevantToTaxesPaid(selectedOption.object.relevantToTaxesPaid);
+        setRelevantToInterestPaid(selectedOption.object.relevantToInterestPaid);
+        setRelevantToDividendsPaid(selectedOption.object.relevantToDividendsPaid);
+        setRelativeToDepreciationAmortization(selectedOption.object.relevantToDepreciationAmortization);
+        console.log(incomeStatementFormatPositionId);
     }
 
 
