@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.dto.JournalEntryLogDTO;
+import com.easyledger.api.dto.SearchQueryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
@@ -89,6 +90,13 @@ public class JournalEntryController {
 		return journalEntryRepo.getAllJournalEntryViewModelsForOrganization(organizationId, pageable);
 	}
 
+	@PostMapping(path = "organization/{id}/journalEntryViewModel")
+	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganizationAndSearchQuery (
+			@PathVariable(value = "id") Long organizationId, @RequestBody SearchQueryDTO searchQuery, Authentication authentication, Pageable pageable) throws UnauthorizedException {
+		authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+		
+		return journalEntryService.getAllJournalEntryViewModelsForOrganizationAndSearchQuery(organizationId, searchQuery, pageable);
+	}
 	
     @GetMapping("/journalEntry/{id}")
     public ResponseEntity<JournalEntryDTO> getJournalEntryById(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
