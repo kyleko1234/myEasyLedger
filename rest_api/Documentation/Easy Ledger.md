@@ -34,6 +34,7 @@ Prefix all endpoints with `http://{host}/v0.6.1/`
 <br/> <br/>
 - [[List All JournalEntries|GET /journalEntry]]
 - [[List All JournalEntries Belonging to an Organization as JournalEntryViewModels|GET /organization/{id}/journalEntryViewModel]]*
+- [[Search for JournalEntryViewModels|POST /organization/{id}/journalEntryViewModel?page={i}&size={j}]]
 - [[Retrieve a JournalEntry|GET /journalEntry/{id}]] **
 - [[Update a JournalEntry|PUT /journalEntry/{id}]]**
 - [[Create a JournalEntry|POST /journalEntry]]**
