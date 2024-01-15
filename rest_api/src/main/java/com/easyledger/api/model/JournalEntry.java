@@ -77,7 +77,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				+ "	journal_entry.id = line_item.journal_entry_id AND       "
 				+ "	journal_entry.organization_id = :organizationId AND       "
 				+ "	journal_entry.deleted = false AND  "
-				+ "	((journal_entry.description ILIKE '%' || :query || '%') OR (line_item.description ILIKE '%' || :query || '%'))"
+				+ "	journal_entry.description ILIKE '%' || :query || '%'"
 				+ "GROUP BY journal_entry.id      "
 				+ "ORDER BY journal_entry.journal_entry_date DESC, journal_entry.id DESC ",
 		resultSetMapping = "journalEntryViewModelMapping"
@@ -97,7 +97,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				+ "WHERE  "
 				+ "	journal_entry.organization_id = :organizationId AND  "
 				+ "	journal_entry.deleted = false AND "
-				+ "	((journal_entry.description ILIKE '%' || :query || '%') OR (line_item.description ILIKe '%' || :query || '%'))",
+				+ "	journal_entry.description ILIKE '%' || :query || '%'",
 		resultSetMapping = "journalEntryViewModelMapping.count"
 )
 
