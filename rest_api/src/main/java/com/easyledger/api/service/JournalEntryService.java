@@ -62,11 +62,8 @@ public class JournalEntryService {
 	
 	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganizationAndSearchQuery(Long organizationId, SearchQueryDTO searchQuery, Pageable pageable) {
 		String query = searchQuery.getQuery();
-		if (query == null || query.trim().isEmpty()) {
-			return journalEntryRepo.getAllJournalEntryViewModelsForOrganization(organizationId, pageable);
-		} else {
-			return journalEntryRepo.getAllJournalEntryViewModelsForOrganizationAndQuery(organizationId, query, pageable);
-		}
+		return journalEntryRepo.getAllJournalEntryViewModelsForOrganizationAndQuery(organizationId, query, pageable);
+		
 	}
 
 	// Creates new Entry entity object from EntryDTO. Does not save the entity to the database.
