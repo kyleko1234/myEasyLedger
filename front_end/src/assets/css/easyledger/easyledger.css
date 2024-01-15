@@ -298,7 +298,7 @@ a {
 /* MODIFICATIONS TO BOOTSTRAP FORMS
  * Remember to update styled-select.js when updating this
 */
-.form-control {
+.form-control, .input-group-text {
     font-size: var(--base-font-size);
 }
 
@@ -318,7 +318,7 @@ a {
     opacity: 0.5;
 }
 
-.dark-mode .form-control {
+.dark-mode .form-control, .dark-mode .input-group-text {
     background-color: #191919;
     border-color: #373737;
     color: var(--dark-mode-text-color);
@@ -398,6 +398,7 @@ input::-webkit-inner-spin-button {
 }
 input[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 

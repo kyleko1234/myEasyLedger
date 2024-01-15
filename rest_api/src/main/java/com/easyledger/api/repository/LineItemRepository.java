@@ -30,5 +30,8 @@ public interface LineItemRepository extends JpaRepository<LineItem, Long> {
 	public Page<LineItemDTO> getAllAssetAndLiabilityLineItemsForOrganization(Long organizationId, Pageable pageable);
 	
 	@Query(nativeQuery = true)
+	public Page<LineItemDTO>getAllAssetAndLiabilityLineItemsForOrganizationAndQuery(Long organizationId, String query, Pageable pageable);
+	
+	@Query(nativeQuery = true)
 	public List<LineItemDTO> getLineItemsForAccountBetweenDates(Long accountId, LocalDate startDate, LocalDate endDate);
 }

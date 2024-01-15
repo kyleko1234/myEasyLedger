@@ -5,9 +5,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.easyledger.api.dto.LineItemDTO;
+import com.easyledger.api.dto.SearchQueryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Account;
@@ -58,4 +61,8 @@ public class LineItemService {
 		return lineItemRepo.getLineItemsForAccountBetweenDates(accountId, startDate, endDate);
 	}
 	
+	public Page<LineItemDTO> getAllAssetAndLiabilityLineItemsForOrganizationAndQuery(Long organizationId, SearchQueryDTO searchQuery, Pageable pageable) {
+		String query = searchQuery.getQuery();
+		return lineItemRepo.getAllAssetAndLiabilityLineItemsForOrganizationAndQuery(organizationId, query, pageable);
+	}
 }

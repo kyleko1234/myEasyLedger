@@ -17,7 +17,7 @@ The name of this organization.
 The date that the fiscal year for this organization begins, in yyyymmdd. The year portion of this date is not likely to be important but it is recommended to use a leap year for this date.
 
 - **lockInitialAccountValues(`boolean`)**<br/>
-If true, the initial debit and credit amounts of the accounts this organization owns may not be modified after the account contains line-items. Defaults to true.
+If true, the initial debit and credit amounts of the accounts this organization owns may not be modified. Defaults to true.
 
 - **lockJournalEntriesBefore(`LocalDate`)**<br/>
 Journal entries belonging to this organization dated before this date cannot be edited. Defaults to "null".

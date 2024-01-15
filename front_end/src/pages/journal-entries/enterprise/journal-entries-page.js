@@ -11,6 +11,9 @@ import JournalEntryTitleBarSmallScreen from './journal-entry-title-bar-small-scr
 import JournalEntryTitleBarStandard from './journal-entry-title-bar-standard';
 import JournalEntryViewModelSmallScreen from './journal-entry-view-model-small-screen';
 import JournalEntryViewModelStandard from './journal-entry-view-model-standard';
+import { Form, Input, InputGroup, InputGroupText } from 'reactstrap';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import SearchBar from '../../../components/misc/search-bar';
 
 function JournalEntriesPage(props) {
     const appContext = React.useContext(PageSettings);
@@ -20,7 +23,18 @@ function JournalEntriesPage(props) {
     const [vendorOptions, setVendorOptions] = React.useState([]);
     const [customerOptions, setCustomerOptions] = React.useState([]);
     const [accountOptions, setAccountOptions] = React.useState([]);
-
+    
+    /**
+     * Search. Note: when moving through pages using the "older" and "newer" buttons/links, we do not want to change the search query even 
+     * if the contents of the search input have changed. Therefore the search query that we send to the server must be stored in a different
+     * variable than the actual value of the search bar input.
+     * We set a useEffect hook to listen to a change in searchQuery. When the user hits the search button, searchQuery is updated to match the search bar input.
+     * searchQuery being updated will trigger an API call for new data based on the new search term.
+     * This way, if the user updates the search bar input WITHOUT hitting the search button, the pagination buttons will trigger API calls using the old search term 
+     * instead of the updated but not submitted one.
+     */
+    const [searchQuery, setSearchQuery] = React.useState("");
+    const [searchBarInput, setSearchBarInput] = React.useState("");
 
     //pagination
     const [pageSize, setPageSize] = React.useState(appContext.resultsPerPage);
@@ -41,8 +55,11 @@ function JournalEntriesPage(props) {
     const [editMode, setEditMode] = React.useState(false);
 
     //functions to fetch data from API
-    const fetchJournalEntryData = (pageIndex, pageSize) => {
-        axios.get(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/journalEntryViewModel?page=${pageIndex}&size=${pageSize}`)
+    const fetchJournalEntryData = () => {
+        let requestBody = {
+            query: searchQuery
+        }
+        axios.post(`${API_BASE_URL}/organization/${appContext.currentOrganizationId}/journalEntryViewModel?page=${pageIndex}&size=${pageSize}`, requestBody)
             .then(response => {
                 response.data.content.forEach(journalEntry => {
                     journalEntry.journalEntryDate = localizeDate(journalEntry.journalEntryDate);
@@ -124,17 +141,17 @@ function JournalEntriesPage(props) {
             .catch(console.log);
     }
 
-    const fetchData = (pageIndex, pageSize) => {
-        fetchJournalEntryData(pageIndex, pageSize);
+    const fetchData = () => {
+        fetchJournalEntryData();
         fetchVendors();
         fetchCustomers();
         fetchAccounts();
     }
 
-    //Fetch data on page load and when pageIndex and pageSize are updated
+    //Fetch data on page load and when pageIndex and pageSize are updated, or when a search is submitted
     React.useEffect(() => {
-        fetchData(pageIndex, pageSize);
-    }, [pageIndex, pageSize])
+        fetchData();
+    }, [pageIndex, pageSize, searchQuery])
 
     //create a journalEntry
     const handleCreateAJournalEntryButton = () => {
@@ -147,6 +164,16 @@ function JournalEntriesPage(props) {
         toggleJournalEntryModal();
     }
 
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+        setSearchQuery(searchBarInput);
+    }
+
+    const clearSearch = () => {
+        setSearchBarInput("");
+        setSearchQuery("");
+    }
+
     return (
         <>
             <JournalEntryTitleBarStandard
@@ -154,6 +181,12 @@ function JournalEntriesPage(props) {
             />
             <JournalEntryTitleBarSmallScreen
                 handleCreateAJournalEntryButton={handleCreateAJournalEntryButton}
+            />
+            <SearchBar
+                handleSearchSubmit={handleSearchSubmit}
+                inputValue={searchBarInput}
+                clearSearch={clearSearch}
+                onChange={event => setSearchBarInput(event.target.value)}
             />
             <JournalEntryTableHeader />
             <div>
@@ -169,7 +202,6 @@ function JournalEntriesPage(props) {
                         />
                     )
                 })}
-
             </div>
             <div>
                 {journalEntryViewModels.map(journalEntryViewModel => {
@@ -199,7 +231,7 @@ function JournalEntriesPage(props) {
                 isOpen={journalEntryModal}
                 editMode={editMode} setEditMode={setEditMode}
                 toggle={toggleJournalEntryModal}
-                refreshParentComponent={() => fetchData(pageIndex, pageSize)}
+                refreshParentComponent={() => fetchData()}
                 currentJournalEntryId={currentJournalEntryId} setCurrentJournalEntryId={setCurrentJournalEntryId}
                 accountOptions={accountOptions}
                 vendorOptions={vendorOptions}

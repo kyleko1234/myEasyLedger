@@ -15,10 +15,13 @@ public interface JournalEntryRepository extends JpaRepository<JournalEntry, Long
 	/* Returns a page of EntryViewModels. EntryViewModel is a class based on Entry, which is meant
 	 * to represent a compressed view of an Entry containing only information on EntryId, Date, Description,
 	 * total sum of credit LineItems, and total sum of debit LineItems. Uses a named native query defined 
-	 * in Entry.java.*/
+	 * in JournalEntry.java.*/
 	@Query(nativeQuery = true)
 	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganization(Long organizationId, Pageable pageable);
 	
+	@Query(nativeQuery = true)
+	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganizationAndQuery(Long organizationId, String query, Pageable pageable);
+
 	@Query(
 			value = "SELECT CASE EXISTS (SELECT 1 from journal_entry "
 					+ "WHERE journal_entry.vendor_id = ? "

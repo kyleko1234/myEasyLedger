@@ -65,6 +65,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				"ORDER BY journal_entry.journal_entry_date DESC, journal_entry.id DESC",
 		resultSetMapping = "journalEntryViewModelMapping"
 )
+@NamedNativeQuery( //retrieves all undeleted entries for the given organization that match the search query and maps them into EntryViewModels. journal entry will be returned if search query matches either line item descriptions or journal entry descriptions.
+		name = "JournalEntry.getAllJournalEntryViewModelsForOrganizationAndQuery",
+		query = "SELECT       "
+				+ "	journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS description,       "
+				+ "	SUM(CASE line_item.is_credit WHEN false THEN line_item.amount END) AS debitAmount,      "
+				+ "	SUM(CASE line_item.is_credit WHEN true THEN line_item.amount END) as creditAmount      "
+				+ "FROM      "
+				+ "	journal_entry, line_item      "
+				+ "WHERE       "
+				+ "	journal_entry.id = line_item.journal_entry_id AND       "
+				+ "	journal_entry.organization_id = :organizationId AND       "
+				+ "	journal_entry.deleted = false AND  "
+				+ "	((journal_entry.description ILIKE '%' || :query || '%') OR (line_item.description ILIKE '%' || :query || '%'))"
+				+ "GROUP BY journal_entry.id      "
+				+ "ORDER BY journal_entry.journal_entry_date DESC, journal_entry.id DESC ",
+		resultSetMapping = "journalEntryViewModelMapping"
+)
 @SqlResultSetMapping(//sqlresultsetmapping for counting query
 		name = "journalEntryViewModelMapping.count",
 		columns = @ColumnResult(name = "count"))
@@ -72,6 +89,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NamedNativeQuery( //query to count number of entries in order to use Pageable on Entry.getAllEntryViewModels
 		name = "JournalEntry.getAllJournalEntryViewModelsForOrganization.count",
 		query = "SELECT count(*) AS count from journal_entry WHERE journal_entry.organization_id = ? AND journal_entry.deleted = false",
+		resultSetMapping = "journalEntryViewModelMapping.count"
+)
+@NamedNativeQuery( //query to count number of entries in order to use Pageable on Entry.getAllEntryViewModelsForOrganizationAndQuery
+		name = "JournalEntry.getAllJournalEntryViewModelsForOrganizationAndQuery.count",
+		query = "SELECT count(*) AS count FROM journal_entry  "
+				+ "WHERE  "
+				+ "	journal_entry.organization_id = :organizationId AND  "
+				+ "	journal_entry.deleted = false AND "
+				+ "	((journal_entry.description ILIKE '%' || :query || '%') OR (line_item.description ILIKe '%' || :query || '%'))",
 		resultSetMapping = "journalEntryViewModelMapping.count"
 )
 

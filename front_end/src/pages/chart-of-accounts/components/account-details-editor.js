@@ -41,7 +41,6 @@ function AccountDetailsEditor(props) {
     const [noParentOrSubtypeAlert, setNoParentOrSubtypeAlert] = React.useState(false);
     const [deleteAccountAlert, setDeleteAccountAlert] = React.useState(false);
     const [cannotDeleteAccountAlert, setCannotDeleteAccountAlert] = React.useState(false);
-    const [initialValueLockedAlert, setInitialValueLockedAlert] = React.useState(false);
     const [saveButtonTooltip, setSaveButtonTooltip] = React.useState(false);
     const [deleteButtonTooltip, setDeleteButtonTooltip] = React.useState(false);
     const toggleDeleteAccountAlert = () => {
@@ -49,9 +48,6 @@ function AccountDetailsEditor(props) {
     }
     const toggleCannotDeleteAccountAlert = () => {
         setCannotDeleteAccountAlert(!cannotDeleteAccountAlert);
-    }
-    const toggleInitialValueLockedAlert = () => {
-        setInitialValueLockedAlert(!initialValueLockedAlert);
     }
     const toggleSaveButtonTooltip = () => {
         setSaveButtonTooltip(!saveButtonTooltip);
@@ -302,9 +298,7 @@ function AccountDetailsEditor(props) {
             console.log(response);
             props.fetchData();
             props.toggle();
-        }).catch(() => {
-            toggleInitialValueLockedAlert();
-        });
+        }).catch(console.log);
     }
 
     const setInitialAccountValue = initialAccountValue => {
@@ -414,7 +408,8 @@ function AccountDetailsEditor(props) {
                                         <div className="mb-3 row">
                                             <label className={
                                                 "col-form-label col-md-4 " 
-                                                + (appContext.currentPermissionTypeId < 2 || currentAccountHasChildren ? "disabled " : "")
+                                                + (appContext.currentPermissionTypeId < 2 || currentAccountHasChildren || (!props.createMode && appContext.lockInitialAccountValues)
+                                                        ? "disabled " : "")
                                                 + (DEBIT_ACCOUNT_TYPES.includes(parseInt(accountTypeId))? "": " discouraged")
                                             }>
                                                 {accountDetailsEditorText[appContext.locale]["Initial Debit Value"]}
@@ -427,14 +422,16 @@ function AccountDetailsEditor(props) {
                                                     onChange={event => {
                                                         setInitialDebitValueInput(event.target.value);
                                                     }}
-                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) ? true : false}
+                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) || (!props.createMode && appContext.lockInitialAccountValues)
+                                                            ? true : false}
                                                 />
                                             </div>
                                         </div>
                                         <div className="mb-3 row">
                                             <label className={
                                                 "col-form-label col-md-4 "
-                                                + (appContext.currentPermissionTypeId < 2 || currentAccountHasChildren ? "disabled " : "")
+                                                + (appContext.currentPermissionTypeId < 2 || currentAccountHasChildren || (!props.createMode && appContext.lockInitialAccountValues)
+                                                        ? "disabled " : "")
                                                 + (DEBIT_ACCOUNT_TYPES.includes(parseInt(accountTypeId))? " discouraged": "")
                                             }>
                                                 {accountDetailsEditorText[appContext.locale]["Initial Credit Value"]}
@@ -447,7 +444,8 @@ function AccountDetailsEditor(props) {
                                                     onChange={event => {
                                                         setInitialCreditValueInput(event.target.value);
                                                     }}
-                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) ? true : false}
+                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) || (!props.createMode && appContext.lockInitialAccountValues)
+                                                            ? true : false}
                                                 />
                                             </div>
                                         </div>
@@ -456,7 +454,8 @@ function AccountDetailsEditor(props) {
                                 : <>
                                     {(accountTypeId == 1 || accountTypeId == 2) ?
                                         <div className="mb-3 row">
-                                            <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 || currentAccountHasChildren ? "disabled " : "")}>
+                                            <label className={"col-form-label col-md-4 " + (appContext.currentPermissionTypeId < 2 || currentAccountHasChildren || (!props.createMode && appContext.lockInitialAccountValues)
+                                                    ? "disabled " : "")}>
                                                 {accountDetailsEditorText[appContext.locale]["Initial Account Value"]}
                                             </label>
                                             <div className="col-md-8">
@@ -467,7 +466,8 @@ function AccountDetailsEditor(props) {
                                                     onChange={event => {
                                                         setInitialAccountValue(event.target.value);
                                                     }}
-                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) ? true : false}
+                                                    disabled={(currentAccountHasChildren || appContext.currentPermissionTypeId < 2) || (!props.createMode && appContext.lockInitialAccountValues)
+                                                            ? true : false}
                                                 />
                                             </div>
                                         </div>
@@ -552,24 +552,6 @@ function AccountDetailsEditor(props) {
                 {props.category
                     ? accountDetailsEditorText[appContext.locale]["Please remove all line items and child categories from this category and try again."]
                     : accountDetailsEditorText[appContext.locale]["Please remove all line items and child accounts from this account and try again."]}
-            </SweetAlert>
-            <SweetAlert 
-                danger 
-                show={initialValueLockedAlert}
-                showConfirm={true} 
-                showCancel={false}
-                confirmBtnBsStyle="default"
-                confirmBtnText={accountDetailsEditorText[appContext.locale]["Cancel"]}
-                title={props.category
-                    ? accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this category."]
-                    : accountDetailsEditorText[appContext.locale]["Cannot edit the initial value of this account."]
-                }
-                onConfirm={toggleInitialValueLockedAlert}
-                onCancel={toggleInitialValueLockedAlert}
-            >
-                {props.category
-                    ? accountDetailsEditorText[appContext.locale]["Please contact an administrator of this ledger if you wish to change the initial values of non-empty accounts."]
-                    : accountDetailsEditorText[appContext.locale]["Please contact an administrator of this ledger if you wish to change the initial values of non-empty categories."]}
             </SweetAlert>
         </>
     )

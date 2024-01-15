@@ -6,10 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.dto.LineItemDTO;
+import com.easyledger.api.dto.SearchQueryDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.model.Customer;
@@ -19,10 +22,12 @@ import com.easyledger.api.model.Organization;
 import com.easyledger.api.model.Person;
 import com.easyledger.api.model.Vendor;
 import com.easyledger.api.repository.CustomerRepository;
+import com.easyledger.api.repository.JournalEntryRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.repository.PersonRepository;
 import com.easyledger.api.repository.VendorRepository;
 import com.easyledger.api.security.UserPrincipal;
+import com.easyledger.api.viewmodel.JournalEntryViewModel;
 
 @Service
 public class JournalEntryService {
@@ -39,16 +44,26 @@ public class JournalEntryService {
 	@Autowired
 	private CustomerRepository customerRepo;
 	
+	@Autowired
+	private JournalEntryRepository journalEntryRepo;
+
 	private LineItemService lineItemService;
 	
 	public JournalEntryService(PersonRepository personRepo, LineItemService lineItemService,
-			OrganizationRepository organizationRepo, VendorRepository vendorRepo, CustomerRepository customerRepo) {
+			OrganizationRepository organizationRepo, VendorRepository vendorRepo, CustomerRepository customerRepo, JournalEntryRepository journalEntryRepo) {
 		super();
 		this.personRepo = personRepo;
 		this.lineItemService = lineItemService;
 		this.organizationRepo = organizationRepo;
 		this.vendorRepo = vendorRepo;
 		this.customerRepo = customerRepo;
+		this.journalEntryRepo = journalEntryRepo;
+	}
+	
+	public Page<JournalEntryViewModel> getAllJournalEntryViewModelsForOrganizationAndSearchQuery(Long organizationId, SearchQueryDTO searchQuery, Pageable pageable) {
+		String query = searchQuery.getQuery();
+		return journalEntryRepo.getAllJournalEntryViewModelsForOrganizationAndQuery(organizationId, query, pageable);
+		
 	}
 
 	// Creates new Entry entity object from EntryDTO. Does not save the entity to the database.

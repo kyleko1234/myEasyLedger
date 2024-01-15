@@ -34,11 +34,6 @@ export const accountDetailsEditorText = {
         "Initial Account Value": "Initial Account Value",
         "Display Order": "Display Order",
 
-        "Cannot edit the initial value of this category.": "Cannot edit the initial value of this category.",
-        "Cannot edit the initial value of this account.": "Cannot edit the initial value of this account.",
-        "Please contact an administrator of this ledger if you wish to change the initial values of non-empty accounts.": "Please contact an administrator of this ledger if you wish to change the initial values of non-empty accounts.",
-        "Please contact an administrator of this ledger if you wish to change the initial values of non-empty categories.": "Please contact an administrator of this ledger if you wish to change the initial values of non-empty categories.",
-
         "This action requires EDIT permissions for this ledger.": "This action requires EDIT permissions for this ledger.",
 
         //Account Subtype Names.
@@ -116,11 +111,6 @@ export const accountDetailsEditorText = {
         "Cannot delete this category.": "無法删除本類別。",
         "Please remove all line items and child categories from this category and try again." : "請删先本類別下所有單行項目及其子類別後再試一次。",
         "Initial Account Value": "科目初始餘額",
-
-        "Cannot edit the initial value of this category.": "本類別的初始餘額不能更改。",
-        "Cannot edit the initial value of this account.": "本科目的初始餘額不能更改。",
-        "Please contact an administrator of this ledger if you wish to change the initial values of non-empty accounts.": "如果您需要更改本科目的初始餘額，請連繫有本帳册管理權限的使用者。",
-        "Please contact an administrator of this ledger if you wish to change the initial values of non-empty categories.": "如果您需要更改本類別的初始餘額，請連繫有本帳册管理權限的使用者。",
 
         "This action requires EDIT permissions for this ledger.": "使用本功能需有編修者權限。",
         

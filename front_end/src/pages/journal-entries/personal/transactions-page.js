@@ -10,6 +10,7 @@ import TransactionViewModelStandard from './transaction-view-model-standard';
 import TransactionsTableHeader from './transactions-table-header';
 import TransactionsTitleBarSmallScreen from './transactions-title-bar-small-screen';
 import TransactionsTitleBarStandard from './transactions-title-bar-standard';
+import SearchBar from '../../../components/misc/search-bar';
 
 function TransactionsPage(props) {
     const appContext = React.useContext(PageSettings);
@@ -18,6 +19,17 @@ function TransactionsPage(props) {
     const [transactionViewModels, setTransactionViewModels] = React.useState([]);
     const [accountOptions, setAccountOptions] = React.useState([]);
 
+    /**
+     * Search. Note: when moving through pages using the "older" and "newer" buttons/links, we do not want to change the search query even 
+     * if the contents of the search input have changed. Therefore the search query that we send to the server must be stored in a different
+     * variable than the actual value of the search bar input.
+     * We set a useEffect hook to listen to a change in searchQuery. When the user hits the search button, searchQuery is updated to match the search bar input.
+     * searchQuery being updated will trigger an API call for new data based on the new search term.
+     * This way, if the user updates the search bar input WITHOUT hitting the search button, the pagination buttons will trigger API calls using the old search term 
+     * instead of the updated but not submitted one.
+     */
+    const [searchQuery, setSearchQuery] = React.useState("");
+    const [searchBarInput, setSearchBarInput] = React.useState("");
 
     //pagination
     const [pageSize, setPageSize] = React.useState(appContext.resultsPerPage);
@@ -51,9 +63,12 @@ function TransactionsPage(props) {
             .catch(console.log);
     }
     
-    const fetchJournalEntryData = (pageIndex, pageSize) => {
+    const fetchTransactionData = () => {
+        let requestBody = {
+            query: searchQuery
+        }
         const url = `${API_BASE_URL}/organization/${appContext.currentOrganizationId}/assetAndLiabilityLineItem/?page=${pageIndex}&size=${pageSize}`;
-        axios.get(url).then(response => {
+        axios.post(url, requestBody).then(response => {
             let fetchedTransactions = response.data.content;
             fetchedTransactions.forEach(lineItem => {
                 if (lineItem.isCredit) {
@@ -76,15 +91,15 @@ function TransactionsPage(props) {
 
     }
 
-    const fetchData = (pageIndex, pageSize) => {
-        fetchJournalEntryData(pageIndex, pageSize);
+    const fetchData = () => {
+        fetchTransactionData();
         fetchAccounts();
     }
 
     //Fetch data on page load and when pageIndex and pageSize are updated
     React.useEffect(() => {
-        fetchData(pageIndex, pageSize);
-    }, [pageIndex, pageSize])
+        fetchData();
+    }, [pageIndex, pageSize, searchQuery])
 
     const handleCreateTransactionButton = () => {
         setEditMode(true);
@@ -96,6 +111,16 @@ function TransactionsPage(props) {
         toggleTransactionModal();
     }
 
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+        setSearchQuery(searchBarInput);
+    }
+
+    const clearSearch = () => {
+        setSearchBarInput("");
+        setSearchQuery("");
+    }
+
     return(
         <>
             <TransactionsTitleBarStandard
@@ -103,6 +128,12 @@ function TransactionsPage(props) {
             />
             <TransactionsTitleBarSmallScreen
                 handleCreateTransactionButton={handleCreateTransactionButton}
+            />
+            <SearchBar
+                handleSearchSubmit={handleSearchSubmit}
+                inputValue={searchBarInput}
+                clearSearch={clearSearch}
+                onChange={event => setSearchBarInput(event.target.value)}
             />
             <TransactionsTableHeader />
             <div>
@@ -149,7 +180,7 @@ function TransactionsPage(props) {
                 isOpen={transactionModal}
                 editMode={editMode} setEditMode={setEditMode}
                 toggle={toggleTransactionModal}
-                refreshParentComponent={() => fetchData(pageIndex, pageSize)}
+                refreshParentComponent={() => fetchData()}
                 currentJournalEntryId={currentJournalEntryId} setCurrentJournalEntryId={setCurrentJournalEntryId}
                 accountOptions={accountOptions}
             />
