@@ -45,6 +45,7 @@ Prefix all endpoints with `http://{host}/v0.6.1/`
 - [[List All LineItems| GET /lineItem]]
 - [[Retrieve a LineItem|GET /lineItem/{id}]]
 - [[Retrieve All LineItems for an Account|GET /account/{id}/lineItem]]**
+- [[Search for Asset and Liability LineItems for an Organization|POST /organization/{organizationId}/assetAndLiabilityLineItem?page={i}&size={j}]]
 <br/><br/>
 - [[List All Organizations|GET /organization]]
 - [[Retrieve an Organization|GET /organization/{id}]]

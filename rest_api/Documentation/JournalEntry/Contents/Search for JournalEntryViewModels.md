@@ -4,7 +4,8 @@ Endpoint: `POST /organization/{id}/journalEntryViewModel?page={i}&size={j}`
 Authorization: User making the request must belong to the specified organization.
 
 Returns a page from a paginated list of all undeleted journal entries belonging to organization with id {id} with zero-indexed page number  `i` and page size `j` as ViewModels, sorted by most recent journalEntryDate, secondary sorted by journalEntryId descending. JournalEntryViewModels are a compressed view of entries, allowing the entry to be displayed in one row with a summary of LineItem data for that entry. This is useful for generating a compact paginated view of a General Journal. ViewModels include information on journalEntryId, journalEntryDate, description for the journal entry, total debit amounts for the entry, and total credit amounts for the entry. Pagination is done server-side.
-A request body should be provided with a search query. This query will be used to search for and return JournalEntryViewModels for JournalEntries that have descriptions matching this query. This endpoint does NOT search through LineItem descriptions/memos. If a query is not provided, or if it is an empty string or whitespace, this endpoint will return all JournalEntryViewModels instead of performing a text search.
+A request body should be provided with a search query. This query will be used to search for and return JournalEntryViewModels for JournalEntries that have descriptions matching this query, or that contain LineItems with descriptions that match this query. If a query is not provided, or if it is an empty string or whitespace, this endpoint will return all JournalEntryViewModels instead of performing a text search.
+In order to support the Chinese language, this search requires exact string matches or partial string matches (no fuzzy searches or advanced search engine features).
 ___
 
 #### Request Body Structure
