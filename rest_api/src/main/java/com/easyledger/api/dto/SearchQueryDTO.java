@@ -7,7 +7,7 @@ public class SearchQueryDTO {
 	}
 	
 	public SearchQueryDTO(String query) {
-		if (query != null) {
+		if (query != null && !query.trim().isEmpty()) {
 			this.query = query.trim();
 		} else {
 			this.query = "";
@@ -19,7 +19,7 @@ public class SearchQueryDTO {
 	}
 	
 	public void setQuery(String query) {
-		if (query != null) {
+		if (query != null && !query.trim().isEmpty()) {
 			this.query = query.trim();
 		} else {
 			this.query = "";

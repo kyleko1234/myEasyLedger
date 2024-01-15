@@ -51,7 +51,7 @@ function TransactionsPage(props) {
             .catch(console.log);
     }
     
-    const fetchJournalEntryData = (pageIndex, pageSize) => {
+    const fetchTransactionData = (pageIndex, pageSize) => {
         const url = `${API_BASE_URL}/organization/${appContext.currentOrganizationId}/assetAndLiabilityLineItem/?page=${pageIndex}&size=${pageSize}`;
         axios.get(url).then(response => {
             let fetchedTransactions = response.data.content;
@@ -77,7 +77,7 @@ function TransactionsPage(props) {
     }
 
     const fetchData = (pageIndex, pageSize) => {
-        fetchJournalEntryData(pageIndex, pageSize);
+        fetchTransactionData(pageIndex, pageSize);
         fetchAccounts();
     }
 
