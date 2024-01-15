@@ -146,7 +146,7 @@ function OrganizationSettings(props) {
                         </label>
                         <div className="col-md-9 col-form-label disabled">{currencies.find(currency => currency.value === permissionObject.organization.currency).label}</div>
                     </div>
-                    <div className="mb-3 row mx-0 my-2 align-items-center">
+                    <div className={"mb-3 row mx-0 my-2 align-items-center " + (permissionObject.organization.isEnterprise ? "" : "d-none")}>
                         <label 
                             className={"col-lg-3 col-form-label my-0 px-0 " + (permissionObject.permissionType.id < 3 ? "disabled " : "")}
                             htmlFor='initial-retained-earnings'
