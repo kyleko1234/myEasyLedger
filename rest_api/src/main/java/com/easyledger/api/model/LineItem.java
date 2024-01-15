@@ -120,6 +120,48 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				+ "    journalEntryDate DESC, journalEntryId DESC, lineItemId DESC  ",
 		resultSetMapping = "lineItemDTOMapping"
 )
+@NamedNativeQuery( //retrieves all undeleted LineItems in undeleted entries for an organization when given an organizationId and search query matching either journal entry description or line item description
+		name = "LineItem.getAllAssetAndLiabilityLineItemsForOrganizationAndQuery",
+		query = "(SELECT             "
+				+ "		account.id AS accountId, account.name AS accountName,             "
+				+ "		line_item.amount AS amount, line_item.description AS description,             "
+				+ "		journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS journalEntryDescription,             "
+				+ "		line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId       "
+				+ "	FROM             "
+				+ "		line_item, journal_entry, account, account_subtype, account_type       "
+				+ "	WHERE             "
+				+ "		journal_entry.organization_id = :organizationId AND              "
+				+ "		line_item.account_id = account.id AND             "
+				+ "		line_item.journal_entry_id = journal_entry.id AND             "
+				+ "		journal_entry.deleted = false AND        "
+				+ "		account_subtype.id = account.account_subtype_id AND       "
+				+ "		account_type.id = account_subtype.account_type_id AND  "
+				+ "		account_type.id < 3  AND"
+				+ "		((journal_entry.description ILIKE '%' || :query || '%') OR (line_item.description ILIKE '%' || :query || '%'))"
+				+ ")      "
+				+ "UNION       "
+				+ "(SELECT             "
+				+ "	child_account.id AS accountId, child_account.name AS accountName,             "
+				+ "	line_item.amount AS amount, line_item.description AS description,            "
+				+ "	journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS journalEntryDescription,             "
+				+ "	line_item.is_credit AS isCredit, line_item.id AS lineItemId, account_subtype.id AS accountSubtypeId, account_type.id AS accountTypeId       "
+				+ "FROM             "
+				+ "	line_item, journal_entry, account AS child_account, account AS parent_account, account_subtype, account_type       "
+				+ "WHERE             "
+				+ "	journal_entry.organization_id = :organizationId AND              "
+				+ "	line_item.account_id = child_account.id AND             "
+				+ "	line_item.journal_entry_id = journal_entry.id AND             "
+				+ "	journal_entry.deleted = false AND        "
+				+ "	parent_account.id = child_account.parent_account_id AND        "
+				+ "	account_subtype.id = parent_account.account_subtype_id AND       "
+				+ "	account_type.id = account_subtype.account_type_id AND  "
+				+ "	account_type.id < 3 AND"
+				+ "	((journal_entry.description ILIKE '%' || :query || '%') OR (line_item.description ILIKE '%' || :query || '%'))"
+				+ ")      "
+				+ "ORDER BY             "
+				+ "	journalEntryDate DESC, journalEntryId DESC, lineItemId DESC  ",
+		resultSetMapping = "lineItemDTOMapping"
+)
 @SqlResultSetMapping(//sqlresultsetmapping for counting query
 		name = "lineItemDTOMapping.count",
 		columns = @ColumnResult(name = "count"))
@@ -129,7 +171,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 		query = "SELECT count(*) AS count from line_item, journal_entry WHERE line_item.account_id = ? AND line_item.journal_entry_id = journal_entry.id AND journal_entry.deleted = false",
 		resultSetMapping = "lineItemDTOMapping.count"
 )
-@NamedNativeQuery( //query to count number of LineItems in order to use Pageable on LineItem.getAllLineItemsForOrganization
+@NamedNativeQuery( //query to count number of LineItems in order to use Pageable on LineItem.getAllAssetAndLiabilityLineItemsForOrganization
 		name = "LineItem.getAllAssetAndLiabilityLineItemsForOrganization.count",
 		query = "SELECT SUM(count) AS count FROM ( "
 				+ "    ( "
@@ -160,6 +202,43 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 				+ "            child_account.parent_account_id = parent_account.id AND "
 				+ "            parent_account.account_subtype_id = account_subtype.id AND "
 				+ "            account_subtype.account_type_id < 3 "
+				+ "    ) "
+				+ ") AS return_table",
+		resultSetMapping = "lineItemDTOMapping.count"
+)
+@NamedNativeQuery( //query to count number of LineItems in order to use Pageable on LineItem.getAllAssetAndLiabilityLineItemsForOrganization
+		name = "LineItem.getAllAssetAndLiabilityLineItemsForOrganizationAndQuery.count",
+		query = "SELECT SUM(count) AS count FROM ( "
+				+ "    ( "
+				+ "        SELECT  "
+				+ "            count(*) AS count  "
+				+ "        FROM  "
+				+ "            line_item, journal_entry, account, account_subtype "
+				+ "        WHERE  "
+				+ "            journal_entry.organization_id = :organizationId AND  "
+				+ "            line_item.journal_entry_id = journal_entry.id AND  "
+				+ "            journal_entry.deleted = false AND "
+				+ "            line_item.account_id = account.id AND  "
+				+ "            account.account_subtype_id = account_subtype.id AND "
+				+ "            account_subtype.account_type_id < 3 AND "
+				+ "	           ((journal_entry.description ILIKE '%' || :query || '%') OR (line_item.description ILIKE '%' || :query || '%')) "
+				+ "    )  "
+				+ "    UNION "
+				+ "    ( "
+				+ "        SELECT  "
+				+ "            count(*) AS count  "
+				+ "        FROM  "
+				+ "            line_item, journal_entry, account_subtype, "
+				+ "            account AS parent_account, account AS child_account "
+				+ "        WHERE  "
+				+ "            journal_entry.organization_id = :organizationId AND  "
+				+ "            line_item.journal_entry_id = journal_entry.id AND  "
+				+ "            journal_entry.deleted = false AND "
+				+ "            line_item.account_id = child_account.id AND  "
+				+ "            child_account.parent_account_id = parent_account.id AND "
+				+ "            parent_account.account_subtype_id = account_subtype.id AND "
+				+ "            account_subtype.account_type_id < 3 AND "
+				+ "	           ((journal_entry.description ILIKE '%' || :query || '%') OR (line_item.description ILIKE '%' || :query || '%')) "
 				+ "    ) "
 				+ ") AS return_table",
 		resultSetMapping = "lineItemDTOMapping.count"

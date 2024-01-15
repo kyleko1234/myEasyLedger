@@ -11,10 +11,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easyledger.api.dto.LineItemDTO;
+import com.easyledger.api.dto.SearchQueryDTO;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
 import com.easyledger.api.model.Account;
@@ -24,6 +27,7 @@ import com.easyledger.api.repository.AccountRepository;
 import com.easyledger.api.repository.LineItemRepository;
 import com.easyledger.api.repository.OrganizationRepository;
 import com.easyledger.api.security.AuthorizationService;
+import com.easyledger.api.service.LineItemService;
 
 @RestController
 @CrossOrigin("*")
@@ -33,14 +37,16 @@ public class LineItemController {
 	private AccountRepository accountRepo;
 	private AuthorizationService authorizationService;
 	private OrganizationRepository organizationRepo;
+	private LineItemService lineItemService;
 
 	public LineItemController(LineItemRepository lineItemRepo, AccountRepository accountRepo, 
-			OrganizationRepository organizationRepo, AuthorizationService authorizationService) {
+			OrganizationRepository organizationRepo, AuthorizationService authorizationService, LineItemService lineItemService) {
 		super();
 		this.lineItemRepo = lineItemRepo;
 		this.accountRepo = accountRepo;
 		this.authorizationService = authorizationService;
 		this.organizationRepo = organizationRepo;
+		this.lineItemService = lineItemService;
 	}
 
 	@Secured("ROLE_ADMIN")
@@ -83,5 +89,13 @@ public class LineItemController {
     	return lineItemRepo.getAllAssetAndLiabilityLineItemsForOrganization(organizationId, pageable);
     }
 
+    @PostMapping("/organization/{organizationId}/assetAndLiabilityLineItem")
+    public Page<LineItemDTO> getAllAssetAndLiabilityLineItemsForOrganizationAndQuery(@PathVariable(value="organizationId") Long organizationId, @RequestBody SearchQueryDTO searchQuery,
+    		Pageable pageable, Authentication authentication) throws ResourceNotFoundException, UnauthorizedException {
+    	Organization organization = organizationRepo.findById(organizationId)
+	    		.orElseThrow(() -> new ResourceNotFoundException("Organization not found for this id :: " + organizationId));
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, organizationId);
+    	return lineItemService.getAllAssetAndLiabilityLineItemsForOrganizationAndQuery(organizationId, searchQuery, pageable);
+    }
 }
 
