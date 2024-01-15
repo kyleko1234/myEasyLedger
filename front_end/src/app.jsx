@@ -108,6 +108,7 @@ class App extends React.Component {
                         objectToSetToState.currency = currentPermission.organization.currency;
                         objectToSetToState.isEnterprise = currentPermission.organization.isEnterprise;
                         objectToSetToState.lockJournalEntriesBefore = currentPermission.organization.lockJournalEntriesBefore;
+                        objectToSetToState.lockInitialAccountValues = currentPermission.organization.lockInitialAccountValues;
                     }
                 } else {
                     objectToSetToState.currentOrganizationId = null
@@ -163,6 +164,7 @@ class App extends React.Component {
 			lastName: '',
 			email: '',
 			currentOrganizationId: null,
+            lockInitialAccountValues: true,
 			permissions: null,
 			locale: (navigator.language
                     ? (navigator.language.includes("zh")

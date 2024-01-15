@@ -201,10 +201,7 @@ function OrganizationSettings(props) {
                                 htmlFor="lockInitialAccountValueCheckbox" 
                                 className={"my-0 mx-2 form-check-label " + (permissionObject.permissionType.id < 3 ? "disabled " : "")}
                             >
-                                {permissionObject.organization.isEnterprise
-                                    ? settingsText[appContext.locale]["Lock initial values for accounts with journal entries"]
-                                    : settingsText[appContext.locale]["Lock initial values for accounts and categories with transactions"]
-                                }
+                                {settingsText[appContext.locale]["Lock initial values for all accounts"]}
                             </label>
                         </div>
                     </div>

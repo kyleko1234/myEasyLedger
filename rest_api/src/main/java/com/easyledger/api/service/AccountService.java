@@ -212,8 +212,8 @@ public class AccountService {
 		}
 		
 		if (dto.getInitialCreditAmount().compareTo(oldAccount.getInitialCreditAmount()) != 0 || dto.getInitialDebitAmount().compareTo(oldAccount.getInitialDebitAmount()) != 0) {
-			if (oldAccount.getOrganization().isLockInitialAccountValues() && lineItemRepo.accountContainsLineItems(oldAccount.getId())) {
-				throw new ConflictException("Cannot change the initial value of a non-empty account");
+			if (oldAccount.getOrganization().isLockInitialAccountValues()) {
+				throw new ConflictException("Initial account values are locked for this ledger.");
 			}
 			if (oldAccount.isHasChildren()) {
 				throw new ConflictException("Cannot change the initial value of an account with children.");
