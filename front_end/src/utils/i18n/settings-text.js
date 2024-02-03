@@ -159,7 +159,7 @@ export const settingsText = {
         "Results per Page": "更改每頁筆數",
         "Number of results to display per page" : "每頁顯示帳目筆數數量",
 
-        "Lock initial values for all accounts": "TRANSLATION",
+        "Lock initial values for all accounts": "鎖定所有科目的初始餘額",
 
         "Lock journal entries before": "鎖定此日期之前的交易",
         "Invalid date.": "日期格式有誤",
