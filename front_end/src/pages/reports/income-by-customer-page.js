@@ -83,7 +83,7 @@ function IncomeByCustomerPage() {
                             customerData={pieChartCustomerData}
                             loading={loading}
                         />
-                        <hr/>
+                        <hr className="d-none d-lg-flex"/>
                         <IncomeByCustomerReport
                             incomeByCustomerReportDto={incomeByCustomerReportDto}
                         />

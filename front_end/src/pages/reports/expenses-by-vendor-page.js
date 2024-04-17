@@ -83,7 +83,7 @@ function ExpensesByVendorPage() {
                             vendorData={pieChartVendorData}
                             loading={loading}
                         />
-                        <hr/>
+                        <hr className="d-none d-lg-flex"/>
                         <ExpensesByVendorReport
                             expensesByVendorReportDto={expensesByVendorReportDto}
                         />
