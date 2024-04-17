@@ -91,7 +91,7 @@ function ExpensesByAccountPage() {
                             accountData={pieChartAccountData}
                             loading={loading}
                         />
-                        <hr/>
+                        <hr className="d-none d-lg-flex"/>
                         <ExpensesByAccountReport
                             incomeExpenseReportDto={incomeExpenseReportDto}
                             detailedView={detailedView}

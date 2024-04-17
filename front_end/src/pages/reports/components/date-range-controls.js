@@ -219,30 +219,46 @@ function DateRangeControls({parentComponentDataFetchFunction, detailedView,
                                             value={datesToRequest[i].label === "Custom" ? null : dateRangePresets.find(preset => preset.label == datesToRequest[i].label)}
                                         />
                                     </div>
-                                    <div className="d-flex justify-content-between text-start align-items-center my-1">
-                                        <label className="my-0 col-3 px-0">
-                                            {incomeStatementRenderText[appContext.locale]["From:"]} 
-                                        </label>
-                                        <input 
-                                            type="date" 
-                                            placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]}
-                                            className="form-control" 
-                                            value={datesToRequest[i].startDate} 
-                                            onChange={event => handleChangeStartDate(event.target.value, i)} 
-                                        />
-                                    </div>
-                                    <div className="d-flex justify-content-between text-start align-items-center mb-2">
-                                        <label className="my-0 col-3 px-0">
-                                            {incomeStatementRenderText[appContext.locale]["To:"]} 
-                                        </label>
-                                        <input 
-                                            type="date" 
-                                            placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]}
-                                            className="form-control" 
-                                            value={datesToRequest[i].endDate} 
-                                            onChange={event => handleChangeEndDate(event.target.value, i)} 
-                                        />
-                                    </div>
+                                    {singleDate 
+                                        ? <div className="d-flex justify-content-between text-start align-items-center mb-2">
+                                            <label className="my-0 col-3 px-0">
+                                                {balanceSheetRenderText[appContext.locale]["As of:"]} 
+                                            </label>
+                                            <input 
+                                                type="date" 
+                                                placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]}
+                                                className="form-control" 
+                                                value={datesToRequest[i].endDate} 
+                                                onChange={event => handleChangeEndDate(event.target.value, i)} 
+                                            />
+                                        </div>
+                                        : <>
+                                            <div className="d-flex justify-content-between text-start align-items-center my-1">
+                                                <label className="my-0 col-3 px-0">
+                                                    {incomeStatementRenderText[appContext.locale]["From:"]} 
+                                                </label>
+                                                <input 
+                                                    type="date" 
+                                                    placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]}
+                                                    className="form-control" 
+                                                    value={datesToRequest[i].startDate} 
+                                                    onChange={event => handleChangeStartDate(event.target.value, i)} 
+                                                />
+                                            </div>
+                                            <div className="d-flex justify-content-between text-start align-items-center mb-2">
+                                                <label className="my-0 col-3 px-0">
+                                                    {incomeStatementRenderText[appContext.locale]["To:"]} 
+                                                </label>
+                                                <input 
+                                                    type="date" 
+                                                    placeholder={incomeStatementRenderText[appContext.locale]["yyyy-mm-dd"]}
+                                                    className="form-control" 
+                                                    value={datesToRequest[i].endDate} 
+                                                    onChange={event => handleChangeEndDate(event.target.value, i)} 
+                                                />
+                                            </div>
+                                        </>
+                                    }
                                 </div>
                             )
                         })}
