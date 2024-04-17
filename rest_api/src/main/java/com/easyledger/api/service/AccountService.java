@@ -2,6 +2,8 @@ package com.easyledger.api.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -317,7 +319,8 @@ public class AccountService {
 
 		updatedAccount.setHasChildren(oldAccount.isHasChildren());
 		Account returnObject = accountRepo.save(updatedAccount);
-		for (Account childAccount : oldAccount.getChildAccounts()) {
+		List<Account> children = new ArrayList<Account>(oldAccount.getChildAccounts()); //must make a new collection here, otherwise iterating through the list and updating the children will give java.util.ConcurrentModificationException: null 
+		for (Account childAccount : children) {
 			childAccount.setIncomeStatementFormatPosition(updatedAccount.getIncomeStatementFormatPosition());
 			childAccount.setBalanceSheetFormatPosition(updatedAccount.getBalanceSheetFormatPosition());
 			childAccount.setCashFlowFormatPosition(updatedAccount.getCashFlowFormatPosition());
