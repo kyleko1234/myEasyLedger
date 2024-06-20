@@ -14,6 +14,7 @@ import JournalEntryViewModelStandard from './journal-entry-view-model-standard';
 import { Form, Input, InputGroup, InputGroupText } from 'reactstrap';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import SearchBar from '../../../components/misc/search-bar';
+import JournalEntryViewModel from './journal-entry-view-model';
 
 function JournalEntriesPage(props) {
     const appContext = React.useContext(PageSettings);
@@ -192,21 +193,7 @@ function JournalEntriesPage(props) {
             <div>
                 {journalEntryViewModels.map(journalEntryViewModel => {
                     return (
-                        <JournalEntryViewModelStandard
-                            key={journalEntryViewModel.journalEntryId}
-                            journalEntryDate={journalEntryViewModel.journalEntryDate}
-                            description={journalEntryViewModel.description}
-                            debitAmount={journalEntryViewModel.debitAmount}
-                            creditAmount={journalEntryViewModel.creditAmount}
-                            onClick={() => handleClickJournalEntry(journalEntryViewModel.journalEntryId)}
-                        />
-                    )
-                })}
-            </div>
-            <div>
-                {journalEntryViewModels.map(journalEntryViewModel => {
-                    return (
-                        <JournalEntryViewModelSmallScreen
+                        <JournalEntryViewModel
                             key={journalEntryViewModel.journalEntryId}
                             journalEntryDate={journalEntryViewModel.journalEntryDate}
                             description={journalEntryViewModel.description}

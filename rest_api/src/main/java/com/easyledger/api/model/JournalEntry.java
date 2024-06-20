@@ -67,19 +67,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )
 @NamedNativeQuery( //retrieves all undeleted entries for the given organization that match the search query and maps them into EntryViewModels. journal entry will be returned if search query matches either line item descriptions or journal entry descriptions.
 		name = "JournalEntry.getAllJournalEntryViewModelsForOrganizationAndQuery",
-		query = "SELECT       "
-				+ "	journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS description,       "
-				+ "	SUM(CASE line_item.is_credit WHEN false THEN line_item.amount END) AS debitAmount,      "
-				+ "	SUM(CASE line_item.is_credit WHEN true THEN line_item.amount END) as creditAmount      "
-				+ "FROM      "
-				+ "	journal_entry, line_item      "
-				+ "WHERE       "
-				+ "	journal_entry.id = line_item.journal_entry_id AND       "
-				+ "	journal_entry.organization_id = :organizationId AND       "
-				+ "	journal_entry.deleted = false AND  "
-				+ "	journal_entry.description ILIKE '%' || :query || '%'"
-				+ "GROUP BY journal_entry.id      "
-				+ "ORDER BY journal_entry.journal_entry_date DESC, journal_entry.id DESC ",
+		query = "SELECT         "
+				+ "	journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS description,         "
+				+ "	SUM(CASE line_item.is_credit WHEN false THEN line_item.amount ELSE 0 END) AS debitAmount,        "
+				+ "	SUM(CASE line_item.is_credit WHEN true THEN line_item.amount ELSE 0 END) as creditAmount "
+				+ "FROM        "
+				+ "	journal_entry, line_item "
+				+ "WHERE   "
+				+ "journal_entry.id = line_item.journal_entry_id AND "
+				+ "	journal_entry.organization_id = :organizationId AND         "
+				+ "	journal_entry.deleted = false AND    "
+				+ "	(journal_entry.description ILIKE '%' || :query || '%' "
+				+ "	 	OR EXISTS (SELECT 1 "
+				+ "				   FROM line_item "
+				+ "				   WHERE line_item.journal_entry_id = journal_entry.id "
+				+ "				   AND line_item.description ILIKE '%' || :query || '%')) "
+				+ "GROUP BY journal_entry.id "
+				+ "ORDER BY journalEntryDate DESC, journalEntryId DESC  ",
 		resultSetMapping = "journalEntryViewModelMapping"
 )
 @SqlResultSetMapping(//sqlresultsetmapping for counting query
@@ -93,11 +97,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 )
 @NamedNativeQuery( //query to count number of entries in order to use Pageable on Entry.getAllEntryViewModelsForOrganizationAndQuery
 		name = "JournalEntry.getAllJournalEntryViewModelsForOrganizationAndQuery.count",
-		query = "SELECT count(*) AS count FROM journal_entry  "
-				+ "WHERE  "
-				+ "	journal_entry.organization_id = :organizationId AND  "
-				+ "	journal_entry.deleted = false AND "
-				+ "	journal_entry.description ILIKE '%' || :query || '%'",
+		query = "SELECT count(*) AS count FROM  "
+				+ "(SELECT         "
+				+ "	journal_entry.id AS journalEntryId, journal_entry.journal_entry_date AS journalEntryDate, journal_entry.description AS description,         "
+				+ "	SUM(CASE line_item.is_credit WHEN false THEN line_item.amount ELSE 0 END) AS debitAmount,        "
+				+ "	SUM(CASE line_item.is_credit WHEN true THEN line_item.amount ELSE 0 END) as creditAmount "
+				+ "FROM        "
+				+ "	journal_entry, line_item "
+				+ "WHERE   "
+				+ "journal_entry.id = line_item.journal_entry_id AND "
+				+ "	journal_entry.organization_id = :organizationId AND         "
+				+ "	journal_entry.deleted = false AND    "
+				+ "	(journal_entry.description ILIKE '%' || :query || '%' "
+				+ "	 	OR EXISTS (SELECT 1 "
+				+ "				   FROM line_item "
+				+ "				   WHERE line_item.journal_entry_id = journal_entry.id "
+				+ "				   AND line_item.description ILIKE '%' || :query || '%')) "
+				+ "GROUP BY journal_entry.id "
+				+ "ORDER BY journalEntryDate DESC, journalEntryId DESC  "
+				+ ") AS results",
 		resultSetMapping = "journalEntryViewModelMapping.count"
 )
 
