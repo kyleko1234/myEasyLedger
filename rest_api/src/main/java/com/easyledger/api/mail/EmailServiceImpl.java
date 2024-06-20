@@ -20,7 +20,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 
 @Component
 public class EmailServiceImpl {
-	private static final String FROM_ADDRESS = "noreply@easyledgerapp.com";
+	private static final String FROM_ADDRESS = "noreply@myeasyledger.com";
 	
 	@Autowired
 	private JavaMailSender emailSender;
@@ -67,6 +67,7 @@ public class EmailServiceImpl {
 	public void sendHtmlMessage(String to, String subject, String htmlBody) throws MessagingException {
 		MimeMessage message = emailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+		helper.setFrom(FROM_ADDRESS);
 		helper.setTo(to);;
 		helper.setSubject(subject);
 		helper.setText(htmlBody, true);
