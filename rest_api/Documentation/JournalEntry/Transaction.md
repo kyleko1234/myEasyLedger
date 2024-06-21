@@ -23,7 +23,7 @@ The object structure for `TransactionLineItem`:
 	"amount": BigDecimal,
 	"accountId": Long,
 	"accountName": String 64,
-	"transactionTypeId": int,
+	"transactionTypeId": Long,
 	"transactionTypeName": String,
 }
 ```

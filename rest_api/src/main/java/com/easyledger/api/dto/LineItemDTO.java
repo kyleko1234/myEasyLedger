@@ -8,7 +8,7 @@ import java.util.Date;
 import com.easyledger.api.model.LineItem;
 
 
-public class LineItemDTO {
+public class LineItemDTO implements Comparable<LineItemDTO> {
 	
 	private Long accountId;
 	private String accountName;
@@ -158,6 +158,18 @@ public class LineItemDTO {
 				+ ", description=" + description + ", journalEntryId=" + journalEntryId + ", journalEntryDate="
 				+ journalEntryDate + ", isCredit=" + isCredit + ", lineItemId=" + lineItemId + ", accountSubtypeId="
 				+ accountSubtypeId + ", accountTypeId=" + accountTypeId + "]";
+	}
+
+	@Override
+	public int compareTo(LineItemDTO lineItemDto) {
+		long difference = Math.subtractExact(this.getLineItemId(), lineItemDto.getLineItemId());
+		if (difference > 0) {
+			return 1;
+		} else if (difference < 0) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 
 

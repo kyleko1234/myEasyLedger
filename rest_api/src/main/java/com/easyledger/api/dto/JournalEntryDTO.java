@@ -134,8 +134,6 @@ public class JournalEntryDTO {
 				+ ", description=" + description + ", personId=" + personId + ", organizationId=" + organizationId
 				+ ", lineItems=" + lineItems + ", deleted=" + deleted + "]";
 	}
-
-
 	
 }
 
