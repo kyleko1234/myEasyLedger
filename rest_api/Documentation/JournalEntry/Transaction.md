@@ -11,7 +11,8 @@ The object structure for `Transaction`:
 	"description": String 255,
 	"fromAccountId": Long,
 	"fromAccountName": String 64,
-	"transactionLineItems": Array<TransactionLineItem> 
+	"transactionLineItems": Array<TransactionLineItem>,
+	"amount": BigDecimal
 }
 ```
 The object structure for `TransactionLineItem`:
@@ -46,7 +47,7 @@ TransactionTypes:
 # Converting Journal Entries into Transactions
 1. Ensure LineItems are sorted by lineItemId, ascending.
 2. JournalEntryId, Description, Date, PersonId, OrganizationId are all directly copied.
-3. The accountId and accountName of the first LineItem are set as the 'fromAccount' for the transaction. Then, remove this first LineItem from the array of LineItems.
+3. The accountId and accountName of the first LineItem are set as the 'fromAccount' for the transaction. The 'total' of this transaction is the amount of the first LineItem if isCredit is false, else negate the amount of this LineItem to get the total. Then, remove this first LineItem from the array of LineItems.
 4. Reformat the remaining LineItems into TransactionLineItems:
 	1. LineItemId and description remain the same
 	2. AccountName and AccountId remain the same
@@ -59,7 +60,9 @@ TransactionTypes:
 2. Sum total debits and credits of the resulting LineItems.
 3. Add a LineItem to the front of the array: 
 	1. accountId, accountName are taken from the 'fromAccount'  of the Transaction
-	2. amount of this LineItem is the total credits of the rest of the line items minus the total debits
-	3. isCredit = false
+	2. If total debits >= total credits, make this LineItem isCredit = true, with total debits - total credits as the amount. Otherwise if credits > debits, make isCredit false, with total credits - debits as the amount.
 	4. description should be the same as the description of the Transaction.
 4. Populate the JournalEntry fields from the Transaction fields: organizationId, personId, description, journalEntryDate, journalEntryId should all remain the same.
+
+# Endpoints
+Retrieve a single transaction by JournalEntryId: GET `/transaction/{journalEntryId}`
