@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.easyledger.api.dto.JournalEntryDTO;
 import com.easyledger.api.dto.JournalEntryLogDTO;
 import com.easyledger.api.dto.SearchQueryDTO;
+import com.easyledger.api.dto.TransactionDTO;
 import com.easyledger.api.exception.ConflictException;
 import com.easyledger.api.exception.ResourceNotFoundException;
 import com.easyledger.api.exception.UnauthorizedException;
@@ -106,6 +107,16 @@ public class JournalEntryController {
     	JournalEntryDTO journalEntryDTO = new JournalEntryDTO(journalEntry);
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, journalEntryDTO.getOrganizationId());
         return ResponseEntity.ok().body(journalEntryDTO);
+    }
+    
+    @GetMapping("/transaction/{journalEntryId}")
+    public ResponseEntity<TransactionDTO> getJournalEntryByIdAsTransaction(@PathVariable(value = "journalEntryId") Long journalEntryId, Authentication authentication) 
+    		throws UnauthorizedException, ResourceNotFoundException {
+    	JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
+        		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId)); 
+    	JournalEntryDTO journalEntryDTO = new JournalEntryDTO(journalEntry);
+    	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, journalEntryDTO.getOrganizationId());
+    	return ResponseEntity.ok().body(new TransactionDTO(journalEntryDTO));
     }
     
     @GetMapping("/journalEntry/{id}/log")

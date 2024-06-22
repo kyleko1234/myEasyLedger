@@ -8,6 +8,8 @@ import com.easyledger.api.utility.TransactionType;
 public class TransactionLineItemDTO {
 	private Long lineItemId;
 	private Long journalEntryId;
+	private Long accountId;
+	private String accountName;
 	private String description;
 	private BigDecimal amount;
 	private Long transactionTypeId;
@@ -19,6 +21,8 @@ public class TransactionLineItemDTO {
 	public TransactionLineItemDTO(LineItemDTO lineItem) {
 		this.lineItemId = lineItem.getLineItemId();
 		this.journalEntryId = lineItem.getJournalEntryId();
+		this.accountId = lineItem.getAccountId();
+		this.accountName = lineItem.getAccountName();
 		this.description = lineItem.getDescription();
 		for (TransactionType transactionType : TransactionType.values()) {
 			if (Arrays.binarySearch(transactionType.getAccountTypeIds(), lineItem.getAccountTypeId()) >= 0) {
@@ -67,6 +71,18 @@ public class TransactionLineItemDTO {
 	}
 	public void setTransactionTypeName(String transactionTypeName) {
 		this.transactionTypeName = transactionTypeName;
+	}
+	public Long getAccountId() {
+		return accountId;
+	}
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+	public String getAccountName() {
+		return accountName;
+	}
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
 	}
 	
 	

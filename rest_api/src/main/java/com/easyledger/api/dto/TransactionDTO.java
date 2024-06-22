@@ -1,5 +1,6 @@
 package com.easyledger.api.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,10 +14,11 @@ public class TransactionDTO {
 	private String description;
 	private Long fromAccountId;
 	private String fromAccountName;
-	private List<TransactionLineItemDTO> lineItems;
+	private List<TransactionLineItemDTO> lineItems = new ArrayList<TransactionLineItemDTO>();
+	private BigDecimal total;
 
 	public TransactionDTO() {
-		this.lineItems = new ArrayList<TransactionLineItemDTO>();
+
 	}
 	public TransactionDTO(JournalEntryDTO journalEntry) {
 		this.journalEntryId = journalEntry.getJournalEntryId();
@@ -28,6 +30,11 @@ public class TransactionDTO {
 		LineItemDTO firstLineItem = journalEntry.getLineItems().remove(0);
 		this.fromAccountId = firstLineItem.getAccountId();
 		this.fromAccountName = firstLineItem.getAccountName();
+		if (firstLineItem.isIsCredit()) {
+			this.total = firstLineItem.getAmount().negate();
+		} else {
+			this.total = firstLineItem.getAmount();
+		}
 		for (LineItemDTO lineItem : journalEntry.getLineItems()) {
 			this.lineItems.add(new TransactionLineItemDTO(lineItem));
 		}
@@ -79,6 +86,12 @@ public class TransactionDTO {
 	}
 	public void setLineItems(List<TransactionLineItemDTO> lineItems) {
 		this.lineItems = lineItems;
+	}
+	public BigDecimal getTotal() {
+		return total;
+	}
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 	
 	
