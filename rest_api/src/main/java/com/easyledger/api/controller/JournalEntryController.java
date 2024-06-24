@@ -100,23 +100,23 @@ public class JournalEntryController {
 	}
 	
     @GetMapping("/journalEntry/{id}")
-    public ResponseEntity<JournalEntryDTO> getJournalEntryById(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
+    public JournalEntryDTO getJournalEntryById(@PathVariable(value = "id") Long journalEntryId, Authentication authentication)
         throws ResourceNotFoundException, UnauthorizedException {
     	JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
     		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId)); 
     	JournalEntryDTO journalEntryDTO = new JournalEntryDTO(journalEntry);
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, journalEntryDTO.getOrganizationId());
-        return ResponseEntity.ok().body(journalEntryDTO);
+        return journalEntryDTO;
     }
     
     @GetMapping("/transaction/{journalEntryId}")
-    public ResponseEntity<TransactionDTO> getJournalEntryByIdAsTransaction(@PathVariable(value = "journalEntryId") Long journalEntryId, Authentication authentication) 
+    public TransactionDTO getJournalEntryByIdAsTransaction(@PathVariable(value = "journalEntryId") Long journalEntryId, Authentication authentication) 
     		throws UnauthorizedException, ResourceNotFoundException {
     	JournalEntry journalEntry = journalEntryRepo.findById(journalEntryId)
         		.orElseThrow(() -> new ResourceNotFoundException("Journal Entry not found for this id :: " + journalEntryId)); 
     	JournalEntryDTO journalEntryDTO = new JournalEntryDTO(journalEntry);
     	authorizationService.authorizeViewPermissionsByOrganizationId(authentication, journalEntryDTO.getOrganizationId());
-    	return ResponseEntity.ok().body(new TransactionDTO(journalEntryDTO));
+    	return new TransactionDTO(journalEntryDTO);
     }
     
     @GetMapping("/journalEntry/{id}/log")
@@ -169,7 +169,7 @@ public class JournalEntryController {
      * @throws JsonProcessingException **/ 		
     @Transactional(rollbackFor=Exception.class)
     @PutMapping("/journalEntry/{id}")
-    public ResponseEntity<JournalEntryDTO> updateJournalEntryById(@PathVariable(value = "id") Long id, @RequestBody JournalEntryDTO dto, Authentication authentication) 
+    public JournalEntryDTO updateJournalEntryById(@PathVariable(value = "id") Long id, @RequestBody JournalEntryDTO dto, Authentication authentication) 
     	throws ConflictException, ResourceNotFoundException, UnauthorizedException, JsonProcessingException {
     	// Assert URI id is the same as id in the request body.
     	if (dto.getJournalEntryId() == null || !dto.getJournalEntryId().equals(id)) {
@@ -218,14 +218,21 @@ public class JournalEntryController {
     	//Log the update of this entry
     	journalEntryLogRepo.save(new JournalEntryLog(updatedJournalEntry, newEntryDTO));
 
-    	return ResponseEntity.ok().body(newEntryDTO);
+    	return newEntryDTO;
+    }
 
+    @PutMapping("/transaction/{journalEntryId}")
+    public TransactionDTO updateTransactionById(@PathVariable(value = "journalEntryId") Long journalEntryId, @RequestBody TransactionDTO transaction, Authentication authentication) 
+    		throws JsonProcessingException, ConflictException, ResourceNotFoundException, UnauthorizedException {
+    	JournalEntryDTO journalEntry = new JournalEntryDTO(transaction);
+    	JournalEntryDTO updatedEntry = updateJournalEntryById(journalEntryId, journalEntry, authentication);
+    	return new TransactionDTO(updatedEntry);
     }
 
     @Transactional(rollbackFor=Exception.class)
     @PostMapping("/journalEntry")
     @ResponseStatus(HttpStatus.CREATED)
-    public JournalEntryDTO createJournalEntryById(@RequestBody JournalEntryDTO dto, Authentication authentication) 
+    public JournalEntryDTO createJournalEntry(@RequestBody JournalEntryDTO dto, Authentication authentication) 
     	throws ConflictException, ResourceNotFoundException, UnauthorizedException, JsonProcessingException {
     
     	if (dto.getJournalEntryId() != null) {
@@ -259,6 +266,14 @@ public class JournalEntryController {
     	journalEntryLogRepo.save(new JournalEntryLog(updatedJournalEntry, newEntryDTO));
     	return newEntryDTO;
 
+    }
+    
+    @PostMapping("/transaction")
+    public TransactionDTO createTransaction(@RequestBody TransactionDTO transaction, Authentication authentication) 
+    		throws JsonProcessingException, ConflictException, ResourceNotFoundException, UnauthorizedException {
+    	JournalEntryDTO journalEntry = new JournalEntryDTO(transaction);
+    	JournalEntryDTO createdEntry = createJournalEntry(journalEntry, authentication);
+    	return new TransactionDTO(createdEntry);
     }
     
     private void checkLockDateForJournalEntry(JournalEntry journalEntry) throws ConflictException {
