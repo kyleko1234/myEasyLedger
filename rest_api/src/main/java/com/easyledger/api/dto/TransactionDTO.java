@@ -16,6 +16,7 @@ public class TransactionDTO {
 	private String fromAccountName;
 	private List<TransactionLineItemDTO> lineItems = new ArrayList<TransactionLineItemDTO>();
 	private BigDecimal total;
+	private Long balancerLineItemId;
 
 	public TransactionDTO() {
 
@@ -30,6 +31,7 @@ public class TransactionDTO {
 		LineItemDTO firstLineItem = journalEntry.getLineItems().remove(0);
 		this.fromAccountId = firstLineItem.getAccountId();
 		this.fromAccountName = firstLineItem.getAccountName();
+		this.balancerLineItemId = firstLineItem.getLineItemId();
 		if (firstLineItem.isIsCredit()) {
 			this.total = firstLineItem.getAmount().negate();
 		} else {
@@ -92,6 +94,12 @@ public class TransactionDTO {
 	}
 	public void setTotal(BigDecimal total) {
 		this.total = total;
+	}
+	public Long getBalancerLineItemId() {
+		return balancerLineItemId;
+	}
+	public void setBalancerLineItemId(Long balancerLineItemId) {
+		this.balancerLineItemId = balancerLineItemId;
 	}
 	
 	

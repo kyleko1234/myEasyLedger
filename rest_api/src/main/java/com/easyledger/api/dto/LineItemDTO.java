@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import com.easyledger.api.model.LineItem;
+import com.easyledger.api.utility.TransactionType;
 
 
 public class LineItemDTO implements Comparable<LineItemDTO> {
@@ -64,6 +65,20 @@ public class LineItemDTO implements Comparable<LineItemDTO> {
 		this.accountTypeId = accountTypeId.longValueExact();
 	}
 
+	public LineItemDTO(TransactionLineItemDTO lineItem) {
+		this.accountId = lineItem.getAccountId();
+		this.accountName = lineItem.getAccountName();
+		this.amount = lineItem.getAmount();
+		this.description = lineItem.getDescription();
+		this.journalEntryId = lineItem.getJournalEntryId();
+		this.lineItemId = lineItem.getLineItemId();
+		for (TransactionType transactionType : TransactionType.values()) {
+			if (transactionType.getTransactionTypeId().equals(lineItem.getTransactionTypeId())) {
+				this.isCredit = transactionType.isCredit();
+			}
+		}
+	}
+	
 	public Long getAccountId() {
 		return accountId;
 	}
