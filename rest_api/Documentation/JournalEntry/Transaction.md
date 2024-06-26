@@ -12,7 +12,7 @@ The object structure for `Transaction`:
 	"fromAccountId": Long,
 	"fromAccountName": String 64,
 	"transactionLineItems": Array<TransactionLineItem>,
-	"amount": BigDecimal,
+	"total": BigDecimal,
 	"balancerLineItemId": Long
 }
 ```
@@ -67,4 +67,51 @@ TransactionTypes:
 4. Populate the JournalEntry fields from the Transaction fields: organizationId, personId, description, journalEntryDate, journalEntryId should all remain the same.
 
 # Endpoints
-Retrieve a single transaction by JournalEntryId: GET `/transaction/{journalEntryId}`
+## Retrieve a single transaction by JournalEntryId
+GET `/transaction/{journalEntryId}`
+## Post a transaction
+POST `/transaction`
+Request body format:
+```json
+{
+    "journalEntryId": null,
+    "journalEntryDate": Date string, "yyyy-mm-dd" format,
+    "organizationId": Number,
+    "personId": Number,
+    "description": String,
+    "fromAccountId": Number,
+    "lineItems": [
+        {
+            "accountId": Number,
+            "description": String,
+            "amount": Number,
+            "transactionTypeId": Number,
+        }
+    ]
+}
+```
+Note that the `journalEntryId` field must be null.
+## Edit a transaction
+PUT `/transaction/{journalEntryId}`
+Request body format:
+```json
+{
+    "journalEntryId": Number,
+    "journalEntryDate": Date string, "yyyy-mm-dd" format,
+    "organizationId": Number,
+    "personId": Number,
+    "description": String,
+    "fromAccountId": Number,
+    "lineItems": [
+        {
+            "accountId": Number,
+            "description": String,
+            "amount": Number,
+            "transactionTypeId": Number,
+        }
+    ]
+}
+```
+The `journalEntryId` field must match the `journalEntryId` in the URI. This `journalEntryId` determines the entry that you will edit with this operation.
+## Retrieving edit history of transactions
+This is currently not supported on the backend. Use [[Access Edit History of a Journal Entry]] and then do the conversion from journal entry to transaction on the front end.

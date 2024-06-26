@@ -220,7 +220,8 @@ public class JournalEntryController {
 
     	return newEntryDTO;
     }
-
+    
+    @Transactional(rollbackFor=Exception.class)
     @PutMapping("/transaction/{journalEntryId}")
     public TransactionDTO updateTransactionById(@PathVariable(value = "journalEntryId") Long journalEntryId, @RequestBody TransactionDTO transaction, Authentication authentication) 
     		throws JsonProcessingException, ConflictException, ResourceNotFoundException, UnauthorizedException {
@@ -268,6 +269,7 @@ public class JournalEntryController {
 
     }
     
+    @Transactional(rollbackFor=Exception.class)
     @PostMapping("/transaction")
     public TransactionDTO createTransaction(@RequestBody TransactionDTO transaction, Authentication authentication) 
     		throws JsonProcessingException, ConflictException, ResourceNotFoundException, UnauthorizedException {
