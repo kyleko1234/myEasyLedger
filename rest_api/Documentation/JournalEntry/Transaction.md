@@ -11,7 +11,7 @@ The object structure for `Transaction`:
 	"description": String 255,
 	"fromAccountId": Long,
 	"fromAccountName": String 64,
-	"transactionLineItems": Array<TransactionLineItem>,
+	"lineItems": Array<TransactionLineItem>,
 	"total": BigDecimal,
 	"balancerLineItemId": Long
 }

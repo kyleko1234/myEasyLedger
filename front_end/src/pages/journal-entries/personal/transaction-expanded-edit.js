@@ -33,6 +33,7 @@ function TransactionExpandedEdit({
             accountId: "",
             description: "",
             transactionType: transactionTypeOptions[0],
+            transactionTypeId: transactionTypeOptions[0].value,
             transactionTypeName: transactionTypeOptions[0].label,
             amount: 0
         })

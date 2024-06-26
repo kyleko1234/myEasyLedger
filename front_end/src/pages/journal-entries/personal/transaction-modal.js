@@ -21,6 +21,7 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
         accountId: "",
         description: "",
         transactionType: transactionTypeOptions[0],
+        transactionTypeId: transactionTypeOptions[0].value,
         transactionTypeName: transactionTypeOptions[0].label,
         amount: 0
     }]);
@@ -28,6 +29,7 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
     const [journalEntryDate, setJournalEntryDate] = React.useState(getTodayAsDateString());
     const [fromAccountId, setFromAccountId] = React.useState(defaultFromAccountId ? defaultFromAccountId : null);
     const [fromAccountName, setFromAccountName] = React.useState(defaultFromAccountName ? defaultFromAccountName : null);
+    const [balancerLineItemId, setBalancerLineItemId] = React.useState('');
 
     const [alertMessages, setAlertMessages] = React.useState([]);
 
@@ -38,6 +40,7 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
             accountId: "",
             description: "",
             transactionType: transactionTypeOptions[0],
+            transactionTypeId: transactionTypeOptions[0].value,
             transactionTypeName: transactionTypeOptions[0].label,
             amount: 0
         }]);
@@ -139,45 +142,14 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
     }
     
     const prepareRequestBody = () => {
-        let totalDebits = 0;
-        let totalCredits = 0;
-        let formattedLineItems = lineItems.map(lineItem => {
-            if (lineItem.transactionType.isCredit) {
-                totalCredits += parseFloat(lineItem.amount);
-            } else {
-                totalDebits += parseFloat(lineItem.amount);
-            }
-            return ({
-                accountId: lineItem.accountId,
-                amount: lineItem.amount,
-                description: lineItem.description,
-                isCredit: lineItem.transactionType.isCredit
-            });
-        });
-        if (totalDebits >= totalCredits) {
-            formattedLineItems.unshift({
-                accountId: fromAccountId,
-                amount: parseFloat((totalDebits - totalCredits).toFixed(2)),
-                isCredit: true,
-                description: journalEntryDescription
-            })
-        } else {
-            formattedLineItems.unshift({
-                accountId: fromAccountId,
-                amount: parseFloat((totalCredits - totalDebits).toFixed(2)),
-                isCredit: false,
-                description: journalEntryDescription
-            })
-        }
-        formattedLineItems.forEach(lineItem => {
-            lineItem.amount = returnStringToNearestCentPrecisionNumber(lineItem.amount); //rounds all numbers to two decimal places.
-        })
         let formattedTransaction = {
             journalEntryId: null,
             journalEntryDate: journalEntryDate,
             description: journalEntryDescription,
             organizationId: appContext.currentOrganizationId,
-            lineItems: formattedLineItems
+            lineItems: lineItems,
+            fromAccountId: fromAccountId,
+            balancerLineItemId: balancerLineItemId
         };  
         if (currentJournalEntryId != 0) {
             formattedTransaction.journalEntryId = currentJournalEntryId;
@@ -186,7 +158,7 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
     }
 
     const postTransaction = (requestBody) => {
-        axios.post(`${API_BASE_URL}/journalEntry`, requestBody)
+        axios.post(`${API_BASE_URL}/transaction`, requestBody)
             .then(response => {
                 refreshParentComponent();
                 fetchTransaction(response.data.journalEntryId);
@@ -196,7 +168,7 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
     }
 
     const putTransaction = (requestBody) => {
-        axios.put(`${API_BASE_URL}/journalEntry/${currentJournalEntryId}`, requestBody)
+        axios.put(`${API_BASE_URL}/transaction/${currentJournalEntryId}`, requestBody)
             .then(response => {
                 refreshParentComponent();
                 fetchTransaction(currentJournalEntryId);
@@ -205,38 +177,22 @@ function TransactionModal({ isOpen, toggle, editMode, setEditMode, refreshParent
             }).catch(console.log);
     }
 
-
     const fetchTransaction = (journalEntryId) => {
         if (journalEntryId != 0) {
-            axios.get(`${API_BASE_URL}/journalEntry/${journalEntryId}`).then(response => {
+            axios.get(`${API_BASE_URL}/transaction/${journalEntryId}`).then(response => {
                 let journalEntry = response.data;
 
                 //set the selected journalentry's id, date, desc as state
                 setCurrentJournalEntryId(journalEntry.journalEntryId);
                 setJournalEntryDate(journalEntry.journalEntryDate);
                 setJournalEntryDescription(journalEntry.description);
-
-                let fetchedLineItems = journalEntry.lineItems.slice();
-                fetchedLineItems.sort((a, b) => (a.lineItemId > b.lineItemId) ? 1 : -1) //ensure lineItems are sorted by lineItemId ascending
-
-                //remove the first lineitem from the array, and set its account as the 'from' account
-                let firstLineItem = fetchedLineItems.shift();
-                setFromAccountId(firstLineItem.accountId);
-                setFromAccountName(firstLineItem.accountName);
-                //format line items for display
-                let formattedLineItems = fetchedLineItems.map(lineItem => {
-                    let transactionType = transactionTypeOptions.find(transactionType => transactionType.accountTypeIds.includes(lineItem.accountTypeId));
-                    return ({
-                        lineItemId: lineItem.lineItemId,
-                        accountName: lineItem.accountName,
-                        accountId: lineItem.accountId,
-                        description: lineItem.description,
-                        transactionType: transactionType,
-                        transactionTypeName: transactionType.label,
-                        amount: transactionType.isCredit == lineItem.isCredit ? lineItem.amount : lineItem.amount * -1
-                    });
-                });
-                setLineItems(formattedLineItems);
+                setBalancerLineItemId(journalEntry.balancerLineItemId);
+                setFromAccountId(journalEntry.fromAccountId);
+                setFromAccountName(journalEntry.fromAccountName);
+                journalEntry.lineItems.forEach(lineItem => {
+                    lineItem.transactionType = transactionTypeOptions.find((transactionType => transactionType.value == lineItem.transactionTypeId));
+                })
+                setLineItems(journalEntry.lineItems);
             }).catch(console.log);
         }
     }
