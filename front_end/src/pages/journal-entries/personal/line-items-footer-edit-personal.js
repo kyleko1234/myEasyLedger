@@ -2,14 +2,17 @@ import React from 'react';
 import { PageSettings } from '../../../config/page-settings';
 import { journalEntriesText } from '../../../utils/i18n/journal-entries-text';
 import { formatCurrency } from '../../../utils/util-fns';
+import { PERSONAL_TRANSACTION_TYPES } from '../../../utils/constants';
 
 function LineItemsFooterEditPersonal({lineItems}){
     const appContext = React.useContext(PageSettings);
+    const transactionTypeOptions = PERSONAL_TRANSACTION_TYPES(appContext.locale);
 
     const sumAmounts = () => {
         let sum = 0;
         lineItems.forEach(lineItem => {
-            if (lineItem.transactionType.isCredit) {
+            let transactionType = transactionTypeOptions.find(transactionType => transactionType.value == lineItem.transactionTypeId);
+            if (transactionType.isCredit) {
                 sum += parseFloat(lineItem.amount);
             } else {
                 sum -= parseFloat(lineItem.amount);

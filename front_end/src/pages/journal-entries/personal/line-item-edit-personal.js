@@ -24,8 +24,9 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
     }
     const handleChangeTransactionType = selectedOption => {
         let updatedLineItems = lineItems.slice();
-        updatedLineItems[i].transactionType = selectedOption;
+        updatedLineItems[i].transactionTypeId = selectedOption.value;
         updatedLineItems[i].transactionTypeName = selectedOption.label;
+        updatedLineItems[i].transactionType = selectedOption;
         updatedLineItems[i].accountId = '';
         updatedLineItems[i].accountName = '';
         setLineItems(updatedLineItems);
@@ -38,7 +39,7 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
                 <div className="pseudo-td col-3">
                     <StyledSelect
                         options={transactionTypeOptions}
-                        value={transactionTypeOptions.find(transactionType => transactionType.value == lineItems[i].transactionType.value)}
+                        value={transactionTypeOptions.find(transactionType => transactionType.value == lineItems[i].transactionTypeId)}
                         menuShouldScrollIntoView={false}
                         onChange={handleChangeTransactionType}
                     />
@@ -90,7 +91,7 @@ function LineItemEditPersonal({ lineItems, setLineItems, i, accountOptions, remo
                             <div>
                                 <StyledSelect
                                     options={transactionTypeOptions}
-                                    value={transactionTypeOptions.find(transactionType => transactionType.value == lineItems[i].transactionType.value)}
+                                    value={transactionTypeOptions.find(transactionType => transactionType.value == lineItems[i].transactionTypeId)}
                                     menuShouldScrollIntoView={false}
                                     onChange={handleChangeTransactionType}
                                 />

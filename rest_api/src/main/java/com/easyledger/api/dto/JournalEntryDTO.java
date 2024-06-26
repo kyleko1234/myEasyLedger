@@ -1,5 +1,6 @@
 package com.easyledger.api.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,6 +48,39 @@ public class JournalEntryDTO {
 			LineItemDTO nextLineItemDTO = new LineItemDTO(lineItemIterator.next());
 			this.lineItems.add(nextLineItemDTO);
 		} 
+	}
+	
+	public JournalEntryDTO(TransactionDTO transaction) {
+		this.journalEntryId = transaction.getJournalEntryId();
+		this.journalEntryDate = transaction.getJournalEntryDate();
+		this.description = transaction.getDescription();
+		this.personId = transaction.getPersonId();
+		this.organizationId = transaction.getOrganizationId();
+		this.lineItems = new ArrayList<LineItemDTO>();
+		BigDecimal debitTotal = new BigDecimal(0);
+		BigDecimal creditTotal = new BigDecimal(0);
+		for (TransactionLineItemDTO transactionLineItem : transaction.getLineItems()) {
+			LineItemDTO formattedLineItem = new LineItemDTO(transactionLineItem);
+			this.lineItems.add(formattedLineItem);
+			if (formattedLineItem.getAmount() != null) {
+				if (formattedLineItem.isIsCredit()) {
+					creditTotal = creditTotal.add(formattedLineItem.getAmount());
+				} else {
+					debitTotal = debitTotal.add(formattedLineItem.getAmount());
+				}
+			}
+		}
+		LineItemDTO balancerLineItem = new LineItemDTO();
+		balancerLineItem.setAccountId(transaction.getFromAccountId());
+		balancerLineItem.setDescription(transaction.getDescription());
+		if (debitTotal.compareTo(creditTotal) >= 0) {
+			balancerLineItem.setIsCredit(true);
+			balancerLineItem.setAmount(debitTotal.subtract(creditTotal));
+		} else {
+			balancerLineItem.setIsCredit(false);
+			balancerLineItem.setAmount(creditTotal.subtract(debitTotal));
+		}
+		this.lineItems.add(0, balancerLineItem);
 	}
 	
 	public JournalEntryDTO () {
@@ -134,8 +168,6 @@ public class JournalEntryDTO {
 				+ ", description=" + description + ", personId=" + personId + ", organizationId=" + organizationId
 				+ ", lineItems=" + lineItems + ", deleted=" + deleted + "]";
 	}
-
-
 	
 }
 

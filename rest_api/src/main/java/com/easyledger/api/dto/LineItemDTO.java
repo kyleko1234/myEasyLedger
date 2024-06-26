@@ -6,9 +6,10 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import com.easyledger.api.model.LineItem;
+import com.easyledger.api.utility.TransactionType;
 
 
-public class LineItemDTO {
+public class LineItemDTO implements Comparable<LineItemDTO> {
 	
 	private Long accountId;
 	private String accountName;
@@ -64,6 +65,20 @@ public class LineItemDTO {
 		this.accountTypeId = accountTypeId.longValueExact();
 	}
 
+	public LineItemDTO(TransactionLineItemDTO lineItem) {
+		this.accountId = lineItem.getAccountId();
+		this.accountName = lineItem.getAccountName();
+		this.amount = lineItem.getAmount();
+		this.description = lineItem.getDescription();
+		this.journalEntryId = lineItem.getJournalEntryId();
+		this.lineItemId = lineItem.getLineItemId();
+		for (TransactionType transactionType : TransactionType.values()) {
+			if (transactionType.getTransactionTypeId().equals(lineItem.getTransactionTypeId())) {
+				this.isCredit = transactionType.isCredit();
+			}
+		}
+	}
+	
 	public Long getAccountId() {
 		return accountId;
 	}
@@ -158,6 +173,18 @@ public class LineItemDTO {
 				+ ", description=" + description + ", journalEntryId=" + journalEntryId + ", journalEntryDate="
 				+ journalEntryDate + ", isCredit=" + isCredit + ", lineItemId=" + lineItemId + ", accountSubtypeId="
 				+ accountSubtypeId + ", accountTypeId=" + accountTypeId + "]";
+	}
+
+	@Override
+	public int compareTo(LineItemDTO lineItemDto) {
+		long difference = Math.subtractExact(this.getLineItemId(), lineItemDto.getLineItemId());
+		if (difference > 0) {
+			return 1;
+		} else if (difference < 0) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 
 
