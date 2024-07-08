@@ -486,11 +486,28 @@ a.pseudo-tr:hover,
     background-color: #1e1e1e;
 }
 
-.report-row-detailed {
+.report-row-detailed { /*deprecate these*/
     background-color: #ececec;
 }
 .dark-mode .report-row-detailed {
+    background-color: #151515;
+}
+
+.report-header {
+    background-color: #d4d4d4;
+    font-weight: 600;
+}
+.dark-mode .report-header {
+    background-color: #404040;
+    font-weight: 600;
+}
+.report-subheader {
+    background-color: #ececec;
+    font-weight: 600;
+}
+.dark-mode .report-subheader {
     background-color: #282828;
+    font-weight: 600;
 }
 
 /* LOGIN AND REGISTRATION PAGES */
@@ -600,6 +617,13 @@ a.pseudo-tr:hover,
 }
 
 /* Utility classes, mostly left from adjusting color admin */
+.ms-n1 {
+    margin-left: -0.25rem !important;
+}
+.ms-n2 {
+    margin-left: -0.5rem !important;
+}
+
 .clickable:hover {
     cursor: pointer;
 }
@@ -630,16 +654,16 @@ a.pseudo-tr:hover,
 }
 
 .indent, .indent-1 {
-    padding-left: 3em;
+    padding-left: 2em;
 }
 .indent-2 {
-    padding-left: 6em;
+    padding-left: 4em;
 }
 .indent-3 {
-    padding-left: 9em;
+    padding-left: 6em;
 }
 .indent-4 {
-    padding-left: 12em;
+    padding-left: 8em;
 }
 
 .vertical-line {
