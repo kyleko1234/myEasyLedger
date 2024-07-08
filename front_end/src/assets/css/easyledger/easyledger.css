@@ -623,7 +623,9 @@ a.pseudo-tr:hover,
 .ms-n2 {
     margin-left: -0.5rem !important;
 }
-
+.ms-01 {
+    margin-left: .125rem !important;
+}
 .clickable:hover {
     cursor: pointer;
 }

@@ -24,7 +24,7 @@ function AccountInReport({accountName, amounts, accountId, hasChildren, isChild,
                     indentLevel={0}
                     className="border-top-0 w-100"
                 />
-                : <Link className="w-100" to={`/account-details/${accountId}`}>
+                : <Link className="w-100" to={`/account-details/${accountId}`} target="_blank">
                     <ReportRow
                         label={accountName}
                         values={amounts}
@@ -38,7 +38,7 @@ function AccountInReport({accountName, amounts, accountId, hasChildren, isChild,
         <div className="d-md-none d-flex pseudo-tr">
             <div className="vertical-line"></div>
             {isChild
-                ? <div className="vertical-line ms-1"></div>
+                ? <div className="vertical-line ms-01"></div>
                 : null
             }
             <ReportRow
