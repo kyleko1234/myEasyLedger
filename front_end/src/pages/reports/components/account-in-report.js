@@ -5,13 +5,13 @@ import { PageSettings } from '../../../config/page-settings';
 import { formatCurrency } from '../../../utils/util-fns';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
-function AccountInReport({accountName, amounts, accountId, hasChildren, isChild, indentLevel}) {
+function AccountInReport({accountName, amounts, accountId, hasChildren, isChild, indentLevel, className}) {
     const appContext = React.useContext(PageSettings)
     const indentClassNames = ["", "indent", "indent-2", "indent-3", "indent-4"]
 
     return(
         <>
-        <div className="d-none d-md-flex pseudo-tr ">
+        <div className={"d-none d-md-flex pseudo-tr " + className}>
             <div className={"vertical-line "  + (indentLevel? indentClassNames[indentLevel] : "")}></div>
             {isChild
                 ? <div className="vertical-line ms-2"></div>
@@ -35,7 +35,7 @@ function AccountInReport({accountName, amounts, accountId, hasChildren, isChild,
                 </Link>
             }
         </div>
-        <div className="d-md-none d-flex pseudo-tr">
+        <div className={"d-md-none d-flex pseudo-tr " + className}>
             <div className="vertical-line"></div>
             {isChild
                 ? <div className="vertical-line ms-01"></div>
