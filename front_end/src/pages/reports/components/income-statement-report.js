@@ -4,6 +4,7 @@ import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { accountIsEmpty, localizeDate, subtypeIsEmpty } from '../../../utils/util-fns';
 import ReportRow from './report-row';
+import AccountInReport from './account-in-report';
 
 function IncomeStatementReport({ incomeStatementDto, detailedView }) {
     const appContext = React.useContext(PageSettings);
@@ -47,29 +48,30 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     {/** Revenue */}
                     <ReportRow
                         label={translate("Revenue")}
-                        className="fw-semibold"
+                        className="report-header"
                     />
                     {incomeStatementDto.revenueAccounts.map(account => {
                         if (!accountIsEmpty(account)) {
                             return (
                                 <React.Fragment key={account.accountId}>
-                                    <ReportRow
-                                        label={account.accountName}
-                                        values={account.amounts}
-                                        isCurrency
+                                    <AccountInReport
+                                        accountName={account.accountName}
+                                        amounts={account.amounts}
+                                        accountId={account.accountId}
+                                        hasChildren={account.hasChildren}
                                         indentLevel={1}
                                     />
                                     {detailedView
                                         ? account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
                                                 return (
-                                                    <ReportRow
+                                                    <AccountInReport
                                                         key={child.accountId}
-                                                        label={child.accountName}
-                                                        values={child.amounts}
-                                                        isCurrency
+                                                        accountId={child.accountId}
+                                                        accountName={child.accountName}
+                                                        amounts={child.amounts}
                                                         indentLevel={2}
-                                                        className="report-row-detailed"
+                                                        isChild
                                                     />
                                                 )
                                             }
@@ -83,35 +85,36 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     <ReportRow
                         label={translate("Total revenue")}
                         values={incomeStatementDto.totalRevenue}
-                        className="fw-semibold"
+                        className="fw-bold"
                         isCurrency
                     />
                     {/** Cost of sales */}
                     <ReportRow
                         label={translate("Cost of sales")}
-                        className="fw-semibold mt-3 border-top-0"
+                        className="report-header border-top-0"
                     />
                     {incomeStatementDto.costOfSalesAccounts.map(account => {
                         if (!accountIsEmpty(account)) {
                             return (
                                 <React.Fragment key={account.accountId}>
-                                    <ReportRow
-                                        label={account.accountName}
-                                        values={account.amounts}
-                                        isCurrency
+                                    <AccountInReport
+                                        accountName={account.accountName}
+                                        amounts={account.amounts}
+                                        accountId={account.accountId}
+                                        hasChildren={account.hasChildren}
                                         indentLevel={1}
                                     />
                                     {detailedView
                                         ? account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
                                                 return (
-                                                    <ReportRow
+                                                    <AccountInReport
                                                         key={child.accountId}
-                                                        label={child.accountName}
-                                                        values={child.amounts}
-                                                        isCurrency
+                                                        accountId={child.accountId}
+                                                        accountName={child.accountName}
+                                                        amounts={child.amounts}
                                                         indentLevel={2}
-                                                        className="report-row-detailed"
+                                                        isChild
                                                     />
                                                 )
                                             }
@@ -125,20 +128,20 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     <ReportRow
                         label={translate("Total cost of sales")}
                         values={incomeStatementDto.totalCostOfSales}
-                        className="fw-semibold"
+                        className="fw-bold"
                         isCurrency
                     />
                     {/** Gross Profit */}
                     <ReportRow
                         label={translate("Gross profit")}
                         values={incomeStatementDto.totalGrossProfit}
-                        className="fw-semibold border-top-0 mt-3"
+                        className="report-header fw-bold border-top-0"
                         isCurrency
                     />
                     {/** Operating expenses */}
                     <ReportRow
                         label={translate("Operating expenses")}
-                        className="fw-semibold mt-3 border-top-0"
+                        className="report-header mt-5 border-top-0"
                     />
                     {incomeStatementDto.operatingExpensesSubtypes.map((subtype, i) => {
                         if (!subtypeIsEmpty(subtype)) {
@@ -149,28 +152,30 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                         values={subtype.totalDebitsMinusCredits}
                                         isCurrency
                                         indentLevel={1}
+                                        className="report-subheader"
                                     />
                                     {detailedView
                                         ? subtype.accounts.map(account => {
                                             if (!accountIsEmpty(account)) {
                                                 return (
                                                     <React.Fragment key={account.accountId}>
-                                                        <ReportRow
-                                                            label={account.accountName}
-                                                            values={account.amounts}
-                                                            isCurrency
+                                                        <AccountInReport
+                                                            accountName={account.accountName}
+                                                            amounts={account.amounts}
+                                                            accountId={account.accountId}
+                                                            hasChildren={account.hasChildren}
                                                             indentLevel={2}
-                                                            className="report-row-detailed"
                                                         />
                                                         {account.children.map(child => {
                                                             if (!accountIsEmpty(child)) {
                                                                 return (
-                                                                    <ReportRow
-                                                                        label={child.accountName}
-                                                                        values={child.amounts}
-                                                                        isCurrency
+                                                                    <AccountInReport
+                                                                        key={child.accountId}
+                                                                        accountName={child.accountName}
+                                                                        amounts={child.amounts}
+                                                                        accountId={child.accountId}
+                                                                        isChild
                                                                         indentLevel={3}
-                                                                        className="report-row-detailed"
                                                                     />
                                                                 )
                                                             }
@@ -188,20 +193,20 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     <ReportRow
                         label={translate("Total operating expenses")}
                         values={incomeStatementDto.totalOperatingExpenses}
-                        className="fw-semibold"
+                        className="fw-bold"
                         isCurrency
                     />
                     {/** Operating Income */}
                     <ReportRow
                         label={translate("Operating income")}
                         values={incomeStatementDto.totalOperatingIncome}
-                        className="fw-semibold border-top-0 mt-3"
+                        className="report-header fw-bold border-top-0"
                         isCurrency
                     />
                     {/** Non-operating income/expenses */}
                     <ReportRow
                         label={translate("Non-operating income and expenses")}
-                        className="fw-semibold mt-3 border-top-0"
+                        className="report-header mt-5 border-top-0"
                     />
                     {incomeStatementDto.nonOperatingIncomeAndExpenseSubtypes.map((subtype, i) => {
                         if (!subtypeIsEmpty(subtype)) {
@@ -212,28 +217,30 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                         values={subtype.totalDebitsMinusCredits}
                                         isCurrency
                                         indentLevel={1}
+                                        className="report-subheader"
                                     />
                                     {detailedView
                                         ? subtype.accounts.map(account => {
                                             if (!accountIsEmpty(account)) {
                                                 return (
                                                     <React.Fragment key={account.accountId}>
-                                                        <ReportRow
-                                                            label={account.accountName}
-                                                            values={account.amounts}
-                                                            isCurrency
+                                                        <AccountInReport
+                                                            accountName={account.accountName}
+                                                            amounts={account.amounts}
+                                                            accountId={account.accountId}
+                                                            hasChildren={account.hasChildren}
                                                             indentLevel={2}
-                                                            className="report-row-detailed"
                                                         />
                                                         {account.children.map(child => {
                                                             if (!accountIsEmpty(child)) {
                                                                 return (
-                                                                    <ReportRow
-                                                                        label={child.accountName}
-                                                                        values={child.amounts}
-                                                                        isCurrency
+                                                                    <AccountInReport
+                                                                        key={child.accountId}
+                                                                        accountName={child.accountName}
+                                                                        amounts={child.amounts}
+                                                                        accountId={child.accountId}
+                                                                        isChild
                                                                         indentLevel={3}
-                                                                        className="report-row-detailed"
                                                                     />
                                                                 )
                                                             }
@@ -251,14 +258,14 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     <ReportRow
                         label={translate("Total non-operating income and expenses, net")}
                         values={incomeStatementDto.totalNonOperatingIncomeAndExpenseSubtypesNet}
-                        className="fw-semibold"
+                        className="fw-bold"
                         isCurrency
                     />
                     {/** EBIT */}
                     <ReportRow
                         label={translate("Earnings before interest and tax")}
                         values={incomeStatementDto.totalEbit}
-                        className="fw-semibold border-top-0 mt-3"
+                        className="report-header fw-bold border-top-0 mt-5"
                         isCurrency
                     />
                     {/** Interest */}
@@ -273,23 +280,23 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                             if (!accountIsEmpty(account)) {
                                 return (
                                     <React.Fragment key={account.accountId}>
-                                        <ReportRow
-                                            label={account.accountName}
-                                            values={account.amounts}
-                                            isCurrency
+                                        <AccountInReport
+                                            accountName={account.accountName}
+                                            amounts={account.amounts}
+                                            accountId={account.accountId}
+                                            hasChildren={account.hasChildren}
                                             indentLevel={1}
-                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
                                                     return (
-                                                        <ReportRow
+                                                        <AccountInReport
                                                             key={child.accountId}
-                                                            label={child.accountName}
-                                                            values={child.amounts}
-                                                            isCurrency
+                                                            accountName={child.accountName}
+                                                            amounts={child.amounts}
+                                                            accountId={child.accountId}
+                                                            isChild
                                                             indentLevel={2}
-                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }
@@ -305,7 +312,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     <ReportRow
                         label={translate("Earnings before tax")}
                         values={incomeStatementDto.totalEarningsBeforeTax}
-                        className="fw-semibold"
+                        className="report-header fw-bold"
                         isCurrency
                     />
                     {/** Tax */}
@@ -320,23 +327,23 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                             if (!accountIsEmpty(account)) {
                                 return (
                                     <React.Fragment key={account.accountId}>
-                                        <ReportRow
-                                            label={account.accountName}
-                                            values={account.amounts}
-                                            isCurrency
+                                        <AccountInReport
+                                            accountName={account.accountName}
+                                            amounts={account.amounts}
+                                            accountId={account.accountId}
+                                            hasChildren={account.hasChildren}
                                             indentLevel={1}
-                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
                                                     return (
-                                                        <ReportRow
+                                                        <AccountInReport
                                                             key={child.accountId}
-                                                            label={child.accountName}
-                                                            values={child.amounts}
-                                                            isCurrency
+                                                            accountName={child.accountName}
+                                                            amounts={child.amounts}
+                                                            accountId={child.accountId}
+                                                            isChild
                                                             indentLevel={2}
-                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }
@@ -352,7 +359,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     {!accountsAreEmpty(incomeStatementDto.nonRecurringAccounts)
                         ? <ReportRow
                             label={translate("Non-recurring and extraordinary items")}
-                            className="fw-semibold border-top-0 mt-3"
+                            className="report-header border-top-0 mt-5"
                             isCurrency
                             values={incomeStatementDto.totalNonRecurringNet}
                         />
@@ -363,23 +370,23 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                             if (!accountIsEmpty(account)) {
                                 return (
                                     <React.Fragment key={account.accountId}>
-                                        <ReportRow
-                                            label={account.accountName}
-                                            values={account.amounts}
-                                            isCurrency
+                                        <AccountInReport
+                                            accountName={account.accountName}
+                                            amounts={account.amounts}
+                                            accountId={account.accountId}
+                                            hasChildren={account.hasChildren}
                                             indentLevel={1}
-                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                                 if (!accountIsEmpty(child)) {
                                                     return (
-                                                        <ReportRow
+                                                        <AccountInReport
                                                             key={child.accountId}
-                                                            label={child.accountName}
-                                                            values={child.amounts}
-                                                            isCurrency
+                                                            accountName={child.accountName}
+                                                            amounts={child.amounts}
+                                                            accountId={child.accountId}
+                                                            isChild
                                                             indentLevel={2}
-                                                            className="report-row-detailed"
                                                         />
                                                     )
                                                 }
@@ -395,7 +402,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     <ReportRow
                         label={translate("Net income")}
                         values={incomeStatementDto.netIncome}
-                        className="fw-semibold border-top-0 mt-3"
+                        className="report-header fw-bold border-top-0"
                         isCurrency
                     />
                 </div>

@@ -547,7 +547,13 @@ public class ReportsService {
 		generatedIncomeStatement.setTotalOperatingExpenses(AccountSubtypeInReportDTO.sumSubtypes(operatingExpensesSubtypes));
 		generatedIncomeStatement.setTotalOperatingIncome(Utility.subtractLists(generatedIncomeStatement.getTotalGrossProfit(), generatedIncomeStatement.getTotalOperatingExpenses()));
 		generatedIncomeStatement.setNonOperatingIncomeAndExpenseSubtypes(nonOperatingIncomeExpenseSubtypes);
-		generatedIncomeStatement.setTotalNonOperatingIncomeAndExpenseSubtypesNet(AccountSubtypeInReportDTO.sumSubtypes(nonOperatingIncomeExpenseSubtypes));
+		List<BigDecimal> totalNonOperatingIncomeAndExpenseSubtypesNet = AccountSubtypeInReportDTO.sumSubtypes(nonOperatingIncomeExpenseSubtypes);
+		if (totalNonOperatingIncomeAndExpenseSubtypesNet.isEmpty()) {
+			for (DateRangeDTO date : dates) {
+				totalNonOperatingIncomeAndExpenseSubtypesNet.add(new BigDecimal(0));
+			}
+		}
+		generatedIncomeStatement.setTotalNonOperatingIncomeAndExpenseSubtypesNet(totalNonOperatingIncomeAndExpenseSubtypesNet);
 		generatedIncomeStatement.setTotalEbit(Utility.addLists(generatedIncomeStatement.getTotalOperatingIncome(), generatedIncomeStatement.getTotalNonOperatingIncomeAndExpenseSubtypesNet()));
 		generatedIncomeStatement.setInterestAccounts(interestAccounts);
 		generatedIncomeStatement.setTotalInterest(AccountInReportDTO.sumAmountsOfAccounts(interestAccounts));
