@@ -418,6 +418,11 @@ public class ReportsService {
 
 		generatedCashFlowStatement.setIncomeExpenseFromInvestingAccounts(incomeExpenseFromInvestingAccounts);
 		List<BigDecimal> totalIncomeExpenseFromInvestingNet = Utility.negateList(AccountInReportDTO.sumAmountsOfAccounts(incomeExpenseFromInvestingAccounts));
+		if (totalIncomeExpenseFromInvestingNet.isEmpty()) {
+			for (DateRangeDTO date : dates) {
+				totalIncomeExpenseFromInvestingNet.add(new BigDecimal(0));
+			}
+		}
 		generatedCashFlowStatement.setTotalIncomeExpenseFromInvestingNet(totalIncomeExpenseFromInvestingNet);
 		generatedCashFlowStatement.setNonCashInvestingIncomeExpenseAccounts(nonCashInvestingIncomeExpenseAccounts);
 		List<BigDecimal> totalNonCashInvestingIncomeExpense = AccountInReportDTO.sumAmountsOfAccounts(nonCashInvestingIncomeExpenseAccounts);
@@ -434,6 +439,11 @@ public class ReportsService {
 		
 		generatedCashFlowStatement.setIncomeExpenseFromFinancingAccounts(incomeExpenseFromFinancingAccounts);
 		List<BigDecimal> totalIncomeExpenseFromFinancingNet = Utility.negateList(AccountInReportDTO.sumAmountsOfAccounts(incomeExpenseFromFinancingAccounts));
+		if (totalIncomeExpenseFromFinancingNet.isEmpty()) {
+			for (DateRangeDTO date : dates) {
+				totalIncomeExpenseFromFinancingNet.add(new BigDecimal(0));
+			}
+		}
 		generatedCashFlowStatement.setTotalIncomeExpenseFromFinancingNet(totalIncomeExpenseFromFinancingNet);
 		generatedCashFlowStatement.setNonCashFinancingIncomeExpenseAccounts(nonCashFinancingIncomeExpenseAccounts);
 		List<BigDecimal> totalNonCashFinancingIncomeExpense = AccountInReportDTO.sumAmountsOfAccounts(nonCashFinancingIncomeExpenseAccounts);
@@ -465,6 +475,11 @@ public class ReportsService {
 		generatedCashFlowStatement.setTotalTaxLiabilities(totalTaxLiabilities);
 		
 		List<BigDecimal> totalAdjustmentForNonOperatingIncomeExpenseNet = Utility.negateList(Utility.addLists(totalIncomeExpenseFromInvestingNet, totalIncomeExpenseFromFinancingNet));
+		if (totalAdjustmentForNonOperatingIncomeExpenseNet.isEmpty()) {
+			for (DateRangeDTO date : dates) {
+				totalAdjustmentForNonOperatingIncomeExpenseNet.add(new BigDecimal(0));
+			}
+		}
 		generatedCashFlowStatement.setTotalAdjustmentForNonOperatingIncomeExpenseNet(totalAdjustmentForNonOperatingIncomeExpenseNet);
 		List<BigDecimal> totalIncomeExpenseFromOperatingNet = Utility.addLists(totalNetIncome, totalAdjustmentForNonOperatingIncomeExpenseNet);
 		generatedCashFlowStatement.setTotalIncomeExpenseFromOperatingNet(totalIncomeExpenseFromOperatingNet);
@@ -474,8 +489,8 @@ public class ReportsService {
 		List<BigDecimal> cashFlowFromOperations = Utility.addLists(totalNetIncome, totalAdjustmentToNetIncomeForOperatingCashFlow);
 		generatedCashFlowStatement.setCashFlowFromOperations(cashFlowFromOperations);
 		
-		List<BigDecimal> totalAdjustmenForAssetsLiabilitiesDepreciation = Utility.addLists(totalChangesInInvestingAssetsLiabilities, totalAdjustmentForDepreciationAmortization);
-		List<BigDecimal> totalAdjustmentForChangesInInvestingAssetsLiabilitiesEquity = Utility.addLists(totalAdjustmenForAssetsLiabilitiesDepreciation, totalChangesInInvestingEquity);
+		List<BigDecimal> totalAdjustmentForAssetsLiabilitiesDepreciation = Utility.addLists(totalChangesInInvestingAssetsLiabilities, totalAdjustmentForDepreciationAmortization);
+		List<BigDecimal> totalAdjustmentForChangesInInvestingAssetsLiabilitiesEquity = Utility.addLists(totalAdjustmentForAssetsLiabilitiesDepreciation, totalChangesInInvestingEquity);
 		List<BigDecimal> totalAdjustmentToInvestingIncomeForInvestingCashFlow = Utility.addLists(totalNonCashInvestingIncomeExpense, totalAdjustmentForChangesInInvestingAssetsLiabilitiesEquity);
 		List<BigDecimal> cashFlowFromInvesting = Utility.addLists(totalIncomeExpenseFromInvestingNet, totalAdjustmentToInvestingIncomeForInvestingCashFlow);
 		generatedCashFlowStatement.setCashFlowFromInvesting(cashFlowFromInvesting);
@@ -489,7 +504,17 @@ public class ReportsService {
 		generatedCashFlowStatement.setCashFlowFromFinancing(cashFlowFromFinancing);
 		
 		List<BigDecimal> totalInterestPaid = Utility.addLists(totalInterestExpense, totalInterestLiabilities);
+		if (totalInterestPaid.isEmpty()) {
+			for (DateRangeDTO date : dates) {
+				totalInterestPaid.add(new BigDecimal(0));
+			}
+		}
 		List<BigDecimal> totalTaxesPaid = Utility.addLists(totalTaxExpense, totalTaxLiabilities);
+		if (totalTaxesPaid.isEmpty()) {
+			for (DateRangeDTO date : dates) {
+				totalTaxesPaid.add(new BigDecimal(0));
+			}
+		}
 		generatedCashFlowStatement.setTotalInterestPaid(totalInterestPaid);
 		generatedCashFlowStatement.setTotalTaxesPaid(totalTaxesPaid);
 		

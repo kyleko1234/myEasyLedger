@@ -70,7 +70,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                         accountId={child.accountId}
                                                         accountName={child.accountName}
                                                         amounts={child.amounts}
-                                                        indentLevel={2}
+                                                        indentLevel={1}
                                                         isChild
                                                     />
                                                 )
@@ -113,7 +113,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                         accountId={child.accountId}
                                                         accountName={child.accountName}
                                                         amounts={child.amounts}
-                                                        indentLevel={2}
+                                                        indentLevel={1}
                                                         isChild
                                                     />
                                                 )
@@ -135,7 +135,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     <ReportRow
                         label={translate("Gross profit")}
                         values={incomeStatementDto.totalGrossProfit}
-                        className="report-header fw-bold border-top-0"
+                        className="fw-bold"
                         isCurrency
                     />
                     {/** Operating expenses */}
@@ -152,7 +152,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                         values={subtype.totalDebitsMinusCredits}
                                         isCurrency
                                         indentLevel={1}
-                                        className="report-subheader"
+                                        className=""
                                     />
                                     {detailedView
                                         ? subtype.accounts.map(account => {
@@ -175,7 +175,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                                         amounts={child.amounts}
                                                                         accountId={child.accountId}
                                                                         isChild
-                                                                        indentLevel={3}
+                                                                        indentLevel={2}
                                                                     />
                                                                 )
                                                             }
@@ -200,7 +200,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     <ReportRow
                         label={translate("Operating income")}
                         values={incomeStatementDto.totalOperatingIncome}
-                        className="report-header fw-bold border-top-0"
+                        className="fw-bold "
                         isCurrency
                     />
                     {/** Non-operating income/expenses */}
@@ -217,7 +217,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                         values={subtype.totalDebitsMinusCredits}
                                         isCurrency
                                         indentLevel={1}
-                                        className="report-subheader"
+                                        className=""
                                     />
                                     {detailedView
                                         ? subtype.accounts.map(account => {
@@ -240,7 +240,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                                         amounts={child.amounts}
                                                                         accountId={child.accountId}
                                                                         isChild
-                                                                        indentLevel={3}
+                                                                        indentLevel={2}
                                                                     />
                                                                 )
                                                             }
@@ -271,7 +271,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     {/** Interest */}
                     <ReportRow
                         label={translate("Interest expense")}
-                        className="fw-semibold"
+                        className=""
                         isCurrency
                         values={incomeStatementDto.totalInterest}
                     />
@@ -296,7 +296,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                             amounts={child.amounts}
                                                             accountId={child.accountId}
                                                             isChild
-                                                            indentLevel={2}
+                                                            indentLevel={1}
                                                         />
                                                     )
                                                 }
@@ -318,7 +318,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                     {/** Tax */}
                     <ReportRow
                         label={translate("Tax expense")}
-                        className="fw-semibold"
+                        className=""
                         isCurrency
                         values={incomeStatementDto.totalTaxes}
                     />
@@ -343,7 +343,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                             amounts={child.amounts}
                                                             accountId={child.accountId}
                                                             isChild
-                                                            indentLevel={2}
+                                                            indentLevel={1}
                                                         />
                                                     )
                                                 }
@@ -386,7 +386,7 @@ function IncomeStatementReport({ incomeStatementDto, detailedView }) {
                                                             amounts={child.amounts}
                                                             accountId={child.accountId}
                                                             isChild
-                                                            indentLevel={2}
+                                                            indentLevel={1}
                                                         />
                                                     )
                                                 }
