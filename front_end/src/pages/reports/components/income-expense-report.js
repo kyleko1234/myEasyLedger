@@ -4,6 +4,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { incomeStatementRenderText } from '../../../utils/i18n/income-statement-render-text';
 import { accountIsEmpty, localizeDate } from '../../../utils/util-fns';
 import ReportRow from './report-row';
+import AccountInReportSimple from './account-in-report-simple';
 
 function IncomeExpenseReport({incomeExpenseReportDto, detailedView}) {
     const appContext = React.useContext(PageSettings);
@@ -39,29 +40,33 @@ function IncomeExpenseReport({incomeExpenseReportDto, detailedView}) {
                     {/**Income */}
                     <ReportRow
                         label={translate("Income")}
-                        className="fw-semibold"
+                        className="report-header"
                     />
                     {incomeExpenseReportDto.incomeAccounts
                         ? incomeExpenseReportDto.incomeAccounts.map(account => {
                             if (!accountIsEmpty(account)) {
                                 return(
                                     <React.Fragment key={account.accountId}>
-                                        <ReportRow
-                                            label={account.accountName}
-                                            values={account.amounts}
-                                            isCurrency
+                                        <AccountInReportSimple
+                                            accountName={account.accountName}
+                                            amounts={account.amounts}
+                                            accountId={account.accountId}
+                                            hasChildren={account.hasChildren}
                                             indentLevel={1}
+                                            category={!appContext.isEnterprise}
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child) && detailedView) {
                                                 return(
-                                                    <ReportRow
-                                                        label={child.accountName}
-                                                        values={child.amounts}
-                                                        isCurrency
-                                                        indentLevel={2}
+                                                    <AccountInReportSimple
+                                                        accountName={child.accountName}
+                                                        amounts={child.amounts}
+                                                        accountId={child.accountId}
+                                                        indentLevel={1}
+                                                        isChild
                                                         key={child.accountId}
                                                         className="report-row-detailed"
+                                                        category={!appContext.isEnterprise}
                                                     />
                                                 )
                                             }
@@ -76,34 +81,38 @@ function IncomeExpenseReport({incomeExpenseReportDto, detailedView}) {
                         label={translate("Total Income")}
                         values={incomeExpenseReportDto.totalIncome}
                         isCurrency
-                        className="fw-semibold"
+                        className="fw-bold"
                     />
                     {/**Expenses */}
                     <ReportRow
                         label={translate("Expenses")}
-                        className="fw-semibold border-top-0 mt-3"
+                        className="report-header border-top-0 mt-5"
                     />
                     {incomeExpenseReportDto.expenseAccounts
                         ? incomeExpenseReportDto.expenseAccounts.map(account => {
                             if (!accountIsEmpty(account)) {
                                 return(
                                     <React.Fragment key={account.accountId}>
-                                        <ReportRow
-                                            label={account.accountName}
-                                            values={account.amounts}
-                                            isCurrency
+                                        <AccountInReportSimple
+                                            accountName={account.accountName}
+                                            amounts={account.amounts}
+                                            accountId={account.accountId}
+                                            hasChildren={account.hasChildren}
                                             indentLevel={1}
+                                            category={!appContext.isEnterprise}
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child) && detailedView) {
                                                 return(
-                                                    <ReportRow
-                                                        label={child.accountName}
-                                                        values={child.amounts}
-                                                        isCurrency
-                                                        indentLevel={2}
+                                                    <AccountInReportSimple
+                                                        accountName={child.accountName}
+                                                        amounts={child.amounts}
+                                                        accountId={child.accountId}
+                                                        indentLevel={1}
+                                                        isChild
                                                         key={child.accountId}
                                                         className="report-row-detailed"
+                                                        category={!appContext.isEnterprise}
                                                     />
                                                 )
                                             }
@@ -118,13 +127,13 @@ function IncomeExpenseReport({incomeExpenseReportDto, detailedView}) {
                         label={translate("Total expenses")}
                         values={incomeExpenseReportDto.totalExpenses}
                         isCurrency
-                        className="fw-semibold"
+                        className="fw-bold"
                     />
                     <ReportRow
                         label={translate("Total Income less Expenses")}
                         values={incomeExpenseReportDto.totalIncomeMinusExpenses}
                         isCurrency
-                        className="fw-semibold border-top-0 mt-3"
+                        className="report-header fw-bold border-top-0 mt-5"
                     />
 
                 </div>

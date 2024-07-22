@@ -4,6 +4,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { netWorthReportText } from '../../../utils/i18n/net-worth-report-text';
 import { accountIsEmpty, localizeDate } from '../../../utils/util-fns';
 import ReportRow from './report-row';
+import AccountInReportSimple from './account-in-report-simple';
 
 function NetWorthReport({netWorthReportDto, detailedView}) {
     const appContext = React.useContext(PageSettings);
@@ -30,27 +31,29 @@ function NetWorthReport({netWorthReportDto, detailedView}) {
                     {/**Assets */}
                     <ReportRow
                         label={translate("Assets")}
-                        className="fw-semibold"
+                        className="report-header"
                     />
                     {netWorthReportDto.assetAccounts
                         ? netWorthReportDto.assetAccounts.map(account => {
                             if (!accountIsEmpty(account)) {
                                 return(
                                     <React.Fragment key={account.accountId}>
-                                        <ReportRow
-                                            label={account.accountName}
-                                            values={account.amounts}
-                                            isCurrency
+                                        <AccountInReportSimple
+                                            accountName={account.accountName}
+                                            amounts={account.amounts}
+                                            accountId={account.accountId}
+                                            hasChildren={account.hasChildren}
                                             indentLevel={1}
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child) && detailedView) {
                                                 return(
-                                                    <ReportRow
-                                                        label={child.accountName}
-                                                        values={child.amounts}
-                                                        isCurrency
-                                                        indentLevel={2}
+                                                    <AccountInReportSimple
+                                                        accountName={child.accountName}
+                                                        amounts={child.amounts}
+                                                        accountId={child.accountId}
+                                                        indentLevel={1}
+                                                        isChild
                                                         key={child.accountId}
                                                         className="report-row-detailed"
                                                     />
@@ -67,33 +70,35 @@ function NetWorthReport({netWorthReportDto, detailedView}) {
                         label={translate("Total Assets")}
                         values={netWorthReportDto.totalAssets}
                         isCurrency
-                        className="fw-semibold"
+                        className="fw-bold"
                     />
 
                     {/**Liabilities */}
                     <ReportRow
                         label={translate("Liabilities")}
-                        className="fw-semibold border-top-0 mt-3"
+                        className="report-header border-top-0 mt-5"
                     />
                     {netWorthReportDto.liabilityAccounts
                         ? netWorthReportDto.liabilityAccounts.map(account => {
                             if (!accountIsEmpty(account)) {
                                 return(
                                     <React.Fragment key={account.accountId}>
-                                        <ReportRow
-                                            label={account.accountName}
-                                            values={account.amounts}
-                                            isCurrency
+                                        <AccountInReportSimple
+                                            accountName={account.accountName}
+                                            amounts={account.amounts}
+                                            accountId={account.accountId}
+                                            hasChildren={account.hasChildren}
                                             indentLevel={1}
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child) && detailedView) {
                                                 return(
-                                                    <ReportRow
-                                                        label={child.accountName}
-                                                        values={child.amounts}
-                                                        isCurrency
-                                                        indentLevel={2}
+                                                    <AccountInReportSimple
+                                                        accountName={child.accountName}
+                                                        amounts={child.amounts}
+                                                        accountId={child.accountId}
+                                                        indentLevel={1}
+                                                        isChild
                                                         key={child.accountId}
                                                         className="report-row-detailed"
                                                     />
@@ -110,14 +115,14 @@ function NetWorthReport({netWorthReportDto, detailedView}) {
                         label={translate("Total Liabilities")}
                         values={netWorthReportDto.totalLiabilities}
                         isCurrency
-                        className="fw-semibold"
+                        className="fw-bold"
                     />
                     {/**Total net worth */}
                     <ReportRow
                         label={translate("Total Net Worth")}
                         values={netWorthReportDto.totalNetWorth}
                         isCurrency
-                        className="fw-semibold border-top-0 mt-3"
+                        className="report-header fw-bold border-top-0 mt-5"
                     />
                 </div>
                 : <LoadingSpinner big/>

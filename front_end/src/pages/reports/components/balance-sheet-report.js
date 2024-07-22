@@ -5,6 +5,7 @@ import { PageSettings } from '../../../config/page-settings';
 import { balanceSheetRenderText } from '../../../utils/i18n/balance-sheet-render-text';
 import { accountIsEmpty, arrayIsAllZeroes, localizeDate, subtypeIsEmpty } from '../../../utils/util-fns';
 import ReportRow from './report-row';
+import AccountInReport from './account-in-report';
 
 function BalanceSheetReport({balanceSheetDto, detailedView}) {
     const appContext = React.useContext(PageSettings);
@@ -32,7 +33,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
             </Alert>
             {balanceSheetDto
                 ? <div>
-                    {/** Report Header */}
+                    {/** Date Labels */}
                     <ReportRow
                         values={dateLabels()}
                         className="fw-semibold"
@@ -40,14 +41,14 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                     {/** Assets */}
                     <ReportRow
                         label={translate("Assets")}
-                        className="fw-semibold"
+                        className="report-header"
                     />
                     <ReportRow
                         label={translate("Current assets")}
                         values={balanceSheetDto.totalCurrentAssets}
                         isCurrency
                         indentLevel={1}
-                        className="fw-semibold"
+                        className="report-subheader"
                     />
                     {balanceSheetDto.currentAssetsSubtypes
                         ? balanceSheetDto.currentAssetsSubtypes.map((subtype, i)=> {
@@ -62,26 +63,26 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                         />
                                         {detailedView 
                                             ? subtype.accounts.map((account, i) => {
-                                                if (!accountIsEmpty(account)) {
+                                                if (!accountIsEmpty(account)) { 
                                                     return (
                                                         <React.Fragment key={i}>
-                                                            <ReportRow
-                                                                label={account.accountName}
-                                                                values={account.amounts}
-                                                                isCurrency
+                                                            <AccountInReport
+                                                                accountName={account.accountName}
+                                                                accountId={account.accountId}
+                                                                amounts={account.amounts}
+                                                                hasChildren={account.hasChildren}
                                                                 indentLevel={3}
-                                                                className="report-row-detailed"
                                                             />
                                                             {account.children.map(child => {
                                                                 if (!accountIsEmpty(child)) {
                                                                     return(
-                                                                        <ReportRow
-                                                                            label={child.accountName}
-                                                                            values={child.amounts}
-                                                                            isCurrency
+                                                                        <AccountInReport
+                                                                            accountName={child.accountName}
+                                                                            amounts={child.amounts}
+                                                                            accountId={child.accountId}
                                                                             key={child.accountId}
-                                                                            indentLevel={4}
-                                                                            className="report-row-detailed"
+                                                                            isChild
+                                                                            indentLevel={3}
                                                                         />
                                                                     )
                                                                 }
@@ -103,7 +104,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                         values={balanceSheetDto.totalNonCurrentAssets}
                         isCurrency
                         indentLevel={1}
-                        className="fw-semibold"
+                        className="report-subheader"
                     />
                     {balanceSheetDto.nonCurrentAssetsSubtypes
                         ? balanceSheetDto.nonCurrentAssetsSubtypes.map((subtype, i) => {
@@ -121,23 +122,23 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                 if (!accountIsEmpty(account)) {
                                                     return (
                                                         <React.Fragment key={i}>
-                                                            <ReportRow
-                                                                label={account.accountName}
-                                                                values={account.amounts}
-                                                                isCurrency
+                                                            <AccountInReport
+                                                                accountName={account.accountName}
+                                                                amounts={account.amounts}
+                                                                accountId={account.accountId}
+                                                                hasChildren={account.hasChildren}
                                                                 indentLevel={3}
-                                                                className="report-row-detailed"
                                                             />
                                                             {account.children.map(child => {
                                                                 if (!accountIsEmpty(child)) {
                                                                     return(
-                                                                        <ReportRow
-                                                                            label={child.accountName}
-                                                                            values={child.amounts}
-                                                                            isCurrency
+                                                                        <AccountInReport
+                                                                            accountName={child.accountName}
+                                                                            amounts={child.amounts}
                                                                             key={child.accountId}
-                                                                            indentLevel={4}
-                                                                            className="report-row-detailed"
+                                                                            accountId={child.accountId}
+                                                                            isChild
+                                                                            indentLevel={3}
                                                                         />
                                                                     )
                                                                 }
@@ -156,21 +157,21 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                     }
                     <ReportRow
                         label={translate("Total assets")}
-                        className="fw-semibold"
+                        className="fw-bold"
                         isCurrency
                         values={balanceSheetDto.totalAssets}
                     />
                     {/** Liabilities */}
                     <ReportRow
                         label={translate("Liabilities")}
-                        className="fw-semibold border-top-0 mt-3"
+                        className="border-top-0 mt-5 report-header"
                     />
                     <ReportRow
                         label={translate("Current liabilities")}
                         values={balanceSheetDto.totalCurrentLiabilities}
                         isCurrency
                         indentLevel={1}
-                        className="fw-semibold"
+                        className="report-subheader"
                     />
                     {balanceSheetDto.currentLiabilitiesSubtypes
                         ? balanceSheetDto.currentLiabilitiesSubtypes.map((subtype, i)=> {
@@ -188,23 +189,23 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                 if (!accountIsEmpty(account)) {
                                                     return (
                                                         <React.Fragment key={i}>
-                                                            <ReportRow
-                                                                label={account.accountName}
-                                                                values={account.amounts}
-                                                                isCurrency
+                                                            <AccountInReport
+                                                                accountName={account.accountName}
+                                                                amounts={account.amounts}
+                                                                accountId={account.accountId}
+                                                                hasChildren={account.hasChildren}
                                                                 indentLevel={3}
-                                                                className="report-row-detailed"
                                                             />
                                                             {account.children.map(child => {
                                                                 if (!accountIsEmpty(child)) {
                                                                     return(
-                                                                        <ReportRow
-                                                                            label={child.accountName}
-                                                                            values={child.amounts}
-                                                                            isCurrency
+                                                                        <AccountInReport
+                                                                            accountName={child.accountName}
+                                                                            amounts={child.amounts}
                                                                             key={child.accountId}
-                                                                            indentLevel={4}
-                                                                            className="report-row-detailed"
+                                                                            accountId={child.accountId}
+                                                                            isChild
+                                                                            indentLevel={3}
                                                                         />
                                                                     )
                                                                 }
@@ -226,7 +227,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                         values={balanceSheetDto.totalNonCurrentLiabilities}
                         isCurrency
                         indentLevel={1}
-                        className="fw-semibold"
+                        className="report-subheader"
                     />
                     {balanceSheetDto.nonCurrentLiabilitiesSubtypes
                         ? balanceSheetDto.nonCurrentLiabilitiesSubtypes.map((subtype, i) => {
@@ -244,23 +245,23 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                                                 if (!accountIsEmpty(account)) {
                                                     return (
                                                         <React.Fragment key={i}>
-                                                            <ReportRow
-                                                                label={account.accountName}
-                                                                values={account.amounts}
-                                                                isCurrency
+                                                            <AccountInReport
+                                                                accountName={account.accountName}
+                                                                amounts={account.amounts}
+                                                                accountId={account.accountId}
+                                                                hasChildren={account.hasChildren}
                                                                 indentLevel={3}
-                                                                className="report-row-detailed"
                                                             />
                                                             {account.children.map(child => {
                                                                 if (!accountIsEmpty(child)) {
                                                                     return(
-                                                                        <ReportRow
-                                                                            label={child.accountName}
-                                                                            values={child.amounts}
-                                                                            isCurrency
+                                                                        <AccountInReport
+                                                                            accountName={child.accountName}
+                                                                            amounts={child.amounts}
                                                                             key={child.accountId}
-                                                                            indentLevel={4}
-                                                                            className="report-row-detailed"
+                                                                            accountId={child.accountId}
+                                                                            indentLevel={3}
+                                                                            isChild
                                                                         />
                                                                     )
                                                                 }
@@ -279,44 +280,44 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                     }
                     <ReportRow
                         label={translate("Total liabilities")}
-                        className="fw-semibold"
+                        className="fw-bold"
                         isCurrency
                         values={balanceSheetDto.totalLiabilities}
                     />
                     {/** Equity */}
                     <ReportRow
                         label={translate("Equity")}
-                        className="fw-semibold border-top-0 mt-3"
+                        className="report-header border-top-0 mt-5"
                     />
                     <ReportRow
                         label={translate("Paid-in capital")}
                         values={balanceSheetDto.totalPaidInCapital}
                         isCurrency
                         indentLevel={1}
-                        className="fw-semibold"
+                        className="report-subheader"
                     />
                     {detailedView 
                         ? balanceSheetDto.paidInCapitalAccounts.map((account, i) => {
                             if (!accountIsEmpty(account)) {
                                 return (
                                     <React.Fragment key={i}>
-                                        <ReportRow
-                                            label={account.accountName}
-                                            values={account.amounts}
-                                            isCurrency
+                                        <AccountInReport
+                                            accountName={account.accountName}
+                                            amounts={account.amounts}
+                                            accountId={account.accountId}
+                                            hasChildren={account.hasChildren}
                                             indentLevel={2}
-                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
                                                 return(
-                                                    <ReportRow
-                                                        label={child.accountName}
-                                                        values={child.amounts}
-                                                        isCurrency
+                                                    <AccountInReport
+                                                        accountName={child.accountName}
+                                                        amounts={child.amounts}
+                                                        accountId={child.accountId}
                                                         key={child.accountId}
-                                                        indentLevel={3}
-                                                        className="report-row-detailed"
+                                                        indentLevel={2}
+                                                        isChild
                                                     />
                                                 )
                                             }
@@ -332,30 +333,30 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                         values={balanceSheetDto.totalShareBasedCompensation}
                         isCurrency
                         indentLevel={1}
-                        className="fw-semibold"
+                        className="report-subheader"
                     />
                     {detailedView 
                         ? balanceSheetDto.shareBasedCompensationAccounts.map((account, i) => {
                             if (!accountIsEmpty(account)) {
                                 return (
                                     <React.Fragment key={i}>
-                                        <ReportRow
-                                            label={account.accountName}
-                                            values={account.amounts}
-                                            isCurrency
+                                        <AccountInReport
+                                            accountName={account.accountName}
+                                            amounts={account.amounts}
+                                            accountId={account.accountId}
+                                            hasChildren={account.hasChildren}
                                             indentLevel={2}
-                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
                                                 return(
-                                                    <ReportRow
-                                                        label={child.accountName}
-                                                        values={child.amounts}
-                                                        isCurrency
+                                                    <AccountInReport
+                                                        accountName={child.accountName}
+                                                        amounts={child.amounts}
+                                                        accountId={child.accountId}
                                                         key={child.accountId}
-                                                        indentLevel={3}
-                                                        className="report-row-detailed"
+                                                        indentLevel={2}
+                                                        isChild
                                                     />
                                                 )
                                             }
@@ -371,30 +372,30 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                         values={balanceSheetDto.totalOtherEquityItems}
                         isCurrency
                         indentLevel={1}
-                        className="fw-semibold"
+                        className="report-subheader"
                     />
                     {detailedView 
                         ? balanceSheetDto.otherEquityItemsAccounts.map((account, i) => {
                             if (!accountIsEmpty(account)) {
                                 return (
                                     <React.Fragment key={i}>
-                                        <ReportRow
-                                            label={account.accountName}
-                                            values={account.amounts}
-                                            isCurrency
+                                        <AccountInReport
+                                            accountName={account.accountName}
+                                            amounts={account.amounts}
+                                            accountId={account.accountId}
+                                            hasChildren={account.hasChildren}
                                             indentLevel={2}
-                                            className="report-row-detailed"
                                         />
                                         {account.children.map(child => {
                                             if (!accountIsEmpty(child)) {
                                                 return(
-                                                    <ReportRow
-                                                        label={child.accountName}
-                                                        values={child.amounts}
-                                                        isCurrency
+                                                    <AccountInReport
+                                                        accountName={child.accountName}
+                                                        amounts={child.amounts}
+                                                        accountId={child.accountId}
                                                         key={child.accountId}
-                                                        indentLevel={3}
-                                                        className="report-row-detailed"
+                                                        indentLevel={2}
+                                                        isChild
                                                     />
                                                 )
                                             }
@@ -408,7 +409,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                     <ReportRow
                         label={translate("Retained earnings")}
                         indentLevel={1}
-                        className="fw-semibold"
+                        className="report-subheader"
                     />
                     <ReportRow
                         label={translate("Beginning balances")}
@@ -439,7 +440,7 @@ function BalanceSheetReport({balanceSheetDto, detailedView}) {
                         label={translate("Total equity")}
                         values={balanceSheetDto.totalEquity}
                         isCurrency
-                        className="fw-semibold"
+                        className="fw-bold"
                     />
 
 
